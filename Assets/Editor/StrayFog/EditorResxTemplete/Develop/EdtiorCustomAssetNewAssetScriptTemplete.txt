@@ -1,0 +1,8 @@
+﻿using StrayFogPlugins;
+/// <summary>
+/// #ClassName#
+/// </summary>
+public class #ClassName# : AbsScriptableObject
+{
+
+}

@@ -1,0 +1,3 @@
+taskkill /pid #Pid# /f
+"#EngineExe#" -projectPath "#ProjectPath#" -logFile "#LogFile#" -executeMethod "#ExecuteMethod#"
+ping -n 3 127.1>nul & exit

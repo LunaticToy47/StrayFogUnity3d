@@ -1,0 +1,11 @@
+﻿using StrayFogPlugins;
+namespace StrayFogRunning
+{
+	/// <summary>
+	/// #NAME#
+	/// </summary>
+	public class #NAME# : AbsUIWindowView
+	{
+
+	}
+}

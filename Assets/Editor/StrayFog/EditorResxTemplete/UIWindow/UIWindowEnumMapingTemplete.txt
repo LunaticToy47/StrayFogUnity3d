@@ -1,0 +1,9 @@
+﻿/// <summary>
+/// UI窗口枚举
+/// </summary>
+public enum enUIWindow
+{
+#Windows#
+	#Name# = #Id#,
+#Windows#
+}

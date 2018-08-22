@@ -1,0 +1,10 @@
+﻿namespace StrayFogRunning
+{
+	/// <summary>
+	/// 资源磁盘映射枚举#EnumName#
+	/// </summary>
+	public enum en#EnumName#
+	{#Enums#
+		#Name# = #HashCode#,#Enums#	
+	}
+}

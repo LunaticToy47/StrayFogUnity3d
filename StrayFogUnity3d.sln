@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrayFogUnity3d", "Assembly-CSharp.csproj", "{D63B5063-64F7-4543-6F52-362E2B817E5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrayFogUnity3d", "StrayFog.csproj", "{7804B737-8114-97F0-AF90-AB5E78C4A00B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrayFogUnity3d", "EditorStrayFog.csproj", "{6AA1889A-415C-1DE9-85B5-C84B4163B38E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{D63B5063-64F7-4543-6F52-362E2B817E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D63B5063-64F7-4543-6F52-362E2B817E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D63B5063-64F7-4543-6F52-362E2B817E5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7804B737-8114-97F0-AF90-AB5E78C4A00B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7804B737-8114-97F0-AF90-AB5E78C4A00B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7804B737-8114-97F0-AF90-AB5E78C4A00B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7804B737-8114-97F0-AF90-AB5E78C4A00B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AA1889A-415C-1DE9-85B5-C84B4163B38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA1889A-415C-1DE9-85B5-C84B4163B38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA1889A-415C-1DE9-85B5-C84B4163B38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA1889A-415C-1DE9-85B5-C84B4163B38E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
