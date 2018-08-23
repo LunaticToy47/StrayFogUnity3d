@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Assets.Editor.StrayFog.EditorResxTemplete;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -9,7 +10,7 @@ public class EditorWindowCustomAssetNewAsset : EditorWindow
     /// <summary>
     /// Txt脚本模板
     /// </summary>
-    string mTxtScriptTemplete = EditorResxTemplete.EditorResxTemplete.EdtiorCustomAssetNewAssetScriptTemplete;
+    string mTxtScriptTemplete = EditorResxTemplete.EdtiorCustomAssetNewAssetScriptTemplete;
     /// <summary>
     /// 脚本内容
     /// </summary>

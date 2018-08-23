@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Editor.StrayFog.EditorResxTemplete;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -358,7 +359,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     void BuilderWindowEnum()
     {
         float progress = 0;
-        string scriptTemplete = EditorResxTemplete.EditorResxTemplete.UIWindowEnumMapingTemplete;
+        string scriptTemplete = EditorResxTemplete.UIWindowEnumMapingTemplete;
         string result = scriptTemplete;
         string replaceTemplete = string.Empty;
         string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#Windows#", out replaceTemplete);

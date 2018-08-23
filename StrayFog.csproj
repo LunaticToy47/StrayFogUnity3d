@@ -349,6 +349,9 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data">
+      <HintPath>D:/StrayFogXLua/StrayFogUnity3d/Assets/Editor/System.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Data.Sqlite">
       <HintPath>D:/StrayFogXLua/StrayFogUnity3d/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
     </Reference>
@@ -369,9 +372,6 @@
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data">
-      <HintPath>D:/StrayFogXLua/StrayFogUnity3d/Assets/Editor/System.Data.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>

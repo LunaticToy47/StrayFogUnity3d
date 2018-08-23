@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Editor.StrayFog.EditorResxTemplete;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -110,7 +111,7 @@ public sealed class EditorUtility_CMD : AbsSingle<EditorUtility_CMD>
     {
         Process p = Process.GetCurrentProcess();
         string path = Path.Combine(EditorApplication.applicationPath, p.MainModule.FileName);
-        string bat = EditorResxTemplete.EditorResxTemplete.Cmd_ExecuteApplicationRestartMenu;
+        string bat = EditorResxTemplete.Cmd_ExecuteApplicationRestartMenu;
         MethodInfo method = typeof(EditorStrayFogExecute).GetMethod("ExecuteBuildPackage");
         bat = bat.Replace("#Pid#", p.Id.ToString())
             .Replace("#EngineExe#", path)

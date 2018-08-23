@@ -1,4 +1,5 @@
-﻿using Mono.Data.Sqlite;
+﻿using Assets.Editor.StrayFog.EditorResxTemplete;
+using Mono.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -411,7 +412,7 @@ public sealed class EditorStrayFogExecute
             if (t.isDetermainant)
             {
                 #region 行列式实体对象
-                string entityScriptTemplete = EditorResxTemplete.EditorResxTemplete.SQLiteDeterminantEntityScriptTemplete;
+                string entityScriptTemplete = EditorResxTemplete.SQLiteDeterminantEntityScriptTemplete;
 
                 string rowMark = "#Row#";
                 string rowReplaceTemplete = string.Empty;
@@ -448,7 +449,7 @@ public sealed class EditorStrayFogExecute
             else
             {
                 #region 非行列式实体对象
-                string entityScriptTemplete = EditorResxTemplete.EditorResxTemplete.SQLiteEntityScriptTemplete;
+                string entityScriptTemplete = EditorResxTemplete.SQLiteEntityScriptTemplete;
 
                 string propertyMark = "#Properties#";
                 string propertyReplaceTemplete = string.Empty;
@@ -492,7 +493,7 @@ public sealed class EditorStrayFogExecute
 
         #region 生成实体操作扩展
         EditorTextAssetConfig cfgHeplerExtendScript = new EditorTextAssetConfig("SQLiteEntityHelperExtend", sqliteFolder, enFileExt.CS, "");
-        string helperScriptTemplete = EditorResxTemplete.EditorResxTemplete.SQLiteEntityHelperExtendTemplete;
+        string helperScriptTemplete = EditorResxTemplete.SQLiteEntityHelperExtendTemplete;
 
         string entityMapingMark = "#EntityMaping#";
         string entityMapingReplaceTemplete = string.Empty;
@@ -704,7 +705,7 @@ public sealed class EditorStrayFogExecute
 
             #region 生成枚举
             EditorTextAssetConfig cfgEnumScript = new EditorTextAssetConfig("", enEditorApplicationFolder.Game_Running_AssetDiskMaping.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
-            string assetDiskMapingScriptTemplete = EditorResxTemplete.EditorResxTemplete.AssetDiskMapingEnumTemplete;
+            string assetDiskMapingScriptTemplete = EditorResxTemplete.AssetDiskMapingEnumTemplete;
 
             string enumMark = "#Enums#";
             string enumReplaceTemplete = string.Empty;
@@ -841,17 +842,17 @@ public sealed class EditorStrayFogExecute
     /// <summary>
     /// 删除Manifest批处理
     /// </summary>
-    static readonly EditorTextAssetConfig mDeleteManifestBat = new EditorTextAssetConfig("DeleteManifest", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.EditorResxTemplete.Cmd_DeleteManifestTemplete);
+    static readonly EditorTextAssetConfig mDeleteManifestBat = new EditorTextAssetConfig("DeleteManifest", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_DeleteManifestTemplete);
 
     /// <summary>
     /// DebugProfiler批处理
     /// </summary>
-    static readonly EditorTextAssetConfig mDebugProfilerBat = new EditorTextAssetConfig("DebugProfiler", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.EditorResxTemplete.Cmd_DebugProfilerTemplete);
+    static readonly EditorTextAssetConfig mDebugProfilerBat = new EditorTextAssetConfig("DebugProfiler", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_DebugProfilerTemplete);
 
     /// <summary>
     /// ClearSvn批处理
     /// </summary>
-    static readonly EditorTextAssetConfig mClearSvnReg = new EditorTextAssetConfig("ClearSvn", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.EditorResxTemplete.Cmd_ClearSvnTemplete);
+    static readonly EditorTextAssetConfig mClearSvnReg = new EditorTextAssetConfig("ClearSvn", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_ClearSvnTemplete);
     /// <summary>
     /// 生成删除包中无用资源的bat文件
     /// </summary>
@@ -1204,7 +1205,7 @@ public sealed class EditorStrayFogExecute
             #endregion
         }
 
-        string editorFMSMachineMapingScriptTemplete = EditorResxTemplete.EditorResxTemplete.EditorFMSMachineMapingScriptTemplete;
+        string editorFMSMachineMapingScriptTemplete = EditorResxTemplete.EditorFMSMachineMapingScriptTemplete;
         string editorFMSMachineMapingResult = editorFMSMachineMapingScriptTemplete;
 
         string editorFMSMachineMapingReplaceTemplete = string.Empty;
@@ -1404,7 +1405,7 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteBuildDefaultShader()
     {
         EditorBinaryAssetConfig txtCfg = new EditorBinaryAssetConfig("", enEditorApplicationFolder.Project_Shader.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Shader, null);
-        PropertyInfo[] pis = typeof(EditorResxTemplete.EditorResxTemplete).GetProperties();
+        PropertyInfo[] pis = typeof(EditorResxTemplete).GetProperties();
         if (pis != null && pis.Length > 0)
         {
             float progress = 0;

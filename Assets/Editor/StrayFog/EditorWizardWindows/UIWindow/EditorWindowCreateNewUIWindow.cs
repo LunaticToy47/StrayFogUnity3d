@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Assets.Editor.StrayFog.EditorResxTemplete;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -123,7 +124,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
             {
                 isCreate = EditorUtility.DisplayDialog("Exists Script", "The script '" + _viewScript.fileName + "' already exists,are you sure want to cover it?", "Yes", "No");
             }
-            string windowTemplate = EditorResxTemplete.EditorResxTemplete.UIWindowViewTemplete;
+            string windowTemplate = EditorResxTemplete.UIWindowViewTemplete;
             windowTemplate = windowTemplate.Replace("#NAME#", _viewScript.name);
             _viewScript.SetText(windowTemplate);
             _viewScript.CreateAsset();
