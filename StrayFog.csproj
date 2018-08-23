@@ -61,66 +61,66 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\StrayFog\AbsClass\AbsScriptableObject.cs" />
-    <Compile Include="Assets\StrayFog\AbsClass\AbsSingle.cs" />
-    <Compile Include="Assets\StrayFog\AbsClass\AbsSingleScriptableObject.cs" />
-    <Compile Include="Assets\StrayFog\Attribute\AliasTooltipAttribute.cs" />
-    <Compile Include="Assets\StrayFog\Attribute\FileExtAttribute.cs" />
-    <Compile Include="Assets\StrayFog\Attribute\InvokeMethodAttribute.cs" />
-    <Compile Include="Assets\StrayFog\Attribute\ReferPropertyDisplayInspectorAttribute.cs" />
-    <Compile Include="Assets\StrayFog\Attribute\RegularExpressionAttribute.cs" />
-    <Compile Include="Assets\StrayFog\Attribute\ValueRangeAttribute .cs" />
-    <Compile Include="Assets\StrayFog\Enums\EnumMacroDefineScriptingDefineSymbols.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\BitConverterExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\CryptionExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\DateTimeExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\HiloSwapExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\RAMUnitExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\ReflectionExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\StringExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\TypeExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtend\UniqueExtend.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtendEngine\BitConverterExtendEngine.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtendEngine\ColorExtendEngine.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtendEngine\HiloSwapExtendEngine.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtendEngine\RegularExpressionExtendEngine.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtendEngine\StringExtendEngine.cs" />
-    <Compile Include="Assets\StrayFog\GlobalExtendEngine\UIExtendEngine.cs" />
-    <Compile Include="Assets\StrayFog\Guide\UIGuideRegister.cs" />
-    <Compile Include="Assets\StrayFog\Interface\IAttachMonoBehaviourAnyWhere.cs" />
-    <Compile Include="Assets\StrayFog\Interface\IRunningStartUpLevel.cs" />
-    <Compile Include="Assets\StrayFog\Level\StartUpLevel.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\EngineSerializeExtend.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\DataReaderProvider.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\DataWriterProvider.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\EcmaScriptIdentifier.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\EcmaScriptWriter.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\IDataReader.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\IDataReaderProvider.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\IDataWriter.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\IDataWriterProvider.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\IJsonSerializable.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonDataReader.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonDataWriter.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonDeserializationException.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonIgnoreAttribute.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonNameAttribute.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonReader.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonReaderSettings.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonSerializationException.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonSpecifiedPropertyAttribute.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonToken.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonTypeCoercionException.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonWriter.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\JsonWriterSettings.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\TypeCoercionUtility.cs" />
-    <Compile Include="Assets\StrayFog\Serialize\Json\Json\WriteDelegate_1.cs" />
-    <Compile Include="Assets\StrayFog\SQLite\SQLiteHelper.cs" />
-    <Compile Include="Assets\StrayFog\StrayFogApplication.cs" />
-    <Compile Include="Assets\StrayFog\StrayFogAssembly.cs" />
-    <Compile Include="Assets\StrayFog\StrayFogRegisterMonoBehaviour.cs" />
-    <Compile Include="Assets\StrayFog\StrayFogSetting.cs" />
-    <Compile Include="Assets\StrayFog\UIWindow\EnumUIWindow.cs" />
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsScriptableObject.cs" />
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsSingle.cs" />
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsSingleScriptableObject.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\AliasTooltipAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\FileExtAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\InvokeMethodAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\ReferPropertyDisplayInspectorAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\RegularExpressionAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\ValueRangeAttribute .cs" />
+    <Compile Include="Assets\StrayFog\Core\Enums\EnumMacroDefineScriptingDefineSymbols.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\BitConverterExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\CryptionExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\DateTimeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\HiloSwapExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\RAMUnitExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\ReflectionExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\StringExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\TypeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\UniqueExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\BitConverterExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\ColorExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\HiloSwapExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\RegularExpressionExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\StringExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\UIExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\Guide\UIGuideRegister.cs" />
+    <Compile Include="Assets\StrayFog\Core\Interface\IAttachMonoBehaviourAnyWhere.cs" />
+    <Compile Include="Assets\StrayFog\Core\Interface\IRunningStartUpLevel.cs" />
+    <Compile Include="Assets\StrayFog\Core\Level\StartUpLevel.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\EngineSerializeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\DataReaderProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\DataWriterProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\EcmaScriptIdentifier.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\EcmaScriptWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataReaderProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataWriterProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IJsonSerializable.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDataReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDataWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDeserializationException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonIgnoreAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonNameAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonReaderSettings.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonSerializationException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonSpecifiedPropertyAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonToken.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonTypeCoercionException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonWriterSettings.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\TypeCoercionUtility.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\WriteDelegate_1.cs" />
+    <Compile Include="Assets\StrayFog\Core\SQLite\SQLiteHelper.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogApplication.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogAssembly.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogRegisterMonoBehaviour.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogSetting.cs" />
+    <Compile Include="Assets\StrayFog\Core\UIWindow\EnumUIWindow.cs" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -350,25 +350,25 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Data">
-      <HintPath>D:/StrayFogXLua/StrayFogUnity3d/Assets/Editor/System.Data.dll</HintPath>
+      <HintPath>D:/StrayFog/StrayFogUnity3d/Assets/Editor/System.Data.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
-      <HintPath>D:/StrayFogXLua/StrayFogUnity3d/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
+      <HintPath>D:/StrayFog/StrayFogUnity3d/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
-      <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
+      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Analytics">
-      <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/Editor/UnityEditor.Analytics.dll</HintPath>
+      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/Editor/UnityEditor.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
-      <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
-      <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>

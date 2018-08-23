@@ -10,10 +10,10 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{D63B5063-64F7-4543-6F52-362E2B817E5A}</ProjectGuid>
+    <ProjectGuid>{5E0AF36A-CFFD-D41A-260B-A77323847A81}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>StrayFogCore</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -61,19 +61,66 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\NewBehaviourScript.cs" />
-    <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>D:/StrayFog/StrayFogUnity3d/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/StrayFog/StrayFogUnity3d/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/StrayFog/StrayFogUnity3d/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/StrayFog/StrayFogUnity3d/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsScriptableObject.cs" />
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsSingle.cs" />
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsSingleScriptableObject.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\AliasTooltipAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\FileExtAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\InvokeMethodAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\ReferPropertyDisplayInspectorAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\RegularExpressionAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\ValueRangeAttribute .cs" />
+    <Compile Include="Assets\StrayFog\Core\Enums\EnumMacroDefineScriptingDefineSymbols.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\BitConverterExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\CryptionExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\DateTimeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\HiloSwapExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\RAMUnitExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\ReflectionExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\StringExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\TypeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\UniqueExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\BitConverterExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\ColorExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\HiloSwapExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\RegularExpressionExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\StringExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\UIExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\Guide\UIGuideRegister.cs" />
+    <Compile Include="Assets\StrayFog\Core\Interface\IAttachMonoBehaviourAnyWhere.cs" />
+    <Compile Include="Assets\StrayFog\Core\Interface\IRunningStartUpLevel.cs" />
+    <Compile Include="Assets\StrayFog\Core\Level\StartUpLevel.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\EngineSerializeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\DataReaderProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\DataWriterProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\EcmaScriptIdentifier.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\EcmaScriptWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataReaderProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataWriterProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IJsonSerializable.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDataReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDataWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDeserializationException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonIgnoreAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonNameAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonReaderSettings.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonSerializationException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonSpecifiedPropertyAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonToken.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonTypeCoercionException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonWriterSettings.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\TypeCoercionUtility.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\WriteDelegate_1.cs" />
+    <Compile Include="Assets\StrayFog\Core\SQLite\SQLiteHelper.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogApplication.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogAssembly.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogRegisterMonoBehaviour.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogSetting.cs" />
+    <Compile Include="Assets\StrayFog\Core\UIWindow\EnumUIWindow.cs" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -254,29 +301,77 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Timeline">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Timeline">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.GoogleAudioSpatializer">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.GoogleAudioSpatializer">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>D:/StrayFog/StrayFogUnity3d/Assets/Editor/System.Data.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
       <HintPath>D:/StrayFog/StrayFogUnity3d/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/Editor/UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>
@@ -305,16 +400,6 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/Boo.Lang.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="EditorStrayFog.csproj">
-      <Project>{6AA1889A-415C-1DE9-85B5-C84B4163B38E}</Project>
-      <Name>EditorStrayFog</Name>
-    </ProjectReference>
-    <ProjectReference Include="StrayFogCore.csproj">
-      <Project>{5E0AF36A-CFFD-D41A-260B-A77323847A81}</Project>
-      <Name>StrayFogCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

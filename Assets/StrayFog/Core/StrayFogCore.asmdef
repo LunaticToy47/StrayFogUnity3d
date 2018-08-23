@@ -1,8 +1,6 @@
 {
-    "name": "EditorStrayFog",
-    "references": [
-        "StrayFogCore"
-    ],
+    "name": "StrayFogCore",
+    "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
