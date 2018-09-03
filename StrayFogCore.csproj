@@ -10,10 +10,10 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{6AA1889A-415C-1DE9-85B5-C84B4163B38E}</ProjectGuid>
+    <ProjectGuid>{5E0AF36A-CFFD-D41A-260B-A77323847A81}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>EditorStrayFog</AssemblyName>
+    <AssemblyName>StrayFogCore</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -48,7 +48,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
-    <UnityProjectType>Editor:5</UnityProjectType>
+    <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2018.2.2f1</UnityVersion>
   </PropertyGroup>
@@ -61,99 +61,66 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\StrayFog\AbsEditorClass\AbsEditorSavedAssetConfig.cs" />
-    <Compile Include="Assets\Editor\StrayFog\AbsEditorClass\AbsEditorSavedAssetFile.cs" />
-    <Compile Include="Assets\Editor\StrayFog\AbsEditorClass\AbsEditorWindow.cs" />
-    <Compile Include="Assets\Editor\StrayFog\Attribute\EditorApplicationFolderAttribute.cs" />
-    <Compile Include="Assets\Editor\StrayFog\Attribute\EditorAssetFilterAttribute.cs" />
-    <Compile Include="Assets\Editor\StrayFog\AttributeDrawer\Drawers\AbsEditorAttributeDrawer.cs" />
-    <Compile Include="Assets\Editor\StrayFog\AttributeDrawer\Drawers\EditorAliasTooltipAttributeDrawer.cs" />
-    <Compile Include="Assets\Editor\StrayFog\AttributeDrawer\Drawers\EditorInvokeMethodAttributeDrawer.cs" />
-    <Compile Include="Assets\Editor\StrayFog\AttributeDrawer\Drawers\EditorReferPropertyDisplayInspectorDrawer.cs" />
-    <Compile Include="Assets\Editor\StrayFog\AttributeDrawer\Drawers\EditorValueRangeAttributeDrawer.cs" />
-    <Compile Include="Assets\Editor\StrayFog\AttributeDrawer\EditorPropertyAttributeDrawer.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorAssetConfig\AbsEdtiorAssetConfig.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorAssetConfig\EditorBinaryAssetConfig.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorAssetConfig\EditorEngineAssetConfig.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorAssetConfig\EditorTextAssetConfig.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorAnimatorMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorAnimCurveMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorAssetBundleNameMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorAssetDiskMapingMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorCustomAssetMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorDevelopMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorDllMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorGuideMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorProjectMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorQueryMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorReleaseMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorResourceLoadingModeMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorShaderMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorSpriteAtlasMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorSQLiteMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorUIWindowMenuItem.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EnumEditorMenuItemPriority.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorResxTemplete\EditorResxTemplete.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorSelection\EditorSelectionAsset.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorStrayFogApplication.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorStrayFogAssembly.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorStrayFogExecute.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorStrayFogGlobalVariable.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorStrayFogSavedConfigAssetFile.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorStrayFogUtility.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorUtility\EditorUtility_AssetBundleName.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorUtility\EditorUtility_CMD.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorUtility\EditorUtility_CollectAsset.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorUtility\EditorUtility_GUILayout.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorUtility\EditorUtility_Regedit.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorUtility\EditorUtility_Regex.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorValidate\EditorValidateIOnlyRunningMonoBehaviour.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\Animator\Class\EditorAnimatorControllerFMSMapingConfig.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\Animator\Class\EditorAnimatorControllerFMSMapingFile.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\Animator\Class\EditorSelectionAnimatorControllerFMSMapingAsset.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\Animator\EditorWindowAnimatorControllerFMSMaping.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\AnimCurve\Class\EditorAnimCurve.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\AnimCurve\Class\EditorAnimCurveSetting.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\AnimCurve\Class\IEditorAnimCurve.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\AssetBundle\Class\EditorSelectionAssetBundleNameAsset.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\AssetBundle\Class\EditorSetAssetBundleNameConfig.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\AssetBundle\Class\EditorSetAssetBundleNameFile.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\AssetBundle\EditorWindowSetAssetBundleName.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\AssetDiskMaping\Class\EditorSelectionAssetDiskMaping.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\CustomAsset\EditorWindowCustomAssetNewAsset.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\CustomAsset\EditorWindowCustomAssetNewRunningAsset.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\Develop\EditorWindowMacroDefineScriptingDefineSymbols.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\Guide\Class\EditorUIGuideRegisterSetGraphic.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\Guide\EditorWindowSetUIGuideRegister_GraphicNodeIndexs.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\SpriteAtlas\Class\EditorSelectionSpritePackingTagAsset.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\SpriteAtlas\Class\EditorSetSpritePackingTagConfig.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\SpriteAtlas\Class\EditorSetSpritePackingTagFile.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\SpriteAtlas\EditorWindowSetSpritePackingTag.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\SQLite\SQLiteEntity.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\SQLite\SQLiteEntityProperty.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\UIWindow\Class\EditorSelectionUIWindowSetting.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\UIWindow\EditorWindowBuildUIWindowMaping.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\UIWindow\EditorWindowCreateNewUIWindow.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorWizardWindows\UIWindow\EditorWindowSettingUIWindow.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EnumEditorApplicationFolder.cs" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\UIWindow\UIWindowViewTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\UIShader\Water\RippleWaterShader.shader" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\Cmd\Cmd_DebugProfilerTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\Animator\EditorFMSMachineMapingScriptTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\Cmd\Cmd_DeleteManifestTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\Develop\EdtiorCustomAssetNewAssetScriptTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\UIShader\GraphicMask\UIGraphicMaskVertexShader.shader" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\UIShader\Grass\GrassDestabilizeShader.shader" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\SQLite\SQLiteEntityHelperExtendTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\UIShader\Grey\GreyShader.shader" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\SQLite\SQLiteEntityScriptTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\UIShader\GraphicMask\UIGraphicMaskFragmentShader.shader" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\SQLite\SQLiteDeterminantEntityScriptTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\Cmd\Cmd_ExecuteApplicationRestartMenu.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\AssetDiskMaping\AssetDiskMapingEnumTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\Cmd\Cmd_ExecuteEngineMenu.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\Cmd\Cmd_ClearSvnTemplete.txt" />
-    <None Include="Assets\Editor\StrayFog\EditorResxTemplete\UIWindow\UIWindowEnumMapingTemplete.txt" />
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsScriptableObject.cs" />
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsSingle.cs" />
+    <Compile Include="Assets\StrayFog\Core\AbsClass\AbsSingleScriptableObject.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\AliasTooltipAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\FileExtAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\InvokeMethodAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\ReferPropertyDisplayInspectorAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\RegularExpressionAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Attribute\ValueRangeAttribute .cs" />
+    <Compile Include="Assets\StrayFog\Core\Enums\EnumMacroDefineScriptingDefineSymbols.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\BitConverterExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\CryptionExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\DateTimeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\HiloSwapExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\RAMUnitExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\ReflectionExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\StringExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\TypeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtend\UniqueExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\BitConverterExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\ColorExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\HiloSwapExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\RegularExpressionExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\StringExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\UIExtendEngine.cs" />
+    <Compile Include="Assets\StrayFog\Core\Guide\UIGuideRegister.cs" />
+    <Compile Include="Assets\StrayFog\Core\Interface\IAttachMonoBehaviourAnyWhere.cs" />
+    <Compile Include="Assets\StrayFog\Core\Interface\IRunningStartUpLevel.cs" />
+    <Compile Include="Assets\StrayFog\Core\Level\StartUpLevel.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\EngineSerializeExtend.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\DataReaderProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\DataWriterProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\EcmaScriptIdentifier.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\EcmaScriptWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataReaderProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IDataWriterProvider.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\IJsonSerializable.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDataReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDataWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonDeserializationException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonIgnoreAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonNameAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonReader.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonReaderSettings.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonSerializationException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonSpecifiedPropertyAttribute.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonToken.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonTypeCoercionException.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonWriter.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\JsonWriterSettings.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\TypeCoercionUtility.cs" />
+    <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\WriteDelegate_1.cs" />
+    <Compile Include="Assets\StrayFog\Core\SQLite\SQLiteHelper.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogApplication.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogAssembly.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogRegisterMonoBehaviour.cs" />
+    <Compile Include="Assets\StrayFog\Core\StrayFogSetting.cs" />
+    <Compile Include="Assets\StrayFog\Core\UIWindow\EnumUIWindow.cs" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -433,12 +400,6 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/Boo.Lang.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="StrayFogCore.csproj">
-      <Project>{5E0AF36A-CFFD-D41A-260B-A77323847A81}</Project>
-      <Name>StrayFogCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

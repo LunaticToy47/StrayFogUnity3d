@@ -311,9 +311,9 @@
       <Project>{6AA1889A-415C-1DE9-85B5-C84B4163B38E}</Project>
       <Name>EditorStrayFog</Name>
     </ProjectReference>
-    <ProjectReference Include="StrayFog.csproj">
-      <Project>{7804B737-8114-97F0-AF90-AB5E78C4A00B}</Project>
-      <Name>StrayFog</Name>
+    <ProjectReference Include="StrayFogCore.csproj">
+      <Project>{5E0AF36A-CFFD-D41A-260B-A77323847A81}</Project>
+      <Name>StrayFogCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
