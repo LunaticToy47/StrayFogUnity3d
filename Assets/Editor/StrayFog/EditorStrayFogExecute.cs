@@ -1449,7 +1449,7 @@ public sealed class EditorStrayFogExecute
                 {
                     foreach (Type t in types)
                     {
-                        if (t.IsSubTypeOf(absInheritType))
+                        if (t.IsTypeOrSubTypeOf(absInheritType) && t.IsClass && !t.IsInterface && !t.IsAbstract)
                         {
                             destType = t;
                             destCount++;
@@ -1466,6 +1466,7 @@ public sealed class EditorStrayFogExecute
                     if (!absCfg.Exists())
                     {
                         absCfg.CreateAsset();
+                        Debug.LogFormat("BuildProjectAssets=>【{0}】", absCfg.fileName);
                     }
                     break;
                 default:

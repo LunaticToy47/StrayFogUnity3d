@@ -17,8 +17,19 @@ public sealed class EditorStrayFogAssembly
     /// <returns>True:有,False:否</returns>
     public static bool IsExistsTypeInApplication(string _typeName)
     {
-        Assembly assembly = GetApplicationAssembly();
-        Type type = assembly.GetType(_typeName);
+        List<Assembly> assemblies = GetApplicationAssembly();
+        Type type = null;
+        if (assemblies != null && assemblies.Count > 0)
+        {
+            foreach (Assembly a in assemblies)
+            {
+                type = a.GetType(_typeName);
+                if (type != null)
+                {
+                    break;
+                }
+            }            
+        }
         return type != null;
     }
     #endregion
@@ -28,10 +39,23 @@ public sealed class EditorStrayFogAssembly
     /// 获得当前应用程序域运行的程序集
     /// </summary>
     /// <returns>程序集</returns>
-    public static Assembly GetApplicationAssembly()
+    public static List<Assembly> GetApplicationAssembly()
     {
-        string path = Path.GetFullPath("Library/ScriptAssemblies/Assembly-CSharp.dll");
-        return File.Exists(path) ? Assembly.LoadFrom(path) : null;
+        List<Assembly> assemblies = new List<Assembly>();
+        string[] files = Directory.GetFiles("Library/ScriptAssemblies", "*" + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext);
+        if (files != null && files.Length > 0)
+        {
+            string name = string.Empty;
+            foreach (string f in files)
+            {
+                name = Path.GetFileNameWithoutExtension(f);
+                if (!name.ToUpper().Contains("Editor".ToUpper()))
+                {
+                    assemblies.Add(Assembly.LoadFrom(f));
+                }
+            }
+        }
+        return assemblies;
     }
     #endregion
 
@@ -51,10 +75,23 @@ public sealed class EditorStrayFogAssembly
     /// 获得当前应用程序域运行的Editor程序集
     /// </summary>
     /// <returns>程序集</returns>
-    public static Assembly GetEditorApplicationAssembly()
+    public static List<Assembly> GetEditorApplicationAssembly()
     {
-        string path = Path.GetFullPath("Library/ScriptAssemblies/Assembly-CSharp-Editor.dll");
-        return File.Exists(path) ? Assembly.LoadFrom(path) : null;
+        List<Assembly> assemblies = new List<Assembly>();
+        string[] files = Directory.GetFiles("Library/ScriptAssemblies", "*" + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext);
+        if (files != null && files.Length > 0)
+        {
+            string name = string.Empty;
+            foreach (string f in files)
+            {
+                name = Path.GetFileNameWithoutExtension(f);
+                if (name.ToUpper().Contains("Editor".ToUpper()))
+                {
+                    assemblies.Add(Assembly.LoadFrom(f));
+                }
+            }
+        }
+        return assemblies;
     }
     #endregion
 
@@ -76,15 +113,23 @@ public sealed class EditorStrayFogAssembly
     /// <returns>类别组</returns>
     public static Type[] GetApplicationExportedTypes(Type _parentType)
     {
-        Type[] srcs = GetApplicationAssembly().GetExportedTypes();
+        List<Assembly> assemblies = GetApplicationAssembly();
         List<Type> dest = new List<Type>();
-        if (srcs != null && srcs.Length > 0)
+        if (assemblies != null && assemblies.Count > 0)
         {
-            for (int i = 0; i < srcs.Length; i++)
+            Type[] srcs = null;
+            foreach (Assembly a in assemblies)
             {
-                if (srcs[i].IsTypeOrSubTypeOf(_parentType))
+                srcs = a.GetExportedTypes();
+                if (srcs != null && srcs.Length > 0)
                 {
-                    dest.Add(srcs[i]);
+                    for (int i = 0; i < srcs.Length; i++)
+                    {
+                        if (srcs[i].IsTypeOrSubTypeOf(_parentType))
+                        {
+                            dest.Add(srcs[i]);
+                        }
+                    }
                 }
             }
         }
@@ -99,18 +144,26 @@ public sealed class EditorStrayFogAssembly
     /// <returns>类别组</returns>
     public static Type[] GetEditorApplicationExportedTypes(Type _parentType)
     {
-        Type[] srcs = GetEditorApplicationAssembly().GetExportedTypes();
+        List<Assembly> assemblies = GetEditorApplicationAssembly();
         List<Type> dest = new List<Type>();
-        if (srcs != null && srcs.Length > 0)
+        if (assemblies != null && assemblies.Count > 0)
         {
-            for (int i = 0; i < srcs.Length; i++)
+            Type[] srcs = null;
+            foreach (Assembly a in assemblies)
             {
-                if (srcs[i].IsTypeOrSubTypeOf(_parentType))
+                srcs = a.GetExportedTypes();
+                if (srcs != null && srcs.Length > 0)
                 {
-                    dest.Add(srcs[i]);
+                    for (int i = 0; i < srcs.Length; i++)
+                    {
+                        if (srcs[i].IsTypeOrSubTypeOf(_parentType))
+                        {
+                            dest.Add(srcs[i]);
+                        }
+                    }
                 }
             }
-        }
+        }       
         return dest.ToArray();
     }
     #endregion
@@ -250,7 +303,7 @@ public sealed class EditorStrayFogAssembly
                 new string[1] { EditorStrayFogApplication.TryRelativeToProject("") }, "",
                 false, (n) => { return n.ext.Equals(enFileExt.Dll.GetAttribute<FileExtAttribute>().ext); });
         List<Assembly> assemblies = new List<Assembly>();
-        Assembly tempAssembly = null;
+        List<Assembly> tempAssemblies = null;
         if (dlls != null && dlls.Count > 0)
         {
             foreach (EditorSelectionAsset d in dlls)
@@ -265,15 +318,15 @@ public sealed class EditorStrayFogAssembly
                 }
             }
         }
-        tempAssembly = GetApplicationAssembly();
-        if (tempAssembly != null)
+        tempAssemblies = GetApplicationAssembly();
+        if (tempAssemblies != null)
         {
-            assemblies.Add(tempAssembly);
+            assemblies.AddRange(tempAssemblies);
         }
-        tempAssembly = GetEditorApplicationAssembly();
-        if (tempAssembly != null)
+        tempAssemblies = GetEditorApplicationAssembly();
+        if (tempAssemblies != null)
         {
-            assemblies.Add(tempAssembly);
+            assemblies.AddRange(tempAssemblies);
         }
         assemblies.Add(GetUnityEngineAssembly());
         assemblies.Add(GetUnityEditorAssembly());

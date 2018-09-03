@@ -12,7 +12,7 @@ public delegate void RegisterGuideEventHandle(UIGuideRegister _guide);
 /// <summary>
 /// 引擎应用程序
 /// </summary>
-public abstract class StrayFogApplication : AbsSingleScriptableObject<StrayFogApplication>
+public class StrayFogApplication : AbsSingleScriptableObject<StrayFogApplication>
 {
     #region Db库
     /// <summary>
