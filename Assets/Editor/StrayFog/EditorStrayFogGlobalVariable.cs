@@ -8,7 +8,7 @@ public sealed class EditorStrayFogGlobalVariable
     /// <summary>
     /// UI窗口视图脚本目录
     /// </summary>
-    public static readonly string uiWindowViewScriptFolder = enEditorApplicationFolder.Game_Running_UIWindow.GetAttribute<EditorApplicationFolderAttribute>().path;
+    public static readonly string uiWindowViewScriptFolder = enEditorApplicationFolder.Game_UIWindow.GetAttribute<EditorApplicationFolderAttribute>().path;
     /// <summary>
     /// UI窗口视图脚本
     /// </summary>

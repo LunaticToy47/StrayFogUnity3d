@@ -1,5 +1,4 @@
-﻿using Assets.Editor.StrayFog.EditorResxTemplete;
-using System.IO;
+﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
 /// <summary>

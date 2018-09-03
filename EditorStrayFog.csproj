@@ -93,7 +93,7 @@
     <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorSQLiteMenuItem.cs" />
     <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EditorUIWindowMenuItem.cs" />
     <Compile Include="Assets\Editor\StrayFog\EditorMenuItem\EnumEditorMenuItemPriority.cs" />
-    <Compile Include="Assets\Editor\StrayFog\EditorResxTemplete\EditorResxTemplete.Designer.cs" />
+    <Compile Include="Assets\Editor\StrayFog\EditorResxTemplete\EditorResxTemplete.cs" />
     <Compile Include="Assets\Editor\StrayFog\EditorSelection\EditorSelectionAsset.cs" />
     <Compile Include="Assets\Editor\StrayFog\EditorStrayFogApplication.cs" />
     <Compile Include="Assets\Editor\StrayFog\EditorStrayFogAssembly.cs" />
@@ -439,9 +439,6 @@
       <Project>{7804B737-8114-97F0-AF90-AB5E78C4A00B}</Project>
       <Name>StrayFog</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Editor\StrayFog\EditorResxTemplete\EditorResxTemplete.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -1,5 +1,4 @@
-﻿using Assets.Editor.StrayFog.EditorResxTemplete;
-using Mono.Data.Sqlite;
+﻿using Mono.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -333,7 +332,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildSQLiteEntity()
     {
-        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Running_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
+        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
         string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
         string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
 
@@ -704,7 +703,7 @@ public sealed class EditorStrayFogExecute
             #endregion
 
             #region 生成枚举
-            EditorTextAssetConfig cfgEnumScript = new EditorTextAssetConfig("", enEditorApplicationFolder.Game_Running_AssetDiskMaping.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
+            EditorTextAssetConfig cfgEnumScript = new EditorTextAssetConfig("", enEditorApplicationFolder.Game_AssetDiskMaping.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
             string assetDiskMapingScriptTemplete = EditorResxTemplete.AssetDiskMapingEnumTemplete;
 
             string enumMark = "#Enums#";
@@ -1390,7 +1389,7 @@ public sealed class EditorStrayFogExecute
 
         editorFMSMachineMapingResult = EditorStrayFogUtility.regex.ClearRepeatCRLF(editorFMSMachineMapingResult);
 
-        EditorTextAssetConfig cfgScript = new EditorTextAssetConfig("FMSMachineMaping", enEditorApplicationFolder.Game_Running_FMS.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
+        EditorTextAssetConfig cfgScript = new EditorTextAssetConfig("FMSMachineMaping", enEditorApplicationFolder.Game_FMS.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
 
         cfgScript.SetText(editorFMSMachineMapingResult);
         cfgScript.CreateAsset();

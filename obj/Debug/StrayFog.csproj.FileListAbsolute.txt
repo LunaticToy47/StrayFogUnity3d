@@ -186,7 +186,6 @@ D:\StrayFogXLua\StrayFogUnity3d\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
 D:\StrayFogXLua\StrayFogUnity3d\Temp\bin\Debug\UnityEditor.VR.xml
 D:\StrayFogXLua\StrayFogUnity3d\Temp\bin\Debug\UnityEngine.ParticlesLegacyModule.xml
 D:\StrayFogXLua\StrayFogUnity3d\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.xml
-D:\StrayFogXLua\StrayFogUnity3d\obj\Debug\StrayFog.csprojAssemblyReference.cache
 D:\StrayFogXLua\StrayFogUnity3d\obj\Debug\StrayFog.csproj.CoreCompileInputs.cache
 D:\StrayFogXLua\StrayFogUnity3d\obj\Debug\StrayFog.csproj.CopyComplete
 D:\StrayFogXLua\StrayFogUnity3d\obj\Debug\StrayFog.dll

@@ -1,5 +1,4 @@
-﻿using Assets.Editor.StrayFog.EditorResxTemplete;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
