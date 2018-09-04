@@ -1,0 +1,11 @@
+{
+    "name": "ZGame",
+    "references": [
+        "StrayFogCore",
+        "StrayFogRunning"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

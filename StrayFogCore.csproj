@@ -88,8 +88,6 @@
     <Compile Include="Assets\StrayFog\Core\GlobalExtendEngine\UIExtendEngine.cs" />
     <Compile Include="Assets\StrayFog\Core\Guide\UIGuideRegister.cs" />
     <Compile Include="Assets\StrayFog\Core\Interface\IAttachMonoBehaviourAnyWhere.cs" />
-    <Compile Include="Assets\StrayFog\Core\Interface\IRunningStartUpLevel.cs" />
-    <Compile Include="Assets\StrayFog\Core\Level\StartUpLevel.cs" />
     <Compile Include="Assets\StrayFog\Core\Serialize\EngineSerializeExtend.cs" />
     <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\DataReaderProvider.cs" />
     <Compile Include="Assets\StrayFog\Core\Serialize\Json\Json\DataWriterProvider.cs" />

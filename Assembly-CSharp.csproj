@@ -61,7 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\NewBehaviourScript.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/StrayFogXLua/StrayFogUnity3d/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
@@ -311,9 +310,17 @@
       <Project>{6AA1889A-415C-1DE9-85B5-C84B4163B38E}</Project>
       <Name>EditorStrayFog</Name>
     </ProjectReference>
+    <ProjectReference Include="StrayFogRunning.csproj">
+      <Project>{F1CD2B3C-037F-1A41-A76D-79343935D540}</Project>
+      <Name>StrayFogRunning</Name>
+    </ProjectReference>
     <ProjectReference Include="StrayFogCore.csproj">
       <Project>{5E0AF36A-CFFD-D41A-260B-A77323847A81}</Project>
       <Name>StrayFogCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="ZGame.csproj">
+      <Project>{4E9B6633-B85D-D77A-D110-09863B5FCB6B}</Project>
+      <Name>ZGame</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,20 +1,16 @@
-﻿using StrayFogRunning;
-using System.Collections.Generic;
-namespace StrayFogRunning
+﻿using System.Collections.Generic;
+/// <summary>
+/// #EntityName#实体
+/// </summary>
+public partial class #ClassName#: AbsSQLiteEntity
 {
 	/// <summary>
-	/// #EntityName#实体
+    /// PK键组
+    /// </summary>
+    public override object[] pks { get { return new List<object>() { #PK##Name#,#PK#}.ToArray(); } }
+	#Properties#
+	/// <summary>
+	/// #Name#
 	/// </summary>
-	public partial class #ClassName#: AbsSQLiteEntity
-	{
-		/// <summary>
-        /// PK键组
-        /// </summary>
-        public override object[] pks { get { return new List<object>() { #PK##Name#,#PK#}.ToArray(); } }
-		#Properties#
-		/// <summary>
-		/// #Name#
-		/// </summary>
-		public #Type# #Name# { get; private set; }#Properties#
-	}
+	public #Type# #Name# { get; private set; }#Properties#
 }

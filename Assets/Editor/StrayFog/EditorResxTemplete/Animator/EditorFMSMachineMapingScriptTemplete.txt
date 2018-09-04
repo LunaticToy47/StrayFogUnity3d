@@ -1,174 +1,170 @@
-﻿using StrayFogPlugins;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-namespace StrayFogRunning
-{
+/// <summary>
+/// FMS状态机映射
+/// </summary>
+public sealed class FMSMachineMaping
+{	
+	#region MachineForLayer映射
 	/// <summary>
-	/// FMS状态机映射
+	/// MachineForLayer映射
 	/// </summary>
-	public sealed class FMSMachineMaping
-	{	
-		#region MachineForLayer映射
-		/// <summary>
-		/// MachineForLayer映射
-		/// </summary>
-		readonly static Dictionary<int, List<int>> mMachineForLayerMaping = new Dictionary<int, List<int>>() {#MACHINEFORLAYER#
-			{ (int)enFMSMachine.#MACHINE#,new List<int> { #LISTLAYER##LAYER#,#LISTLAYER# } },#MACHINEFORLAYER#
-		};
-		#endregion
+	readonly static Dictionary<int, List<int>> mMachineForLayerMaping = new Dictionary<int, List<int>>() {#MACHINEFORLAYER#
+		{ (int)enFMSMachine.#MACHINE#,new List<int> { #LISTLAYER##LAYER#,#LISTLAYER# } },#MACHINEFORLAYER#
+	};
+	#endregion
 
-		#region LayerForMachine映射
-		/// <summary>
-		/// LayerForMachine映射
-		/// </summary>
-		readonly static Dictionary<int, List<int>> mLayerForMachineMaping = new Dictionary<int, List<int>>() {#LAYERFORMACHINE#
-			{ #LAYER#,new List<int> { #LISTMACHINE#(int)enFMSMachine.#MACHINE#,#LISTMACHINE# } },#LAYERFORMACHINE#
-		};
-		#endregion
+	#region LayerForMachine映射
+	/// <summary>
+	/// LayerForMachine映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mLayerForMachineMaping = new Dictionary<int, List<int>>() {#LAYERFORMACHINE#
+		{ #LAYER#,new List<int> { #LISTMACHINE#(int)enFMSMachine.#MACHINE#,#LISTMACHINE# } },#LAYERFORMACHINE#
+	};
+	#endregion
 
-		#region StateForLayer映射
-		/// <summary>
-		/// StateForLayer映射
-		/// </summary>
-		readonly static Dictionary<int, List<int>> mStateForLayerMaping = new Dictionary<int, List<int>>() {#STATEFORLAYER#
-			{ (int)enFMSState.#STATE#,new List<int> { #LISTLAYER##LAYER#,#LISTLAYER# } },#STATEFORLAYER#
-		};
-		#endregion
+	#region StateForLayer映射
+	/// <summary>
+	/// StateForLayer映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mStateForLayerMaping = new Dictionary<int, List<int>>() {#STATEFORLAYER#
+		{ (int)enFMSState.#STATE#,new List<int> { #LISTLAYER##LAYER#,#LISTLAYER# } },#STATEFORLAYER#
+	};
+	#endregion
 
-		#region LayerForState映射
-		/// <summary>
-		/// LayerForState映射
-		/// </summary>
-		readonly static Dictionary<int, List<int>> mLayerForStateMaping = new Dictionary<int, List<int>>() {#LAYERFORSTATE#
-			{ #LAYER#,new List<int> { #LISTSTATE#(int)enFMSState.#STATE#,#LISTSTATE# } },#LAYERFORSTATE#
-		};
-		#endregion
+	#region LayerForState映射
+	/// <summary>
+	/// LayerForState映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mLayerForStateMaping = new Dictionary<int, List<int>>() {#LAYERFORSTATE#
+		{ #LAYER#,new List<int> { #LISTSTATE#(int)enFMSState.#STATE#,#LISTSTATE# } },#LAYERFORSTATE#
+	};
+	#endregion
 
-		#region StateForMachine映射
-		/// <summary>
-		/// StateForMachine映射
-		/// </summary>
-		readonly static Dictionary<int, List<int>> mStateForMachineMaping = new Dictionary<int, List<int>>() {#STATEFORMACHINE#
-			{ (int)enFMSState.#STATE#,new List<int> { #LISTMACHINE#(int)enFMSMachine.#MACHINE#,#LISTMACHINE#} },#STATEFORMACHINE#
-		};
-		#endregion
+	#region StateForMachine映射
+	/// <summary>
+	/// StateForMachine映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mStateForMachineMaping = new Dictionary<int, List<int>>() {#STATEFORMACHINE#
+		{ (int)enFMSState.#STATE#,new List<int> { #LISTMACHINE#(int)enFMSMachine.#MACHINE#,#LISTMACHINE#} },#STATEFORMACHINE#
+	};
+	#endregion
 
-		#region MachineForState映射
-		/// <summary>
-		/// MachineForState映射
-		/// </summary>
-		readonly static Dictionary<int, List<int>> mMachineForStateMaping = new Dictionary<int, List<int>>() {#MACHINEFORSTATE#
-			{ (int)enFMSMachine.#MACHINE#,new List<int> { #LISTSTATE#(int)enFMSState.#STATE#,#LISTSTATE#} },#MACHINEFORSTATE#
-		};
-		#endregion
+	#region MachineForState映射
+	/// <summary>
+	/// MachineForState映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mMachineForStateMaping = new Dictionary<int, List<int>>() {#MACHINEFORSTATE#
+		{ (int)enFMSMachine.#MACHINE#,new List<int> { #LISTSTATE#(int)enFMSState.#STATE#,#LISTSTATE#} },#MACHINEFORSTATE#
+	};
+	#endregion
 
-		#region IsMachine 是否是指定状态机
-		/// <summary>
-		/// 是否是指定状态机
-		/// </summary>
-		/// <param name="_animator">阿凡达</param>
-		/// <param name="_machineNameHash">状态机NameHash值</param>
-		/// <returns>true:是,false:否</returns>
-		public static bool IsMachine(Animator _animator, int _machineNameHash)
+	#region IsMachine 是否是指定状态机
+	/// <summary>
+	/// 是否是指定状态机
+	/// </summary>
+	/// <param name="_animator">阿凡达</param>
+	/// <param name="_machineNameHash">状态机NameHash值</param>
+	/// <returns>true:是,false:否</returns>
+	public static bool IsMachine(Animator _animator, int _machineNameHash)
+	{
+		bool result = false;
+		if (mMachineForLayerMaping.ContainsKey(_machineNameHash))
 		{
-			bool result = false;
-			if (mMachineForLayerMaping.ContainsKey(_machineNameHash))
+			if (mMachineForLayerMaping[_machineNameHash].Count > 0)
 			{
-				if (mMachineForLayerMaping[_machineNameHash].Count > 0)
+				AnimatorStateInfo info;
+				foreach (int layer in mMachineForLayerMaping[_machineNameHash])
 				{
-					AnimatorStateInfo info;
-					foreach (int layer in mMachineForLayerMaping[_machineNameHash])
+					info = _animator.GetCurrentAnimatorStateInfo(layer);
+					if (mStateForMachineMaping.ContainsKey(info.shortNameHash))
 					{
-						info = _animator.GetCurrentAnimatorStateInfo(layer);
-						if (mStateForMachineMaping.ContainsKey(info.shortNameHash))
+						foreach (int machineNameHash in mStateForMachineMaping[info.shortNameHash])
 						{
-							foreach (int machineNameHash in mStateForMachineMaping[info.shortNameHash])
+							result |= _machineNameHash == machineNameHash;
+							if (result)
 							{
-								result |= _machineNameHash == machineNameHash;
-								if (result)
-								{
-									break;
-								}
+								break;
 							}
 						}
-						if (result)
-						{
-							break;
-						}                    
 					}
-				}
-			}
-			return result;
-		}
-		#endregion
-
-		#region IsState 是否是指定状态
-		/// <summary>
-		/// 是否是指定状态
-		/// </summary>
-		/// <param name="_animator">阿凡达</param>
-		/// <param name="_stateNameHash">状态NameHash值</param>
-		/// <returns>true:是,false:否</returns>
-		public static bool IsState(Animator _animator,int _stateNameHash)
-		{
-			bool result = false;
-			if (mStateForLayerMaping.ContainsKey(_stateNameHash))
-			{
-				if (mStateForLayerMaping[_stateNameHash].Count > 0)
-				{
-					AnimatorStateInfo info;
-					foreach (int layer in mStateForLayerMaping[_stateNameHash])
+					if (result)
 					{
-						info = _animator.GetCurrentAnimatorStateInfo(layer);
-						result |= _stateNameHash == info.shortNameHash;
-						if (result)
-						{
-							break;
-						}
-					}
+						break;
+					}                    
 				}
 			}
-			return result;
 		}
-		#endregion
-	}
-	#region enFMSMachine
-	/// <summary>
-	/// 状态机
-	/// </summary>
-	public enum enFMSMachine
-	{#ENUMMACHINE#
-		/// <summary>
-		/// #MACHINEDESC#
-		/// </summary>
-		[AliasTooltip("#MACHINEDESC#")]
-		#MACHINE# = #VALUE#,#ENUMMACHINE#
+		return result;
 	}
 	#endregion
 
-	#region enFMSState
+	#region IsState 是否是指定状态
 	/// <summary>
-	/// 状态
+	/// 是否是指定状态
 	/// </summary>
-	public enum enFMSState
-	{#ENUMSTATE#
-		/// <summary>
-		/// #STATEDESC#
-		/// </summary>
-		[AliasTooltip("#STATEDESC#")]
-		#STATE# = #VALUE#,#ENUMSTATE#
-	}
-	#endregion
-	#region enFMSParameter
-	/// <summary>
-	/// FMS参数
-	/// </summary>
-	public enum enFMSParameter
-	{#ENUMPARAMETER#
-		/// <summary>
-		/// #NAME#
-		/// </summary>
-		#NAME# = #VALUE#,#ENUMPARAMETER#
+	/// <param name="_animator">阿凡达</param>
+	/// <param name="_stateNameHash">状态NameHash值</param>
+	/// <returns>true:是,false:否</returns>
+	public static bool IsState(Animator _animator,int _stateNameHash)
+	{
+		bool result = false;
+		if (mStateForLayerMaping.ContainsKey(_stateNameHash))
+		{
+			if (mStateForLayerMaping[_stateNameHash].Count > 0)
+			{
+				AnimatorStateInfo info;
+				foreach (int layer in mStateForLayerMaping[_stateNameHash])
+				{
+					info = _animator.GetCurrentAnimatorStateInfo(layer);
+					result |= _stateNameHash == info.shortNameHash;
+					if (result)
+					{
+						break;
+					}
+				}
+			}
+		}
+		return result;
 	}
 	#endregion
 }
+#region enFMSMachine
+/// <summary>
+/// 状态机
+/// </summary>
+public enum enFMSMachine
+{#ENUMMACHINE#
+	/// <summary>
+	/// #MACHINEDESC#
+	/// </summary>
+	[AliasTooltip("#MACHINEDESC#")]
+	#MACHINE# = #VALUE#,#ENUMMACHINE#
+}
+#endregion
+
+#region enFMSState
+/// <summary>
+/// 状态
+/// </summary>
+public enum enFMSState
+{#ENUMSTATE#
+	/// <summary>
+	/// #STATEDESC#
+	/// </summary>
+	[AliasTooltip("#STATEDESC#")]
+	#STATE# = #VALUE#,#ENUMSTATE#
+}
+#endregion
+#region enFMSParameter
+/// <summary>
+/// FMS参数
+/// </summary>
+public enum enFMSParameter
+{#ENUMPARAMETER#
+	/// <summary>
+	/// #NAME#
+	/// </summary>
+	#NAME# = #VALUE#,#ENUMPARAMETER#
+}
+#endregion

@@ -1,16 +1,12 @@
-﻿using StrayFogRunning;
-using System.Collections.Generic;
-namespace StrayFogRunning
+﻿using System.Collections.Generic;
+/// <summary>
+/// #EntityName#实体
+/// </summary>
+public partial class #ClassName#: AbsSQLiteDeterminantEntity
 {
+	#Row#
 	/// <summary>
-	/// #EntityName#实体
+	/// #Name#
 	/// </summary>
-	public partial class #ClassName#: AbsSQLiteDeterminantEntity
-	{
-		#Row#
-		/// <summary>
-		/// #Name#
-		/// </summary>
-		public #Type# #Name# { get; private set; }#Row#
-	}
+	public #Type# #Name# { get; private set; }#Row#
 }
