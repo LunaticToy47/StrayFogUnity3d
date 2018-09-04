@@ -380,7 +380,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
         }
         result = result.Replace(replaceTemplete, sbTemplete.ToString());
         result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
-        EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow", enEditorApplicationFolder.Game_UIWindow.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, result);
+        EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow", enEditorApplicationFolder.Game_Script_UIWindow.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, result);
         cfg.CreateAsset();
         Debug.Log(sbLog);
         EditorUtility.ClearProgressBar();

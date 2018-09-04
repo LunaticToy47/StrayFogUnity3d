@@ -14,10 +14,12 @@ public enum enEditorApplicationFolder
     /// EditorResxTemplete目录
     /// </summary>
     [EditorApplicationFolder("EditorResxTemplete目录", "Assets/Editor/StrayFog/EditorResxTemplete", "EditorResxTemplete目录")]
-    Editor_ResxTemplete,    
+    Editor_ResxTemplete,
     #endregion
 
     #region Game目录
+
+    #region Game
     /// <summary>
     /// 游戏Editor目录
     /// </summary>
@@ -28,36 +30,54 @@ public enum enEditorApplicationFolder
     /// </summary>
     [EditorApplicationFolder("游戏目录", "Assets/Game", "游戏根目录")]
     Game,
+    #endregion
+
+    #region Assets
+    /// <summary>
+    /// 游戏Assets目录
+    /// </summary>
+    [EditorApplicationFolder("游戏Assets目录", "Assets/Game/AssetBundles/Assets", "游戏Assets目录")]
+    Game_AssetBundles_Assets,
+    #endregion
+
+    #region SQLite
+    /// <summary>
+    /// 游戏运行时SQLite脚本目录
+    /// </summary>
+    [EditorApplicationFolder("游戏运行时SQLite脚本目录", "Assets/Game/Script/SQLite", "游戏运行时SQLite脚本目录")]
+    Game_Script_SQLite,
+    #endregion
+
+    #region FMS
+    /// <summary>
+    /// 游戏运行时FMS脚本目录
+    /// </summary>
+    [EditorApplicationFolder("游戏运行时FMS脚本目录", "Assets/Game/Script/FMS", "游戏运行时FMS脚本目录")]
+    Game_Script_FMS,
+    #endregion
+
+    #region AssetDiskMaping
+    /// <summary>
+    /// 游戏运行时AssetDiskMaping脚本目录
+    /// </summary>
+    [EditorApplicationFolder("游戏运行时AssetDiskMaping脚本目录", "Assets/Game/Script/AssetDiskMaping", "游戏运行时AssetDiskMaping脚本目录")]
+    Game_Script_AssetDiskMaping,
+    #endregion
+
+    #region UIWindow
     /// <summary>
     /// 游戏UIWindow目录
     /// </summary>
     [EditorApplicationFolder("游戏UIWindow目录", "Assets/Game/AssetBundles/UIWindow", "游戏UIWindow目录")]
     Game_AssetBundles_UIWindow,
+
     /// <summary>
-    /// 游戏Assets目录
+    /// 游戏运行时UIWindow脚本目录
     /// </summary>
-    [EditorApplicationFolder("游戏UIWindow目录", "Assets/Game/AssetBundles/Assets", "游戏Assets目录")]
-    Game_AssetBundles_Assets,    
-    /// <summary>
-    /// 游戏运行时SQLite目录
-    /// </summary>
-    [EditorApplicationFolder("游戏运行时SQLite目录", "Assets/Game/SQLite", "游戏运行时SQLite目录")]
-    Game_SQLite,
-    /// <summary>
-    /// 游戏运行时FMS目录
-    /// </summary>
-    [EditorApplicationFolder("游戏运行时FMS目录", "Assets/Game/FMS", "游戏运行时FMS目录")]
-    Game_FMS,
-    /// <summary>
-    /// 游戏运行时AssetDiskMaping目录
-    /// </summary>
-    [EditorApplicationFolder("游戏运行时AssetDiskMaping目录", "Assets/Game/AssetDiskMaping", "游戏运行时AssetDiskMaping目录")]
-    Game_AssetDiskMaping,
-    /// <summary>
-    /// 游戏运行时UIWindow目录
-    /// </summary>
-    [EditorApplicationFolder("游戏运行时UIWindow目录", "Assets/Game/UIWindow", "游戏运行时UIWindow目录")]
-    Game_UIWindow,
+    [EditorApplicationFolder("游戏运行时UIWindow脚本目录", "Assets/Game/Script/UIWindow", "游戏运行时UIWindow脚本目录")]
+    Game_Script_UIWindow,
+    #endregion
+
     #endregion
 
     #region Project目录

@@ -332,7 +332,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildSQLiteEntity()
     {
-        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
+        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
         string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
         string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
 
@@ -703,7 +703,7 @@ public sealed class EditorStrayFogExecute
             #endregion
 
             #region 生成枚举
-            EditorTextAssetConfig cfgEnumScript = new EditorTextAssetConfig("", enEditorApplicationFolder.Game_AssetDiskMaping.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
+            EditorTextAssetConfig cfgEnumScript = new EditorTextAssetConfig("", enEditorApplicationFolder.Game_Script_AssetDiskMaping.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
             string assetDiskMapingScriptTemplete = EditorResxTemplete.AssetDiskMapingEnumTemplete;
 
             string enumMark = "#Enums#";
@@ -1389,7 +1389,7 @@ public sealed class EditorStrayFogExecute
 
         editorFMSMachineMapingResult = EditorStrayFogUtility.regex.ClearRepeatCRLF(editorFMSMachineMapingResult);
 
-        EditorTextAssetConfig cfgScript = new EditorTextAssetConfig("FMSMachineMaping", enEditorApplicationFolder.Game_FMS.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
+        EditorTextAssetConfig cfgScript = new EditorTextAssetConfig("FMSMachineMaping", enEditorApplicationFolder.Game_Script_FMS.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
 
         cfgScript.SetText(editorFMSMachineMapingResult);
         cfgScript.CreateAsset();
