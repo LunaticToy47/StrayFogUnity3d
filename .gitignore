@@ -1929,3 +1929,8 @@ Assembly-CSharp.csproj
 /Game.csproj
 /StrayFogRunning.csproj
 /ZGame.csproj
+/Library/ScriptAssemblies
+/obj/Debug
+/EditorStrayFog.csproj
+/StrayFogCore.csproj
+/StrayFogUnity3d.sln
