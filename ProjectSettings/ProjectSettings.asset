@@ -123,7 +123,7 @@ PlayerSettings:
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
-  xboxOneDisableKinectGpuReservation: 0
+  xboxOneDisableKinectGpuReservation: 1
   xboxOneEnable7thCore: 0
   vrSettings:
     cardboard:
@@ -631,7 +631,21 @@ PlayerSettings:
   XboxOneLanguage:
   - enus
   XboxOneCapability: []
-  XboxOneGameRating: {}
+  XboxOneGameRating:
+    CERO (Japan): 0
+    COB-AU (Australia): 0
+    CSRR (Taiwan): 0
+    DJCTQ (Brazil): 0
+    ESRB (US): 0
+    FPB (South Africa): 0
+    GRB (South Korea): 0
+    MDA (Singapore): 0
+    Microsoft: 0
+    OFLC-NZ (New Zealand): 0
+    PCBP (Russia): 0
+    PEGI (Europe): 0
+    PEGI (Portugal): 0
+    USK (Germany): 0
   XboxOneIsContentPackage: 0
   XboxOneEnableGPUVariability: 0
   XboxOneSockets: {}

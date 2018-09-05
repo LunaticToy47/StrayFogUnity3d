@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42acd2cd086d9354ea01e839173c451a, type: 3}
+  m_Script: {fileID: 11500000, guid: dc53b0f408ccd9a43813fdfb35c08854, type: 3}
   m_Name: StrayFogApplication
   m_EditorClassIdentifier: 
   invoke: 

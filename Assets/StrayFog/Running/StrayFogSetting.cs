@@ -52,7 +52,7 @@ public class StrayFogSetting : AbsSingleScriptableObject<StrayFogSetting>
         "samsungtv";
 #elif UNITY_XBOXONE
         //#define directive for executing Xbox One code.
-        "xboxone	";
+        "xboxone";
 #elif UNITY_TIZEN
         //#define directive for the Tizen platform.
         "tizen";
