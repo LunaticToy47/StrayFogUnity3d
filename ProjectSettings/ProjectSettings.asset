@@ -571,13 +571,15 @@ PlayerSettings:
   scriptingDefineSymbols:
     21: UNITY_XBOXONE_DEVELOPMENT_BUILD
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    XboxOne: 0
   il2cppCompilerConfiguration: {}
   incrementalIl2cppBuild: {}
   allowUnsafeCode: 0
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 0
-  apiCompatibilityLevelPerPlatform: {}
+  apiCompatibilityLevelPerPlatform:
+    XboxOne: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Template_3D
