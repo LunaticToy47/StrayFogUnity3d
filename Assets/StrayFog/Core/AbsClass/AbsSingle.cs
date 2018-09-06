@@ -3,8 +3,7 @@ using System.Runtime.CompilerServices;
 /// <summary>
 /// 单例MonoBehaviour组件
 /// </summary>
-public abstract class AbsSingle<T>
-    where T : class
+public abstract class AbsSingle
 {
     #region AbsSingle 构造函数
     /// <summary>
@@ -15,25 +14,23 @@ public abstract class AbsSingle<T>
     /// <summary>
     /// 当前实例
     /// </summary>
-    static T mCurrent;
+    static AbsSingle mCurrent;
     #endregion
 
     #region current 单例
     /// <summary>
     /// 单例
     /// </summary>
-    public static T current
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public static T current<T>()
+        where T: AbsSingle
     {
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        get
+        if (mCurrent == null)
         {
-            if (mCurrent == null)
-            {
-                mCurrent = Activator.CreateInstance<T>();
-                (mCurrent as AbsSingle<T>).OnAfterConstructor();
-            }
-            return mCurrent;
+            mCurrent = Activator.CreateInstance<T>();
+            mCurrent.OnAfterConstructor();
         }
+        return (T)mCurrent;
     }
     #endregion
 

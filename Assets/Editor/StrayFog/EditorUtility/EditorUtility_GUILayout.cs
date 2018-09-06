@@ -8,7 +8,7 @@ using UnityEngine;
 /// <summary>
 /// GUILayout工具
 /// </summary>
-public class EditorUtility_GUILayout : AbsSingle<EditorUtility_GUILayout>
+public class EditorUtility_GUILayout : AbsSingle
 {
     #region SerializedProperty 相关
     ///// <summary>

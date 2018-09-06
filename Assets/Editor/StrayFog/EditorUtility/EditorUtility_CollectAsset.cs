@@ -46,7 +46,7 @@ public enum enEditorAssetFilterClassify
 /// <summary>
 /// 资源收集
 /// </summary>
-public class EditorUtility_CollectAsset : AbsSingle<EditorUtility_CollectAsset>
+public class EditorUtility_CollectAsset : AbsSingle
 {
     #region CollectAsset 收集资源【EditorSelectionAsset重载】
     /// <summary>

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// AssetBundleName工具
 /// </summary>
-public class EditorUtility_AssetBundleName : AbsSingle<EditorUtility_AssetBundleName>
+public class EditorUtility_AssetBundleName : AbsSingle
 {
     /// <summary>
     /// 非法Unity资源名称

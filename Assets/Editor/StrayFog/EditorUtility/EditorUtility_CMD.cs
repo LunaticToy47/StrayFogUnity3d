@@ -8,7 +8,7 @@ using UnityEngine;
 /// <summary>
 /// CMD工具
 /// </summary>
-public sealed class EditorUtility_CMD : AbsSingle<EditorUtility_CMD>
+public sealed class EditorUtility_CMD : AbsSingle
 {
     #region ExcuteFile 执行文件
     /// <summary>
