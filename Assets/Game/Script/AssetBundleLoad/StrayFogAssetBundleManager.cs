@@ -22,7 +22,7 @@ public delegate void AssetErrorCallbackEventHandle(View_AssetDiskMaping _args, s
 /// <summary>
 /// 资源管理器
 /// </summary>
-public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour<StrayFogAssetBundleManager>
+public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
 {
     #region OnAfterConstructor
     /// <summary>
@@ -35,9 +35,9 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour<StrayFog
     protected override void OnAfterConstructor()
     {
         #region 加载AssetBundleManifest
-        if (File.Exists(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().manifestPath))
+        if (File.Exists(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().manifestPath))
         {
-            AssetBundle ab = AssetBundle.LoadFromFile(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().manifestPath);
+            AssetBundle ab = AssetBundle.LoadFromFile(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().manifestPath);
             if (ab != null)
             {
                 mAssetBundleManifest = ab.LoadAsset<AssetBundleManifest>(typeof(AssetBundleManifest).Name);
@@ -45,9 +45,9 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour<StrayFog
                 ab = null;
             }
         }
-        else if (!SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
+        else if (!StrayFogUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
         {
-            Debug.LogError("Can not find 【AssetBundleManifest】=>" + SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().manifestPath);
+            Debug.LogError("Can not find 【AssetBundleManifest】=>" + StrayFogUtility.SingleScriptableObject<StrayFogSetting>().manifestPath);
         }
         #endregion
         base.OnAfterConstructor();
@@ -103,7 +103,7 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour<StrayFog
     void OnGetKey(string _assetBundleName, out int _assetId, out string _assetPath)
     {
         _assetId = _assetBundleName.UniqueHashCode();
-        _assetPath = Path.Combine(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
+        _assetPath = Path.Combine(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
     }
     #endregion
 

@@ -109,7 +109,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// </summary>
     public void CloseWindow()
     {
-        StrayFogUIWindowManager.current.CloseWindow(config.id);
+        StrayFogUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().CloseWindow(config.id);
     }
     #endregion
 }

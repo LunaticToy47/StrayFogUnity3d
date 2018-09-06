@@ -21,17 +21,17 @@ public sealed class StrayFogAssembly
         if (mDynamicAssemblyArray == null)
         {
             mDynamicAssemblyArray = new List<Assembly>();
-            SqliteDataReader reader = SingleObjectUtility.SingleScriptableObject<StrayFogApplication>().sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
+            SqliteDataReader reader = StrayFogUtility.SingleScriptableObject<StrayFogApplication>().sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
             string path = string.Empty;
             while (reader.Read())
             {
-                if (SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
+                if (StrayFogUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
                 {
                     path = reader.GetString(0).Replace(@"\", "/");
                 }
                 else
                 {
-                    path = Path.Combine(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, reader.GetString(1)).Replace(@"\", "/");
+                    path = Path.Combine(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, reader.GetString(1)).Replace(@"\", "/");
                 }
                 if (File.Exists(path))
                 {

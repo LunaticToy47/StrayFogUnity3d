@@ -2,7 +2,6 @@
 /// <summary>
 /// ScriptableObject单例
 /// </summary>
-/// <typeparam name="T"></typeparam>
 public abstract class AbsSingleScriptableObject : AbsScriptableObject
 {
     #region 单例

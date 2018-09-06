@@ -92,5 +92,44 @@ public sealed class StrayFogUtility
         return mProfilerMemorySb.ToString();
     }
     #endregion
+
+    #region SingleMonoBehaviour 单例AbsSingleMonoBehaviour对象扩展
+    /// <summary>
+    /// 单例AbsSingleMonoBehaviour对象扩展
+    /// </summary>
+    /// <typeparam name="T">对象类型</typeparam>
+    /// <returns>对象</returns>
+    public static T SingleMonoBehaviour<T>()
+        where T : AbsSingleMonoBehaviour
+    {
+        return AbsSingleMonoBehaviour.current<T>();
+    }
+    #endregion
+
+    #region Single 单例AbsSingle对象扩展
+    /// <summary>
+    /// 单例AbsSingle对象扩展
+    /// </summary>
+    /// <typeparam name="T">对象类型</typeparam>
+    /// <returns>对象</returns>
+    public static T Single<T>()
+        where T : AbsSingle
+    {
+        return AbsSingle.current<T>();
+    }
+    #endregion
+
+    #region SingleScriptableObject 单例AbsSingleScriptableObject对象扩展
+    /// <summary>
+    /// 单例AbsSingleScriptableObject对象扩展
+    /// </summary>
+    /// <typeparam name="T">对象类型</typeparam>
+    /// <returns>对象</returns>
+    public static T SingleScriptableObject<T>()
+        where T : AbsSingleScriptableObject
+    {
+        return AbsSingleScriptableObject.current<T>();
+    }
+    #endregion
 }
 

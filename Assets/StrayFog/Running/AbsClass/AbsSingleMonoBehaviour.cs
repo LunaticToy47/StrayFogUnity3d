@@ -3,9 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 单例MonoBehaviour组件
 /// </summary>
-/// <typeparam name="T">组件类型</typeparam>
-public abstract class AbsSingleMonoBehaviour<T> : AbsMonoBehaviour
-where T : AbsMonoBehaviour
+public abstract class AbsSingleMonoBehaviour : AbsMonoBehaviour
 {
     #region 构造函数
     /// <summary>
@@ -16,28 +14,26 @@ where T : AbsMonoBehaviour
     /// <summary>
     /// 当前实例
     /// </summary>
-    static T msCurrent;
+    static AbsSingleMonoBehaviour msCurrent;
     #endregion
 
     #region 单例
     /// <summary>
     /// 单例
     /// </summary>    
-    public static T current
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public static T current<T>()
+        where T : AbsSingleMonoBehaviour
     {
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        get
+        if (msCurrent == null)
         {
-            if (msCurrent == null)
-            {
-                GameObject go = new GameObject(typeof(T).FullName);
-                msCurrent = go.AddComponent<T>();
-                DontDestroyOnLoad(msCurrent.gameObject);
-                msCurrent.gameObject.hideFlags = HideFlags.DontSave | HideFlags.NotEditable;
-                (msCurrent as AbsSingleMonoBehaviour<T>).OnAfterConstructor();
-            }
-            return msCurrent;
+            GameObject go = new GameObject(typeof(T).FullName);
+            msCurrent = go.AddComponent<T>();
+            DontDestroyOnLoad(msCurrent.gameObject);
+            msCurrent.gameObject.hideFlags = HideFlags.DontSave | HideFlags.NotEditable;
+            msCurrent.OnAfterConstructor();
         }
+        return (T)msCurrent;
     }
     #endregion
 

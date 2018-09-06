@@ -2,7 +2,7 @@
 /// <summary>
 /// 场景管理
 /// </summary>
-public class StrayFogSceneManager : AbsSingleMonoBehaviour<StrayFogSceneManager>
+public class StrayFogSceneManager : AbsSingleMonoBehaviour
 {
     /// <summary>
     /// 加载场景

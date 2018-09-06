@@ -22,7 +22,7 @@ public class StrayFogApplication : AbsSingleScriptableObject
     /// <summary>
     /// SQL帮助类
     /// </summary>
-    public SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().dbConnectionString); } return mSqlHelper; } }
+    public SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().dbConnectionString); } return mSqlHelper; } }
     /// <summary>
     /// 关闭数据库
     /// </summary>

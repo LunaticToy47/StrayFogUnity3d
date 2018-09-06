@@ -21,7 +21,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 引导管理器
 /// </summary>
-public class StrayFogGuideManager : AbsSingleMonoBehaviour<StrayFogGuideManager>
+public class StrayFogGuideManager : AbsSingleMonoBehaviour
 {
     #region OnIsLevel 是否是指定关卡
     /// <summary>
@@ -67,7 +67,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour<StrayFogGuideManager>
     protected override void OnAfterConstructor()
     {
         #region 初始化引导窗口
-        List<View_UIWindowSetting> guides = StrayFogUIWindowManager.current.GetWindowSettings((w) => { return w.isGuideWindow; });
+        List<View_UIWindowSetting> guides = StrayFogUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().GetWindowSettings((w) => { return w.isGuideWindow; });
         if (guides != null && guides.Count > 0)
         {
             List<int> ids = new List<int>();
@@ -78,7 +78,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour<StrayFogGuideManager>
                     ids.Add(w.id);
                 }
             }
-            StrayFogUIWindowManager.current.OpenWindow<GuideWindow>(ids.ToArray(), (sets, pars) =>
+            StrayFogUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().OpenWindow<GuideWindow>(ids.ToArray(), (sets, pars) =>
             {
                 mGuideWindow = sets[0];
                 mGuideWindow.SetActiveImmediate(false);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 运行时管理器
 /// </summary>
-public class StrayFogGameManager : AbsSingleMonoBehaviour<StrayFogGameManager>
+public class StrayFogGameManager : AbsSingleMonoBehaviour
 {
     #region Initialization 初始化
     /// <summary>
@@ -21,11 +21,11 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour<StrayFogGameManager>
             m_isInitialized = true;
             List<Table_GameSetting> settings = SQLiteEntityHelper.Select<Table_GameSetting>();
             runningSetting = settings[0];
-            SingleObjectUtility.SingleScriptableObject<StrayFogApplication>().OnRegisterGuide += Current_OnRegisterGuide;
-            StrayFogGuideManager.current.OnIsLevel += Current_OnIsLevel;
-            StrayFogGuideManager.current.OnWindowIsOpened += Current_OnWindowIsOpened;
-            StrayFogGuideManager.current.OnTriggerFinished += Current_OnTriggerFinished;
-            StrayFogGuideManager.current.TriggerCheck();
+            StrayFogUtility.SingleScriptableObject<StrayFogApplication>().OnRegisterGuide += Current_OnRegisterGuide;
+            StrayFogUtility.SingleMonoBehaviour<StrayFogGuideManager>().OnIsLevel += Current_OnIsLevel;
+            StrayFogUtility.SingleMonoBehaviour<StrayFogGuideManager>().OnWindowIsOpened += Current_OnWindowIsOpened;
+            StrayFogUtility.SingleMonoBehaviour<StrayFogGuideManager>().OnTriggerFinished += Current_OnTriggerFinished;
+            StrayFogUtility.SingleMonoBehaviour<StrayFogGuideManager>().TriggerCheck();
         }
 
         if (_onCallback != null)
@@ -50,7 +50,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour<StrayFogGameManager>
     /// <returns>true:打开,false:未打开</returns>
     bool Current_OnWindowIsOpened(int _windowId)
     {
-        return StrayFogUIWindowManager.current.IsOpenedWindow(_windowId);
+        return StrayFogUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().IsOpenedWindow(_windowId);
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour<StrayFogGameManager>
     /// <param name="_guide">引导</param>
     void Current_OnRegisterGuide(UIGuideRegister _guide)
     {
-        StrayFogGuideManager.current.RegisterGuide(_guide);
+        StrayFogUtility.SingleMonoBehaviour<StrayFogGuideManager>().RegisterGuide(_guide);
     }
 
     /// <summary>

@@ -28,7 +28,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// UI窗口管理器【主体】
 /// </summary>
-public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour<StrayFogUIWindowManager>
+public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
 {
     #region OnLoadWindowInMemory 加载窗口到内存
     /// <summary>
@@ -62,7 +62,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour<StrayFogUI
 
         foreach (View_UIWindowSetting cfg in _winCfgs)
         {
-            StrayFogAssetBundleManager.current.LoadAssetInMemory(cfg.fileId, cfg.folderId,
+            StrayFogUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>().LoadAssetInMemory(cfg.fileId, cfg.folderId,
             (result) =>
             {
                 index++;

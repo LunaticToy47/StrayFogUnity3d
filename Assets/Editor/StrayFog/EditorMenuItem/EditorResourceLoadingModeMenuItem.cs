@@ -45,7 +45,7 @@ static class EditorResourceLoadingModeMenuItem
     [MenuItem(mcHierarchy + mcRLMInternal, true, mcPriority + 1)]
     static bool EditorDevelopMenuItem_RLMInternalValidateWindow()
     {
-        return !SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().isInternal;
+        return !StrayFogUtility.SingleScriptableObject<StrayFogSetting>().isInternal;
     }
     #endregion
 
@@ -69,7 +69,7 @@ static class EditorResourceLoadingModeMenuItem
     [MenuItem(mcHierarchy + mcRLMExternal, true, mcPriority + 2)]
     static bool EditorDevelopMenuItem_RLMExternalValidateWindow()
     {
-        return SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().isInternal;
+        return StrayFogUtility.SingleScriptableObject<StrayFogSetting>().isInternal;
     }
     #endregion
 

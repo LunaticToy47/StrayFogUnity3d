@@ -12,7 +12,7 @@ public class StrayFogGuideLevel : AbsLevel
     /// </summary>
     void Awake()
     {
-        StrayFogGameManager.current.Initialization(() =>
+        StrayFogUtility.SingleMonoBehaviour<StrayFogGameManager>().Initialization(() =>
         {
             StartCoroutine(OpenLobby());
         });
@@ -29,7 +29,7 @@ public class StrayFogGuideLevel : AbsLevel
         UnityEngine.Debug.Log("Open=>" + enUIWindow.LobbyWindow);
         Stopwatch watch = new Stopwatch();
         watch.Start();
-        StrayFogUIWindowManager.current.OpenWindow<LobbyWindow>(enUIWindow.LobbyWindow,
+        StrayFogUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().OpenWindow<LobbyWindow>(enUIWindow.LobbyWindow,
             (wins, args) =>
             {
                 Stopwatch w = (Stopwatch)args[0];
