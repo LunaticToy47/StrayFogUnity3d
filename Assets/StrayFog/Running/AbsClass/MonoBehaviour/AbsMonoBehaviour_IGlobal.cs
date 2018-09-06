@@ -25,7 +25,7 @@ public abstract partial class AbsMonoBehaviour : IGlobal
         {
             if (mGlobalId == 0)
             {
-                mGlobalId = StrayFogUtility.NewGlobalUniqueId();
+                mGlobalId = StrayFogRunningUtility.NewGlobalUniqueId();
             }
             return mGlobalId;
         }

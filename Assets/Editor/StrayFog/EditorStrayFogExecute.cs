@@ -306,7 +306,7 @@ public sealed class EditorStrayFogExecute
             progress++;
             if (!string.IsNullOrEmpty(n.GetAssetBundleName()))
             {
-                File.Copy(n.path, Path.Combine(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, n.GetAssetBundleName()));
+                File.Copy(n.path, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, n.GetAssetBundleName()));
             }
             else
             {
@@ -525,8 +525,8 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildSQLiteDbToPackage()
     {
-        string db = Path.Combine(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, StrayFogUtility.SingleScriptableObject<StrayFogSetting>().assetBundleDbName);
-        File.Copy(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().dbSource, db);
+        string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleDbName);
+        File.Copy(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource, db);
         Debug.Log("ExecuteBuildSQLiteDbToPackage Succeed!");
     }
     #endregion
@@ -858,7 +858,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildDeleteNouseAssetBatToPackage()
     {
-        string path = Path.GetFullPath(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
+        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         string scriptTemplete = mDeleteManifestBat.text;
         string replaceTemplete = string.Empty;
         string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#DelCmd#", out replaceTemplete);
@@ -888,7 +888,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildPackage()
     {
-        string path = Path.GetFullPath(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
+        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
         EditorStrayFogUtility.cmd.DeleteFolder(path);
 

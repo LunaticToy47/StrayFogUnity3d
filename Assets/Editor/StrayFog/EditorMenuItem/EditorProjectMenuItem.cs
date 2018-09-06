@@ -34,7 +34,7 @@ static class EditorProjectMenuItem
     [MenuItem(mcHierarchy + mcBuildProjectAssets, false, mcPriority + 1)]
     static void EditorDevelopMenuItem_BuildProjectAssetsWindow()
     {
-        EditorStrayFogExecute.ExecuteBuildProjectAssets<StrayFogApplication>();
+        EditorStrayFogExecute.ExecuteBuildProjectAssets<StrayFogRunningApplication>();
         EditorStrayFogExecute.ExecuteBuildProjectAssets<StrayFogSetting>();
     }
     #endregion

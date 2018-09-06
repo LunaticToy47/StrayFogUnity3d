@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 /// <summary>
 /// 单例MonoBehaviour组件
@@ -10,14 +11,13 @@ public abstract class AbsSingle
     /// 构造函数
     /// </summary>
     protected AbsSingle() { }
-
-    /// <summary>
-    /// 当前实例
-    /// </summary>
-    static AbsSingle mCurrent;
     #endregion
 
     #region current 单例
+    /// <summary>
+    /// 单例对象映射
+    /// </summary>
+    static Dictionary<int, AbsSingle> mSingleMaping = new Dictionary<int, AbsSingle>();
     /// <summary>
     /// 单例
     /// </summary>
@@ -25,12 +25,14 @@ public abstract class AbsSingle
     public static T current<T>()
         where T: AbsSingle
     {
-        if (mCurrent == null)
-        {
-            mCurrent = Activator.CreateInstance<T>();
-            mCurrent.OnAfterConstructor();
+        Type t = typeof(T);
+        int k = t.GetHashCode();
+        if (!mSingleMaping.ContainsKey(k))
+        {            
+            mSingleMaping[k].OnAfterConstructor();
+            mSingleMaping.Add(k, Activator.CreateInstance<T>());
         }
-        return (T)mCurrent;
+        return (T)mSingleMaping[k];
     }
     #endregion
 

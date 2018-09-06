@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 引擎工具
 /// </summary>
-public sealed class StrayFogUtility
+public sealed class StrayFogRunningUtility
 {
     #region NewGlobalUniqueId 新生成全局唯一ID
     /// <summary>
@@ -94,6 +94,7 @@ public sealed class StrayFogUtility
     #endregion
 
     #region SingleMonoBehaviour 单例AbsSingleMonoBehaviour对象扩展
+    
     /// <summary>
     /// 单例AbsSingleMonoBehaviour对象扩展
     /// </summary>

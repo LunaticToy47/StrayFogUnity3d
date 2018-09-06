@@ -62,7 +62,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
 
         foreach (View_UIWindowSetting cfg in _winCfgs)
         {
-            StrayFogUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>().LoadAssetInMemory(cfg.fileId, cfg.folderId,
+            StrayFogRunningUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>().LoadAssetInMemory(cfg.fileId, cfg.folderId,
             (result) =>
             {
                 index++;

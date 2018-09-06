@@ -38,7 +38,7 @@ public class GuideWindow : AbsUIWindowView
     {
         if (!mIsSetMaterial)
         {
-            StrayFogUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>().LoadAssetInMemory(enAssetDiskMapingFile.f_GuideMaskShader_mat,
+            StrayFogRunningUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>().LoadAssetInMemory(enAssetDiskMapingFile.f_GuideMaskShader_mat,
             enAssetDiskMapingFolder.Assets_Game_AssetBundles_Materials,
             (result) =>
             {

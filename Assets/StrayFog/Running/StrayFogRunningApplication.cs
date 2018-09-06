@@ -12,7 +12,7 @@ public delegate void RegisterGuideEventHandle(UIGuideRegister _guide);
 /// <summary>
 /// 引擎应用程序
 /// </summary>
-public class StrayFogApplication : AbsSingleScriptableObject
+public class StrayFogRunningApplication : AbsSingleScriptableObject
 {
     #region Db库
     /// <summary>
@@ -22,7 +22,7 @@ public class StrayFogApplication : AbsSingleScriptableObject
     /// <summary>
     /// SQL帮助类
     /// </summary>
-    public SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(StrayFogUtility.SingleScriptableObject<StrayFogSetting>().dbConnectionString); } return mSqlHelper; } }
+    public SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbConnectionString); } return mSqlHelper; } }
     /// <summary>
     /// 关闭数据库
     /// </summary>

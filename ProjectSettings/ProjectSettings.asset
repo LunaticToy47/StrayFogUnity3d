@@ -569,7 +569,7 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 1
   scriptingDefineSymbols:
-    21: UNITY_XBOXONE_DEVELOPMENT_BUILD
+    21: 
   platformArchitecture: {}
   scriptingBackend:
     XboxOne: 0

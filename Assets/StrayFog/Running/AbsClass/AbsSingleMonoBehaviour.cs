@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 /// <summary>
 /// 单例MonoBehaviour组件
@@ -10,14 +12,13 @@ public abstract class AbsSingleMonoBehaviour : AbsMonoBehaviour
     /// 构造函数
     /// </summary>
     protected AbsSingleMonoBehaviour() { }
-
-    /// <summary>
-    /// 当前实例
-    /// </summary>
-    static AbsSingleMonoBehaviour msCurrent;
     #endregion
 
     #region 单例
+    /// <summary>
+    /// 单例对象映射
+    /// </summary>
+    static Dictionary<int, AbsSingleMonoBehaviour> mSingleMaping = new Dictionary<int, AbsSingleMonoBehaviour>();
     /// <summary>
     /// 单例
     /// </summary>    
@@ -25,15 +26,17 @@ public abstract class AbsSingleMonoBehaviour : AbsMonoBehaviour
     public static T current<T>()
         where T : AbsSingleMonoBehaviour
     {
-        if (msCurrent == null)
+        Type t = typeof(T);
+        int k = t.GetHashCode();
+        if (!mSingleMaping.ContainsKey(k))
         {
-            GameObject go = new GameObject(typeof(T).FullName);
-            msCurrent = go.AddComponent<T>();
-            DontDestroyOnLoad(msCurrent.gameObject);
-            msCurrent.gameObject.hideFlags = HideFlags.DontSave | HideFlags.NotEditable;
-            msCurrent.OnAfterConstructor();
+            GameObject go = new GameObject(typeof(T).FullName);            
+            DontDestroyOnLoad(mSingleMaping[k].gameObject);
+            mSingleMaping[k].gameObject.hideFlags = HideFlags.DontSave | HideFlags.NotEditable;
+            mSingleMaping[k].OnAfterConstructor();
+            mSingleMaping.Add(k, go.AddComponent<T>());
         }
-        return (T)msCurrent;
+        return (T)mSingleMaping[k];
     }
     #endregion
 

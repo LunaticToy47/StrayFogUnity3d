@@ -67,7 +67,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     protected override void OnAfterConstructor()
     {
         #region 初始化引导窗口
-        List<View_UIWindowSetting> guides = StrayFogUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().GetWindowSettings((w) => { return w.isGuideWindow; });
+        List<View_UIWindowSetting> guides = StrayFogRunningUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().GetWindowSettings((w) => { return w.isGuideWindow; });
         if (guides != null && guides.Count > 0)
         {
             List<int> ids = new List<int>();
@@ -78,7 +78,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
                     ids.Add(w.id);
                 }
             }
-            StrayFogUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().OpenWindow<GuideWindow>(ids.ToArray(), (sets, pars) =>
+            StrayFogRunningUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().OpenWindow<GuideWindow>(ids.ToArray(), (sets, pars) =>
             {
                 mGuideWindow = sets[0];
                 mGuideWindow.SetActiveImmediate(false);
