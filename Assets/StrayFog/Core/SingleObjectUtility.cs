@@ -13,4 +13,15 @@ public static class SingleObjectUtility
     {
         return AbsSingle.current<T>();
     }
+
+    /// <summary>
+    /// 单例对象扩展
+    /// </summary>
+    /// <typeparam name="T">对象类型</typeparam>
+    /// <returns>对象</returns>
+    public static T SingleScriptableObject<T>()
+        where T : AbsSingleScriptableObject
+    {
+        return AbsSingleScriptableObject.current<T>();
+    }
 }

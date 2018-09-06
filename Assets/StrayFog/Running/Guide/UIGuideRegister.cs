@@ -42,6 +42,6 @@ public class UIGuideRegister : MonoBehaviour, IAttachMonoBehaviourAnyWhere
     /// </summary>
     void Start()
     {
-        StrayFogApplication.current.RegisterGuide(this);
+        SingleObjectUtility.SingleScriptableObject<StrayFogApplication>().RegisterGuide(this);
     }
 }

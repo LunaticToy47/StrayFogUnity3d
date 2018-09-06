@@ -34,7 +34,7 @@ static class EditorQueryMenuItem
     [MenuItem(mcHierarchy + mcLookAssetBundleRoot, false, mcPriority + 1)]
     static void EditorDevelopMenuItem_LookAssetBundleRootWindow()
     {
-        EditorUtility.RevealInFinder(StrayFogSetting.current.assetBundleRoot);
+        EditorUtility.RevealInFinder(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
     }
     #endregion
 }

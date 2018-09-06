@@ -90,7 +90,7 @@ public sealed partial class SQLiteEntityHelper
         {
             msEntityPropertyMaping.Add(entityKey, new Dictionary<int, PropertyInfo>());
         }
-        SqliteDataReader reader = StrayFogApplication.current.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _tableName));
+        SqliteDataReader reader = SingleObjectUtility.SingleScriptableObject<StrayFogApplication>().sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _tableName));
         string propertyName = string.Empty;
         T entity = default(T);
         Type columnType = null;
@@ -222,7 +222,7 @@ public sealed partial class SQLiteEntityHelper
                     }
                 }
             }
-            SqliteDataReader reader = StrayFogApplication.current.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", tableName));
+            SqliteDataReader reader = SingleObjectUtility.SingleScriptableObject<StrayFogApplication>().sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", tableName));
             while (reader.Read())
             {//默认0是属性名称,1是属性值
                 propertyKey = reader.GetValue(result.propertyNameIndex).ToString().UniqueHashCode();

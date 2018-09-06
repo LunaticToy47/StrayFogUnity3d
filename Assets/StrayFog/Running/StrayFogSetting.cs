@@ -7,7 +7,7 @@ using UnityEditor;
 /// <summary>
 /// StrayFogSetting
 /// </summary>
-public class StrayFogSetting : AbsSingleScriptableObject<StrayFogSetting>
+public class StrayFogSetting : AbsSingleScriptableObject
 {
     #region platform 运行平台
     //https://docs.unity3d.com/Manual/PlatformDependentCompilation.html

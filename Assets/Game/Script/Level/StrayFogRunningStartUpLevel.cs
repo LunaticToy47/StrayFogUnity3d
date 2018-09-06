@@ -47,8 +47,8 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
     /// </summary>
     void OnGUI()
     {
-        GUILayout.Label(StrayFogSetting.current.dbSource);
-        GUILayout.Label(StrayFogSetting.current.dbConnectionString);
+        GUILayout.Label(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().dbSource);
+        GUILayout.Label(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().dbConnectionString);
         foreach (Table_TableColumnMaping t in mTables)
         {
             GUILayout.Label(t.JsonSerialize());

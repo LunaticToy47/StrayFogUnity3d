@@ -3,14 +3,8 @@
 /// ScriptableObject单例
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public abstract class AbsSingleScriptableObject<T> : AbsScriptableObject
-where T : AbsSingleScriptableObject<T>
+public abstract class AbsSingleScriptableObject : AbsScriptableObject
 {
-    /// <summary>
-    /// 资源名称
-    /// </summary>
-    public static readonly string assetName = typeof(T).Name;
-
     #region 单例
     /// <summary>
     /// 构造函数
@@ -19,21 +13,21 @@ where T : AbsSingleScriptableObject<T>
     /// <summary>
     /// 单例
     /// </summary>
-    static T msCurrent = null;
+    static AbsSingleScriptableObject msCurrent = null;
     /// <summary>
     /// 当前单例
     /// </summary>
-    public static T current
+    public static T current<T>()
+        where T: AbsSingleScriptableObject
     {
-        get
+        string assetName = typeof(T).Name;
+
+        if (msCurrent == null)
         {
-            if (msCurrent == null)
-            {
-                msCurrent = Resources.Load<T>(assetName);
-                (msCurrent as AbsSingleScriptableObject<T>).OnAfterConstructor();
-            }
-            return msCurrent;
+            msCurrent = Resources.Load<T>(assetName);
+            msCurrent.OnAfterConstructor();
         }
+        return (T)msCurrent;
     }
     #endregion
 

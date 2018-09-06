@@ -21,7 +21,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour<StrayFogGameManager>
             m_isInitialized = true;
             List<Table_GameSetting> settings = SQLiteEntityHelper.Select<Table_GameSetting>();
             runningSetting = settings[0];
-            StrayFogApplication.current.OnRegisterGuide += Current_OnRegisterGuide;
+            SingleObjectUtility.SingleScriptableObject<StrayFogApplication>().OnRegisterGuide += Current_OnRegisterGuide;
             StrayFogGuideManager.current.OnIsLevel += Current_OnIsLevel;
             StrayFogGuideManager.current.OnWindowIsOpened += Current_OnWindowIsOpened;
             StrayFogGuideManager.current.OnTriggerFinished += Current_OnTriggerFinished;

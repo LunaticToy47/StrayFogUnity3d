@@ -306,7 +306,7 @@ public sealed class EditorStrayFogExecute
             progress++;
             if (!string.IsNullOrEmpty(n.GetAssetBundleName()))
             {
-                File.Copy(n.path, Path.Combine(StrayFogSetting.current.assetBundleRoot, n.GetAssetBundleName()));
+                File.Copy(n.path, Path.Combine(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, n.GetAssetBundleName()));
             }
             else
             {
@@ -525,8 +525,8 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildSQLiteDbToPackage()
     {
-        string db = Path.Combine(StrayFogSetting.current.assetBundleRoot, StrayFogSetting.current.assetBundleDbName);
-        File.Copy(StrayFogSetting.current.dbSource, db);
+        string db = Path.Combine(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleDbName);
+        File.Copy(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().dbSource, db);
         Debug.Log("ExecuteBuildSQLiteDbToPackage Succeed!");
     }
     #endregion
@@ -858,7 +858,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildDeleteNouseAssetBatToPackage()
     {
-        string path = Path.GetFullPath(StrayFogSetting.current.assetBundleRoot);
+        string path = Path.GetFullPath(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         string scriptTemplete = mDeleteManifestBat.text;
         string replaceTemplete = string.Empty;
         string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#DelCmd#", out replaceTemplete);
@@ -888,7 +888,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildPackage()
     {
-        string path = Path.GetFullPath(StrayFogSetting.current.assetBundleRoot);
+        string path = Path.GetFullPath(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
         EditorStrayFogUtility.cmd.DeleteFolder(path);
 
@@ -1435,7 +1435,8 @@ public sealed class EditorStrayFogExecute
     /// 生成工程资源
     /// </summary>
     /// <typeparam name="T">资源类型</typeparam>
-    public static void ExecuteBuildProjectAssets<T>() where T : AbsSingleScriptableObject<T>
+    public static void ExecuteBuildProjectAssets<T>() 
+        where T : AbsSingleScriptableObject
     {
         Type absInheritType = typeof(T);
         Type destType = null;

@@ -35,9 +35,9 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour<StrayFog
     protected override void OnAfterConstructor()
     {
         #region 加载AssetBundleManifest
-        if (File.Exists(StrayFogSetting.current.manifestPath))
+        if (File.Exists(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().manifestPath))
         {
-            AssetBundle ab = AssetBundle.LoadFromFile(StrayFogSetting.current.manifestPath);
+            AssetBundle ab = AssetBundle.LoadFromFile(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().manifestPath);
             if (ab != null)
             {
                 mAssetBundleManifest = ab.LoadAsset<AssetBundleManifest>(typeof(AssetBundleManifest).Name);
@@ -45,9 +45,9 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour<StrayFog
                 ab = null;
             }
         }
-        else if (!StrayFogSetting.current.isInternal)
+        else if (!SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
         {
-            Debug.LogError("Can not find 【AssetBundleManifest】=>" + StrayFogSetting.current.manifestPath);
+            Debug.LogError("Can not find 【AssetBundleManifest】=>" + SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().manifestPath);
         }
         #endregion
         base.OnAfterConstructor();
@@ -103,7 +103,7 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour<StrayFog
     void OnGetKey(string _assetBundleName, out int _assetId, out string _assetPath)
     {
         _assetId = _assetBundleName.UniqueHashCode();
-        _assetPath = Path.Combine(StrayFogSetting.current.assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
+        _assetPath = Path.Combine(SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
     }
     #endregion
 

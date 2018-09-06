@@ -254,7 +254,7 @@ public sealed class EditorStrayFogApplication
     /// <summary>
     /// SQL帮助类
     /// </summary>
-    public static SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(string.Format("data source={0}", StrayFogSetting.current.dbSource)); } return mSqlHelper; } }
+    public static SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(string.Format("data source={0}", SingleObjectUtility.SingleScriptableObject<StrayFogSetting>().dbSource)); } return mSqlHelper; } }
     /// <summary>
     /// 关闭数据库
     /// </summary>
