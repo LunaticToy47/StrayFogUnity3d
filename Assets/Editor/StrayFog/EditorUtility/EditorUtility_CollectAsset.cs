@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -42,8 +43,6 @@ public enum enEditorAssetFilterClassify
     DefaultAsset = 0x20
 }
 #endregion
-
-
 /// <summary>
 /// 资源收集
 /// </summary>
@@ -414,3 +413,4 @@ public class EditorUtility_CollectAsset : AbsSingle<EditorUtility_CollectAsset>
     }
     #endregion
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
 /// <summary>
 /// 资源加载模式菜单
@@ -105,3 +106,4 @@ static class EditorResourceLoadingModeMenuItem
     }
     #endregion
 }
+#endif

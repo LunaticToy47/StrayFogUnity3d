@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// 精灵图集菜单 
 /// </summary>
@@ -74,3 +75,4 @@ static class EditorSpriteAtlasMenuItem
     }
     #endregion
 }
+#endif

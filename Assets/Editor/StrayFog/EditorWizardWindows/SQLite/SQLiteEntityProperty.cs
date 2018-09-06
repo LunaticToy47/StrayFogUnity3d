@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿#if UNITY_EDITOR
+/// <summary>
 /// SQLite表格列
 /// </summary>
 public class SQLiteEntityProperty
@@ -28,3 +29,4 @@ public class SQLiteEntityProperty
     /// </summary>
     public bool isPK { get; set; }
 }
+#endif

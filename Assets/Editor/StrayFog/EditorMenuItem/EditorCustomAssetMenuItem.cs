@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// 自定义资源菜单 
 /// </summary>
@@ -55,3 +56,4 @@ static class EditorCustomAssetMenuItem
     //}
     #endregion
 }
+#endif

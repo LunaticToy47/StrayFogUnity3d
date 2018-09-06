@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-    /// <summary>
-    /// SQLite实体
-    /// </summary>
-    public enum enSQLiteEntityClassify
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
+/// <summary>
+/// SQLite实体
+/// </summary>
+public enum enSQLiteEntityClassify
     {
         /// <summary>
         /// 表格
@@ -61,3 +62,4 @@ public class SQLiteEntity
     /// </summary>
     public List<SQLiteEntityProperty> properties { get; private set; }
 }
+#endif

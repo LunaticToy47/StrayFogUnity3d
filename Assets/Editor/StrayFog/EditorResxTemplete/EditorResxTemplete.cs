@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR
+using System.IO;
 /// <summary>
 /// EditorResxTemplete模板
 /// </summary>
@@ -227,3 +228,4 @@ public class EditorResxTemplete
         }
     }
 }
+#endif

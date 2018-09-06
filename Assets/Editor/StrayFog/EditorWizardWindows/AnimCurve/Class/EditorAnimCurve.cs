@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 /// <summary>
 /// 曲线
 /// </summary>
@@ -69,3 +70,4 @@ class EditorAnimCurve
             name, keyframeCount, mStartingTime, mFinalTime, mDurationTime, mStartingValue, mFinalValue);
     }
 }
+#endif

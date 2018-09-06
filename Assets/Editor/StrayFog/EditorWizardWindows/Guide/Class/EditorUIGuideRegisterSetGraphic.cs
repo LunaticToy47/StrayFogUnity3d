@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -98,3 +99,4 @@ public class EditorUIGuideRegisterSetGraphic
         isFoundRegister = register != null;
     }
 }
+#endif

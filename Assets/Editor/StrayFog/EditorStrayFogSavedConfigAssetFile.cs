@@ -1,4 +1,4 @@
-﻿
+﻿#if UNITY_EDITOR
 /// <summary>
 /// 可保存的配置资源文件
 /// </summary>
@@ -18,4 +18,4 @@ public sealed class EditorStrayFogSavedConfigAssetFile
     public static EditorAnimatorControllerFMSMapingConfig setAnimatorControllerFMSMaping = new EditorAnimatorControllerFMSMapingConfig();
 
 }
-
+#endif

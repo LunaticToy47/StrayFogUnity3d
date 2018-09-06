@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -389,3 +390,4 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     }
     #endregion
 }
+#endif

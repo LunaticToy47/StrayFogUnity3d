@@ -1,6 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR 
+using System;
 using UnityEngine;
-
 /// <summary>
 /// 编辑器资源过滤特性
 /// </summary>
@@ -21,6 +21,6 @@ public class EditorAssetFilterAttribute : PropertyAttribute
     /// </summary>
     public string filter { get; private set; }
 }
-
+#endif
 
 

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR 
+using UnityEditor;
 /// <summary>
 /// Animator菜单 
 /// </summary>
@@ -47,3 +48,4 @@ static class EditorAnimatorMenuItem
     }
     #endregion
 }
+#endif

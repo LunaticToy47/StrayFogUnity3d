@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR 
+using System.IO;
 /// <summary>
 /// 抽象资源配置
 /// </summary>
@@ -148,3 +149,4 @@ public abstract class AbsEdtiorAssetConfig
     #endregion
     #endregion
 }
+#endif

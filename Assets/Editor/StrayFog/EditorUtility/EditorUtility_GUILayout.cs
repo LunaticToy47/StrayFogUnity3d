@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -370,3 +371,4 @@ public class EditorUtility_GUILayout : AbsSingle<EditorUtility_GUILayout>
     }
     #endregion
 }
+#endif

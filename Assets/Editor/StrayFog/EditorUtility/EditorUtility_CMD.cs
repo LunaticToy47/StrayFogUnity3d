@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -122,3 +123,4 @@ public sealed class EditorUtility_CMD : AbsSingle<EditorUtility_CMD>
     }
     #endregion
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR 
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -120,3 +121,4 @@ public abstract class AbsEditorSavedAssetFile : AbsScriptableObject
     /// </summary>
     protected virtual void OnDrawGUI() { }
 }
+#endif

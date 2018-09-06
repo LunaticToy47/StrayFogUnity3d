@@ -1,4 +1,5 @@
-﻿using Mono.Data.Sqlite;
+﻿#if UNITY_EDITOR
+using Mono.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1501,4 +1502,4 @@ public sealed class EditorStrayFogExecute
     }
     #endregion
 }
-
+#endif

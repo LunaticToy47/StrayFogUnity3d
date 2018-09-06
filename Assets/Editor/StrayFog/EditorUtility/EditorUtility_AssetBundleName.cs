@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -234,3 +235,4 @@ public class EditorUtility_AssetBundleName : AbsSingle<EditorUtility_AssetBundle
     }
     #endregion
 }
+#endif

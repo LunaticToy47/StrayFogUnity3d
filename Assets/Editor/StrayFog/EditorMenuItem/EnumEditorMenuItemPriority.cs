@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿#if UNITY_EDITOR
+/// <summary>
 /// 编辑菜单
 /// </summary>
 enum enEditorMenuItemPriority
@@ -68,3 +69,4 @@ enum enEditorMenuItemPriority
     /// </summary>
     Release,
 }
+#endif

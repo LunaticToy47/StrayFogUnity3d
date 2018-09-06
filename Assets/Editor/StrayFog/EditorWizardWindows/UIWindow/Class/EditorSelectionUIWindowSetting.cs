@@ -1,4 +1,5 @@
-﻿using Mono.Data.Sqlite;
+﻿#if UNITY_EDITOR
+using Mono.Data.Sqlite;
 using System;
 using UnityEngine;
 /// <summary>
@@ -157,3 +158,4 @@ public class EditorSelectionUIWindowSetting : EditorSelectionAssetDiskMaping
     [AliasTooltip("是否是引导窗口")]
     public bool isGuideWindow { get; set; }
 }
+#endif

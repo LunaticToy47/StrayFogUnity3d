@@ -1,7 +1,7 @@
-﻿using System.Reflection;
+﻿#if UNITY_EDITOR 
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-
 /// <summary>
 /// 编辑器属性绘制抽象类
 /// </summary>
@@ -38,3 +38,4 @@ abstract class AbsEditorAttributeDrawer
         return 0;
     }
 }
+#endif

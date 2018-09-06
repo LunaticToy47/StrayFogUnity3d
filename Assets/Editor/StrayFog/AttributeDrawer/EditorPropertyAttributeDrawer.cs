@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR 
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
@@ -7,7 +8,6 @@ using UnityEngine;
  1.EditorUnityGUIContentAttributeDrawer必须直接继承PropertyDrawer才可以起作用
  2.当CustomPropertyDrawer的useForChildren=true，则其子类才会起作用
 */
-
 [CustomPropertyDrawer(typeof(PropertyAttribute), true)]
 public class EditorPropertyAttributeDrawer : PropertyDrawer
 {
@@ -111,3 +111,4 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
         return (isDraw ? EditorGUI.GetPropertyHeight(_property, _label) : 0) + (mPropertyHeightMaping.ContainsKey(propertyKey) ? mPropertyHeightMaping[propertyKey] : 0);
     }
 }
+#endif

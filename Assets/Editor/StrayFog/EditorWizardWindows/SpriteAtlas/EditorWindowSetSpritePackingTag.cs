@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 /// <summary>
 /// 设置
@@ -58,3 +59,4 @@ public class EditorWindowSetSpritePackingTag : AbsEditorWindow
     }
     #endregion
 }
+#endif

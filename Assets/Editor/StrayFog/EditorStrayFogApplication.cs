@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -267,4 +268,4 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 }
-
+#endif

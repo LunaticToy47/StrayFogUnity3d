@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR 
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -73,3 +74,4 @@ sealed class EditorReferPropertyDisplayInspectorDrawer : AbsEditorAttributeDrawe
         return mIsDarwerMaping[_propertyKey];
     }
 }
+#endif

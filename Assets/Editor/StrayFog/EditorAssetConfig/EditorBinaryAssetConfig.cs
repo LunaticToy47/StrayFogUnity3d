@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR 
+using System.IO;
 using UnityEditor;
 /// <summary>
 /// 二进制资源配置
@@ -56,3 +57,4 @@ public class EditorBinaryAssetConfig : AbsEdtiorAssetConfig
     }
     #endregion
 }
+#endif

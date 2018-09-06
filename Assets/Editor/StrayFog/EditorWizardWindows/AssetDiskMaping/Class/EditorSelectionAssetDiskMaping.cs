@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR
+using System.IO;
 using System.Collections.Generic;
 using System;
 /// <summary>
@@ -189,3 +190,4 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
         return count > 0;
     }
 }
+#endif

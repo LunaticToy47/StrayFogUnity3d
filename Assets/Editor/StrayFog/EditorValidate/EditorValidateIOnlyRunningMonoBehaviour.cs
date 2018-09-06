@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 /// <summary>
 /// IRunningMonoBehaviour编辑器验证
@@ -17,3 +18,4 @@ public class EditorValidateIOnlyRunningMonoBehaviour : Editor
         }
     }
 }
+#endif

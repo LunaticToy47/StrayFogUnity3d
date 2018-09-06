@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 /// <summary>
 /// 全局变量
 /// </summary>
@@ -23,3 +24,4 @@ public sealed class EditorStrayFogGlobalVariable
     public static readonly EditorEngineAssetConfig uiWindowPrefab = new EditorEngineAssetConfig("", uiWindowPrefabFolder, enFileExt.Prefab, typeof(GameObject).FullName);
     #endregion
 }
+#endif

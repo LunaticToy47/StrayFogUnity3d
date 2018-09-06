@@ -1,4 +1,5 @@
-﻿#region enEditorProjectFolder 工程目录枚举
+﻿#if UNITY_EDITOR
+#region enEditorProjectFolder 工程目录枚举
 /// <summary>
 /// 应用程序目录
 /// </summary>
@@ -94,5 +95,6 @@ public enum enEditorApplicationFolder
     #endregion
 }
 #endregion
+#endif
 
 

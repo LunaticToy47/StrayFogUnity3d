@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// SpritePackingTag选择资源
 /// </summary>
@@ -62,3 +63,4 @@ public class EditorSelectionSpritePackingTagAsset : EditorSelectionAsset
         }
     }
 }
+#endif

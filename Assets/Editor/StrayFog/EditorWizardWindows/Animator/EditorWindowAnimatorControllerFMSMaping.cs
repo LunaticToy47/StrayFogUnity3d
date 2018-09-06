@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 /// <summary>
 /// 设置
@@ -54,3 +55,4 @@ public class EditorWindowAnimatorControllerFMSMaping : AbsEditorWindow
     }
     #endregion
 }
+#endif

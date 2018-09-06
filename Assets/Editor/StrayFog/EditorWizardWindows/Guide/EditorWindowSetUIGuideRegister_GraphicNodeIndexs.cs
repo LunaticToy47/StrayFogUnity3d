@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -69,3 +70,4 @@ public class EditorWindowSetUIGuideRegister_GraphicNodeIndexs : EditorWindow
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR 
+using UnityEditor;
 /// <summary>
 /// 资源磁盘映射 
 /// </summary>
@@ -51,3 +52,4 @@ static class EditorAssetDiskMapingMenuItem
     }
     #endregion
 }
+#endif

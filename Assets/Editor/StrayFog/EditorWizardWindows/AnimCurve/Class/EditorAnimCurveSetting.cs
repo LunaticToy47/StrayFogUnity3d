@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 #region Linear
 /// <summary>
 /// Linear曲线
@@ -1232,3 +1233,4 @@ public class AnimCurve_BounceEaseOutIn : AbsSingle<AnimCurve_BounceEaseOutIn>, I
     }
 }
 #endregion
+#endif

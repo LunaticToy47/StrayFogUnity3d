@@ -1,4 +1,4 @@
-﻿
+﻿#if UNITY_EDITOR
 /// <summary>
 /// Editor工具集合
 /// </summary>
@@ -29,3 +29,4 @@ public sealed class EditorStrayFogUtility
     /// </summary>
     public readonly static EditorUtility_GUILayout guiLayout = EditorUtility_GUILayout.current;
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// 引导菜单 
 /// </summary>
@@ -53,3 +54,4 @@ static class EditorGuideMenuItem
     }
     #endregion
 }
+#endif

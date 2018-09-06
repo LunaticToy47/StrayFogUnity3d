@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR 
+using UnityEditor;
 /// <summary>
 /// 编辑器设定保存资源
 /// </summary>
@@ -37,3 +38,4 @@ public abstract class AbsEditorSavedAssetConfig<C, F> : EditorEngineAssetConfig
         return AssetDatabase.LoadAssetAtPath<F>(fileName);
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿#if UNITY_EDITOR
+using System.Text.RegularExpressions;
 /// <summary>
 /// 正则表达式工具
 /// </summary>
@@ -53,3 +54,4 @@ public class EditorUtility_Regex : AbsSingle<EditorUtility_Regex>
     }
     #endregion
 }
+#endif

@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿#if UNITY_EDITOR
+/// <summary>
 /// 编辑器动画曲线
 /// </summary>
 public interface IEditorAnimCurve
@@ -20,3 +21,4 @@ public interface IEditorAnimCurve
     /// <param name="_curveDuration">曲线持续时间</param>
     double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration);
 }
+#endif

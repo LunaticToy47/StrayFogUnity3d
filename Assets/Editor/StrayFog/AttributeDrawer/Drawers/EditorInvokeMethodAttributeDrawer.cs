@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR 
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
@@ -201,3 +202,4 @@ sealed class EditorInvokeMethodAttributeDrawer : AbsEditorAttributeDrawer
         return mPropertyHeightMaping[_propertyKey];
     }
 }
+#endif

@@ -1,6 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR 
+using System;
 using UnityEngine;
-
 /// <summary>
 /// 编辑器工程目录属性
 /// </summary>
@@ -31,6 +31,6 @@ public class EditorApplicationFolderAttribute : PropertyAttribute
     /// </summary>
     public string tooltip { get; private set; }
 }
-
+#endif
 
 

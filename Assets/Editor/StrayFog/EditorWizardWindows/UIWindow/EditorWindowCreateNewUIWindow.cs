@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -171,3 +172,4 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     #endregion
     #endregion
 }
+#endif

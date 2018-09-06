@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR 
+using System.IO;
 /// <summary>
 /// TextAsset资源配置
 /// </summary>
@@ -48,3 +49,4 @@ public class EditorTextAssetConfig : AbsEdtiorAssetConfig
     }
     #endregion
 }
+#endif

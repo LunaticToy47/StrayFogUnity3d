@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// UIWindow菜单 
 /// </summary>
@@ -55,3 +56,4 @@ static class EditorUIWindowMenuItem
     }
     #endregion
 }
+#endif

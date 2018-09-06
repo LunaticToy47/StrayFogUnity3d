@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// Dll菜单 
 /// </summary>
@@ -37,3 +38,4 @@ static class EditorDllMenuItem
     }
     #endregion
 }
+#endif

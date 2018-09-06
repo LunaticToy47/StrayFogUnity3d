@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 /// <summary>
 /// 设置资源AssetBundleName窗口
@@ -61,3 +62,4 @@ public class EditorWindowSetAssetBundleName : AbsEditorWindow
     }
     #endregion
 }
+#endif

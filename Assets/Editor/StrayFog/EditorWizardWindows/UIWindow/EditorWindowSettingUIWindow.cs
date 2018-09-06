@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 /// <summary>
 /// 设置窗口
@@ -66,3 +67,4 @@ public class EditorWindowSettingUIWindow : AbsEditorWindow
         mWindow = _window;
     }
 }
+#endif

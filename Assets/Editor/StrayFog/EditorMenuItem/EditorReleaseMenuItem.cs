@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// 发布菜单 
 /// </summary>
@@ -80,3 +81,4 @@ static class EditorReleaseMenuItem
     }
     #endregion
 }
+#endif

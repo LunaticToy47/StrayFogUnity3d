@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// Query查询菜单 
 /// </summary>
@@ -37,3 +38,4 @@ static class EditorQueryMenuItem
     }
     #endregion
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// 工程菜单
 /// </summary>
@@ -38,3 +39,4 @@ static class EditorProjectMenuItem
     }
     #endregion
 }
+#endif
