@@ -115,7 +115,6 @@ public partial class StrayFogUIWindowManager
         _uCanvas.canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         _uCanvas.canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
         _uCanvas.canvasScaler.referenceResolution = StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGameManager>().runningSetting.resolution;
-        _uCanvas.canvasScaler.referenceResolution = new Vector2(1920, 1080);
         switch (_renderMode)
         {
             case RenderMode.ScreenSpaceOverlay:

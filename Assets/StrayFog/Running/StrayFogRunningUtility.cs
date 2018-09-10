@@ -103,6 +103,7 @@ public sealed class StrayFogRunningUtility
     public static T SingleMonoBehaviour<T>()
         where T : AbsSingleMonoBehaviour
     {
+        Type t = typeof(T);
         return AbsSingleMonoBehaviour.current<T>();
     }
     #endregion

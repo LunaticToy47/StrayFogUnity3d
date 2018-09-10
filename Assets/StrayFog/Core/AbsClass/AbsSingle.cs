@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 /// <summary>
 /// 单例MonoBehaviour组件
 /// </summary>
@@ -21,16 +20,19 @@ public abstract class AbsSingle
     /// <summary>
     /// 单例
     /// </summary>
-    [MethodImpl(MethodImplOptions.Synchronized)]
+    //[MethodImpl(MethodImplOptions.Synchronized)]
+    //https://www.cnblogs.com/zhuawang/archive/2013/05/27/3102834.htm
+    //这里使用后线程同步锁，会超成死锁，不可以用
     public static T current<T>()
         where T: AbsSingle
     {
         Type t = typeof(T);
         int k = t.GetHashCode();
         if (!mSingleMaping.ContainsKey(k))
-        {            
-            mSingleMaping[k].OnAfterConstructor();
-            mSingleMaping.Add(k, Activator.CreateInstance<T>());
+        {
+            T ins = Activator.CreateInstance<T>();
+            ins.OnAfterConstructor();
+            mSingleMaping.Add(k, ins);                        
         }
         return (T)mSingleMaping[k];
     }
