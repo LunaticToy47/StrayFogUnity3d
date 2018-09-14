@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Reflection;
 using System.IO;
+using System.Text;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -205,7 +206,30 @@ string.Empty;
 #endif
         }
     }
-    #endregion 
+    #endregion
+
+    #region ToData 数据字符串
+    /// <summary>
+    /// 数据字符串
+    /// </summary>
+    /// <returns>数据字符串</returns>
+    public string ToData()
+    {
+        StringBuilder sb = new StringBuilder();
+        PropertyInfo[] properties = GetType().GetProperties();
+        if (properties != null && properties.Length > 0)
+        {
+            foreach (PropertyInfo p in properties)
+            {
+                if (p.CanRead && !p.CanWrite)
+                {
+                    sb.AppendLine(string.Format("{0}=>{1}", p.Name, p.GetValue(this, null)));
+                }
+            }
+        }
+        return sb.ToString();
+    }
+    #endregion
 
     #region UNITY_EDITOR
 #if UNITY_EDITOR

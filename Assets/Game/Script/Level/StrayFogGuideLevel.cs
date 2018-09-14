@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Diagnostics;
+using System.Reflection;
 using UnityEngine;
 /// <summary>
 /// 引导关卡
@@ -12,10 +13,18 @@ public class StrayFogGuideLevel : AbsLevel
     /// </summary>
     void Awake()
     {
-        StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGameManager>().Initialization(() =>
-        {
-            StartCoroutine(OpenLobby());
-        });
+        //StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGameManager>().Initialization(() =>
+        //{
+        //    StartCoroutine(OpenLobby());
+        //});
+    }
+
+    void OnGUI()
+    {        
+        StrayFogSetting setting = StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>();
+        GUI.skin.label.fontSize = 40;
+        GUI.color = Color.black;
+        GUILayout.Label(setting.ToData());
     }
 
     /// <summary>
