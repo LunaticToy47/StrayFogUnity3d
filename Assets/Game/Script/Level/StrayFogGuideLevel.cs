@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 /// <summary>
@@ -25,6 +26,16 @@ public class StrayFogGuideLevel : AbsLevel
         GUI.skin.label.fontSize = 40;
         GUI.color = Color.black;
         GUILayout.Label(setting.ToData());
+
+        string path = setting.assetBundleRoot + "/ab_xboxone";
+        if (!Directory.Exists(setting.assetBundleRoot))
+        {
+            Directory.CreateDirectory(setting.assetBundleRoot);
+        }
+        GUILayout.Label(path);
+        GUILayout.Label(File.Exists(path).ToString());
+        File.WriteAllText(path+".txt", "11111");
+        GUILayout.Label(File.Exists(path).ToString());
     }
 
     /// <summary>
