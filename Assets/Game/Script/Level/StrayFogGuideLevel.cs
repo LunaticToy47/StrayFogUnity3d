@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using UnityEngine;
 /// <summary>
 /// 引导关卡
@@ -18,8 +17,8 @@ public class StrayFogGuideLevel : AbsLevel
         {
             StartCoroutine(OpenLobby());
         });
-        //luaenv.DoString("CS.UnityEngine.Debug.Log('hello world')");
-        //luaenv.Dispose();
+        StrayFogGamePools.xLuaManager.luaEnv.DoString("CS.UnityEngine.Debug.Log('hello world')");
+        StrayFogGamePools.xLuaManager.luaEnv.Dispose();
     }
 
     void OnGUI()
