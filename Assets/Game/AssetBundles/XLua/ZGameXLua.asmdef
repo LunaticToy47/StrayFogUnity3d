@@ -1,8 +1,9 @@
 {
-    "name": "ZGame",
+    "name": "ZGameXLua",
     "references": [
         "StrayFogCore",
         "StrayFogRunning",
+        "ZGame",
         "XLua"
     ],
     "optionalUnityReferences": [],
