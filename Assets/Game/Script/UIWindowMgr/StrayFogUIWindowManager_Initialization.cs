@@ -114,7 +114,7 @@ public partial class StrayFogUIWindowManager
         _uCanvas.canvas.sortingOrder = byte.MaxValue;
         _uCanvas.canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         _uCanvas.canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-        _uCanvas.canvasScaler.referenceResolution = StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGameManager>().runningSetting.resolution;
+        _uCanvas.canvasScaler.referenceResolution = StrayFogGamePools.gameManager.runningSetting.resolution;
         switch (_renderMode)
         {
             case RenderMode.ScreenSpaceOverlay:

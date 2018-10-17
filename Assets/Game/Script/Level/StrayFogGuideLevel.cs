@@ -14,23 +14,24 @@ public class StrayFogGuideLevel : AbsLevel
     /// </summary>
     void Awake()
     {
-        //StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGameManager>().Initialization(() =>
-        //{
-        //    StartCoroutine(OpenLobby());
-        //});
+        StrayFogGamePools.gameManager.Initialization(() =>
+        {
+            StartCoroutine(OpenLobby());
+        });
+        //luaenv.DoString("CS.UnityEngine.Debug.Log('hello world')");
+        //luaenv.Dispose();
     }
 
     void OnGUI()
-    {        
-        StrayFogSetting setting = StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>();
+    {
         GUI.skin.label.fontSize = 40;
         GUI.color = Color.black;
-        GUILayout.Label(setting.ToData());
+        GUILayout.Label(StrayFogGamePools.setting.ToData());
 
-        string path = setting.assetBundleRoot + "/ab_xboxone";
-        if (!Directory.Exists(setting.assetBundleRoot))
+        string path = StrayFogGamePools.setting.assetBundleRoot + "/ab_xboxone";
+        if (!Directory.Exists(StrayFogGamePools.setting.assetBundleRoot))
         {
-            Directory.CreateDirectory(setting.assetBundleRoot);
+            Directory.CreateDirectory(StrayFogGamePools.setting.assetBundleRoot);
         }
         GUILayout.Label(path);
         GUILayout.Label(File.Exists(path).ToString());
@@ -49,7 +50,7 @@ public class StrayFogGuideLevel : AbsLevel
         UnityEngine.Debug.Log("Open=>" + enUIWindow.LobbyWindow);
         Stopwatch watch = new Stopwatch();
         watch.Start();
-        StrayFogRunningUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().OpenWindow<LobbyWindow>(enUIWindow.LobbyWindow,
+        StrayFogGamePools.uiWindowManager.OpenWindow<LobbyWindow>(enUIWindow.LobbyWindow,
             (wins, args) =>
             {
                 Stopwatch w = (Stopwatch)args[0];

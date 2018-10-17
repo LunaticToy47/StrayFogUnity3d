@@ -21,7 +21,7 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
     /// </summary>
     void Awake()
     {
-        StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGameManager>().Initialization(() =>
+        StrayFogGamePools.gameManager.Initialization(() =>
         {
             try
             {
@@ -31,12 +31,12 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
             {
                 mError = ep.Message;
             }
-            StrayFogRunningUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>().LoadAssetInMemory(
+            StrayFogGamePools.assetBundleManager.LoadAssetInMemory(
                 enAssetDiskMapingFile.f_ExampleGuide_unity,
                 enAssetDiskMapingFolder.Assets_Game_AssetBundles_Scene,
                 (result) =>
                 {
-                    StrayFogRunningUtility.SingleMonoBehaviour<StrayFogSceneManager>().LoadScene(result.assetName);
+                    StrayFogGamePools.sceneManager.LoadScene(result.assetName);
                 }, 1, "A");
         });
     }
@@ -47,8 +47,8 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
     /// </summary>
     void OnGUI()
     {
-        GUILayout.Label(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource);
-        GUILayout.Label(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbConnectionString);
+        GUILayout.Label(StrayFogGamePools.setting.dbSource);
+        GUILayout.Label(StrayFogGamePools.setting.dbConnectionString);
         foreach (Table_TableColumnMaping t in mTables)
         {
             GUILayout.Label(t.JsonSerialize());

@@ -21,11 +21,11 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
             m_isInitialized = true;
             List<Table_GameSetting> settings = SQLiteEntityHelper.Select<Table_GameSetting>();
             runningSetting = settings[0];
-            StrayFogRunningUtility.SingleScriptableObject<StrayFogRunningApplication>().OnRegisterGuide += Current_OnRegisterGuide;
-            StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGuideManager>().OnIsLevel += Current_OnIsLevel;
-            StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGuideManager>().OnWindowIsOpened += Current_OnWindowIsOpened;
-            StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGuideManager>().OnTriggerFinished += Current_OnTriggerFinished;
-            StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGuideManager>().TriggerCheck();
+            StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
+            StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
+            StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
+            StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
+            StrayFogGamePools.guideManager.TriggerCheck();
         }
 
         if (_onCallback != null)
@@ -50,7 +50,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
     /// <returns>true:打开,false:未打开</returns>
     bool Current_OnWindowIsOpened(int _windowId)
     {
-        return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogUIWindowManager>().IsOpenedWindow(_windowId);
+        return StrayFogGamePools.uiWindowManager.IsOpenedWindow(_windowId);
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
     /// <param name="_guide">引导</param>
     void Current_OnRegisterGuide(UIGuideRegister _guide)
     {
-        StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGuideManager>().RegisterGuide(_guide);
+        StrayFogGamePools.guideManager.RegisterGuide(_guide);
     }
 
     /// <summary>

@@ -34,7 +34,7 @@ public class StrayFogFMSLevel : AbsLevel
     /// </summary>
     void Awake()
     {
-        StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGameManager>().Initialization(() =>
+        StrayFogGamePools.gameManager.Initialization(() =>
         {
             StartCoroutine(LoadCharacter());
         });
@@ -49,7 +49,7 @@ public class StrayFogFMSLevel : AbsLevel
         yield return new WaitForSeconds(1);
         Stopwatch watch = new Stopwatch();
         watch.Start();
-        StrayFogRunningUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>().LoadAssetInMemory(enAssetDiskMapingFile.f_pf_hero_1002_prefab, enAssetDiskMapingFolder.Assets_Game_AssetBundles_Prefabs_Character,
+        StrayFogGamePools.assetBundleManager.LoadAssetInMemory(enAssetDiskMapingFile.f_pf_hero_1002_prefab, enAssetDiskMapingFolder.Assets_Game_AssetBundles_Prefabs_Character,
             (result) =>
             {
                 GameObject hero = result.Instantiate<GameObject>();

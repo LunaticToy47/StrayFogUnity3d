@@ -121,7 +121,7 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
     /// <param name="_parameter">加载参数</param>
     public void BeginLoad(AssetBundleLoaderParameter _parameter)
     {
-        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
+        if (StrayFogGamePools.setting.isInternal)
         {
             #region 内部资源加载
             if (File.Exists(_parameter.assetDiskMaping.inAssetPath))
@@ -178,9 +178,9 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
             if (!mCacheMemoryMaping.ContainsKey(key))
             {
                 Object value = null;
-                if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
+                if (StrayFogGamePools.setting.isInternal)
                 {
-                    value = StrayFogRunningUtility.SingleScriptableObject<StrayFogRunningApplication>().LoadAssetAtPath(_assetDiskMaping.inAssetPath, _type);
+                    value = StrayFogGamePools.runningApplication.LoadAssetAtPath(_assetDiskMaping.inAssetPath, _type);
                 }
                 else
                 {
