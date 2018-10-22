@@ -17,10 +17,6 @@ public class StrayFogGuideLevel : AbsLevel
         {
             StartCoroutine(OpenLobby());
         });
-        
-        StrayFogGamePools.xLuaManager.luaEnv.DoString("CS.UnityEngine.Debug.Log('hello world')");
-        StrayFogGamePools.xLuaManager.luaEnv.DoString("CS.UnityEngine.Debug.Log(CS.StrayFogGamePools.setting.assetBundleRoot)");
-        StrayFogGamePools.xLuaManager.luaEnv.Dispose();
     }
 
     void OnGUI()

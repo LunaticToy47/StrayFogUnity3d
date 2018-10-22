@@ -206,8 +206,13 @@ using UnityEngine;
         /// Cginc库
         /// </summary>
         [FileExt(".cginc")]
-        Cginc,        
-    }
+        Cginc,
+        /// <summary>
+        /// xlua文件
+        /// </summary>
+        [FileExt(".xlua.txt")]
+        XLuaTxt,    
+}
 #endregion
 
 /// <summary>

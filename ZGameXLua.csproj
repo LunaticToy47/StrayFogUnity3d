@@ -309,14 +309,14 @@
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.render-pipelines.core@3.0.0-preview/CoreRP/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>C:/Users/Bzl/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.render-pipelines.core@3.0.0-preview/CoreRP/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>
