@@ -29,7 +29,7 @@ public abstract class AbsSingleMonoBehaviour : AbsMonoBehaviour
     {
         Type t = typeof(T);
         int k = t.GetHashCode();
-        if (!mSingleMaping.ContainsKey(k))
+        if (!mSingleMaping.ContainsKey(k) || mSingleMaping[k] == null)
         {
             GameObject go = new GameObject(typeof(T).FullName);
             T ins = go.AddComponent<T>();

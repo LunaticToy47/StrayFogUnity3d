@@ -1,9 +1,10 @@
 ﻿#if UNITY_EDITOR 
+using System;
 using System.IO;
 /// <summary>
 /// 抽象资源配置
 /// </summary>
-public abstract class AbsEdtiorAssetConfig
+public abstract class AbsEdtiorAssetConfig : ICloneable
 {
     #region public 构造函数
     /// <summary>
@@ -13,11 +14,12 @@ public abstract class AbsEdtiorAssetConfig
     /// <param name="_directory">目录</param>
     /// <param name="_ext">后缀</param>
     public AbsEdtiorAssetConfig(string _name, string _directory,
-        enFileExt _ext)
+    enFileExt _ext)
     {
         OnSetName(_name);
         OnSetDirectory(_directory);
         OnSetExt(_ext);
+        OnReset();
     }
     #endregion
 
@@ -147,6 +149,21 @@ public abstract class AbsEdtiorAssetConfig
     /// </summary>
     protected abstract void OnCreateAsset();
     #endregion
+    #endregion
+
+    #region ICloneable
+    /// <summary>
+    /// 克隆
+    /// </summary>
+    /// <returns>克隆后对象</returns>
+    public object Clone()
+    {
+        return OnClone();
+    }
+    /// <summary>
+    /// 克隆对象
+    /// </summary>
+    protected abstract AbsEdtiorAssetConfig OnClone();
     #endregion
 }
 #endif

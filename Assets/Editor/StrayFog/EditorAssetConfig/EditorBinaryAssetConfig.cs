@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR 
+using System;
 using System.IO;
 using UnityEditor;
 /// <summary>
@@ -54,6 +55,22 @@ public class EditorBinaryAssetConfig : AbsEdtiorAssetConfig
                 File.Delete(fileName);
                 break;
         }
+    }
+    #endregion
+
+    #region ICloneable
+    /// <summary>
+    /// 克隆对象
+    /// </summary>
+    protected override AbsEdtiorAssetConfig OnClone()
+    {
+        byte[] bts = new byte[0];
+        if (bytes != null)
+        {
+            bts = new byte[bytes.LongLength];
+            Array.Copy(bytes, bts, bytes.LongLength);
+        }
+        return new EditorBinaryAssetConfig(name, directory, ext, bts);
     }
     #endregion
 }

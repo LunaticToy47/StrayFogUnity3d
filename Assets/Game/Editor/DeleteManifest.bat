@@ -1,3 +1,3 @@
 @echo on
-del /s/q C:\Users\Bzl\AppData\LocalLow\Bzl\StrayFogUnity3d\ab_xboxone\*.manifest
+del /s/q C:\Users\baozhenliang\AppData\LocalLow\Bzl\StrayFogUnity3d\ab_win\*.manifest
 ping -n 3 127.1>nul & exit

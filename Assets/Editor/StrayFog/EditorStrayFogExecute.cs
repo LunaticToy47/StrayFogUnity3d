@@ -858,12 +858,20 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildDeleteNouseAssetBatToPackage()
     {
+        EditorTextAssetConfig deleteManifestBat = (EditorTextAssetConfig)mDeleteManifestBat.Clone();
+        EditorTextAssetConfig debugProfilerBat = (EditorTextAssetConfig)mDebugProfilerBat.Clone();
+        EditorTextAssetConfig clearSvnReg = (EditorTextAssetConfig)mClearSvnReg.Clone();
+
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
-        string scriptTemplete = mDeleteManifestBat.text;
+        string scriptTemplete = deleteManifestBat.text;
         string replaceTemplete = string.Empty;
         string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#DelCmd#", out replaceTemplete);
         StringBuilder sbTemplete = new StringBuilder();
-        string[] directories = Directory.GetDirectories(path);
+        string[] directories = new string[0];
+        if (Directory.Exists(path))
+        {
+            directories = Directory.GetDirectories(path);
+        }        
         foreach (string key in directories)
         {
             sbTemplete.AppendLine(formatTemplete.Replace("#Folder#", key));
@@ -871,13 +879,13 @@ public sealed class EditorStrayFogExecute
         sbTemplete.AppendLine(formatTemplete.Replace("#Folder#", path));
         string result = scriptTemplete.Replace(replaceTemplete, sbTemplete.ToString());
         result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
-        mDeleteManifestBat.SetText(result);
-        mDeleteManifestBat.CreateAsset();
+        deleteManifestBat.SetText(result);
+        deleteManifestBat.CreateAsset();
 
-        mDebugProfilerBat.SetText(mDebugProfilerBat.text.Replace("#DebugProfiler#", PlayerSettings.applicationIdentifier));
-        mDebugProfilerBat.CreateAsset();
+        debugProfilerBat.SetText(debugProfilerBat.text.Replace("#DebugProfiler#", PlayerSettings.applicationIdentifier));
+        debugProfilerBat.CreateAsset();
 
-        mClearSvnReg.CreateAsset();
+        clearSvnReg.CreateAsset();
         Debug.Log("ExecuteBuildPackageDeleteNouseAssetBat Succeed!");
     }
     #endregion

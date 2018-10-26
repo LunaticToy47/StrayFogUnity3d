@@ -12,6 +12,7 @@ public enum enAssetDiskMapingFile
 	f_ExampleFMS_unity = -1553022821,
 	f_ExampleGuide_unity = 1555606421,
 	f_ExampleProject_unity = -80690262,
+	f_ExampleXLua_unity = -699454701,
 	f_chgPowerCircle1_png = 252311722,
 	f_chgPowerCircle2_png = 64044992,
 	f_chgPowerCircle3_png = 776920590,
@@ -145,5 +146,7 @@ public enum enAssetDiskMapingFile
 	f_Skill100405_png = -1488506594,
 	f_Skill100406_png = -745009968,
 	f_GuideWindow_prefab = -1287614635,
-	f_LobbyWindow_prefab = -1625153888,	
+	f_LobbyWindow_prefab = -1625153888,
+	f_StrayFogXLuaLevel_xlua_txt = -1566411474,
+	f_ZGame_asmdef = -404197285,	
 }

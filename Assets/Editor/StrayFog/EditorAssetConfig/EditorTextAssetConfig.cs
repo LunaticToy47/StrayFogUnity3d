@@ -48,5 +48,15 @@ public class EditorTextAssetConfig : AbsEdtiorAssetConfig
         File.WriteAllText(fileName, text);
     }
     #endregion
+
+    #region ICloneable
+    /// <summary>
+    /// 克隆对象
+    /// </summary>
+    protected override AbsEdtiorAssetConfig OnClone()
+    {
+        return new EditorTextAssetConfig(name, directory, ext, text);
+    }
+    #endregion
 }
 #endif

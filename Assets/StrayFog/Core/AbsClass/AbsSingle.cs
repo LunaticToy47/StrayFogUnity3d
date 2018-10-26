@@ -28,7 +28,7 @@ public abstract class AbsSingle
     {
         Type t = typeof(T);
         int k = t.GetHashCode();
-        if (!mSingleMaping.ContainsKey(k))
+        if (!mSingleMaping.ContainsKey(k) || mSingleMaping[k] == null)
         {
             T ins = Activator.CreateInstance<T>();
             ins.OnAfterConstructor();

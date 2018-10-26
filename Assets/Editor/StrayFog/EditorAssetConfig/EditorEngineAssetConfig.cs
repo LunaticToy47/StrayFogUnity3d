@@ -24,15 +24,7 @@ public class EditorEngineAssetConfig : AbsEdtiorAssetConfig
     }
     #endregion
 
-    #region public 属性        
-    /// <summary>
-    /// 程序集
-    /// </summary>
-    public Assembly assembly { get; private set; }
-    /// <summary>
-    /// 类类型
-    /// </summary>
-    public Type classType { get; private set; }
+    #region public 属性
     /// <summary>
     /// 类全名称
     /// </summary>
@@ -91,6 +83,16 @@ public class EditorEngineAssetConfig : AbsEdtiorAssetConfig
                 #endregion
                 break;
         }
+    }
+    #endregion
+
+    #region ICloneable
+    /// <summary>
+    /// 克隆对象
+    /// </summary>
+    protected override AbsEdtiorAssetConfig OnClone()
+    {
+        return new EditorEngineAssetConfig(name, directory, ext, classFullName);
     }
     #endregion
 }
