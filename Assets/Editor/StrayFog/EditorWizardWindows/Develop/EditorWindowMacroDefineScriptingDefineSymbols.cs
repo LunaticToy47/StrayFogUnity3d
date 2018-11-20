@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 脚本编译宏指令
 /// </summary>
-public class EditorWindowMacroDefineScriptingDefineSymbols : EditorWindow
+public class EditorWindowMacroDefineScriptingDefineSymbols : AbsEditorWindow
 {
     /// <summary>
     /// 系统指令状态

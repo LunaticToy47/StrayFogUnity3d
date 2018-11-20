@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 设置UIGuideRegister的GraphicNodeIndexs参数值
 /// </summary>
-public class EditorWindowSetUIGuideRegister_GraphicNodeIndexs : EditorWindow
+public class EditorWindowSetUIGuideRegister_GraphicNodeIndexs : AbsEditorWindow
 {
     /// <summary>
     /// 滚动视图

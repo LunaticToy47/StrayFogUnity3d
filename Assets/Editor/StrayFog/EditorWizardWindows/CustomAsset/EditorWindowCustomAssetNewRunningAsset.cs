@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 自定义运行时资源窗口
 /// </summary>
-public class EditorWindowCustomAssetNewRunningAsset : EditorWindow
+public class EditorWindowCustomAssetNewRunningAsset : AbsEditorWindow
 {
     /// <summary>
     /// 已存在的资源组

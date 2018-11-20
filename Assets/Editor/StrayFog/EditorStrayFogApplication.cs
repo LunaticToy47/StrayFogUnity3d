@@ -11,6 +11,13 @@ using UnityEngine;
 /// </summary>
 public sealed class EditorStrayFogApplication
 {
+    #region Assets路径
+    /// <summary>
+    /// Assets路径
+    /// </summary>
+    public readonly static string assetsPath = Path.GetFullPath("Assets");
+    #endregion
+
     #region curvePresetLibrary 曲线预置库类型
     /// <summary>
     /// 曲线预置库类型
@@ -118,7 +125,7 @@ public sealed class EditorStrayFogApplication
     /// <returns>True:是,False:否</returns>
     public static bool IsSubToProject(string _path)
     {
-        return IsSubTo(_path, Path.GetDirectoryName(Application.dataPath));
+        return IsSubTo(_path, Path.GetDirectoryName(assetsPath));
     }
     #endregion
 
@@ -143,7 +150,7 @@ public sealed class EditorStrayFogApplication
     /// <returns>相对路径</returns>
     public static string GetRelativeToProject(string _path)
     {
-        return GetRelativeTo(_path, Path.GetDirectoryName(Application.dataPath));
+        return GetRelativeTo(_path, Path.GetDirectoryName(assetsPath));
     }
     #endregion
 
@@ -171,7 +178,7 @@ public sealed class EditorStrayFogApplication
     {
         if (string.IsNullOrEmpty(_path))
         {//如果为空，则直接转到Assets路径下
-            _path = Path.GetFileName(Application.dataPath);
+            _path = Path.GetFileName(assetsPath);
         }
         else if (IsSubToProject(_path))
         {//如果是工程子目录

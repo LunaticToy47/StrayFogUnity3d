@@ -34,9 +34,9 @@ static class EditorCustomAssetMenuItem
     [MenuItem(mcHierarchy + mcCustomAsset, false, mcPriority + 1)]
     static void EditorDevelopMenuItem_CustomAssetNewAssetWindow()
     {
-        EditorWindowCustomAssetNewAsset win =
-        EditorWindow.GetWindow<EditorWindowCustomAssetNewAsset>(mcCustomAsset);
-        win.Show();
+        EditorWindowCustomAssetCreateNewAsset win =
+        EditorWindow.GetWindow<EditorWindowCustomAssetCreateNewAsset>(mcCustomAsset);
+        win.ShowUtility();
     }
     #endregion
 

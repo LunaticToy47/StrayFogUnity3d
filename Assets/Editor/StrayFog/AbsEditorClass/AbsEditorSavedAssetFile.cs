@@ -63,7 +63,7 @@ public abstract class AbsEditorSavedAssetFile : AbsScriptableObject
         #region Add Folder
         if (GUILayout.Button("Add Folder"))
         {
-            string folder = EditorUtility.OpenFolderPanel("Add Folder", Application.dataPath, "");
+            string folder = EditorUtility.OpenFolderPanel("Add Folder", EditorStrayFogApplication.assetsPath, "");
             if (EditorStrayFogApplication.IsSubToProject(folder))
             {
                 folder = EditorStrayFogApplication.GetRelativeToProject(folder);
@@ -75,7 +75,7 @@ public abstract class AbsEditorSavedAssetFile : AbsScriptableObject
             }
             else
             {
-                EditorUtility.DisplayDialog("Folder", "Folder must be in 【" + Application.dataPath + "】", "OK");
+                EditorUtility.DisplayDialog("Folder", "Folder must be in 【" + EditorStrayFogApplication.assetsPath + "】", "OK");
             }
         }
         #endregion

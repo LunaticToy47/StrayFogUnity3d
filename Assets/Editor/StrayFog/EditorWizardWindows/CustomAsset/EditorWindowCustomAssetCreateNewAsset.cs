@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 自定义资源窗口
 /// </summary>
-public class EditorWindowCustomAssetNewAsset : EditorWindow
+public class EditorWindowCustomAssetCreateNewAsset : AbsEditorWindow
 {
     /// <summary>
     /// Txt脚本模板
@@ -34,6 +34,7 @@ public class EditorWindowCustomAssetNewAsset : EditorWindow
     {
 
     }
+
     /// <summary>
     /// OnGUI
     /// </summary>
