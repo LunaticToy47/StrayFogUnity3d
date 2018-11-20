@@ -51,7 +51,6 @@ public class SQLiteHelper
         {
             mDbConnection.Close();
             mDbConnection.Dispose();
-            mDbConnection = null;
         }
         SqliteConnection.ClearAllPools();
         GC.Collect();
@@ -68,6 +67,10 @@ public class SQLiteHelper
         SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
         //SqliteCommand cmd = mDbConnection.CreateCommand();
         //cmd.CommandText = _queryString;
+        if (mDbConnection.State == System.Data.ConnectionState.Closed)
+        {
+            mDbConnection.Open();
+        }
         SqliteDataReader reader = cmd.ExecuteReader();
         cmd.Dispose();
         cmd = null;
@@ -85,9 +88,14 @@ public class SQLiteHelper
         SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
         //SqliteCommand cmd = mDbConnection.CreateCommand();
         //cmd.CommandText = _queryString;
-        int result = cmd.ExecuteNonQuery();
+        if (mDbConnection.State == System.Data.ConnectionState.Closed)
+        {
+            mDbConnection.Open();
+        }
+        int result = cmd.ExecuteNonQuery();        
         cmd.Dispose();
-        cmd = null;
+        cmd = null;        
+        mDbConnection.Close();
         return result;
     }
     /// <summary>
@@ -100,9 +108,14 @@ public class SQLiteHelper
         SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
         //SqliteCommand cmd = mDbConnection.CreateCommand();
         //cmd.CommandText = _queryString;
+        if (mDbConnection.State == System.Data.ConnectionState.Closed)
+        {
+            mDbConnection.Open();
+        }
         object result = cmd.ExecuteScalar();
         cmd.Dispose();
         cmd = null;
+        mDbConnection.Close();
         return result;
     }
 
