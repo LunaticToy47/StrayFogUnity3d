@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
     /// <summary>
@@ -630,7 +631,9 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
                 {
                     prefab.SetActive(false);
                     prefab.name = cfg.name + "[" + cfg.id + "]";
-                    window = prefab.AddComponent<W>();
+                    Type type = Assembly.GetCallingAssembly().GetType(cfg.name);
+                    //window = prefab.AddComponent<W>();
+                    window = (W)prefab.AddComponent(type);
                     window.SetConfig(cfg);
                     OnGetCanvas((RenderMode)cfg.renderMode).AttachWindow(window);
                     mWindowInstanceMaping.Add(cfg.id, window);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
@@ -47,7 +48,8 @@ public class StrayFogGuideLevel : AbsLevel
         UnityEngine.Debug.Log("Open=>" + enUIWindow.LobbyWindow);
         Stopwatch watch = new Stopwatch();
         watch.Start();
-        StrayFogGamePools.uiWindowManager.OpenWindow<LobbyWindow>(enUIWindow.LobbyWindow,
+        StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIWindowView>(
+            new Enum[2] { enUIWindow.LobbyWindow, enUIWindow.MessageBoxWindow },
             (wins, args) =>
             {
                 Stopwatch w = (Stopwatch)args[0];
