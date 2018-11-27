@@ -110,6 +110,9 @@ public class GuideWindow : AbsUIWindowView
     /// </summary>
     public void ClearTrigger()
     {
-        mUIGraphicMask.ClearGraphicMask();
+        if (mUIGraphicMask != null)
+        {
+            mUIGraphicMask.ClearGraphicMask();
+        }        
     }
 }

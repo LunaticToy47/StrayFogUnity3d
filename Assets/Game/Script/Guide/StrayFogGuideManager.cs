@@ -81,7 +81,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
             StrayFogGamePools.uiWindowManager.OpenWindow<GuideWindow>(ids.ToArray(), (sets, pars) =>
             {
                 mGuideWindow = sets[0];
-                mGuideWindow.SetActiveImmediate(false);
+                mGuideWindow.CloseWindow();
             });
         }
         #endregion
