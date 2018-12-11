@@ -1,7 +1,15 @@
 ﻿using System;
 using System.IO;
 
+/// <summary>
+/// 资源结果回调处理
+/// </summary>
+/// <param name="_assetDiskMaping">资源磁盘映射</param>
+/// <param name="_type">资源类型</param>
+/// <param name="_params">额外参数</param>
+/// <param name="_callback">回调函数【参数一：资源实例，参数二：额外参数】</param>
 public delegate void AssetBundleResultCallbackEventHandle(View_AssetDiskMaping _assetDiskMaping, Type _type, object[] _params,Action<UnityEngine.Object, object[]> _callback);
+
 /// <summary>
 /// AssetBundle结果
 /// </summary>
