@@ -52,20 +52,23 @@ public class StrayFogFMSLevel : AbsLevel
         StrayFogGamePools.assetBundleManager.LoadAssetInMemory(enAssetDiskMapingFile.f_pf_hero_1002_prefab, enAssetDiskMapingFolder.Assets_Game_AssetBundles_Prefabs_Character,
             (result) =>
             {
-                GameObject hero = result.Instantiate<GameObject>();
-                Stopwatch w = (Stopwatch)result.extraParameter[0];
-                w.Stop();
-                UnityEngine.Debug.Log(w.Elapsed + "=>" + hero.gameObject);
+                result.Instantiate<GameObject>((rst,args)=> {
+                    GameObject hero = rst;
+                    Stopwatch w = (Stopwatch)args[0];
+                    w.Stop();
+                    UnityEngine.Debug.Log(w.Elapsed + "=>" + hero.gameObject);
 
-                Animator animator = hero.GetComponent<Animator>();
-                mFMSMachine = hero.GetComponent<FMSMachine>();
-                if (mFMSMachine == null)
-                {
-                    mFMSMachine = hero.AddComponent<FMSMachine>();
-                }
-                mFMSMachine.SetAnimator(animator);
-                mFMSMachine.transform.position = Vector3.back * 7;
-                mFMSMachine.transform.eulerAngles = Vector3.up * 180;
+                    Animator animator = hero.GetComponent<Animator>();
+                    mFMSMachine = hero.GetComponent<FMSMachine>();
+                    if (mFMSMachine == null)
+                    {
+                        mFMSMachine = hero.AddComponent<FMSMachine>();
+                    }
+                    mFMSMachine.SetAnimator(animator);
+                    mFMSMachine.transform.position = Vector3.back * 7;
+                    mFMSMachine.transform.eulerAngles = Vector3.up * 180;
+                }, result.extraParameter);
+                
             }, watch);
     }
 

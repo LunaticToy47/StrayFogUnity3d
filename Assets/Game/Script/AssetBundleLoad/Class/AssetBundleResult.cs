@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+
+public delegate void AssetBundleResultCallbackEventHandle(View_AssetDiskMaping _assetDiskMaping, Type _type, object[] _params,Action<UnityEngine.Object, object[]> _callback);
 /// <summary>
 /// AssetBundle结果
 /// </summary>
@@ -11,7 +14,7 @@ public class AssetBundleResult
     /// <param name="_instantiate">实例化函数</param>
     /// <param name="_extraParameter">额外参数</param>
     public AssetBundleResult(View_AssetDiskMaping _assetDiskMaping,
-        System.Func<View_AssetDiskMaping, System.Type, UnityEngine.Object> _instantiate,
+        AssetBundleResultCallbackEventHandle _instantiate,
         object[] _extraParameter)
     {
         assetDiskMaping = _assetDiskMaping;
@@ -34,14 +37,20 @@ public class AssetBundleResult
     /// <summary>
     /// 实例化
     /// </summary>
-    System.Func<View_AssetDiskMaping, System.Type, UnityEngine.Object> mInstantiate;
+    AssetBundleResultCallbackEventHandle mInstantiate;
     /// <summary>
     /// 实例化对象
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
+    /// <param name="_callback">回调</param>
+    /// <param name="_extraParameter">额外参数</param>
     /// <returns>对象</returns>
-    public T Instantiate<T>() where T : UnityEngine.Object
+    public void Instantiate<T>(Action<T,object[]> _callback,params object[] _extraParameter) where T : UnityEngine.Object
     {
-        return (T)mInstantiate(assetDiskMaping, typeof(T));
+        mInstantiate(assetDiskMaping, typeof(T), new object[2] { _callback, _extraParameter },(asset,args)=> {
+            Action<T, object[]> cb = (Action<T, object[]>)args[0];
+            object[] eps = (object[])args[1];
+            cb((T)asset, eps);
+        });
     }
 }

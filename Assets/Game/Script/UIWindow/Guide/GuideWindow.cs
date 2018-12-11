@@ -42,14 +42,17 @@ public class GuideWindow : AbsUIWindowView
             enAssetDiskMapingFolder.Assets_Game_AssetBundles_Materials,
             (result) =>
             {
-                mUIGraphicMask.material = result.Instantiate<Material>();
-                mIsSetMaterial = true;
-                Action<UIGuideTrigger[]> call = (Action<UIGuideTrigger[]>)result.extraParameter[0];
-                UIGuideTrigger[] ws = (UIGuideTrigger[])result.extraParameter[1];
-                if (call != null)
+                result.Instantiate<Material>((rst, args) =>
                 {
-                    call.Invoke(ws);
-                }
+                    mUIGraphicMask.material = rst;
+                    mIsSetMaterial = true;
+                    Action<UIGuideTrigger[]> call = (Action<UIGuideTrigger[]>)args[0];
+                    UIGuideTrigger[] ws = (UIGuideTrigger[])args[1];
+                    if (call != null)
+                    {
+                        call.Invoke(ws);
+                    }
+                }, result.extraParameter);
             }, _onCallback, _guideWidgets);
         }
         else

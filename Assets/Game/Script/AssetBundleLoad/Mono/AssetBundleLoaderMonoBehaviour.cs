@@ -169,7 +169,8 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
     /// <param name="_assetDiskMaping">磁盘映射</param>
     /// <param name="_type">对象类别</param>
     /// <returns>对象</returns>
-    Object OnInstantiate(View_AssetDiskMaping _assetDiskMaping, System.Type _type)
+    void OnInstantiate(View_AssetDiskMaping _assetDiskMaping, System.Type _type, object[] _params, 
+        System.Action<UnityEngine.Object, object[]> _callback)
     {
         Object result = null;
         int key = _assetDiskMaping.inAssetPath.GetHashCode();
@@ -201,7 +202,7 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
                 }
             }
         }
-        return result;
+        _callback(result,_params);
     }
     #endregion
 

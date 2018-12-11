@@ -620,50 +620,70 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
         where W : AbsUIWindowView
     {
         List<W> windows = new List<W>();
+        int index = _winCfgs.Length;
         foreach (View_UIWindowSetting cfg in _winCfgs)
         {
             W window = default(W);
             #region 实例化窗口
             if (!mWindowInstanceMaping.ContainsKey(cfg.id))
             {
-                GameObject prefab = _result[cfg.id].Instantiate<GameObject>();
-                if (prefab != null)
+                _result[cfg.id].Instantiate<GameObject>((rst, args) =>
                 {
-                    prefab.SetActive(false);
-                    prefab.name = cfg.name + "[" + cfg.id + "]";
-                    Type type = Assembly.GetCallingAssembly().GetType(cfg.name);
-                    //window = prefab.AddComponent<W>();
-                    window = (W)prefab.AddComponent(type);
-                    window.SetConfig(cfg);
-                    OnGetCanvas((RenderMode)cfg.renderMode).AttachWindow(window);
-                    mWindowInstanceMaping.Add(cfg.id, window);
-                }
+                    GameObject prefab = rst;
+                    if (prefab != null)
+                    {
+                        prefab.SetActive(false);
+                        prefab.name = cfg.name + "[" + cfg.id + "]";
+                        Type type = Assembly.GetCallingAssembly().GetType(cfg.name);
+                        //window = prefab.AddComponent<W>();
+                        window = (W)prefab.AddComponent(type);
+                        window.SetConfig(cfg);
+                        OnGetCanvas((RenderMode)cfg.renderMode).AttachWindow(window);
+                        mWindowInstanceMaping.Add(cfg.id, window);
+                        window.rectTransform.SetSiblingIndex(mWindowLayerSiblingIndex[(int)cfg.layer][cfg.id]);
+                        windows.Add(window);
+                        index--;
+                        if (index <= 0)
+                        {
+                            OnSerializeAndActiveWindow<W>(windows, (View_UIWindowSetting[])args[0], (UIWindowEntityEventHandler<W>)args[1], (bool)args[2], (object[])args[3]);
+                        }
+                    }
+                }, _winCfgs, _winCallback, _isSerializeOpenWindow, _parameters);
             }
             else
-            {
+            {                
                 window = (W)mWindowInstanceMaping[cfg.id];
+                windows.Add(window);
+                index--;
+                OnSerializeAndActiveWindow<W>(windows, _winCfgs, _winCallback, _isSerializeOpenWindow, _parameters);
             }
-            #endregion
+            #endregion            
+        }        
+    }
 
-            #region 调整窗口深度
-            window.rectTransform.SetSiblingIndex(mWindowLayerSiblingIndex[(int)cfg.layer][cfg.id]);
-            #endregion
-
-            windows.Add(window);
-        }
-
+    /// <summary>
+    /// 序列化和激活窗口
+    /// </summary>
+    /// <param name="_windows">窗口组</param>
+    /// <param name="_winCfgs">窗口配置组</param>
+    /// <param name="_winCallback">窗口回调</param>
+    /// <param name="_isSerializeOpenWindow">是否序列化打开窗口</param>
+    /// <param name="_parameters">参数组</param>
+    void OnSerializeAndActiveWindow<W>(List<W> _windows, View_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _winCallback, bool _isSerializeOpenWindow, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
         if (_isSerializeOpenWindow)
         {
             //序列化打开窗口
             OnSerializeOpenWindow(_winCfgs);
         }
-        foreach (W w in windows)
+        foreach (W w in _windows)
         {
             OnSetWindowActive(w, true);
         }
         if (_winCallback != null)
         {
-            _winCallback.Invoke(windows.ToArray(), _parameters);
+            _winCallback.Invoke(_windows.ToArray(), _parameters);
         }
     }
     #endregion
