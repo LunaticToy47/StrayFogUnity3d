@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 /// <summary>
@@ -164,13 +165,23 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
     /// </summary>
     Dictionary<int, Object> mCacheMemoryMaping = new Dictionary<int, Object>();
     /// <summary>
+    /// 资源与请求映射
+    /// </summary>
+    Dictionary<int, int> mCacheAssetRequestMaping = new Dictionary<int, int>();
+    /// <summary>
+    /// 资源请求回调
+    /// </summary>
+    Dictionary<int, List<object>> mCacheAssetRequestCallback = new Dictionary<int, List<object>>();
+    /// <summary>
     /// Instantiate
     /// </summary>
-    /// <param name="_assetDiskMaping">磁盘映射</param>
+    /// <param name="_assetDiskMaping">磁盘映射</param>    
     /// <param name="_type">对象类别</param>
+    /// <param name="_params">额外参数</param>
+    /// <param name="_callback">回调</param>
     /// <returns>对象</returns>
     void OnInstantiate(View_AssetDiskMaping _assetDiskMaping, System.Type _type, object[] _params, 
-        System.Action<UnityEngine.Object, object[]> _callback)
+        System.Action<Object, object[]> _callback)
     {
         Object result = null;
         int key = _assetDiskMaping.inAssetPath.GetHashCode();
@@ -178,31 +189,109 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         {
             if (!mCacheMemoryMaping.ContainsKey(key))
             {
-                Object value = null;
                 if (StrayFogGamePools.setting.isInternal)
                 {
-                    value = StrayFogGamePools.runningApplication.LoadAssetAtPath(_assetDiskMaping.inAssetPath, _type);
+                    result = StrayFogGamePools.runningApplication.LoadAssetAtPath(_assetDiskMaping.inAssetPath, _type);
+                    mCacheMemoryMaping.Add(key, result);
+                    OnInstantiateCallback(result, _assetDiskMaping, _params, _callback);
                 }
                 else
                 {
-                    value = mAssetBundle.LoadAsset(_assetDiskMaping.fileName, _type);
+                    if (!mCacheAssetRequestCallback.ContainsKey(key))
+                    {
+                        mCacheAssetRequestCallback.Add(key, new List<object>());
+                    }
+                    mCacheAssetRequestCallback[key].Add(new object[3] { _assetDiskMaping , _params , _callback });
+
+                    if (!mCacheAssetRequestMaping.ContainsKey(key))
+                    {
+                        AssetBundleRequest assetRequest = mAssetBundle.LoadAssetAsync(_assetDiskMaping.fileName, _type);
+                        int hashCode = assetRequest.GetHashCode();
+                        mCacheAssetRequestMaping.Add(key, hashCode);
+                        assetRequest.completed += AssetRequest_completed;
+                    }
                 }
-                mCacheMemoryMaping.Add(key, value);
             }
-            result = mCacheMemoryMaping[key];
-            if (result != null)
+            else
             {
-                bool isMemory = result is Texture || result is Sprite ||
-                    _assetDiskMaping.extEnumValue == (int)enFileExt.Asset ||
-                    _assetDiskMaping.extEnumValue == (int)enFileExt.TextAsset
-                    ;
-                if (!isMemory)
-                {
-                    result = Instantiate(result);
-                }
+                OnInstantiateCallback(mCacheMemoryMaping[key], _assetDiskMaping, _params, _callback);
             }
         }
-        _callback(result,_params);
+        else
+        {
+            _callback(result, _params);
+        }
+    }
+
+    /// <summary>
+    /// 资源请求
+    /// </summary>
+    /// <param name="_async">异步</param>
+    void AssetRequest_completed(AsyncOperation _async)
+    {
+        AssetBundleRequest req = (AssetBundleRequest)_async;
+        int hashCode = req.GetHashCode();
+        int callbackKey = 0;
+        foreach (KeyValuePair<int, int> key in mCacheAssetRequestMaping)
+        {
+            if (key.Value == hashCode)
+            {
+                callbackKey = key.Key;
+                break;
+            }
+        }
+        if (!mCacheMemoryMaping.ContainsKey(callbackKey))
+        {
+            mCacheMemoryMaping.Add(callbackKey, req.asset);
+        }
+        foreach (object key in mCacheAssetRequestCallback[callbackKey])
+        {
+            object[] p = (object[])key;
+            OnInstantiateCallback(req.asset,(View_AssetDiskMaping)p[0],(object[])p[1],(System.Action<Object, object[]>)p[2]);
+        }
+    }
+
+    /// <summary>
+    /// 实例回调
+    /// </summary>
+    /// <param name="_asset">资源对象</param>
+    /// <param name="_assetDiskMaping">磁盘映射</param>
+    /// <param name="_params">额外参数</param>
+    /// <param name="_callback">回调</param>
+    void OnInstantiateCallback(Object _asset, View_AssetDiskMaping _assetDiskMaping, object[] _params,
+        System.Action<Object, object[]> _callback)
+    {
+        if (_asset != null)
+        {
+            bool isMemory = _asset is Texture || _asset is Sprite ||
+                _assetDiskMaping.extEnumValue == (int)enFileExt.Asset ||
+                _assetDiskMaping.extEnumValue == (int)enFileExt.TextAsset;
+            if (!isMemory)
+            {
+                StartCoroutine(OnCallback(_asset, _params, _callback));
+            }
+            else
+            {
+                _callback(_asset, _params);
+            }
+        }
+        else
+        {
+            _callback(_asset, _params);
+        }        
+    }
+
+    /// <summary>
+    /// 回调
+    /// </summary>
+    /// <param name="_asset">资源对象</param>
+    /// <param name="_params">额外参数</param>
+    /// <param name="_callback">回调</param>
+    IEnumerator OnCallback(Object _asset, object[] _params, System.Action<Object, object[]> _callback)
+    {
+        yield return new WaitForEndOfFrame();
+        _asset = Instantiate(_asset);
+        _callback(_asset, _params);
     }
     #endregion
 
