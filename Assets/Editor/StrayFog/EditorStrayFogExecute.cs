@@ -78,6 +78,7 @@ public sealed class EditorStrayFogExecute
                         sbLog.AppendLine(n.ToLog());
                         EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodeMaping.Count);
                     }
+                    EditorUtility.ClearProgressBar();
                     if (EditorStrayFogApplication.IsExecuteMethodInCmd())
                     {
                         Debug.Log(sbLog.ToString());
