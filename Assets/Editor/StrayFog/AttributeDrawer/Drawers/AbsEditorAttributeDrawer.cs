@@ -29,6 +29,15 @@ abstract class AbsEditorAttributeDrawer
         return true;
     }
     /// <summary>
+    /// 是否只读
+    /// </summary>
+    /// <param name="_propertyKey">属性Key</param>
+    /// <returns>true:只读,false:非只读</returns>
+    public virtual bool IsReadOnly(int _propertyKey)
+    {
+        return false;
+    }
+    /// <summary>
     /// GetPropertyHeight
     /// </summary>
     /// <param name="_propertyKey">属性Key</param>

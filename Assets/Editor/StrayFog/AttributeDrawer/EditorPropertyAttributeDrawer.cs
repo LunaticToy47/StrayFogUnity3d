@@ -28,6 +28,10 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
     /// </summary>
     bool mIsDraw = false;
     /// <summary>
+    /// 是否只读
+    /// </summary>
+    bool mIsReadOnly = false;
+    /// <summary>
     /// OnGUI
     /// </summary>
     /// <param name="_position">位置</param>
@@ -66,6 +70,7 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
             _label = drawer.Execute(propertyKey, _position, _property, _label, fieldInfo);
             propertyHeight += drawer.GetPropertyHeight(propertyKey);
             mIsDraw &= drawer.IsDrawer(propertyKey);
+            mIsReadOnly |= drawer.IsReadOnly(propertyKey);
         }
         mPropertyHeightMaping[propertyKey] = propertyHeight;
         if (!mPropertyDrawMaping.ContainsKey(propertyKey))
@@ -78,6 +83,11 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
         }
         if (mIsDraw)
         {
+            bool enabled = GUI.enabled;
+            if (mIsReadOnly)
+            {
+                GUI.enabled = false;
+            }
             switch (_property.propertyType)
             {
                 case SerializedPropertyType.Enum:
@@ -95,6 +105,10 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
                     EditorGUI.PropertyField(_position, _property, _label, _property.hasVisibleChildren && _property.isExpanded);
                     #endregion
                     break;
+            }
+            if (mIsReadOnly)
+            {
+                GUI.enabled = enabled;
             }
         }
     }
