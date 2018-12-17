@@ -9,9 +9,9 @@ using UnityEngine;
 sealed class EditorAliasTooltipAttributeDrawer : AbsEditorAttributeDrawer
 {
     /// <summary>
-    /// GUIContent映射
+    /// AliasTooltipAttribute映射
     /// </summary>
-    static Dictionary<int, GUIContent> mGUIContentMaping = new Dictionary<int, GUIContent>();
+    static Dictionary<int, AliasTooltipAttribute> mAliasTooltipMaping = new Dictionary<int, AliasTooltipAttribute>();
     /// <summary>
     /// GetLabel
     /// </summary>
@@ -22,17 +22,17 @@ sealed class EditorAliasTooltipAttributeDrawer : AbsEditorAttributeDrawer
     /// <param name="_fieldInfo">字段信息</param>
     public override GUIContent Execute(int _propertyKey, Rect _position, SerializedProperty _property, GUIContent _label, FieldInfo _fieldInfo)
     {
-        if (!mGUIContentMaping.ContainsKey(_propertyKey))
-        {
-            mGUIContentMaping.Add(_propertyKey, new GUIContent(_label.text, _label.image, _label.tooltip));
+        if (!mAliasTooltipMaping.ContainsKey(_propertyKey))
+        {           
             AliasTooltipAttribute attr = _fieldInfo.GetFirstAttributeAbsolute<AliasTooltipAttribute>();
-            if (attr != null)
-            {
-                mGUIContentMaping[_propertyKey].text = attr.alias;
-                mGUIContentMaping[_propertyKey].tooltip = attr.tooltip;
-            }
+            mAliasTooltipMaping.Add(_propertyKey, attr);
         }
-        return mGUIContentMaping[_propertyKey];
+        if (mAliasTooltipMaping[_propertyKey] != null)
+        {
+            _label.text = mAliasTooltipMaping[_propertyKey].alias;
+            _label.tooltip = mAliasTooltipMaping[_propertyKey].tooltip;
+        }
+        return _label;
     }
 }
 #endif
