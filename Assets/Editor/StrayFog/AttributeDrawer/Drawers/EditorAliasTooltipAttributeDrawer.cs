@@ -24,7 +24,7 @@ sealed class EditorAliasTooltipAttributeDrawer : AbsEditorAttributeDrawer
     {
         if (!mGUIContentMaping.ContainsKey(_propertyKey))
         {
-            mGUIContentMaping.Add(_propertyKey, _label);
+            mGUIContentMaping.Add(_propertyKey, new GUIContent(_label.text, _label.image, _label.tooltip));
             AliasTooltipAttribute attr = _fieldInfo.GetFirstAttributeAbsolute<AliasTooltipAttribute>();
             if (attr != null)
             {
