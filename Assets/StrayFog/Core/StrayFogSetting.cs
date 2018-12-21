@@ -110,8 +110,10 @@ public class StrayFogSetting : AbsSingleScriptableObject
             return
 #if UNITY_WEBGL
 "";
-# else
-Application.persistentDataPath + "/" + platform;
+#elif (UNITY_STANDALONE_WIN)&& !UNITY_EDITOR
+            Path.GetDirectoryName(Application.dataPath) + "/" + platform;
+#else
+            Application.persistentDataPath + "/" + platform;
 #endif
         }
     }
