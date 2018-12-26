@@ -65,6 +65,30 @@ public class FMSMachine : AbsMonoBehaviour
     }
     #endregion
 
+    #region GetStateHashName 获得指定状态的HashName值
+    /// <summary>
+    /// 获得指定状态的HashName值
+    /// </summary>
+    /// <param name="_state">状态</param>
+    /// <returns>HashName值</returns>
+    public int GetStateHashName(enFMSState _state)
+    {
+        return (int)_state;
+    }
+    #endregion
+
+    #region GetParameterId 获得参数Id值
+    /// <summary>
+    /// 获得参数Id值
+    /// </summary>
+    /// <param name="_parameter">参数</param>
+    /// <returns>Id值</returns>
+    public int GetParameterId(enFMSParameter _parameter)
+    {
+        return (int)_parameter;
+    }
+    #endregion
+
     #region CrossFade 淡入淡出   
     /// <summary>
     /// 淡入淡出
@@ -72,16 +96,16 @@ public class FMSMachine : AbsMonoBehaviour
     /// <param name="_state">状态</param>
     public void CrossFade(enFMSState _state)
     {
-        CrossFade(_state, Time.fixedDeltaTime);
+        CrossFade(_state, 0);
     }
     /// <summary>
-    /// 淡入淡出Attack1_1
+    /// 淡入淡出
     /// </summary>
     /// <param name="_state">状态</param>
-    /// <param name="_transitionDuration">转换时间</param>
-    public void CrossFade(enFMSState _state, float _transitionDuration)
+    /// <param name="_normalizedTransitionDuration">归一化转换时间值</param>
+    public void CrossFade(enFMSState _state, float _normalizedTransitionDuration)
     {
-        CrossFade((int)_state, _transitionDuration);
+        CrossFade(GetStateHashName(_state), _normalizedTransitionDuration);
     }
     /// <summary>
     /// 淡入淡出
@@ -89,16 +113,16 @@ public class FMSMachine : AbsMonoBehaviour
     /// <param name="_stateNameHash">状态值</param>
     public void CrossFade(int _stateNameHash)
     {
-        CrossFade(_stateNameHash, Time.fixedDeltaTime);
+        CrossFade(_stateNameHash, 0);
     }
     /// <summary>
-    /// 淡入淡出Attack1_1
+    /// 淡入淡出
     /// </summary>
     /// <param name="_stateNameHash">状态NameHash值</param>
-    /// <param name="_transitionDuration">转换时间</param>
-    public void CrossFade(int _stateNameHash, float _transitionDuration)
+    /// <param name="_normalizedTransitionDuration">归一化转换时间值</param>
+    public void CrossFade(int _stateNameHash, float _normalizedTransitionDuration)
     {
-        mAnimator.CrossFade(_stateNameHash, Mathf.Clamp(_transitionDuration, 0, float.MaxValue));
+        mAnimator.CrossFade(_stateNameHash, Mathf.Clamp01(_normalizedTransitionDuration));
     }
     #endregion
 

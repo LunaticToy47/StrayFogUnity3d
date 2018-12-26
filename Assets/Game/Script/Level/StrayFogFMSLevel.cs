@@ -30,6 +30,14 @@ public class StrayFogFMSLevel : AbsLevel
     /// </summary>
     Vector2 mParameterScrollViewPosition = Vector2.zero;
     /// <summary>
+    /// 采样归一化时间
+    /// </summary>
+    float mSampleNormalizedTime = 0;
+    /// <summary>
+    /// 自动采样
+    /// </summary>
+    bool mAutoSample = true;
+    /// <summary>
     /// Awake
     /// </summary>
     void Awake()
@@ -114,7 +122,23 @@ public class StrayFogFMSLevel : AbsLevel
             GUILayout.EndHorizontal();
             GUILayout.EndScrollView();
 
-            GUILayout.EndVertical();
+            if (mFMSMachine.IsState(enFMSState.RunSample))
+            {
+                GUILayout.BeginHorizontal();
+                mAutoSample = GUILayout.Toggle(mAutoSample,"Auto Sample");
+                mSampleNormalizedTime = GUILayout.HorizontalSlider(mSampleNormalizedTime, 0, 1);
+                mFMSMachine.SetFloat(enFMSParameter.sampleNormalizedTime, mSampleNormalizedTime);
+                GUILayout.EndHorizontal();
+                GUILayout.EndVertical();
+            }            
+        }
+    }
+
+    private void Update()
+    {
+        if (mAutoSample)
+        {
+            mSampleNormalizedTime += deltaTime;
         }
     }
 }

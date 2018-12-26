@@ -4,159 +4,161 @@ using UnityEngine;
 /// FMS状态机映射
 /// </summary>
 public sealed class FMSMachineMaping
-{
-    #region MachineForLayer映射
-    /// <summary>
-    /// MachineForLayer映射
-    /// </summary>
-    readonly static Dictionary<int, List<int>> mMachineForLayerMaping = new Dictionary<int, List<int>>() {
-            { (int)enFMSMachine.Appear,new List<int> { 0, } },
-            { (int)enFMSMachine.Attack,new List<int> { 0, } },
-            { (int)enFMSMachine.Base_Layer,new List<int> { 0, } },
-            { (int)enFMSMachine.CutOff,new List<int> { 0, } },
-            { (int)enFMSMachine.MaxSkill,new List<int> { 0, } },
-            { (int)enFMSMachine.Move,new List<int> { 0, } },
-            { (int)enFMSMachine.Skill,new List<int> { 0, } },
-        };
-    #endregion
-    #region LayerForMachine映射
-    /// <summary>
-    /// LayerForMachine映射
-    /// </summary>
-    readonly static Dictionary<int, List<int>> mLayerForMachineMaping = new Dictionary<int, List<int>>() {
-            { 0,new List<int> { (int)enFMSMachine.Base_Layer,(int)enFMSMachine.Attack,(int)enFMSMachine.Skill,(int)enFMSMachine.CutOff,(int)enFMSMachine.Move,(int)enFMSMachine.MaxSkill,(int)enFMSMachine.Appear, } },
-        };
-    #endregion
-    #region StateForLayer映射
-    /// <summary>
-    /// StateForLayer映射
-    /// </summary>
-    readonly static Dictionary<int, List<int>> mStateForLayerMaping = new Dictionary<int, List<int>>() {
-            { (int)enFMSState.Attack1_1,new List<int> { 0, } },
-            { (int)enFMSState.Attack1_2,new List<int> { 0, } },
-            { (int)enFMSState.Attack2_1,new List<int> { 0, } },
-            { (int)enFMSState.Attack2_2,new List<int> { 0, } },
-            { (int)enFMSState.Attack3_1,new List<int> { 0, } },
-            { (int)enFMSState.Die,new List<int> { 0, } },
-            { (int)enFMSState.Idle,new List<int> { 0, } },
-            { (int)enFMSState.Run,new List<int> { 0, } },
-            { (int)enFMSState.skill1_1,new List<int> { 0, } },
-            { (int)enFMSState.skill1_2,new List<int> { 0, } },
-            { (int)enFMSState.skill1_3,new List<int> { 0, } },
-            { (int)enFMSState.skill2_1,new List<int> { 0, } },
-            { (int)enFMSState.skill3_1,new List<int> { 0, } },
-        };
-    #endregion
-    #region LayerForState映射
-    /// <summary>
-    /// LayerForState映射
-    /// </summary>
-    readonly static Dictionary<int, List<int>> mLayerForStateMaping = new Dictionary<int, List<int>>() {
-            { 0,new List<int> { (int)enFMSState.Attack1_2,(int)enFMSState.Attack2_2,(int)enFMSState.Attack3_1,(int)enFMSState.Attack1_1,(int)enFMSState.Attack2_1,(int)enFMSState.skill3_1,(int)enFMSState.skill2_1,(int)enFMSState.skill1_3,(int)enFMSState.skill1_1,(int)enFMSState.skill1_2,(int)enFMSState.Die,(int)enFMSState.Idle,(int)enFMSState.Run, } },
-        };
-    #endregion
-    #region StateForMachine映射
-    /// <summary>
-    /// StateForMachine映射
-    /// </summary>
-    readonly static Dictionary<int, List<int>> mStateForMachineMaping = new Dictionary<int, List<int>>() {
-            { (int)enFMSState.Attack1_1,new List<int> { (int)enFMSMachine.Attack,} },
-            { (int)enFMSState.Attack1_2,new List<int> { (int)enFMSMachine.Attack,} },
-            { (int)enFMSState.Attack2_1,new List<int> { (int)enFMSMachine.Attack,} },
-            { (int)enFMSState.Attack2_2,new List<int> { (int)enFMSMachine.Attack,} },
-            { (int)enFMSState.Attack3_1,new List<int> { (int)enFMSMachine.Attack,} },
-            { (int)enFMSState.Die,new List<int> { (int)enFMSMachine.CutOff,} },
-            { (int)enFMSState.Idle,new List<int> { (int)enFMSMachine.Move,} },
-            { (int)enFMSState.Run,new List<int> { (int)enFMSMachine.Move,} },
-            { (int)enFMSState.skill1_1,new List<int> { (int)enFMSMachine.Skill,} },
-            { (int)enFMSState.skill1_2,new List<int> { (int)enFMSMachine.Skill,} },
-            { (int)enFMSState.skill1_3,new List<int> { (int)enFMSMachine.Skill,} },
-            { (int)enFMSState.skill2_1,new List<int> { (int)enFMSMachine.Skill,} },
-            { (int)enFMSState.skill3_1,new List<int> { (int)enFMSMachine.Skill,} },
-        };
-    #endregion
-    #region MachineForState映射
-    /// <summary>
-    /// MachineForState映射
-    /// </summary>
-    readonly static Dictionary<int, List<int>> mMachineForStateMaping = new Dictionary<int, List<int>>() {
-            { (int)enFMSMachine.Appear,new List<int> { } },
-            { (int)enFMSMachine.Attack,new List<int> { (int)enFMSState.Attack1_2,(int)enFMSState.Attack2_2,(int)enFMSState.Attack3_1,(int)enFMSState.Attack1_1,(int)enFMSState.Attack2_1,} },
-            { (int)enFMSMachine.Base_Layer,new List<int> { } },
-            { (int)enFMSMachine.CutOff,new List<int> { (int)enFMSState.Die,} },
-            { (int)enFMSMachine.MaxSkill,new List<int> { } },
-            { (int)enFMSMachine.Move,new List<int> { (int)enFMSState.Idle,(int)enFMSState.Run,} },
-            { (int)enFMSMachine.Skill,new List<int> { (int)enFMSState.skill3_1,(int)enFMSState.skill2_1,(int)enFMSState.skill1_3,(int)enFMSState.skill1_1,(int)enFMSState.skill1_2,} },
-        };
-    #endregion
-    #region IsMachine 是否是指定状态机
-    /// <summary>
-    /// 是否是指定状态机
-    /// </summary>
-    /// <param name="_animator">阿凡达</param>
-    /// <param name="_machineNameHash">状态机NameHash值</param>
-    /// <returns>true:是,false:否</returns>
-    public static bool IsMachine(Animator _animator, int _machineNameHash)
-    {
-        bool result = false;
-        if (mMachineForLayerMaping.ContainsKey(_machineNameHash))
-        {
-            if (mMachineForLayerMaping[_machineNameHash].Count > 0)
-            {
-                AnimatorStateInfo info;
-                foreach (int layer in mMachineForLayerMaping[_machineNameHash])
-                {
-                    info = _animator.GetCurrentAnimatorStateInfo(layer);
-                    if (mStateForMachineMaping.ContainsKey(info.shortNameHash))
-                    {
-                        foreach (int machineNameHash in mStateForMachineMaping[info.shortNameHash])
-                        {
-                            result |= _machineNameHash == machineNameHash;
-                            if (result)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                    if (result)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        return result;
-    }
-    #endregion
-    #region IsState 是否是指定状态
-    /// <summary>
-    /// 是否是指定状态
-    /// </summary>
-    /// <param name="_animator">阿凡达</param>
-    /// <param name="_stateNameHash">状态NameHash值</param>
-    /// <returns>true:是,false:否</returns>
-    public static bool IsState(Animator _animator, int _stateNameHash)
-    {
-        bool result = false;
-        if (mStateForLayerMaping.ContainsKey(_stateNameHash))
-        {
-            if (mStateForLayerMaping[_stateNameHash].Count > 0)
-            {
-                AnimatorStateInfo info;
-                foreach (int layer in mStateForLayerMaping[_stateNameHash])
-                {
-                    info = _animator.GetCurrentAnimatorStateInfo(layer);
-                    result |= _stateNameHash == info.shortNameHash;
-                    if (result)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        return result;
-    }
-    #endregion
+{	
+	#region MachineForLayer映射
+	/// <summary>
+	/// MachineForLayer映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mMachineForLayerMaping = new Dictionary<int, List<int>>() {
+		{ (int)enFMSMachine.Appear,new List<int> { 0, } },
+		{ (int)enFMSMachine.Attack,new List<int> { 0, } },
+		{ (int)enFMSMachine.Base_Layer,new List<int> { 0, } },
+		{ (int)enFMSMachine.CutOff,new List<int> { 0, } },
+		{ (int)enFMSMachine.MaxSkill,new List<int> { 0, } },
+		{ (int)enFMSMachine.Move,new List<int> { 0, } },
+		{ (int)enFMSMachine.Skill,new List<int> { 0, } },
+	};
+	#endregion
+	#region LayerForMachine映射
+	/// <summary>
+	/// LayerForMachine映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mLayerForMachineMaping = new Dictionary<int, List<int>>() {
+		{ 0,new List<int> { (int)enFMSMachine.Base_Layer,(int)enFMSMachine.Attack,(int)enFMSMachine.Skill,(int)enFMSMachine.CutOff,(int)enFMSMachine.Move,(int)enFMSMachine.MaxSkill,(int)enFMSMachine.Appear, } },
+	};
+	#endregion
+	#region StateForLayer映射
+	/// <summary>
+	/// StateForLayer映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mStateForLayerMaping = new Dictionary<int, List<int>>() {
+		{ (int)enFMSState.Attack1_1,new List<int> { 0, } },
+		{ (int)enFMSState.Attack1_2,new List<int> { 0, } },
+		{ (int)enFMSState.Attack2_1,new List<int> { 0, } },
+		{ (int)enFMSState.Attack2_2,new List<int> { 0, } },
+		{ (int)enFMSState.Attack3_1,new List<int> { 0, } },
+		{ (int)enFMSState.Die,new List<int> { 0, } },
+		{ (int)enFMSState.Idle,new List<int> { 0, } },
+		{ (int)enFMSState.Run,new List<int> { 0, } },
+		{ (int)enFMSState.RunSample,new List<int> { 0, } },
+		{ (int)enFMSState.skill1_1,new List<int> { 0, } },
+		{ (int)enFMSState.skill1_2,new List<int> { 0, } },
+		{ (int)enFMSState.skill1_3,new List<int> { 0, } },
+		{ (int)enFMSState.skill2_1,new List<int> { 0, } },
+		{ (int)enFMSState.skill3_1,new List<int> { 0, } },
+	};
+	#endregion
+	#region LayerForState映射
+	/// <summary>
+	/// LayerForState映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mLayerForStateMaping = new Dictionary<int, List<int>>() {
+		{ 0,new List<int> { (int)enFMSState.Attack1_2,(int)enFMSState.Attack2_2,(int)enFMSState.Attack3_1,(int)enFMSState.Attack1_1,(int)enFMSState.Attack2_1,(int)enFMSState.skill3_1,(int)enFMSState.skill2_1,(int)enFMSState.skill1_3,(int)enFMSState.skill1_1,(int)enFMSState.skill1_2,(int)enFMSState.Die,(int)enFMSState.Idle,(int)enFMSState.Run,(int)enFMSState.RunSample, } },
+	};
+	#endregion
+	#region StateForMachine映射
+	/// <summary>
+	/// StateForMachine映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mStateForMachineMaping = new Dictionary<int, List<int>>() {
+		{ (int)enFMSState.Attack1_1,new List<int> { (int)enFMSMachine.Attack,} },
+		{ (int)enFMSState.Attack1_2,new List<int> { (int)enFMSMachine.Attack,} },
+		{ (int)enFMSState.Attack2_1,new List<int> { (int)enFMSMachine.Attack,} },
+		{ (int)enFMSState.Attack2_2,new List<int> { (int)enFMSMachine.Attack,} },
+		{ (int)enFMSState.Attack3_1,new List<int> { (int)enFMSMachine.Attack,} },
+		{ (int)enFMSState.Die,new List<int> { (int)enFMSMachine.CutOff,} },
+		{ (int)enFMSState.Idle,new List<int> { (int)enFMSMachine.Move,} },
+		{ (int)enFMSState.Run,new List<int> { (int)enFMSMachine.Move,} },
+		{ (int)enFMSState.RunSample,new List<int> { (int)enFMSMachine.Move,} },
+		{ (int)enFMSState.skill1_1,new List<int> { (int)enFMSMachine.Skill,} },
+		{ (int)enFMSState.skill1_2,new List<int> { (int)enFMSMachine.Skill,} },
+		{ (int)enFMSState.skill1_3,new List<int> { (int)enFMSMachine.Skill,} },
+		{ (int)enFMSState.skill2_1,new List<int> { (int)enFMSMachine.Skill,} },
+		{ (int)enFMSState.skill3_1,new List<int> { (int)enFMSMachine.Skill,} },
+	};
+	#endregion
+	#region MachineForState映射
+	/// <summary>
+	/// MachineForState映射
+	/// </summary>
+	readonly static Dictionary<int, List<int>> mMachineForStateMaping = new Dictionary<int, List<int>>() {
+		{ (int)enFMSMachine.Appear,new List<int> { } },
+		{ (int)enFMSMachine.Attack,new List<int> { (int)enFMSState.Attack1_2,(int)enFMSState.Attack2_2,(int)enFMSState.Attack3_1,(int)enFMSState.Attack1_1,(int)enFMSState.Attack2_1,} },
+		{ (int)enFMSMachine.Base_Layer,new List<int> { } },
+		{ (int)enFMSMachine.CutOff,new List<int> { (int)enFMSState.Die,} },
+		{ (int)enFMSMachine.MaxSkill,new List<int> { } },
+		{ (int)enFMSMachine.Move,new List<int> { (int)enFMSState.Idle,(int)enFMSState.Run,(int)enFMSState.RunSample,} },
+		{ (int)enFMSMachine.Skill,new List<int> { (int)enFMSState.skill3_1,(int)enFMSState.skill2_1,(int)enFMSState.skill1_3,(int)enFMSState.skill1_1,(int)enFMSState.skill1_2,} },
+	};
+	#endregion
+	#region IsMachine 是否是指定状态机
+	/// <summary>
+	/// 是否是指定状态机
+	/// </summary>
+	/// <param name="_animator">阿凡达</param>
+	/// <param name="_machineNameHash">状态机NameHash值</param>
+	/// <returns>true:是,false:否</returns>
+	public static bool IsMachine(Animator _animator, int _machineNameHash)
+	{
+		bool result = false;
+		if (mMachineForLayerMaping.ContainsKey(_machineNameHash))
+		{
+			if (mMachineForLayerMaping[_machineNameHash].Count > 0)
+			{
+				AnimatorStateInfo info;
+				foreach (int layer in mMachineForLayerMaping[_machineNameHash])
+				{
+					info = _animator.GetCurrentAnimatorStateInfo(layer);
+					if (mStateForMachineMaping.ContainsKey(info.shortNameHash))
+					{
+						foreach (int machineNameHash in mStateForMachineMaping[info.shortNameHash])
+						{
+							result |= _machineNameHash == machineNameHash;
+							if (result)
+							{
+								break;
+							}
+						}
+					}
+					if (result)
+					{
+						break;
+					}                    
+				}
+			}
+		}
+		return result;
+	}
+	#endregion
+	#region IsState 是否是指定状态
+	/// <summary>
+	/// 是否是指定状态
+	/// </summary>
+	/// <param name="_animator">阿凡达</param>
+	/// <param name="_stateNameHash">状态NameHash值</param>
+	/// <returns>true:是,false:否</returns>
+	public static bool IsState(Animator _animator,int _stateNameHash)
+	{
+		bool result = false;
+		if (mStateForLayerMaping.ContainsKey(_stateNameHash))
+		{
+			if (mStateForLayerMaping[_stateNameHash].Count > 0)
+			{
+				AnimatorStateInfo info;
+				foreach (int layer in mStateForLayerMaping[_stateNameHash])
+				{
+					info = _animator.GetCurrentAnimatorStateInfo(layer);
+					result |= _stateNameHash == info.shortNameHash;
+					if (result)
+					{
+						break;
+					}
+				}
+			}
+		}
+		return result;
+	}
+	#endregion
 }
 #region enFMSMachine
 /// <summary>
@@ -248,6 +250,11 @@ public enum enFMSState
 	[AliasTooltip("Run")]
 	Run = 1748754976,
 	/// <summary>
+	/// RunSample
+	/// </summary>
+	[AliasTooltip("RunSample")]
+	RunSample = -1024391356,
+	/// <summary>
 	/// skill1_1
 	/// </summary>
 	[AliasTooltip("skill1_1")]
@@ -284,6 +291,9 @@ public enum enFMSParameter
 	/// exitAction
 	/// </summary>
 	exitAction = -1189175008,
+	/// <summary>
+	/// sampleNormalizedTime
+	/// </summary>
+	sampleNormalizedTime = 1709776050,
 }
 #endregion
-

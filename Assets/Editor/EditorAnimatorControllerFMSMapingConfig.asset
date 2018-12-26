@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c826ceec2d3b57f44996b52868ebad2e, type: 3}
   m_Name: EditorAnimatorControllerFMSMapingConfig
   m_EditorClassIdentifier: 
-  folders: []
+  folders:
+  - Assets/Game/Resources/Animator/Ani/Player
   invoke: 
