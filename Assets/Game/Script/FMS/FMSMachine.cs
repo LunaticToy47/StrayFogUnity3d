@@ -114,6 +114,18 @@ public class FMSMachine : AbsMonoBehaviour
     }
     #endregion
 
+    #region GetInteger
+    /// <summary>
+    /// GetInteger
+    /// </summary>
+    /// <param name="_parameter">参数</param>
+    /// <returns>Value</returns>
+    public int GetInteger(enFMSParameter _parameter)
+    {
+        return mAnimator.GetInteger((int)_parameter);
+    }
+    #endregion
+
     #region SetFloat
     /// <summary>
     /// SetFloat
@@ -126,6 +138,18 @@ public class FMSMachine : AbsMonoBehaviour
     }
     #endregion
 
+    #region GetFloat
+    /// <summary>
+    /// GetFloat
+    /// </summary>
+    /// <param name="_parameter">参数</param>
+    /// <returns>Value</returns>
+    public float GetFloat(enFMSParameter _parameter)
+    {
+        return mAnimator.GetFloat((int)_parameter);
+    }
+    #endregion
+
     #region SetBool
     /// <summary>
     /// SetBool
@@ -135,6 +159,18 @@ public class FMSMachine : AbsMonoBehaviour
     public void SetBool(enFMSParameter _parameter, bool _value)
     {
         mAnimator.SetBool((int)_parameter, _value);
+    }
+    #endregion
+
+    #region GetBool
+    /// <summary>
+    /// GetBool
+    /// </summary>
+    /// <param name="_parameter">参数</param>
+    /// <returns>Value</returns>
+    public bool GetBool(enFMSParameter _parameter)
+    {
+        return mAnimator.GetBool((int)_parameter);
     }
     #endregion
 
