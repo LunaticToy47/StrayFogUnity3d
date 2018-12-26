@@ -60,36 +60,8 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        LoadWindows();
+        mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
     }
-
-    #region LoadWindows 加载窗口
-    /// <summary>
-    /// 加载窗口
-    /// </summary>
-    void LoadWindows()
-    {
-        string[] folders = new string[1] { EditorStrayFogGlobalVariable.uiWindowPrefabFolder };
-        mWindows = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionUIWindowSetting>(folders, enEditorAssetFilterClassify.Prefab, false);
-        if (mWindows != null && mWindows.Count > 0)
-        {
-            foreach (EditorSelectionUIWindowSetting n in mWindows)
-            {
-                n.Resolve();
-                n.Read();
-            }
-
-            mWindows.Sort((x, y) =>
-            {
-                return y.nameWithoutExtension.CompareTo(x.nameWithoutExtension);
-            });
-            mWindows.Sort((x, y) =>
-            {
-                return x.layer >= y.layer ? 1 : -1;
-            });
-        }
-    }
-    #endregion
 
     /// <summary>
     /// OnGUI
@@ -116,14 +88,6 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// </summary>
     void DrawAssetNodes()
     {
-        #region LoadWindows 加载窗口
-        if (GUILayout.Button("Load Windows"))
-        {
-            LoadWindows();
-        }
-        #endregion
-        EditorGUILayout.Separator();
-
         #region  mSearchWindowName 搜索
         mSearchWindowName = EditorGUILayout.TextField("Search Window Name", mSearchWindowName);
         #endregion
@@ -206,9 +170,9 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
                 (string.IsNullOrEmpty(mSearchWindowName) || Regex.IsMatch(mWindows[i].nameWithoutExtension,
                 string.Format(@"({0})+?\w*", mSearchWindowName.Replace(",", "|")), RegexOptions.IgnoreCase)) &&
                 //绘制类别过滤
-                mSearchWindowRenderMode[(int)mWindows[i].renderMode] &&
+                mSearchWindowRenderMode[(int)mWindows[i].assetNode.renderMode] &&
                 //窗口最小Layer
-                mSearchWindowMinLayer[(int)mWindows[i].layer];
+                mSearchWindowMinLayer[(int)mWindows[i].assetNode.layer];
         }
         #endregion
 
@@ -227,8 +191,8 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
                     EditorGUILayout.LabelField(
                         string.Format("{0}=>【{1}】{2}",
                             string.Format("{0}.{1}", (i + 1).PadLeft(mWindows.Count), mWindows[i].nameWithoutExtension),
-                            mWindows[i].renderMode.ToString(),
-                            msrWindowMinLayerMaping[(int)mWindows[i].layer]
+                            mWindows[i].assetNode.renderMode.ToString(),
+                            msrWindowMinLayerMaping[(int)mWindows[i].assetNode.layer]
                         )
                      );
                     #endregion
@@ -238,9 +202,10 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
                     #region Setting 按钮
                     if (GUILayout.Button("Setting"))
                     {
-                        EditorWindowSettingUIWindow win = GetWindow<EditorWindowSettingUIWindow>("Setting Window");
-                        win.SetWindow(mWindows[i]);
-                        win.Show();
+                        EditorStrayFogApplication.PingObject(mWindows[i].assetNode);
+                        //EditorWindowSettingUIWindow win = GetWindow<EditorWindowSettingUIWindow>("Setting Window");
+                        //win.SetWindow(mWindows[i]);
+                        //win.Show();
                     }
                     #endregion
 
@@ -358,34 +323,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// </summary>
     void BuilderWindowEnum()
     {
-        float progress = 0;
-        string scriptTemplete = EditorResxTemplete.UIWindowEnumMapingTemplete;
-        string result = scriptTemplete;
-        string replaceTemplete = string.Empty;
-        string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#Windows#", out replaceTemplete);
-        StringBuilder sbTemplete = new StringBuilder();
-        StringBuilder sbLog = new StringBuilder();
-        if (mWindows != null && mWindows.Count > 0)
-        {
-            sbLog.AppendLine(EditorSelectionUIWindowSetting.ExecuteDeleteAllUIWindowSetting());
-            foreach (EditorSelectionUIWindowSetting w in mWindows)
-            {
-                sbTemplete.AppendLine(
-                    formatTemplete
-                    .Replace("#Name#", w.nameWithoutExtension)
-                    .Replace("#Id#", w.winId.ToString()));
-                sbLog.AppendLine(w.ExecuteInsertUIWindowSetting());
-                progress++;
-                EditorUtility.DisplayProgressBar("Builder Window Enum", w.path, progress / mWindows.Count);
-            }
-        }
-        result = result.Replace(replaceTemplete, sbTemplete.ToString());
-        result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
-        EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow", enEditorApplicationFolder.Game_Script_UIWindow.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, result);
-        cfg.CreateAsset();
-        Debug.Log(sbLog);
-        EditorUtility.ClearProgressBar();
-        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        EditorStrayFogExecute.ExecuteBuildUIWindowSetting();
         EditorUtility.DisplayDialog("Builder Window Enum", "Builder Window Enum Success", "OK");
     }
     #endregion

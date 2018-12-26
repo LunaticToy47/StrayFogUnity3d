@@ -24,26 +24,26 @@ public class EditorWindowSettingUIWindow : AbsEditorWindow
             #region 绘制属性
             EditorGUILayout.LabelField(string.Format("{0}【{1}】", mWindow.nameWithoutExtension, mWindow.winId));
             //RenderMode
-            mWindow.renderMode = (RenderMode)EditorStrayFogUtility.guiLayout.EnumPopup(mWindow.renderMode, new GUIContent("RenderMode"));
+            mWindow.assetNode.renderMode = (RenderMode)EditorStrayFogUtility.guiLayout.EnumPopup(mWindow.assetNode.renderMode, new GUIContent("RenderMode"));
             //enUIWindowLayer
-            mWindow.layer = (enUIWindowLayer)EditorStrayFogUtility.guiLayout.EnumPopup(mWindow.layer, new GUIContent("窗口层级"));
+            mWindow.assetNode.layer = (enUIWindowLayer)EditorStrayFogUtility.guiLayout.EnumPopup(mWindow.assetNode.layer, new GUIContent("窗口层级"));
             //enUIWindowOpenMode
-            mWindow.openMode = (enUIWindowOpenMode)EditorStrayFogUtility.guiLayout.EnumPopup(mWindow.openMode, new GUIContent("打开模式"));
+            mWindow.assetNode.openMode = (enUIWindowOpenMode)EditorStrayFogUtility.guiLayout.EnumPopup(mWindow.assetNode.openMode, new GUIContent("打开模式"));
             //enUIWindowCloseMode
-            mWindow.closeMode = (enUIWindowCloseMode)EditorStrayFogUtility.guiLayout.EnumPopup(mWindow.closeMode, new GUIContent("关闭模式"));
+            mWindow.assetNode.closeMode = (enUIWindowCloseMode)EditorStrayFogUtility.guiLayout.EnumPopup(mWindow.assetNode.closeMode, new GUIContent("关闭模式"));
 
             //isIgnoreOpenCloseMode
-            mWindow.isIgnoreOpenCloseMode = EditorGUILayout.Toggle("是否忽略开启关闭模式", mWindow.isIgnoreOpenCloseMode);
+            mWindow.assetNode.isIgnoreOpenCloseMode = EditorGUILayout.Toggle("是否忽略开启关闭模式", mWindow.assetNode.isIgnoreOpenCloseMode);
             //isDonotDestroyInstance
-            mWindow.isDonotDestroyInstance = EditorGUILayout.Toggle("是否是不可销毁实例", mWindow.isDonotDestroyInstance);
+            mWindow.assetNode.isDonotDestroyInstance = EditorGUILayout.Toggle("是否是不可销毁实例", mWindow.assetNode.isDonotDestroyInstance);
             //isNotAutoRestoreSequenceWindow
-            mWindow.isNotAutoRestoreSequenceWindow = EditorGUILayout.Toggle("是否是不可自动恢复序列窗口", mWindow.isNotAutoRestoreSequenceWindow);
+            mWindow.assetNode.isNotAutoRestoreSequenceWindow = EditorGUILayout.Toggle("是否是不可自动恢复序列窗口", mWindow.assetNode.isNotAutoRestoreSequenceWindow);
             //是否立即显示窗口
-            mWindow.isImmediateDisplay = EditorGUILayout.Toggle("是否立即显示窗口", mWindow.isImmediateDisplay);
+            mWindow.assetNode.isImmediateDisplay = EditorGUILayout.Toggle("是否立即显示窗口", mWindow.assetNode.isImmediateDisplay);
             //跳转场景时是否手动关闭
-            mWindow.isManualCloseWhenGotoScene = EditorGUILayout.Toggle("跳转场景时是否手动关闭", mWindow.isManualCloseWhenGotoScene);
+            mWindow.assetNode.isManualCloseWhenGotoScene = EditorGUILayout.Toggle("跳转场景时是否手动关闭", mWindow.assetNode.isManualCloseWhenGotoScene);
             //是否是引导窗口
-            mWindow.isGuideWindow = EditorGUILayout.Toggle("是否是引导窗口", mWindow.isGuideWindow);
+            mWindow.assetNode.isGuideWindow = EditorGUILayout.Toggle("是否是引导窗口", mWindow.assetNode.isGuideWindow);
             #endregion
 
             #region 保存设置

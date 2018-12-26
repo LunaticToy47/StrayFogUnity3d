@@ -149,6 +149,21 @@ public abstract class AbsEdtiorAssetConfig : ICloneable
     /// </summary>
     protected abstract void OnCreateAsset();
     #endregion
+
+    #region LoadAsset 加载资源
+    /// <summary>
+    /// 加载资源
+    /// </summary>
+    public void LoadAsset()
+    {
+        OnReset();
+        OnLoadAsset();
+    }
+    /// <summary>
+    /// 加载资源
+    /// </summary>
+    protected abstract void OnLoadAsset();
+    #endregion
     #endregion
 
     #region ICloneable

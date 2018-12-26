@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// SQLite实体
 /// </summary>
-public abstract class AbsSQLiteEntity
+public abstract class AbsSQLiteEntity : AbsScriptableObject
 {
     /// <summary>
     /// PK键组

@@ -27,6 +27,11 @@ public enum enEditorApplicationFolder
     [EditorApplicationFolder("游戏Editor目录", "Assets/Game/Editor", "游戏Editor目录")]
     Game_Editor,
     /// <summary>
+    /// 游戏Editor的UIWindow目录
+    /// </summary>
+    [EditorApplicationFolder("游戏Editor目录", "Assets/Game/Editor/UIWindow", "游戏Editor的UIWindow目录")]
+    Game_Editor_UIWindow,
+    /// <summary>
     /// 游戏目录
     /// </summary>
     [EditorApplicationFolder("游戏目录", "Assets/Game", "游戏根目录")]

@@ -899,6 +899,8 @@ public sealed class EditorStrayFogExecute
     {
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
+
+        EditorStrayFogApplication.CloseDb();
         EditorStrayFogUtility.cmd.DeleteFolder(path);
 
         if (Directory.Exists(path))
@@ -921,6 +923,7 @@ public sealed class EditorStrayFogExecute
         ExecuteSetSpritePackingTag();
         ExecuteSetAssetBundleName();
         ExecuteBuildAllAssetDiskMaping();
+        ExecuteBuildUIWindowSetting();
 
         ExecuteBuildDllToPackage();
         ExecuteBuildSQLiteDbToPackage();
@@ -1509,6 +1512,46 @@ public sealed class EditorStrayFogExecute
             }
             EditorStrayFogApplication.PingObject(root);
         }
+    }
+    #endregion
+
+    #region ExecuteBuildUIWindowSetting 生成窗口设定
+    /// <summary>
+    /// 生成窗口设定
+    /// </summary>
+    public static void ExecuteBuildUIWindowSetting()
+    {
+        List<EditorSelectionUIWindowSetting> mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
+        float progress = 0;
+        string scriptTemplete = EditorResxTemplete.UIWindowEnumMapingTemplete;
+        string result = scriptTemplete;
+        string replaceTemplete = string.Empty;
+        string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#Windows#", out replaceTemplete);
+        StringBuilder sbTemplete = new StringBuilder();
+        StringBuilder sbLog = new StringBuilder();
+        if (mWindows != null && mWindows.Count > 0)
+        {
+            sbLog.AppendLine(EditorSelectionUIWindowSetting.ExecuteDeleteAllUIWindowSetting());
+            foreach (EditorSelectionUIWindowSetting w in mWindows)
+            {
+                sbTemplete.AppendLine(
+                    formatTemplete
+                    .Replace("#Name#", w.nameWithoutExtension)
+                    .Replace("#Id#", w.winId.ToString()));
+                sbLog.AppendLine(w.ExecuteInsertUIWindowSetting());
+                progress++;
+                EditorUtility.DisplayProgressBar("Builder Window Enum", w.path, progress / mWindows.Count);
+            }
+        }
+        result = result.Replace(replaceTemplete, sbTemplete.ToString());
+        result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
+        EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow", enEditorApplicationFolder.Game_Script_UIWindow.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, result);
+        cfg.CreateAsset();        
+        EditorStrayFogApplication.CloseDb();
+        EditorUtility.ClearProgressBar();               
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        sbLog.AppendFormat("ExecuteBuildUIWindowSetting 【{0}】Succeed!", cfg.fileName);
+        Debug.Log(sbLog);
     }
     #endregion
 }

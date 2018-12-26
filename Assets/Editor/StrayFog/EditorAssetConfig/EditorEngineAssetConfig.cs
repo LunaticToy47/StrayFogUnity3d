@@ -29,14 +29,18 @@ public class EditorEngineAssetConfig : AbsEdtiorAssetConfig
     /// 类全名称
     /// </summary>
     public string classFullName { get; private set; }
+    /// <summary>
+    /// 引擎资源
+    /// </summary>
+    public UnityEngine.Object engineAsset{ get; private set; }
     #endregion
 
     #region public 方法
-    /// <summary>
-    /// 设置类型
-    /// </summary>
-    /// <param name="_typeFullName">类全名称</param>
-    public void SetType(string _typeFullName)
+/// <summary>
+/// 设置类型
+/// </summary>
+/// <param name="_typeFullName">类全名称</param>
+public void SetType(string _typeFullName)
     {
         classFullName = _typeFullName;
     }
@@ -79,6 +83,38 @@ public class EditorEngineAssetConfig : AbsEdtiorAssetConfig
                 else
                 {
                     Debug.LogErrorFormat("Can not find 【{0}】asset script.", classFullName);
+                }
+                #endregion
+                break;
+        }
+    }
+    #endregion
+
+    #region 加载资源
+    /// <summary>
+    /// 加载资源
+    /// </summary>
+    protected override void OnLoadAsset()
+    {
+        engineAsset = null;
+        switch (ext)
+        {
+            case enFileExt.Prefab:
+                #region Prefab
+                engineAsset = AssetDatabase.LoadAssetAtPath<GameObject>(fileName);
+                #endregion
+                break;
+            default:
+                #region 默认
+                Assembly assembly = null;
+                Type type = EditorStrayFogAssembly.GetType(classFullName, ref assembly);
+                if (type != null)
+                {
+                    engineAsset = AssetDatabase.LoadAssetAtPath(fileName, type);
+                }
+                else
+                {
+                    Debug.LogErrorFormat("Can not find 【{0}】asset in path 【{1}】.", classFullName, fileName);
                 }
                 #endregion
                 break;

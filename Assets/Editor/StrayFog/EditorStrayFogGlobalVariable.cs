@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// 全局变量
@@ -22,6 +23,36 @@ public sealed class EditorStrayFogGlobalVariable
     /// UI窗口预置
     /// </summary>
     public static readonly EditorEngineAssetConfig uiWindowPrefab = new EditorEngineAssetConfig("", uiWindowPrefabFolder, enFileExt.Prefab, typeof(GameObject).FullName);
+
+    /// <summary>
+    /// 收集UI窗口设定资源组
+    /// </summary>
+    /// <typeparam name="T">资源类型</typeparam>
+    /// <returns>UI窗口设定资源组</returns>
+    public static List<T> CollectUIWindowSettingAssets<T>()
+        where T : EditorSelectionUIWindowSetting
+    {
+        string[] folders = new string[1] { uiWindowPrefabFolder };
+        List<T> result = EditorStrayFogUtility.collectAsset.CollectAsset<T>(folders, enEditorAssetFilterClassify.Prefab, false);
+        if (result != null && result.Count > 0)
+        {
+            foreach (T n in result)
+            {
+                n.Resolve();
+                n.Read();
+            }
+
+            result.Sort((x, y) =>
+            {
+                return y.nameWithoutExtension.CompareTo(x.nameWithoutExtension);
+            });
+            result.Sort((x, y) =>
+            {
+                return x.assetNode.layer >= y.assetNode.layer ? 1 : -1;
+            });
+        }
+        return result;
+    }
     #endregion
 }
 #endif

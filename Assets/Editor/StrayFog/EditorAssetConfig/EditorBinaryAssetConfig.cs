@@ -58,6 +58,16 @@ public class EditorBinaryAssetConfig : AbsEdtiorAssetConfig
     }
     #endregion
 
+    #region 加载资源
+    /// <summary>
+    /// 加载资源
+    /// </summary>
+    protected override void OnLoadAsset()
+    {
+        bytes = File.ReadAllBytes(fileName);
+    }
+    #endregion
+
     #region ICloneable
     /// <summary>
     /// 克隆对象
