@@ -227,6 +227,14 @@ public sealed class EditorStrayFogAssembly
     }
 
     /// <summary>
+    /// 类别映射
+    /// </summary>
+    static Dictionary<int, Type> mGetTypeTypeMaping = new Dictionary<int, Type>();
+    /// <summary>
+    /// 程序集映射
+    /// </summary>
+    static Dictionary<int, Assembly> mGetTypeAssemblyMaping = new Dictionary<int, Assembly>();
+    /// <summary>
     /// 获得类别
     /// </summary>
     /// <param name="_typeName">类别名称</param>
@@ -234,23 +242,34 @@ public sealed class EditorStrayFogAssembly
     /// <returns>类别</returns>
     public static Type GetType(string _typeName, ref Assembly _assembly)
     {
+        int key = _typeName.GetHashCode();
         Type type = null;
-        List<Assembly> assemblies = GetDynamicAssemblies();
-        if (assemblies != null && assemblies.Count > 0)
+        if (!mGetTypeTypeMaping.ContainsKey(key))
         {
-            foreach (Assembly m in assemblies)
+            List<Assembly> assemblies = GetDynamicAssemblies();
+            if (assemblies != null && assemblies.Count > 0)
             {
-                type = m.GetType(_typeName);
-                if (type == null)
+                foreach (Assembly m in assemblies)
                 {
-                    type = m.GetType(m.GetName().Name + "." + _typeName);
-                }
-                if (type != null)
-                {
-                    _assembly = m;
-                    break;
+                    type = m.GetType(_typeName);
+                    if (type == null)
+                    {
+                        type = m.GetType(m.GetName().Name + "." + _typeName);
+                    }
+                    if (type != null)
+                    {
+                        _assembly = m;
+                        break;
+                    }
                 }
             }
+            mGetTypeTypeMaping.Add(key, type);
+            mGetTypeAssemblyMaping.Add(key, _assembly);
+        }
+        else
+        {
+            type = mGetTypeTypeMaping[key];
+            _assembly = mGetTypeAssemblyMaping[key];
         }
         return type;
     }
@@ -299,11 +318,11 @@ public sealed class EditorStrayFogAssembly
     /// <returns>程序集组</returns>
     public static List<Assembly> GetDynamicAssemblies()
     {
+        List<Assembly> assemblies = new List<Assembly>();
         List<EditorSelectionAsset> dlls =
             EditorStrayFogUtility.collectAsset.CollectAsset(
                 new string[1] { EditorStrayFogApplication.TryRelativeToProject("") }, "",
-                false, (n) => { return n.ext.Equals(enFileExt.Dll.GetAttribute<FileExtAttribute>().ext); });
-        List<Assembly> assemblies = new List<Assembly>();
+                false, (n) => { return n.ext.Equals(enFileExt.Dll.GetAttribute<FileExtAttribute>().ext); });        
         List<Assembly> tempAssemblies = null;
         if (dlls != null && dlls.Count > 0)
         {
