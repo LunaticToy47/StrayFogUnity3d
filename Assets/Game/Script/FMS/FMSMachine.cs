@@ -19,7 +19,8 @@ public class FMSMachine : AbsMonoBehaviour
     /// <param name="_animator">阿凡达</param>
     public void SetAnimator(Animator _animator)
     {
-        mAnimator = _animator;
+           //UnityEditor.Animations.AnimatorState
+           mAnimator = _animator;
     }
     #endregion
 

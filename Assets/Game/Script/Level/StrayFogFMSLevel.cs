@@ -97,10 +97,6 @@ public class StrayFogFMSLevel : AbsLevel
                 {
                     mFMSMachine.CrossFade(key.Value);
                 }
-                if (mFMSMachine.IsState(key.Value))
-                {
-                    UnityEngine.Debug.Log(string.Format("Current State 【{0}】", (enFMSState)key.Value));
-                }
             }
             GUILayout.EndHorizontal();
             GUILayout.EndScrollView();
@@ -139,6 +135,8 @@ public class StrayFogFMSLevel : AbsLevel
         if (mAutoSample)
         {
             mSampleNormalizedTime += deltaTime;
+            mSampleNormalizedTime -= Mathf.FloorToInt(mSampleNormalizedTime);
+            //UnityEngine.Debug.Log(mFMSMachine.animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
         }
     }
 }
