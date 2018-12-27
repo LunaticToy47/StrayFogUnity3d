@@ -4,8 +4,14 @@
 public class EditorXlsTableSchema : AbsScriptableObject
 {
     /// <summary>
+    /// 表名称
+    /// </summary>
+    [AliasTooltip("表名称")]
+    [ReadOnly]
+    public string tableName;
+    /// <summary>
     /// 列
     /// </summary>
-    [AliasTooltipAttribute("列")]
+    [AliasTooltip("列")]
     public EditorXlsTableColumnSchema[] columns;
 }

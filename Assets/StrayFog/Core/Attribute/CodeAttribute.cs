@@ -9,9 +9,18 @@ public class CodeAttribute : AliasTooltipAttribute
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="_code">代码</param>
-    public CodeAttribute(string _code)
-        : this(_code, _code, _code)
+    /// <param name="_csTypeName">代码</param>
+    public CodeAttribute(string _csTypeName)
+        : this(_csTypeName, _csTypeName, _csTypeName)
+    {
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="_csTypeName">代码</param>
+    public CodeAttribute(string _csTypeName, string _sqliteTypeName)
+        : this(_csTypeName, _csTypeName, _sqliteTypeName)
     {
     }
 
@@ -19,31 +28,21 @@ public class CodeAttribute : AliasTooltipAttribute
     /// 构造函数
     /// </summary>
     /// <param name="_alias">别名</param>
-    /// <param name="_code">代码</param>
-    public CodeAttribute(string _alias, string _code)
-        : this(_alias,_code,_code)
-    {
-    }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="_alias">别名</param>
-    /// <param name="_code">代码</param>
-    /// <param name="_prefixCode">代码前缀</param>
-    public CodeAttribute(string _alias, string _code,string _codePrefix)
+    /// <param name="_csTypeName">CS类型名称</param>
+    /// <param name="_sqliteTypeName">Sqlite数据库类型名称</param>
+    public CodeAttribute(string _alias, string _csTypeName, string _sqliteTypeName)
         : base(_alias)
     {
-        code = _code;
-        codePrefix = _codePrefix;
+        csTypeName = _csTypeName;
+        sqliteTypeName = _sqliteTypeName;
 }
 
     /// <summary>
-    /// 代码
+    /// CS类型名称
     /// </summary>
-    public string code { get; private set; }
+    public string csTypeName { get; private set; }
     /// <summary>
-    /// 代码前缀
+    /// Sqlite数据库类型名称
     /// </summary>
-    public string codePrefix { get; private set; }
+    public string sqliteTypeName { get; private set; }
 }
