@@ -38,6 +38,14 @@ public enum enEditorApplicationFolder
     Game,
     #endregion
 
+    #region XLS
+    /// <summary>
+    /// XLS数据源目录
+    /// </summary>
+    [EditorApplicationFolder("XLS数据源目录", "Assets/Game/Editor/XLS", "XLS数据源目录")]
+    XLS_TableSrc,
+    #endregion
+
     #region Assets
     /// <summary>
     /// 游戏Assets目录
