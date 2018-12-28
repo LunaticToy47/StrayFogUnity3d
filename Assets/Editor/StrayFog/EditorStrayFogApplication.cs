@@ -103,6 +103,46 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 
+    #region RevealInFinder
+    /// <summary>
+    /// RevealInFinder
+    /// </summary>
+    /// <param name="_object">对象</param>
+    public static void RevealInFinder(UnityEngine.Object _object)
+    {
+        RevealInFinder(AssetDatabase.GetAssetPath(_object));
+    }
+
+    /// <summary>
+    /// RevealInFinder
+    /// </summary>
+    /// <param name="_assetPath">资源路径</param>
+    public static void RevealInFinder(string _assetPath)
+    {
+        EditorUtility.RevealInFinder(_assetPath);
+    }
+    #endregion
+
+    #region OpenFile
+    /// <summary>
+    /// OpenFile
+    /// </summary>
+    /// <param name="_object">对象</param>
+    public static void OpenFile(UnityEngine.Object _object)
+    {
+        OpenFile(Path.GetFullPath(AssetDatabase.GetAssetPath(_object)));
+    }
+
+    /// <summary>
+    /// OpenFile
+    /// </summary>
+    /// <param name="_assetPath">资源路径</param>
+    public static void OpenFile(string _assetPath)
+    {
+        EditorStrayFogUtility.cmd.OpenFile(_assetPath);
+    }
+    #endregion    
+
     #region CopyToClipboard 文本复制到剪帖板
     /// <summary>
     /// 文本复制到剪帖板

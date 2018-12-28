@@ -10,6 +10,12 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [ReadOnly]
     public string tableName;
     /// <summary>
+    /// 文件路径
+    /// </summary>
+    [AliasTooltip("文件路径")]
+    [ReadOnly]
+    public string fileName;
+    /// <summary>
     /// 列
     /// </summary>
     [AliasTooltip("列")]

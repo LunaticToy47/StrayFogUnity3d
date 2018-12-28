@@ -118,6 +118,7 @@ public sealed class EditorStrayFogXLS
             {
                 Worksheet sheet = book.Worksheets[0];
                 tempTable = new EditorXlsTableSchema();
+                tempTable.fileName = f.path;
                 tempTable.tableName = f.nameWithoutExtension;
                 if (sheet.Cells.LastRowIndex >= msrColumnNameRowIndex)
                 {

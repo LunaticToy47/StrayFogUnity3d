@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
@@ -11,6 +12,11 @@ public class EditorExportXlsToSqliteWindow : AbsEditorWindow
     /// 表格架构
     /// </summary>
     List<EditorXlsTableSchema> mXlsTableSchemas = new List<EditorXlsTableSchema>();
+
+    /// <summary>
+    /// 滚动视图位置
+    /// </summary>
+    Vector2 mScrollViewPosition = Vector2.zero;
 
     /// <summary>
     /// OnFocus
@@ -53,7 +59,28 @@ public class EditorExportXlsToSqliteWindow : AbsEditorWindow
     /// </summary>
     private void DrawAssetNodes()
     {
-        if (GUILayout.Button("ExportXlsToSqlite"))
+        mScrollViewPosition = EditorGUILayout.BeginScrollView(mScrollViewPosition);
+        for (int i = 0; i < mXlsTableSchemas.Count; i++)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(string.Format("{0}. {1}", (i + 1).PadLeft(mXlsTableSchemas.Count), mXlsTableSchemas[i].tableName));
+            if (GUILayout.Button("Brower"))
+            {
+                EditorStrayFogApplication.PingObject(mXlsTableSchemas[i].fileName);
+            }
+            if (GUILayout.Button("Reveal"))
+            {
+                EditorStrayFogApplication.RevealInFinder(mXlsTableSchemas[i].fileName);
+            }
+            if (GUILayout.Button("Open"))
+            {
+                EditorStrayFogApplication.OpenFile(Path.GetFullPath(mXlsTableSchemas[i].fileName));
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+        EditorGUILayout.EndScrollView();
+
+        if (GUILayout.Button("Export Xls To Sqlite"))
         {
 
         }
