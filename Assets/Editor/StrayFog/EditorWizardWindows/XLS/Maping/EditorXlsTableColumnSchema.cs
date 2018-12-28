@@ -17,6 +17,11 @@ public class EditorXlsTableColumnSchema
     [AliasTooltip("列描述")]
     public string desc;
     /// <summary>
+    /// 是否是主键
+    /// </summary>
+    [AliasTooltip("是否是主键")]
+    public bool isPK;
+    /// <summary>
     /// 列类型
     /// </summary>
     [AliasTooltip("列类型")]

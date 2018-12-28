@@ -24,22 +24,36 @@ static class EditorXLSMenuItem
     const int mcPriority = 100 * (int)enEditorMenuItemPriority.XLS;
     #endregion
 
-    #region Export Xls To Sqlite
-    const string mcExportXlsToSqlite = "Export Xls To Sqlite";
+    #region Export Xls Schema To Sqlite
+    const string mcExportXlsSchemaToSqlite = "Export Xls Schema To Sqlite";
     /// <summary>
-    /// Export Xls To Sqlite
+    /// Export Xls Schema To Sqlite
     /// </summary>
-    [MenuItem(mcMenu + mcExportXlsToSqlite, false, mcPriority + 1)]
-    [MenuItem(mcAssetMenu + mcExportXlsToSqlite, false, mcPriority + 1)]
-    [MenuItem(mcHierarchy + mcExportXlsToSqlite, false, mcPriority + 1)]
-    static void EditorXLSMenuItem_ExportXlsToSqliteWindow()
+    [MenuItem(mcMenu + mcExportXlsSchemaToSqlite, false, mcPriority + 1)]
+    [MenuItem(mcAssetMenu + mcExportXlsSchemaToSqlite, false, mcPriority + 1)]
+    [MenuItem(mcHierarchy + mcExportXlsSchemaToSqlite, false, mcPriority + 1)]
+    static void EditorXLSMenuItem_ExportXlsSchemaToSqliteWindow()
     {
-        EditorExportXlsToSqliteWindow win =
-               EditorWindow.GetWindow<EditorExportXlsToSqliteWindow>(mcExportXlsToSqlite);
+        EditorXlsSchemaToSqliteWindow win =
+               EditorWindow.GetWindow<EditorXlsSchemaToSqliteWindow>(mcExportXlsDataToSqlite);
         win.Show();
     }
     #endregion    
 
-    //Export Xls To Sqlite
+    #region Export Xls Data To Sqlite
+    const string mcExportXlsDataToSqlite = "Export Xls Data To Sqlite";
+    /// <summary>
+    /// Export Xls Data To Sqlite
+    /// </summary>
+    [MenuItem(mcMenu + mcExportXlsDataToSqlite, false, mcPriority + 2)]
+    [MenuItem(mcAssetMenu + mcExportXlsDataToSqlite, false, mcPriority + 2)]
+    [MenuItem(mcHierarchy + mcExportXlsDataToSqlite, false, mcPriority + 2)]
+    static void EditorXLSMenuItem_ExportXlsDataToSqliteWindow()
+    {
+        EditorExportXlsDataToSqliteWindow win =
+               EditorWindow.GetWindow<EditorExportXlsDataToSqliteWindow>(mcExportXlsDataToSqlite);
+        win.Show();
+    }
+    #endregion    
 }
 #endif

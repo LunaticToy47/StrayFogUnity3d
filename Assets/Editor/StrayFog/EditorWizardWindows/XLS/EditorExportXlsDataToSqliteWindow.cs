@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 导出XLS表到Sqlite数据库
 /// </summary>
-public class EditorExportXlsToSqliteWindow : AbsEditorWindow
+public class EditorExportXlsDataToSqliteWindow : AbsEditorWindow
 {
     /// <summary>
     /// 表格架构
@@ -64,6 +64,12 @@ public class EditorExportXlsToSqliteWindow : AbsEditorWindow
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(string.Format("{0}. {1}", (i + 1).PadLeft(mXlsTableSchemas.Count), mXlsTableSchemas[i].tableName));
+            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表",mXlsTableSchemas[i].isDeterminant);
+            if (mXlsTableSchemas[i].isDeterminant && mXlsTableSchemas[i].columns.Length != 2)
+            {
+                mXlsTableSchemas[i].isDeterminant = false;
+                EditorUtility.DisplayDialog("Determinant", "Determinant table must be only two columns.", "OK");
+            }
             if (GUILayout.Button("Brower"))
             {
                 EditorStrayFogApplication.PingObject(mXlsTableSchemas[i].fileName);
@@ -80,9 +86,9 @@ public class EditorExportXlsToSqliteWindow : AbsEditorWindow
         }
         EditorGUILayout.EndScrollView();
 
-        if (GUILayout.Button("Export Xls To Sqlite"))
+        if (GUILayout.Button("Export Xls Data To Sqlite"))
         {
-
+            EditorStrayFogExecute.ExecuteExportXlsDataToSqlite();
         }
     }
     #endregion

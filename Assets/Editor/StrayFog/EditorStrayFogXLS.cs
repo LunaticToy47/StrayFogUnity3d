@@ -98,12 +98,19 @@ public sealed class EditorStrayFogXLS
 
     #region ReadXlsSchema 读取XLS表结构框架
     /// <summary>
+    /// XLS表架构文件
+    /// </summary>
+    static readonly EditorEngineAssetConfig msrXlsTableMapingAsset = new EditorEngineAssetConfig("",
+        enEditorApplicationFolder.XLS_TableMaping.GetAttribute<EditorApplicationFolderAttribute>().path,
+        enFileExt.Asset,"");
+
+    /// <summary>
     /// 读取XLS表结构框架
     /// </summary>
     /// <returns>XLS表结构框架</returns>
     public static List<EditorXlsTableSchema> ReadXlsSchema()
     {
-        List<EditorXlsTableSchema> tableSchema = new List<EditorXlsTableSchema>();
+        List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
         string[] xlsFolders = new string[1] { enEditorApplicationFolder.XLS_TableSrc.GetAttribute<EditorApplicationFolderAttribute>().path };
         FileExtAttribute fileExt = enFileExt.Xls.GetAttribute<FileExtAttribute>();
         List<EditorSelectionAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(xlsFolders, enEditorAssetFilterClassify.DefaultAsset, false, (n) => { return n.ext.ToUpper() == fileExt.ext.ToUpper(); });
@@ -117,9 +124,17 @@ public sealed class EditorStrayFogXLS
             if (book.Worksheets.Count > 0)
             {
                 Worksheet sheet = book.Worksheets[0];
-                tempTable = new EditorXlsTableSchema();
+                msrXlsTableMapingAsset.SetName(f.nameWithoutExtension);
+                msrXlsTableMapingAsset.SetType(typeof(EditorXlsTableSchema).FullName);
+                if (!msrXlsTableMapingAsset.Exists())
+                {
+                    msrXlsTableMapingAsset.CreateAsset();
+                }
+                msrXlsTableMapingAsset.LoadAsset();
+                tempTable = (EditorXlsTableSchema)msrXlsTableMapingAsset.engineAsset;
                 tempTable.fileName = f.path;
-                tempTable.tableName = f.nameWithoutExtension;
+                tempTable.tableName = f.nameWithoutExtension;  
+
                 if (sheet.Cells.LastRowIndex >= msrColumnNameRowIndex)
                 {
                     tempTable.columns = new EditorXlsTableColumnSchema[sheet.Cells.LastColIndex + 1];
@@ -127,7 +142,7 @@ public sealed class EditorStrayFogXLS
                     {
                         tempTableCell = new EditorXlsTableColumnSchema();
                         tempTableCell.name = sheet.Cells[msrColumnNameRowIndex, i].StringValue;
-                        tempTableCell.desc = TransDescToSummary(sheet.Cells[msrColumnDescriptionRowIndex, i].StringValue);
+                        tempTableCell.desc = sheet.Cells[msrColumnDescriptionRowIndex, i].StringValue;
                         tempTableCell.type = enSQLiteDataType.String;
                         tempTableCell.arrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
 
@@ -161,24 +176,25 @@ public sealed class EditorStrayFogXLS
                         tempTable.columns[i] = tempTableCell;
                     }
                 }
-                tableSchema.Add(tempTable);
+                tableSchemas.Add(tempTable);
             }
         }
-        return tableSchema;
+        return tableSchemas;
     }
+    #endregion
 
+    #region TransDescToSummary 转换描述为Summary形式
     /// <summary>
     /// 转换描述为Summary形式
     /// </summary>
     /// <param name="_desc">描述</param>
     /// <returns>描述</returns>
-    static string TransDescToSummary(string _desc)
+    public static string TransDescToSummary(string _desc)
     {
         StringBuilder descSb = new StringBuilder();
         StringReader reader = new StringReader(_desc);
         string line = string.Empty;
         int num = 0;
-        descSb.AppendLine("/// <summary>");
         do
         {
             line = reader.ReadLine();
@@ -195,7 +211,6 @@ public sealed class EditorStrayFogXLS
                 num++;
             }
         } while (!string.IsNullOrEmpty(line));
-        descSb.AppendLine("/// </summary>");
         return descSb.ToString();
     }
     #endregion

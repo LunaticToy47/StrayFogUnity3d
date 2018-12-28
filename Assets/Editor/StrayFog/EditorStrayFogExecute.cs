@@ -918,12 +918,12 @@ public sealed class EditorStrayFogExecute
         }
         ExecuteClearAllSpritePackingTag();
         ExecuteClearAllAssetBundleName();
-
-        ExecuteBuildSQLiteEntity();
+                
         ExecuteSetSpritePackingTag();
         ExecuteSetAssetBundleName();
         ExecuteBuildAllAssetDiskMaping();
         ExecuteBuildUIWindowSetting();
+        ExecuteExportXlsDataToSqlite();
 
         ExecuteBuildDllToPackage();
         ExecuteBuildSQLiteDbToPackage();
@@ -1552,6 +1552,28 @@ public sealed class EditorStrayFogExecute
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendFormat("ExecuteBuildUIWindowSetting 【{0}】Succeed!", cfg.fileName);
         Debug.Log(sbLog);
+    }
+    #endregion
+
+
+    #region ExecuteExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
+    /// <summary>
+    /// 生成Xls表结构到Sqlite数据库
+    /// </summary>
+    public static void ExecuteExportXlsSchemaToSqlite()
+    {
+        List<EditorXlsTableSchema> tableSchemas = EditorStrayFogXLS.ReadXlsSchema();
+
+    }
+    #endregion
+
+    #region ExecuteExportXlsDataToSqlite 生成Xls数据到Sqlite数据库
+    /// <summary>
+    /// 生成Xls数据到Sqlite数据库
+    /// </summary>
+    public static void ExecuteExportXlsDataToSqlite()
+    {
+        
     }
     #endregion
 }

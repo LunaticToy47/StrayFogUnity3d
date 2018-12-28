@@ -16,6 +16,12 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [ReadOnly]
     public string fileName;
     /// <summary>
+    /// 是否是行列式表
+    /// </summary>
+    [AliasTooltip("是否是行列式表")]
+    [ReadOnly]
+    public bool isDeterminant;
+    /// <summary>
     /// 列
     /// </summary>
     [AliasTooltip("列")]
