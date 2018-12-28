@@ -17,7 +17,7 @@ public class EditorExportXlsToSqliteWindow : AbsEditorWindow
     /// </summary>
     private void OnFocus()
     {
-        mXlsTableSchemas = EditorXLSUtility.ReadXlsSchema();
+        mXlsTableSchemas = EditorStrayFogXLS.ReadXlsSchema();
     }
 
     /// <summary>
@@ -25,6 +25,38 @@ public class EditorExportXlsToSqliteWindow : AbsEditorWindow
     /// </summary>
     void OnGUI()
     {
-        
+        DrawBrower();
+        DrawAssetNodes();        
     }
+
+    #region DrawBrower
+    /// <summary>
+    /// DrawBrower
+    /// </summary>
+    void DrawBrower()
+    {
+        EditorGUILayout.Separator();
+        EditorGUILayout.HelpBox(EditorStrayFogXLS.msrSeparateDescription, MessageType.None);
+        EditorGUILayout.Separator();
+        if (GUILayout.Button(EditorStrayFogXLS.msrXlsTableColumnTypeCodeSequenceDescription))
+        {
+            EditorStrayFogApplication.CopyToClipboard(EditorStrayFogXLS.msrXlsTableColumnTypeCodeSequence);
+            Debug.Log(EditorStrayFogXLS.msrXlsTableColumnTypeCodeSequence);
+        }
+        EditorGUILayout.Separator();
+    }
+    #endregion
+
+    #region DrawAssetNodes
+    /// <summary>
+    /// DrawAssetNodes
+    /// </summary>
+    private void DrawAssetNodes()
+    {
+        if (GUILayout.Button("ExportXlsToSqlite"))
+        {
+
+        }
+    }
+    #endregion
 }

@@ -85,11 +85,6 @@ public enum enSQLiteDataType
     /// <summary>
     /// String
     /// </summary>
-    [Code("byte[]", "BLOB")]
-    Binary,
-    /// <summary>
-    /// String
-    /// </summary>
     [Code("Guid", "UNIQUEIDENTIFIER")]
     Guid,    
     /// <summary>
@@ -124,12 +119,12 @@ public enum enSQLiteDataTypeArrayDimension
     /// <summary>
     /// 一维数组
     /// </summary>
-    [Code("一维数组", "[]", "DIM1")]
+    [Code("一维数组", "[]", "BLOB")]
     OneDimensionArray,
     /// <summary>
     /// 二维数组
     /// </summary>
-    [Code("二维数组", "[][]", "DIM2")]
+    [Code("二维数组", "[][]", "BLOB")]
     TwoDimensionArray,
 }
 #endregion
