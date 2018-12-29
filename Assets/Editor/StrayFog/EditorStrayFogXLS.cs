@@ -176,12 +176,83 @@ public sealed class EditorStrayFogXLS
     {
         List<EditorXlsTableSchema> tableSchemas = ReadXlsSchema();
         StringBuilder sbSql = new StringBuilder();
+        string entitySqlTemplete = EditorResxTemplete.SQLiteCreateTableTemplete;
+
+        #region #Column# Templete
+        string columnMark = "#Column#";
+        string columnReplaceTemplete = string.Empty;
+        string columnTemplete = string.Empty;
+
+        StringBuilder sbColumnReplace = new StringBuilder();
+        columnTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entitySqlTemplete, columnMark, out columnReplaceTemplete);
+        #endregion
+
+        #region #PK# Templete
+        string pkMark = "#PK#";
+        string pkReplaceTemplete = string.Empty;
+        string pkTemplete = string.Empty;
+
+        StringBuilder sbPkReplace = new StringBuilder();
+        pkTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entitySqlTemplete, pkMark, out pkReplaceTemplete);
+        #endregion
+
+        #region #PRIMARYKEY# Templete
+        string primarykeyMark = "#PRIMARYKEY#";
+        string primarykeyReplaceTemplete = string.Empty;
+        string primarykeyTemplete = string.Empty;
+
+        StringBuilder sbPrimarykeyReplace = new StringBuilder();
+        primarykeyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entitySqlTemplete, primarykeyMark, out primarykeyReplaceTemplete);
+        #endregion
+
+        List<string> sbExcuteSql = new List<string>();
+        int index = 0;
         foreach (EditorXlsTableSchema t in tableSchemas)
         {
-
+            sbColumnReplace.Length = 0;
+            sbPkReplace.Length = 0;
+            index = 0;
+            foreach (EditorXlsTableColumnSchema c in t.columns)
+            {
+                index++;
+                sbColumnReplace.Append(
+                    columnTemplete
+                    .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
+                    .Replace("#Name#", c.name)
+                    .Replace("#DataType#", GetSQLiteDataTypeName(c.type, c.arrayDimension))
+                    .Replace("#Dot#", index == t.columns.Length ? "" : ",")
+                );
+                if (c.isPK)
+                {
+                    sbPkReplace.Append(
+                            pkTemplete.Replace("#Name#",c.name)
+                    );
+                }
+            }
+            if (sbPkReplace.Length > 0)
+            {
+                sbPkReplace = sbPkReplace.Remove(sbPkReplace.Length - 1, 1);
+                sbExcuteSql.Add(entitySqlTemplete
+                .Replace("#TableName#", t.name)
+                .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
+                .Replace(pkReplaceTemplete, sbPkReplace.ToString())
+                );
+            }
+            else
+            {
+                if (sbColumnReplace.Length > 0)
+                {
+                    sbColumnReplace = sbColumnReplace.Remove(sbColumnReplace.Length - 1, 1);
+                }
+                sbExcuteSql.Add(entitySqlTemplete
+                .Replace("#TableName#", t.name)
+                .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
+                .Replace(primarykeyReplaceTemplete, sbPrimarykeyReplace.ToString())
+                );
+            }            
         }
-        //msrSQLiteDataTypeMaping
-        //msrSQLiteDataTypeArrayDimensionMaping
+
+        Debug.Log("DDD");
     }
     #endregion
 
@@ -280,6 +351,19 @@ public sealed class EditorStrayFogXLS
         {
             _dataTypeArrayDimension = msCSDataTypeArrayDimensionMaping[hashCode];
         }
+    }
+    #endregion
+
+    #region GetSQLiteDataTypeName 获得SQLite数据类型名称
+    /// <summary>
+    /// 获得SQLite数据类型名称
+    /// </summary>
+    /// <param name="_dataType">数据类型</param>
+    /// <param name="_dataTypeArrayDimension">数组维度</param>
+    /// <returns>SQLite数据类型名称</returns>
+    public static string GetSQLiteDataTypeName(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    {
+        return msrSQLiteDataTypeMaping[_dataType].sqliteTypeName + msrSQLiteDataTypeArrayDimensionMaping[_dataTypeArrayDimension].sqliteTypeName;
     }
     #endregion
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 导出XLS表架构到Sqlite数据库
 /// </summary>
-public class EditorXlsSchemaToSqliteWindow : AbsEditorWindow
+public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
 {
     /// <summary>
     /// 表格架构

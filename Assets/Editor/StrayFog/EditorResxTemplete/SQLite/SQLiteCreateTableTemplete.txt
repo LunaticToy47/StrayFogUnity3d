@@ -1,0 +1,15 @@
+PRAGMA foreign_keys = OFF;
+
+-- ----------------------------
+-- Table structure for #TableName#
+-- ----------------------------
+DROP TABLE IF EXISTS "main"."#TableName#";
+CREATE TABLE "#TableName#" (
+#Column#
+"#Name#"  #DataType# #NotNull# #Dot#
+#Column#
+
+#PRIMARYKEY#
+PRIMARY KEY (#PK#"#Name#" ASC,#PK#)
+#PRIMARYKEY#
+);

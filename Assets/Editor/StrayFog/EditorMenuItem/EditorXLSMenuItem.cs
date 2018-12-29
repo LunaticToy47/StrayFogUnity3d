@@ -24,22 +24,6 @@ static class EditorXLSMenuItem
     const int mcPriority = 100 * (int)enEditorMenuItemPriority.XLS;
     #endregion
 
-    #region Export Xls Schema To Sqlite
-    const string mcExportXlsSchemaToSqlite = "Export Xls Schema To Sqlite";
-    /// <summary>
-    /// Export Xls Schema To Sqlite
-    /// </summary>
-    [MenuItem(mcMenu + mcExportXlsSchemaToSqlite, false, mcPriority + 1)]
-    [MenuItem(mcAssetMenu + mcExportXlsSchemaToSqlite, false, mcPriority + 1)]
-    [MenuItem(mcHierarchy + mcExportXlsSchemaToSqlite, false, mcPriority + 1)]
-    static void EditorXLSMenuItem_ExportXlsSchemaToSqliteWindow()
-    {
-        EditorXlsSchemaToSqliteWindow win =
-               EditorWindow.GetWindow<EditorXlsSchemaToSqliteWindow>(mcExportXlsDataToSqlite);
-        win.Show();
-    }
-    #endregion    
-
     #region Export Xls Data To Sqlite
     const string mcExportXlsDataToSqlite = "Export Xls Data To Sqlite";
     /// <summary>

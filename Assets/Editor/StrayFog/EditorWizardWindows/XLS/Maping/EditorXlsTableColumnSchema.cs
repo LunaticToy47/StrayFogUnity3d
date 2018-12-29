@@ -32,8 +32,8 @@ public class EditorXlsTableColumnSchema
     [AliasTooltip("数组维度")]
     public enSQLiteDataTypeArrayDimension arrayDimension;
     /// <summary>
-    /// 是否不允许为空
+    /// 是否允许为空
     /// </summary>
-    [AliasTooltip("是否不允许为空")]
-    public bool isNotNull;
+    [AliasTooltip("是否允许为空")]
+    public bool isNull;
 }
