@@ -119,12 +119,12 @@ public enum enSQLiteDataTypeArrayDimension
     /// <summary>
     /// 一维数组
     /// </summary>
-    [Code("一维数组", "[]", "BLOB")]
+    [Code("一维数组", "[]", "DIM")]
     OneDimensionArray,
     /// <summary>
     /// 二维数组
     /// </summary>
-    [Code("二维数组", "[][]", "BLOB")]
+    [Code("二维数组", "[][]", "DIM2")]
     TwoDimensionArray,
 }
 #endregion
