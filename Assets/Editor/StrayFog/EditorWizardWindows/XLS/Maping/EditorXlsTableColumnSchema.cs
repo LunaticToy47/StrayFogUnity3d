@@ -22,6 +22,11 @@ public class EditorXlsTableColumnSchema
     [AliasTooltip("是否是主键")]
     public bool isPK;
     /// <summary>
+    /// 是否不允许为空
+    /// </summary>
+    [AliasTooltip("是否是主键")]
+    public bool isNotNull;
+    /// <summary>
     /// 列类型
     /// </summary>
     [AliasTooltip("列类型")]

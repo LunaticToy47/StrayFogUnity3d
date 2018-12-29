@@ -3,24 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEngine;
 /// <summary>
 /// 编辑器XLS工具
 /// </summary>
 public sealed class EditorStrayFogXLS
 {
-    #region XLS 变量
-    /// <summary>
-    /// 列描述行索引
-    /// </summary>
-    static readonly int msrColumnDescriptionRowIndex = 0;
+    #region XLS 变量    
     /// <summary>
     /// 列名称行索引
     /// </summary>
-    static readonly int msrColumnNameRowIndex = 2;
+    static readonly int msrColumnNameRowIndex = 0;
     /// <summary>
     /// 列类型行索引
     /// </summary>
     static readonly int msrColumnTypeRowIndex = 1;
+    /// <summary>
+    /// 列描述行索引
+    /// </summary>
+    static readonly int msrColumnDescriptionRowIndex = 2;
     /// <summary>
     /// 表数据行起始索引
     /// </summary>
@@ -118,12 +119,33 @@ public sealed class EditorStrayFogXLS
         EditorXlsTableColumnSchema tempTableCell = null;
         string typeValue = string.Empty;
         string dimValue = string.Empty;
+        string tempColumnName = string.Empty;
         foreach (EditorSelectionAsset f in xlsFiles)
         {
             Workbook book = Workbook.Open(f.path);
             if (book.Worksheets.Count > 0)
             {
                 Worksheet sheet = book.Worksheets[0];
+                List<string> lstColumnName = new List<string>();
+                //XLS表中是否有同名列
+                if (sheet.Cells.LastRowIndex >= msrColumnNameRowIndex)
+                {
+                    for (int i = 0; i <= sheet.Cells.LastColIndex; i++)
+                    {
+                        tempColumnName = sheet.Cells[msrColumnNameRowIndex, i].StringValue.ToUpper();
+                        if (!lstColumnName.Contains(tempColumnName))
+                        {
+                            lstColumnName.Add(tempColumnName);
+                        }
+                        else
+                        {
+                            throw new UnityException(string.Format("There are same column【{0}】 in xls【{1}】", 
+                                sheet.Cells[msrColumnNameRowIndex, i].StringValue, f.path));
+                        }
+                    }
+                }
+
+                //读取已保存的表架构
                 msrXlsTableMapingAsset.SetName(f.nameWithoutExtension);
                 msrXlsTableMapingAsset.SetType(typeof(EditorXlsTableSchema).FullName);
                 if (!msrXlsTableMapingAsset.Exists())
@@ -132,9 +154,24 @@ public sealed class EditorStrayFogXLS
                 }
                 msrXlsTableMapingAsset.LoadAsset();
                 tempTable = (EditorXlsTableSchema)msrXlsTableMapingAsset.engineAsset;
-                tempTable.fileName = f.path;
-                tempTable.tableName = f.nameWithoutExtension;  
 
+                //保存原始列架构
+                Dictionary<string, EditorXlsTableColumnSchema> srcEditorXlsTableColumnSchemaMaping = new Dictionary<string, EditorXlsTableColumnSchema>();
+                if (tempTable.columns != null && tempTable.columns.Length > 0)
+                {
+                    foreach (EditorXlsTableColumnSchema c in tempTable.columns)
+                    {
+                        tempColumnName = c.name.ToUpper();
+                        if (!srcEditorXlsTableColumnSchemaMaping.ContainsKey(tempColumnName))
+                        {
+                            srcEditorXlsTableColumnSchemaMaping.Add(tempColumnName, c);
+                        }
+                    }
+                }
+
+
+                tempTable.fileName = f.path;
+                tempTable.tableName = f.nameWithoutExtension;
                 if (sheet.Cells.LastRowIndex >= msrColumnNameRowIndex)
                 {
                     tempTable.columns = new EditorXlsTableColumnSchema[sheet.Cells.LastColIndex + 1];
@@ -145,7 +182,11 @@ public sealed class EditorStrayFogXLS
                         tempTableCell.desc = sheet.Cells[msrColumnDescriptionRowIndex, i].StringValue;
                         tempTableCell.type = enSQLiteDataType.String;
                         tempTableCell.arrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
-
+                        tempColumnName = tempTableCell.name.ToUpper();
+                        if (srcEditorXlsTableColumnSchemaMaping.ContainsKey(tempColumnName))
+                        {
+                            tempTableCell.isPK = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isPK;
+                        }
                         typeValue = dimValue = sheet.Cells[msrColumnTypeRowIndex, i].StringValue;
                         foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionMaping)
                         {
@@ -180,6 +221,23 @@ public sealed class EditorStrayFogXLS
             }
         }
         return tableSchemas;
+    }
+    #endregion
+
+    #region ExecuteExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
+    /// <summary>
+    /// 生成Xls表结构到Sqlite数据库
+    /// </summary>
+    public static void ExecuteExportXlsSchemaToSqlite()
+    {
+        List<EditorXlsTableSchema> tableSchemas = ReadXlsSchema();
+        StringBuilder sbSql = new StringBuilder();
+        foreach (EditorXlsTableSchema t in tableSchemas)
+        {
+
+        }
+        //msrSQLiteDataTypeMaping
+        //msrSQLiteDataTypeArrayDimensionMaping
     }
     #endregion
 

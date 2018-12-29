@@ -1562,8 +1562,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteExportXlsSchemaToSqlite()
     {
-        List<EditorXlsTableSchema> tableSchemas = EditorStrayFogXLS.ReadXlsSchema();
-
+        EditorStrayFogXLS.ExecuteExportXlsSchemaToSqlite();
     }
     #endregion
 
