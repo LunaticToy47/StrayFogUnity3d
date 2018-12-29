@@ -20,12 +20,7 @@ public class EditorXlsTableColumnSchema
     /// 是否是主键
     /// </summary>
     [AliasTooltip("是否是主键")]
-    public bool isPK;
-    /// <summary>
-    /// 是否不允许为空
-    /// </summary>
-    [AliasTooltip("是否是主键")]
-    public bool isNotNull;
+    public bool isPK;    
     /// <summary>
     /// 列类型
     /// </summary>
@@ -36,4 +31,9 @@ public class EditorXlsTableColumnSchema
     /// </summary>
     [AliasTooltip("数组维度")]
     public enSQLiteDataTypeArrayDimension arrayDimension;
+    /// <summary>
+    /// 是否不允许为空
+    /// </summary>
+    [AliasTooltip("是否不允许为空")]
+    public bool isNotNull;
 }

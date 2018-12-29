@@ -11,37 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c155114dd274da4881773358ac43f3f, type: 3}
   m_Name: AssetDiskMapingFile
   m_EditorClassIdentifier: 
-  tableName: AssetDiskMapingFile
-  fileName: Assets/Game/Editor/XLS/AssetDiskMapingFile.xls
+  tableName: 
+  fileName: 
   isDeterminant: 0
-  columns:
-  - name: fileId
-    desc: "\u6587\u4EF6id"
-    isPK: 1
-    type: 6
-    arrayDimension: 0
-  - name: folderId
-    desc: "\u6587\u4EF6\u5939id"
-    isPK: 1
-    type: 6
-    arrayDimension: 0
-  - name: inSide
-    desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
-    isPK: 0
-    type: 14
-    arrayDimension: 0
-  - name: outSide
-    desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
-    isPK: 0
-    type: 14
-    arrayDimension: 0
-  - name: extId
-    desc: "\u6269\u5C55\u540Did"
-    isPK: 0
-    type: 6
-    arrayDimension: 0
-  - name: extEnumValue
-    desc: "\u6269\u5C55\u540D\u679A\u4E3E\u503C"
-    isPK: 0
-    type: 6
-    arrayDimension: 0
+  columns: []

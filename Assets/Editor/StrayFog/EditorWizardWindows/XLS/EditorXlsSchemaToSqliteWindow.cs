@@ -43,11 +43,6 @@ public class EditorXlsSchemaToSqliteWindow : AbsEditorWindow
         EditorGUILayout.Separator();
         EditorGUILayout.HelpBox(EditorStrayFogXLS.msrSeparateDescription, MessageType.None);
         EditorGUILayout.Separator();
-        if (GUILayout.Button(EditorStrayFogXLS.msrXlsTableColumnTypeCodeSequenceDescription))
-        {
-            EditorStrayFogApplication.CopyToClipboard(EditorStrayFogXLS.msrXlsTableColumnTypeCodeSequence);
-            Debug.Log(EditorStrayFogXLS.msrXlsTableColumnTypeCodeSequence);
-        }
         EditorGUILayout.Separator();
     }
     #endregion

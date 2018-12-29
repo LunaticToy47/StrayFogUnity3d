@@ -47,11 +47,7 @@ public sealed class EditorStrayFogXLS
     static readonly string[] msrElementSeparate = new string[] { @"," };
     #endregion
 
-    #region public readonly 变量
-    /// <summary>
-    /// Xls表格列类型代码序列说明
-    /// </summary>
-    public static readonly string msrXlsTableColumnTypeCodeSequenceDescription = "参考TableColumnMaping.xls表，将列类型代码序列复制到CellType页的第一行，做为TableData页的列类型序列数据源";
+    #region public readonly 变量  
     /// <summary>
     /// 分隔符说明
     /// </summary>
@@ -67,35 +63,7 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     public static readonly Dictionary<enSQLiteDataTypeArrayDimension, CodeAttribute> msrSQLiteDataTypeArrayDimensionMaping =
                         typeof(enSQLiteDataTypeArrayDimension).EnumToAttribute<enSQLiteDataTypeArrayDimension, CodeAttribute>();
-
-    /// <summary>
-    /// Xls表格列类型代码序列
-    /// </summary>
-    public static readonly string msrXlsTableColumnTypeCodeSequence = OnBuilderXlsTableColumnTypeCodeSequence();
-    #endregion
-
-    #region OnBuilderXlsTableColumnTypeCodeSequence 生成XLS配置表列类别代码序列
-    /// <summary>
-    /// 生成XLS配置表列类别代码序列
-    /// </summary>
-    /// <returns></returns>
-    static string OnBuilderXlsTableColumnTypeCodeSequence()
-    {
-        StringBuilder sbSeq = new StringBuilder();
-        foreach (CodeAttribute a in msrSQLiteDataTypeArrayDimensionMaping.Values)
-        {
-            foreach (CodeAttribute t in msrSQLiteDataTypeMaping.Values)
-            {
-                sbSeq.AppendFormat("{0}{1}\t", t.csTypeName, a.csTypeName);
-            }
-        }
-        if (sbSeq.Length > 0)
-        {
-            sbSeq = sbSeq.Remove(sbSeq.Length - 1, 1);
-        }
-        return sbSeq.ToString();
-    }
-    #endregion
+    #endregion    
 
     #region ReadXlsSchema 读取XLS表结构框架
     /// <summary>
@@ -117,8 +85,7 @@ public sealed class EditorStrayFogXLS
         List<EditorSelectionAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(xlsFolders, enEditorAssetFilterClassify.DefaultAsset, false, (n) => { return n.ext.ToUpper() == fileExt.ext.ToUpper(); });
         EditorXlsTableSchema tempTable = null;
         EditorXlsTableColumnSchema tempTableCell = null;
-        string typeValue = string.Empty;
-        string dimValue = string.Empty;
+        
         string tempColumnName = string.Empty;
         foreach (EditorSelectionAsset f in xlsFiles)
         {
@@ -127,7 +94,8 @@ public sealed class EditorStrayFogXLS
             {
                 Worksheet sheet = book.Worksheets[0];
                 List<string> lstColumnName = new List<string>();
-                //XLS表中是否有同名列
+
+                #region XLS表中是否有同名列
                 if (sheet.Cells.LastRowIndex >= msrColumnNameRowIndex)
                 {
                     for (int i = 0; i <= sheet.Cells.LastColIndex; i++)
@@ -144,8 +112,9 @@ public sealed class EditorStrayFogXLS
                         }
                     }
                 }
+                #endregion
 
-                //读取已保存的表架构
+                #region 读取已保存的表架构
                 msrXlsTableMapingAsset.SetName(f.nameWithoutExtension);
                 msrXlsTableMapingAsset.SetType(typeof(EditorXlsTableSchema).FullName);
                 if (!msrXlsTableMapingAsset.Exists())
@@ -154,8 +123,9 @@ public sealed class EditorStrayFogXLS
                 }
                 msrXlsTableMapingAsset.LoadAsset();
                 tempTable = (EditorXlsTableSchema)msrXlsTableMapingAsset.engineAsset;
+                #endregion
 
-                //保存原始列架构
+                #region 保存原始列架构
                 Dictionary<string, EditorXlsTableColumnSchema> srcEditorXlsTableColumnSchemaMaping = new Dictionary<string, EditorXlsTableColumnSchema>();
                 if (tempTable.columns != null && tempTable.columns.Length > 0)
                 {
@@ -168,7 +138,7 @@ public sealed class EditorStrayFogXLS
                         }
                     }
                 }
-
+                #endregion
 
                 tempTable.fileName = f.path;
                 tempTable.tableName = f.nameWithoutExtension;
@@ -187,33 +157,7 @@ public sealed class EditorStrayFogXLS
                         {
                             tempTableCell.isPK = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isPK;
                         }
-                        typeValue = dimValue = sheet.Cells[msrColumnTypeRowIndex, i].StringValue;
-                        foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionMaping)
-                        {
-                            if (!string.IsNullOrEmpty(key.Value.csTypeName))
-                            {
-                                typeValue = typeValue.Replace(key.Value.csTypeName, "");
-                            }
-                        }
-
-                        dimValue = dimValue.Replace(typeValue, "");
-
-                        foreach (KeyValuePair<enSQLiteDataType, CodeAttribute> key in msrSQLiteDataTypeMaping)
-                        {
-                            if (typeValue.ToUpper().Equals(key.Value.csTypeName.ToUpper()))
-                            {
-                                tempTableCell.type = key.Key;                          
-                                break;
-                            }
-                        }
-                        foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionMaping)
-                        {
-                            if (string.IsNullOrEmpty(dimValue) || dimValue.ToUpper().Equals(key.Value.csTypeName.ToUpper()))
-                            {
-                                tempTableCell.arrayDimension = key.Key;
-                                break;
-                            }
-                        }
+                        ResolveCSDataType(sheet.Cells[msrColumnTypeRowIndex, i].StringValue,ref tempTableCell.type,ref tempTableCell.arrayDimension);                        
                         tempTable.columns[i] = tempTableCell;
                     }
                 }
@@ -270,6 +214,72 @@ public sealed class EditorStrayFogXLS
             }
         } while (!string.IsNullOrEmpty(line));
         return descSb.ToString();
+    }
+    #endregion
+
+    #region ResolveCSDataType 解析列CS数据类型
+    /// <summary>
+    /// CSDataType映射
+    /// </summary>
+    static Dictionary<int, enSQLiteDataType> msCSDataTypeMaping = new Dictionary<int, enSQLiteDataType>();
+    /// <summary>
+    /// CSDataTypeArrayDimension映射
+    /// </summary>
+    static Dictionary<int, enSQLiteDataTypeArrayDimension> msCSDataTypeArrayDimensionMaping = new Dictionary<int, enSQLiteDataTypeArrayDimension>();
+    /// <summary>
+    /// 解析列CS数据类型
+    /// </summary>
+    /// <param name="_csTypeValue">cs列类型值</param>
+    /// <param name="_dataType">数据类型</param>
+    /// <param name="_dataTypeArrayDimension">数据数组类型</param>
+    public static void ResolveCSDataType(string _csTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    {
+        int hashCode = _csTypeValue.GetHashCode();
+        string typeValue = string.Empty;
+        string dimValue = string.Empty;
+        typeValue = dimValue = _csTypeValue;
+        foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionMaping)
+        {
+            if (!string.IsNullOrEmpty(key.Value.csTypeName))
+            {
+                typeValue = typeValue.Replace(key.Value.csTypeName, "");
+            }
+        }
+        dimValue = dimValue.Replace(typeValue, "");
+
+        if (!msCSDataTypeMaping.ContainsKey(hashCode))
+        {
+            foreach (KeyValuePair<enSQLiteDataType, CodeAttribute> key in msrSQLiteDataTypeMaping)
+            {
+                if (typeValue.ToUpper().Equals(key.Value.csTypeName.ToUpper()))
+                {
+                    _dataType = key.Key;
+                    msCSDataTypeMaping.Add(hashCode, key.Key);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            _dataType = msCSDataTypeMaping[hashCode];
+        }
+
+        if (!msCSDataTypeArrayDimensionMaping.ContainsKey(hashCode))
+        {
+            foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionMaping)
+            {
+                if (string.IsNullOrEmpty(dimValue) || dimValue.ToUpper().Equals(key.Value.csTypeName.ToUpper()))
+                {
+                    _dataTypeArrayDimension = key.Key;
+                    msCSDataTypeArrayDimensionMaping.Add(hashCode, key.Key);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            _dataTypeArrayDimension = msCSDataTypeArrayDimensionMaping[hashCode];
+        }
     }
     #endregion
 }
