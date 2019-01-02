@@ -651,6 +651,10 @@ public sealed class EditorStrayFogExecute
 
     #region SQLite菜单
 
+    #endregion
+
+    #region XLS菜单
+
     #region ExecuteExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
     /// <summary>
     /// 生成Xls表结构到Sqlite数据库
@@ -658,12 +662,13 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteExportXlsSchemaToSqlite()
     {
         bool result = EditorStrayFogXLS.ExecuteExportXlsSchemaToSqlite();
+        OnBuildSQLiteEntity();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         Debug.LogFormat("ExecuteExportXlsSchemaToSqlite 【{0}】", result);
     }
     #endregion
 
-    #region ExecuteBuildSQLiteEntity 生成SQLite实体
+    #region OnBuildSQLiteEntity 生成SQLite实体
     /// <summary>
     /// 特殊实体数据类型
     /// </summary>
@@ -675,7 +680,7 @@ public sealed class EditorStrayFogExecute
     /// <summary>
     /// 生成SQLite实体
     /// </summary>
-    public static void ExecuteBuildSQLiteEntity()
+    static void OnBuildSQLiteEntity()
     {
         string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
         string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
@@ -863,15 +868,11 @@ public sealed class EditorStrayFogExecute
     }
     #endregion
 
-    #endregion
-
-    #region XLS菜单
-
-    #region ExecuteExportXlsDataToSqlite 生成Xls数据到Sqlite数据库
+    #region OnExportXlsDataToSqlite 导出Xls数据到Sqlite数据库
     /// <summary>
-    /// 生成Xls数据到Sqlite数据库
+    /// 导出Xls数据到Sqlite数据库
     /// </summary>
-    public static void ExecuteExportXlsDataToSqlite()
+    static void OnExportXlsDataToSqlite()
     {
 
     }
@@ -1547,10 +1548,11 @@ public sealed class EditorStrayFogExecute
 
         ExecuteSetSpritePackingTag();
         ExecuteSetAssetBundleName();
+
         ExecuteBuildAllAssetDiskMaping();
         ExecuteBuildUIWindowSetting();
-        ExecuteExportXlsDataToSqlite();
 
+        OnExportXlsDataToSqlite();
         ExecuteBuildDllToPackage();
         ExecuteCopySQLiteDbToPackage();
         ExecuteBuildDeleteNouseAssetBatToPackage();

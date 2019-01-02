@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
-/// 导出XLS表到Sqlite数据库
+/// 导出XLS表架构到Sqlite数据库
 /// </summary>
-public class EditorExportXlsDataToSqliteWindow : AbsEditorWindow
+public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
 {
     /// <summary>
     /// 表格架构
@@ -59,11 +58,16 @@ public class EditorExportXlsDataToSqliteWindow : AbsEditorWindow
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(string.Format("{0}. {1}", (i + 1).PadLeft(mXlsTableSchemas.Count), mXlsTableSchemas[i].tableName));
-            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表",mXlsTableSchemas[i].isDeterminant);
-            if (mXlsTableSchemas[i].isDeterminant && mXlsTableSchemas[i].columns.Length != 2)
+            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表", mXlsTableSchemas[i].isDeterminant);
+            if (mXlsTableSchemas[i].isDeterminant &&
+                (mXlsTableSchemas[i].columns == null || mXlsTableSchemas[i].columns.Length != 2))
             {
                 mXlsTableSchemas[i].isDeterminant = false;
-                EditorUtility.DisplayDialog("Determinant", "Determinant table must be only two columns.", "OK");
+                EditorUtility.DisplayDialog("Determinant", "The Determinant table must be only two columns.", "OK");
+            }
+            if (GUILayout.Button("Setting"))
+            {
+                EditorStrayFogApplication.PingObject(mXlsTableSchemas[i]);
             }
             if (GUILayout.Button("Brower"))
             {
@@ -81,9 +85,9 @@ public class EditorExportXlsDataToSqliteWindow : AbsEditorWindow
         }
         EditorGUILayout.EndScrollView();
 
-        if (GUILayout.Button("Export Xls Data To Sqlite"))
+        if (GUILayout.Button("Export Xls Schema To Sqlite"))
         {
-            EditorStrayFogExecute.ExecuteExportXlsDataToSqlite();
+            EditorStrayFogExecute.ExecuteExportXlsSchemaToSqlite();
         }
     }
     #endregion
