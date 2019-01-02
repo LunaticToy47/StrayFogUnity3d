@@ -9,7 +9,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// <summary>
     /// 窗口配置
     /// </summary>
-    public View_UIWindowSetting config { get; private set; }
+    public Table_UIWindowSetting config { get; private set; }
     #endregion
 
     #region SetConfig 设置设定
@@ -17,7 +17,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// 设置设定
     /// </summary>
     /// <param name="_cfg">设定</param>
-    public void SetConfig(View_UIWindowSetting _cfg)
+    public void SetConfig(Table_UIWindowSetting _cfg)
     {
         config = _cfg;
     }

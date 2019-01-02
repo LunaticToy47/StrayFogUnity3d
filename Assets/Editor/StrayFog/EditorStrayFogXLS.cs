@@ -55,16 +55,7 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     public static readonly string msrSeparateDescription = "1.一维数组\"|\"竖线分隔,例:1|2|3" + System.Environment.NewLine + "2.二维数组\"|\"竖线分隔一维,\",\"逗号分隔二维,例:A0,A1,A2|B0,B1,B2";
 
-    /// <summary>
-    /// SQLite数据类别映射
-    /// </summary>
-    public static readonly Dictionary<enSQLiteDataType, CodeAttribute> msrSQLiteDataTypeMaping =
-                        typeof(enSQLiteDataType).EnumToAttribute<enSQLiteDataType, CodeAttribute>();
-    /// <summary>
-    /// SQLite数据类别数组维度映射
-    /// </summary>
-    public static readonly Dictionary<enSQLiteDataTypeArrayDimension, CodeAttribute> msrSQLiteDataTypeArrayDimensionMaping =
-                        typeof(enSQLiteDataTypeArrayDimension).EnumToAttribute<enSQLiteDataTypeArrayDimension, CodeAttribute>();
+    
     #endregion    
 
     #region ReadXlsSchema 读取XLS表结构框架
@@ -159,7 +150,7 @@ public sealed class EditorStrayFogXLS
                         {
                             tempTableCell.isPK = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isPK;
                         }
-                        ResolveCSDataType(sheet.Cells[msrColumnTypeRowIndex, i].StringValue,ref tempTableCell.type,ref tempTableCell.arrayDimension);                        
+                        StrayFogCoreSQLiteHelper.ResolveCSDataType(sheet.Cells[msrColumnTypeRowIndex, i].StringValue,ref tempTableCell.type,ref tempTableCell.arrayDimension);                        
                         tempTable.columns[i] = tempTableCell;
                     }
                 }
@@ -170,7 +161,7 @@ public sealed class EditorStrayFogXLS
     }
     #endregion
 
-    #region ExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
+   #region ExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
     /// <summary>
     /// 生成Xls表结构到Sqlite数据库
     /// </summary>
@@ -178,6 +169,17 @@ public sealed class EditorStrayFogXLS
     public static bool ExportXlsSchemaToSqlite()
     {
         List<EditorXlsTableSchema> tableSchemas = ReadXlsSchema();
+        return OnCreateSqliteSchema(tableSchemas) && OnCreateEntityScript(tableSchemas);
+    }
+
+    /// <summary>
+    /// 创建SQLite数据库结构
+    /// </summary>
+    /// <param name="_tableSchemas">表架构</param>
+    /// <returns>true:成功,false:失败</returns>
+    static bool OnCreateSqliteSchema(List<EditorXlsTableSchema> _tableSchemas)
+    {
+        List<string> sbExcuteSql = new List<string>();
         StringBuilder sbSql = new StringBuilder();
         string entitySqlTemplete = EditorResxTemplete.SQLiteCreateTableTemplete;
 
@@ -208,9 +210,9 @@ public sealed class EditorStrayFogXLS
         primarykeyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entitySqlTemplete, primarykeyMark, out primarykeyReplaceTemplete);
         #endregion
 
-        List<string> sbExcuteSql = new List<string>();
+        #region 生成要执行的SQL语句        
         int index = 0;
-        foreach (EditorXlsTableSchema t in tableSchemas)
+        foreach (EditorXlsTableSchema t in _tableSchemas)
         {
             sbColumnReplace.Length = 0;
             sbPkReplace.Length = 0;
@@ -229,9 +231,9 @@ public sealed class EditorStrayFogXLS
                     columnTemplete
                     .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
                     .Replace("#Name#", c.name)
-                    .Replace("#DataType#", GetSQLiteDataTypeName(c.type, c.arrayDimension))
+                    .Replace("#DataType#", StrayFogCoreSQLiteHelper.GetSQLiteDataTypeName(c.type, c.arrayDimension))
                     .Replace("#Dot#", index == t.columns.Length && sbPkReplace.Length == 0 ? "" : ",")
-                );                
+                );
             }
             if (sbPkReplace.Length > 0)
             {
@@ -256,21 +258,82 @@ public sealed class EditorStrayFogXLS
                 .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
                 .Replace(primarykeyReplaceTemplete, sbPrimarykeyReplace.ToString())
                 );
-            }            
+            }
         }
-        
-        List<EditorSelectionAsset> views = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(new string[1] { EditorResxTemplete.SqliteViewSqlRoot },enEditorAssetFilterClassify.TextAsset);
+
+        List<EditorSelectionAsset> views = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(new string[1] { EditorResxTemplete.SqliteViewSqlRoot }, enEditorAssetFilterClassify.TextAsset);
         foreach (EditorSelectionAsset v in views)
         {
             TextAsset ta = AssetDatabase.LoadAssetAtPath<TextAsset>(v.path);
             sbExcuteSql.Add(ta.text);
         }
-        bool result = EditorStrayFogApplication.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
-        //OnBuildSQLiteEntity();
-        return result;
+        #endregion
+
+        return EditorStrayFogApplication.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
+    }
+
+    /// <summary>
+    /// 创建实体脚本
+    /// </summary>
+    /// <param name="_tableSchemas">表架构</param>
+    /// <returns>true:成功,false:失败</returns>
+    static bool OnCreateEntityScript(List<EditorXlsTableSchema> _tableSchemas)
+    {
+        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
+        string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
+        string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
+
+        //EditorStrayFogUtility.cmd.DeleteFolder(sqliteEntityFolder);
+        //EditorStrayFogUtility.cmd.DeleteFolder(sqliteDeterminantEntitiesFolder);
+
+        EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", sqliteEntityFolder, enFileExt.CS, "");
+
+        #region 非行列式脚本模板
+        string entityScriptTemplete = EditorResxTemplete.SQLiteEntityScriptTemplete;
+
+        string propertyMark = "#Properties#";
+        string propertyReplaceTemplete = string.Empty;
+        string propertyTemplete = string.Empty;
+        StringBuilder sbPropertyReplace = new StringBuilder();
+        propertyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, propertyMark, out propertyReplaceTemplete);
+
+        string pkMark = "#PK#";
+        string pkReplaceTemplete = string.Empty;
+        string pkTemplete = string.Empty;
+        StringBuilder sbPkReplace = new StringBuilder();
+        pkTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, pkMark, out pkReplaceTemplete);
+        #endregion
+
+        #region 行列式脚本模板
+        string determinantEntityScriptTemplete = EditorResxTemplete.SQLiteDeterminantEntityScriptTemplete;
+
+        string rowMark = "#Row#";
+        string rowReplaceTemplete = string.Empty;
+        string rowTemplete = string.Empty;
+        StringBuilder sbRowReplace = new StringBuilder();
+        rowTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(determinantEntityScriptTemplete, rowMark, out rowReplaceTemplete);
+        #endregion
+
+        #region 创建Table脚本
+        for (int i = 0; i < _tableSchemas.Count; i++)
+        {
+            if (_tableSchemas[i].isCreateScript)
+            {
+
+            }
+            EditorUtility.DisplayProgressBar("Build Table Entity", _tableSchemas[i].name, (i + 1) / _tableSchemas.Count);
+        }
+        #endregion
+
+        #region 创建View脚本
+
+        #endregion
+        EditorUtility.ClearProgressBar();
+        return true;
     }
     #endregion
 
+    /*
     #region OnBuildSQLiteEntity 生成SQLite实体
     /// <summary>
     /// 特殊实体数据类型
@@ -285,6 +348,7 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     static void OnBuildSQLiteEntity()
     {
+        
         string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
         string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
         string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
@@ -468,8 +532,10 @@ public sealed class EditorStrayFogXLS
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         Debug.Log(sbLog.ToString());
         Debug.Log("BuildSQLiteEntity Succeed!");
-    }
-    #endregion
+        
+}
+#endregion
+    */
 
     #region TransDescToSummary 转换描述为Summary形式
     /// <summary>
@@ -501,84 +567,5 @@ public sealed class EditorStrayFogXLS
         } while (!string.IsNullOrEmpty(line));
         return descSb.ToString();
     }
-    #endregion
-
-    #region ResolveCSDataType 解析列CS数据类型
-    /// <summary>
-    /// CSDataType映射
-    /// </summary>
-    static Dictionary<int, enSQLiteDataType> msCSDataTypeMaping = new Dictionary<int, enSQLiteDataType>();
-    /// <summary>
-    /// CSDataTypeArrayDimension映射
-    /// </summary>
-    static Dictionary<int, enSQLiteDataTypeArrayDimension> msCSDataTypeArrayDimensionMaping = new Dictionary<int, enSQLiteDataTypeArrayDimension>();
-    /// <summary>
-    /// 解析列CS数据类型
-    /// </summary>
-    /// <param name="_csTypeValue">cs列类型值</param>
-    /// <param name="_dataType">数据类型</param>
-    /// <param name="_dataTypeArrayDimension">数据数组类型</param>
-    public static void ResolveCSDataType(string _csTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
-    {
-        int hashCode = _csTypeValue.GetHashCode();
-        string typeValue = string.Empty;
-        string dimValue = string.Empty;
-        typeValue = dimValue = _csTypeValue;
-        foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionMaping)
-        {
-            if (!string.IsNullOrEmpty(key.Value.csTypeName))
-            {
-                typeValue = typeValue.Replace(key.Value.csTypeName, "");
-            }
-        }
-        dimValue = dimValue.Replace(typeValue, "");
-
-        if (!msCSDataTypeMaping.ContainsKey(hashCode))
-        {
-            foreach (KeyValuePair<enSQLiteDataType, CodeAttribute> key in msrSQLiteDataTypeMaping)
-            {
-                if (typeValue.ToUpper().Equals(key.Value.csTypeName.ToUpper()))
-                {
-                    _dataType = key.Key;
-                    msCSDataTypeMaping.Add(hashCode, key.Key);
-                    break;
-                }
-            }
-        }
-        else
-        {
-            _dataType = msCSDataTypeMaping[hashCode];
-        }
-
-        if (!msCSDataTypeArrayDimensionMaping.ContainsKey(hashCode))
-        {
-            foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionMaping)
-            {
-                if (string.IsNullOrEmpty(dimValue) || dimValue.ToUpper().Equals(key.Value.csTypeName.ToUpper()))
-                {
-                    _dataTypeArrayDimension = key.Key;
-                    msCSDataTypeArrayDimensionMaping.Add(hashCode, key.Key);
-                    break;
-                }
-            }
-        }
-        else
-        {
-            _dataTypeArrayDimension = msCSDataTypeArrayDimensionMaping[hashCode];
-        }
-    }
-    #endregion
-
-    #region GetSQLiteDataTypeName 获得SQLite数据类型名称
-    /// <summary>
-    /// 获得SQLite数据类型名称
-    /// </summary>
-    /// <param name="_dataType">数据类型</param>
-    /// <param name="_dataTypeArrayDimension">数组维度</param>
-    /// <returns>SQLite数据类型名称</returns>
-    public static string GetSQLiteDataTypeName(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
-    {
-        return msrSQLiteDataTypeMaping[_dataType].sqliteTypeName + msrSQLiteDataTypeArrayDimensionMaping[_dataTypeArrayDimension].sqliteTypeName;
-    }
-    #endregion
+    #endregion    
 }

@@ -22,6 +22,11 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [ReadOnly]
     public bool isDeterminant;
     /// <summary>
+    /// 是否生成脚本
+    /// </summary>
+    [AliasTooltip("是否生成脚本")]
+    public bool isCreateScript;
+    /// <summary>
     /// 列
     /// </summary>
     [AliasTooltip("列")]

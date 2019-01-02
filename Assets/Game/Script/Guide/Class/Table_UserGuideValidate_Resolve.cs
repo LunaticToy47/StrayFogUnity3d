@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 /// <summary>
-/// View_UserGuideValidate配置解析
+/// Table_UserGuideValidate配置解析
 /// </summary>
-public partial class View_UserGuideValidate
+public partial class Table_UserGuideValidate
 {
     /// <summary>
     /// 验证类型

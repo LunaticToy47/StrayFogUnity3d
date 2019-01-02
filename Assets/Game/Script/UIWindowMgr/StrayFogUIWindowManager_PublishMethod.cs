@@ -19,10 +19,10 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     /// <param name="_condition">条件</param>
     /// <returns>结果</returns>
-    public List<View_UIWindowSetting> GetWindowSettings(Func<View_UIWindowSetting, bool> _condition)
+    public List<Table_UIWindowSetting> GetWindowSettings(Func<Table_UIWindowSetting, bool> _condition)
     {
-        List<View_UIWindowSetting> result = new List<View_UIWindowSetting>();
-        foreach (View_UIWindowSetting w in mWindowSettingMaping.Values)
+        List<Table_UIWindowSetting> result = new List<Table_UIWindowSetting>();
+        foreach (Table_UIWindowSetting w in mWindowSettingMaping.Values)
         {
             if (_condition == null || _condition(w))
             {

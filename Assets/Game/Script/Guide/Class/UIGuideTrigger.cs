@@ -18,7 +18,7 @@ public class UIGuideTrigger : EventTrigger
     /// <summary>
     /// config
     /// </summary>
-    public View_UserGuideTrigger config { get; private set; }
+    public Table_UserGuideTrigger config { get; private set; }
     #endregion
 
     #region maskGraphic
@@ -55,7 +55,7 @@ public class UIGuideTrigger : EventTrigger
     /// </summary>
     /// <param name="_config">配置</param>
     /// <param name="_triggerType">触发类别</param>
-    public void SetConfig(View_UserGuideTrigger _config, EventTriggerType _triggerType)
+    public void SetConfig(Table_UserGuideTrigger _config, EventTriggerType _triggerType)
     {
         config = _config;
         maskGraphic = gameObject.GetComponent<Graphic>();

@@ -52,11 +52,11 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 触发配置映射
     /// </summary>
-    Dictionary<int, View_UserGuideTrigger> mTriggerConfigMaping = new Dictionary<int, View_UserGuideTrigger>();
+    Dictionary<int, Table_UserGuideTrigger> mTriggerConfigMaping = new Dictionary<int, Table_UserGuideTrigger>();
     /// <summary>
     /// 验证配置映射
     /// </summary>
-    Dictionary<int, View_UserGuideValidate> mValidateConfigMaping = new Dictionary<int, View_UserGuideValidate>();
+    Dictionary<int, Table_UserGuideValidate> mValidateConfigMaping = new Dictionary<int, Table_UserGuideValidate>();
     /// <summary>
     /// 等待触发引导
     /// </summary>
@@ -67,11 +67,11 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     protected override void OnAfterConstructor()
     {
         #region 初始化引导窗口
-        List<View_UIWindowSetting> guides = StrayFogGamePools.uiWindowManager.GetWindowSettings((w) => { return w.isGuideWindow; });
+        List<Table_UIWindowSetting> guides = StrayFogGamePools.uiWindowManager.GetWindowSettings((w) => { return w.isGuideWindow; });
         if (guides != null && guides.Count > 0)
         {
             List<int> ids = new List<int>();
-            foreach (View_UIWindowSetting w in guides)
+            foreach (Table_UIWindowSetting w in guides)
             {
                 if (!ids.Contains(w.id))
                 {
@@ -87,10 +87,10 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
         #endregion
 
         #region 初始化引导数据
-        List<View_UserGuideTrigger> triggers = SQLiteEntityHelper.Select<View_UserGuideTrigger>();
+        List<Table_UserGuideTrigger> triggers = SQLiteEntityHelper.Select<Table_UserGuideTrigger>();
         if (triggers != null && triggers.Count > 0)
         {
-            foreach (View_UserGuideTrigger t in triggers)
+            foreach (Table_UserGuideTrigger t in triggers)
             {
                 if (!mTriggerConfigMaping.ContainsKey(t.id))
                 {
@@ -103,10 +103,10 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
             }
         }
 
-        List<View_UserGuideValidate> validates = SQLiteEntityHelper.Select<View_UserGuideValidate>();
+        List<Table_UserGuideValidate> validates = SQLiteEntityHelper.Select<Table_UserGuideValidate>();
         if (validates != null && validates.Count > 0)
         {
-            foreach (View_UserGuideValidate t in validates)
+            foreach (Table_UserGuideValidate t in validates)
             {
                 if (!mValidateConfigMaping.ContainsKey(t.id))
                 {
@@ -213,7 +213,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 当前运行的引导
     /// </summary>
-    View_UserGuideTrigger mRunningUserGuideTrigger = null;
+    Table_UserGuideTrigger mRunningUserGuideTrigger = null;
     /// <summary>
     /// TriggerCheck
     /// </summary>
@@ -260,7 +260,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// 显示引导窗口
     /// </summary>
     /// <param name="_guideTrigger">引导触发配置</param>
-    void OnDisplayGuideWindow(View_UserGuideTrigger _guideTrigger)
+    void OnDisplayGuideWindow(Table_UserGuideTrigger _guideTrigger)
     {
         if (_guideTrigger != null)
         {
@@ -289,7 +289,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// </summary>
     /// <param name="_cfg">配置</param>
     /// <returns>true:触发引导,false:不触发引导</returns>
-    bool OnIsTrigger(View_UserGuideTrigger _cfg)
+    bool OnIsTrigger(Table_UserGuideTrigger _cfg)
     {
         bool? isTrigger = true;
         if (_cfg.levelId > 0)
@@ -351,7 +351,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
             isEnd = mValidateConfigMaping.ContainsKey(_guideWidget.config.validateId);
             if (isEnd)
             {
-                View_UserGuideValidate vfg = mValidateConfigMaping[_guideWidget.config.validateId];
+                Table_UserGuideValidate vfg = mValidateConfigMaping[_guideWidget.config.validateId];
                 foreach (enGuideValidateCondition c in vfg.validateCondition)
                 {
                     switch (c)

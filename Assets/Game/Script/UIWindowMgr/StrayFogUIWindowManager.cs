@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
     /// </summary>
     /// <param name="_settings">窗口设定组</param>
     /// <param name="_parameters">参数组</param>
-    public delegate void UIWindowSettingEventHandler(View_UIWindowSetting[] _settings, params object[] _parameters);
+    public delegate void UIWindowSettingEventHandler(Table_UIWindowSetting[] _settings, params object[] _parameters);
 
     /// <summary>
     /// UI窗口实体事件
@@ -41,7 +41,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// <param name="_configCallback">配置回调</param>
     /// <param name="_windowCallback">窗口回调</param>
     /// <param name="_parameters">参数组</param>
-    delegate void UILoadInMemoryEventHandler<W>(View_UIWindowSetting[] _winCfg, Dictionary<int, AssetBundleResult> _memoryResult,
+    delegate void UILoadInMemoryEventHandler<W>(Table_UIWindowSetting[] _winCfg, Dictionary<int, AssetBundleResult> _memoryResult,
         UIWindowSettingEventHandler _configCallback, UIWindowEntityEventHandler<W> _windowCallback, params object[] _parameters) where W : AbsUIWindowView;
     /// <summary>
     /// 加载窗口到内存
@@ -52,7 +52,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// <param name="_windowCallback">窗口回调</param>
     /// <param name="_memoryCallback">内存回调</param>
     /// <param name="_parameters">参数组</param>
-    void OnLoadWindowInMemory<W>(View_UIWindowSetting[] _winCfgs,
+    void OnLoadWindowInMemory<W>(Table_UIWindowSetting[] _winCfgs,
         UIWindowSettingEventHandler _configCallback, UIWindowEntityEventHandler<W> _windowCallback,
         UILoadInMemoryEventHandler<W> _memoryCallback, params object[] _parameters)
         where W : AbsUIWindowView
@@ -61,7 +61,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
         Dictionary<int, AssetBundleResult> resultMaping = new Dictionary<int, AssetBundleResult>();
         int count = _winCfgs.Length;
 
-        foreach (View_UIWindowSetting cfg in _winCfgs)
+        foreach (Table_UIWindowSetting cfg in _winCfgs)
         {
             StrayFogGamePools.assetBundleManager.LoadAssetInMemory(cfg.fileId, cfg.folderId,
             (result) =>
@@ -78,7 +78,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
                 }
                 if (index >= count)
                 {
-                    View_UIWindowSetting[] winCfgs = (View_UIWindowSetting[])result.extraParameter[0];
+                    Table_UIWindowSetting[] winCfgs = (Table_UIWindowSetting[])result.extraParameter[0];
                     UIWindowSettingEventHandler cfgCall = (UIWindowSettingEventHandler)result.extraParameter[1];
                     UIWindowEntityEventHandler<W> winCall = (UIWindowEntityEventHandler<W>)result.extraParameter[2];
                     UILoadInMemoryEventHandler<W> memoryCall = (UILoadInMemoryEventHandler<W>)result.extraParameter[3];
@@ -100,7 +100,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// <param name="_winCallback">窗口回调</param>
     /// <param name="_memoryCallback">内存回调</param>
     /// <param name="_parameters">参数组</param>
-    void OnPreloadWindow<W>(View_UIWindowSetting[] _windowIds,
+    void OnPreloadWindow<W>(Table_UIWindowSetting[] _windowIds,
         UIWindowSettingEventHandler _cfgCallback,
         UIWindowEntityEventHandler<W> _winCallback,
         UILoadInMemoryEventHandler<W> _memoryCallback,
@@ -133,7 +133,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// </summary>
     /// <param name="_winCfg">窗口配置</param>
     /// <returns>返回当前窗口配置</returns>
-    View_UIWindowSetting OnPresetAdjustWindowSiblingIndex(View_UIWindowSetting _winCfg)
+    Table_UIWindowSetting OnPresetAdjustWindowSiblingIndex(Table_UIWindowSetting _winCfg)
     {
         int siblingIndex = 0;
         int winLayer = (int)_winCfg.layer;
@@ -221,7 +221,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// 序列化打开模式
     /// </summary>
     /// <param name="_openWinCfgs">打开的窗口配置组</param>
-    void OnSerializeOpenWindow(View_UIWindowSetting[] _openWinCfgs)
+    void OnSerializeOpenWindow(Table_UIWindowSetting[] _openWinCfgs)
     {
         Stack<OpenWindowSequence> stackWin = OnGetOpenWindowSequence();
         //是否是同一组窗口打开
@@ -230,7 +230,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
         List<int> openWins = new List<int>();
         List<int> openSeqs = new List<int>();
         List<int> closeWins = new List<int>();
-        foreach (View_UIWindowSetting w in _openWinCfgs)
+        foreach (Table_UIWindowSetting w in _openWinCfgs)
         {
             if (!openSeqs.Contains(w.id) && w.openMode != (int)enUIWindowOpenMode.Default)
             {
@@ -255,7 +255,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
         {
             #region 执行打开模式
             winSeq = new OpenWindowSequence();
-            foreach (View_UIWindowSetting cfg in _openWinCfgs)
+            foreach (Table_UIWindowSetting cfg in _openWinCfgs)
             {
                 if (cfg.openMode != (int)enUIWindowOpenMode.Default)
                 {//如果打开模式不是默认模式
@@ -265,7 +265,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
                     }
                     #region 收集打开窗口数据                    
                     AbsUIWindowView win = OnGetWindow<AbsUIWindowView>(cfg.id);
-                    View_UIWindowSetting cmpCfg = null;
+                    Table_UIWindowSetting cmpCfg = null;
                     bool isSeqWin = false;
                     foreach (int aid in mActiveWindowMaping)
                     {
@@ -320,7 +320,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// 关闭窗口恢复已打开的序列化窗口
     /// </summary>
     /// <param name="_closeWinCfgs">关闭的窗口配置组</param>
-    void OnCloseToRestoreSerializeOpenWindow(View_UIWindowSetting[] _closeWinCfgs)
+    void OnCloseToRestoreSerializeOpenWindow(Table_UIWindowSetting[] _closeWinCfgs)
     {
         Stack<OpenWindowSequence> stackWin = OnGetOpenWindowSequence();
         if (stackWin.Count > 0)
@@ -328,14 +328,14 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
             OpenWindowSequence dms = stackWin.Peek();
             bool isSameSeq = true;
             //是否与最后打开的窗口序列一致
-            foreach (View_UIWindowSetting cfg in _closeWinCfgs)
+            foreach (Table_UIWindowSetting cfg in _closeWinCfgs)
             {
                 isSameSeq &= dms.openWinIds.Contains(cfg.id);
             }
 
             if (isSameSeq)
             {//如果关闭的窗口是最后的打开窗口序列
-                List<View_UIWindowSetting> configs = new List<View_UIWindowSetting>();
+                List<Table_UIWindowSetting> configs = new List<Table_UIWindowSetting>();
                 for (int i = 0; i < dms.winSequences.Count; i++)
                 {
                     configs.Add(OnPresetAdjustWindowSiblingIndex(OnGetWindowSetting(dms.winSequences[i])[0]));
@@ -355,15 +355,15 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// 序列化关闭窗口
     /// </summary>
     /// <param name="_winCfgs">窗口配置</param>
-    void OnSerializeCloseWindow(View_UIWindowSetting[] _winCfgs)
+    void OnSerializeCloseWindow(Table_UIWindowSetting[] _winCfgs)
     {
-        foreach (View_UIWindowSetting cfg in _winCfgs)
+        foreach (Table_UIWindowSetting cfg in _winCfgs)
         {
             if (cfg.closeMode != (int)enUIWindowCloseMode.Default)
             {
                 #region 处理关闭窗口数据
                 AbsUIWindowView win = OnGetWindow<AbsUIWindowView>(cfg.id);
-                View_UIWindowSetting cmpCfg = null;
+                Table_UIWindowSetting cmpCfg = null;
                 bool isCloseWin = false;
                 foreach (AbsUIWindowView cmpWin in mWindowInstanceMaping.Values)
                 {
@@ -434,7 +434,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
         {
             if (mWaitRestoreWindowSequence[sceneId].Count > 0)
             {
-                List<View_UIWindowSetting> cfgs = new List<View_UIWindowSetting>();
+                List<Table_UIWindowSetting> cfgs = new List<Table_UIWindowSetting>();
                 foreach (int wid in mWaitRestoreWindowSequence[sceneId])
                 {
                     cfgs.Add(OnPresetAdjustWindowSiblingIndex(OnGetWindowSetting(wid)[0]));
@@ -535,7 +535,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
         if (mWindowInstanceMaping.Count > 0)
         {
             List<int> winIds = new List<int>(mWindowInstanceMaping.Keys);
-            View_UIWindowSetting config = null;
+            Table_UIWindowSetting config = null;
             foreach (int id in winIds)
             {
                 config = OnGetWindowSetting(id)[0];
@@ -583,10 +583,10 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// <param name="_windowIds">窗口Id组</param>
     /// <param name="_winCallback">窗口回调</param>
     /// <param name="_parameters">参数组</param>
-    void OnOpenWindow<W>(View_UIWindowSetting[] _windowIds, UIWindowEntityEventHandler<W> _winCallback, params object[] _parameters)
+    void OnOpenWindow<W>(Table_UIWindowSetting[] _windowIds, UIWindowEntityEventHandler<W> _winCallback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-        foreach (View_UIWindowSetting c in _windowIds)
+        foreach (Table_UIWindowSetting c in _windowIds)
         {
             OnPresetAdjustWindowSiblingIndex(c);
         }
@@ -616,12 +616,12 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// <param name="_winCallback">窗口回调</param>
     /// <param name="_isSerializeOpenWindow">是否序列化打开窗口</param>
     /// <param name="_parameters">参数组</param>
-    void OnInstanceAndOpenWindow<W>(View_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _result, UIWindowEntityEventHandler<W> _winCallback, bool _isSerializeOpenWindow, params object[] _parameters)
+    void OnInstanceAndOpenWindow<W>(Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _result, UIWindowEntityEventHandler<W> _winCallback, bool _isSerializeOpenWindow, params object[] _parameters)
         where W : AbsUIWindowView
     {
         List<W> windows = new List<W>();
         int index = _winCfgs.Length;
-        foreach (View_UIWindowSetting cfg in _winCfgs)
+        foreach (Table_UIWindowSetting cfg in _winCfgs)
         {
             W window = default(W);
             #region 实例化窗口
@@ -645,7 +645,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
                         index--;
                         if (index <= 0)
                         {
-                            OnSerializeAndActiveWindow<W>(windows, (View_UIWindowSetting[])args[0], (UIWindowEntityEventHandler<W>)args[1], (bool)args[2], (object[])args[3]);
+                            OnSerializeAndActiveWindow<W>(windows, (Table_UIWindowSetting[])args[0], (UIWindowEntityEventHandler<W>)args[1], (bool)args[2], (object[])args[3]);
                         }
                     }
                 }, _winCfgs, _winCallback, _isSerializeOpenWindow, _parameters);
@@ -669,7 +669,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// <param name="_winCallback">窗口回调</param>
     /// <param name="_isSerializeOpenWindow">是否序列化打开窗口</param>
     /// <param name="_parameters">参数组</param>
-    void OnSerializeAndActiveWindow<W>(List<W> _windows, View_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _winCallback, bool _isSerializeOpenWindow, params object[] _parameters)
+    void OnSerializeAndActiveWindow<W>(List<W> _windows, Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _winCallback, bool _isSerializeOpenWindow, params object[] _parameters)
         where W : AbsUIWindowView
     {
         if (_isSerializeOpenWindow)
@@ -696,12 +696,12 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// <param name="_windowIds">窗口Id组</param>
     /// <param name="_winCallback">窗口回调</param>
     /// <param name="_parameters">参数组</param>
-    void OnCloseWindow<W>(View_UIWindowSetting[] _windows, UIWindowEntityEventHandler<W> _winCallback, params object[] _parameters)
+    void OnCloseWindow<W>(Table_UIWindowSetting[] _windows, UIWindowEntityEventHandler<W> _winCallback, params object[] _parameters)
         where W : AbsUIWindowView
     {
         List<int> closeWins = new List<int>();
         List<W> windows = new List<W>();
-        foreach (View_UIWindowSetting cfg in _windows)
+        foreach (Table_UIWindowSetting cfg in _windows)
         {
             W win = OnGetWindow<W>(cfg.id);
             if (win == null)
@@ -730,13 +730,13 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     /// <param name="_windowIds">窗口Id组</param>
     /// <param name="_winCallback">窗口回调</param>
     /// <param name="_parameters">参数组</param>
-    void OnGetWindow<W>(View_UIWindowSetting[] _windows, UIWindowEntityEventHandler<W> _winCallback, params object[] _parameters)
+    void OnGetWindow<W>(Table_UIWindowSetting[] _windows, UIWindowEntityEventHandler<W> _winCallback, params object[] _parameters)
         where W : AbsUIWindowView
     {
         List<W> result = new List<W>();
         if (_windows != null && _windows.Length > 0)
         {
-            foreach (View_UIWindowSetting w in _windows)
+            foreach (Table_UIWindowSetting w in _windows)
             {
                 result.Add(OnGetWindow<W>(w.id));
             }

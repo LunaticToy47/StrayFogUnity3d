@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 /// <summary>
-/// View_UserGuideTrigger配置解析
+/// Table_UserGuideTrigger配置解析
 /// </summary>
-public partial class View_UserGuideTrigger
+public partial class Table_UserGuideTrigger
 {
     /// <summary>
     /// 触发条件组
