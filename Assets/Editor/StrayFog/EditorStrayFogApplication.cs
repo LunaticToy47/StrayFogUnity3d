@@ -291,28 +291,6 @@ public sealed class EditorStrayFogApplication
         }
         return args.Count <= 0;
     }
-    #endregion
-
-    #region Db库
-    /// <summary>
-    /// SQLiteHelper
-    /// </summary>
-    static SQLiteHelper mSqlHelper = null;
-    /// <summary>
-    /// SQL帮助类
-    /// </summary>
-    public static SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(string.Format("data source={0}", StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource)); } return mSqlHelper; } }
-    /// <summary>
-    /// 关闭数据库
-    /// </summary>
-    public static void CloseDb()
-    {
-        if (mSqlHelper != null)
-        {
-            mSqlHelper.Close();
-            mSqlHelper = null;
-        }
-    }
-    #endregion
+    #endregion    
 }
 #endif

@@ -98,7 +98,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public static string ExecuteDeleteAllFile()
     {
         string sql = "DELETE FROM AssetDiskMapingFile";
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -109,7 +109,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public string ExecuteInsertFile()
     {
         string sql = string.Format("INSERT INTO AssetDiskMapingFile (fileId,folderId,inSide,outSide,extId,extEnumValue) VALUES({0},{1},'{2}','{3}',{4},{5});", fileId, folderId, fileInSide, fileOutSide, fileExtHashCode, fileExtEnumValue);
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -120,7 +120,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public bool ExistsFile()
     {
         string sql = string.Format("SELECT COUNT(*) FROM AssetDiskMapingFile WHERE  fileId={0} AND folderId = {1};", fileId, folderId);
-        Int64 count = (Int64)EditorStrayFogApplication.sqlHelper.ExecuteScalar(sql);
+        Int64 count = (Int64)SQLiteHelper.sqlHelper.ExecuteScalar(sql);
         return count > 0;
     }
 
@@ -131,7 +131,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public static string ExecuteDeleteAllFileExt()
     {
         string sql = "DELETE FROM AssetDiskMapingFileExt";
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -142,7 +142,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public string ExecuteInsertFileExt()
     {
         string sql = string.Format("INSERT INTO AssetDiskMapingFileExt (extId,ext) VALUES({0},'{1}')", fileExtHashCode, ext);
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -153,7 +153,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public bool ExistsFileExt()
     {
         string sql = string.Format("SELECT COUNT(*) FROM AssetDiskMapingFileExt WHERE  extId={0};", fileExtHashCode);
-        Int64 count = (Int64)EditorStrayFogApplication.sqlHelper.ExecuteScalar(sql);
+        Int64 count = (Int64)SQLiteHelper.sqlHelper.ExecuteScalar(sql);
         return count > 0;
     }
 
@@ -164,7 +164,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public static string ExecuteDeleteAllFolder()
     {
         string sql = "DELETE FROM AssetDiskMapingFolder";
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -175,7 +175,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public string ExecuteInsertFolder()
     {
         string sql = string.Format("INSERT INTO AssetDiskMapingFolder (folderId,inSide,outSide) VALUES({0},'{1}', '{2}');", folderId, folderInSide, folderOutSide);
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -186,7 +186,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     public bool ExistsFolder()
     {
         string sql = string.Format("SELECT COUNT(*) FROM AssetDiskMapingFolder WHERE  folderId={0};", folderId);
-        Int64 count = (Int64)EditorStrayFogApplication.sqlHelper.ExecuteScalar(sql);
+        Int64 count = (Int64)SQLiteHelper.sqlHelper.ExecuteScalar(sql);
         return count > 0;
     }
 }

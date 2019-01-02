@@ -1,8 +1,22 @@
 ﻿using System.Collections.Generic;
 /// <summary>
-/// StrayFogCoreSQLite帮助类
+/// SQLite实体
 /// </summary>
-public sealed class StrayFogCoreSQLiteHelper
+public enum enSQLiteEntityClassify
+{
+    /// <summary>
+    /// 表格
+    /// </summary>        
+    Table,
+    /// <summary>
+    /// 视图
+    /// </summary>
+    View
+}
+/// <summary>
+/// StrayFogSQLiteDataTypeHelper帮助类
+/// </summary>
+public sealed class StrayFogSQLiteDataTypeHelper
 {
     /// <summary>
     /// SQLite数据类别映射
@@ -157,6 +171,42 @@ public sealed class StrayFogCoreSQLiteHelper
     public static string GetSQLiteDataTypeName(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
     {
         return msrSQLiteDataTypeCodeAttributeMaping[_dataType].sqliteTypeName + msrSQLiteDataTypeArrayDimensionCodeAttributeMaping[_dataTypeArrayDimension].sqliteTypeName;
+    }
+    #endregion
+
+    #region GetCSDataTypeName 获得CS数据类型名称
+    /// <summary>
+    /// 获得CS数据类型名称
+    /// </summary>
+    /// <param name="_dataType">数据类型</param>
+    /// <param name="_dataTypeArrayDimension">数组维度</param>
+    /// <returns>SQLite数据类型名称</returns>
+    public static string GetCSDataTypeName(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    {
+        return msrSQLiteDataTypeCodeAttributeMaping[_dataType].csTypeName + msrSQLiteDataTypeArrayDimensionCodeAttributeMaping[_dataTypeArrayDimension].csTypeName;
+    }
+    #endregion
+
+    #region GetEntityClassName 获得实体类名称
+    /// <summary>
+    /// 获得实体类名称
+    /// </summary>
+    /// <param name="_entityName">实体名称</param>
+    /// <param name="_entityClassify">实体分类</param>
+    /// <returns>脚本类名称</returns>
+    public static string GetEntityClassName(string _entityName, enSQLiteEntityClassify _entityClassify)
+    {
+        string className = _entityName;
+        string prefix = _entityClassify.ToString() + "_";
+        if (_entityName.StartsWith(prefix))
+        {
+            className = _entityName;
+        }
+        else
+        {
+            className = prefix + _entityName;
+        }
+        return className;
     }
     #endregion
 }

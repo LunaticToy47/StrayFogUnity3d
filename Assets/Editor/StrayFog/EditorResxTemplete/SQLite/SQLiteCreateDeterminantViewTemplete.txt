@@ -1,0 +1,8 @@
+﻿-- ----------------------------
+-- View structure for View_DeterminantVT
+-- ----------------------------
+DROP VIEW IF EXISTS "main"."View_DeterminantVT";
+CREATE VIEW View_DeterminantVT AS
+#Determinant#
+SELECT '#Name#' AS vtName UNION
+#Determinant#

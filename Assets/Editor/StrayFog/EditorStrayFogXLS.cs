@@ -150,7 +150,7 @@ public sealed class EditorStrayFogXLS
                         {
                             tempTableCell.isPK = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isPK;
                         }
-                        StrayFogCoreSQLiteHelper.ResolveCSDataType(sheet.Cells[msrColumnTypeRowIndex, i].StringValue,ref tempTableCell.type,ref tempTableCell.arrayDimension);                        
+                        StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.Cells[msrColumnTypeRowIndex, i].StringValue,ref tempTableCell.type,ref tempTableCell.arrayDimension);                        
                         tempTable.columns[i] = tempTableCell;
                     }
                 }
@@ -179,9 +179,11 @@ public sealed class EditorStrayFogXLS
     /// <returns>true:成功,false:失败</returns>
     static bool OnCreateSqliteSchema(List<EditorXlsTableSchema> _tableSchemas)
     {
+        bool result = false;
         List<string> sbExcuteSql = new List<string>();
         StringBuilder sbSql = new StringBuilder();
         string entitySqlTemplete = EditorResxTemplete.SQLiteCreateTableTemplete;
+        string determinantSqlTemplete = EditorResxTemplete.SQLiteCreateDeterminantViewTemplete;
 
         #region #Column# Templete
         string columnMark = "#Column#";
@@ -210,6 +212,15 @@ public sealed class EditorStrayFogXLS
         primarykeyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entitySqlTemplete, primarykeyMark, out primarykeyReplaceTemplete);
         #endregion
 
+        #region #Determinant# Templete
+        string determinantMark = "#Determinant#";
+        string determinantReplaceTemplete = string.Empty;
+        string determinantTemplete = string.Empty;
+
+        StringBuilder sbDeterminantReplace = new StringBuilder();
+        determinantTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(determinantSqlTemplete, determinantMark, out determinantReplaceTemplete);
+        #endregion        
+
         #region 生成要执行的SQL语句        
         int index = 0;
         foreach (EditorXlsTableSchema t in _tableSchemas)
@@ -231,7 +242,7 @@ public sealed class EditorStrayFogXLS
                     columnTemplete
                     .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
                     .Replace("#Name#", c.name)
-                    .Replace("#DataType#", StrayFogCoreSQLiteHelper.GetSQLiteDataTypeName(c.type, c.arrayDimension))
+                    .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.type, c.arrayDimension))
                     .Replace("#Dot#", index == t.columns.Length && sbPkReplace.Length == 0 ? "" : ",")
                 );
             }
@@ -259,6 +270,18 @@ public sealed class EditorStrayFogXLS
                 .Replace(primarykeyReplaceTemplete, sbPrimarykeyReplace.ToString())
                 );
             }
+
+            if (t.isDeterminant)
+            {
+                sbDeterminantReplace.Append(determinantTemplete.Replace("#Name#", t.name));
+            }
+        }
+
+        if (sbDeterminantReplace.Length > 0)
+        {
+            int ri = sbDeterminantReplace.ToString().LastIndexOf("UNION");
+            sbDeterminantReplace = sbDeterminantReplace.Remove(ri, sbDeterminantReplace.Length - ri);
+            sbExcuteSql.Add(determinantSqlTemplete.Replace(determinantReplaceTemplete, sbDeterminantReplace.ToString()));
         }
 
         List<EditorSelectionAsset> views = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(new string[1] { EditorResxTemplete.SqliteViewSqlRoot }, enEditorAssetFilterClassify.TextAsset);
@@ -269,7 +292,8 @@ public sealed class EditorStrayFogXLS
         }
         #endregion
 
-        return EditorStrayFogApplication.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
+        result  = SQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());        
+        return result;
     }
 
     /// <summary>
@@ -286,76 +310,6 @@ public sealed class EditorStrayFogXLS
         //EditorStrayFogUtility.cmd.DeleteFolder(sqliteEntityFolder);
         //EditorStrayFogUtility.cmd.DeleteFolder(sqliteDeterminantEntitiesFolder);
 
-        EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", sqliteEntityFolder, enFileExt.CS, "");
-
-        #region 非行列式脚本模板
-        string entityScriptTemplete = EditorResxTemplete.SQLiteEntityScriptTemplete;
-
-        string propertyMark = "#Properties#";
-        string propertyReplaceTemplete = string.Empty;
-        string propertyTemplete = string.Empty;
-        StringBuilder sbPropertyReplace = new StringBuilder();
-        propertyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, propertyMark, out propertyReplaceTemplete);
-
-        string pkMark = "#PK#";
-        string pkReplaceTemplete = string.Empty;
-        string pkTemplete = string.Empty;
-        StringBuilder sbPkReplace = new StringBuilder();
-        pkTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, pkMark, out pkReplaceTemplete);
-        #endregion
-
-        #region 行列式脚本模板
-        string determinantEntityScriptTemplete = EditorResxTemplete.SQLiteDeterminantEntityScriptTemplete;
-
-        string rowMark = "#Row#";
-        string rowReplaceTemplete = string.Empty;
-        string rowTemplete = string.Empty;
-        StringBuilder sbRowReplace = new StringBuilder();
-        rowTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(determinantEntityScriptTemplete, rowMark, out rowReplaceTemplete);
-        #endregion
-
-        #region 创建Table脚本
-        for (int i = 0; i < _tableSchemas.Count; i++)
-        {
-            if (_tableSchemas[i].isCreateScript)
-            {
-
-            }
-            EditorUtility.DisplayProgressBar("Build Table Entity", _tableSchemas[i].name, (i + 1) / _tableSchemas.Count);
-        }
-        #endregion
-
-        #region 创建View脚本
-
-        #endregion
-        EditorUtility.ClearProgressBar();
-        return true;
-    }
-    #endregion
-
-    /*
-    #region OnBuildSQLiteEntity 生成SQLite实体
-    /// <summary>
-    /// 特殊实体数据类型
-    /// </summary>
-    readonly static Dictionary<string, string> msrSpecialEntityDataType = new Dictionary<string, string>() {
-            { typeof(Vector2).Name ,typeof(Vector2).FullName },
-            { typeof(Vector3).Name ,typeof(Vector3).FullName },
-            { typeof(Vector4).Name ,typeof(Vector4).FullName },
-        };
-    /// <summary>
-    /// 生成SQLite实体
-    /// </summary>
-    static void OnBuildSQLiteEntity()
-    {
-        
-        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
-        string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
-        string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
-
-        EditorStrayFogUtility.cmd.DeleteFolder(sqliteEntityFolder);
-        EditorStrayFogUtility.cmd.DeleteFolder(sqliteDeterminantEntitiesFolder);
-
         StringBuilder sbLog = new StringBuilder();
         List<SQLiteEntity> entities = new List<SQLiteEntity>();
         SqliteDataReader pragmaReader = null;
@@ -365,13 +319,14 @@ public sealed class EditorStrayFogXLS
         string tempEntityName = string.Empty;
         string tempEntityType = string.Empty;
         bool tempIsDetermainant = false;
-        Type tempPropertyType = null;
+        enSQLiteDataType tempSQLiteDataType = enSQLiteDataType.String;
+        enSQLiteDataTypeArrayDimension tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
         Dictionary<string, enSQLiteEntityClassify> classifyMaping = typeof(enSQLiteEntityClassify).NameToEnum<enSQLiteEntityClassify>();
         enSQLiteEntityClassify tempEntityClassify = enSQLiteEntityClassify.Table;
         float progress = 0;
         #region 收集实体            
-        Int64 count = EditorStrayFogApplication.sqlHelper.ReadEntityNamesCount();
-        SqliteDataReader tableNameReader = EditorStrayFogApplication.sqlHelper.ReadEntityNames();
+        Int64 count = SQLiteHelper.sqlHelper.ReadEntityNamesCount();
+        SqliteDataReader tableNameReader = SQLiteHelper.sqlHelper.ReadEntityNames();
         while (tableNameReader.Read())
         {
             progress++;
@@ -387,8 +342,8 @@ public sealed class EditorStrayFogXLS
                 }
             }
             tempEntity = new SQLiteEntity(tempEntityName, tempEntityClassify, tempIsDetermainant);
-            pragmaReader = EditorStrayFogApplication.sqlHelper.ReadTablePragma(tempEntityName);
-            schemaReader = EditorStrayFogApplication.sqlHelper.ReadTableSchema(tempEntityName);
+            pragmaReader = SQLiteHelper.sqlHelper.ReadTablePragma(tempEntityName);
+            schemaReader = SQLiteHelper.sqlHelper.ReadTableSchema(tempEntityName);
             //收集列名
             while (pragmaReader.Read())
             {
@@ -400,19 +355,24 @@ public sealed class EditorStrayFogXLS
             //收集列类型
             foreach (SQLiteEntityProperty c in tempEntity.properties)
             {
-                tempPropertyType = schemaReader.GetFieldType(schemaReader.GetOrdinal(c.name));
-                if (msrSpecialEntityDataType.ContainsKey(c.sqliteDataTypeName))
-                {
-                    c.typeName = msrSpecialEntityDataType[c.sqliteDataTypeName];
-                }
-                else if (string.IsNullOrEmpty(c.sqliteDataTypeName))
-                {
-                    c.typeName = typeof(string).FullName;
-                }
-                else
-                {
-                    c.typeName = tempPropertyType.FullName;
-                }
+                //tempPropertyType = schemaReader.GetFieldType(schemaReader.GetOrdinal(c.name));
+                //if (msrSpecialEntityDataType.ContainsKey(c.sqliteDataTypeName))
+                //{
+                //    c.typeName = msrSpecialEntityDataType[c.sqliteDataTypeName];
+                //}
+                //else if (string.IsNullOrEmpty(c.sqliteDataTypeName))
+                //{
+                //    c.typeName = typeof(string).FullName;
+                //}
+                //else
+                //{
+                //    c.typeName = tempPropertyType.FullName;
+                //}
+                //这里的sqliteDataTypeName如果是视图生成的，有可能这个值为空
+                tempSQLiteDataType = enSQLiteDataType.String;
+                tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+                StrayFogSQLiteDataTypeHelper.ResolveSQLiteDataType(c.sqliteDataTypeName,ref tempSQLiteDataType,ref tempSQLiteDataTypeArrayDimension);
+                c.typeName = StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
             }
             entities.Add(tempEntity);
             EditorUtility.DisplayProgressBar("Collection Entity", tempEntity.name, progress / count);
@@ -442,7 +402,7 @@ public sealed class EditorStrayFogXLS
                     rowMaping.Add(p.name, p);
                 }
 
-                SqliteDataReader dataReader = EditorStrayFogApplication.sqlHelper.ReadFullTable(t.name);
+                SqliteDataReader dataReader = SQLiteHelper.sqlHelper.ReadFullTable(t.name);
                 while (dataReader.Read())
                 {
                     sbRowReplace.Append(
@@ -527,15 +487,14 @@ public sealed class EditorStrayFogXLS
         cfgHeplerExtendScript.CreateAsset();
         #endregion
 
-        EditorStrayFogApplication.CloseDb();
+        SQLiteHelper.sqlHelper.Close();
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         Debug.Log(sbLog.ToString());
         Debug.Log("BuildSQLiteEntity Succeed!");
-        
-}
-#endregion
-    */
+        return true;
+    }
+    #endregion
 
     #region TransDescToSummary 转换描述为Summary形式
     /// <summary>

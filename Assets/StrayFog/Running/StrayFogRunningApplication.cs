@@ -14,28 +14,6 @@ public delegate void RegisterGuideEventHandle(UIGuideRegister _guide);
 /// </summary>
 public class StrayFogRunningApplication : AbsSingleScriptableObject
 {
-    #region Db库
-    /// <summary>
-    /// SQLiteHelper
-    /// </summary>
-    SQLiteHelper mSqlHelper = null;
-    /// <summary>
-    /// SQL帮助类
-    /// </summary>
-    public SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbConnectionString); } return mSqlHelper; } }
-    /// <summary>
-    /// 关闭数据库
-    /// </summary>
-    void CloseDb()
-    {
-        if (mSqlHelper != null)
-        {
-            mSqlHelper.Close();
-            mSqlHelper = null;
-        }
-    }
-    #endregion
-
     #region LoadAssetAtPath 从指定路径加载资源
     /// <summary>
     /// 从指定路径加载资源
@@ -59,7 +37,7 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
     /// </summary>
     void OnApplicationQuit()
     {
-        CloseDb();
+        SQLiteHelper.sqlHelper.Close();
     }
     #endregion
 

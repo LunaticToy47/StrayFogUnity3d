@@ -46,7 +46,6 @@ public sealed class EditorStrayFogExecute
         result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
         EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow", enEditorApplicationFolder.Game_Script_UIWindow.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, result);
         cfg.CreateAsset();
-        EditorStrayFogApplication.CloseDb();
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendFormat("ExecuteBuildUIWindowSetting 【{0}】Succeed!", cfg.fileName);
@@ -1249,7 +1248,7 @@ public sealed class EditorStrayFogExecute
             }
             #endregion
 
-            EditorStrayFogApplication.CloseDb();
+            SQLiteHelper.sqlHelper.Close();
             EditorUtility.ClearProgressBar();
         }
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
@@ -1326,7 +1325,7 @@ public sealed class EditorStrayFogExecute
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
 
-        EditorStrayFogApplication.CloseDb();
+        SQLiteHelper.sqlHelper.Close();
         EditorStrayFogUtility.cmd.DeleteFolder(path);
 
         if (Directory.Exists(path))

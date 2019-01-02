@@ -1,19 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
-/// <summary>
-/// SQLite实体
-/// </summary>
-public enum enSQLiteEntityClassify
-    {
-        /// <summary>
-        /// 表格
-        /// </summary>        
-        Table,
-        /// <summary>
-        /// 视图
-        /// </summary>
-        View
-    }
+
 /// <summary>
 /// SQLite表格
 /// </summary>

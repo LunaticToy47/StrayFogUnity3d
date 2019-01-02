@@ -156,6 +156,17 @@ public class EditorResxTemplete
     }
 
     /// <summary>
+    /// SQLiteCreateDeterminantViewTemplete
+    /// </summary>
+    public static string SQLiteCreateDeterminantViewTemplete
+    {
+        get
+        {
+            return GetFileString("SQLite/SQLiteCreateDeterminantViewTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+        }
+    }
+
+    /// <summary>
     /// SQLiteDeterminantEntityScriptTemplete
     /// </summary>
     public static string SQLiteCreateTableTemplete

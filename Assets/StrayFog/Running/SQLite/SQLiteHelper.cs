@@ -7,6 +7,17 @@ using System.Collections.Generic;
 /// </summary>
 public class SQLiteHelper
 {
+    #region Db库
+    /// <summary>
+    /// SQLiteHelper
+    /// </summary>
+    static SQLiteHelper mSqlHelper = null;
+    /// <summary>
+    /// SQL帮助类
+    /// </summary>
+    public static SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(string.Format("data source={0}", StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource)); } return mSqlHelper; } }   
+    #endregion
+
     /// <summary>
     /// 数据库连接定义
     /// </summary>
@@ -19,13 +30,12 @@ public class SQLiteHelper
     /// 构造函数    
     /// </summary>
     /// <param name="_connectionString">数据库连接字符串</param>
-    public SQLiteHelper(string _connectionString)
+    SQLiteHelper(string _connectionString)
     {
         try
         {
             //构造数据库连接
             mDbConnection = new SqliteConnection(_connectionString);
-            mDbConnection.Open();
         }
         catch (Exception e)
         {
@@ -47,10 +57,13 @@ public class SQLiteHelper
                 reader = null;
             }
         }
+        
+        string connection = mDbConnection.ConnectionString;
         if (mDbConnection != null && mDbConnection.State != System.Data.ConnectionState.Closed)
         {
             mDbConnection.Close();
             mDbConnection.Dispose();
+            mDbConnection = null;
         }
         SqliteConnection.ClearAllPools();
         GC.Collect();

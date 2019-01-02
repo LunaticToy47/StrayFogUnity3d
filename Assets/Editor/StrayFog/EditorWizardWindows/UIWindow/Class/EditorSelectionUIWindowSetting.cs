@@ -34,7 +34,7 @@ public class EditorSelectionUIWindowSetting : EditorSelectionAssetDiskMaping
             Convert.ToInt32(assetNode.isManualCloseWhenGotoScene),
             Convert.ToInt32(assetNode.isGuideWindow)
             );
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -57,7 +57,7 @@ public class EditorSelectionUIWindowSetting : EditorSelectionAssetDiskMaping
             Convert.ToInt32(assetNode.isManualCloseWhenGotoScene),
             Convert.ToInt32(assetNode.isGuideWindow)
             );
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -68,7 +68,7 @@ public class EditorSelectionUIWindowSetting : EditorSelectionAssetDiskMaping
     public static string ExecuteDeleteAllUIWindowSetting()
     {
         string sql = "DELETE FROM UIWindowSetting";
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 
@@ -79,7 +79,7 @@ public class EditorSelectionUIWindowSetting : EditorSelectionAssetDiskMaping
     public string ExecuteDeleteUIWindowSetting()
     {
         string sql = string.Format("DELETE FROM UIWindowSetting WHERE id={0}", winId);
-        EditorStrayFogApplication.sqlHelper.ExecuteNonQuery(sql);
+        SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
         return sql;
     }
 

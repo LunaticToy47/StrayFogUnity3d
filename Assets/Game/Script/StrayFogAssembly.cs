@@ -21,7 +21,7 @@ public sealed class StrayFogAssembly
         if (mDynamicAssemblyArray == null)
         {
             mDynamicAssemblyArray = new List<Assembly>();
-            SqliteDataReader reader = StrayFogGamePools.runningApplication.sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
+            SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
             string path = string.Empty;
             while (reader.Read())
             {
