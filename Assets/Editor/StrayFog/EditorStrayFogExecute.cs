@@ -1562,7 +1562,9 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteExportXlsSchemaToSqlite()
     {
-        EditorStrayFogXLS.ExecuteExportXlsSchemaToSqlite();
+        bool result = EditorStrayFogXLS.ExecuteExportXlsSchemaToSqlite();
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        Debug.LogFormat("ExecuteExportXlsSchemaToSqlite 【{0}】", result);
     }
     #endregion
 

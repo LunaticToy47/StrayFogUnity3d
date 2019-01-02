@@ -11,7 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c155114dd274da4881773358ac43f3f, type: 3}
   m_Name: AssetDiskMapingFileExt
   m_EditorClassIdentifier: 
-  tableName: 
-  fileName: 
+  tableName: AssetDiskMapingFileExt
+  fileName: Assets/Game/Editor/XLS/AssetDiskMapingFileExt.xls
   isDeterminant: 0
-  columns: []
+  columns:
+  - name: extId
+    desc: "\u6269\u5C55\u540Did"
+    isPK: 1
+    type: 6
+    arrayDimension: 0
+    isNull: 0
+  - name: ext
+    desc: "\u6269\u5C55\u540D"
+    isPK: 0
+    type: 14
+    arrayDimension: 0
+    isNull: 0

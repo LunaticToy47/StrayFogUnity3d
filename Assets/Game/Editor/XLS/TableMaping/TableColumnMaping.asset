@@ -11,7 +11,175 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c155114dd274da4881773358ac43f3f, type: 3}
   m_Name: TableColumnMaping
   m_EditorClassIdentifier: 
-  tableName: 
-  fileName: 
+  tableName: TableColumnMaping
+  fileName: Assets/Game/Editor/XLS/TableColumnMaping.xls
   isDeterminant: 0
-  columns: []
+  columns:
+  - name: id
+    desc: "int\u5217"
+    isPK: 0
+    type: 6
+    arrayDimension: 0
+    isNull: 0
+  - name: strCol
+    desc: "string\u5217"
+    isPK: 0
+    type: 14
+    arrayDimension: 0
+    isNull: 0
+  - name: boolCol
+    desc: "bool\u5217"
+    isPK: 0
+    type: 0
+    arrayDimension: 0
+    isNull: 0
+  - name: intCol
+    desc: "int\u5217"
+    isPK: 0
+    type: 6
+    arrayDimension: 0
+    isNull: 0
+  - name: floatCol
+    desc: "float\u5217"
+    isPK: 0
+    type: 10
+    arrayDimension: 0
+    isNull: 0
+  - name: byteCol
+    desc: "byte\u5217"
+    isPK: 0
+    type: 3
+    arrayDimension: 0
+    isNull: 0
+  - name: shortCol
+    desc: "short\u5217"
+    isPK: 0
+    type: 4
+    arrayDimension: 0
+    isNull: 0
+  - name: vec2Col
+    desc: "vector2\u5217"
+    isPK: 0
+    type: 16
+    arrayDimension: 0
+    isNull: 0
+  - name: vec3Col
+    desc: "vector3\u5217"
+    isPK: 0
+    type: 17
+    arrayDimension: 0
+    isNull: 0
+  - name: vec4Col
+    desc: "vector4\u5217"
+    isPK: 0
+    type: 18
+    arrayDimension: 0
+    isNull: 0
+  - name: strColArray
+    desc: "string\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 14
+    arrayDimension: 1
+    isNull: 0
+  - name: boolColArray
+    desc: "bool\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 0
+    arrayDimension: 1
+    isNull: 0
+  - name: intColArray
+    desc: "int\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 6
+    arrayDimension: 1
+    isNull: 0
+  - name: floatColArray
+    desc: "float\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 10
+    arrayDimension: 1
+    isNull: 0
+  - name: byteColArray
+    desc: "byte\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 3
+    arrayDimension: 1
+    isNull: 0
+  - name: shortColArray
+    desc: "short\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 4
+    arrayDimension: 1
+    isNull: 0
+  - name: vec2ColArray
+    desc: "vector2\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 16
+    arrayDimension: 1
+    isNull: 0
+  - name: vec3ColArray
+    desc: "vector3\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 17
+    arrayDimension: 1
+    isNull: 0
+  - name: vec4ColArray
+    desc: "vector4\u4E00\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 18
+    arrayDimension: 1
+    isNull: 0
+  - name: strCol2Array
+    desc: "string\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 14
+    arrayDimension: 2
+    isNull: 0
+  - name: boolCol2Array
+    desc: "bool\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 0
+    arrayDimension: 2
+    isNull: 0
+  - name: intCol2Array
+    desc: "int\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 6
+    arrayDimension: 2
+    isNull: 0
+  - name: floatCol2Array
+    desc: "float\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 10
+    arrayDimension: 2
+    isNull: 0
+  - name: byteCol2Array
+    desc: "byte\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 3
+    arrayDimension: 2
+    isNull: 0
+  - name: shortCol2Array
+    desc: "short\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 4
+    arrayDimension: 2
+    isNull: 0
+  - name: vec2Col2Array
+    desc: "vector2\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 16
+    arrayDimension: 2
+    isNull: 0
+  - name: vec3Col2Array
+    desc: "vector3\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 17
+    arrayDimension: 2
+    isNull: 0
+  - name: vec4Col2Array
+    desc: "vector4\u4E8C\u7EF4\u6570\u7EC4\u5217"
+    isPK: 0
+    type: 18
+    arrayDimension: 2
+    isNull: 0

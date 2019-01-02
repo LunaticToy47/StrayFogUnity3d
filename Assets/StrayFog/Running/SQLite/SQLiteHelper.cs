@@ -149,6 +149,96 @@ public class SQLiteHelper
     }
     #endregion
 
+    #region ExecuteTransaction
+    /// <summary>
+    /// 执行SQL事务
+    /// </summary>
+    /// <param name="_queryStrings">SQL命令字符串组</param>
+    /// <returns>true:成功,false:失败</returns>
+    public bool ExecuteTransaction(params string[] _queryStrings)
+    {
+        bool result = false;
+        if (_queryStrings != null && _queryStrings.Length > 0)
+        {
+            SqliteCommand cmd = new SqliteCommand(mDbConnection);
+            //SqliteCommand cmd = mDbConnection.CreateCommand();
+            //cmd.CommandText = _queryString;
+            if (mDbConnection.State == System.Data.ConnectionState.Closed)
+            {
+                mDbConnection.Open();
+            }
+            SqliteTransaction trans = mDbConnection.BeginTransaction();
+            try
+            {
+                foreach (string sql in _queryStrings)
+                {
+                    cmd.CommandText = sql;
+                    cmd.ExecuteNonQuery();
+                }
+                trans.Commit();
+            }
+            catch(Exception ep)
+            {
+                trans.Rollback();
+                Debug.LogError(ep.Message);
+            }
+            finally
+            {
+                cmd.Dispose();
+                cmd = null;
+                mDbConnection.Close();
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// 执行SQL事务
+    /// </summary>
+    /// <param name="_queryStringParametersPair">SQL命令字符串参数组</param>
+    /// <returns>true:成功,false:失败</returns>
+    public bool ExecuteTransaction(Dictionary<string, SqliteParameter[]> _queryStringParametersPair)
+    {
+        
+        bool result = false;
+        if (_queryStringParametersPair != null && _queryStringParametersPair.Count > 0)
+        {
+            SqliteCommand cmd = new SqliteCommand(mDbConnection);
+            //SqliteCommand cmd = mDbConnection.CreateCommand();
+            //cmd.CommandText = _queryString;
+            if (mDbConnection.State == System.Data.ConnectionState.Closed)
+            {
+                mDbConnection.Open();
+            }
+            SqliteTransaction trans = mDbConnection.BeginTransaction();
+            try
+            {
+                foreach (KeyValuePair<string, SqliteParameter[]> key in _queryStringParametersPair)
+                {
+                    cmd.CommandText = key.Key;
+                    cmd.Parameters.AddRange(key.Value);
+                    cmd.ExecuteNonQuery();
+                }
+                trans.Commit();
+            }
+            catch (Exception ep)
+            {
+                trans.Rollback();
+                Debug.LogError(ep.Message);
+            }
+            finally
+            {
+                cmd.Dispose();
+                cmd = null;
+                mDbConnection.Close();
+                result = true;
+            }
+        }
+        return result;
+    }
+    #endregion
+
     #region ExecuteScalar
     /// <summary>
     /// 执行SQL命令

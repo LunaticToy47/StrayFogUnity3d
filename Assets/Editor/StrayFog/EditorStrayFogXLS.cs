@@ -172,7 +172,8 @@ public sealed class EditorStrayFogXLS
     /// <summary>
     /// 生成Xls表结构到Sqlite数据库
     /// </summary>
-    public static void ExecuteExportXlsSchemaToSqlite()
+    /// <returns>true:成功,false:失败</returns>
+    public static bool ExecuteExportXlsSchemaToSqlite()
     {
         List<EditorXlsTableSchema> tableSchemas = ReadXlsSchema();
         StringBuilder sbSql = new StringBuilder();
@@ -211,31 +212,35 @@ public sealed class EditorStrayFogXLS
         {
             sbColumnReplace.Length = 0;
             sbPkReplace.Length = 0;
+            sbPrimarykeyReplace.Length = 0;
             index = 0;
             foreach (EditorXlsTableColumnSchema c in t.columns)
             {
                 index++;
+                if (c.isPK)
+                {
+                    sbPkReplace.Append(
+                            pkTemplete.Replace("#Name#", c.name)
+                    );
+                }
                 sbColumnReplace.Append(
                     columnTemplete
                     .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
                     .Replace("#Name#", c.name)
                     .Replace("#DataType#", GetSQLiteDataTypeName(c.type, c.arrayDimension))
-                    .Replace("#Dot#", index == t.columns.Length ? "" : ",")
-                );
-                if (c.isPK)
-                {
-                    sbPkReplace.Append(
-                            pkTemplete.Replace("#Name#",c.name)
-                    );
-                }
+                    .Replace("#Dot#", index == t.columns.Length && sbPkReplace.Length == 0 ? "" : ",")
+                );                
             }
             if (sbPkReplace.Length > 0)
             {
                 sbPkReplace = sbPkReplace.Remove(sbPkReplace.Length - 1, 1);
+
+                sbPrimarykeyReplace.Append(primarykeyTemplete.Replace(pkReplaceTemplete, sbPkReplace.ToString()));
+
                 sbExcuteSql.Add(entitySqlTemplete
                 .Replace("#TableName#", t.name)
                 .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
-                .Replace(pkReplaceTemplete, sbPkReplace.ToString())
+                .Replace(primarykeyReplaceTemplete, sbPrimarykeyReplace.ToString())
                 );
             }
             else
@@ -252,7 +257,7 @@ public sealed class EditorStrayFogXLS
             }            
         }
 
-        Debug.Log("DDD");
+        return EditorStrayFogApplication.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());             
     }
     #endregion
 
