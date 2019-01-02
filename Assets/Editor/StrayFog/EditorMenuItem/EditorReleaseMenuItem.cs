@@ -67,17 +67,17 @@ static class EditorReleaseMenuItem
     }
     #endregion
 
-    #region Build SQLite Db To Package
-    const string mcBuildSQLiteDbToPackage = "Build SQLite Db To Package";
+    #region Copy SQLite Db To Package
+    const string mcCopySQLiteDbToPackage = "Copy SQLite Db To Package";
     /// <summary>
-    /// 生成SQLite数据库到资源包
+    /// 复制SQLite数据库到资源包
     /// </summary>
-    [MenuItem(mcMenu + mcBuildSQLiteDbToPackage, false, mcPriority + 4)]
-    [MenuItem(mcAssetMenu + mcBuildSQLiteDbToPackage, false, mcPriority + 4)]
-    [MenuItem(mcHierarchy + mcBuildSQLiteDbToPackage, false, mcPriority + 4)]
-    static void EditorDevelopMenuItem_BuildSQLiteDbToPackageWindow()
+    [MenuItem(mcMenu + mcCopySQLiteDbToPackage, false, mcPriority + 4)]
+    [MenuItem(mcAssetMenu + mcCopySQLiteDbToPackage, false, mcPriority + 4)]
+    [MenuItem(mcHierarchy + mcCopySQLiteDbToPackage, false, mcPriority + 4)]
+    static void EditorDevelopMenuItem_CopySQLiteDbToPackageWindow()
     {
-        EditorStrayFogExecute.ExecuteBuildSQLiteDbToPackage();
+        EditorStrayFogExecute.ExecuteCopySQLiteDbToPackage();
     }
     #endregion
 }
