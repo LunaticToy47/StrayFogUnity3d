@@ -6,6 +6,10 @@ using System.IO;
 public class EditorResxTemplete
 {
     /// <summary>
+    /// SQLite数据库视图Sql目录
+    /// </summary>
+    public static readonly string SqliteViewSqlRoot = Path.Combine(enEditorApplicationFolder.Editor_ResxTemplete.GetAttribute<EditorApplicationFolderAttribute>().path,"SQLite/ViewSql").TransPathSeparatorCharToUnityChar();
+    /// <summary>
     /// 根目录
     /// </summary>
     static readonly string msrRoot = enEditorApplicationFolder.Editor_ResxTemplete.GetAttribute<EditorApplicationFolderAttribute>().path;

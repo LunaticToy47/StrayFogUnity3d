@@ -20,7 +20,7 @@ public sealed partial class SQLiteEntityHelper
 		{ typeof(Table_UserGuideTrigger).GetHashCode(),"UserGuideTrigger" },
 		{ typeof(View_UserGuideValidate).GetHashCode(),"View_UserGuideValidate" },
 		{ typeof(Table_UserGuideValidate).GetHashCode(),"UserGuideValidate" },
-		{ typeof(Table_GameLanguageText).GetHashCode(),"GameLanguageText" },
+		{ typeof(Table_GameLanguage).GetHashCode(),"GameLanguageText" },
 		{ typeof(View_DeterminantVT).GetHashCode(),"View_DeterminantVT" },
 		{ typeof(Table_SkillBehaviour).GetHashCode(),"SkillBehaviour" },
 		{ typeof(Table_Skill).GetHashCode(),"Skill" },

@@ -40,7 +40,12 @@ public enum enEditorAssetFilterClassify
     /// DefaultAsset
     /// </summary>
     [EditorAssetFilter("t:DefaultAsset")]
-    DefaultAsset = 0x20
+    DefaultAsset = 0x20,
+    /// <summary>
+    /// TextAsset
+    /// </summary>
+    [EditorAssetFilter("t:TextAsset")]
+    TextAsset = 0x40
 }
 #endregion
 /// <summary>

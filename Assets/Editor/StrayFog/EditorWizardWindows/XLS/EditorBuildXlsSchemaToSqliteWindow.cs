@@ -88,6 +88,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
         if (GUILayout.Button("Export Xls Schema To Sqlite"))
         {
             EditorStrayFogExecute.ExecuteExportXlsSchemaToSqlite();
+            EditorUtility.DisplayDialog("XlsSchema", "ExecuteExportXlsSchemaToSqlite successed.", "OK");
         }
     }
     #endregion

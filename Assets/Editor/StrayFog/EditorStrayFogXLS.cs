@@ -1,8 +1,10 @@
 ﻿using ExcelLibrary.SpreadSheet;
+using Mono.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 /// <summary>
 /// 编辑器XLS工具
@@ -168,12 +170,12 @@ public sealed class EditorStrayFogXLS
     }
     #endregion
 
-    #region ExecuteExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
+    #region ExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
     /// <summary>
     /// 生成Xls表结构到Sqlite数据库
     /// </summary>
     /// <returns>true:成功,false:失败</returns>
-    public static bool ExecuteExportXlsSchemaToSqlite()
+    public static bool ExportXlsSchemaToSqlite()
     {
         List<EditorXlsTableSchema> tableSchemas = ReadXlsSchema();
         StringBuilder sbSql = new StringBuilder();
@@ -256,8 +258,216 @@ public sealed class EditorStrayFogXLS
                 );
             }            
         }
+        
+        List<EditorSelectionAsset> views = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(new string[1] { EditorResxTemplete.SqliteViewSqlRoot },enEditorAssetFilterClassify.TextAsset);
+        foreach (EditorSelectionAsset v in views)
+        {
+            TextAsset ta = AssetDatabase.LoadAssetAtPath<TextAsset>(v.path);
+            sbExcuteSql.Add(ta.text);
+        }
+        bool result = EditorStrayFogApplication.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
+        //OnBuildSQLiteEntity();
+        return result;
+    }
+    #endregion
 
-        return EditorStrayFogApplication.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());             
+    #region OnBuildSQLiteEntity 生成SQLite实体
+    /// <summary>
+    /// 特殊实体数据类型
+    /// </summary>
+    readonly static Dictionary<string, string> msrSpecialEntityDataType = new Dictionary<string, string>() {
+            { typeof(Vector2).Name ,typeof(Vector2).FullName },
+            { typeof(Vector3).Name ,typeof(Vector3).FullName },
+            { typeof(Vector4).Name ,typeof(Vector4).FullName },
+        };
+    /// <summary>
+    /// 生成SQLite实体
+    /// </summary>
+    static void OnBuildSQLiteEntity()
+    {
+        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
+        string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
+        string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
+
+        EditorStrayFogUtility.cmd.DeleteFolder(sqliteEntityFolder);
+        EditorStrayFogUtility.cmd.DeleteFolder(sqliteDeterminantEntitiesFolder);
+
+        StringBuilder sbLog = new StringBuilder();
+        List<SQLiteEntity> entities = new List<SQLiteEntity>();
+        SqliteDataReader pragmaReader = null;
+        SqliteDataReader schemaReader = null;
+        SQLiteEntity tempEntity = null;
+        SQLiteEntityProperty tempEntityProperty = null;
+        string tempEntityName = string.Empty;
+        string tempEntityType = string.Empty;
+        bool tempIsDetermainant = false;
+        Type tempPropertyType = null;
+        Dictionary<string, enSQLiteEntityClassify> classifyMaping = typeof(enSQLiteEntityClassify).NameToEnum<enSQLiteEntityClassify>();
+        enSQLiteEntityClassify tempEntityClassify = enSQLiteEntityClassify.Table;
+        float progress = 0;
+        #region 收集实体            
+        Int64 count = EditorStrayFogApplication.sqlHelper.ReadEntityNamesCount();
+        SqliteDataReader tableNameReader = EditorStrayFogApplication.sqlHelper.ReadEntityNames();
+        while (tableNameReader.Read())
+        {
+            progress++;
+            tempEntityName = tableNameReader.GetString(tableNameReader.GetOrdinal("tbl_name"));
+            tempEntityType = tableNameReader.GetString(tableNameReader.GetOrdinal("type"));
+            tempIsDetermainant = tableNameReader.GetInt32(tableNameReader.GetOrdinal("isDetermainant")) > 0;
+            foreach (KeyValuePair<string, enSQLiteEntityClassify> key in classifyMaping)
+            {
+                if (key.Key.ToLower().Equals(tempEntityType.ToLower()))
+                {
+                    tempEntityClassify = key.Value;
+                    break;
+                }
+            }
+            tempEntity = new SQLiteEntity(tempEntityName, tempEntityClassify, tempIsDetermainant);
+            pragmaReader = EditorStrayFogApplication.sqlHelper.ReadTablePragma(tempEntityName);
+            schemaReader = EditorStrayFogApplication.sqlHelper.ReadTableSchema(tempEntityName);
+            //收集列名
+            while (pragmaReader.Read())
+            {
+                tempEntityProperty = new SQLiteEntityProperty(pragmaReader.GetString(pragmaReader.GetOrdinal("name")));
+                tempEntityProperty.isPK = pragmaReader.GetInt64(pragmaReader.GetOrdinal("pk")) > 0;
+                tempEntityProperty.sqliteDataTypeName = pragmaReader.GetString(pragmaReader.GetOrdinal("type"));
+                tempEntity.properties.Add(tempEntityProperty);
+            }
+            //收集列类型
+            foreach (SQLiteEntityProperty c in tempEntity.properties)
+            {
+                tempPropertyType = schemaReader.GetFieldType(schemaReader.GetOrdinal(c.name));
+                if (msrSpecialEntityDataType.ContainsKey(c.sqliteDataTypeName))
+                {
+                    c.typeName = msrSpecialEntityDataType[c.sqliteDataTypeName];
+                }
+                else if (string.IsNullOrEmpty(c.sqliteDataTypeName))
+                {
+                    c.typeName = typeof(string).FullName;
+                }
+                else
+                {
+                    c.typeName = tempPropertyType.FullName;
+                }
+            }
+            entities.Add(tempEntity);
+            EditorUtility.DisplayProgressBar("Collection Entity", tempEntity.name, progress / count);
+        }
+        #endregion
+
+        #region 生成实体对象
+        EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", sqliteEntityFolder, enFileExt.CS, "");
+        progress = 0;
+        foreach (SQLiteEntity t in entities)
+        {
+            progress++;
+            if (t.isDetermainant)
+            {
+                #region 行列式实体对象
+                string entityScriptTemplete = EditorResxTemplete.SQLiteDeterminantEntityScriptTemplete;
+
+                string rowMark = "#Row#";
+                string rowReplaceTemplete = string.Empty;
+                string rowTemplete = string.Empty;
+                StringBuilder sbRowReplace = new StringBuilder();
+                rowTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, rowMark, out rowReplaceTemplete);
+                Dictionary<string, SQLiteEntityProperty> rowMaping = new Dictionary<string, SQLiteEntityProperty>();
+
+                foreach (SQLiteEntityProperty p in t.properties)
+                {
+                    rowMaping.Add(p.name, p);
+                }
+
+                SqliteDataReader dataReader = EditorStrayFogApplication.sqlHelper.ReadFullTable(t.name);
+                while (dataReader.Read())
+                {
+                    sbRowReplace.Append(
+                        rowTemplete.Replace("#Name#", dataReader.GetValue(0).ToString()).Replace("#Type#", rowMaping[dataReader.GetName(1)].typeName)
+                        );
+                }
+
+                cfgEntityScript.SetName(t.className);
+                cfgEntityScript.SetDirectory(sqliteDeterminantEntitiesFolder);
+                entityScriptTemplete = entityScriptTemplete
+                    .Replace("#EntityName#", t.name)
+                    .Replace("#ClassName#", cfgEntityScript.name)
+                    .Replace(rowReplaceTemplete, sbRowReplace.ToString())
+                    ;
+                cfgEntityScript.SetText(entityScriptTemplete);
+                cfgEntityScript.CreateAsset();
+                sbLog.AppendLine(cfgEntityScript.fileName);
+                #endregion
+            }
+            else
+            {
+                #region 非行列式实体对象
+                string entityScriptTemplete = EditorResxTemplete.SQLiteEntityScriptTemplete;
+
+                string propertyMark = "#Properties#";
+                string propertyReplaceTemplete = string.Empty;
+                string propertyTemplete = string.Empty;
+                StringBuilder sbPropertyReplace = new StringBuilder();
+                propertyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, propertyMark, out propertyReplaceTemplete);
+
+                string pkMark = "#PK#";
+                string pkReplaceTemplete = string.Empty;
+                string pkTemplete = string.Empty;
+                StringBuilder sbPkReplace = new StringBuilder();
+                pkTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, pkMark, out pkReplaceTemplete);
+
+                foreach (SQLiteEntityProperty p in t.properties)
+                {
+                    sbPropertyReplace.Append(
+                        propertyTemplete.Replace("#Name#", p.name).Replace("#Type#", p.typeName)
+                        );
+                    if (p.isPK)
+                    {
+                        sbPkReplace.Append(pkTemplete.Replace("#Name#", p.name));
+                    }
+                }
+                cfgEntityScript.SetName(t.className);
+                cfgEntityScript.SetDirectory(sqliteEntityFolder);
+                entityScriptTemplete = entityScriptTemplete
+                    .Replace("#EntityName#", t.name)
+                    .Replace("#ClassName#", cfgEntityScript.name)
+                    .Replace(pkReplaceTemplete, sbPkReplace.ToString())
+                    .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString())
+                    ;
+
+                cfgEntityScript.SetText(entityScriptTemplete);
+                cfgEntityScript.CreateAsset();
+                sbLog.AppendLine(cfgEntityScript.fileName);
+                #endregion
+            }
+            EditorUtility.DisplayProgressBar("Build Entity", t.name, progress / entities.Count);
+        }
+        #endregion
+
+        #region 生成实体操作扩展
+        EditorTextAssetConfig cfgHeplerExtendScript = new EditorTextAssetConfig("SQLiteEntityHelperExtend", sqliteFolder, enFileExt.CS, "");
+        string helperScriptTemplete = EditorResxTemplete.SQLiteEntityHelperExtendTemplete;
+
+        string entityMapingMark = "#EntityMaping#";
+        string entityMapingReplaceTemplete = string.Empty;
+        string entityMapingTemplete = string.Empty;
+        StringBuilder sbEntityMapingReplace = new StringBuilder();
+        entityMapingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, entityMapingMark, out entityMapingReplaceTemplete);
+        progress = 0;
+        foreach (SQLiteEntity t in entities)
+        {
+            progress++;
+            sbEntityMapingReplace.Append(entityMapingTemplete.Replace("#ClassName#", t.className).Replace("#TableName#", t.name));
+            EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / entities.Count);
+        }
+        cfgHeplerExtendScript.SetText(helperScriptTemplete.Replace(entityMapingReplaceTemplete, sbEntityMapingReplace.ToString()));
+        cfgHeplerExtendScript.CreateAsset();
+        #endregion
+
+        EditorStrayFogApplication.CloseDb();
+        EditorUtility.ClearProgressBar();
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        Debug.Log(sbLog.ToString());
+        Debug.Log("BuildSQLiteEntity Succeed!");
     }
     #endregion
 
