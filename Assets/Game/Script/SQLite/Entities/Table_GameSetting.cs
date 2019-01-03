@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 /// <summary>
 /// GameSetting实体
 /// </summary>
@@ -12,17 +13,17 @@ public partial class Table_GameSetting: AbsSQLiteEntity
 	/// <summary>
 	/// id
 	/// </summary>
-	public System.Int32 id { get; private set; }
+	public int id { get; private set; }
 	/// <summary>
 	/// resolution
 	/// </summary>
-	public UnityEngine.Vector2 resolution { get; private set; }
+	public Vector2 resolution { get; private set; }
 	/// <summary>
 	/// targetFrameRate
 	/// </summary>
-	public System.Int32 targetFrameRate { get; private set; }
+	public int targetFrameRate { get; private set; }
 	/// <summary>
 	/// isRunGuide
 	/// </summary>
-	public System.Boolean isRunGuide { get; private set; }
+	public bool isRunGuide { get; private set; }
 }

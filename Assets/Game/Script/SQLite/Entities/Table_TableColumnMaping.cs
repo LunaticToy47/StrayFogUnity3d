@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 /// <summary>
 /// TableColumnMaping实体
 /// </summary>
@@ -7,54 +8,118 @@ public partial class Table_TableColumnMaping: AbsSQLiteEntity
 	/// <summary>
     /// PK键组
     /// </summary>
-    public override object[] pks { get { return new List<object>() { pId,}.ToArray(); } }
+    public override object[] pks { get { return new List<object>() { }.ToArray(); } }
 	
 	/// <summary>
-	/// pId
+	/// id
 	/// </summary>
-	public System.Int32 pId { get; private set; }
+	public int id { get; private set; }
 	/// <summary>
-	/// pByte
+	/// strCol
 	/// </summary>
-	public System.Byte pByte { get; private set; }
+	public string strCol { get; private set; }
 	/// <summary>
-	/// pInt16
+	/// boolCol
 	/// </summary>
-	public System.Int16 pInt16 { get; private set; }
+	public bool boolCol { get; private set; }
 	/// <summary>
-	/// pInt32
+	/// intCol
 	/// </summary>
-	public System.Int32 pInt32 { get; private set; }
+	public int intCol { get; private set; }
 	/// <summary>
-	/// pInt64
+	/// floatCol
 	/// </summary>
-	public System.Int64 pInt64 { get; private set; }
+	public float floatCol { get; private set; }
 	/// <summary>
-	/// pstring
+	/// byteCol
 	/// </summary>
-	public System.String pstring { get; private set; }
+	public byte byteCol { get; private set; }
 	/// <summary>
-	/// pFloat
+	/// shortCol
 	/// </summary>
-	public System.Single pFloat { get; private set; }
+	public short shortCol { get; private set; }
 	/// <summary>
-	/// pBytes
+	/// vec2Col
 	/// </summary>
-	public System.Byte[] pBytes { get; private set; }
+	public Vector2 vec2Col { get; private set; }
 	/// <summary>
-	/// pBool
+	/// vec3Col
 	/// </summary>
-	public System.Boolean pBool { get; private set; }
+	public Vector3 vec3Col { get; private set; }
 	/// <summary>
-	/// pVector2
+	/// vec4Col
 	/// </summary>
-	public UnityEngine.Vector2 pVector2 { get; private set; }
+	public Vector4 vec4Col { get; private set; }
 	/// <summary>
-	/// pVector3
+	/// strColArray
 	/// </summary>
-	public UnityEngine.Vector3 pVector3 { get; private set; }
+	public string[] strColArray { get; private set; }
 	/// <summary>
-	/// pVector4
+	/// boolColArray
 	/// </summary>
-	public UnityEngine.Vector4 pVector4 { get; private set; }
+	public bool[] boolColArray { get; private set; }
+	/// <summary>
+	/// intColArray
+	/// </summary>
+	public int[] intColArray { get; private set; }
+	/// <summary>
+	/// floatColArray
+	/// </summary>
+	public float[] floatColArray { get; private set; }
+	/// <summary>
+	/// byteColArray
+	/// </summary>
+	public byte[] byteColArray { get; private set; }
+	/// <summary>
+	/// shortColArray
+	/// </summary>
+	public short[] shortColArray { get; private set; }
+	/// <summary>
+	/// vec2ColArray
+	/// </summary>
+	public Vector2[] vec2ColArray { get; private set; }
+	/// <summary>
+	/// vec3ColArray
+	/// </summary>
+	public Vector3[] vec3ColArray { get; private set; }
+	/// <summary>
+	/// vec4ColArray
+	/// </summary>
+	public Vector4[] vec4ColArray { get; private set; }
+	/// <summary>
+	/// strCol2Array
+	/// </summary>
+	public System.String strCol2Array { get; private set; }
+	/// <summary>
+	/// boolCol2Array
+	/// </summary>
+	public System.Boolean boolCol2Array { get; private set; }
+	/// <summary>
+	/// intCol2Array
+	/// </summary>
+	public System.Int32 intCol2Array { get; private set; }
+	/// <summary>
+	/// floatCol2Array
+	/// </summary>
+	public System.Object floatCol2Array { get; private set; }
+	/// <summary>
+	/// byteCol2Array
+	/// </summary>
+	public System.Byte byteCol2Array { get; private set; }
+	/// <summary>
+	/// shortCol2Array
+	/// </summary>
+	public System.Int16 shortCol2Array { get; private set; }
+	/// <summary>
+	/// vec2Col2Array
+	/// </summary>
+	public System.Object vec2Col2Array { get; private set; }
+	/// <summary>
+	/// vec3Col2Array
+	/// </summary>
+	public System.Object vec3Col2Array { get; private set; }
+	/// <summary>
+	/// vec4Col2Array
+	/// </summary>
+	public System.Object vec4Col2Array { get; private set; }
 }

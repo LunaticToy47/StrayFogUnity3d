@@ -14,6 +14,7 @@ MonoBehaviour:
   tableName: TableColumnMaping
   fileName: Assets/Game/Editor/XLS/TableColumnMaping.xls
   isDeterminant: 0
+  isCreateScript: 1
   columns:
   - name: id
     desc: "int\u5217"

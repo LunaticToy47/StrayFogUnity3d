@@ -308,7 +308,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
                     isTrigger &= true;
                     break;
                 case enGuideTriggerCondition.SpecifyWindow:
-                    isTrigger &= OnWindowIsOpened(_cfg.triggerIntValues[i]);
+                    isTrigger &= OnWindowIsOpened(_cfg.intValues[i]);
                     break;
                 default:
                     isTrigger &= false;

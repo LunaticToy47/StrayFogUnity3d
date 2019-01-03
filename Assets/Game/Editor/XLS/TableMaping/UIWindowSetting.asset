@@ -14,6 +14,7 @@ MonoBehaviour:
   tableName: UIWindowSetting
   fileName: Assets/Game/Editor/XLS/UIWindowSetting.xls
   isDeterminant: 0
+  isCreateScript: 1
   columns:
   - name: id
     desc: "\u7A97\u53E3id"

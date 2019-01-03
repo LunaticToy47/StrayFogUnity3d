@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 /// <summary>
-/// GameLanguageText实体
+/// GameLanguage实体
 /// </summary>
 public partial class Table_GameLanguage: AbsSQLiteDeterminantEntity
 {
@@ -8,9 +8,9 @@ public partial class Table_GameLanguage: AbsSQLiteDeterminantEntity
 	/// <summary>
 	/// GuideTip
 	/// </summary>
-	public System.String GuideTip { get; private set; }
+	public string GuideTip { get; private set; }
 	/// <summary>
 	/// LobbyTip
 	/// </summary>
-	public System.String LobbyTip { get; private set; }
+	public string LobbyTip { get; private set; }
 }

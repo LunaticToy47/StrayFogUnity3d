@@ -66,6 +66,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
                 EditorUtility.DisplayDialog("Determinant", "The Determinant table must be only two columns.", "OK");
             }
             mXlsTableSchemas[i].isCreateScript = EditorGUILayout.ToggleLeft("是否生成脚本", mXlsTableSchemas[i].isCreateScript);
+            EditorUtility.SetDirty(mXlsTableSchemas[i]);
             if (GUILayout.Button("Setting"))
             {
                 EditorStrayFogApplication.PingObject(mXlsTableSchemas[i]);

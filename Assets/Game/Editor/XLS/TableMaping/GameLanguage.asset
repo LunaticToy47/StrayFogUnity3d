@@ -11,7 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c155114dd274da4881773358ac43f3f, type: 3}
   m_Name: GameLanguage
   m_EditorClassIdentifier: 
-  tableName: 
-  fileName: 
-  isDeterminant: 0
-  columns: []
+  tableName: GameLanguage
+  fileName: Assets/Game/Editor/XLS/GameLanguage.xls
+  isDeterminant: 1
+  isCreateScript: 1
+  columns:
+  - name: name
+    desc: "\u540D\u79F0"
+    isPK: 0
+    type: 14
+    arrayDimension: 0
+    isNull: 0
+  - name: value
+    desc: "\u503C"
+    isPK: 0
+    type: 14
+    arrayDimension: 0
+    isNull: 0

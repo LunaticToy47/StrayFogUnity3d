@@ -14,6 +14,7 @@ MonoBehaviour:
   tableName: AssetDiskMapingFileExt
   fileName: Assets/Game/Editor/XLS/AssetDiskMapingFileExt.xls
   isDeterminant: 0
+  isCreateScript: 0
   columns:
   - name: extId
     desc: "\u6269\u5C55\u540Did"

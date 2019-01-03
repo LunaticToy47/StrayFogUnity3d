@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 /// <summary>
 /// UserGuideValidate实体
 /// </summary>
@@ -12,21 +13,21 @@ public partial class Table_UserGuideValidate: AbsSQLiteEntity
 	/// <summary>
 	/// id
 	/// </summary>
-	public System.Int32 id { get; private set; }
+	public int id { get; private set; }
 	/// <summary>
 	/// desc
 	/// </summary>
-	public System.String desc { get; private set; }
+	public string desc { get; private set; }
 	/// <summary>
 	/// conditions
 	/// </summary>
-	public System.Byte[] conditions { get; private set; }
+	public int[] conditions { get; private set; }
 	/// <summary>
 	/// intValues
 	/// </summary>
-	public System.Byte[] intValues { get; private set; }
+	public int[] intValues { get; private set; }
 	/// <summary>
 	/// vector2Values
 	/// </summary>
-	public System.Byte[] vector2Values { get; private set; }
+	public Vector2[] vector2Values { get; private set; }
 }

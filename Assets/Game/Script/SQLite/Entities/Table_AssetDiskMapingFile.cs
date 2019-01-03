@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// View_AssetDiskMaping实体
+/// AssetDiskMapingFile实体
 /// </summary>
-public partial class View_AssetDiskMaping: AbsSQLiteEntity
+public partial class Table_AssetDiskMapingFile: AbsSQLiteEntity
 {
 	/// <summary>
     /// PK键组
     /// </summary>
-    public override object[] pks { get { return new List<object>() { }.ToArray(); } }
+    public override object[] pks { get { return new List<object>() { fileId,folderId,}.ToArray(); } }
 	
 	/// <summary>
 	/// fileId
@@ -19,17 +19,17 @@ public partial class View_AssetDiskMaping: AbsSQLiteEntity
 	/// </summary>
 	public int folderId { get; private set; }
 	/// <summary>
-	/// fileName
+	/// inSide
 	/// </summary>
-	public string fileName { get; private set; }
+	public string inSide { get; private set; }
 	/// <summary>
-	/// inAssetPath
+	/// outSide
 	/// </summary>
-	public string inAssetPath { get; private set; }
+	public string outSide { get; private set; }
 	/// <summary>
-	/// outAssetPath
+	/// extId
 	/// </summary>
-	public string outAssetPath { get; private set; }
+	public int extId { get; private set; }
 	/// <summary>
 	/// extEnumValue
 	/// </summary>

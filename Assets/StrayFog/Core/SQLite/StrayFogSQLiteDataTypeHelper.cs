@@ -44,7 +44,8 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <param name="_csTypeValue">cs列类型值</param>
     /// <param name="_dataType">数据类型</param>
     /// <param name="_dataTypeArrayDimension">数据数组类型</param>
-    public static void ResolveCSDataType(string _csTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    /// <returns>true:有匹配的类型,false:无匹配的类型</returns>
+    public static bool ResolveCSDataType(string _csTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
     {
         int hashCode = _csTypeValue.GetHashCode();
         string typeValue = string.Empty;
@@ -92,6 +93,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
         {
             _dataTypeArrayDimension = msCSDataTypeArrayDimensionMaping[hashCode];
         }
+        return msCSDataTypeMaping.ContainsKey(hashCode) && msCSDataTypeArrayDimensionMaping.ContainsKey(hashCode);
     }
     #endregion
 
@@ -110,7 +112,8 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <param name="_sqliteTypeValue">cs列类型值</param>
     /// <param name="_dataType">数据类型</param>
     /// <param name="_dataTypeArrayDimension">数据数组类型</param>
-    public static void ResolveSQLiteDataType(string _sqliteTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    /// <returns>true:有匹配的类型,false:无匹配的类型</returns>
+    public static bool ResolveSQLiteDataType(string _sqliteTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
     {
         int hashCode = _sqliteTypeValue.GetHashCode();
         string typeValue = string.Empty;
@@ -158,6 +161,8 @@ public sealed class StrayFogSQLiteDataTypeHelper
         {
             _dataTypeArrayDimension = msSQLiteDataTypeArrayDimensionMaping[hashCode];
         }
+
+        return msSQLiteDataTypeMaping.ContainsKey(hashCode) && msSQLiteDataTypeArrayDimensionMaping.ContainsKey(hashCode);
     }
     #endregion
 

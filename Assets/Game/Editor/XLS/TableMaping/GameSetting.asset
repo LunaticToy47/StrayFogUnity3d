@@ -14,6 +14,7 @@ MonoBehaviour:
   tableName: GameSetting
   fileName: Assets/Game/Editor/XLS/GameSetting.xls
   isDeterminant: 0
+  isCreateScript: 1
   columns:
   - name: id
     desc: "\u6807\u8BC6id"

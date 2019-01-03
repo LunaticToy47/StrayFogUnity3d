@@ -14,6 +14,7 @@ MonoBehaviour:
   tableName: UserGuideValidate
   fileName: Assets/Game/Editor/XLS/UserGuideValidate.xls
   isDeterminant: 0
+  isCreateScript: 1
   columns:
   - name: id
     desc: "\u6807\u8BC6id"
@@ -30,13 +31,13 @@ MonoBehaviour:
   - name: conditions
     desc: "\u6761\u4EF6"
     isPK: 0
-    type: 3
+    type: 6
     arrayDimension: 1
     isNull: 0
   - name: intValues
     desc: "\u6761\u4EF6Int\u503C"
     isPK: 0
-    type: 3
+    type: 6
     arrayDimension: 1
     isNull: 0
   - name: vector2Values
