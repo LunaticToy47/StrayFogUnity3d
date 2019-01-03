@@ -3,12 +3,15 @@ using UnityEngine;
 /// <summary>
 /// #EntityName#实体
 /// </summary>
-public partial class #ClassName#: AbsSQLiteEntity
+public partial class #ClassName#: AbsSQLite#Determinant#Entity
 {
+	#Primarykey#
 	/// <summary>
     /// PK键组
     /// </summary>
     public override object[] pks { get { return new List<object>() { #PK##Name#,#PK#}.ToArray(); } }
+	#Primarykey#
+
 	#Properties#
 	/// <summary>
 	/// #Desc#

@@ -19,7 +19,6 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// 是否是行列式表
     /// </summary>
     [AliasTooltip("是否是行列式表")]
-    [ReadOnly]
     public bool isDeterminant;
     /// <summary>
     /// 是否生成脚本

@@ -58,13 +58,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(string.Format("{0}. {1}", (i + 1).PadLeft(mXlsTableSchemas.Count), mXlsTableSchemas[i].tableName));
-            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表", mXlsTableSchemas[i].isDeterminant);
-            if (mXlsTableSchemas[i].isDeterminant &&
-                (mXlsTableSchemas[i].columns == null || mXlsTableSchemas[i].columns.Length != 2))
-            {
-                mXlsTableSchemas[i].isDeterminant = false;
-                EditorUtility.DisplayDialog("Determinant", "The Determinant table must be only two columns.", "OK");
-            }
+            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表", mXlsTableSchemas[i].isDeterminant);      
             mXlsTableSchemas[i].isCreateScript = EditorGUILayout.ToggleLeft("是否生成脚本", mXlsTableSchemas[i].isCreateScript);
             EditorUtility.SetDirty(mXlsTableSchemas[i]);
             if (GUILayout.Button("Setting"))

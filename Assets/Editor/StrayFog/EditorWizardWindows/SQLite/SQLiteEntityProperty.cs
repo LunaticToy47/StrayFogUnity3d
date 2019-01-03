@@ -21,6 +21,10 @@ public class SQLiteEntityProperty
     /// </summary>
     public string typeName { get; set; }
     /// <summary>
+    /// 列说明
+    /// </summary>
+    public string desc { get; set; }
+    /// <summary>
     /// 数据类型名称
     /// </summary>
     public string sqliteDataTypeName { get; set; }

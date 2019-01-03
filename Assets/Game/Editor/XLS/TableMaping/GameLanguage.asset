@@ -28,3 +28,15 @@ MonoBehaviour:
     type: 14
     arrayDimension: 0
     isNull: 0
+  - name: valueType
+    desc: "\u503C\u7C7B\u578B"
+    isPK: 0
+    type: 14
+    arrayDimension: 0
+    isNull: 0
+  - name: desc
+    desc: "\u8BF4\u660E"
+    isPK: 0
+    type: 14
+    arrayDimension: 0
+    isNull: 0

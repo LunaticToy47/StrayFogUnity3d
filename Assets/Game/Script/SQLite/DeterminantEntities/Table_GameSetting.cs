@@ -3,17 +3,11 @@ using UnityEngine;
 /// <summary>
 /// GameSetting实体
 /// </summary>
-public partial class Table_GameSetting: AbsSQLiteEntity
+public partial class Table_GameSetting: AbsSQLiteDeterminantEntity
 {
-	/// <summary>
-    /// PK键组
-    /// </summary>
-    public override object[] pks { get { return new List<object>() { id,}.ToArray(); } }
 	
-	/// <summary>
-	/// 标识id
-	/// </summary>
-	public int id { get; private set; }
+
+	
 	/// <summary>
 	/// 分辨率
 	/// </summary>
