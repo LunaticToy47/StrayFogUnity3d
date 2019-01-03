@@ -11,7 +11,7 @@ public partial class #ClassName#: AbsSQLiteEntity
     public override object[] pks { get { return new List<object>() { #PK##Name#,#PK#}.ToArray(); } }
 	#Properties#
 	/// <summary>
-	/// #Name#
+	/// #Desc#
 	/// </summary>
 	public #Type# #Name# { get; private set; }#Properties#
 }

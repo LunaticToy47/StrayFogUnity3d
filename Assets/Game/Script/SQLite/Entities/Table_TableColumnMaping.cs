@@ -11,115 +11,115 @@ public partial class Table_TableColumnMaping: AbsSQLiteEntity
     public override object[] pks { get { return new List<object>() { }.ToArray(); } }
 	
 	/// <summary>
-	/// id
+	/// int列
 	/// </summary>
 	public int id { get; private set; }
 	/// <summary>
-	/// strCol
+	/// string列
 	/// </summary>
 	public string strCol { get; private set; }
 	/// <summary>
-	/// boolCol
+	/// bool列
 	/// </summary>
 	public bool boolCol { get; private set; }
 	/// <summary>
-	/// intCol
+	/// int列
 	/// </summary>
 	public int intCol { get; private set; }
 	/// <summary>
-	/// floatCol
+	/// float列
 	/// </summary>
 	public float floatCol { get; private set; }
 	/// <summary>
-	/// byteCol
+	/// byte列
 	/// </summary>
 	public byte byteCol { get; private set; }
 	/// <summary>
-	/// shortCol
+	/// short列
 	/// </summary>
 	public short shortCol { get; private set; }
 	/// <summary>
-	/// vec2Col
+	/// vector2列
 	/// </summary>
 	public Vector2 vec2Col { get; private set; }
 	/// <summary>
-	/// vec3Col
+	/// vector3列
 	/// </summary>
 	public Vector3 vec3Col { get; private set; }
 	/// <summary>
-	/// vec4Col
+	/// vector4列
 	/// </summary>
 	public Vector4 vec4Col { get; private set; }
 	/// <summary>
-	/// strColArray
+	/// string一维数组列
 	/// </summary>
 	public string[] strColArray { get; private set; }
 	/// <summary>
-	/// boolColArray
+	/// bool一维数组列
 	/// </summary>
 	public bool[] boolColArray { get; private set; }
 	/// <summary>
-	/// intColArray
+	/// int一维数组列
 	/// </summary>
 	public int[] intColArray { get; private set; }
 	/// <summary>
-	/// floatColArray
+	/// float一维数组列
 	/// </summary>
 	public float[] floatColArray { get; private set; }
 	/// <summary>
-	/// byteColArray
+	/// byte一维数组列
 	/// </summary>
 	public byte[] byteColArray { get; private set; }
 	/// <summary>
-	/// shortColArray
+	/// short一维数组列
 	/// </summary>
 	public short[] shortColArray { get; private set; }
 	/// <summary>
-	/// vec2ColArray
+	/// vector2一维数组列
 	/// </summary>
 	public Vector2[] vec2ColArray { get; private set; }
 	/// <summary>
-	/// vec3ColArray
+	/// vector3一维数组列
 	/// </summary>
 	public Vector3[] vec3ColArray { get; private set; }
 	/// <summary>
-	/// vec4ColArray
+	/// vector4一维数组列
 	/// </summary>
 	public Vector4[] vec4ColArray { get; private set; }
 	/// <summary>
-	/// strCol2Array
+	/// string二维数组列
 	/// </summary>
 	public System.String strCol2Array { get; private set; }
 	/// <summary>
-	/// boolCol2Array
+	/// bool二维数组列
 	/// </summary>
 	public System.Boolean boolCol2Array { get; private set; }
 	/// <summary>
-	/// intCol2Array
+	/// int二维数组列
 	/// </summary>
 	public System.Int32 intCol2Array { get; private set; }
 	/// <summary>
-	/// floatCol2Array
+	/// float二维数组列
 	/// </summary>
 	public System.Object floatCol2Array { get; private set; }
 	/// <summary>
-	/// byteCol2Array
+	/// byte二维数组列
 	/// </summary>
 	public System.Byte byteCol2Array { get; private set; }
 	/// <summary>
-	/// shortCol2Array
+	/// short二维数组列
 	/// </summary>
 	public System.Int16 shortCol2Array { get; private set; }
 	/// <summary>
-	/// vec2Col2Array
+	/// vector2二维数组列
 	/// </summary>
 	public System.Object vec2Col2Array { get; private set; }
 	/// <summary>
-	/// vec3Col2Array
+	/// vector3二维数组列
 	/// </summary>
 	public System.Object vec3Col2Array { get; private set; }
 	/// <summary>
-	/// vec4Col2Array
+	/// vector4二维数组列
 	/// </summary>
 	public System.Object vec4Col2Array { get; private set; }
 }

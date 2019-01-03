@@ -11,19 +11,19 @@ public partial class Table_GameSetting: AbsSQLiteEntity
     public override object[] pks { get { return new List<object>() { id,}.ToArray(); } }
 	
 	/// <summary>
-	/// id
+	/// 标识id
 	/// </summary>
 	public int id { get; private set; }
 	/// <summary>
-	/// resolution
+	/// 分辨率
 	/// </summary>
 	public Vector2 resolution { get; private set; }
 	/// <summary>
-	/// targetFrameRate
+	/// 帧率
 	/// </summary>
 	public int targetFrameRate { get; private set; }
 	/// <summary>
-	/// isRunGuide
+	/// 是否运行引导
 	/// </summary>
 	public bool isRunGuide { get; private set; }
 }

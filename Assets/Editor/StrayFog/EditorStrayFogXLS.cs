@@ -321,15 +321,17 @@ public sealed class EditorStrayFogXLS
 
         StringBuilder sbLog = new StringBuilder();
         List<SQLiteEntity> entities = new List<SQLiteEntity>();
+        Dictionary<string, Dictionary<string, string>> tableColumnsDescMaping = new Dictionary<string, Dictionary<string, string>>();
         SqliteDataReader pragmaReader = null;
         SqliteDataReader schemaReader = null;
         SQLiteEntity tempEntity = null;
         SQLiteEntityProperty tempEntityProperty = null;
         string tempEntityName = string.Empty;
         string tempEntityType = string.Empty;
+        string tempColumnDesc = string.Empty;
         bool tempIsDetermainant = false;
         Type tempPropertyType = null;
-        bool tempMatchPropertyType = false;
+        bool tempMatchPropertyType = false;        
         enSQLiteDataType tempSQLiteDataType = enSQLiteDataType.String;
         enSQLiteDataTypeArrayDimension tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
         Dictionary<string, enSQLiteEntityClassify> classifyMaping = typeof(enSQLiteEntityClassify).NameToEnum<enSQLiteEntityClassify>();
@@ -389,6 +391,26 @@ public sealed class EditorStrayFogXLS
         }
         #endregion
 
+        #region 收集描述
+        foreach (EditorXlsTableSchema t in _tableSchemas)
+        {
+            if (!tableColumnsDescMaping.ContainsKey(t.tableName))
+            {
+                tableColumnsDescMaping.Add(t.tableName, new Dictionary<string, string>());
+            }
+            if (t.columns != null && t.columns.Length > 0)
+            {
+                foreach (EditorXlsTableColumnSchema c in t.columns)
+                {
+                    if (!tableColumnsDescMaping[t.tableName].ContainsKey(c.name))
+                    {
+                        tableColumnsDescMaping[t.tableName].Add(c.name, c.desc);
+                    }
+                }
+            }            
+        }
+        #endregion
+
         #region 生成实体对象
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", sqliteEntityFolder, enFileExt.CS, "");
         progress = 0;
@@ -414,8 +436,16 @@ public sealed class EditorStrayFogXLS
                 {
                     foreach (string name in determinantColumnName)
                     {
+                        tempColumnDesc = name;
+                        if (tableColumnsDescMaping.ContainsKey(t.name) && tableColumnsDescMaping[t.name].ContainsKey(name))
+                        {
+                            tempColumnDesc = OnTransDescToSummary(tableColumnsDescMaping[t.name][name]);
+                        }
                         sbRowReplace.Append(
-                            rowTemplete.Replace("#Name#", name).Replace("#Type#", tempEntityType)
+                            rowTemplete
+                            .Replace("#Name#", name)
+                            .Replace("#Desc#", tempColumnDesc)
+                            .Replace("#Type#", tempEntityType)
                             );
                     }                    
                 }
@@ -429,8 +459,17 @@ public sealed class EditorStrayFogXLS
                     SqliteDataReader dataReader = SQLiteHelper.sqlHelper.ReadFullTable(t.name);
                     while (dataReader.Read())
                     {
+                        tempColumnDesc = dataReader.GetValue(0).ToString();
+                        if (tableColumnsDescMaping.ContainsKey(t.name) && tableColumnsDescMaping[t.name].ContainsKey(dataReader.GetValue(0).ToString()))
+                        {
+                            tempColumnDesc = OnTransDescToSummary(tableColumnsDescMaping[t.name][dataReader.GetValue(0).ToString()]);
+                        }
+
                         sbRowReplace.Append(
-                            rowTemplete.Replace("#Name#", dataReader.GetValue(0).ToString()).Replace("#Type#", rowMaping[dataReader.GetName(1)].typeName)
+                            rowTemplete
+                            .Replace("#Name#", dataReader.GetValue(0).ToString())
+                            .Replace("#Desc#", tempColumnDesc)
+                            .Replace("#Type#", rowMaping[dataReader.GetName(1)].typeName)
                             );
                     }
                 }
@@ -469,8 +508,17 @@ public sealed class EditorStrayFogXLS
 
                 foreach (SQLiteEntityProperty p in t.properties)
                 {
+                    tempColumnDesc = p.name;
+                    if (tableColumnsDescMaping.ContainsKey(t.name) && tableColumnsDescMaping[t.name].ContainsKey(p.name))
+                    {
+                        tempColumnDesc = OnTransDescToSummary(tableColumnsDescMaping[t.name][p.name]);
+                    }
+
                     sbPropertyReplace.Append(
-                        propertyTemplete.Replace("#Name#", p.name).Replace("#Type#", p.typeName)
+                        propertyTemplete
+                        .Replace("#Name#", p.name)
+                        .Replace("#Desc#", tempColumnDesc)
+                        .Replace("#Type#", p.typeName)
                         );
                     if (p.isPK)
                     {
@@ -558,15 +606,12 @@ public sealed class EditorStrayFogXLS
         return columnNames;
     }
 
-    #endregion
-
-    #region TransDescToSummary 转换描述为Summary形式
     /// <summary>
     /// 转换描述为Summary形式
     /// </summary>
     /// <param name="_desc">描述</param>
     /// <returns>描述</returns>
-    public static string TransDescToSummary(string _desc)
+    static string OnTransDescToSummary(string _desc)
     {
         StringBuilder descSb = new StringBuilder();
         StringReader reader = new StringReader(_desc);
@@ -590,5 +635,6 @@ public sealed class EditorStrayFogXLS
         } while (!string.IsNullOrEmpty(line));
         return descSb.ToString();
     }
-    #endregion    
+
+    #endregion
 }

@@ -11,39 +11,39 @@ public partial class Table_UserGuideTrigger: AbsSQLiteEntity
     public override object[] pks { get { return new List<object>() { id,}.ToArray(); } }
 	
 	/// <summary>
-	/// id
+	/// 标识id
 	/// </summary>
 	public int id { get; private set; }
 	/// <summary>
-	/// desc
+	/// 描述
 	/// </summary>
 	public string desc { get; private set; }
 	/// <summary>
-	/// nextId
+	/// 下一引导id
 	/// </summary>
 	public int nextId { get; private set; }
 	/// <summary>
-	/// guideType
+	/// 引导类型
 	/// </summary>
 	public int guideType { get; private set; }
 	/// <summary>
-	/// displayType
+	/// 显示类型
 	/// </summary>
 	public int displayType { get; private set; }
 	/// <summary>
-	/// levelId
+	/// 关卡id
 	/// </summary>
 	public int levelId { get; private set; }
 	/// <summary>
-	/// conditions
+	/// 条件
 	/// </summary>
 	public int[] conditions { get; private set; }
 	/// <summary>
-	/// intValues
+	/// 条件Int值
 	/// </summary>
 	public int[] intValues { get; private set; }
 	/// <summary>
-	/// validateId
+	/// 验证id
 	/// </summary>
 	public int validateId { get; private set; }
 }

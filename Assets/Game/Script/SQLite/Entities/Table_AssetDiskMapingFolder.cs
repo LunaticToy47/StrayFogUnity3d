@@ -11,15 +11,15 @@ public partial class Table_AssetDiskMapingFolder: AbsSQLiteEntity
     public override object[] pks { get { return new List<object>() { folderId,}.ToArray(); } }
 	
 	/// <summary>
-	/// folderId
+	/// 文件夹Id
 	/// </summary>
 	public int folderId { get; private set; }
 	/// <summary>
-	/// inSide
+	/// 内部资源路径
 	/// </summary>
 	public string inSide { get; private set; }
 	/// <summary>
-	/// outSide
+	/// 外部资源路径
 	/// </summary>
 	public string outSide { get; private set; }
 }

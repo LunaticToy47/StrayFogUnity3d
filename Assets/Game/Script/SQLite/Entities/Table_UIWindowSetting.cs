@@ -11,59 +11,59 @@ public partial class Table_UIWindowSetting: AbsSQLiteEntity
     public override object[] pks { get { return new List<object>() { id,}.ToArray(); } }
 	
 	/// <summary>
-	/// id
+	/// 窗口id
 	/// </summary>
 	public int id { get; private set; }
 	/// <summary>
-	/// name
+	/// 窗口名称
 	/// </summary>
 	public string name { get; private set; }
 	/// <summary>
-	/// folderId
+	/// 文件夹id
 	/// </summary>
 	public int folderId { get; private set; }
 	/// <summary>
-	/// fileId
+	/// 文件id
 	/// </summary>
 	public int fileId { get; private set; }
 	/// <summary>
-	/// renderMode
+	/// 画布绘制模式
 	/// </summary>
 	public int renderMode { get; private set; }
 	/// <summary>
-	/// layer
+	/// 窗口Layer
 	/// </summary>
 	public int layer { get; private set; }
 	/// <summary>
-	/// openMode
+	/// 窗口打开模式
 	/// </summary>
 	public int openMode { get; private set; }
 	/// <summary>
-	/// closeMode
+	/// 窗口关闭模式
 	/// </summary>
 	public int closeMode { get; private set; }
 	/// <summary>
-	/// isIgnoreOpenCloseMode
+	/// 是否忽略打开关闭模式
 	/// </summary>
 	public bool isIgnoreOpenCloseMode { get; private set; }
 	/// <summary>
-	/// isNotAutoRestoreSequenceWindow
+	/// 是否是不可自动恢复序列窗口
 	/// </summary>
 	public bool isNotAutoRestoreSequenceWindow { get; private set; }
 	/// <summary>
-	/// isDonotDestroyInstance
+	/// 是否是不可销毁实例
 	/// </summary>
 	public bool isDonotDestroyInstance { get; private set; }
 	/// <summary>
-	/// isImmediateDisplay
+	/// 是否立即显示
 	/// </summary>
 	public bool isImmediateDisplay { get; private set; }
 	/// <summary>
-	/// isManualCloseWhenGotoScene
+	/// 跳转场景时是否手动关闭
 	/// </summary>
 	public bool isManualCloseWhenGotoScene { get; private set; }
 	/// <summary>
-	/// isGuideWindow
+	/// 是否是引导窗口
 	/// </summary>
 	public bool isGuideWindow { get; private set; }
 }

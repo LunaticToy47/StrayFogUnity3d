@@ -6,7 +6,7 @@ public partial class #ClassName#: AbsSQLiteDeterminantEntity
 {
 	#Row#
 	/// <summary>
-	/// #Name#
+	/// #Desc#
 	/// </summary>
 	public #Type# #Name# { get; private set; }#Row#
 }

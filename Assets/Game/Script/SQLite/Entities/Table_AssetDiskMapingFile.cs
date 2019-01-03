@@ -11,27 +11,27 @@ public partial class Table_AssetDiskMapingFile: AbsSQLiteEntity
     public override object[] pks { get { return new List<object>() { fileId,folderId,}.ToArray(); } }
 	
 	/// <summary>
-	/// fileId
+	/// 文件id
 	/// </summary>
 	public int fileId { get; private set; }
 	/// <summary>
-	/// folderId
+	/// 文件夹id
 	/// </summary>
 	public int folderId { get; private set; }
 	/// <summary>
-	/// inSide
+	/// 内部资源路径
 	/// </summary>
 	public string inSide { get; private set; }
 	/// <summary>
-	/// outSide
+	/// 外部资源路径
 	/// </summary>
 	public string outSide { get; private set; }
 	/// <summary>
-	/// extId
+	/// 扩展名id
 	/// </summary>
 	public int extId { get; private set; }
 	/// <summary>
-	/// extEnumValue
+	/// 扩展名枚举值
 	/// </summary>
 	public int extEnumValue { get; private set; }
 }
