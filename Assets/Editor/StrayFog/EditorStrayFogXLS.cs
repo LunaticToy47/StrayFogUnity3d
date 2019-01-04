@@ -66,6 +66,34 @@ public sealed class EditorStrayFogXLS
         enFileExt.Xlsx, "");
     #endregion
 
+    #region OnClearXlsData 清除XLS表数据
+    /// <summary>
+    /// 清除XLS表数据
+    /// </summary>
+    /// <param name="_tableName">表名</param>
+    static void OnClearXlsData(string _tableName)
+    {
+        msrXlsTableSrcAsset.SetName(_tableName);
+        string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
+        using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
+            {
+                sheet.DeleteRow(msrColumnDataRowStartIndex, sheet.Dimension.Rows);
+                pck.SaveAs(new FileInfo(newXlsPath));
+            }
+        }
+
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(msrXlsTableSrcAsset.fileName);
+            File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
+        }
+    }
+    #endregion
+
     #region ReadXlsSchema 读取XLS表结构框架
     /// <summary>
     /// 读取XLS表结构框架
@@ -609,33 +637,21 @@ public sealed class EditorStrayFogXLS
 
     #endregion
 
-    #region OnClearXlsData 清除XLS表数据
+    #region AssetDiskMaping表操作
     /// <summary>
-    /// 清除XLS表数据
+    /// AssetDiskMapingFolder表
     /// </summary>
-    /// <param name="_tableName">表名</param>
-    static void OnClearXlsData(string _tableName)
-    {
-        msrXlsTableSrcAsset.SetName(_tableName);
-        string newXlsPath = msrXlsTableSrcAsset.fileName +"."+ msrXlsTableSrcAsset.ext;
-        using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
-        {
-            ExcelPackage pck = new ExcelPackage(fs);
-            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-            if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
-            {
-                sheet.DeleteRow(msrColumnDataRowStartIndex, sheet.Dimension.Rows);
-                pck.SaveAs(new FileInfo(newXlsPath));
-            }
-        }
+    static readonly string msrXlsName_AssetDiskMapingFolder = "AssetDiskMapingFolder";
 
-        if (File.Exists(newXlsPath))
-        {
-            File.Delete(msrXlsTableSrcAsset.fileName);
-            File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
-        }
-    }
-    #endregion
+    /// <summary>
+    /// AssetDiskMapingFileExt表
+    /// </summary>
+    static readonly string msrXlsName_AssetDiskMapingFileExt = "AssetDiskMapingFileExt";
+
+    /// <summary>
+    /// AssetDiskMapingFile表
+    /// </summary>
+    static readonly string msrXlsName_AssetDiskMapingFile = "AssetDiskMapingFile";
 
     #region InsertDataToAssetDiskMapingFolder 插入数据到AssetDiskMapingFolder表
     /// <summary>
@@ -645,7 +661,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFolder(List<EditorSelectionAssetDiskMaping> _nodes,Action<string,float> _progressCallback)
     {
-        msrXlsTableSrcAsset.SetName("AssetDiskMapingFolder");
+        msrXlsTableSrcAsset.SetName(msrXlsName_AssetDiskMapingFolder);
         OnClearXlsData(msrXlsTableSrcAsset.name);
         string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
         List<int> saveIds = new List<int>();
@@ -687,7 +703,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFileExt(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        msrXlsTableSrcAsset.SetName("AssetDiskMapingFileExt");
+        msrXlsTableSrcAsset.SetName(msrXlsName_AssetDiskMapingFileExt);
         OnClearXlsData(msrXlsTableSrcAsset.name);
         string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
         List<int> saveIds = new List<int>();
@@ -728,9 +744,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFile(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        //string sql = string.Format("INSERT INTO AssetDiskMapingFile (fileId,folderId,inSide,outSide,extId,extEnumValue) 
-        //VALUES({0},{1},'{2}','{3}',{4},{5});", fileId, folderId, fileInSide, fileOutSide, fileExtHashCode, fileExtEnumValue);
-        msrXlsTableSrcAsset.SetName("AssetDiskMapingFile");
+        msrXlsTableSrcAsset.SetName(msrXlsName_AssetDiskMapingFile);
         OnClearXlsData(msrXlsTableSrcAsset.name);
         string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
         List<int> saveIds = new List<int>();
@@ -765,5 +779,93 @@ public sealed class EditorStrayFogXLS
             File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
         }
     }
+    #endregion
+
+    #endregion
+
+    #region UIWindowSetting表操作
+    /// <summary>
+    /// UIWindowSetting表
+    /// </summary>
+    static readonly string msrXlsName_UIWindowSetting = "UIWindowSetting";
+
+    #region DeleteAllUIWindowSetting 删除所有窗口设置
+    /// <summary>
+    /// 删除所有窗口设置
+    /// </summary>
+    public static void DeleteAllUIWindowSetting()
+    {
+        OnClearXlsData(msrXlsName_UIWindowSetting);
+    }
+    #endregion
+
+    #region DeleteUIWindowSetting 删除指定窗口设置
+    /// <summary>
+    /// 删除所有窗口设置
+    /// </summary>
+    /// <param name="_winId">窗口id</param>
+    public static void DeleteUIWindowSetting(int _winId)
+    {
+        msrXlsTableSrcAsset.SetName(msrXlsName_UIWindowSetting);
+        string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
+        bool isDel = false;
+        int delCount = 0;
+        using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
+            {
+                int maxRow = sheet.Dimension.Rows;
+                for (int row = msrColumnDataRowStartIndex; row <= maxRow; row++)
+                {
+                    if (sheet.GetValue<int>(row - delCount, 1) == _winId)
+                    {
+                        sheet.DeleteRow(row - delCount, 1, true);
+                        isDel |= true;
+                        delCount++;
+                    }
+                }
+                if (isDel)
+                {
+                    pck.SaveAs(new FileInfo(newXlsPath));
+                }                
+            }
+        }
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(msrXlsTableSrcAsset.fileName);
+            File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
+        }
+    }
+    #endregion
+
+    #region InsertUIWindowSetting 插入窗口设置
+    /// <summary>
+    /// 删除所有窗口设置
+    /// </summary>
+    /// <param name="_windows">窗口组</param>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
+    {
+        DeleteAllUIWindowSetting();
+
+        //string sql = string.Format("INSERT INTO UIWindowSetting (id,name,fileId,folderId,renderMode,layer,openMode,closeMode,isIgnoreOpenCloseMode,isNotAutoRestoreSequenceWindow,isDonotDestroyInstance,isImmediateDisplay,isManualCloseWhenGotoScene,isGuideWindow) VALUES({0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13})",
+        //    winId, nameWithoutExtension, fileId, folderId,
+        //    (int)assetNode.renderMode,
+        //    (int)assetNode.layer,
+        //    (int)assetNode.openMode,
+        //    (int)assetNode.closeMode,
+        //    Convert.ToInt32(assetNode.isIgnoreOpenCloseMode),
+        //    Convert.ToInt32(assetNode.isNotAutoRestoreSequenceWindow),
+        //    Convert.ToInt32(assetNode.isDonotDestroyInstance),
+        //    Convert.ToInt32(assetNode.isImmediateDisplay),
+        //    Convert.ToInt32(assetNode.isManualCloseWhenGotoScene),
+        //    Convert.ToInt32(assetNode.isGuideWindow)
+        //    );
+        //SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
+        //EditorUtility.DisplayProgressBar("Builder Window Enum", w.path, progress / mWindows.Count);
+    }
+    #endregion
     #endregion
 }

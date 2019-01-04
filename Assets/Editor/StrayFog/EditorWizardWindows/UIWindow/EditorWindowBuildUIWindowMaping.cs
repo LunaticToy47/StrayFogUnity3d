@@ -203,9 +203,6 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
                     if (GUILayout.Button("Setting"))
                     {
                         EditorStrayFogApplication.PingObject(mWindows[i].assetNode);
-                        //EditorWindowSettingUIWindow win = GetWindow<EditorWindowSettingUIWindow>("Setting Window");
-                        //win.SetWindow(mWindows[i]);
-                        //win.Show();
                     }
                     #endregion
 
@@ -242,7 +239,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
                             mRemoveWindows.Add(i);
                             EditorStrayFogUtility.cmd.DeleteFolder(Path.GetFullPath(EditorStrayFogGlobalVariable.uiWindowPrefab.directory));
                             EditorStrayFogUtility.cmd.DeleteFolder(Path.GetFullPath(EditorStrayFogGlobalVariable.uiWindowViewScript.directory));
-                            mWindows[i].ExecuteDeleteUIWindowSetting();
+                            EditorStrayFogXLS.DeleteUIWindowSetting(mWindows[i].winId);
                             break;
                         }
                     }

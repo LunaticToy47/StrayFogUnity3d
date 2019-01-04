@@ -28,18 +28,19 @@ public sealed class EditorStrayFogExecute
         StringBuilder sbTemplete = new StringBuilder();
         StringBuilder sbLog = new StringBuilder();
         if (mWindows != null && mWindows.Count > 0)
-        {
-            sbLog.AppendLine(EditorSelectionUIWindowSetting.ExecuteDeleteAllUIWindowSetting());
+        {            
             foreach (EditorSelectionUIWindowSetting w in mWindows)
             {
                 sbTemplete.AppendLine(
                     formatTemplete
                     .Replace("#Name#", w.nameWithoutExtension)
-                    .Replace("#Id#", w.winId.ToString()));
-                sbLog.AppendLine(w.ExecuteInsertUIWindowSetting());
+                    .Replace("#Id#", w.winId.ToString()));                
                 progress++;
                 EditorUtility.DisplayProgressBar("Builder Window Enum", w.path, progress / mWindows.Count);
             }
+            EditorStrayFogXLS.InsertUIWindowSetting(mWindows,(n,p)=> {
+                EditorUtility.DisplayProgressBar("Insert Window Setting To Xls", n, p);
+            });
         }
         result = result.Replace(replaceTemplete, sbTemplete.ToString());
         result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
