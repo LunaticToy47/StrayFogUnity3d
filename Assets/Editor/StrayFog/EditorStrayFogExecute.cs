@@ -904,16 +904,16 @@ public sealed class EditorStrayFogExecute
     #endregion
 
     #region AssetDiskMaping菜单
-
+    
     #region ExecuteBuildAllAssetDiskMaping 生成资源磁盘映射
     /// <summary>
     /// 资源磁盘映射文件夹枚举
     /// </summary>
-    readonly static string msrEnumAssetDiskMapingFolder = "EnumAssetDiskMapingFolder";
+    readonly static string msrEnumAssetDiskMapingFolder = "AssetDiskMapingFolder";
     /// <summary>
     /// 资源磁盘映射文件枚举
     /// </summary>
-    readonly static string msrEnumAssetDiskMapingFile = "EnumAssetDiskMapingFile";
+    readonly static string msrEnumAssetDiskMapingFile = "AssetDiskMapingFile";
     /// <summary>
     /// 生成资源磁盘映射
     /// </summary>
@@ -947,8 +947,6 @@ public sealed class EditorStrayFogExecute
         {
             Dictionary<int, string> fileEnum = new Dictionary<int, string>();
             Dictionary<int, string> folderEnum = new Dictionary<int, string>();
-            List<string> scriptLines = new List<string>();
-            bool hasEnum = false;
             List<int> appendEnum = new List<int>();
             float progress = 0;
 
@@ -962,9 +960,7 @@ public sealed class EditorStrayFogExecute
             }
             #endregion
 
-            EditorSelectionAssetDiskMaping.ClearXlsData();
             EditorUtility.ClearProgressBar();
-            return;
 
             #region 插入目录
             progress = 0;
@@ -974,15 +970,15 @@ public sealed class EditorStrayFogExecute
                 {
                     folderEnum.Add(n.folderId, n.folderEnumName);
                 }
-                if (!n.ExistsFolder())
-                {
-                    sbLog.AppendLine(n.ExecuteInsertFolder());
-                }
                 progress++;
-                EditorUtility.DisplayProgressBar("Insert Folder Maping",
-                                n.path, progress / (float)_nodes.Count);
+                EditorUtility.DisplayProgressBar("Folder Enum",
+                                n.path, progress / _nodes.Count);
             }
-            #endregion
+            EditorStrayFogXLS.InsertDataToAssetDiskMapingFolder(_nodes,(n,p)=>
+            {
+                EditorUtility.DisplayProgressBar("Insert Data To AssetDiskMapingFolder", n, p);
+            });
+            #endregion            
 
             #region 插入文件后缀            
             List<int> extHashCode = new List<int>();
@@ -993,15 +989,15 @@ public sealed class EditorStrayFogExecute
                 {
                     extHashCode.Add(n.fileExtHashCode);
                 }
-                if (!n.ExistsFileExt())
-                {
-                    sbLog.AppendLine(n.ExecuteInsertFileExt());
-                }
+                EditorUtility.DisplayProgressBar("FileExt Enum",
+                                n.path, progress / _nodes.Count);
                 progress++;
-                EditorUtility.DisplayProgressBar("Insert FileExt",
-                                n.path, progress / (float)_nodes.Count);
             }
-            #endregion
+            EditorStrayFogXLS.InsertDataToAssetDiskMapingFileExt(_nodes, (n, p) =>
+            {
+                EditorUtility.DisplayProgressBar("Insert Data To AssetDiskMapingFileExt", n, p);
+            });
+            #endregion            
 
             #region 插入文件            
             progress = 0;
@@ -1011,14 +1007,14 @@ public sealed class EditorStrayFogExecute
                 {
                     fileEnum.Add(n.fileId, n.fileScriptEnumName);
                 }
-                if (!n.ExistsFile())
-                {
-                    sbLog.AppendLine(n.ExecuteInsertFile());
-                }
                 progress++;
-                EditorUtility.DisplayProgressBar("Insert File Maping",
+                EditorUtility.DisplayProgressBar("File Enum",
                                 n.path, progress / (float)_nodes.Count);
             }
+            EditorStrayFogXLS.InsertDataToAssetDiskMapingFile(_nodes, (n, p) =>
+            {
+                EditorUtility.DisplayProgressBar("Insert Data To AssetDiskMapingFile", n, p);
+            });
             #endregion
 
             #region 枚举模板
@@ -1034,9 +1030,8 @@ public sealed class EditorStrayFogExecute
 
             #region 生成目录枚举
             progress = 0;
-            scriptLines.Clear();
             appendEnum.Clear();
-            cfgEnumScript.SetName(msrEnumAssetDiskMapingFolder);
+            cfgEnumScript.SetName("Enum" + msrEnumAssetDiskMapingFolder);
 
             foreach (KeyValuePair<int, string> key in folderEnum)
             {
@@ -1049,7 +1044,7 @@ public sealed class EditorStrayFogExecute
                                 key.Value, progress / folderEnum.Count);
             }
             cfgEnumScript.SetText(assetDiskMapingScriptTemplete
-                .Replace("#EnumName#", "AssetDiskMapingFolder")
+                .Replace("#EnumName#", cfgEnumScript.name.Remove(0, 4))
                 .Replace(enumReplaceTemplete, sbEnumTableReplace.ToString()));
             cfgEnumScript.CreateAsset();
             #endregion
@@ -1057,36 +1052,23 @@ public sealed class EditorStrayFogExecute
             #region 生成文件枚举
             progress = 0;
             sbEnumTableReplace.Length = 0;
-            scriptLines.Clear();
             appendEnum.Clear();
-            cfgEnumScript.SetName(msrEnumAssetDiskMapingFile);
+            cfgEnumScript.SetName("Enum" + msrEnumAssetDiskMapingFile);
 
-            scriptLines.AddRange(File.ReadAllLines(cfgEnumScript.fileName));
             foreach (KeyValuePair<int, string> key in fileEnum)
             {
-                hasEnum = false;
-                foreach (string t in scriptLines)
-                {
-                    hasEnum = t.Contains(key.Key.ToString()) && t.Contains(key.Value);
-                    if (hasEnum)
-                    {
-                        break;
-                    }
-                }
-                if (!hasEnum)
-                {
-                    appendEnum.Add(key.Key);
-                }
+                progress++;
+                sbEnumTableReplace.Append(
+                  enumTemplete.Replace("#Name#", key.Value)
+                  .Replace("#HashCode#", key.Key.ToString())
+                    );
+                EditorUtility.DisplayProgressBar("Build File Enum",
+                                key.Value, progress / fileEnum.Count);
             }
-
-            foreach (int k in appendEnum)
-            {
-                scriptLines.Insert(scriptLines.Count - 2, string.Format("{0} = {1},", fileEnum[k], k));
-            }
-            if (appendEnum.Count > 0)
-            {
-                File.WriteAllLines(cfgEnumScript.fileName, scriptLines.ToArray());
-            }
+            cfgEnumScript.SetText(assetDiskMapingScriptTemplete
+                .Replace("#EnumName#", cfgEnumScript.name.Remove(0,4))
+                .Replace(enumReplaceTemplete, sbEnumTableReplace.ToString()));
+            cfgEnumScript.CreateAsset();
             #endregion
             SQLiteHelper.sqlHelper.Close();
             EditorUtility.ClearProgressBar();

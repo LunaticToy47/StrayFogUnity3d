@@ -609,50 +609,161 @@ public sealed class EditorStrayFogXLS
 
     #endregion
 
-    #region ClearXlsData 清除XLS表数据
+    #region OnClearXlsData 清除XLS表数据
     /// <summary>
     /// 清除XLS表数据
     /// </summary>
     /// <param name="_tableName">表名</param>
-    public static void ClearXlsData(string _tableName)
+    static void OnClearXlsData(string _tableName)
     {
-        ReadXlsSchema();
-        //msrXlsTableSrcAsset.SetName(_tableName);
+        msrXlsTableSrcAsset.SetName(_tableName);
+        string newXlsPath = msrXlsTableSrcAsset.fileName +"."+ msrXlsTableSrcAsset.ext;
+        using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
+            {
+                sheet.DeleteRow(msrColumnDataRowStartIndex, sheet.Dimension.Rows);
+                pck.SaveAs(new FileInfo(newXlsPath));
+            }
+        }
 
-        //using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
-        //{
-        //    ExcelPackage pck = new ExcelPackage(fs);
-        //    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(msrXlsTableSrcAsset.fileName);
+            File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
+        }
+    }
+    #endregion
 
-        //    int minColumnNum = sheet.Dimension.Start.Column;//工作区开始列
-        //    int maxColumnNum = sheet.Dimension.End.Column; //工作区结束列
-        //    int minRowNum = sheet.Dimension.Start.Row; //工作区开始行号
-        //    int maxRowNum = sheet.Dimension.End.Row; //工作区结束行号
-        //    int rowNum = sheet.Dimension.Rows;
-        //    int columnNum = sheet.Dimension.Columns;
+    #region InsertDataToAssetDiskMapingFolder 插入数据到AssetDiskMapingFolder表
+    /// <summary>
+    /// 插入数据到AssetDiskMapingFolder表
+    /// </summary>
+    /// <param name="_nodes">节点</param>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertDataToAssetDiskMapingFolder(List<EditorSelectionAssetDiskMaping> _nodes,Action<string,float> _progressCallback)
+    {
+        msrXlsTableSrcAsset.SetName("AssetDiskMapingFolder");
+        OnClearXlsData(msrXlsTableSrcAsset.name);
+        string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
+        List<int> saveIds = new List<int>();
+        int sameRows = 0;
+        using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            for (int i = 0; i < _nodes.Count; i++)
+            {
+                if (!saveIds.Contains(_nodes[i].folderId))
+                {
+                    saveIds.Add(_nodes[i].folderId);
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 1].Value = _nodes[i].folderId;
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 2].Value = _nodes[i].folderInSide;
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 3].Value = _nodes[i].folderOutSide;
+                }
+                else
+                {
+                    sameRows++;
+                }
+                _progressCallback(_nodes[i].name, (i + 1) / (float)_nodes.Count);
+            }
+            pck.SaveAs(new FileInfo(newXlsPath));
+        }
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(msrXlsTableSrcAsset.fileName);
+            File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
+        }
+    }
+    #endregion
 
-        //    int tableNum = sheet.Tables.Count;
+    #region InsertDataToAssetDiskMapingFileExt 插入数据到AssetDiskMapingFileExt表
+    /// <summary>
+    /// 插入数据到AssetDiskMapingFileExt表
+    /// </summary>
+    /// <param name="_nodes">节点</param>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertDataToAssetDiskMapingFileExt(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
+    {
+        msrXlsTableSrcAsset.SetName("AssetDiskMapingFileExt");
+        OnClearXlsData(msrXlsTableSrcAsset.name);
+        string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
+        List<int> saveIds = new List<int>();
+        int sameRows = 0;
+        using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            for (int i = 0; i < _nodes.Count; i++)
+            {
+                if (!saveIds.Contains(_nodes[i].fileExtHashCode))
+                {
+                    saveIds.Add(_nodes[i].fileExtHashCode);
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 1].Value = _nodes[i].fileExtHashCode;
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 2].Value = _nodes[i].ext;
+                }
+                else
+                {
+                    sameRows++;
+                }
+                _progressCallback(_nodes[i].name, (i + 1) / (float)_nodes.Count);
+            }
+            pck.SaveAs(new FileInfo(newXlsPath));
+        }
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(msrXlsTableSrcAsset.fileName);
+            File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
+        }
+    }
+    #endregion
 
-        //    object value = sheet.GetValue(1, 1);
-        //    //sheet.DeleteRow(4, maxRowNum, true);
-        //    //pck.SaveAs(new FileInfo(msrXlsTableSrcAsset.fileName  + ".xlsx"));
-        //    fs.Close();
-        //}
-        //Debug.Log("DDD");
-
-        //Workbook book = Workbook.Open(msrXlsTableSrcAsset.fileName);
-        //if (book.Worksheets.Count > 0)
-        //{
-        //    Worksheet sheet = book.Worksheets[0];
-        //    if (sheet.Cells.LastRowIndex >= msrColumnDataRowStartIndex)
-        //    {
-        //        for (int i = msrColumnDataRowStartIndex; i <= sheet.Cells.LastRowIndex; i++)
-        //        {
-        //            sheet.Cells.Rows.Remove(i);                    
-        //        }
-        //    }            
-        //}
-        //book.Save(msrXlsTableSrcAsset.fileName + ".xls");
+    #region InsertDataToAssetDiskMapingFile 插入数据到AssetDiskMapingFile表
+    /// <summary>
+    /// 插入数据到AssetDiskMapingFile表
+    /// </summary>
+    /// <param name="_nodes">节点</param>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertDataToAssetDiskMapingFile(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
+    {
+        //string sql = string.Format("INSERT INTO AssetDiskMapingFile (fileId,folderId,inSide,outSide,extId,extEnumValue) 
+        //VALUES({0},{1},'{2}','{3}',{4},{5});", fileId, folderId, fileInSide, fileOutSide, fileExtHashCode, fileExtEnumValue);
+        msrXlsTableSrcAsset.SetName("AssetDiskMapingFile");
+        OnClearXlsData(msrXlsTableSrcAsset.name);
+        string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
+        List<int> saveIds = new List<int>();
+        int sameRows = 0;
+        using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            for (int i = 0; i < _nodes.Count; i++)
+            {
+                if (!saveIds.Contains(_nodes[i].guidHashCode))
+                {
+                    saveIds.Add(_nodes[i].guidHashCode);
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 1].Value = _nodes[i].fileId;
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 2].Value = _nodes[i].folderId;
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 3].Value = _nodes[i].fileInSide;
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 4].Value = _nodes[i].fileOutSide;
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 5].Value = _nodes[i].fileExtHashCode;
+                    sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 6].Value = _nodes[i].fileExtEnumValue;
+                }
+                else
+                {
+                    sameRows++;
+                }
+                _progressCallback(_nodes[i].name, (i + 1) / (float)_nodes.Count);
+            }
+            pck.SaveAs(new FileInfo(newXlsPath));
+        }
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(msrXlsTableSrcAsset.fileName);
+            File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
+        }
     }
     #endregion
 }
