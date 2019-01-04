@@ -16,15 +16,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     /// 滚动视图位置
     /// </summary>
     Vector2 mScrollViewPosition = Vector2.zero;
-
-    /// <summary>
-    /// OnFocus
-    /// </summary>
-    private void OnFocus()
-    {
-        mXlsTableSchemas = EditorStrayFogXLS.ReadXlsSchema();
-    }
-
+    
     /// <summary>
     /// OnGUI
     /// </summary>
@@ -43,6 +35,10 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
         EditorGUILayout.Separator();
         EditorGUILayout.HelpBox(EditorStrayFogXLS.msrSeparateDescription, MessageType.None);
         EditorGUILayout.Separator();
+        if (GUILayout.Button("Load XLS"))
+        {
+            mXlsTableSchemas = EditorStrayFogXLS.ReadXlsSchema();
+        }
         EditorGUILayout.Separator();
     }
     #endregion

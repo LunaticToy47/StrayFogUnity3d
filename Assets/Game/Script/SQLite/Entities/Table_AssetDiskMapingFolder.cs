@@ -14,15 +14,15 @@ public partial class Table_AssetDiskMapingFolder: AbsSQLiteEntity
 
 	
 	/// <summary>
-	/// 
+	/// 文件夹Id
 	/// </summary>
 	public int folderId { get; private set; }
 	/// <summary>
-	/// 
+	/// 内部资源路径
 	/// </summary>
 	public string inSide { get; private set; }
 	/// <summary>
-	/// 
+	/// 外部资源路径
 	/// </summary>
 	public string outSide { get; private set; }
 }

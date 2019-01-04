@@ -14,23 +14,23 @@ public partial class Table_UserGuideValidate: AbsSQLiteEntity
 
 	
 	/// <summary>
-	/// 
+	/// 标识id
 	/// </summary>
 	public int id { get; private set; }
 	/// <summary>
-	/// 
+	/// 描述
 	/// </summary>
 	public string desc { get; private set; }
 	/// <summary>
-	/// 
+	/// 条件
 	/// </summary>
 	public int[] conditions { get; private set; }
 	/// <summary>
-	/// 
+	/// 条件Int值
 	/// </summary>
 	public int[] intValues { get; private set; }
 	/// <summary>
-	/// 
+	/// 条件Vector2值
 	/// </summary>
 	public Vector2[] vector2Values { get; private set; }
 }

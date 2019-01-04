@@ -47,28 +47,14 @@ static class EditorAssetBundleNameMenuItem
     }
     #endregion
 
-    #region ClearAssetBundleName
-    const string mcClearAssetBundleName = "ClearAssetBundleName";
-    /// <summary>
-    /// 设置AssetBundleName
-    /// </summary>
-    [MenuItem(mcMenu + mcClearAssetBundleName, false, mcPriority + 2)]
-    [MenuItem(mcAssetMenu + mcClearAssetBundleName, false, mcPriority + 2)]
-    [MenuItem(mcHierarchy + mcClearAssetBundleName, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_ClearAssetBundleNameWindow()
-    {
-        EditorStrayFogExecute.ExecuteClearAssetBundleName();
-    }
-    #endregion
-
     #region Clear All AssetBundleName
     const string mcClearAllAssetBundleName = "Clear All AssetBundleName";
     /// <summary>
     /// 清除所有AssetBundleName
     /// </summary>
-    [MenuItem(mcMenu + mcClearAllAssetBundleName, false, mcPriority + 3)]
-    [MenuItem(mcAssetMenu + mcClearAllAssetBundleName, false, mcPriority + 3)]
-    [MenuItem(mcHierarchy + mcClearAllAssetBundleName, false, mcPriority + 3)]
+    [MenuItem(mcMenu + mcClearAllAssetBundleName, false, mcPriority + 2)]
+    [MenuItem(mcAssetMenu + mcClearAllAssetBundleName, false, mcPriority + 2)]
+    [MenuItem(mcHierarchy + mcClearAllAssetBundleName, false, mcPriority + 2)]
     public static void EditorDevelopMenuItem_ClearAllAssetBundleNameWindow()
     {
         if (EditorStrayFogApplication.IsExecuteMethodInCmd() || EditorUtility.DisplayDialog("Clear All AssetBundleName", "Are you srue clear all AssetBundleName?", "Yes", "No"))

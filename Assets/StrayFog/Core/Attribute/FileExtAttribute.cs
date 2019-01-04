@@ -173,10 +173,10 @@ public enum enFileExt
     [FileExt(".xml")]
     Xml,
     /// <summary>
-    /// xls文件
+    /// xlsx
     /// </summary>
-    [FileExt(".xls")]
-    Xls,
+    [FileExt(".xlsx")]
+    Xlsx,
     /// <summary>
     /// Config配置文件
     /// </summary>

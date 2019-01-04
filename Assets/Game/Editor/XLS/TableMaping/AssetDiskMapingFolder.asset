@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: AssetDiskMapingFolder
   m_EditorClassIdentifier: 
   tableName: AssetDiskMapingFolder
-  fileName: Assets/Game/Editor/XLS/AssetDiskMapingFolder.xls
+  fileName: Assets/Game/Editor/XLS/AssetDiskMapingFolder.xlsx
   isDeterminant: 0
   isCreateScript: 0
   columns:

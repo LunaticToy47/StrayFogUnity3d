@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: GameLanguage
   m_EditorClassIdentifier: 
   tableName: GameLanguage
-  fileName: Assets/Game/Editor/XLS/GameLanguage.xls
+  fileName: Assets/Game/Editor/XLS/GameLanguage.xlsx
   isDeterminant: 1
   isCreateScript: 1
   columns:

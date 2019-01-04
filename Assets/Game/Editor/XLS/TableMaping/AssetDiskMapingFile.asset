@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: AssetDiskMapingFile
   m_EditorClassIdentifier: 
   tableName: AssetDiskMapingFile
-  fileName: Assets/Game/Editor/XLS/AssetDiskMapingFile.xls
+  fileName: Assets/Game/Editor/XLS/AssetDiskMapingFile.xlsx
   isDeterminant: 0
   isCreateScript: 0
   columns:
@@ -21,10 +21,10 @@ MonoBehaviour:
     isPK: 1
     type: 6
     arrayDimension: 0
-    isNull: 0
+    isNull: 1
   - name: folderId
     desc: "\u6587\u4EF6\u5939id"
-    isPK: 1
+    isPK: 0
     type: 6
     arrayDimension: 0
     isNull: 0

@@ -13,5 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   folders:
   - Assets/Game/AssetBundles
-  - Assets/Game/Script
   invoke: 

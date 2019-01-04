@@ -14,7 +14,7 @@ public partial class View_DeterminantVT: AbsSQLiteEntity
 
 	
 	/// <summary>
-	/// 
+	/// vtName
 	/// </summary>
 	public string vtName { get; private set; }
 }

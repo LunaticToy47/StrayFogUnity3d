@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: GameSetting
   m_EditorClassIdentifier: 
   tableName: GameSetting
-  fileName: Assets/Game/Editor/XLS/GameSetting.xls
+  fileName: Assets/Game/Editor/XLS/GameSetting.xlsx
   isDeterminant: 1
   isCreateScript: 1
   columns:

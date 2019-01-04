@@ -55,7 +55,7 @@ public class EditorWindowSetAssetBundleName : AbsEditorWindow
 
         if (GUILayout.Button("Clear Name"))
         {
-            EditorStrayFogExecute.ExecuteClearAssetBundleName();
+            EditorStrayFogExecute.ExecuteClearAllAssetBundleName();
             EditorUtility.DisplayDialog("Clear AssetBundleName", "clear AssetBundle success", "OK");
         }
         EditorGUILayout.EndHorizontal();

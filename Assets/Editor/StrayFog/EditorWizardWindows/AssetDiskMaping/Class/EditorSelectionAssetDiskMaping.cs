@@ -92,6 +92,16 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     }
 
     /// <summary>
+    /// 清除XLS表数据
+    /// </summary>
+    public static void ClearXlsData()
+    {
+        EditorStrayFogXLS.ClearXlsData("AssetDiskMapingFile");
+        //EditorStrayFogXLS.ClearXlsData("AssetDiskMapingFolder");
+        //EditorStrayFogXLS.ClearXlsData("AssetDiskMapingFileExt");
+    }
+
+    /// <summary>
     /// 执行删除File表
     /// </summary>
     /// <returns>执行语句</returns>
