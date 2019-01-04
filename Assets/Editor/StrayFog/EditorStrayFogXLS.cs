@@ -849,22 +849,52 @@ public sealed class EditorStrayFogXLS
     public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
     {
         DeleteAllUIWindowSetting();
-
+        msrXlsTableSrcAsset.SetName(msrXlsName_UIWindowSetting);
+        string newXlsPath = msrXlsTableSrcAsset.fileName + "." + msrXlsTableSrcAsset.ext;
+        using (FileStream fs = new FileStream(msrXlsTableSrcAsset.fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            for (int i = 0; i < _windows.Count; i++)
+            {
+                sheet.Cells[msrColumnDataRowStartIndex + i, 1].Value = _windows[i].winId;
+                sheet.Cells[msrColumnDataRowStartIndex + i, 2].Value = _windows[i].nameWithoutExtension;
+                sheet.Cells[msrColumnDataRowStartIndex + i, 3].Value = _windows[i].fileId;
+                sheet.Cells[msrColumnDataRowStartIndex + i, 4].Value = _windows[i].folderId;
+                sheet.Cells[msrColumnDataRowStartIndex + i, 5].Value = (int)_windows[i].assetNode.renderMode;
+                sheet.Cells[msrColumnDataRowStartIndex + i, 6].Value = (int)_windows[i].assetNode.layer;
+                sheet.Cells[msrColumnDataRowStartIndex + i, 7].Value = (int)_windows[i].assetNode.openMode;
+                sheet.Cells[msrColumnDataRowStartIndex + i, 8].Value = (int)_windows[i].assetNode.closeMode;
+                sheet.Cells[msrColumnDataRowStartIndex + i, 9].Value = Convert.ToInt32(_windows[i].assetNode.isIgnoreOpenCloseMode);
+                sheet.Cells[msrColumnDataRowStartIndex + i, 10].Value = Convert.ToInt32(_windows[i].assetNode.isNotAutoRestoreSequenceWindow);
+                sheet.Cells[msrColumnDataRowStartIndex + i, 11].Value = Convert.ToInt32(_windows[i].assetNode.isDonotDestroyInstance);
+                sheet.Cells[msrColumnDataRowStartIndex + i, 12].Value = Convert.ToInt32(_windows[i].assetNode.isImmediateDisplay);
+                sheet.Cells[msrColumnDataRowStartIndex + i, 13].Value = Convert.ToInt32(_windows[i].assetNode.isManualCloseWhenGotoScene);
+                sheet.Cells[msrColumnDataRowStartIndex + i, 14].Value = Convert.ToInt32(_windows[i].assetNode.isGuideWindow);
+                _progressCallback(_windows[i].path, (i + 1) / (float)_windows.Count);
+            }
+            pck.SaveAs(new FileInfo(newXlsPath));
+        }
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(msrXlsTableSrcAsset.fileName);
+            File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
+        }
         //string sql = string.Format("INSERT INTO UIWindowSetting (id,name,fileId,folderId,renderMode,layer,openMode,closeMode,isIgnoreOpenCloseMode,isNotAutoRestoreSequenceWindow,isDonotDestroyInstance,isImmediateDisplay,isManualCloseWhenGotoScene,isGuideWindow) VALUES({0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13})",
-        //    winId, nameWithoutExtension, fileId, folderId,
-        //    (int)assetNode.renderMode,
-        //    (int)assetNode.layer,
-        //    (int)assetNode.openMode,
-        //    (int)assetNode.closeMode,
-        //    Convert.ToInt32(assetNode.isIgnoreOpenCloseMode),
-        //    Convert.ToInt32(assetNode.isNotAutoRestoreSequenceWindow),
-        //    Convert.ToInt32(assetNode.isDonotDestroyInstance),
-        //    Convert.ToInt32(assetNode.isImmediateDisplay),
-        //    Convert.ToInt32(assetNode.isManualCloseWhenGotoScene),
-        //    Convert.ToInt32(assetNode.isGuideWindow)
-        //    );
-        //SQLiteHelper.sqlHelper.ExecuteNonQuery(sql);
-        //EditorUtility.DisplayProgressBar("Builder Window Enum", w.path, progress / mWindows.Count);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     #endregion
     #endregion
