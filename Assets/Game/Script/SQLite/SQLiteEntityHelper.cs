@@ -128,67 +128,94 @@ public sealed partial class SQLiteEntityHelper
         where T : AbsSQLiteEntity
     {
         List<T> result = new List<T>();
-        Type entityType = typeof(T);
-        int entityKey = entityType.GetHashCode();
-        int propertyKey = 0;
-        if (!msEntityPropertyMaping.ContainsKey(entityKey))
+        if (!msEntityPropertyMaping.ContainsKey(_entitySetting.id))
         {
-            msEntityPropertyMaping.Add(entityKey, new Dictionary<int, PropertyInfo>());
-        }
+            msEntityPropertyMaping.Add(_entitySetting.id, new Dictionary<int, PropertyInfo>());
+            Type type = typeof(T);
 
+        }
         if (StrayFogGamePools.setting.isInternal)
         {
-            #region 内部资源加载
-            
-
-            #endregion
+            //内部资源加载
+            result = OnReadFromXLS<T>(_entitySetting);
         }
         else
         {
-            #region 外部资源加载
-            SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.name));
-            string propertyName = string.Empty;
-            T entity = default(T);
-            Type columnType = null;
-            Type propertyType = null;
-            object readerValue = null;
-            while (reader.Read())
-            {
-                entity = Activator.CreateInstance<T>();
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    propertyName = reader.GetName(i);
-                    propertyKey = propertyName.UniqueHashCode();
-                    if (!msEntityPropertyMaping[entityKey].ContainsKey(propertyKey))
-                    {
-                        msEntityPropertyMaping[entityKey].Add(propertyKey, entityType.GetProperty(propertyName));
-                    }
-                    columnType = reader.GetFieldType(i);
-                    propertyType = msEntityPropertyMaping[entityKey][propertyKey].PropertyType;
-                    readerValue = reader.GetValue(i);
-                    if (columnType.Equals(propertyType))
-                    {//如果实体属性类型与数据库保存的类型一致
-                        msEntityPropertyMaping[entityKey][propertyKey].SetValue(entity, readerValue, null);
-                    }
-                    else if (msrPropertyTypeValueSQLiteToEntity.ContainsKey(propertyType.FullName))
-                    {//如果实体属性值与数据库值有相应的转换函数
-                        msEntityPropertyMaping[entityKey][propertyKey].SetValue(entity, msrPropertyTypeValueSQLiteToEntity[propertyType.FullName](readerValue), null);
-                    }
-                    else
-                    {
-                        Debug.LogErrorFormat("{0}'s property[{1}][{2}] can not convert value from db【{3】【{4}】",
-                            entityType.Name,
-                            msEntityPropertyMaping[entityKey][propertyKey].Name, propertyType.FullName,
-                            readerValue == null ? "null" : readerValue.JsonSerialize(), columnType.FullName);
-                    }
-                }
-                entity.Resolve();
-                result.Add(entity);
-            }
-            reader.Close();
-            reader = null;
-            #endregion
-        }        
+            //外部资源加载
+            result = OnReadFromSQLite<T>(_entitySetting);
+        }
+        return result;
+    }
+    #endregion
+
+    #region OnReadFromXLS
+    /// <summary>
+    /// 从XLS读取数据
+    /// </summary>
+    /// <typeparam name="T">实体类型</typeparam>
+    /// <param name="_entitySetting">实体设定</param>
+    /// <returns>数据集</returns>
+    static List<T> OnReadFromXLS<T>(SQLiteEntitySetting _entitySetting)
+        where T : AbsSQLiteEntity
+    {
+        List<T> result = new List<T>();
+
+        return result;
+    }
+    #endregion
+
+    #region OnReadFromSQLite
+    /// <summary>
+    /// 从SQLite读取数据
+    /// </summary>
+    /// <typeparam name="T">实体类型</typeparam>
+    /// <param name="_entitySetting">实体设定</param>
+    /// <returns>数据集</returns>
+    static List<T> OnReadFromSQLite<T>(SQLiteEntitySetting _entitySetting)
+        where T : AbsSQLiteEntity
+    {
+        List<T> result = new List<T>();
+        //SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.name));
+        //string propertyName = string.Empty;
+        //T entity = default(T);
+        //Type columnType = null;
+        //Type propertyType = null;
+        //object readerValue = null;
+        //while (reader.Read())
+        //{
+        //    entity = Activator.CreateInstance<T>();
+        //    for (int i = 0; i < reader.FieldCount; i++)
+        //    {
+        //        propertyName = reader.GetName(i);
+        //        propertyKey = propertyName.UniqueHashCode();
+        //        if (!msEntityPropertyMaping[entityKey].ContainsKey(propertyKey))
+        //        {
+        //            msEntityPropertyMaping[entityKey].Add(propertyKey, entityType.GetProperty(propertyName));
+        //        }
+        //        columnType = reader.GetFieldType(i);
+        //        propertyType = msEntityPropertyMaping[entityKey][propertyKey].PropertyType;
+        //        readerValue = reader.GetValue(i);
+        //        if (columnType.Equals(propertyType))
+        //        {//如果实体属性类型与数据库保存的类型一致
+        //            msEntityPropertyMaping[entityKey][propertyKey].SetValue(entity, readerValue, null);
+        //        }
+        //        else if (msrPropertyTypeValueSQLiteToEntity.ContainsKey(propertyType.FullName))
+        //        {//如果实体属性值与数据库值有相应的转换函数
+        //            msEntityPropertyMaping[entityKey][propertyKey].SetValue(entity, msrPropertyTypeValueSQLiteToEntity[propertyType.FullName](readerValue), null);
+        //        }
+        //        else
+        //        {
+        //            Debug.LogErrorFormat("{0}'s property[{1}][{2}] can not convert value from db【{3】【{4}】",
+        //                entityType.Name,
+        //                msEntityPropertyMaping[entityKey][propertyKey].Name, propertyType.FullName,
+        //                readerValue == null ? "null" : readerValue.JsonSerialize(), columnType.FullName);
+        //        }
+        //    }
+        //    entity.Resolve();
+        //    result.Add(entity);
+        //}
+        //reader.Close();
+        //reader = null;
         return result;
     }
     #endregion
@@ -243,54 +270,6 @@ public sealed partial class SQLiteEntityHelper
             result = temp;
         }
         return result;
-    }
-    #endregion
-
-    #region Select 获得行列式数据集
-    /// <summary>
-    /// 获得行列式数据集
-    /// </summary>
-    /// <typeparam name="T">实体类型</typeparam>
-    /// <returns>数据集</returns>
-    public static T SelectDeterminant<T>()
-        where T : AbsSQLiteEntity
-    {
-        SQLiteEntitySetting entitySetting = OnGetEntitySetting<T>();
-        //int key = 0;
-        //string tableName = OnGetDeterminantEntityTableName<T>(out key);
-        //if (!mCacheEntityData.ContainsKey(key))
-        //{
-        //    Type entityType = typeof(T);
-        //    int entityKey = entityType.GetHashCode();
-        //    T result = Activator.CreateInstance<T>();
-        //    int propertyKey = 0;
-        //    if (!msEntityPropertyMaping.ContainsKey(entityKey))
-        //    {
-        //        msEntityPropertyMaping.Add(entityKey, new Dictionary<int, PropertyInfo>());
-        //        PropertyInfo[] properties = entityType.GetProperties();
-        //        if (properties != null && properties.Length > 0)
-        //        {
-        //            foreach (PropertyInfo p in properties)
-        //            {
-        //                propertyKey = p.Name.UniqueHashCode();
-        //                if (!msEntityPropertyMaping[entityKey].ContainsKey(propertyKey))
-        //                {
-        //                    msEntityPropertyMaping[entityKey].Add(propertyKey, p);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", tableName));
-        //    while (reader.Read())
-        //    {//默认0是属性名称,1是属性值
-        //        propertyKey = reader.GetValue(result.propertyNameIndex).ToString().UniqueHashCode();
-        //        msEntityPropertyMaping[entityKey][propertyKey].SetValue(result, reader.GetValue(result.propertyValueIndex), null);
-        //    }
-        //    reader.Close();
-        //    reader = null;
-        //    mCacheEntityData.Add(key, result);
-        //}
-        return (T)mCacheEntityData[entitySetting.id];
     }
     #endregion
 }
