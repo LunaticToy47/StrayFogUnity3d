@@ -8,7 +8,7 @@ public sealed partial class SQLiteEntityHelper
     /// 实体设定映射
     /// </summary>
     static readonly Dictionary<int, SQLiteEntitySetting> msrEntityMaping = new Dictionary<int, SQLiteEntitySetting>() {#EntityMaping#
-		{ typeof(#ClassName#).GetHashCode(),new SQLiteEntitySetting(typeof(#ClassName#).GetHashCode(),"#TableName#","#XlsFileName#",#IsDeterminant#,enSQLiteEntityClassify.#Classify#)},#EntityMaping#
+		{ typeof(#ClassName#).GetHashCode(),new SQLiteEntitySetting(typeof(#ClassName#).GetHashCode(),"#TableName#","#XlsFileName#",#IsDeterminant#,enSQLiteEntityClassify.#Classify#,#xlsColumnNameIndex#,#xlsColumnDataIndex#)},#EntityMaping#
     };
 
     /// <summary>

@@ -22,13 +22,18 @@ public sealed partial class SQLiteEntityHelper
         /// <param name="_xlsFileName">xls文件名称</param>
         /// <param name="_isDeterminant">是否是行列式</param>
         /// <param name="_classify">实体分类</param>
-        public SQLiteEntitySetting(int _id, string _name, string _xlsFileName, bool _isDeterminant, enSQLiteEntityClassify _classify)
+        /// <param name="_xlsColumnNameIndex">XLS表列名称索引</param>
+        /// <param name="_xlsColumnDataIndex">XLS表列值索引</param>
+        public SQLiteEntitySetting(int _id, string _name, string _xlsFileName, bool _isDeterminant, enSQLiteEntityClassify _classify,
+            int _xlsColumnNameIndex, int _xlsColumnDataIndex)
         {
             id = _id;
             name = _name;
             xlsFileName = _xlsFileName;
             isDeterminant = _isDeterminant;
             classify = _classify;
+            xlsColumnNameIndex = _xlsColumnNameIndex;
+            xlsColumnDataIndex = _xlsColumnDataIndex;
         }
         /// <summary>
         /// 实体id
@@ -50,6 +55,14 @@ public sealed partial class SQLiteEntityHelper
         /// 实体分类
         /// </summary>
         public enSQLiteEntityClassify classify { get; private set; }
+        /// <summary>
+        /// XLS表列名称索引
+        /// </summary>
+        public int xlsColumnNameIndex { get; private set; }
+        /// <summary>
+        /// XLS表列值索引
+        /// </summary>
+        public int xlsColumnDataIndex { get; private set; }
     }
     #endregion
 
@@ -132,7 +145,19 @@ public sealed partial class SQLiteEntityHelper
         {
             msEntityPropertyMaping.Add(_entitySetting.id, new Dictionary<int, PropertyInfo>());
             Type type = typeof(T);
-
+            PropertyInfo[] pps = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.DeclaredOnly);
+            if (pps != null && pps.Length > 0)
+            {
+                int key = 0;
+                foreach (PropertyInfo p in pps)
+                {
+                    key = p.Name.UniqueHashCode();
+                    if (!msEntityPropertyMaping[_entitySetting.id].ContainsKey(key))
+                    {
+                        msEntityPropertyMaping[_entitySetting.id].Add(key, p);
+                    }
+                }
+            }
         }
         if (StrayFogGamePools.setting.isInternal)
         {

@@ -13,21 +13,42 @@ public sealed class EditorStrayFogXLS
 {
     #region XLS 变量    
     /// <summary>
-    /// 列名称行索引
+    /// 表列名称行索引
     /// </summary>
     static readonly int msrColumnNameRowIndex = 1;
     /// <summary>
-    /// 列类型行索引
+    /// 表列类型行索引
     /// </summary>
     static readonly int msrColumnTypeRowIndex = 2;
     /// <summary>
-    /// 列描述行索引
+    /// 表列描述行索引
     /// </summary>
     static readonly int msrColumnDescriptionRowIndex = 3;
     /// <summary>
     /// 表数据行起始索引
     /// </summary>
     static readonly int msrColumnDataRowStartIndex = 4;
+    
+    /// <summary>
+    /// 行列式表列名称列索引
+    /// </summary>
+    static readonly int msrDeterminantColumnNameColumnIndex = 1;
+    /// <summary>
+    /// 行列式表列名称列值索引
+    /// </summary>
+    static readonly int msrDeterminantColumnDataColumnIndex = 2;
+    /// <summary>
+    /// 行列式表列类型行索引
+    /// </summary>
+    static readonly int msrDeterminantColumnTypeColumnIndex = 3;
+    /// <summary>
+    /// 行列式表列描述行索引
+    /// </summary>
+    static readonly int msrDeterminantColumnDescriptionColumnIndex = 4;
+    /// <summary>
+    /// 行列式表数据行起始索引
+    /// </summary>
+    static readonly int msrDeterminantColumnDataRowStartIndex = 4;
     #endregion
 
     #region 分隔符 readonly 变量
@@ -497,9 +518,21 @@ public sealed class EditorStrayFogXLS
         #endregion
 
         progress = 0;
+        int xlsColumnNameIndex = 0;
+        int xlsColumnDataIndex = 0;
         foreach (SQLiteEntity t in entities)
         {
             progress++;
+            if (t.isDetermainant)
+            {
+                xlsColumnNameIndex = msrDeterminantColumnNameColumnIndex;
+                xlsColumnDataIndex = msrDeterminantColumnDataColumnIndex;
+            }
+            else
+            {
+                xlsColumnNameIndex = msrColumnNameRowIndex;
+                xlsColumnDataIndex = msrColumnDataRowStartIndex;
+            }
             sbEntityMapingReplace.Append(
                 entityMapingTemplete
                 .Replace("#ClassName#", t.className)
@@ -507,6 +540,8 @@ public sealed class EditorStrayFogXLS
                 .Replace("#XlsFileName#", t.fileName)
                 .Replace("#IsDeterminant#",Convert.ToString(t.isDetermainant).ToLower())
                 .Replace("#Classify#", t.classify.ToString())
+                .Replace("#xlsColumnNameIndex#", xlsColumnNameIndex.ToString())
+                .Replace("#xlsColumnDataIndex#", xlsColumnDataIndex.ToString())
                 );
             EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / entities.Count);
         }
@@ -552,13 +587,13 @@ public sealed class EditorStrayFogXLS
                     {
                         for (int i = msrColumnDataRowStartIndex; i <= sheet.Dimension.Rows; i++)
                         {
-                            tempEntityProperty = new SQLiteEntityProperty(sheet.GetValue<string>(i, 1).ToString());
+                            tempEntityProperty = new SQLiteEntityProperty(sheet.GetValue<string>(i, msrDeterminantColumnNameColumnIndex).ToString());
                             tempSQLiteDataType = enSQLiteDataType.String;
                             tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
-                            StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(i, 3).ToString(), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
+                            StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(i, msrDeterminantColumnTypeColumnIndex).ToString(), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
                             tempEntityProperty.sqliteDataTypeName = StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
                             tempEntityProperty.typeName = StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
-                            tempEntityProperty.desc = sheet.GetValue<string>(i, 4).ToString();
+                            tempEntityProperty.desc = sheet.GetValue<string>(i, msrDeterminantColumnDescriptionColumnIndex).ToString();
                             _entity.properties.Add(tempEntityProperty);
                         }
                     }
