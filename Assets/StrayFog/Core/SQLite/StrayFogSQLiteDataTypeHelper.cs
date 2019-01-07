@@ -208,7 +208,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
         typeValue = dimValue = _sqliteTypeValue;
         foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping)
         {
-            if (!string.IsNullOrEmpty(key.Value.sqliteTypeName))
+            if (!string.IsNullOrEmpty(key.Value.sqliteTypeName) && typeValue.EndsWith(key.Value.sqliteTypeName))
             {
                 typeValue = typeValue.Replace(key.Value.sqliteTypeName, "");
             }
@@ -313,11 +313,50 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <returns>转换后的列值</returns>
     public static object GetXlsCSTypeColumnValue(object _xlsValue,PropertyInfo _propertyInfo, enSQLiteDataType _SQLiteDataType, enSQLiteDataTypeArrayDimension _SQLiteDataTypeArrayDimension)
     {
-        string[] tempArray = null;
+        string[] tempArray = new string[0];
+        string[] tempArrayTwo = new string[0];
         ArrayList oneResult = new ArrayList();
+        ArrayList twoResult = new ArrayList();
+        int step = 1;
         switch (_SQLiteDataTypeArrayDimension)
         {
             case enSQLiteDataTypeArrayDimension.TwoDimensionArray:
+                if (_xlsValue != null)
+                {
+                    tempArrayTwo = _xlsValue.ToString().Split(msrOneArraySeparate, StringSplitOptions.RemoveEmptyEntries);
+                    if (tempArrayTwo != null)
+                    {
+                        switch (_SQLiteDataType)
+                        {
+                            case enSQLiteDataType.Vector2:
+                                step = 2;
+                                break;
+                            case enSQLiteDataType.Vector3:
+                                step = 3;
+                                break;
+                            case enSQLiteDataType.Vector4:
+                                step = 4;
+                                break;
+                            default:
+                                step = 1;
+                                break;
+                        }
+                        foreach(string oneArray in tempArrayTwo)
+                        {
+                            oneResult = new ArrayList();
+                            tempArray = oneArray.ToString().Split(msrElementSeparate, StringSplitOptions.RemoveEmptyEntries);
+                            if (tempArray != null)
+                            {
+                                for (int i = 0; i < tempArray.Length; i += step)
+                                {
+                                    oneResult.Add(Convert.ChangeType(OnGetValue(string.Join(msrElementSeparate[0], tempArray, i, step), _SQLiteDataType), 
+                                        _propertyInfo.PropertyType.GetElementType()));
+                                }
+                            }
+                            twoResult.Add(oneResult);
+                        }
+                    }
+                }
                 break;
             case enSQLiteDataTypeArrayDimension.OneDimensionArray:
                 if (_xlsValue != null)

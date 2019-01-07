@@ -167,77 +167,77 @@ public partial class Table_TableColumnMaping: AbsSQLiteEntity
 	/// <summary>
 	/// bool二维数组
 	/// </summary>
-	public System.Boolean boolDIM2Col { get; private set; }
+	public bool[][] boolDIM2Col { get; private set; }
 	/// <summary>
 	/// char二维数组
 	/// </summary>
-	public System.String charDIM2Col { get; private set; }
+	public char[][] charDIM2Col { get; private set; }
 	/// <summary>
 	/// sbyte二维数组
 	/// </summary>
-	public System.Object sbyteDIM2Col { get; private set; }
+	public sbyte[][] sbyteDIM2Col { get; private set; }
 	/// <summary>
 	/// byte二维数组
 	/// </summary>
-	public System.Byte byteDIM2Col { get; private set; }
+	public byte[][] byteDIM2Col { get; private set; }
 	/// <summary>
 	/// short二维数组
 	/// </summary>
-	public System.Int16 shortDIM2Col { get; private set; }
+	public short[][] shortDIM2Col { get; private set; }
 	/// <summary>
 	/// ushort二维数组
 	/// </summary>
-	public System.Object ushortDIM2Col { get; private set; }
+	public ushort[][] ushortDIM2Col { get; private set; }
 	/// <summary>
 	/// int二维数组
 	/// </summary>
-	public System.Int32 intDIM2Col { get; private set; }
+	public int[][] intDIM2Col { get; private set; }
 	/// <summary>
 	/// uint二维数组
 	/// </summary>
-	public System.Object uintDIM2Col { get; private set; }
+	public uint[][] uintDIM2Col { get; private set; }
 	/// <summary>
 	/// long二维数组
 	/// </summary>
-	public System.Int64 longDIM2Col { get; private set; }
+	public long[][] longDIM2Col { get; private set; }
 	/// <summary>
 	/// ulong二维数组
 	/// </summary>
-	public System.Object ulongDIM2Col { get; private set; }
+	public ulong[][] ulongDIM2Col { get; private set; }
 	/// <summary>
 	/// float二维数组
 	/// </summary>
-	public System.Object floatDIM2Col { get; private set; }
+	public float[][] floatDIM2Col { get; private set; }
 	/// <summary>
 	/// double二维数组
 	/// </summary>
-	public System.Single doubleDIM2Col { get; private set; }
+	public double[][] doubleDIM2Col { get; private set; }
 	/// <summary>
 	/// decimal二维数组
 	/// </summary>
-	public System.Decimal decimalDIM2Col { get; private set; }
+	public decimal[][] decimalDIM2Col { get; private set; }
 	/// <summary>
 	/// DateTime二维数组
 	/// </summary>
-	public System.DateTime DateTimeDIM2Col { get; private set; }
+	public DateTime[][] DateTimeDIM2Col { get; private set; }
 	/// <summary>
 	/// string二维数组
 	/// </summary>
-	public System.String stringDIM2Col { get; private set; }
+	public string[][] stringDIM2Col { get; private set; }
 	/// <summary>
 	/// Guid二维数组
 	/// </summary>
-	public System.Guid GuidDIM2Col { get; private set; }
+	public Guid[][] GuidDIM2Col { get; private set; }
 	/// <summary>
 	/// Vector2二维数组
 	/// </summary>
-	public System.Object Vector2DIM2Col { get; private set; }
+	public Vector2[][] Vector2DIM2Col { get; private set; }
 	/// <summary>
 	/// Vector3二维数组
 	/// </summary>
-	public System.Object Vector3DIM2Col { get; private set; }
+	public Vector3[][] Vector3DIM2Col { get; private set; }
 	/// <summary>
 	/// Vector4二维数组
 	/// </summary>
-	public System.Object Vector4DIM2Col { get; private set; }
+	public Vector4[][] Vector4DIM2Col { get; private set; }
 }

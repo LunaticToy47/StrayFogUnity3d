@@ -617,16 +617,9 @@ public sealed class EditorStrayFogXLS
                 tempMatchPropertyType = false;
                 tempSQLiteDataType = enSQLiteDataType.String;
                 tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
-                tempPropertyType = schemaReader.GetFieldType(schemaReader.GetOrdinal(c.name));
+
+                tempPropertyType = schemaReader.GetFieldType(schemaReader.GetOrdinal(c.name));                
                 c.typeName = StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
-                if (_propertyDescMaping.ContainsKey(c.name))
-                {
-                    c.desc = _propertyDescMaping[c.name];
-                }
-                else
-                {
-                    c.desc = c.name;
-                }
                 if (!string.IsNullOrEmpty(c.sqliteDataTypeName))
                 {
                     tempMatchPropertyType = StrayFogSQLiteDataTypeHelper.ResolveSQLiteDataType(c.sqliteDataTypeName, ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
@@ -638,6 +631,15 @@ public sealed class EditorStrayFogXLS
                     {
                         c.typeName = tempPropertyType.FullName;
                     }
+                }
+
+                if (_propertyDescMaping.ContainsKey(c.name))
+                {
+                    c.desc = _propertyDescMaping[c.name];
+                }
+                else
+                {
+                    c.desc = c.name;
                 }
             }
         }        
