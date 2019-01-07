@@ -315,8 +315,6 @@ public sealed class StrayFogSQLiteDataTypeHelper
     {
         string[] tempArray = null;
         ArrayList oneResult = new ArrayList();
-        string dt = DateTime.MinValue.ToString();
-        string guid = Guid.NewGuid().ToString();
         switch (_SQLiteDataTypeArrayDimension)
         {
             case enSQLiteDataTypeArrayDimension.TwoDimensionArray:
