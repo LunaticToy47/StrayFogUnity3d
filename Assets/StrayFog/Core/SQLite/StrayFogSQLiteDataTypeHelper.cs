@@ -213,5 +213,5 @@ public sealed class StrayFogSQLiteDataTypeHelper
         }
         return className;
     }
-    #endregion
+    #endregion    
 }

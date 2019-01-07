@@ -90,47 +90,59 @@ public sealed partial class SQLiteEntityHelper
         {
             msEntityPropertyMaping.Add(entityKey, new Dictionary<int, PropertyInfo>());
         }
-        SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _tableName));
-        string propertyName = string.Empty;
-        T entity = default(T);
-        Type columnType = null;
-        Type propertyType = null;
-        object readerValue = null;
-        while (reader.Read())
+
+        if (StrayFogGamePools.setting.isInternal)
         {
-            entity = Activator.CreateInstance<T>();
-            for (int i = 0; i < reader.FieldCount; i++)
-            {
-                propertyName = reader.GetName(i);
-                propertyKey = propertyName.UniqueHashCode();
-                if (!msEntityPropertyMaping[entityKey].ContainsKey(propertyKey))
-                {
-                    msEntityPropertyMaping[entityKey].Add(propertyKey, entityType.GetProperty(propertyName));
-                }
-                columnType = reader.GetFieldType(i);
-                propertyType = msEntityPropertyMaping[entityKey][propertyKey].PropertyType;
-                readerValue = reader.GetValue(i);
-                if (columnType.Equals(propertyType))
-                {//如果实体属性类型与数据库保存的类型一致
-                    msEntityPropertyMaping[entityKey][propertyKey].SetValue(entity, readerValue, null);
-                }
-                else if (msrPropertyTypeValueSQLiteToEntity.ContainsKey(propertyType.FullName))
-                {//如果实体属性值与数据库值有相应的转换函数
-                    msEntityPropertyMaping[entityKey][propertyKey].SetValue(entity, msrPropertyTypeValueSQLiteToEntity[propertyType.FullName](readerValue), null);
-                }
-                else
-                {
-                    Debug.LogErrorFormat("{0}'s property[{1}][{2}] can not convert value from db【{3】【{4}】",
-                        entityType.Name,
-                        msEntityPropertyMaping[entityKey][propertyKey].Name, propertyType.FullName,
-                        readerValue == null ? "null" : readerValue.JsonSerialize(), columnType.FullName);
-                }
-            }
-            entity.Resolve();
-            result.Add(entity);
+            #region 内部资源加载
+            
+            #endregion
         }
-        reader.Close();
-        reader = null;
+        else
+        {
+            #region 外部资源加载
+            SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _tableName));
+            string propertyName = string.Empty;
+            T entity = default(T);
+            Type columnType = null;
+            Type propertyType = null;
+            object readerValue = null;
+            while (reader.Read())
+            {
+                entity = Activator.CreateInstance<T>();
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    propertyName = reader.GetName(i);
+                    propertyKey = propertyName.UniqueHashCode();
+                    if (!msEntityPropertyMaping[entityKey].ContainsKey(propertyKey))
+                    {
+                        msEntityPropertyMaping[entityKey].Add(propertyKey, entityType.GetProperty(propertyName));
+                    }
+                    columnType = reader.GetFieldType(i);
+                    propertyType = msEntityPropertyMaping[entityKey][propertyKey].PropertyType;
+                    readerValue = reader.GetValue(i);
+                    if (columnType.Equals(propertyType))
+                    {//如果实体属性类型与数据库保存的类型一致
+                        msEntityPropertyMaping[entityKey][propertyKey].SetValue(entity, readerValue, null);
+                    }
+                    else if (msrPropertyTypeValueSQLiteToEntity.ContainsKey(propertyType.FullName))
+                    {//如果实体属性值与数据库值有相应的转换函数
+                        msEntityPropertyMaping[entityKey][propertyKey].SetValue(entity, msrPropertyTypeValueSQLiteToEntity[propertyType.FullName](readerValue), null);
+                    }
+                    else
+                    {
+                        Debug.LogErrorFormat("{0}'s property[{1}][{2}] can not convert value from db【{3】【{4}】",
+                            entityType.Name,
+                            msEntityPropertyMaping[entityKey][propertyKey].Name, propertyType.FullName,
+                            readerValue == null ? "null" : readerValue.JsonSerialize(), columnType.FullName);
+                    }
+                }
+                entity.Resolve();
+                result.Add(entity);
+            }
+            reader.Close();
+            reader = null;
+            #endregion
+        }        
         return result;
     }
     #endregion

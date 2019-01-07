@@ -10,11 +10,13 @@ public class SQLiteEntity
     /// SQLite表格
     /// </summary>
     /// <param name="_name">表格名称</param>
+    /// <param name="_fileName">文件路径</param>
     /// <param name="_classify">表格分类</param>
     /// <param name="_isDetermainant">是否是行列式</param>
-    public SQLiteEntity(string _name, enSQLiteEntityClassify _classify, bool _isDetermainant)
+    public SQLiteEntity(string _name, string _fileName, enSQLiteEntityClassify _classify, bool _isDetermainant)
     {
         name = _name;
+        fileName = _fileName;
         classify = _classify;
         isDetermainant = _isDetermainant;
         string prefix = _classify.ToString() + "_";
@@ -36,6 +38,10 @@ public class SQLiteEntity
     /// 类名称
     /// </summary>
     public string className { get; private set; }
+    /// <summary>
+    /// 文件路径
+    /// </summary>
+    public string fileName { get; private set; }
     /// <summary>
     /// 表格名称
     /// </summary>

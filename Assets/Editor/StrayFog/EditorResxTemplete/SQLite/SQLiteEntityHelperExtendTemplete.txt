@@ -11,6 +11,13 @@ public sealed partial class SQLiteEntityHelper
 		{ typeof(#ClassName#).GetHashCode(),"#TableName#" },#EntityMaping#
     };
 
+	/// <summary>
+    /// 实体XLS表路径映射
+    /// </summary>
+    static readonly Dictionary<int, string> msrEntityXlsFileNameMaping = new Dictionary<int, string>() {#EntityXlsFileNameMaping#
+		{ typeof(#ClassName#).GetHashCode(),"#TableFileName#" },#EntityXlsFileNameMaping#
+    };
+
     /// <summary>
     /// 获得实体表格名称
     /// </summary>

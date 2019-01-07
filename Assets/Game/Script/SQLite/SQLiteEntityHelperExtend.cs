@@ -21,6 +21,23 @@ public sealed partial class SQLiteEntityHelper
 		{ typeof(View_AssetDiskMaping).GetHashCode(),"View_AssetDiskMaping" },
     };
 
+	/// <summary>
+    /// 实体XLS表路径映射
+    /// </summary>
+    static readonly Dictionary<int, string> msrEntityXlsFileNameMaping = new Dictionary<int, string>() {
+		{ typeof(Table_AssetDiskMapingFile).GetHashCode(),"Assets/Game/Editor/XLS/AssetDiskMapingFile.xlsx" },
+		{ typeof(Table_AssetDiskMapingFileExt).GetHashCode(),"Assets/Game/Editor/XLS/AssetDiskMapingFileExt.xlsx" },
+		{ typeof(Table_AssetDiskMapingFolder).GetHashCode(),"Assets/Game/Editor/XLS/AssetDiskMapingFolder.xlsx" },
+		{ typeof(Table_GameLanguage).GetHashCode(),"Assets/Game/Editor/XLS/GameLanguage.xlsx" },
+		{ typeof(Table_GameSetting).GetHashCode(),"Assets/Game/Editor/XLS/GameSetting.xlsx" },
+		{ typeof(Table_TableColumnMaping).GetHashCode(),"Assets/Game/Editor/XLS/TableColumnMaping.xlsx" },
+		{ typeof(Table_UIWindowSetting).GetHashCode(),"Assets/Game/Editor/XLS/UIWindowSetting.xlsx" },
+		{ typeof(Table_UserGuideTrigger).GetHashCode(),"Assets/Game/Editor/XLS/UserGuideTrigger.xlsx" },
+		{ typeof(Table_UserGuideValidate).GetHashCode(),"Assets/Game/Editor/XLS/UserGuideValidate.xlsx" },
+		{ typeof(View_DeterminantVT).GetHashCode(),"" },
+		{ typeof(View_AssetDiskMaping).GetHashCode(),"" },
+    };
+
     /// <summary>
     /// 获得实体表格名称
     /// </summary>

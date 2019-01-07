@@ -360,16 +360,22 @@ public sealed class EditorStrayFogXLS
         SQLiteEntity tempEntity = null;        
         string tempEntityName = string.Empty;
         string tempEntityType = string.Empty;
+        string tempEntityFileName = string.Empty;
         bool tempIsDetermainant = false;        
         Dictionary<string, enSQLiteEntityClassify> classifyMaping = typeof(enSQLiteEntityClassify).NameToEnum<enSQLiteEntityClassify>();
         enSQLiteEntityClassify tempEntityClassify = enSQLiteEntityClassify.Table;
         float progress = 0;
         Dictionary<string, Dictionary<string, string>> tempColumnDescMaping = new Dictionary<string, Dictionary<string, string>>();
+        Dictionary<string, EditorXlsTableSchema> tempTableMaping = new Dictionary<string, EditorXlsTableSchema>();
         foreach (EditorXlsTableSchema t in _tableSchemas)
         {
             if (!tempColumnDescMaping.ContainsKey(t.name))
             {
                 tempColumnDescMaping.Add(t.name, new Dictionary<string, string>());
+            }
+            if (!tempTableMaping.ContainsKey(t.name))
+            {
+                tempTableMaping.Add(t.name, t);
             }
             if (t.columns != null && t.columns.Length > 0)
             {
@@ -400,7 +406,12 @@ public sealed class EditorStrayFogXLS
                     break;
                 }
             }
-            tempEntity = new SQLiteEntity(tempEntityName, tempEntityClassify, tempIsDetermainant);
+            tempEntityFileName = string.Empty;
+            if (tempTableMaping.ContainsKey(tempEntityName))
+            {
+                tempEntityFileName = tempTableMaping[tempEntityName].fileName;
+            }
+            tempEntity = new SQLiteEntity(tempEntityName, tempEntityFileName, tempEntityClassify, tempIsDetermainant);
             OnResolveEntityProperty(tempEntity, tempColumnDescMaping.ContainsKey(tempEntity.name) ? tempColumnDescMaping[tempEntity.name] : new Dictionary<string, string>());          
             entities.Add(tempEntity);
             EditorUtility.DisplayProgressBar("Collection Entity", tempEntity.name, progress / count);
@@ -494,19 +505,35 @@ public sealed class EditorStrayFogXLS
         EditorTextAssetConfig cfgHeplerExtendScript = new EditorTextAssetConfig("SQLiteEntityHelperExtend", sqliteFolder, enFileExt.CS, "");
         string helperScriptTemplete = EditorResxTemplete.SQLiteEntityHelperExtendTemplete;
 
+        #region #EntityMaping#
         string entityMapingMark = "#EntityMaping#";
         string entityMapingReplaceTemplete = string.Empty;
         string entityMapingTemplete = string.Empty;
         StringBuilder sbEntityMapingReplace = new StringBuilder();
         entityMapingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, entityMapingMark, out entityMapingReplaceTemplete);
+        #endregion
+
+        #region #EntityXlsFileNameMaping#
+        string entityXlsFileNameMapingMark = "#EntityXlsFileNameMaping#";
+        string entityXlsFileNameMapingReplaceTemplete = string.Empty;
+        string entityXlsFileNameMapingTemplete = string.Empty;
+        StringBuilder sbEntityXlsFileNameMapingReplace = new StringBuilder();
+        entityXlsFileNameMapingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, entityXlsFileNameMapingMark, out entityXlsFileNameMapingReplaceTemplete);
+        #endregion
+
         progress = 0;
         foreach (SQLiteEntity t in entities)
         {
             progress++;
             sbEntityMapingReplace.Append(entityMapingTemplete.Replace("#ClassName#", t.className).Replace("#TableName#", t.name));
+            sbEntityXlsFileNameMapingReplace.Append(entityXlsFileNameMapingTemplete.Replace("#ClassName#", t.className).Replace("#TableFileName#", t.fileName));
             EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / entities.Count);
         }
-        cfgHeplerExtendScript.SetText(helperScriptTemplete.Replace(entityMapingReplaceTemplete, sbEntityMapingReplace.ToString()));
+        cfgHeplerExtendScript.SetText(
+            helperScriptTemplete
+            .Replace(entityMapingReplaceTemplete, sbEntityMapingReplace.ToString())
+            .Replace(entityXlsFileNameMapingReplaceTemplete, sbEntityXlsFileNameMapingReplace.ToString())
+            );
         cfgHeplerExtendScript.CreateAsset();
         #endregion
 
@@ -880,21 +907,6 @@ public sealed class EditorStrayFogXLS
             File.Delete(msrXlsTableSrcAsset.fileName);
             File.Move(newXlsPath, msrXlsTableSrcAsset.fileName);
         }
-        //string sql = string.Format("INSERT INTO UIWindowSetting (id,name,fileId,folderId,renderMode,layer,openMode,closeMode,isIgnoreOpenCloseMode,isNotAutoRestoreSequenceWindow,isDonotDestroyInstance,isImmediateDisplay,isManualCloseWhenGotoScene,isGuideWindow) VALUES({0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13})",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
     #endregion
     #endregion
