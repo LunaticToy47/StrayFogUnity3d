@@ -5,12 +5,10 @@ using UnityEngine;
 /// </summary>
 public partial class Table_TableColumnMaping: AbsSQLiteEntity
 {
-	
 	/// <summary>
     /// PK键组
     /// </summary>
     public override object[] pks { get { return new List<object>() { }.ToArray(); } }
-	
 
 	
 	/// <summary>

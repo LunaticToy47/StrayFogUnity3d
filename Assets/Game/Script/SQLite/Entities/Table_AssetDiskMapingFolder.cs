@@ -5,12 +5,10 @@ using UnityEngine;
 /// </summary>
 public partial class Table_AssetDiskMapingFolder: AbsSQLiteEntity
 {
-	
 	/// <summary>
     /// PK键组
     /// </summary>
     public override object[] pks { get { return new List<object>() { folderId,}.ToArray(); } }
-	
 
 	
 	/// <summary>

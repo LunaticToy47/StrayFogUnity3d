@@ -8,6 +8,51 @@ using UnityEngine;
 /// </summary>
 public sealed partial class SQLiteEntityHelper
 {
+    #region SQLite表实体设定
+    /// <summary>
+    /// SQLite表实体设定
+    /// </summary>
+    class SQLiteEntitySetting
+    {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="_id">id</param>
+        /// <param name="_name">实体名称</param>
+        /// <param name="_xlsFileName">xls文件名称</param>
+        /// <param name="_isDeterminant">是否是行列式</param>
+        /// <param name="_classify">实体分类</param>
+        public SQLiteEntitySetting(int _id, string _name, string _xlsFileName, bool _isDeterminant, enSQLiteEntityClassify _classify)
+        {
+            id = _id;
+            name = _name;
+            xlsFileName = _xlsFileName;
+            isDeterminant = _isDeterminant;
+            classify = _classify;
+        }
+        /// <summary>
+        /// 实体id
+        /// </summary>
+        public int id { get; private set; }
+        /// <summary>
+        /// 实体名称
+        /// </summary>
+        public string name { get; private set; }
+        /// <summary>
+        /// 实体XLS表名称
+        /// </summary>
+        public string xlsFileName { get; private set; }
+        /// <summary>
+        /// 是否是行列式表
+        /// </summary>
+        public bool isDeterminant { get; private set; }
+        /// <summary>
+        /// 实体分类
+        /// </summary>
+        public enSQLiteEntityClassify classify { get; private set; }
+    }
+    #endregion
+
     /// <summary>
     /// 从SQLite到实体的数据值转换
     /// </summary>
@@ -77,9 +122,9 @@ public sealed partial class SQLiteEntityHelper
     /// 读取所有数据
     /// </summary>
     /// <typeparam name="T">实体类型</typeparam>
-    /// <param name="_tableName">实体表名称</param>
+    /// <param name="_entitySetting">实体设定</param>
     /// <returns>数据集合</returns>
-    static List<T> OnReadAll<T>(string _tableName)
+    static List<T> OnReadAll<T>(SQLiteEntitySetting _entitySetting)
         where T : AbsSQLiteEntity
     {
         List<T> result = new List<T>();
@@ -95,12 +140,13 @@ public sealed partial class SQLiteEntityHelper
         {
             #region 内部资源加载
             
+
             #endregion
         }
         else
         {
             #region 外部资源加载
-            SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _tableName));
+            SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.name));
             string propertyName = string.Empty;
             T entity = default(T);
             Type columnType = null;
@@ -173,16 +219,15 @@ public sealed partial class SQLiteEntityHelper
     where T : AbsSQLiteEntity
     {
         List<T> result = new List<T>();
-        int key = 0;
-        string name = OnGetEntityTableName<T>(out key);
-        if (mCacheEntityData.ContainsKey(key))
+        SQLiteEntitySetting entitySetting = OnGetEntitySetting<T>();
+        if (mCacheEntityData.ContainsKey(entitySetting.id))
         {
-            result = (List<T>)mCacheEntityData[key];
+            result = (List<T>)mCacheEntityData[entitySetting.id];
         }
         else
         {
-            result = OnReadAll<T>(name);
-            mCacheEntityData.Add(key, result);
+            result = OnReadAll<T>(entitySetting);
+            mCacheEntityData.Add(entitySetting.id, result);
         }
 
         if (_condition != null)
@@ -208,43 +253,44 @@ public sealed partial class SQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <returns>数据集</returns>
     public static T SelectDeterminant<T>()
-        where T : AbsSQLiteDeterminantEntity
+        where T : AbsSQLiteEntity
     {
-        int key = 0;
-        string tableName = OnGetDeterminantEntityTableName<T>(out key);
-        if (!mCacheEntityData.ContainsKey(key))
-        {
-            Type entityType = typeof(T);
-            int entityKey = entityType.GetHashCode();
-            T result = Activator.CreateInstance<T>();
-            int propertyKey = 0;
-            if (!msEntityPropertyMaping.ContainsKey(entityKey))
-            {
-                msEntityPropertyMaping.Add(entityKey, new Dictionary<int, PropertyInfo>());
-                PropertyInfo[] properties = entityType.GetProperties();
-                if (properties != null && properties.Length > 0)
-                {
-                    foreach (PropertyInfo p in properties)
-                    {
-                        propertyKey = p.Name.UniqueHashCode();
-                        if (!msEntityPropertyMaping[entityKey].ContainsKey(propertyKey))
-                        {
-                            msEntityPropertyMaping[entityKey].Add(propertyKey, p);
-                        }
-                    }
-                }
-            }
-            SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", tableName));
-            while (reader.Read())
-            {//默认0是属性名称,1是属性值
-                propertyKey = reader.GetValue(result.propertyNameIndex).ToString().UniqueHashCode();
-                msEntityPropertyMaping[entityKey][propertyKey].SetValue(result, reader.GetValue(result.propertyValueIndex), null);
-            }
-            reader.Close();
-            reader = null;
-            mCacheEntityData.Add(key, result);
-        }
-        return (T)mCacheEntityData[key];
+        SQLiteEntitySetting entitySetting = OnGetEntitySetting<T>();
+        //int key = 0;
+        //string tableName = OnGetDeterminantEntityTableName<T>(out key);
+        //if (!mCacheEntityData.ContainsKey(key))
+        //{
+        //    Type entityType = typeof(T);
+        //    int entityKey = entityType.GetHashCode();
+        //    T result = Activator.CreateInstance<T>();
+        //    int propertyKey = 0;
+        //    if (!msEntityPropertyMaping.ContainsKey(entityKey))
+        //    {
+        //        msEntityPropertyMaping.Add(entityKey, new Dictionary<int, PropertyInfo>());
+        //        PropertyInfo[] properties = entityType.GetProperties();
+        //        if (properties != null && properties.Length > 0)
+        //        {
+        //            foreach (PropertyInfo p in properties)
+        //            {
+        //                propertyKey = p.Name.UniqueHashCode();
+        //                if (!msEntityPropertyMaping[entityKey].ContainsKey(propertyKey))
+        //                {
+        //                    msEntityPropertyMaping[entityKey].Add(propertyKey, p);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", tableName));
+        //    while (reader.Read())
+        //    {//默认0是属性名称,1是属性值
+        //        propertyKey = reader.GetValue(result.propertyNameIndex).ToString().UniqueHashCode();
+        //        msEntityPropertyMaping[entityKey][propertyKey].SetValue(result, reader.GetValue(result.propertyValueIndex), null);
+        //    }
+        //    reader.Close();
+        //    reader = null;
+        //    mCacheEntityData.Add(key, result);
+        //}
+        return (T)mCacheEntityData[entitySetting.id];
     }
     #endregion
 }

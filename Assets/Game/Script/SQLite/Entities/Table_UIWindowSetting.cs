@@ -5,12 +5,10 @@ using UnityEngine;
 /// </summary>
 public partial class Table_UIWindowSetting: AbsSQLiteEntity
 {
-	
 	/// <summary>
     /// PK键组
     /// </summary>
     public override object[] pks { get { return new List<object>() { id,}.ToArray(); } }
-	
 
 	
 	/// <summary>

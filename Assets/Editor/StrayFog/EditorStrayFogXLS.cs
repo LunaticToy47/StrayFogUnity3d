@@ -426,15 +426,6 @@ public sealed class EditorStrayFogXLS
             progress++;
             string entityScriptTemplete = EditorResxTemplete.SQLiteEntityScriptTemplete;
 
-            #region #Primarykey#
-            string primarykeyMark = "#Primarykey#";
-            string primarykeyReplaceTemplete = string.Empty;
-            string primarykeyTemplete = string.Empty;
-
-            StringBuilder sbPrimarykeyReplace = new StringBuilder();
-            primarykeyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, primarykeyMark, out primarykeyReplaceTemplete);
-            #endregion
-
             #region #Properties#
             string propertyMark = "#Properties#";
             string propertyReplaceTemplete = string.Empty;
@@ -471,25 +462,17 @@ public sealed class EditorStrayFogXLS
             cfgEntityScript.SetName(t.className);
             if (t.isDetermainant)
             {
-                cfgEntityScript.SetDirectory(sqliteDeterminantEntitiesFolder);
-                entityScriptTemplete = entityScriptTemplete
-                .Replace("#Determinant#", "Determinant")
-                .Replace("#EntityName#", t.name)                
-                .Replace("#ClassName#", cfgEntityScript.name)
-                .Replace(primarykeyReplaceTemplete, sbPrimarykeyReplace.ToString())
-                .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString());
+                cfgEntityScript.SetDirectory(sqliteDeterminantEntitiesFolder);               
             }
             else
             {
                 cfgEntityScript.SetDirectory(sqliteEntityFolder);
-                entityScriptTemplete = entityScriptTemplete
-                .Replace("#Determinant#", "")
-                .Replace("#Primarykey#","")
-                .Replace("#EntityName#", t.name)                
+            }
+            entityScriptTemplete = entityScriptTemplete
+                .Replace("#EntityName#", t.name)
                 .Replace("#ClassName#", cfgEntityScript.name)
                 .Replace(pkReplaceTemplete, sbPkReplace.ToString())
                 .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString());
-            }
 
             cfgEntityScript.SetText(entityScriptTemplete);
             cfgEntityScript.CreateAsset();
@@ -513,27 +496,21 @@ public sealed class EditorStrayFogXLS
         entityMapingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, entityMapingMark, out entityMapingReplaceTemplete);
         #endregion
 
-        #region #EntityXlsFileNameMaping#
-        string entityXlsFileNameMapingMark = "#EntityXlsFileNameMaping#";
-        string entityXlsFileNameMapingReplaceTemplete = string.Empty;
-        string entityXlsFileNameMapingTemplete = string.Empty;
-        StringBuilder sbEntityXlsFileNameMapingReplace = new StringBuilder();
-        entityXlsFileNameMapingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, entityXlsFileNameMapingMark, out entityXlsFileNameMapingReplaceTemplete);
-        #endregion
-
         progress = 0;
         foreach (SQLiteEntity t in entities)
         {
             progress++;
-            sbEntityMapingReplace.Append(entityMapingTemplete.Replace("#ClassName#", t.className).Replace("#TableName#", t.name));
-            sbEntityXlsFileNameMapingReplace.Append(entityXlsFileNameMapingTemplete.Replace("#ClassName#", t.className).Replace("#TableFileName#", t.fileName));
+            sbEntityMapingReplace.Append(
+                entityMapingTemplete
+                .Replace("#ClassName#", t.className)
+                .Replace("#TableName#", t.name)                
+                .Replace("#XlsFileName#", t.fileName)
+                .Replace("#IsDeterminant#",Convert.ToString(t.isDetermainant).ToLower())
+                .Replace("#Classify#", t.classify.ToString())
+                );
             EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / entities.Count);
         }
-        cfgHeplerExtendScript.SetText(
-            helperScriptTemplete
-            .Replace(entityMapingReplaceTemplete, sbEntityMapingReplace.ToString())
-            .Replace(entityXlsFileNameMapingReplaceTemplete, sbEntityXlsFileNameMapingReplace.ToString())
-            );
+        cfgHeplerExtendScript.SetText(helperScriptTemplete.Replace(entityMapingReplaceTemplete, sbEntityMapingReplace.ToString()));
         cfgHeplerExtendScript.CreateAsset();
         #endregion
 

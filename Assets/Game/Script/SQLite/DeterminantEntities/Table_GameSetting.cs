@@ -3,9 +3,12 @@ using UnityEngine;
 /// <summary>
 /// GameSetting实体
 /// </summary>
-public partial class Table_GameSetting: AbsSQLiteDeterminantEntity
+public partial class Table_GameSetting: AbsSQLiteEntity
 {
-	
+	/// <summary>
+    /// PK键组
+    /// </summary>
+    public override object[] pks { get { return new List<object>() { }.ToArray(); } }
 
 	
 	/// <summary>

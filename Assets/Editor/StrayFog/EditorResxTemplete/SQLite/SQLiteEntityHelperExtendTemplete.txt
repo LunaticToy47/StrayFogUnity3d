@@ -4,41 +4,21 @@
 /// </summary>
 public sealed partial class SQLiteEntityHelper
 {
-    /// <summary>
-    /// 实体名称映射
-    /// </summary>
-    static readonly Dictionary<int, string> msrEntityNameMaping = new Dictionary<int, string>() {#EntityMaping#
-		{ typeof(#ClassName#).GetHashCode(),"#TableName#" },#EntityMaping#
-    };
-
 	/// <summary>
-    /// 实体XLS表路径映射
+    /// 实体设定映射
     /// </summary>
-    static readonly Dictionary<int, string> msrEntityXlsFileNameMaping = new Dictionary<int, string>() {#EntityXlsFileNameMaping#
-		{ typeof(#ClassName#).GetHashCode(),"#TableFileName#" },#EntityXlsFileNameMaping#
+    static readonly Dictionary<int, SQLiteEntitySetting> msrEntityMaping = new Dictionary<int, SQLiteEntitySetting>() {#EntityMaping#
+		{ typeof(#ClassName#).GetHashCode(),new SQLiteEntitySetting(typeof(#ClassName#).GetHashCode(),"#TableName#","#XlsFileName#",#IsDeterminant#,enSQLiteEntityClassify.#Classify#)},#EntityMaping#
     };
 
     /// <summary>
-    /// 获得实体表格名称
+    /// 获得实体设定
     /// </summary>
-    /// <param name="_key">键值</param>
-    /// <returns>表格名称</returns>
-    static string OnGetEntityTableName<T>(out int _key)
+    /// <returns>实体设定</returns>
+    static SQLiteEntitySetting OnGetEntitySetting<T>()
         where T : AbsSQLiteEntity
     {
-        _key = typeof(T).GetHashCode();
-        return msrEntityNameMaping[_key];
-    }
-
-	/// <summary>
-    /// 获得实体表格名称
-    /// </summary>
-    /// <param name="_key">键值</param>
-    /// <returns>表格名称</returns>
-    static string OnGetDeterminantEntityTableName<T>(out int _key)
-        where T : AbsSQLiteDeterminantEntity
-    {
-        _key = typeof(T).GetHashCode();
-        return msrEntityNameMaping[_key];
+        int key = typeof(T).GetHashCode();
+        return msrEntityMaping[key];
     }
 }
