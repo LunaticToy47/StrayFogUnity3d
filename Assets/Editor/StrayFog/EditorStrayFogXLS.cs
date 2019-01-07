@@ -520,6 +520,8 @@ public sealed class EditorStrayFogXLS
         progress = 0;
         int xlsColumnNameIndex = 0;
         int xlsColumnDataIndex = 0;
+        int xlsColumnTypeIndex = 0;
+        int xlsDataStartRowIndex = msrColumnDataRowStartIndex;
         foreach (SQLiteEntity t in entities)
         {
             progress++;
@@ -527,11 +529,13 @@ public sealed class EditorStrayFogXLS
             {
                 xlsColumnNameIndex = msrDeterminantColumnNameColumnIndex;
                 xlsColumnDataIndex = msrDeterminantColumnDataColumnIndex;
+                xlsColumnTypeIndex = msrDeterminantColumnTypeColumnIndex;
             }
             else
             {
                 xlsColumnNameIndex = msrColumnNameRowIndex;
                 xlsColumnDataIndex = msrColumnDataRowStartIndex;
+                xlsColumnTypeIndex = msrColumnTypeRowIndex;
             }
             sbEntityMapingReplace.Append(
                 entityMapingTemplete
@@ -542,6 +546,8 @@ public sealed class EditorStrayFogXLS
                 .Replace("#Classify#", t.classify.ToString())
                 .Replace("#xlsColumnNameIndex#", xlsColumnNameIndex.ToString())
                 .Replace("#xlsColumnDataIndex#", xlsColumnDataIndex.ToString())
+                .Replace("#xlsColumnTypeIndex#", xlsColumnTypeIndex.ToString())
+                .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
                 );
             EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / entities.Count);
         }

@@ -1,6 +1,8 @@
 ﻿using Mono.Data.Sqlite;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 /// <summary>
@@ -24,8 +26,10 @@ public sealed partial class SQLiteEntityHelper
         /// <param name="_classify">实体分类</param>
         /// <param name="_xlsColumnNameIndex">XLS表列名称索引</param>
         /// <param name="_xlsColumnDataIndex">XLS表列值索引</param>
+        /// <param name="_xlsColumnTypeIndex">XLS表列类型索引</param>
+        /// <param name="_xlsDataStartRowIndex">XLS表数据起始行索引</param>
         public SQLiteEntitySetting(int _id, string _name, string _xlsFileName, bool _isDeterminant, enSQLiteEntityClassify _classify,
-            int _xlsColumnNameIndex, int _xlsColumnDataIndex)
+            int _xlsColumnNameIndex, int _xlsColumnDataIndex,int _xlsColumnTypeIndex,int _xlsDataStartRowIndex)
         {
             id = _id;
             name = _name;
@@ -34,6 +38,8 @@ public sealed partial class SQLiteEntityHelper
             classify = _classify;
             xlsColumnNameIndex = _xlsColumnNameIndex;
             xlsColumnDataIndex = _xlsColumnDataIndex;
+            xlsColumnTypeIndex = _xlsColumnTypeIndex;
+            xlsDataStartRowIndex = _xlsDataStartRowIndex;
         }
         /// <summary>
         /// 实体id
@@ -63,65 +69,14 @@ public sealed partial class SQLiteEntityHelper
         /// XLS表列值索引
         /// </summary>
         public int xlsColumnDataIndex { get; private set; }
-    }
-    #endregion
-
-    /// <summary>
-    /// 从SQLite到实体的数据值转换
-    /// </summary>
-    readonly static Dictionary<string, Func<object, object>> msrPropertyTypeValueSQLiteToEntity = new Dictionary<string, Func<object, object>>() {
-            { typeof(Vector2).FullName,(src)=>{ return ToVectorX(src,2); } },
-            { typeof(Vector3).FullName,(src)=>{ return ToVectorX(src,3); } },
-            { typeof(Vector4).FullName,(src)=>{ return ToVectorX(src,4);} },
-        };
-
-    #region ToVectorX 值转为VectorX
-    /// <summary>
-    /// 值转为VectorX
-    /// </summary>
-    /// <param name="_src">源值</param>
-    /// <param name="_num">向量维度</param>
-    /// <returns>转换后的值</returns>
-    static object ToVectorX(object _src, int _num)
-    {
-        object result = null;
-        Vector4 v4 = Vector4.zero;
-        #region 读值
-        string[] values = new string[0];
-        if (_src != null)
-        {
-            values = _src.ToString().Split(new string[1] { "," }, StringSplitOptions.RemoveEmptyEntries);
-        }
-        if (values.Length > 0)
-        {
-            v4.x = float.Parse(values[0]);
-        }
-        if (values.Length > 1)
-        {
-            v4.y = float.Parse(values[1]);
-        }
-        if (values.Length > 2)
-        {
-            v4.z = float.Parse(values[2]);
-        }
-        if (values.Length > 3)
-        {
-            v4.w = float.Parse(values[3]);
-        }
-        #endregion
-        switch (_num)
-        {
-            case 2:
-                result = (Vector2)v4;
-                break;
-            case 3:
-                result = (Vector3)v4;
-                break;
-            case 4:
-                result = v4;
-                break;
-        }
-        return result;
+        /// <summary>
+        /// XLS表列类型索引
+        /// </summary>
+        public int xlsColumnTypeIndex { get; private set; }
+        /// <summary>
+        /// XLS表数据起始行索引
+        /// </summary>
+        public int xlsDataStartRowIndex { get; private set; }
     }
     #endregion
 
@@ -184,7 +139,81 @@ public sealed partial class SQLiteEntityHelper
         where T : AbsSQLiteEntity
     {
         List<T> result = new List<T>();
-
+        enSQLiteDataType tempSQLiteDataType = enSQLiteDataType.String;
+        enSQLiteDataTypeArrayDimension tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+        T tempEntity = default(T);
+        int tempPropertyKey = 0;
+        object tempValue = null;
+        string tempName = string.Empty;
+        bool tempIsAllValueNull = false;
+        using (FileStream fs = new FileStream(_entitySetting.xlsFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            if (pck.Workbook.Worksheets.Count > 0)
+            {
+                ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                if (_entitySetting.isDeterminant)
+                {
+                    #region 行列式数据写入
+                    if (sheet.Dimension.Rows >= _entitySetting.xlsColumnDataIndex)
+                    {
+                        tempEntity = Activator.CreateInstance<T>();
+                        for (int row = _entitySetting.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
+                        {                            
+                            tempSQLiteDataType = enSQLiteDataType.String;
+                            tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+                            tempName = sheet.GetValue<string>(row, _entitySetting.xlsColumnNameIndex).Trim();
+                            tempValue = sheet.GetValue(row, _entitySetting.xlsColumnDataIndex);
+                            //如果名称为空，则认为是数据结束
+                            if (string.IsNullOrEmpty(tempName))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                tempPropertyKey = tempName.UniqueHashCode();
+                                StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(row, _entitySetting.xlsColumnTypeIndex), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
+                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, tempSQLiteDataType, tempSQLiteDataTypeArrayDimension), null);                                
+                            }                            
+                        }
+                        result.Add(tempEntity);
+                    }
+                    #endregion
+                }
+                else
+                {
+                    #region 普通数据写入
+                    if (sheet.Dimension.Rows >= _entitySetting.xlsColumnDataIndex)
+                    {
+                        for (int row = _entitySetting.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
+                        {
+                            tempEntity = Activator.CreateInstance<T>();
+                            tempIsAllValueNull = true;
+                            for (int col = 1; col <= sheet.Dimension.Columns; col++)
+                            {
+                                tempSQLiteDataType = enSQLiteDataType.String;
+                                tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+                                tempName = sheet.GetValue<string>(_entitySetting.xlsColumnNameIndex, col).Trim();
+                                tempValue = sheet.GetValue(row, col);
+                                tempIsAllValueNull &= (tempValue == null);
+                                tempPropertyKey = tempName.UniqueHashCode();
+                                StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(_entitySetting.xlsColumnTypeIndex, col), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
+                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, tempSQLiteDataType, tempSQLiteDataTypeArrayDimension), null);
+                            }
+                            if (tempIsAllValueNull)
+                            {//如果所有列为空，则认为是数据结束
+                                break;
+                            }
+                            else
+                            {
+                                result.Add(tempEntity);
+                            }
+                        }
+                    }
+                    #endregion
+                }                
+            }
+        }
         return result;
     }
     #endregion

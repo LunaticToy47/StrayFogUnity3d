@@ -213,5 +213,80 @@ public sealed class StrayFogSQLiteDataTypeHelper
         }
         return className;
     }
-    #endregion    
+    #endregion
+
+    #region GetCSTypeColumnValue 获得CS类型列值
+    /// <summary>
+    /// 获得CS类型列值
+    /// </summary>
+    /// <param name="_xlsValue">xls表列值</param>
+    /// <param name="_SQLiteDataType">代码类型</param>
+    /// <param name="_SQLiteDataTypeArrayDimension">数组维度</param>
+    /// <returns></returns>
+    public static object GetXlsCSTypeColumnValue(object _xlsValue, enSQLiteDataType _SQLiteDataType, enSQLiteDataTypeArrayDimension _SQLiteDataTypeArrayDimension)
+    {
+        return null;
+    }
+    #endregion
 }
+
+/*
+ /// <summary>
+    /// 从SQLite到实体的数据值转换
+    /// </summary>
+    readonly static Dictionary<string, Func<object, object>> msrPropertyTypeValueSQLiteToEntity = new Dictionary<string, Func<object, object>>() {
+            { typeof(Vector2).FullName,(src)=>{ return ToVectorX(src,2); } },
+            { typeof(Vector3).FullName,(src)=>{ return ToVectorX(src,3); } },
+            { typeof(Vector4).FullName,(src)=>{ return ToVectorX(src,4);} },
+        };
+
+    #region ToVectorX 值转为VectorX
+    /// <summary>
+    /// 值转为VectorX
+    /// </summary>
+    /// <param name="_src">源值</param>
+    /// <param name="_num">向量维度</param>
+    /// <returns>转换后的值</returns>
+    static object ToVectorX(object _src, int _num)
+    {
+        object result = null;
+        Vector4 v4 = Vector4.zero;
+        #region 读值
+        string[] values = new string[0];
+        if (_src != null)
+        {
+            values = _src.ToString().Split(new string[1] { "," }, StringSplitOptions.RemoveEmptyEntries);
+        }
+        if (values.Length > 0)
+        {
+            v4.x = float.Parse(values[0]);
+        }
+        if (values.Length > 1)
+        {
+            v4.y = float.Parse(values[1]);
+        }
+        if (values.Length > 2)
+        {
+            v4.z = float.Parse(values[2]);
+        }
+        if (values.Length > 3)
+        {
+            v4.w = float.Parse(values[3]);
+        }
+        #endregion
+        switch (_num)
+        {
+            case 2:
+                result = (Vector2)v4;
+                break;
+            case 3:
+                result = (Vector3)v4;
+                break;
+            case 4:
+                result = v4;
+                break;
+        }
+        return result;
+    }
+    #endregion
+*/

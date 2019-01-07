@@ -21,6 +21,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
         if (!m_isInitialized)
         {
             m_isInitialized = true;
+            SQLiteEntityHelper.Select<Table_TableColumnMaping>();
             runningSetting = SQLiteEntityHelper.Select<Table_GameSetting>()[0];
             StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
@@ -28,7 +29,6 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
             StartCoroutine(OnGuideTriggerCheck());
         }
-
         if (_onCallback != null)
         {
             _onCallback.Invoke();
