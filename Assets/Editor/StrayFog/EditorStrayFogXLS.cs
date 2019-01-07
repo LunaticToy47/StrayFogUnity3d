@@ -45,22 +45,7 @@ public sealed class EditorStrayFogXLS
     /// 行列式表列描述行索引
     /// </summary>
     static readonly int msrDeterminantColumnDescriptionColumnIndex = 4;
-    /// <summary>
-    /// 行列式表数据行起始索引
-    /// </summary>
-    static readonly int msrDeterminantColumnDataRowStartIndex = 4;
-    #endregion
-
-    #region 分隔符 readonly 变量
-    /// <summary>
-    /// 一维数组分隔符
-    /// </summary>
-    static readonly string[] msrOneArraySeparate = new string[] { @"|" };
-    /// <summary>
-    /// 元素分隔符
-    /// </summary>
-    static readonly string[] msrElementSeparate = new string[] { @"," };
-    #endregion
+    #endregion    
 
     #region public readonly 变量  
     /// <summary>
@@ -68,7 +53,15 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     public static readonly string msrSeparateDescription = "1.一维数组\"|\"竖线分隔,例:1|2|3" + System.Environment.NewLine + "2.二维数组\"|\"竖线分隔一维,\",\"逗号分隔二维,例:A0,A1,A2|B0,B1,B2";
 
-
+    /// <summary>
+    /// SQLiteDataTypeCS代码序列
+    /// </summary>
+    public static readonly string msrSQLiteDataTypeCodeSequence =
+        string.Format("{1}{0}{0}{2}{0}{0}{3}", Environment.NewLine,
+            StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeCSCodeColumnNameSequence(),
+            StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeCSCodeColumnTypeSequence(),
+            StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeCSCodeColumnDescSequence()
+            );
     #endregion
 
     #region 内部 readonly 变量

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 /// <summary>
 /// TableColumnMaping实体
 /// </summary>
@@ -12,115 +13,231 @@ public partial class Table_TableColumnMaping: AbsSQLiteEntity
 
 	
 	/// <summary>
-	/// int列
-	/// </summary>
-	public int id { get; private set; }
-	/// <summary>
-	/// string列
-	/// </summary>
-	public string strCol { get; private set; }
-	/// <summary>
-	/// bool列
+	/// bool非数组
 	/// </summary>
 	public bool boolCol { get; private set; }
 	/// <summary>
-	/// int列
+	/// char非数组
 	/// </summary>
-	public int intCol { get; private set; }
+	public char charCol { get; private set; }
 	/// <summary>
-	/// float列
+	/// sbyte非数组
 	/// </summary>
-	public float floatCol { get; private set; }
+	public sbyte sbyteCol { get; private set; }
 	/// <summary>
-	/// byte列
+	/// byte非数组
 	/// </summary>
 	public byte byteCol { get; private set; }
 	/// <summary>
-	/// short列
+	/// short非数组
 	/// </summary>
 	public short shortCol { get; private set; }
 	/// <summary>
-	/// vector2列
+	/// ushort非数组
 	/// </summary>
-	public Vector2 vec2Col { get; private set; }
+	public ushort ushortCol { get; private set; }
 	/// <summary>
-	/// vector3列
+	/// int非数组
 	/// </summary>
-	public Vector3 vec3Col { get; private set; }
+	public int intCol { get; private set; }
 	/// <summary>
-	/// vector4列
+	/// uint非数组
 	/// </summary>
-	public Vector4 vec4Col { get; private set; }
+	public uint uintCol { get; private set; }
 	/// <summary>
-	/// string一维数组列
+	/// long非数组
 	/// </summary>
-	public string[] strColArray { get; private set; }
+	public long longCol { get; private set; }
 	/// <summary>
-	/// bool一维数组列
+	/// ulong非数组
 	/// </summary>
-	public bool[] boolColArray { get; private set; }
+	public ulong ulongCol { get; private set; }
 	/// <summary>
-	/// int一维数组列
+	/// float非数组
 	/// </summary>
-	public int[] intColArray { get; private set; }
+	public float floatCol { get; private set; }
 	/// <summary>
-	/// float一维数组列
+	/// double非数组
 	/// </summary>
-	public float[] floatColArray { get; private set; }
+	public double doubleCol { get; private set; }
 	/// <summary>
-	/// byte一维数组列
+	/// decimal非数组
 	/// </summary>
-	public byte[] byteColArray { get; private set; }
+	public decimal decimalCol { get; private set; }
 	/// <summary>
-	/// short一维数组列
+	/// DateTime非数组
 	/// </summary>
-	public short[] shortColArray { get; private set; }
+	public DateTime DateTimeCol { get; private set; }
 	/// <summary>
-	/// vector2一维数组列
+	/// string非数组
 	/// </summary>
-	public Vector2[] vec2ColArray { get; private set; }
+	public string stringCol { get; private set; }
 	/// <summary>
-	/// vector3一维数组列
+	/// Guid非数组
 	/// </summary>
-	public Vector3[] vec3ColArray { get; private set; }
+	public Guid GuidCol { get; private set; }
 	/// <summary>
-	/// vector4一维数组列
+	/// Vector2非数组
 	/// </summary>
-	public Vector4[] vec4ColArray { get; private set; }
+	public Vector2 Vector2Col { get; private set; }
 	/// <summary>
-	/// string二维数组列
+	/// Vector3非数组
 	/// </summary>
-	public System.String strCol2Array { get; private set; }
+	public Vector3 Vector3Col { get; private set; }
 	/// <summary>
-	/// bool二维数组列
+	/// Vector4非数组
 	/// </summary>
-	public System.Boolean boolCol2Array { get; private set; }
+	public Vector4 Vector4Col { get; private set; }
 	/// <summary>
-	/// int二维数组列
+	/// bool一维数组
 	/// </summary>
-	public System.Int32 intCol2Array { get; private set; }
+	public bool[] boolDIMCol { get; private set; }
 	/// <summary>
-	/// float二维数组列
+	/// char一维数组
 	/// </summary>
-	public System.Object floatCol2Array { get; private set; }
+	public char[] charDIMCol { get; private set; }
 	/// <summary>
-	/// byte二维数组列
+	/// sbyte一维数组
 	/// </summary>
-	public System.Byte byteCol2Array { get; private set; }
+	public sbyte[] sbyteDIMCol { get; private set; }
 	/// <summary>
-	/// short二维数组列
+	/// byte一维数组
 	/// </summary>
-	public System.Int16 shortCol2Array { get; private set; }
+	public byte[] byteDIMCol { get; private set; }
 	/// <summary>
-	/// vector2二维数组列
+	/// short一维数组
 	/// </summary>
-	public System.Object vec2Col2Array { get; private set; }
+	public short[] shortDIMCol { get; private set; }
 	/// <summary>
-	/// vector3二维数组列
+	/// ushort一维数组
 	/// </summary>
-	public System.Object vec3Col2Array { get; private set; }
+	public ushort[] ushortDIMCol { get; private set; }
 	/// <summary>
-	/// vector4二维数组列
+	/// int一维数组
 	/// </summary>
-	public System.Object vec4Col2Array { get; private set; }
+	public int[] intDIMCol { get; private set; }
+	/// <summary>
+	/// uint一维数组
+	/// </summary>
+	public uint[] uintDIMCol { get; private set; }
+	/// <summary>
+	/// long一维数组
+	/// </summary>
+	public long[] longDIMCol { get; private set; }
+	/// <summary>
+	/// ulong一维数组
+	/// </summary>
+	public ulong[] ulongDIMCol { get; private set; }
+	/// <summary>
+	/// float一维数组
+	/// </summary>
+	public float[] floatDIMCol { get; private set; }
+	/// <summary>
+	/// double一维数组
+	/// </summary>
+	public double[] doubleDIMCol { get; private set; }
+	/// <summary>
+	/// decimal一维数组
+	/// </summary>
+	public decimal[] decimalDIMCol { get; private set; }
+	/// <summary>
+	/// DateTime一维数组
+	/// </summary>
+	public DateTime[] DateTimeDIMCol { get; private set; }
+	/// <summary>
+	/// string一维数组
+	/// </summary>
+	public string[] stringDIMCol { get; private set; }
+	/// <summary>
+	/// Guid一维数组
+	/// </summary>
+	public Guid[] GuidDIMCol { get; private set; }
+	/// <summary>
+	/// Vector2一维数组
+	/// </summary>
+	public Vector2[] Vector2DIMCol { get; private set; }
+	/// <summary>
+	/// Vector3一维数组
+	/// </summary>
+	public Vector3[] Vector3DIMCol { get; private set; }
+	/// <summary>
+	/// Vector4一维数组
+	/// </summary>
+	public Vector4[] Vector4DIMCol { get; private set; }
+	/// <summary>
+	/// bool二维数组
+	/// </summary>
+	public System.Boolean boolDIM2Col { get; private set; }
+	/// <summary>
+	/// char二维数组
+	/// </summary>
+	public System.String charDIM2Col { get; private set; }
+	/// <summary>
+	/// sbyte二维数组
+	/// </summary>
+	public System.Object sbyteDIM2Col { get; private set; }
+	/// <summary>
+	/// byte二维数组
+	/// </summary>
+	public System.Byte byteDIM2Col { get; private set; }
+	/// <summary>
+	/// short二维数组
+	/// </summary>
+	public System.Int16 shortDIM2Col { get; private set; }
+	/// <summary>
+	/// ushort二维数组
+	/// </summary>
+	public System.Object ushortDIM2Col { get; private set; }
+	/// <summary>
+	/// int二维数组
+	/// </summary>
+	public System.Int32 intDIM2Col { get; private set; }
+	/// <summary>
+	/// uint二维数组
+	/// </summary>
+	public System.Object uintDIM2Col { get; private set; }
+	/// <summary>
+	/// long二维数组
+	/// </summary>
+	public System.Int64 longDIM2Col { get; private set; }
+	/// <summary>
+	/// ulong二维数组
+	/// </summary>
+	public System.Object ulongDIM2Col { get; private set; }
+	/// <summary>
+	/// float二维数组
+	/// </summary>
+	public System.Object floatDIM2Col { get; private set; }
+	/// <summary>
+	/// double二维数组
+	/// </summary>
+	public System.Single doubleDIM2Col { get; private set; }
+	/// <summary>
+	/// decimal二维数组
+	/// </summary>
+	public System.Decimal decimalDIM2Col { get; private set; }
+	/// <summary>
+	/// DateTime二维数组
+	/// </summary>
+	public System.DateTime DateTimeDIM2Col { get; private set; }
+	/// <summary>
+	/// string二维数组
+	/// </summary>
+	public System.String stringDIM2Col { get; private set; }
+	/// <summary>
+	/// Guid二维数组
+	/// </summary>
+	public System.Guid GuidDIM2Col { get; private set; }
+	/// <summary>
+	/// Vector2二维数组
+	/// </summary>
+	public System.Object Vector2DIM2Col { get; private set; }
+	/// <summary>
+	/// Vector3二维数组
+	/// </summary>
+	public System.Object Vector3DIM2Col { get; private set; }
+	/// <summary>
+	/// Vector4二维数组
+	/// </summary>
+	public System.Object Vector4DIM2Col { get; private set; }
 }

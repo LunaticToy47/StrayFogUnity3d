@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 /// <summary>
 /// AssetDiskMapingFileExt实体
 /// </summary>

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 /// <summary>
 /// GameSetting实体
 /// </summary>

@@ -34,6 +34,11 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     {
         EditorGUILayout.Separator();
         EditorGUILayout.HelpBox(EditorStrayFogXLS.msrSeparateDescription, MessageType.None);
+        if (GUILayout.Button("SQLiteDataType Code Sequence"))
+        {
+            EditorStrayFogApplication.CopyToClipboard(EditorStrayFogXLS.msrSQLiteDataTypeCodeSequence);
+            Debug.Log(EditorStrayFogXLS.msrSQLiteDataTypeCodeSequence);
+        }
         EditorGUILayout.Separator();
         if (GUILayout.Button("Load XLS"))
         {

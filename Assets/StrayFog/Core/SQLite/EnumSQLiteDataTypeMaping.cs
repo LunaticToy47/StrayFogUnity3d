@@ -6,7 +6,7 @@
 /// 代码类型
 /// </summary>
 public enum enSQLiteDataType
-{
+{    
     /// <summary>
     /// Boolean
     /// </summary>

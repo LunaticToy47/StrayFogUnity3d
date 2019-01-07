@@ -173,7 +173,7 @@ public sealed partial class SQLiteEntityHelper
                             {
                                 tempPropertyKey = tempName.UniqueHashCode();
                                 StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(row, _entitySetting.xlsColumnTypeIndex), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
-                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, tempSQLiteDataType, tempSQLiteDataTypeArrayDimension), null);                                
+                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension), null);                                
                             }                            
                         }
                         result.Add(tempEntity);
@@ -198,7 +198,7 @@ public sealed partial class SQLiteEntityHelper
                                 tempIsAllValueNull &= (tempValue == null);
                                 tempPropertyKey = tempName.UniqueHashCode();
                                 StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(_entitySetting.xlsColumnTypeIndex, col), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
-                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, tempSQLiteDataType, tempSQLiteDataTypeArrayDimension), null);
+                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension), null);
                             }
                             if (tempIsAllValueNull)
                             {//如果所有列为空，则认为是数据结束
