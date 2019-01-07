@@ -341,7 +341,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
                                 step = 1;
                                 break;
                         }
-                        foreach(string oneArray in tempArrayTwo)
+                        foreach (string oneArray in tempArrayTwo)
                         {
                             oneResult = new ArrayList();
                             tempArray = oneArray.ToString().Split(msrElementSeparate, StringSplitOptions.RemoveEmptyEntries);
@@ -350,13 +350,14 @@ public sealed class StrayFogSQLiteDataTypeHelper
                                 for (int i = 0; i < tempArray.Length; i += step)
                                 {
                                     oneResult.Add(Convert.ChangeType(OnGetValue(string.Join(msrElementSeparate[0], tempArray, i, step), _SQLiteDataType), 
-                                        _propertyInfo.PropertyType.GetElementType()));
+                                        _propertyInfo.PropertyType.GetElementType().GetElementType()));
                                 }
                             }
-                            twoResult.Add(oneResult);
+                            twoResult.Add(oneResult.ToArray(_propertyInfo.PropertyType.GetElementType().GetElementType()));
                         }
                     }
-                }
+                    _xlsValue = twoResult.ToArray(_propertyInfo.PropertyType.GetElementType());
+                }                
                 break;
             case enSQLiteDataTypeArrayDimension.OneDimensionArray:
                 if (_xlsValue != null)
@@ -369,11 +370,14 @@ public sealed class StrayFogSQLiteDataTypeHelper
                             oneResult.Add(Convert.ChangeType(OnGetValue(tempArray[i], _SQLiteDataType), _propertyInfo.PropertyType.GetElementType()));
                         }
                     }
-                }
-                _xlsValue = oneResult.ToArray(_propertyInfo.PropertyType.GetElementType());
+                    _xlsValue = oneResult.ToArray(_propertyInfo.PropertyType.GetElementType());
+                }                
                 break;
             default:
-                _xlsValue = OnGetValue(_xlsValue, _SQLiteDataType);
+                if (_xlsValue != null)
+                {
+                    _xlsValue = OnGetValue(_xlsValue, _SQLiteDataType);
+                }                
                 break;
         }
         return _xlsValue;

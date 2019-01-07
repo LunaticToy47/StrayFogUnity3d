@@ -173,7 +173,8 @@ public sealed partial class SQLiteEntityHelper
                             {
                                 tempPropertyKey = tempName.UniqueHashCode();
                                 StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(row, _entitySetting.xlsColumnTypeIndex), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
-                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension), null);                                
+                                tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
+                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);                                
                             }                            
                         }
                         result.Add(tempEntity);
@@ -197,8 +198,9 @@ public sealed partial class SQLiteEntityHelper
                                 tempValue = sheet.GetValue(row, col);
                                 tempIsAllValueNull &= (tempValue == null);
                                 tempPropertyKey = tempName.UniqueHashCode();
-                                StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(_entitySetting.xlsColumnTypeIndex, col), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
-                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension), null);
+                                StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(_entitySetting.xlsColumnTypeIndex, col), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);                                
+                                tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
+                                msEntityPropertyMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);                                
                             }
                             if (tempIsAllValueNull)
                             {//如果所有列为空，则认为是数据结束
