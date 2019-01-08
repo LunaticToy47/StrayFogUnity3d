@@ -73,7 +73,7 @@ public sealed class EditorStrayFogXLS
         enFileExt.Asset, "");
 
     /// <summary>
-    /// XLS表架构文件
+    /// XLS表数据文件
     /// </summary>
     static readonly EditorEngineAssetConfig msrXlsTableSrcAsset = new EditorEngineAssetConfig("",
         enEditorApplicationFolder.XLS_TableSrc.GetAttribute<EditorApplicationFolderAttribute>().path,
@@ -681,9 +681,41 @@ public sealed class EditorStrayFogXLS
     /// <summary>
     /// 导出XLS数据到SQLite
     /// </summary>
-    public static void ExportXlsDataToSqlite()
+    /// <param name="_progressCallback">进度回调</param>
+    public static void ExportXlsDataToSqlite(Action<string, string, float> _progressCallback)
     {
-
+        List<EditorXlsTableSchema> tables = ReadXlsSchema();
+        for (int i = 0; i < tables.Count; i++)
+        {
+            _progressCallback("Import Table To Sqlite", tables[i].fileName, (i + 1) / (float)tables.Count);
+            using (FileStream fs = new FileStream(tables[i].fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+            {
+                ExcelPackage pck = new ExcelPackage(fs);
+                ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                bool tempIsAllValueNull = false;
+                object tempValue = null;
+                string tempName = string.Empty;
+                if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
+                {
+                    for (int row = msrColumnDataRowStartIndex; row <= sheet.Dimension.Rows; row++)
+                    {
+                        tempIsAllValueNull = true;
+                        _progressCallback("Read【" + tables[i].name + "】 Row Data ", "Row【" + row + "】", (row - msrColumnDataRowStartIndex + 1) / (float)tables.Count);
+                        for (int col = 1; col <= sheet.Dimension.Columns; col++)
+                        {
+                            tempName = sheet.GetValue<string>(msrColumnNameRowIndex, col).Trim();
+                            tempValue = sheet.GetValue(row, col);
+                            tempIsAllValueNull &= (tempValue == null);
+                            _progressCallback("Read 【"+ tables[i].name + "】 Column Data", "Row【" + row + "】Col【" + col + "】【" + tempName + "】", col / (float)sheet.Dimension.Columns);
+                        }                        
+                        if (tempIsAllValueNull)
+                        {//如果所有列为空，则认为是数据结束
+                            break;
+                        }                        
+                    }
+                }
+            }
+        }
     }
     #endregion
 

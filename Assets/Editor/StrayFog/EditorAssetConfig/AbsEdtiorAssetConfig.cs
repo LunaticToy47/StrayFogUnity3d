@@ -137,17 +137,27 @@ public abstract class AbsEdtiorAssetConfig : ICloneable
     /// </summary>
     public void CreateAsset()
     {
-        OnReset();
-        if (!Directory.Exists(directory))
-        {
-            Directory.CreateDirectory(directory);
-        }
+        CreateDirectory();
         OnCreateAsset();
     }
     /// <summary>
     /// 创建资源
     /// </summary>
     protected abstract void OnCreateAsset();
+    #endregion
+
+    #region CreateDirectory 创建目录
+    /// <summary>
+    /// 创建目录
+    /// </summary>
+    public void CreateDirectory()
+    {
+        OnReset();
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+    }
     #endregion
 
     #region LoadAsset 加载资源

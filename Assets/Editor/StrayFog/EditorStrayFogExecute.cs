@@ -654,7 +654,11 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExportXlsDataToSqlite()
     {
-        EditorStrayFogXLS.ExportXlsDataToSqlite();
+        EditorStrayFogXLS.ExportXlsDataToSqlite((t,n,p)=> {
+            EditorUtility.DisplayProgressBar(t, n, p);
+        });
+        EditorUtility.ClearProgressBar();
+        Debug.Log("ExportXlsDataToSqlite Succeed!");
     }
     #endregion
 
