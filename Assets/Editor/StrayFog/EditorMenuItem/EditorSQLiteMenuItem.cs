@@ -23,5 +23,19 @@ static class EditorSQLiteMenuItem
     /// </summary>
     const int mcPriority = 100 * (int)enEditorMenuItemPriority.SQLite;
     #endregion
+
+    #region Export Xls Data To Sqlite
+    const string mcExportXlsDataToSqlite = "Export Xls Data To Sqlite";
+    /// <summary>
+    /// Export Xls Data To Sqlite
+    /// </summary>
+    [MenuItem(mcMenu + mcExportXlsDataToSqlite, false, mcPriority + 1)]
+    [MenuItem(mcAssetMenu + mcExportXlsDataToSqlite, false, mcPriority + 1)]
+    [MenuItem(mcHierarchy + mcExportXlsDataToSqlite, false, mcPriority + 1)]
+    static void EditorXLSMenuItem_ExportXlsDataToSqlite()
+    {
+        EditorStrayFogExecute.ExportXlsDataToSqlite();
+    }
+    #endregion      
 }
 #endif

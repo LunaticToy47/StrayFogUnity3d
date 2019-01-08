@@ -677,6 +677,16 @@ public sealed class EditorStrayFogXLS
 
     #endregion
 
+    #region ExportXlsDataToSqlite
+    /// <summary>
+    /// 导出XLS数据到SQLite
+    /// </summary>
+    public static void ExportXlsDataToSqlite()
+    {
+
+    }
+    #endregion
+
     #region AssetDiskMaping表操作
     /// <summary>
     /// AssetDiskMapingFolder表

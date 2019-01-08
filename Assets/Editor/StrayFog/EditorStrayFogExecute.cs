@@ -649,7 +649,13 @@ public sealed class EditorStrayFogExecute
     #endregion
 
     #region SQLite菜单
-
+    /// <summary>
+    /// 导出XLS数据到SQLite
+    /// </summary>
+    public static void ExportXlsDataToSqlite()
+    {
+        EditorStrayFogXLS.ExportXlsDataToSqlite();
+    }
     #endregion
 
     #region XLS菜单
@@ -663,16 +669,6 @@ public sealed class EditorStrayFogExecute
         bool result = EditorStrayFogXLS.ExportXlsSchemaToSqlite();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         Debug.LogFormat("ExecuteExportXlsSchemaToSqlite 【{0}】", result);
-    }
-    #endregion
-
-    #region OnExportXlsDataToSqlite 导出Xls数据到Sqlite数据库
-    /// <summary>
-    /// 导出Xls数据到Sqlite数据库
-    /// </summary>
-    static void OnExportXlsDataToSqlite()
-    {
-
     }
     #endregion
 
@@ -1174,7 +1170,7 @@ public sealed class EditorStrayFogExecute
         ExecuteBuildAllAssetDiskMaping();
         ExecuteBuildUIWindowSetting();
 
-        OnExportXlsDataToSqlite();
+        ExportXlsDataToSqlite();
         ExecuteBuildDllToPackage();
         ExecuteCopySQLiteDbToPackage();
         ExecuteBuildDeleteNouseAssetBatToPackage();
