@@ -716,7 +716,7 @@ public sealed class EditorStrayFogXLS
                         for (int col = 1; col <= sheet.Dimension.Columns; col++)
                         {
                             tempName = sheet.GetValue<string>(msrColumnNameRowIndex, col).Trim();
-                            tempValue = sheet.GetValue(row, col);
+                            tempValue = sheet.GetValue<string>(row, col);
                             tempIsAllValueNull &= (tempValue == null);
                             tempSPName.Add("@" + tempName + row + col);
                             tempSPS.Add(new SqliteParameter("@" + tempName + row + col, tempValue));
