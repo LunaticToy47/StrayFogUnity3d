@@ -48,7 +48,7 @@ public sealed class EditorStrayFogExecute
         cfg.CreateAsset();
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        sbLog.AppendFormat("ExecuteBuildUIWindowSetting 【{0}】Succeed!", cfg.fileName);
+        sbLog.AppendLine(string.Format("ExecuteBuildUIWindowSetting 【{0}】Succeed!", cfg.fileName));
         Debug.Log(sbLog);
     }
     #endregion
@@ -68,6 +68,7 @@ public sealed class EditorStrayFogExecute
         Type absInheritType = typeof(T);
         Type destType = null;
         int destCount = 0;
+        StringBuilder sbLog = new StringBuilder();
         List<Assembly> asms = EditorStrayFogAssembly.GetDynamicAssemblies();
         if (asms != null && asms.Count > 0)
         {
@@ -95,7 +96,7 @@ public sealed class EditorStrayFogExecute
                     if (!absCfg.Exists())
                     {
                         absCfg.CreateAsset();
-                        Debug.LogFormat("BuildProjectAssets=>【{0}】", absCfg.fileName);
+                        sbLog.AppendFormat("BuildProjectAssets=>【{0}】", absCfg.fileName);
                     }
                     break;
                 default:
@@ -104,7 +105,8 @@ public sealed class EditorStrayFogExecute
         }
 
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        Debug.Log(string.Format("ExecuteBuildProjectAssets 【{0}】Succeed!", absInheritType.FullName));
+        sbLog.AppendLine(string.Format("ExecuteBuildProjectAssets 【{0}】Succeed!", absInheritType.FullName));
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -120,6 +122,7 @@ public sealed class EditorStrayFogExecute
     {
         EditorBinaryAssetConfig txtCfg = new EditorBinaryAssetConfig("", enEditorApplicationFolder.Project_Shader.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Shader, null);
         PropertyInfo[] pis = typeof(EditorResxTemplete).GetProperties();
+        StringBuilder sbLog = new StringBuilder();
         if (pis != null && pis.Length > 0)
         {
             float progress = 0;
@@ -140,7 +143,8 @@ public sealed class EditorStrayFogExecute
         }
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        Debug.Log("BuildDefaultShader Succeed!");
+        sbLog.AppendLine("BuildDefaultShader Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -181,6 +185,7 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteBuildAnimatorControllerFMSMaping()
     {
         EditorAnimatorControllerFMSMapingConfig cfg = EditorStrayFogSavedConfigAssetFile.setAnimatorControllerFMSMaping;
+        StringBuilder sbLog = new StringBuilder();
         if (cfg.file != null)
         {
             FileExtAttribute animatorControllerExt = enFileExt.AnimatorController.GetAttribute<FileExtAttribute>();
@@ -192,7 +197,8 @@ public sealed class EditorStrayFogExecute
         }
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        Debug.Log("ExecuteBuildAnimatorControllerFMSMaping Succeed!");
+        sbLog.AppendLine("ExecuteBuildAnimatorControllerFMSMaping Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -641,8 +647,8 @@ public sealed class EditorStrayFogExecute
         EditorUtility.ClearProgressBar();
         AssetDatabase.SaveAssets();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        sbLog.AppendLine("ExecuteBuildAnimCurves Succeed!");
         Debug.Log(sbLog.ToString());
-        Debug.Log("ExecuteBuildAnimCurves Succeed!");
     }
     #endregion
 
@@ -654,12 +660,14 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteExportXlsDataToSqlite()
     {
+        StringBuilder sbLog = new StringBuilder();
         EditorStrayFogXLS.ExportXlsDataToSqlite((t,n,p)=> {
             EditorUtility.DisplayProgressBar(t, n, p);
         });
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        Debug.Log("ExportXlsDataToSqlite Succeed!");
+        sbLog.AppendLine("ExportXlsDataToSqlite Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -671,9 +679,11 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteExportXlsSchemaToSqlite()
     {
+        StringBuilder sbLog = new StringBuilder();
         bool result = EditorStrayFogXLS.ExportXlsSchemaToSqlite();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        Debug.LogFormat("ExecuteExportXlsSchemaToSqlite 【{0}】", result);
+        sbLog.AppendLine(string.Format("ExecuteExportXlsSchemaToSqlite 【{0}】", result));
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -688,7 +698,7 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteSetSpritePackingTag()
     {
         EditorSetSpritePackingTagConfig cfg = EditorStrayFogSavedConfigAssetFile.setSpritePackingTag;
-        StringBuilder sbErrorLog = new StringBuilder();
+        StringBuilder sbLog = new StringBuilder();
         if (cfg.file != null)
         {
             List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.file.folders, enEditorAssetFilterClassify.Texture2D);
@@ -703,7 +713,8 @@ public sealed class EditorStrayFogExecute
             AssetDatabase.SaveAssets();
             EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         }
-        Debug.Log("ExecuteSetSpritePackingTag Succeed!");
+        sbLog.AppendLine("ExecuteSetSpritePackingTag Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -715,7 +726,7 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteClearSpritePackingTag()
     {
         EditorSetSpritePackingTagConfig cfg = EditorStrayFogSavedConfigAssetFile.setSpritePackingTag;
-        StringBuilder sbErrorLog = new StringBuilder();
+        StringBuilder sbLog = new StringBuilder();
         if (cfg.file != null)
         {
             List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.file.folders, enEditorAssetFilterClassify.Texture2D);
@@ -730,7 +741,8 @@ public sealed class EditorStrayFogExecute
             AssetDatabase.SaveAssets();
             EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         }
-        Debug.Log("ExecuteClearSpritePackingTag Succeed!");
+        sbLog.AppendLine("ExecuteClearSpritePackingTag Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -740,7 +752,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteClearAllSpritePackingTag()
     {
-        StringBuilder sbErrorLog = new StringBuilder();
+        StringBuilder sbLog = new StringBuilder();
         List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(
             new string[1] { Path.GetFileName(Application.dataPath) }, enEditorAssetFilterClassify.Texture2D);
         float progress = 0;
@@ -753,7 +765,8 @@ public sealed class EditorStrayFogExecute
         EditorUtility.ClearProgressBar();
         AssetDatabase.SaveAssets();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        Debug.Log("ExecuteClearAllSpritePackingTag Succeed!");
+        sbLog.AppendLine("ExecuteClearAllSpritePackingTag Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -768,13 +781,13 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteSetAssetBundleName()
     {
         EditorSetAssetBundleNameConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetBundleName;
+        StringBuilder sbLog = new StringBuilder();
+        string error = string.Empty;
         if (cfg.file != null)
-        {
-            string error = string.Empty;
+        {            
             List<EditorSelectionAssetBundleNameAsset> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetBundleNameAsset>(cfg.file.folders, out error);
             if (string.IsNullOrEmpty(error))
-            {
-                StringBuilder sbLog = new StringBuilder();
+            {                
                 if (nodes != null && nodes.Count > 0)
                 {
                     float progress = 0;
@@ -830,13 +843,13 @@ public sealed class EditorStrayFogExecute
                     EditorUtility.ClearProgressBar();
                     if (EditorStrayFogApplication.IsExecuteMethodInCmd())
                     {
-                        Debug.Log(sbLog.ToString());
+                        //Debug.Log(sbLog.ToString());
                     }
                     else
                     {
                         string logFilename = Path.Combine(Path.GetTempPath(), "AssetBundleName.log");
                         File.WriteAllText(logFilename, sbLog.ToString());
-                        Debug.LogFormat("Log=>{0}", logFilename);
+                        sbLog.AppendLine(string.Format("Log=>{0}", logFilename));
                     }
                     #endregion
                 }
@@ -847,7 +860,8 @@ public sealed class EditorStrayFogExecute
             }
         }
 
-        Debug.Log("ExecuteSetAssetBundleName Succeed!");
+        sbLog.AppendLine("ExecuteSetAssetBundleName Succeed!");
+        Debug.Log(sbLog.ToString());
     }
 
     /// <summary>
@@ -858,6 +872,7 @@ public sealed class EditorStrayFogExecute
     {
         float progress = 0;
         List<int> clear = new List<int>();
+        StringBuilder sbLog = new StringBuilder();
         foreach (KeyValuePair<int, EditorSelectionAssetBundleNameAsset> key in _nodeMaping)
         {
             if (key.Value.ShrinkMerge() && !clear.Contains(key.Key))
@@ -885,6 +900,7 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteClearAllAssetBundleName()
     {
         string[] names = AssetDatabase.GetAllAssetBundleNames();
+        StringBuilder sbLog = new StringBuilder();
         if (names != null && names.Length > 0)
         {
             float progress = 0;
@@ -899,7 +915,8 @@ public sealed class EditorStrayFogExecute
             EditorUtility.ClearProgressBar();
         }
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        Debug.Log("ExecuteClearAllAssetBundleName Succeed!");
+        sbLog.AppendLine("ExecuteClearAllAssetBundleName Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -1076,8 +1093,8 @@ public sealed class EditorStrayFogExecute
             EditorUtility.ClearProgressBar();
         }
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        sbLog.AppendLine("ExecuteBuildSingleAssetDiskMaping Succeed!");
         Debug.Log(sbLog.ToString());
-        Debug.Log("ExecuteBuildSingleAssetDiskMaping Succeed!");
     }
     #endregion
 
@@ -1105,8 +1122,8 @@ public sealed class EditorStrayFogExecute
             EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodes.Count);
         }
         EditorUtility.ClearProgressBar();
+        sbLog.AppendLine("ExecuteLookPackageDll Succeed!");
         Debug.Log(sbLog.ToString());
-        Debug.Log("ExecuteLookPackageDll Succeed!");
         return nodes;
     }
     #endregion   
@@ -1118,6 +1135,7 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteBuildDllToPackage()
     {
         float progress = 0;
+        StringBuilder sbLog = new StringBuilder();
         List<EditorSelectionAssetBundleNameAsset> nodes = ExecuteLookPackageDll();
         foreach (EditorSelectionAssetBundleNameAsset n in nodes)
         {
@@ -1133,7 +1151,8 @@ public sealed class EditorStrayFogExecute
             EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodes.Count);
         }
         EditorUtility.ClearProgressBar();
-        Debug.Log("ExecuteBuildDllToPackage Succeed!");
+        sbLog.AppendLine("ExecuteBuildDllToPackage Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -1147,6 +1166,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildPackage()
     {
+        StringBuilder sbLog = new StringBuilder();
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
 
@@ -1187,8 +1207,9 @@ public sealed class EditorStrayFogExecute
         EditorStrayFogUtility.cmd.ExcuteFile(Path.GetFullPath(mDeleteManifestBat.fileName));
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         EditorUtility.RevealInFinder(path);
-        Debug.Log(path);
-        Debug.Log("ExecuteBuildPackage Succeed!");
+        sbLog.AppendLine(path);
+        sbLog.AppendLine("ExecuteBuildPackage Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -1212,6 +1233,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildDeleteNouseAssetBatToPackage()
     {
+        StringBuilder sbLog = new StringBuilder();
         EditorTextAssetConfig deleteManifestBat = (EditorTextAssetConfig)mDeleteManifestBat.Clone();
         EditorTextAssetConfig debugProfilerBat = (EditorTextAssetConfig)mDebugProfilerBat.Clone();
         EditorTextAssetConfig clearSvnReg = (EditorTextAssetConfig)mClearSvnReg.Clone();
@@ -1240,7 +1262,8 @@ public sealed class EditorStrayFogExecute
         debugProfilerBat.CreateAsset();
 
         clearSvnReg.CreateAsset();
-        Debug.Log("ExecuteBuildPackageDeleteNouseAssetBat Succeed!");
+        sbLog.AppendLine("ExecuteBuildPackageDeleteNouseAssetBat Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
@@ -1250,9 +1273,11 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteCopySQLiteDbToPackage()
     {
+        StringBuilder sbLog = new StringBuilder();
         string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleDbName);
         File.Copy(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource, db);
-        Debug.Log("ExecuteBuildSQLiteDbToPackage Succeed!");
+        sbLog.AppendLine("ExecuteBuildSQLiteDbToPackage Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 
