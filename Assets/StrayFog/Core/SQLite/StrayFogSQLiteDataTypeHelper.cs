@@ -379,7 +379,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
                 }
                 else
                 {
-                    _value = Convert.ToBoolean(_value.ToString() == "0" ? false : true);
+                    _value = Convert.ToBoolean( (_value.ToString() == "0" || _value.ToString().ToUpper() == "false".ToUpper() ) ? false : true);
                 }
                 break;
             case enSQLiteDataType.Byte:

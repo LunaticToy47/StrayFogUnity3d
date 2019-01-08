@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
     /// <summary>
@@ -215,10 +216,26 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// </summary>
     Table_UserGuideTrigger mRunningUserGuideTrigger = null;
     /// <summary>
+    /// 触发检测同步
+    /// </summary>
+    Coroutine mTriggerCheckCoroutine = null;
+    /// <summary>
     /// TriggerCheck
     /// </summary>
     public void TriggerCheck()
     {
+        if (mTriggerCheckCoroutine == null)
+        {
+            mTriggerCheckCoroutine = StartCoroutine(OnTriggerCheck());
+        }        
+    }
+
+    IEnumerator OnTriggerCheck()
+    {
+        while (mGuideWindow == null)
+        {
+            yield return new WaitForEndOfFrame();
+        }        
         bool isTrigger = false;
         if (mRunningUserGuideTrigger == null && mWaitTriggerGuides.Count > 0)
         {
@@ -252,6 +269,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
         {
             OnDisplayGuideWindow(null);
         }
+        mTriggerCheckCoroutine = null;
     }
     #endregion
 

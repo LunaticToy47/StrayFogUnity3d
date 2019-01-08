@@ -197,6 +197,7 @@ public sealed partial class SQLiteEntityHelper
                                 msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);                                
                             }                            
                         }
+                        tempEntity.Resolve();
                         result.Add(tempEntity);
                     }
                     #endregion
@@ -228,6 +229,7 @@ public sealed partial class SQLiteEntityHelper
                             }
                             else
                             {
+                                tempEntity.Resolve();
                                 result.Add(tempEntity);
                             }
                         }
@@ -277,6 +279,7 @@ public sealed partial class SQLiteEntityHelper
                 msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);
             }
             #endregion
+            tempEntity.Resolve();
             result.Add(tempEntity);
         }
         else
@@ -297,6 +300,7 @@ public sealed partial class SQLiteEntityHelper
                     tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
                     msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);
                 }
+                tempEntity.Resolve();
                 result.Add(tempEntity);
             }
             reader.Close();

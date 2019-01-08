@@ -1,4 +1,5 @@
-﻿using Mono.Data.Sqlite;
+﻿#if UNITY_EDITOR
+using Mono.Data.Sqlite;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -987,3 +988,4 @@ public sealed class EditorStrayFogXLS
     #endregion
     #endregion
 }
+#endif

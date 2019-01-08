@@ -27,22 +27,12 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
-            StartCoroutine(OnGuideTriggerCheck());
+            StrayFogGamePools.guideManager.TriggerCheck();
         }
         if (_onCallback != null)
         {
             _onCallback.Invoke();
         }
-    }
-
-    /// <summary>
-    /// 引导触发检测
-    /// </summary>
-    /// <returns>异步</returns>
-    IEnumerator OnGuideTriggerCheck()
-    {
-        yield return new WaitForEndOfFrame();
-        StrayFogGamePools.guideManager.TriggerCheck();
     }
     #endregion
 
