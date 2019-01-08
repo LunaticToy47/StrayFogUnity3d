@@ -35,6 +35,7 @@ static class EditorAnimCurveMenuItem
     static void EditorDevelopMenuItem_BuildAnimCurvesWindow()
     {
         EditorStrayFogExecute.ExecuteBuildAnimCurves();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAnimCurves);
     }
     #endregion
 }

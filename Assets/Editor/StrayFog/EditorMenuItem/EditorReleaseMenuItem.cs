@@ -35,7 +35,7 @@ static class EditorReleaseMenuItem
     static void EditorDevelopMenuItem_BuildPackageWindow()
     {
         EditorStrayFogExecute.ExecuteBuildPackage();
-        EditorUtility.DisplayDialog("Build Package", "Build Package Complete.", "OK");
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildPackage);
     }
     #endregion
 
@@ -47,9 +47,10 @@ static class EditorReleaseMenuItem
     [MenuItem(mcMenu + mcBuildDeleteNouseAssetBatToPackage, false, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcBuildDeleteNouseAssetBatToPackage, false, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcBuildDeleteNouseAssetBatToPackage, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_BuildDeleteNouseAssetBatToPackageWindow()
+    static void EditorDevelopMenuItem_BuildDeleteNouseAssetBatToPackage()
     {
         EditorStrayFogExecute.ExecuteBuildDeleteNouseAssetBatToPackage();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildDeleteNouseAssetBatToPackage);
     }
     #endregion
 
@@ -61,9 +62,25 @@ static class EditorReleaseMenuItem
     [MenuItem(mcMenu + mcBuildDllToPackage, false, mcPriority + 3)]
     [MenuItem(mcAssetMenu + mcBuildDllToPackage, false, mcPriority + 3)]
     [MenuItem(mcHierarchy + mcBuildDllToPackage, false, mcPriority + 3)]
-    static void EditorDevelopMenuItem_BuildDllToPackageWindow()
+    static void EditorDevelopMenuItem_BuildDllToPackage()
     {
         EditorStrayFogExecute.ExecuteBuildDllToPackage();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildDllToPackage);
+    }
+    #endregion
+
+    #region Build All Xls Data
+    const string mcBuildAllXlsData = "Build All Xls Data";
+    /// <summary>
+    /// 生成所有的XLS表数据
+    /// </summary>
+    [MenuItem(mcMenu + mcBuildAllXlsData, false, mcPriority + 4)]
+    [MenuItem(mcAssetMenu + mcBuildAllXlsData, false, mcPriority + 4)]
+    [MenuItem(mcHierarchy + mcBuildAllXlsData, false, mcPriority + 4)]
+    static void EditorDevelopMenuItem_BuildAllXlsData()
+    {
+        EditorStrayFogExecute.ExecuteBuildAllXlsData();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAllXlsData);
     }
     #endregion
 
@@ -72,12 +89,13 @@ static class EditorReleaseMenuItem
     /// <summary>
     /// 复制SQLite数据库到资源包
     /// </summary>
-    [MenuItem(mcMenu + mcCopySQLiteDbToPackage, false, mcPriority + 4)]
-    [MenuItem(mcAssetMenu + mcCopySQLiteDbToPackage, false, mcPriority + 4)]
-    [MenuItem(mcHierarchy + mcCopySQLiteDbToPackage, false, mcPriority + 4)]
-    static void EditorDevelopMenuItem_CopySQLiteDbToPackageWindow()
+    [MenuItem(mcMenu + mcCopySQLiteDbToPackage, false, mcPriority + 5)]
+    [MenuItem(mcAssetMenu + mcCopySQLiteDbToPackage, false, mcPriority + 5)]
+    [MenuItem(mcHierarchy + mcCopySQLiteDbToPackage, false, mcPriority + 5)]
+    static void EditorDevelopMenuItem_CopySQLiteDbToPackage()
     {
         EditorStrayFogExecute.ExecuteCopySQLiteDbToPackage();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcCopySQLiteDbToPackage);
     }
     #endregion
 }

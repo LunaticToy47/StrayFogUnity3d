@@ -123,9 +123,9 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 
-    #region OpenFile
+    #region OpenFile 打开文件
     /// <summary>
-    /// OpenFile
+    /// 打开文件
     /// </summary>
     /// <param name="_object">对象</param>
     public static void OpenFile(UnityEngine.Object _object)
@@ -270,7 +270,7 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 
-    #region IsExecuteMethodInCmd
+    #region IsExecuteMethodInCmd 是否在Cmd中执行方法
     /// <summary>
     /// 是否在Cmd中执行方法
     /// </summary>
@@ -291,6 +291,17 @@ public sealed class EditorStrayFogApplication
         }
         return args.Count <= 0;
     }
-    #endregion    
+    #endregion
+
+    #region MenuItemQuickDisplayDialogSucceed  MenuItem成功快速提示
+    /// <summary>
+    /// MenuItem成功快速提示
+    /// </summary>
+    /// <param name="_title">标题</param>
+    public static void MenuItemQuickDisplayDialogSucceed(string _title)
+    {
+        EditorUtility.DisplayDialog(_title, _title + " Succeed!", "OK");
+    }
+    #endregion
 }
 #endif

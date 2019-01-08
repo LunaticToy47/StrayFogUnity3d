@@ -35,6 +35,7 @@ static class EditorAssetDiskMapingMenuItem
     static void EditorDevelopMenuItem_BuildAllAssetDiskMapingWindow()
     {
         EditorStrayFogExecute.ExecuteBuildAllAssetDiskMaping();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAllAssetDiskMaping);
     }
     #endregion
 }

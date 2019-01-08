@@ -38,6 +38,7 @@ static class EditorAnimatorMenuItem
         if (EditorStrayFogApplication.IsExecuteMethodInCmd())
         {
             EditorStrayFogExecute.ExecuteBuildAnimatorControllerFMSMaping();
+            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAnimatorControllerFMSMaping);
         }
         else
         {

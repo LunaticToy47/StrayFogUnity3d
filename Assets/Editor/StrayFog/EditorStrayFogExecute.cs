@@ -652,7 +652,7 @@ public sealed class EditorStrayFogExecute
     /// <summary>
     /// 导出XLS数据到SQLite
     /// </summary>
-    public static void ExportXlsDataToSqlite()
+    public static void ExecuteExportXlsDataToSqlite()
     {
         EditorStrayFogXLS.ExportXlsDataToSqlite((t,n,p)=> {
             EditorUtility.DisplayProgressBar(t, n, p);
@@ -1172,10 +1172,9 @@ public sealed class EditorStrayFogExecute
         ExecuteSetSpritePackingTag();
         ExecuteSetAssetBundleName();
 
-        ExecuteBuildAllAssetDiskMaping();
-        ExecuteBuildUIWindowSetting();
+        ExecuteBuildAllXlsData();
 
-        ExportXlsDataToSqlite();
+        ExecuteExportXlsDataToSqlite();
         ExecuteBuildDllToPackage();
         ExecuteCopySQLiteDbToPackage();
         ExecuteBuildDeleteNouseAssetBatToPackage();
@@ -1255,8 +1254,18 @@ public sealed class EditorStrayFogExecute
         File.Copy(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource, db);
         Debug.Log("ExecuteBuildSQLiteDbToPackage Succeed!");
     }
-    #endregion    
+    #endregion
 
+    #region ExecuteBuildAllXlsData 生成所有XLS表数据
+    /// <summary>
+    /// 生成所有XLS表数据
+    /// </summary>
+    public static void ExecuteBuildAllXlsData()
+    {
+        ExecuteBuildAllAssetDiskMaping();
+        ExecuteBuildUIWindowSetting();
+    }
+    #endregion
     #endregion
 }
 #endif

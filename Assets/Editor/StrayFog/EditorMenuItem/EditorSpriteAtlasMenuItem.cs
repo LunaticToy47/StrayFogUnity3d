@@ -37,6 +37,7 @@ static class EditorSpriteAtlasMenuItem
         if (EditorStrayFogApplication.IsExecuteMethodInCmd())
         {
             EditorStrayFogExecute.ExecuteSetSpritePackingTag();
+            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcSetSpritePackingTag);
         }
         else
         {
@@ -55,9 +56,10 @@ static class EditorSpriteAtlasMenuItem
     [MenuItem(mcMenu + mcClearSpritePackingTag, false, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcClearSpritePackingTag, false, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcClearSpritePackingTag, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_ClearSpritePackingTagWindow()
+    static void EditorDevelopMenuItem_ClearSpritePackingTag()
     {
         EditorStrayFogExecute.ExecuteClearSpritePackingTag();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcClearSpritePackingTag);
     }
     #endregion
 
@@ -69,9 +71,10 @@ static class EditorSpriteAtlasMenuItem
     [MenuItem(mcMenu + mcClearAllSpritePackingTag, false, mcPriority + 3)]
     [MenuItem(mcAssetMenu + mcClearAllSpritePackingTag, false, mcPriority + 3)]
     [MenuItem(mcHierarchy + mcClearAllSpritePackingTag, false, mcPriority + 3)]
-    static void EditorDevelopMenuItem_ClearAllSpritePackingTagWindow()
+    static void EditorDevelopMenuItem_ClearAllSpritePackingTag()
     {
         EditorStrayFogExecute.ExecuteClearAllSpritePackingTag();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcClearAllSpritePackingTag);
     }
     #endregion
 }

@@ -43,15 +43,15 @@ enum enEditorMenuItemPriority
     /// <summary>
     /// EditorQueryMenuItem
     /// </summary>
-    Query,    
-    /// <summary>
-    /// EditorSQLiteMenuItem
-    /// </summary>
-    SQLite,
+    Query,
     /// <summary>
     /// EditorQueryMenuItem
     /// </summary>
     XLS,
+    /// <summary>
+    /// EditorSQLiteMenuItem
+    /// </summary>
+    SQLite,    
     /// <summary>
     /// EditorSpriteAtlasMenuItem
     /// </summary>

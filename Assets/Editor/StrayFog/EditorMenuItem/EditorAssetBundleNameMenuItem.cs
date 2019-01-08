@@ -37,6 +37,7 @@ static class EditorAssetBundleNameMenuItem
         if (EditorStrayFogApplication.IsExecuteMethodInCmd())
         {
             EditorStrayFogExecute.ExecuteSetAssetBundleName();
+            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcSetAssetBundleName);
         }
         else
         {
@@ -57,9 +58,10 @@ static class EditorAssetBundleNameMenuItem
     [MenuItem(mcHierarchy + mcClearAllAssetBundleName, false, mcPriority + 2)]
     public static void EditorDevelopMenuItem_ClearAllAssetBundleNameWindow()
     {
-        if (EditorStrayFogApplication.IsExecuteMethodInCmd() || EditorUtility.DisplayDialog("Clear All AssetBundleName", "Are you srue clear all AssetBundleName?", "Yes", "No"))
+        if (EditorStrayFogApplication.IsExecuteMethodInCmd() || EditorUtility.DisplayDialog(mcClearAllAssetBundleName, "Are you sure 【"+ mcClearAllAssetBundleName + "】?", "Yes", "No"))
         {
             EditorStrayFogExecute.ExecuteClearAllAssetBundleName();
+            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcClearAllAssetBundleName);
         }
     }
     #endregion

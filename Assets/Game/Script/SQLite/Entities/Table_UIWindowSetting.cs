@@ -21,13 +21,13 @@ public partial class Table_UIWindowSetting: AbsSQLiteEntity
 	/// </summary>
 	public string name { get; private set; }
 	/// <summary>
-	/// 文件夹id
-	/// </summary>
-	public int folderId { get; private set; }
-	/// <summary>
 	/// 文件id
 	/// </summary>
 	public int fileId { get; private set; }
+	/// <summary>
+	/// 文件夹id
+	/// </summary>
+	public int folderId { get; private set; }
 	/// <summary>
 	/// 画布绘制模式
 	/// </summary>

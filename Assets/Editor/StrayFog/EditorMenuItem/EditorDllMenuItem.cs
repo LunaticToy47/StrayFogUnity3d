@@ -35,6 +35,7 @@ static class EditorDllMenuItem
     static void EditorDevelopMenuItem_LookPackageDllWindow()
     {
         EditorStrayFogExecute.ExecuteLookPackageDll();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcLookPackageDll);
     }
     #endregion
 }

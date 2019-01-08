@@ -48,9 +48,10 @@ static class EditorGuideMenuItem
     [MenuItem(mcMenu + mcFindUIGuideRegister_GraphicNodeIndexs_Graphic, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcFindUIGuideRegister_GraphicNodeIndexs_Graphic, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcFindUIGuideRegister_GraphicNodeIndexs_Graphic, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_FindUIGuideRegister_GraphicNodeIndexs_GraphicWindow()
+    static void EditorDevelopMenuItem_FindUIGuideRegister_GraphicNodeIndexs_Graphic()
     {
         EditorStrayFogExecute.ExecuteFindUIGuideRegisterMaskGraphic();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcFindUIGuideRegister_GraphicNodeIndexs_Graphic);
     }
     #endregion
 }

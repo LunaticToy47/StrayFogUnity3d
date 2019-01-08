@@ -32,9 +32,10 @@ static class EditorShaderMenuItem
     [MenuItem(mcMenu + mcBuildDefaultShader, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildDefaultShader, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildDefaultShader, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_BuildDefaultShaderWindow()
+    static void EditorDevelopMenuItem_BuildDefaultShader()
     {
         EditorStrayFogExecute.ExecuteBuildDefaultShader();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildDefaultShader);
     }
     #endregion
 }
