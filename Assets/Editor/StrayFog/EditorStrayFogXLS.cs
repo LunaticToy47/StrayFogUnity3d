@@ -685,9 +685,19 @@ public sealed class EditorStrayFogXLS
     public static void ExportXlsDataToSqlite(Action<string, string, float> _progressCallback)
     {
         List<EditorXlsTableSchema> tables = ReadXlsSchema();
+        Dictionary<string, List<SqliteParameter>> tempInsertTable = new Dictionary<string, List<SqliteParameter>>();
+        StringBuilder tempInsertSql = new StringBuilder();
+        List<string> tempSPName = new List<string>();
+        List<string> tempValueSql = new List<string>();
+        List<SqliteParameter> tempSPS = new List<SqliteParameter>();
         for (int i = 0; i < tables.Count; i++)
         {
             _progressCallback("Import Table To Sqlite", tables[i].fileName, (i + 1) / (float)tables.Count);
+            tempInsertTable.Add(string.Format("DELETE FROM {0}", tables[i].name), new List<SqliteParameter>());
+            tempInsertSql.Length = 0;
+            tempInsertSql.AppendFormat("INSERT INTO {0} VALUES", tables[i].name);
+            tempSPS = new List<SqliteParameter>();
+            tempValueSql = new List<string>();
             using (FileStream fs = new FileStream(tables[i].fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
                 ExcelPackage pck = new ExcelPackage(fs);
@@ -701,21 +711,32 @@ public sealed class EditorStrayFogXLS
                     {
                         tempIsAllValueNull = true;
                         _progressCallback("Read【" + tables[i].name + "】 Row Data ", "Row【" + row + "】", (row - msrColumnDataRowStartIndex + 1) / (float)tables.Count);
+                        
+                        tempSPName = new List<string>();                        
                         for (int col = 1; col <= sheet.Dimension.Columns; col++)
                         {
                             tempName = sheet.GetValue<string>(msrColumnNameRowIndex, col).Trim();
                             tempValue = sheet.GetValue(row, col);
                             tempIsAllValueNull &= (tempValue == null);
+                            tempSPName.Add("@" + tempName + row + col);
+                            tempSPS.Add(new SqliteParameter("@" + tempName + row + col, tempValue));
                             _progressCallback("Read 【"+ tables[i].name + "】 Column Data", "Row【" + row + "】Col【" + col + "】【" + tempName + "】", col / (float)sheet.Dimension.Columns);
-                        }                        
+                        }
                         if (tempIsAllValueNull)
                         {//如果所有列为空，则认为是数据结束
                             break;
-                        }                        
+                        }
+                        else
+                        {
+                            tempValueSql.Add(string.Format("({0})",string.Join(",", tempSPName.ToArray())));
+                        }
                     }
                 }
             }
+            tempInsertSql.Append(string.Join(",", tempValueSql.ToArray()));
+            tempInsertTable.Add(tempInsertSql.ToString(), tempSPS);
         }
+        SQLiteHelper.sqlHelper.ExecuteTransaction(tempInsertTable);
     }
     #endregion
 

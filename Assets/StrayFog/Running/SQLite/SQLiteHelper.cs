@@ -211,7 +211,7 @@ public class SQLiteHelper
     /// </summary>
     /// <param name="_queryStringParametersPair">SQL命令字符串参数组</param>
     /// <returns>true:成功,false:失败</returns>
-    public bool ExecuteTransaction(Dictionary<string, SqliteParameter[]> _queryStringParametersPair)
+    public bool ExecuteTransaction(Dictionary<string, List<SqliteParameter>> _queryStringParametersPair)
     {
         
         bool result = false;
@@ -227,10 +227,10 @@ public class SQLiteHelper
             SqliteTransaction trans = mDbConnection.BeginTransaction();
             try
             {
-                foreach (KeyValuePair<string, SqliteParameter[]> key in _queryStringParametersPair)
+                foreach (KeyValuePair<string, List<SqliteParameter>> key in _queryStringParametersPair)
                 {
                     cmd.CommandText = key.Key;
-                    cmd.Parameters.AddRange(key.Value);
+                    cmd.Parameters.AddRange(key.Value.ToArray());
                     cmd.ExecuteNonQuery();
                 }
                 trans.Commit();

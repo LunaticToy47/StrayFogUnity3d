@@ -658,6 +658,7 @@ public sealed class EditorStrayFogExecute
             EditorUtility.DisplayProgressBar(t, n, p);
         });
         EditorUtility.ClearProgressBar();
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         Debug.Log("ExportXlsDataToSqlite Succeed!");
     }
     #endregion

@@ -35,6 +35,7 @@ static class EditorSQLiteMenuItem
     static void EditorXLSMenuItem_ExportXlsDataToSqlite()
     {
         EditorStrayFogExecute.ExportXlsDataToSqlite();
+        EditorUtility.DisplayDialog("Export Xls Data To Sqlite", "Export Xls Data To Sqlite Complete.", "OK");
     }
     #endregion      
 }
