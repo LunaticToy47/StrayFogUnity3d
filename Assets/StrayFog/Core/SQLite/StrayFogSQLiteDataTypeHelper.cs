@@ -118,13 +118,45 @@ public sealed class StrayFogSQLiteDataTypeHelper
 
     #region ResolveCSDataType 解析列CS数据类型
     /// <summary>
+    /// SQLiteDataType设定
+    /// </summary>
+    class SQLiteDataTypeSetting
+    {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="_dataType">数据类型</param>
+        /// <param name="_dim">维度</param>
+        /// <param name="_isMatch">是否匹配</param>
+        /// <param name="_typeName">类型名称</param>
+        public SQLiteDataTypeSetting(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dim, bool _isMatch, string _typeName)
+        {
+            dataType = _dataType;
+            dim = _dim;
+            isMatch = _isMatch;
+            typeName = _typeName;
+        }
+        /// <summary>
+        /// 数据类型
+        /// </summary>
+        public enSQLiteDataType dataType { get; private set; }
+        /// <summary>
+        /// 维度
+        /// </summary>
+        public enSQLiteDataTypeArrayDimension dim { get; private set; }
+        /// <summary>
+        /// 是否匹配
+        /// </summary>
+        public bool isMatch { get; private set; }
+        /// <summary>
+        /// 类型名称
+        /// </summary>
+        public string typeName { get; private set; }
+    }
+    /// <summary>
     /// CSDataType映射
     /// </summary>
-    static Dictionary<int, enSQLiteDataType> msCSDataTypeMaping = new Dictionary<int, enSQLiteDataType>();
-    /// <summary>
-    /// CSDataTypeArrayDimension映射
-    /// </summary>
-    static Dictionary<int, enSQLiteDataTypeArrayDimension> msCSDataTypeArrayDimensionMaping = new Dictionary<int, enSQLiteDataTypeArrayDimension>();
+    static Dictionary<int, SQLiteDataTypeSetting> msCSDataTypeSettingMaping = new Dictionary<int, SQLiteDataTypeSetting>();    
     /// <summary>
     /// 解析列CS数据类型
     /// </summary>
@@ -135,64 +167,35 @@ public sealed class StrayFogSQLiteDataTypeHelper
     public static bool ResolveCSDataType(string _csTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
     {
         int hashCode = _csTypeValue.GetHashCode();
-        string typeValue = string.Empty;
-        string dimValue = string.Empty;
-        typeValue = dimValue = _csTypeValue;
-        foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping)
+        if (!msCSDataTypeSettingMaping.ContainsKey(hashCode))
         {
-            if (!string.IsNullOrEmpty(key.Value.csTypeName))
+            foreach (enSQLiteDataTypeArrayDimension dim in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping.Keys)
             {
-                typeValue = typeValue.Replace(key.Value.csTypeName, "");
-            }
-        }
-        dimValue = dimValue.Replace(typeValue, "");
-
-        if (!msCSDataTypeMaping.ContainsKey(hashCode))
-        {
-            foreach (KeyValuePair<enSQLiteDataType, CodeAttribute> key in msrSQLiteDataTypeCodeAttributeMaping)
-            {
-                if (typeValue.ToUpper().Equals(key.Value.csTypeName.ToUpper()))
+                foreach (enSQLiteDataType type in msrSQLiteDataTypeCodeAttributeMaping.Keys)
                 {
-                    _dataType = key.Key;
-                    msCSDataTypeMaping.Add(hashCode, key.Key);
-                    break;
+                    if (GetCSDataTypeName(type, dim).Equals(_csTypeValue))
+                    {
+                        msCSDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting(type, dim, true, _csTypeValue));
+                        break;
+                    }
                 }
             }
-        }
-        else
-        {
-            _dataType = msCSDataTypeMaping[hashCode];
-        }
-
-        if (!msCSDataTypeArrayDimensionMaping.ContainsKey(hashCode))
-        {
-            foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping)
+            if (!msCSDataTypeSettingMaping.ContainsKey(hashCode))
             {
-                if (string.IsNullOrEmpty(dimValue) || dimValue.ToUpper().Equals(key.Value.csTypeName.ToUpper()))
-                {
-                    _dataTypeArrayDimension = key.Key;
-                    msCSDataTypeArrayDimensionMaping.Add(hashCode, key.Key);
-                    break;
-                }
+                msCSDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting(enSQLiteDataType.String, enSQLiteDataTypeArrayDimension.NoArray, false, _csTypeValue));
             }
         }
-        else
-        {
-            _dataTypeArrayDimension = msCSDataTypeArrayDimensionMaping[hashCode];
-        }
-        return msCSDataTypeMaping.ContainsKey(hashCode) && msCSDataTypeArrayDimensionMaping.ContainsKey(hashCode);
+        _dataType = msCSDataTypeSettingMaping[hashCode].dataType;
+        _dataTypeArrayDimension = msCSDataTypeSettingMaping[hashCode].dim;
+        return msCSDataTypeSettingMaping[hashCode].isMatch;
     }
     #endregion
 
     #region ResolveSQLiteDataType 解析列CS数据类型
     /// <summary>
-    /// SQLiteDataType映射
+    /// CSDataType映射
     /// </summary>
-    static Dictionary<int, enSQLiteDataType> msSQLiteDataTypeMaping = new Dictionary<int, enSQLiteDataType>();
-    /// <summary>
-    /// SQLiteDataTypeArrayDimension映射
-    /// </summary>
-    static Dictionary<int, enSQLiteDataTypeArrayDimension> msSQLiteDataTypeArrayDimensionMaping = new Dictionary<int, enSQLiteDataTypeArrayDimension>();
+    static Dictionary<int, SQLiteDataTypeSetting> msSQLiteDataTypeSettingMaping = new Dictionary<int, SQLiteDataTypeSetting>();
     /// <summary>
     /// 解析列CS数据类型
     /// </summary>
@@ -203,53 +206,27 @@ public sealed class StrayFogSQLiteDataTypeHelper
     public static bool ResolveSQLiteDataType(string _sqliteTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
     {
         int hashCode = _sqliteTypeValue.GetHashCode();
-        string typeValue = string.Empty;
-        string dimValue = string.Empty;
-        typeValue = dimValue = _sqliteTypeValue;
-        foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping)
+        if (!msSQLiteDataTypeSettingMaping.ContainsKey(hashCode))
         {
-            if (!string.IsNullOrEmpty(key.Value.sqliteTypeName) && typeValue.EndsWith(key.Value.sqliteTypeName))
+            foreach (enSQLiteDataTypeArrayDimension dim in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping.Keys)
             {
-                typeValue = typeValue.Replace(key.Value.sqliteTypeName, "");
-            }
-        }
-        dimValue = dimValue.Replace(typeValue, "");
-
-        if (!msSQLiteDataTypeMaping.ContainsKey(hashCode))
-        {
-            foreach (KeyValuePair<enSQLiteDataType, CodeAttribute> key in msrSQLiteDataTypeCodeAttributeMaping)
-            {
-                if (typeValue.ToUpper().Equals(key.Value.sqliteTypeName.ToUpper()))
+                foreach (enSQLiteDataType type in msrSQLiteDataTypeCodeAttributeMaping.Keys)
                 {
-                    _dataType = key.Key;
-                    msSQLiteDataTypeMaping.Add(hashCode, key.Key);
-                    break;
+                    if (GetSQLiteDataTypeName(type, dim).Equals(_sqliteTypeValue))
+                    {
+                        msSQLiteDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting(type, dim, true, _sqliteTypeValue));
+                        break;
+                    }
                 }
             }
-        }
-        else
-        {
-            _dataType = msSQLiteDataTypeMaping[hashCode];
-        }
-
-        if (!msSQLiteDataTypeArrayDimensionMaping.ContainsKey(hashCode))
-        {
-            foreach (KeyValuePair<enSQLiteDataTypeArrayDimension, CodeAttribute> key in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping)
+            if (!msSQLiteDataTypeSettingMaping.ContainsKey(hashCode))
             {
-                if (string.IsNullOrEmpty(dimValue) || dimValue.ToUpper().Equals(key.Value.sqliteTypeName.ToUpper()))
-                {
-                    _dataTypeArrayDimension = key.Key;
-                    msSQLiteDataTypeArrayDimensionMaping.Add(hashCode, key.Key);
-                    break;
-                }
+                msSQLiteDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting(enSQLiteDataType.String, enSQLiteDataTypeArrayDimension.NoArray, false, _sqliteTypeValue));
             }
         }
-        else
-        {
-            _dataTypeArrayDimension = msSQLiteDataTypeArrayDimensionMaping[hashCode];
-        }
-
-        return msSQLiteDataTypeMaping.ContainsKey(hashCode) && msSQLiteDataTypeArrayDimensionMaping.ContainsKey(hashCode);
+        _dataType = msSQLiteDataTypeSettingMaping[hashCode].dataType;
+        _dataTypeArrayDimension = msSQLiteDataTypeSettingMaping[hashCode].dim;
+        return msSQLiteDataTypeSettingMaping[hashCode].isMatch;
     }
     #endregion
 
@@ -262,7 +239,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <returns>SQLite数据类型名称</returns>
     public static string GetSQLiteDataTypeName(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
     {
-        return msrSQLiteDataTypeCodeAttributeMaping[_dataType].sqliteTypeName + msrSQLiteDataTypeArrayDimensionCodeAttributeMaping[_dataTypeArrayDimension].sqliteTypeName;
+        return string.Format("{1}{0}{1}", msrSQLiteDataTypeCodeAttributeMaping[_dataType].sqliteTypeName, msrSQLiteDataTypeArrayDimensionCodeAttributeMaping[_dataTypeArrayDimension].sqliteTypeName);
     }
     #endregion
 
