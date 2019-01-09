@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using UnityEngine;
 /// <summary>
 /// SQLite表实体帮助类
 /// </summary>
@@ -158,16 +157,16 @@ public sealed partial class SQLiteEntityHelper
     static List<T> OnReadFromXLS<T>(SQLiteEntitySetting _entitySetting)
         where T : AbsSQLiteEntity
     {
-        List<T> result = new List<T>();
-        enSQLiteDataType tempSQLiteDataType = enSQLiteDataType.String;
-        enSQLiteDataTypeArrayDimension tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
-        T tempEntity = default(T);
-        int tempPropertyKey = 0;
-        object tempValue = null;
-        string tempName = string.Empty;
-        bool tempIsAllValueNull = false;
+        List<T> result = new List<T>();        
         if (File.Exists(_entitySetting.xlsFileName))
         {
+            enSQLiteDataType tempSQLiteDataType = enSQLiteDataType.String;
+            enSQLiteDataTypeArrayDimension tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+            T tempEntity = default(T);
+            int tempPropertyKey = 0;
+            object tempValue = null;
+            string tempName = string.Empty;
+            bool tempIsAllValueNull = false;
             using (FileStream fs = new FileStream(_entitySetting.xlsFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 ExcelPackage pck = new ExcelPackage(fs);
@@ -243,7 +242,7 @@ public sealed partial class SQLiteEntityHelper
         }
         else
         {
-
+            result = OnLoadFromXLS<T>(_entitySetting);
         }
         return result;
     }
