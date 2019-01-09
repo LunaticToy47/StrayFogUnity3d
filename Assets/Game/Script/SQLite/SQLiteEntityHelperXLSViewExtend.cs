@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 /// <summary>
-/// SQLite表实体XLS帮助类
+/// SQLite表实体XLS视图数据帮助类
 /// </summary>
 public sealed partial class SQLiteEntityHelper
 {
