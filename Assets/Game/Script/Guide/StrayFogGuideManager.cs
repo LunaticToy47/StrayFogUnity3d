@@ -235,7 +235,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
         while (mGuideWindow == null)
         {
             yield return new WaitForEndOfFrame();
-        }        
+        }
         bool isTrigger = false;
         if (mRunningUserGuideTrigger == null && mWaitTriggerGuides.Count > 0)
         {
