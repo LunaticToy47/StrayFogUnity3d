@@ -18,6 +18,6 @@ public class LobbyWindow : AbsUIWindowView
             txt.text = scale.ToString();
             btnRadarBg.transform.localScale = scale;
         });
-        transform.Find("btnRadar").gameObject.AddComponent<UIDragMono>();
+        transform.Find("btnRadar").gameObject.AddComponent<UIDragMono>();        
     }
 }
