@@ -166,77 +166,84 @@ public sealed partial class SQLiteEntityHelper
         object tempValue = null;
         string tempName = string.Empty;
         bool tempIsAllValueNull = false;
-        using (FileStream fs = new FileStream(_entitySetting.xlsFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+        if (File.Exists(_entitySetting.xlsFileName))
         {
-            ExcelPackage pck = new ExcelPackage(fs);
-            if (pck.Workbook.Worksheets.Count > 0)
+            using (FileStream fs = new FileStream(_entitySetting.xlsFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                if (_entitySetting.isDeterminant)
+                ExcelPackage pck = new ExcelPackage(fs);
+                if (pck.Workbook.Worksheets.Count > 0)
                 {
-                    #region 行列式数据写入
-                    if (sheet.Dimension.Rows >= _entitySetting.xlsColumnDataIndex)
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    if (_entitySetting.isDeterminant)
                     {
-                        tempEntity = Activator.CreateInstance<T>();
-                        for (int row = _entitySetting.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
-                        {                            
-                            tempSQLiteDataType = enSQLiteDataType.String;
-                            tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
-                            tempName = sheet.GetValue<string>(row, _entitySetting.xlsColumnNameIndex).Trim();
-                            tempValue = sheet.GetValue(row, _entitySetting.xlsColumnDataIndex);
-                            //如果名称为空，则认为是数据结束
-                            if (string.IsNullOrEmpty(tempName))
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                tempPropertyKey = tempName.UniqueHashCode();
-                                StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(row, _entitySetting.xlsColumnTypeIndex), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
-                                tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
-                                msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);                                
-                            }                            
-                        }
-                        tempEntity.Resolve();
-                        result.Add(tempEntity);
-                    }
-                    #endregion
-                }
-                else
-                {
-                    #region 普通数据写入
-                    if (sheet.Dimension.Rows >= _entitySetting.xlsColumnDataIndex)
-                    {
-                        for (int row = _entitySetting.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
+                        #region 行列式数据写入
+                        if (sheet.Dimension.Rows >= _entitySetting.xlsColumnDataIndex)
                         {
                             tempEntity = Activator.CreateInstance<T>();
-                            tempIsAllValueNull = true;
-                            for (int col = 1; col <= sheet.Dimension.Columns; col++)
+                            for (int row = _entitySetting.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
                             {
                                 tempSQLiteDataType = enSQLiteDataType.String;
                                 tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
-                                tempName = sheet.GetValue<string>(_entitySetting.xlsColumnNameIndex, col).Trim();
-                                tempValue = sheet.GetValue(row, col);
-                                tempIsAllValueNull &= (tempValue == null);
-                                tempPropertyKey = tempName.UniqueHashCode();
-                                StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(_entitySetting.xlsColumnTypeIndex, col), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);                                
-                                tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
-                                msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);                                
+                                tempName = sheet.GetValue<string>(row, _entitySetting.xlsColumnNameIndex).Trim();
+                                tempValue = sheet.GetValue(row, _entitySetting.xlsColumnDataIndex);
+                                //如果名称为空，则认为是数据结束
+                                if (string.IsNullOrEmpty(tempName))
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    tempPropertyKey = tempName.UniqueHashCode();
+                                    StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(row, _entitySetting.xlsColumnTypeIndex), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
+                                    tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
+                                    msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);
+                                }
                             }
-                            if (tempIsAllValueNull)
-                            {//如果所有列为空，则认为是数据结束
-                                break;
-                            }
-                            else
+                            tempEntity.Resolve();
+                            result.Add(tempEntity);
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        #region 普通数据写入
+                        if (sheet.Dimension.Rows >= _entitySetting.xlsColumnDataIndex)
+                        {
+                            for (int row = _entitySetting.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
                             {
-                                tempEntity.Resolve();
-                                result.Add(tempEntity);
+                                tempEntity = Activator.CreateInstance<T>();
+                                tempIsAllValueNull = true;
+                                for (int col = 1; col <= sheet.Dimension.Columns; col++)
+                                {
+                                    tempSQLiteDataType = enSQLiteDataType.String;
+                                    tempSQLiteDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+                                    tempName = sheet.GetValue<string>(_entitySetting.xlsColumnNameIndex, col).Trim();
+                                    tempValue = sheet.GetValue(row, col);
+                                    tempIsAllValueNull &= (tempValue == null);
+                                    tempPropertyKey = tempName.UniqueHashCode();
+                                    StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(_entitySetting.xlsColumnTypeIndex, col), ref tempSQLiteDataType, ref tempSQLiteDataTypeArrayDimension);
+                                    tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey], tempSQLiteDataType, tempSQLiteDataTypeArrayDimension);
+                                    msEntityPropertyInfoMaping[_entitySetting.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);
+                                }
+                                if (tempIsAllValueNull)
+                                {//如果所有列为空，则认为是数据结束
+                                    break;
+                                }
+                                else
+                                {
+                                    tempEntity.Resolve();
+                                    result.Add(tempEntity);
+                                }
                             }
                         }
+                        #endregion
                     }
-                    #endregion
-                }                
+                }
             }
+        }
+        else
+        {
+
         }
         return result;
     }
