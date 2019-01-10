@@ -17,12 +17,16 @@ public class StrayFogGuideLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            StartCoroutine(OnOpenLobby());
+            
         });
     }
 
     void OnGUI()
     {
+        if (GUILayout.Button("Start Guid"))
+        {
+            StartCoroutine(OnOpenLobby());
+        }
         GUI.skin.label.fontSize = 40;
         GUI.color = Color.black;
         GUILayout.Label(StrayFogGamePools.setting.ToData());
@@ -43,9 +47,8 @@ public class StrayFogGuideLevel : AbsLevel
     /// </summary>
     /// <returns>异步</returns>
     IEnumerator OnOpenLobby()
-    {
-        //yield return new WaitForSeconds(1);
-        yield return null;
+    {        
+        yield return new WaitForEndOfFrame();
         UnityEngine.Debug.Log("Open=>" + enUIWindow.LobbyWindow);
         Stopwatch watch = new Stopwatch();
         watch.Start();
@@ -68,7 +71,6 @@ public class StrayFogGuideLevel : AbsLevel
                 Stopwatch w = (Stopwatch)args[0];
                 w.Stop();
                 UnityEngine.Debug.Log(w.Elapsed + "=>" + wins.JsonSerialize());
-                //SceneManager.LoadScene(0);
             }, _watch);
     }
 }
