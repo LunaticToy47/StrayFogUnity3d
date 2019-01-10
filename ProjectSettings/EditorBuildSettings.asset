@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Game/AssetBundles/Scene/ExampleFMS.unity
+    guid: 8821f5098afc11f41868dc13b0956a1d
   m_configObjects: {}

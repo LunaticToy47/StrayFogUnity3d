@@ -3,6 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// 引导关卡
 /// </summary>
@@ -67,6 +68,7 @@ public class StrayFogGuideLevel : AbsLevel
                 Stopwatch w = (Stopwatch)args[0];
                 w.Stop();
                 UnityEngine.Debug.Log(w.Elapsed + "=>" + wins.JsonSerialize());
+                //SceneManager.LoadScene(0);
             }, _watch);
     }
 }

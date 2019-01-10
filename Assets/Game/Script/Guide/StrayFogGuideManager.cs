@@ -226,16 +226,15 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     {
         if (mTriggerCheckCoroutine == null)
         {
-            mTriggerCheckCoroutine = StartCoroutine(OnTriggerCheck());
+            mTriggerCheckCoroutine = StartCoroutine(OnTriggerCheck(new WaitForCondition((args) => {                
+                return mGuideWindow == null;
+            })));
         }        
     }
 
-    IEnumerator OnTriggerCheck()
+    IEnumerator OnTriggerCheck(WaitForCondition _waitFor)
     {
-        while (mGuideWindow == null)
-        {
-            yield return new WaitForEndOfFrame();
-        }
+        yield return _waitFor;
         bool isTrigger = false;
         if (mRunningUserGuideTrigger == null && mWaitTriggerGuides.Count > 0)
         {

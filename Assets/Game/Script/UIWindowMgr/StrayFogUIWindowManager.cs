@@ -545,6 +545,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
                     mWindowInstanceMaping[id].Dispose();
                     mWindowInstanceMaping[id] = null;
                     mWindowInstanceMaping.Remove(id);
+                    mCacheWindowInstances.Remove(id);
                 }
                 else if (!config.isManualCloseWhenGotoScene)
                 {
@@ -609,6 +610,12 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     Dictionary<int, AbsUIWindowView> mWindowInstanceMaping = new Dictionary<int, AbsUIWindowView>();
 
     /// <summary>
+    /// 已存在的窗口实例缓存
+    /// Key:窗口Id
+    /// </summary>
+    List<int> mCacheWindowInstances = new List<int>();
+
+    /// <summary>
     /// 实例化并开启窗口
     /// </summary>    
     /// <param name="_winCfgs">窗口配置组</param>
@@ -619,46 +626,56 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
     void OnInstanceAndOpenWindow<W>(Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _result, UIWindowEntityEventHandler<W> _winCallback, bool _isSerializeOpenWindow, params object[] _parameters)
         where W : AbsUIWindowView
     {
-        List<W> windows = new List<W>();
-        int index = _winCfgs.Length;
         foreach (Table_UIWindowSetting cfg in _winCfgs)
-        {
-            W window = default(W);
+        {            
             #region 实例化窗口
-            if (!mWindowInstanceMaping.ContainsKey(cfg.id))
+            if (!mCacheWindowInstances.Contains(cfg.id))
             {
+                mCacheWindowInstances.Add(cfg.id);
                 _result[cfg.id].Instantiate<GameObject>((rst, args) =>
                 {
                     GameObject prefab = rst;
+                    Table_UIWindowSetting config = (Table_UIWindowSetting)args[0];
                     if (prefab != null)
                     {
                         prefab.SetActive(false);
-                        prefab.name = cfg.name + "[" + cfg.id + "]";
-                        Type type = Assembly.GetCallingAssembly().GetType(cfg.name);
+                        prefab.name = config.name + "[" + config.id + "]";
+                        Type type = Assembly.GetCallingAssembly().GetType(config.name);
                         //window = prefab.AddComponent<W>();
-                        window = (W)prefab.AddComponent(type);
-                        window.SetConfig(cfg);
-                        OnGetCanvas((RenderMode)cfg.renderMode).AttachWindow(window);
-                        mWindowInstanceMaping.Add(cfg.id, window);
-                        window.rectTransform.SetSiblingIndex(mWindowLayerSiblingIndex[(int)cfg.layer][cfg.id]);
-                        windows.Add(window);
-                        index--;
-                        if (index <= 0)
-                        {
-                            OnSerializeAndActiveWindow<W>(windows, (Table_UIWindowSetting[])args[0], (UIWindowEntityEventHandler<W>)args[1], (bool)args[2], (object[])args[3]);
-                        }
+                        W window = (W)prefab.AddComponent(type);
+                        window.SetConfig(config);
+                        OnGetCanvas((RenderMode)config.renderMode).AttachWindow(window);
+                        window.rectTransform.SetSiblingIndex(mWindowLayerSiblingIndex[(int)config.layer][config.id]);
+                        mWindowInstanceMaping.Add(config.id, window);                        
                     }
-                }, _winCfgs, _winCallback, _isSerializeOpenWindow, _parameters);
-            }
-            else
-            {                
-                window = (W)mWindowInstanceMaping[cfg.id];
-                windows.Add(window);
-                index--;
-                OnSerializeAndActiveWindow<W>(windows, _winCfgs, _winCallback, _isSerializeOpenWindow, _parameters);
+                }, cfg);
             }
             #endregion            
-        }        
+        }
+        StartCoroutine(OnWaitForInstance<W>(new WaitForCondition((args) =>
+        {
+            bool keepWaiting = true;
+            if (args != null && args.Length > 0)
+            {
+                foreach (Table_UIWindowSetting t in args)
+                {
+                    keepWaiting &= mWindowInstanceMaping.ContainsKey(t.id);
+                }
+            }
+            return !keepWaiting;
+        }, _winCfgs), _winCfgs, _result, _winCallback, _isSerializeOpenWindow, _parameters));                
+    }
+
+    IEnumerator OnWaitForInstance<W>(WaitForCondition _waitForCondition, Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _result, UIWindowEntityEventHandler<W> _winCallback, bool _isSerializeOpenWindow, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
+        yield return _waitForCondition;
+        List<W> windows = new List<W>();
+        foreach (Table_UIWindowSetting cfg in _winCfgs)
+        {
+            windows.Add((W)mWindowInstanceMaping[cfg.id]);            
+        }
+        OnSerializeAndActiveWindow<W>(windows, _winCfgs, _winCallback, _isSerializeOpenWindow, _parameters);
     }
 
     /// <summary>
