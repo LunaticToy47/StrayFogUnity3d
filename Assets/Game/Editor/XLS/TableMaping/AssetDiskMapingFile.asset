@@ -21,10 +21,10 @@ MonoBehaviour:
     isPK: 1
     type: 6
     arrayDimension: 0
-    isNull: 1
+    isNull: 0
   - name: folderId
     desc: "\u6587\u4EF6\u5939id"
-    isPK: 0
+    isPK: 1
     type: 6
     arrayDimension: 0
     isNull: 0

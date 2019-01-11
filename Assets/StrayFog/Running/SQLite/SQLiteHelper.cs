@@ -58,7 +58,6 @@ public class SQLiteHelper
             }
         }
         
-        string connection = mDbConnection.ConnectionString;
         if (mDbConnection != null && mDbConnection.State != System.Data.ConnectionState.Closed)
         {
             mDbConnection.Close();
@@ -212,8 +211,7 @@ public class SQLiteHelper
     /// <param name="_queryStringParametersPair">SQL命令字符串参数组</param>
     /// <returns>true:成功,false:失败</returns>
     public bool ExecuteTransaction(Dictionary<string, List<SqliteParameter>> _queryStringParametersPair)
-    {
-        
+    {        
         bool result = false;
         if (_queryStringParametersPair != null && _queryStringParametersPair.Count > 0)
         {

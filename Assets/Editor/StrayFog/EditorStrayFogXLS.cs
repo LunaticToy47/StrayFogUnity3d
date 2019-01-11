@@ -686,7 +686,7 @@ public sealed class EditorStrayFogXLS
     public static void ExportXlsDataToSqlite(Action<string, string, float> _progressCallback)
     {
         List<EditorXlsTableSchema> tables = ReadXlsSchema();
-        Dictionary<string, List<SqliteParameter>> tempInsertTable = new Dictionary<string, List<SqliteParameter>>();
+        Dictionary<string, Dictionary<string, List<SqliteParameter>>> tempInsertTable = new Dictionary<string, Dictionary<string, List<SqliteParameter>>>();
         StringBuilder tempInsertSql = new StringBuilder();
         List<string> tempSPName = new List<string>();
         List<string> tempValueSql = new List<string>();
@@ -694,11 +694,12 @@ public sealed class EditorStrayFogXLS
         for (int i = 0; i < tables.Count; i++)
         {
             _progressCallback("Import Table To Sqlite", tables[i].fileName, (i + 1) / (float)tables.Count);
-            tempInsertTable.Add(string.Format("DELETE FROM {0}", tables[i].name), new List<SqliteParameter>());
+
+            tempInsertTable.Add(tables[i].name, new Dictionary<string, List<SqliteParameter>>());            
             tempInsertSql.Length = 0;
-            tempInsertSql.AppendFormat("INSERT INTO {0} VALUES", tables[i].name);
-            tempSPS = new List<SqliteParameter>();
             tempValueSql = new List<string>();
+
+            tempInsertTable[tables[i].name].Add(string.Format("DELETE FROM {0}", tables[i].name), new List<SqliteParameter>());
             using (FileStream fs = new FileStream(tables[i].fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
                 ExcelPackage pck = new ExcelPackage(fs);
@@ -706,14 +707,20 @@ public sealed class EditorStrayFogXLS
                 bool tempIsAllValueNull = false;
                 object tempValue = null;
                 string tempName = string.Empty;
+
                 if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
                 {
                     for (int row = msrColumnDataRowStartIndex; row <= sheet.Dimension.Rows; row++)
                     {
                         tempIsAllValueNull = true;
                         _progressCallback("Read【" + tables[i].name + "】 Row Data ", "Row【" + row + "】", (row - msrColumnDataRowStartIndex + 1) / (float)tables.Count);
-                        
-                        tempSPName = new List<string>();                        
+
+                        tempSPName = new List<string>();
+                        tempSPS = new List<SqliteParameter>();
+                        tempValueSql = new List<string>();
+                        tempInsertSql.Length = 0;
+                        tempInsertSql.AppendFormat("INSERT INTO {0} VALUES", tables[i].name);
+
                         for (int col = 1; col <= sheet.Dimension.Columns; col++)
                         {
                             tempName = sheet.GetValue<string>(msrColumnNameRowIndex, col).Trim();
@@ -721,7 +728,7 @@ public sealed class EditorStrayFogXLS
                             tempIsAllValueNull &= (tempValue == null);
                             tempSPName.Add("@" + tempName + row + col);
                             tempSPS.Add(new SqliteParameter("@" + tempName + row + col, tempValue));
-                            _progressCallback("Read 【"+ tables[i].name + "】 Column Data", "Row【" + row + "】Col【" + col + "】【" + tempName + "】", col / (float)sheet.Dimension.Columns);
+                            _progressCallback("Read 【" + tables[i].name + "】 Column Data", "Row【" + row + "】Col【" + col + "】【" + tempName + "】", col / (float)sheet.Dimension.Columns);
                         }
                         if (tempIsAllValueNull)
                         {//如果所有列为空，则认为是数据结束
@@ -729,15 +736,22 @@ public sealed class EditorStrayFogXLS
                         }
                         else
                         {
-                            tempValueSql.Add(string.Format("({0})",string.Join(",", tempSPName.ToArray())));
+                            tempValueSql.Add(string.Format("({0})", string.Join(",", tempSPName.ToArray())));
+                            tempInsertSql.Append(string.Join(",", tempValueSql.ToArray()));
+                            tempInsertTable[tables[i].name].Add(tempInsertSql.ToString(), tempSPS);
                         }
                     }
                 }
             }
-            tempInsertSql.Append(string.Join(",", tempValueSql.ToArray()));
-            tempInsertTable.Add(tempInsertSql.ToString(), tempSPS);
         }
-        SQLiteHelper.sqlHelper.ExecuteTransaction(tempInsertTable);
+
+        float progress = 0;
+        foreach (KeyValuePair<string, Dictionary<string, List<SqliteParameter>>> key in tempInsertTable)
+        {
+            progress++;
+            _progressCallback("Excute Sql", string.Format("Insert Table【{0}】Data Count 【{1}】", key.Key, key.Value.Count - 1), progress / tempInsertTable.Count);
+            SQLiteHelper.sqlHelper.ExecuteTransaction(key.Value);
+        }        
     }
     #endregion
 
