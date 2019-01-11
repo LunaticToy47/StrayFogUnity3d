@@ -332,13 +332,17 @@ public sealed class EditorStrayFogXLS
             EditorUtility.DisplayProgressBar("Collection Table", t.name, progress / _tableSchemas.Count);
         }
 
+        if (sbDeterminantReplace.Length <= 0)
+        {
+            sbDeterminantReplace.Append(determinantTemplete.Replace("#Name#", ""));
+        }
         if (sbDeterminantReplace.Length > 0)
         {
             int ri = sbDeterminantReplace.ToString().LastIndexOf("UNION");
             sbDeterminantReplace = sbDeterminantReplace.Remove(ri, sbDeterminantReplace.Length - ri);
             sbExcuteSql.Add(determinantSqlTemplete.Replace(determinantReplaceTemplete, sbDeterminantReplace.ToString()));
         }
-        result = SQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
+        result = sbExcuteSql.Count <= 0 || SQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
         #endregion
 
         #region 生成视图
@@ -351,7 +355,7 @@ public sealed class EditorStrayFogXLS
             sbExcuteSql.Add(ta.text);
             EditorUtility.DisplayProgressBar("Collection View", v.nameWithoutExtension, progress / views.Count);
         }
-        result = SQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
+        result = sbExcuteSql.Count <= 0 || SQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
         #endregion
         return result;
     }
