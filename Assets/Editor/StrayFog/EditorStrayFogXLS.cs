@@ -336,6 +336,7 @@ public sealed class EditorStrayFogXLS
         {
             sbDeterminantReplace.Append(determinantTemplete.Replace("#Name#", ""));
         }
+
         if (sbDeterminantReplace.Length > 0)
         {
             int ri = sbDeterminantReplace.ToString().LastIndexOf("UNION");
