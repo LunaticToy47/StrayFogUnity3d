@@ -4,12 +4,12 @@ using System;
 /// <summary>
 /// AssetDiskMapingFile实体
 /// </summary>
-public partial class Table_AssetDiskMapingFile: AbsSQLiteEntity
+public partial class Table_AssetDiskMapingFile: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组
     /// </summary>
-    public override object[] pks { get { return new List<object>() { fileId,}.ToArray(); } }
+    public override object[] pks { get { return new List<object>() { fileId,folderId,}.ToArray(); } }
 
 	
 	/// <summary>

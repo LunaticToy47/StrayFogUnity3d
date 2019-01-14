@@ -5,17 +5,17 @@ using System.Collections.Generic;
 /// <summary>
 /// SQLite帮助类
 /// </summary>
-public class SQLiteHelper
+public class StrayFogSQLiteHelper
 {
     #region Db库
     /// <summary>
     /// SQLiteHelper
     /// </summary>
-    static SQLiteHelper mSqlHelper = null;
+    static StrayFogSQLiteHelper mSqlHelper = null;
     /// <summary>
     /// SQL帮助类
     /// </summary>
-    public static SQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new SQLiteHelper(string.Format("data source={0}", StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource)); } return mSqlHelper; } }   
+    public static StrayFogSQLiteHelper sqlHelper { get { if (mSqlHelper == null) { mSqlHelper = new StrayFogSQLiteHelper(string.Format("data source={0}", StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource)); } return mSqlHelper; } }   
     #endregion
 
     /// <summary>
@@ -30,7 +30,7 @@ public class SQLiteHelper
     /// 构造函数    
     /// </summary>
     /// <param name="_connectionString">数据库连接字符串</param>
-    SQLiteHelper(string _connectionString)
+    StrayFogSQLiteHelper(string _connectionString)
     {
         try
         {

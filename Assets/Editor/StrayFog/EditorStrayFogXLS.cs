@@ -343,7 +343,7 @@ public sealed class EditorStrayFogXLS
             sbDeterminantReplace = sbDeterminantReplace.Remove(ri, sbDeterminantReplace.Length - ri);
             sbExcuteSql.Add(determinantSqlTemplete.Replace(determinantReplaceTemplete, sbDeterminantReplace.ToString()));
         }
-        result = sbExcuteSql.Count <= 0 || SQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
+        result = sbExcuteSql.Count <= 0 || StrayFogSQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
         #endregion
 
         #region 生成视图
@@ -356,7 +356,7 @@ public sealed class EditorStrayFogXLS
             sbExcuteSql.Add(ta.text);
             EditorUtility.DisplayProgressBar("Collection View", v.nameWithoutExtension, progress / views.Count);
         }
-        result = sbExcuteSql.Count <= 0 || SQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
+        result = sbExcuteSql.Count <= 0 || StrayFogSQLiteHelper.sqlHelper.ExecuteTransaction(sbExcuteSql.ToArray());
         #endregion
         return result;
     }
@@ -410,8 +410,8 @@ public sealed class EditorStrayFogXLS
         }
 
         #region 收集实体            
-        Int64 count = SQLiteHelper.sqlHelper.ReadEntityNamesCount();
-        SqliteDataReader tableNameReader = SQLiteHelper.sqlHelper.ReadEntityNames();
+        Int64 count = StrayFogSQLiteHelper.sqlHelper.ReadEntityNamesCount();
+        SqliteDataReader tableNameReader = StrayFogSQLiteHelper.sqlHelper.ReadEntityNames();
         while (tableNameReader.Read())
         {
             progress++;
@@ -505,7 +505,7 @@ public sealed class EditorStrayFogXLS
         #endregion
 
         #region 生成实体操作扩展
-        EditorTextAssetConfig cfgHeplerExtendScript = new EditorTextAssetConfig("SQLiteEntityHelperExtend", sqliteFolder, enFileExt.CS, "");
+        EditorTextAssetConfig cfgHeplerExtendScript = new EditorTextAssetConfig("StrayFogSQLiteEntityHelperExtend", sqliteFolder, enFileExt.CS, "");
         string helperScriptTemplete = EditorResxTemplete.SQLiteEntityHelperExtendTemplete;
 
         #region #EntityMaping#
@@ -554,7 +554,7 @@ public sealed class EditorStrayFogXLS
         cfgHeplerExtendScript.CreateAsset();
         #endregion
 
-        SQLiteHelper.sqlHelper.Close();
+        StrayFogSQLiteHelper.sqlHelper.Close();
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         Debug.Log(sbLog.ToString());
@@ -607,8 +607,8 @@ public sealed class EditorStrayFogXLS
         }
         else
         {
-            pragmaReader = SQLiteHelper.sqlHelper.ReadTablePragma(_entity.name);
-            schemaReader = SQLiteHelper.sqlHelper.ReadTableSchema(_entity.name);
+            pragmaReader = StrayFogSQLiteHelper.sqlHelper.ReadTablePragma(_entity.name);
+            schemaReader = StrayFogSQLiteHelper.sqlHelper.ReadTableSchema(_entity.name);
             //收集列名
             while (pragmaReader.Read())
             {
@@ -755,7 +755,7 @@ public sealed class EditorStrayFogXLS
         {
             progress++;
             _progressCallback("Excute Sql", string.Format("Insert Table【{0}】Data Count 【{1}】", key.Key, key.Value.Count - 1), progress / tempInsertTable.Count);
-            SQLiteHelper.sqlHelper.ExecuteTransaction(key.Value);
+            StrayFogSQLiteHelper.sqlHelper.ExecuteTransaction(key.Value);
         }        
     }
     #endregion

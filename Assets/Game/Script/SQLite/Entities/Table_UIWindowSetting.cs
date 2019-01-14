@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// UIWindowSetting实体
 /// </summary>
-public partial class Table_UIWindowSetting: AbsSQLiteEntity
+public partial class Table_UIWindowSetting: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组

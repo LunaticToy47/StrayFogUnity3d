@@ -88,7 +88,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
         #endregion
 
         #region 初始化引导数据
-        List<Table_UserGuideTrigger> triggers = SQLiteEntityHelper.Select<Table_UserGuideTrigger>();
+        List<Table_UserGuideTrigger> triggers = StrayFogSQLiteEntityHelper.Select<Table_UserGuideTrigger>();
         if (triggers != null && triggers.Count > 0)
         {
             foreach (Table_UserGuideTrigger t in triggers)
@@ -104,7 +104,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
             }
         }
 
-        List<Table_UserGuideValidate> validates = SQLiteEntityHelper.Select<Table_UserGuideValidate>();
+        List<Table_UserGuideValidate> validates = StrayFogSQLiteEntityHelper.Select<Table_UserGuideValidate>();
         if (validates != null && validates.Count > 0)
         {
             foreach (Table_UserGuideValidate t in validates)

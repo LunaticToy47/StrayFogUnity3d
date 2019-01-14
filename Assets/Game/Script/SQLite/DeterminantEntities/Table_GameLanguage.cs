@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// GameLanguage实体
 /// </summary>
-public partial class Table_GameLanguage: AbsSQLiteEntity
+public partial class Table_GameLanguage: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组

@@ -89,6 +89,14 @@ public abstract class AbsEditorSavedAssetFile : AbsScriptableObject
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(
                     string.Format("{0}.{1}", (i + 1).PadLeft(mTempFolders.Count), mTempFolders[i]));
+                if (GUILayout.Button("Brower"))
+                {
+                    EditorStrayFogApplication.PingObject(mTempFolders[i]);
+                }
+                if (GUILayout.Button("Reveal"))
+                {
+                    EditorStrayFogApplication.RevealInFinder(mTempFolders[i]);
+                }
                 if (GUILayout.Button("Delete"))
                 {
                     if (EditorUtility.DisplayDialog("Delete Folder", "Are you sure to delete folder 【" + mTempFolders[i] + "】", "OK", "Cancel"))
@@ -96,7 +104,7 @@ public abstract class AbsEditorSavedAssetFile : AbsScriptableObject
                         delIndex = i;
                         break;
                     }
-                }
+                }                
                 EditorGUILayout.EndHorizontal();
             }
             if (delIndex >= 0)

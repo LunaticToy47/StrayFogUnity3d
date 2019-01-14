@@ -4,7 +4,7 @@ using System.IO;
 /// <summary>
 /// SQLite表实体XLS视图数据帮助类
 /// </summary>
-public sealed partial class SQLiteEntityHelper
+public sealed partial class StrayFogSQLiteEntityHelper
 {
     /// <summary>
     /// 从XLS读取数据
@@ -12,8 +12,8 @@ public sealed partial class SQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_entitySetting">实体设置</param>
     /// <returns>数据</returns>
-    static List<T> OnLoadFromXLS<T>(SQLiteEntitySetting _entitySetting)
-        where T : AbsSQLiteEntity
+    static List<T> OnLoadFromXLS<T>(StrayFogSQLiteEntitySetting _entitySetting)
+        where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
         T tempEntity = default(T);        
@@ -59,7 +59,7 @@ public sealed partial class SQLiteEntityHelper
             {
                 #region View_DeterminantVT 数据组装
                 int vtNameKey = "vtName".UniqueHashCode();
-                foreach (SQLiteEntitySetting key in msrEntityMaping.Values)
+                foreach (StrayFogSQLiteEntitySetting key in msrEntityMaping.Values)
                 {
                     if (key.isDeterminant)
                     {

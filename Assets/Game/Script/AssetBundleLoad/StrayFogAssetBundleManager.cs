@@ -69,7 +69,7 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         View_AssetDiskMaping result = null;
         if (msAssetDiskMaping.Count <= 0)
         {
-            List<View_AssetDiskMaping> mapings = SQLiteEntityHelper.Select<View_AssetDiskMaping>();
+            List<View_AssetDiskMaping> mapings = StrayFogSQLiteEntityHelper.Select<View_AssetDiskMaping>();
             if (mapings.Count > 0)
             {
                 foreach (View_AssetDiskMaping v in mapings)

@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// AssetDiskMapingFolder实体
 /// </summary>
-public partial class Table_AssetDiskMapingFolder: AbsSQLiteEntity
+public partial class Table_AssetDiskMapingFolder: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组

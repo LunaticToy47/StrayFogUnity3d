@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// UserGuideValidate实体
 /// </summary>
-public partial class Table_UserGuideValidate: AbsSQLiteEntity
+public partial class Table_UserGuideValidate: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组

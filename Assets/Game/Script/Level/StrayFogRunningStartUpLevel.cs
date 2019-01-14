@@ -25,7 +25,7 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
         {
             try
             {
-                mTables = SQLiteEntityHelper.Select<Table_TableColumnMaping>();
+                mTables = StrayFogSQLiteEntityHelper.Select<Table_TableColumnMaping>();
             }
             catch (Exception ep)
             {

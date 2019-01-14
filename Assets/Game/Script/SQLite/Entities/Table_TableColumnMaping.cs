@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// TableColumnMaping实体
 /// </summary>
-public partial class Table_TableColumnMaping: AbsSQLiteEntity
+public partial class Table_TableColumnMaping: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组

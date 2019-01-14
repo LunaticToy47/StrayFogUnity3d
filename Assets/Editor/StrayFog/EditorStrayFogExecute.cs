@@ -1089,7 +1089,7 @@ public sealed class EditorStrayFogExecute
                 .Replace(enumReplaceTemplete, sbEnumTableReplace.ToString()));
             cfgEnumScript.CreateAsset();
             #endregion
-            SQLiteHelper.sqlHelper.Close();
+            StrayFogSQLiteHelper.sqlHelper.Close();
             EditorUtility.ClearProgressBar();
         }
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
@@ -1170,7 +1170,7 @@ public sealed class EditorStrayFogExecute
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
 
-        SQLiteHelper.sqlHelper.Close();
+        StrayFogSQLiteHelper.sqlHelper.Close();
         EditorStrayFogUtility.cmd.DeleteFolder(path);
 
         if (Directory.Exists(path))

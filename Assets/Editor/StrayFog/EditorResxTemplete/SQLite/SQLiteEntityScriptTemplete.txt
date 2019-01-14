@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// #EntityName#实体
 /// </summary>
-public partial class #ClassName#: AbsSQLiteEntity
+public partial class #ClassName#: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组

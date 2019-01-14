@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// UserGuideTrigger实体
 /// </summary>
-public partial class Table_UserGuideTrigger: AbsSQLiteEntity
+public partial class Table_UserGuideTrigger: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组

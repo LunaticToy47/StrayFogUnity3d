@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// View_DeterminantVT实体
 /// </summary>
-public partial class View_DeterminantVT: AbsSQLiteEntity
+public partial class View_DeterminantVT: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
     /// PK键组

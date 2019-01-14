@@ -12,6 +12,7 @@ public enum enAssetDiskMapingFile
 	f_ExampleFMS_unity = -1553022821,
 	f_ExampleGuide_unity = 1555606421,
 	f_ExampleProject_unity = -80690262,
+	f_ExampleSQLite_unity = -401975932,
 	f_ExampleXLua_unity = -699454701,
 	f_chgPowerCircle1_png = 252311722,
 	f_chgPowerCircle2_png = 64044992,

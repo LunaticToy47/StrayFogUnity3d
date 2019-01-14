@@ -5,80 +5,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 /// <summary>
-/// SQLite表实体帮助类
+/// StrayFogSQLite表实体帮助类
 /// </summary>
-public sealed partial class SQLiteEntityHelper
+public sealed partial class StrayFogSQLiteEntityHelper
 {
-    #region SQLite表实体设定
-    /// <summary>
-    /// SQLite表实体设定
-    /// </summary>
-    class SQLiteEntitySetting
-    {
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="_id">id</param>
-        /// <param name="_name">实体名称</param>
-        /// <param name="_xlsFileName">xls文件名称</param>
-        /// <param name="_isDeterminant">是否是行列式</param>
-        /// <param name="_classify">实体分类</param>
-        /// <param name="_xlsColumnNameIndex">XLS表列名称索引</param>
-        /// <param name="_xlsColumnDataIndex">XLS表列值索引</param>
-        /// <param name="_xlsColumnTypeIndex">XLS表列类型索引</param>
-        /// <param name="_xlsDataStartRowIndex">XLS表数据起始行索引</param>
-        public SQLiteEntitySetting(int _id, string _name, string _xlsFileName, bool _isDeterminant, enSQLiteEntityClassify _classify,
-            int _xlsColumnNameIndex, int _xlsColumnDataIndex,int _xlsColumnTypeIndex,int _xlsDataStartRowIndex)
-        {
-            id = _id;
-            name = _name;
-            xlsFileName = _xlsFileName;
-            isDeterminant = _isDeterminant;
-            classify = _classify;
-            xlsColumnNameIndex = _xlsColumnNameIndex;
-            xlsColumnDataIndex = _xlsColumnDataIndex;
-            xlsColumnTypeIndex = _xlsColumnTypeIndex;
-            xlsDataStartRowIndex = _xlsDataStartRowIndex;
-        }
-        /// <summary>
-        /// 实体id
-        /// </summary>
-        public int id { get; private set; }
-        /// <summary>
-        /// 实体名称
-        /// </summary>
-        public string name { get; private set; }
-        /// <summary>
-        /// 实体XLS表名称
-        /// </summary>
-        public string xlsFileName { get; private set; }
-        /// <summary>
-        /// 是否是行列式表
-        /// </summary>
-        public bool isDeterminant { get; private set; }
-        /// <summary>
-        /// 实体分类
-        /// </summary>
-        public enSQLiteEntityClassify classify { get; private set; }
-        /// <summary>
-        /// XLS表列名称索引
-        /// </summary>
-        public int xlsColumnNameIndex { get; private set; }
-        /// <summary>
-        /// XLS表列值索引
-        /// </summary>
-        public int xlsColumnDataIndex { get; private set; }
-        /// <summary>
-        /// XLS表列类型索引
-        /// </summary>
-        public int xlsColumnTypeIndex { get; private set; }
-        /// <summary>
-        /// XLS表数据起始行索引
-        /// </summary>
-        public int xlsDataStartRowIndex { get; private set; }
-    }
-    #endregion
-
     #region OnSelectAll 读取所有数据
     /// <summary>
     /// 实体属性映射
@@ -96,8 +26,8 @@ public sealed partial class SQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_entitySetting">实体设定</param>
     /// <returns>数据集合</returns>
-    static List<T> OnReadAll<T>(SQLiteEntitySetting _entitySetting)
-        where T : AbsSQLiteEntity
+    static List<T> OnReadAll<T>(StrayFogSQLiteEntitySetting _entitySetting)
+        where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
         if (!msEntityPropertyInfoMaping.ContainsKey(_entitySetting.id))
@@ -122,7 +52,7 @@ public sealed partial class SQLiteEntityHelper
         if (!msEntitySQLitePropertyTypeNameMaping.ContainsKey(_entitySetting.id))
         {
             msEntitySQLitePropertyTypeNameMaping.Add(_entitySetting.id, new Dictionary<int, string>());
-            SqliteDataReader reader = SQLiteHelper.sqlHelper.ReadTablePragma(_entitySetting.name);
+            SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ReadTablePragma(_entitySetting.name);
             int key = 0;
             while (reader.Read())
             {
@@ -154,8 +84,8 @@ public sealed partial class SQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_entitySetting">实体设定</param>
     /// <returns>数据集</returns>
-    static List<T> OnReadFromXLS<T>(SQLiteEntitySetting _entitySetting)
-        where T : AbsSQLiteEntity
+    static List<T> OnReadFromXLS<T>(StrayFogSQLiteEntitySetting _entitySetting)
+        where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();        
         if (File.Exists(_entitySetting.xlsFileName))
@@ -255,11 +185,11 @@ public sealed partial class SQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_entitySetting">实体设定</param>
     /// <returns>数据集</returns>
-    static List<T> OnReadFromSQLite<T>(SQLiteEntitySetting _entitySetting)
-        where T : AbsSQLiteEntity
+    static List<T> OnReadFromSQLite<T>(StrayFogSQLiteEntitySetting _entitySetting)
+        where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
-        SqliteDataReader reader = SQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.name));
+        SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.name));
         T tempEntity = default(T);
         string tempPropertyName = string.Empty;
         int tempPropertyKey = 0;
@@ -328,7 +258,7 @@ public sealed partial class SQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <returns>数据集</returns>
     public static List<T> Select<T>()
-        where T : AbsSQLiteEntity
+        where T : AbsStrayFogSQLiteEntity
     {
         return Select<T>(null);
     }
@@ -340,10 +270,10 @@ public sealed partial class SQLiteEntityHelper
     /// <param name="_condition">条件</param>
     /// <returns>数据集</returns>
     public static List<T> Select<T>(Func<T, bool> _condition)
-    where T : AbsSQLiteEntity
+    where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
-        SQLiteEntitySetting entitySetting = OnGetEntitySetting<T>();
+        StrayFogSQLiteEntitySetting entitySetting = OnGetEntitySetting<T>();
         if (mCacheEntityData.ContainsKey(entitySetting.id))
         {
             result = (List<T>)mCacheEntityData[entitySetting.id];
