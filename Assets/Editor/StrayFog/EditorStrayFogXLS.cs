@@ -69,7 +69,7 @@ public sealed class EditorStrayFogXLS
     /// <summary>
     /// 列分隔符
     /// </summary>
-    static readonly string[] msrColumnSeparate = new string[] { @"," };
+    static readonly string msrColumnSeparate =",";
     #endregion
 
     #region OnTransDescToSummary 转换描述为Summary形式
@@ -245,6 +245,7 @@ public sealed class EditorStrayFogXLS
     static void OnCreateTableSchemaToSQLite(List<EditorXlsTableSchema> _tables)
     {
         string sqliteCreateTableTemplete = EditorResxTemplete.SQLiteCreateTableTemplete;
+        List<string> sbExcuteSql = new List<string>();
 
         #region #Column# Templete
         string columnMark = "#Column#";
@@ -299,9 +300,27 @@ public sealed class EditorStrayFogXLS
                     }
                 }
             }
-            
 
+            sbColumnReplace.Append(string.Join(msrColumnSeparate, columnCodes.ToArray()));
+            if (pksCodes.Count > 0)
+            {
+                sbColumnReplace.Append(msrColumnSeparate);
+                sbPrimaryKeyReplace.Append(
+                primaryKeyTemplete
+                .Replace(pksReplaceTemplete, string.Join(msrColumnSeparate, pksCodes.ToArray()))
+                );
+            }           
+
+            sbExcuteSql.Add(
+                sqliteCreateTableTemplete
+                .Replace("#TableName#",table.name)
+                .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
+                .Replace(primaryKeyReplaceTemplete, sbPrimaryKeyReplace.ToString())
+                );
         }
+
+        Debug.Log(sbExcuteSql);
+
     }
 
     #endregion

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tableName: UserGuideValidate
   fileName: Assets/Game/Editor/XLS/UserGuideValidate.xlsx
-  dbName: Assets/Game/Editor
+  dbName: XLS.db
+  dbPath: Assets/Game/Editor/XLS.db
   isDeterminant: 0
   isCreateScript: 1
   columns:
