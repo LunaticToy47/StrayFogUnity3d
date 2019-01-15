@@ -16,6 +16,10 @@ public sealed class EditorStrayFogSavedConfigAssetFile
     /// 设置Animator
     /// </summary>
     public static EditorAnimatorControllerFMSMapingConfig setAnimatorControllerFMSMaping = new EditorAnimatorControllerFMSMapingConfig();
-
+    /// <summary>
+    /// 设置XlsSchemaToSqlite
+    /// </summary>
+    public static EditorXlsSchemaToSqliteConfig setXlsSchemaToSqlite = new EditorXlsSchemaToSqliteConfig();
+    
 }
 #endif

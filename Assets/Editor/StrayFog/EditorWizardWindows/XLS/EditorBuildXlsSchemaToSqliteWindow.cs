@@ -9,6 +9,19 @@ using UnityEngine;
 public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
 {
     /// <summary>
+    /// 配置
+    /// </summary>
+    EditorXlsSchemaToSqliteConfig mConfig;
+
+    /// <summary>
+    /// OnFocus
+    /// </summary>
+    void OnFocus()
+    {
+        mConfig = EditorStrayFogSavedConfigAssetFile.setXlsSchemaToSqlite;
+    }
+
+    /// <summary>
     /// 表格架构
     /// </summary>
     List<EditorXlsTableSchema> mXlsTableSchemas = new List<EditorXlsTableSchema>();
@@ -33,6 +46,10 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
+        if (mConfig.file != null)
+        {
+            mConfig.file.DrawGUI();
+        }
         EditorGUILayout.Separator();
         EditorGUILayout.HelpBox(EditorStrayFogXLS.msrSeparateDescription, MessageType.None);
         if (GUILayout.Button("SQLiteDataType Code Sequence"))
@@ -40,7 +57,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
             EditorStrayFogApplication.CopyToClipboard(EditorStrayFogXLS.msrSQLiteDataTypeCodeSequence);
             Debug.Log(EditorStrayFogXLS.msrSQLiteDataTypeCodeSequence);
         }
-        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();       
         if (GUILayout.Button("Load XLS"))
         {
             mXlsTableSchemas = EditorStrayFogXLS.ReadXlsSchema();
