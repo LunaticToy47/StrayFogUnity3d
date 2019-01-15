@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 /// 引导注册组件
 /// </summary>
 [AddComponentMenu("Game/Guide/UIGuideRegister")]
-public class UIGuideRegister : MonoBehaviour, IAttachMonoBehaviourAnyWhere
+public class UIGuideRegister : AbsMonoBehaviour
 {
     /// <summary>
     /// 引导绘制图节点索引

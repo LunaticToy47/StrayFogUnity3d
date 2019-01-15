@@ -4,7 +4,7 @@ using UnityEngine;
 /// 注册组件
 /// </summary>
 [AddComponentMenu("Game/StrayFogRegisterMonoBehaviour")]
-public class StrayFogRegisterMonoBehaviour : MonoBehaviour, IAttachMonoBehaviourAnyWhere
+public class StrayFogRegisterMonoBehaviour : AbsMonoBehaviour
 {
     /// <summary>
     /// 组件脚本名称

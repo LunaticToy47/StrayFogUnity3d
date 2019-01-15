@@ -6,7 +6,7 @@
 /// </summary>
 /// </summary>
 [AddComponentMenu("Game/Shader/Grass/Destabilize")]
-public class GrassDestabilizeShaderMono : MonoBehaviour
+public class GrassDestabilizeShaderMono : AbsMonoBehaviour
 {
 
 }

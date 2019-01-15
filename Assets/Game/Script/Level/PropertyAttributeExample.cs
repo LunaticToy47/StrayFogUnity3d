@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 [AddComponentMenu("ExampleProject/Script/PropertyAttributeExample")]
-public class PropertyAttributeExample : MonoBehaviour, IAttachMonoBehaviourAnyWhere
+public class PropertyAttributeExample : AbsMonoBehaviour
 {
     [AliasTooltip("属性数量")]
     public int attCount = 2;

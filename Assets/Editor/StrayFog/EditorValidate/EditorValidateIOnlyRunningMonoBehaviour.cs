@@ -12,7 +12,7 @@ public class EditorValidateIOnlyRunningMonoBehaviour : Editor
     /// </summary>
     void OnEnable()
     {
-        if (!(target is IAttachMonoBehaviourAnyWhere) && !EditorApplication.isPlaying)
+        if ((target is IAttachMonoBehaviourOnlyRunning) && !EditorApplication.isPlaying)
         {
             DestroyImmediate(target, true);
         }

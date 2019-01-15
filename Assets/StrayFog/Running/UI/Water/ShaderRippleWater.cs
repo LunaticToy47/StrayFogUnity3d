@@ -4,7 +4,7 @@
 /// </summary>
 [AddComponentMenu("Game/Shader/Water/RippleWater")]
 [RequireComponent(typeof(Renderer))]
-public class ShaderRippleWater : MonoBehaviour
+public class ShaderRippleWater : AbsMonoBehaviour
 {
     /// <summary>
     /// Base(RGB) Texture2D
