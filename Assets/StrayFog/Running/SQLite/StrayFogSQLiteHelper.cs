@@ -51,7 +51,6 @@ public partial class StrayFogSQLiteHelper
         {
             mDbConnection.Close();
             mDbConnection.Dispose();
-            mDbConnection = null;
         }
         SqliteConnection.ClearAllPools();
         GC.Collect();
