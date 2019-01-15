@@ -5,11 +5,12 @@ PRAGMA foreign_keys = OFF;
 -- ----------------------------
 DROP TABLE IF EXISTS "main"."#TableName#";
 CREATE TABLE "#TableName#" (
+
 #Column#
-"#Name#"  #DataType# #NotNull# #Dot#
+"#Name#"  #DataType# #NotNull#
 #Column#
 
-#PRIMARYKEY#
-PRIMARY KEY (#PK#"#Name#" ASC,#PK#)
-#PRIMARYKEY#
+#PrimaryKey#
+PRIMARY KEY (#PKS#"#Name#" ASC#PKS#)
+#PrimaryKey#
 );

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tableName: TableColumnMaping
   fileName: Assets/Game/Editor/XLS/TableColumnMaping.xlsx
+  dbName: Assets/Game/Editor
   isDeterminant: 0
   isCreateScript: 1
   columns:

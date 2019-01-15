@@ -160,38 +160,7 @@ string.Empty;
 #endif
         }
     }
-    #endregion
-
-    #region assetBundleDbName 资源包数据库名称
-    /// <summary>
-    /// 资源包数据库名称
-    /// </summary>
-    public string assetBundleDbName { get { return "c_" + mcStrayFogDb.GetHashCode().ToString().Replace("-", "_"); } }
-    #endregion
-
-    #region dbSource 数据库资源文件路径
-    /// <summary>
-    /// Db库名称
-    /// </summary>
-    const string mcStrayFogDb = "Game.db";
-    /// <summary>
-    /// 数据库资源文件路径
-    /// </summary>
-    public string dbSource { get { return "Assets/Game/Editor/" + mcStrayFogDb; } }
-    #endregion
-
-    #region dbConnectionString 数据库连接字符串
-    /// <summary>
-    /// 数据库连接字符串
-    /// </summary>
-#if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
-    public string dbConnectionString { get { return string.Format("data source={0}", dbSource); } }
-#elif UNITY_ANDROID
-    public string dbConnectionString { get { return string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, assetBundleDbName).Replace("-", "_")); } }
-#else
-    public string dbConnectionString { get { return string.Format("data source={0}", Path.Combine(assetBundleRoot, assetBundleDbName)).Replace("-", "_"); } }
-#endif
-    #endregion
+    #endregion    
 
     #region isInternal 是否是内部资源加载
     /// <summary>
@@ -263,6 +232,37 @@ string.Empty;
         }
         return _position.y - y;
     }
+#endif
+    #endregion
+
+    #region assetBundleDbName 资源包数据库名称
+    /// <summary>
+    /// 资源包数据库名称
+    /// </summary>
+    public string assetBundleDbName { get { return "c_" + mcStrayFogDb.GetHashCode().ToString().Replace("-", "_"); } }
+    #endregion
+
+    #region dbSource 数据库资源文件路径
+    /// <summary>
+    /// Db库名称
+    /// </summary>
+    const string mcStrayFogDb = "Game.db";
+    /// <summary>
+    /// 数据库资源文件路径
+    /// </summary>
+    public string dbSource { get { return "Assets/Game/Editor/" + mcStrayFogDb; } }
+    #endregion
+
+    #region dbConnectionString 数据库连接字符串
+    /// <summary>
+    /// 数据库连接字符串
+    /// </summary>
+#if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
+    public string dbConnectionString { get { return string.Format("data source={0}", dbSource); } }
+#elif UNITY_ANDROID
+    public string dbConnectionString { get { return string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, assetBundleDbName).Replace("-", "_")); } }
+#else
+    public string dbConnectionString { get { return string.Format("data source={0}", Path.Combine(assetBundleRoot, assetBundleDbName)).Replace("-", "_"); } }
 #endif
     #endregion
 }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tableName: UserGuideTrigger
   fileName: Assets/Game/Editor/XLS/UserGuideTrigger.xlsx
+  dbName: Assets/Game/Editor
   isDeterminant: 0
   isCreateScript: 1
   columns:

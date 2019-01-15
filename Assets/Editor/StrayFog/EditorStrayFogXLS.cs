@@ -65,6 +65,332 @@ public sealed class EditorStrayFogXLS
             );
     #endregion
 
+    #region readonly 变量
+    /// <summary>
+    /// 列分隔符
+    /// </summary>
+    static readonly string[] msrColumnSeparate = new string[] { @"," };
+    #endregion
+
+    #region OnTransDescToSummary 转换描述为Summary形式
+    /// <summary>
+    /// 转换描述为Summary形式
+    /// </summary>
+    /// <param name="_desc">描述</param>
+    /// <returns>描述</returns>
+    static string OnTransDescToSummary(string _desc)
+    {
+        StringBuilder descSb = new StringBuilder();
+        StringReader reader = new StringReader(_desc);
+        string line = string.Empty;
+        int num = 0;
+        do
+        {
+            line = reader.ReadLine();
+            if (!string.IsNullOrEmpty(line))
+            {
+                if (num == 0)
+                {
+                    descSb.Append(line);
+                }
+                else
+                {
+                    descSb.Append(Environment.NewLine + "	///" + line);
+                }
+                num++;
+            }
+        } while (!string.IsNullOrEmpty(line));
+        return descSb.ToString();
+    }
+    #endregion
+
+    #region OnClearXlsData 清除XLS表数据
+    /// <summary>
+    /// 清除XLS表数据
+    /// </summary>
+    /// <param name="_xlsPath">XLS表路径</param>
+    static void OnClearXlsData(string _xlsPath)
+    {
+        string newXlsPath = _xlsPath + "_New";
+        using (FileStream fs = new FileStream(_xlsPath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
+            {
+                sheet.DeleteRow(msrColumnDataRowStartIndex, sheet.Dimension.Rows);
+                pck.SaveAs(new FileInfo(newXlsPath));
+            }
+        }
+
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(_xlsPath);
+            File.Move(newXlsPath, _xlsPath);
+        }
+    }
+    #endregion
+
+    #region ReadXlsSchema 读取XLS表结构框架
+    /// <summary>
+    /// 读取XLS表结构框架
+    /// </summary>
+    /// <returns>XLS表结构框架</returns>
+    public static List<EditorXlsTableSchema> ReadXlsSchema()
+    {
+        List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
+        string extXlsx = enFileExt.Xlsx.GetAttribute<FileExtAttribute>().ext;
+        List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedConfigAssetFile.setXlsSchemaToSqlite.file.folders,
+            enEditorAssetFilterClassify.DefaultAsset, false,
+            (n) => { return n.ext.ToUpper() == extXlsx.ToUpper(); });
+
+        EditorXlsTableSchema tempTable = null;
+        EditorXlsTableColumnSchema tempTableCell = null;
+
+        string tempColumnName = string.Empty;
+        foreach (EditorSelectionXlsSchemaToSQLiteAsset f in xlsFiles)
+        {
+            using (FileStream fs = new FileStream(f.path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                ExcelPackage pck = new ExcelPackage(fs);
+                if (pck.Workbook.Worksheets.Count > 0)
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    List<string> lstColumnName = new List<string>();
+
+                    #region XLS表中是否有同名列
+                    if (sheet.Dimension.Rows >= msrColumnNameRowIndex)
+                    {
+                        for (int i = 1; i <= sheet.Dimension.Columns; i++)
+                        {
+                            tempColumnName = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToUpper();
+                            if (!lstColumnName.Contains(tempColumnName))
+                            {
+                                lstColumnName.Add(tempColumnName);
+                            }
+                            else
+                            {
+                                throw new UnityException(string.Format("There are same column【{0}】 in xls【{1}】",
+                                    sheet.GetValue<string>(msrColumnNameRowIndex, i), f.path));
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region 读取已保存的表架构
+                    tempTable = (EditorXlsTableSchema)f.tableAssetConfig.engineAsset;
+                    #endregion
+
+                    #region 保存原始列架构
+                    Dictionary<string, EditorXlsTableColumnSchema> srcEditorXlsTableColumnSchemaMaping = new Dictionary<string, EditorXlsTableColumnSchema>();
+                    if (tempTable.columns != null && tempTable.columns.Length > 0)
+                    {
+                        foreach (EditorXlsTableColumnSchema c in tempTable.columns)
+                        {
+                            tempColumnName = c.name.ToUpper();
+                            if (!srcEditorXlsTableColumnSchemaMaping.ContainsKey(tempColumnName))
+                            {
+                                srcEditorXlsTableColumnSchemaMaping.Add(tempColumnName, c);
+                            }
+                        }
+                    }
+                    #endregion
+
+                    tempTable.fileName = f.path;
+                    tempTable.dbPath = f.dbPath;
+                    tempTable.dbName = f.dbName;
+                    tempTable.tableName = f.nameWithoutExtension;
+                    if (sheet.Dimension.Rows >= msrColumnNameRowIndex)
+                    {
+                        tempTable.columns = new EditorXlsTableColumnSchema[sheet.Dimension.Columns];
+                        for (int i = 1; i <= sheet.Dimension.Columns; i++)
+                        {
+                            tempTableCell = new EditorXlsTableColumnSchema();
+                            tempTableCell.name = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString();
+                            tempTableCell.desc = sheet.GetValue<string>(msrColumnDescriptionRowIndex, i).ToString();
+                            tempTableCell.type = enSQLiteDataType.String;
+                            tempTableCell.arrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+                            tempColumnName = tempTableCell.name.ToUpper();
+                            if (srcEditorXlsTableColumnSchemaMaping.ContainsKey(tempColumnName))
+                            {
+                                tempTableCell.isPK = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isPK;
+                                tempTableCell.isNull = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isNull;
+                            }
+                            StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(msrColumnTypeRowIndex, i).ToString(), ref tempTableCell.type, ref tempTableCell.arrayDimension);
+                            tempTable.columns[i - 1] = tempTableCell;
+                        }
+                    }
+                    tableSchemas.Add(tempTable);
+                }
+            }
+        }
+        return tableSchemas;
+    }
+    #endregion
+
+    #region ExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
+    /// <summary>
+    /// 生成Xls表结构到Sqlite数据库
+    /// </summary>
+    public static void ExportXlsSchemaToSQLite()
+    {
+        List<EditorXlsTableSchema> tables = ReadXlsSchema();
+        OnCreateTableSchemaToSQLite(tables);
+    }
+
+    /// <summary>
+    /// 创建表结构到SQLite数据库
+    /// </summary>
+    /// <param name="_tables">表结构</param>
+    static void OnCreateTableSchemaToSQLite(List<EditorXlsTableSchema> _tables)
+    {
+        string sqliteCreateTableTemplete = EditorResxTemplete.SQLiteCreateTableTemplete;
+
+        #region #Column# Templete
+        string columnMark = "#Column#";
+        string columnReplaceTemplete = string.Empty;
+        string columnTemplete = string.Empty;
+        StringBuilder sbColumnReplace = new StringBuilder();
+        columnTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(sqliteCreateTableTemplete, columnMark, out columnReplaceTemplete);
+        #endregion
+
+        #region #PrimaryKey# Templete
+        string primaryKeyMark = "#PrimaryKey#";
+        string primaryKeyReplaceTemplete = string.Empty;
+        string primaryKeyTemplete = string.Empty;
+        StringBuilder sbPrimaryKeyReplace = new StringBuilder();
+        primaryKeyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(sqliteCreateTableTemplete, primaryKeyMark, out primaryKeyReplaceTemplete);
+        #endregion
+
+        #region #PKS# Templete
+        string pksMark = "#PKS#";
+        string pksReplaceTemplete = string.Empty;
+        string pksTemplete = string.Empty;
+        StringBuilder sbPksReplace = new StringBuilder();
+        pksTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(primaryKeyTemplete, pksMark, out pksReplaceTemplete);
+        #endregion
+
+        List<string> columnCodes = new List<string>();
+        List<string> pksCodes = new List<string>();
+        
+
+        foreach (EditorXlsTableSchema table in _tables)
+        {
+            sbColumnReplace.Length = 0;
+            sbPrimaryKeyReplace.Length = 0;
+            sbPksReplace.Length = 0;
+            columnCodes = new List<string>();
+            pksCodes = new List<string>();
+            if (table.columns != null && table.columns.Length > 0)
+            {
+                foreach (EditorXlsTableColumnSchema c in table.columns)
+                {
+                    columnCodes.Add(
+                       columnTemplete
+                       .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
+                       .Replace("#Name#", c.name)
+                       .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.type, c.arrayDimension))
+                    );
+                    if (c.isPK)
+                    {
+                        pksCodes.Add(
+                            pksTemplete
+                            .Replace("#Name#",c.name));
+                    }
+                }
+            }
+            
+
+        }
+    }
+
+    #endregion
+
+    #region ExportXlsDataToSqlite
+    /// <summary>
+    /// 导出XLS数据到SQLite
+    /// </summary>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void ExportXlsDataToSqlite(Action<string, string, float> _progressCallback)
+    {
+        
+    }
+    #endregion
+
+    #region AssetDiskMaping表操作
+    #region InsertDataToAssetDiskMapingFolder 插入数据到AssetDiskMapingFolder表
+    /// <summary>
+    /// 插入数据到AssetDiskMapingFolder表
+    /// </summary>
+    /// <param name="_nodes">节点</param>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertDataToAssetDiskMapingFolder(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
+    {
+        
+    }
+    #endregion
+
+    #region InsertDataToAssetDiskMapingFileExt 插入数据到AssetDiskMapingFileExt表
+    /// <summary>
+    /// 插入数据到AssetDiskMapingFileExt表
+    /// </summary>
+    /// <param name="_nodes">节点</param>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertDataToAssetDiskMapingFileExt(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
+    {
+        
+    }
+    #endregion
+
+    #region InsertDataToAssetDiskMapingFile 插入数据到AssetDiskMapingFile表
+    /// <summary>
+    /// 插入数据到AssetDiskMapingFile表
+    /// </summary>
+    /// <param name="_nodes">节点</param>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertDataToAssetDiskMapingFile(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
+    {
+        
+    }
+    #endregion
+
+    #endregion
+
+    #region UIWindowSetting表操作
+    #region DeleteAllUIWindowSetting 删除所有窗口设置
+    /// <summary>
+    /// 删除所有窗口设置
+    /// </summary>
+    public static void DeleteAllUIWindowSetting()
+    {
+        
+    }
+    #endregion
+
+    #region DeleteUIWindowSetting 删除指定窗口设置
+    /// <summary>
+    /// 删除所有窗口设置
+    /// </summary>
+    /// <param name="_winId">窗口id</param>
+    public static void DeleteUIWindowSetting(int _winId)
+    {
+        
+    }
+    #endregion
+
+    #region InsertUIWindowSetting 插入窗口设置
+    /// <summary>
+    /// 删除所有窗口设置
+    /// </summary>
+    /// <param name="_windows">窗口组</param>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
+    {
+       
+    }
+    #endregion
+    #endregion
+    /*
     #region 内部 readonly 变量
     /// <summary>
     /// XLS表架构文件
@@ -125,7 +451,7 @@ public sealed class EditorStrayFogXLS
 
         EditorXlsTableSchema tempTable = null;
         EditorXlsTableColumnSchema tempTableCell = null;
-        
+
         string tempColumnName = string.Empty;
         foreach (EditorSelectionAsset f in xlsFiles)
         {
@@ -1006,5 +1332,6 @@ public sealed class EditorStrayFogXLS
     }
     #endregion
     #endregion
+    */
 }
 #endif

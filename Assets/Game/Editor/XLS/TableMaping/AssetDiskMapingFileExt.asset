@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tableName: AssetDiskMapingFileExt
   fileName: Assets/Game/Editor/XLS/AssetDiskMapingFileExt.xlsx
+  dbName: Assets/Game/Editor
   isDeterminant: 0
   isCreateScript: 0
   columns:

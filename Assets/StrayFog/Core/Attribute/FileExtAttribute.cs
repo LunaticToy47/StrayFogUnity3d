@@ -217,6 +217,11 @@ public enum enFileExt
     /// </summary>
     [FileExt(".xlua.txt")]
     XLuaTxt,
+    /// <summary>
+    /// SQLite数据库
+    /// </summary>
+    [FileExt(".db")]
+    SQLiteDb,
 }
 #endregion
 

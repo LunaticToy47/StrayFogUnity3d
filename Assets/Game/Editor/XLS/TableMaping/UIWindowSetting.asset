@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tableName: UIWindowSetting
   fileName: Assets/Game/Editor/XLS/UIWindowSetting.xlsx
+  dbName: Assets/Game/Editor
   isDeterminant: 0
   isCreateScript: 1
   columns:

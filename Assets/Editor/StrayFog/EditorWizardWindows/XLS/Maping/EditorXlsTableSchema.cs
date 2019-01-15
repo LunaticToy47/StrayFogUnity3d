@@ -16,6 +16,18 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [ReadOnly]
     public string fileName;
     /// <summary>
+    /// 数据库名称
+    /// </summary>
+    [AliasTooltip("数据库名称")]
+    [ReadOnly]
+    public string dbName;
+    /// <summary>
+    /// 数据库路径
+    /// </summary>
+    [AliasTooltip("数据库路径")]
+    [ReadOnly]
+    public string dbPath;
+    /// <summary>
     /// 是否是行列式表
     /// </summary>
     [AliasTooltip("是否是行列式表")]

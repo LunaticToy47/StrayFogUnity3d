@@ -57,7 +57,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
             EditorStrayFogApplication.CopyToClipboard(EditorStrayFogXLS.msrSQLiteDataTypeCodeSequence);
             Debug.Log(EditorStrayFogXLS.msrSQLiteDataTypeCodeSequence);
         }
-        EditorGUILayout.Separator();       
+        EditorGUILayout.Separator();
         if (GUILayout.Button("Load XLS"))
         {
             mXlsTableSchemas = EditorStrayFogXLS.ReadXlsSchema();
@@ -76,14 +76,16 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
         for (int i = 0; i < mXlsTableSchemas.Count; i++)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(string.Format("{0}. {1}", (i + 1).PadLeft(mXlsTableSchemas.Count), mXlsTableSchemas[i].tableName));
-            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表", mXlsTableSchemas[i].isDeterminant);      
-            mXlsTableSchemas[i].isCreateScript = EditorGUILayout.ToggleLeft("是否生成脚本", mXlsTableSchemas[i].isCreateScript);
-            EditorUtility.SetDirty(mXlsTableSchemas[i]);
+            EditorGUILayout.LabelField(string.Format("{0}. 【{1}】{2}", (i + 1).PadLeft(mXlsTableSchemas.Count), mXlsTableSchemas[i].dbName ,mXlsTableSchemas[i].tableName));
+
             if (GUILayout.Button("Setting"))
             {
                 EditorStrayFogApplication.PingObject(mXlsTableSchemas[i]);
             }
+
+            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表", mXlsTableSchemas[i].isDeterminant);      
+            mXlsTableSchemas[i].isCreateScript = EditorGUILayout.ToggleLeft("是否生成脚本", mXlsTableSchemas[i].isCreateScript);
+            EditorUtility.SetDirty(mXlsTableSchemas[i]);            
             if (GUILayout.Button("Brower"))
             {
                 EditorStrayFogApplication.PingObject(mXlsTableSchemas[i].fileName);

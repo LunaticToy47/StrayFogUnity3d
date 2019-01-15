@@ -680,9 +680,9 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteExportXlsSchemaToSqlite()
     {
         StringBuilder sbLog = new StringBuilder();
-        bool result = EditorStrayFogXLS.ExportXlsSchemaToSqlite();
+        EditorStrayFogXLS.ExportXlsSchemaToSQLite();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        sbLog.AppendLine(string.Format("ExecuteExportXlsSchemaToSqlite 【{0}】", result));
+        sbLog.AppendLine("ExecuteExportXlsSchemaToSqlite Succeed!");
         Debug.Log(sbLog.ToString());
     }
     #endregion

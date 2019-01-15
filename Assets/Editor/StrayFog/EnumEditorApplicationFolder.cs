@@ -39,21 +39,6 @@ public enum enEditorApplicationFolder
     #endregion
 
     #region XLS
-    /// <summary>
-    /// XLS数据源目录
-    /// </summary>
-    [EditorApplicationFolder("XLS数据源目录", "Assets/Game/Editor/XLS", "XLS数据源目录")]
-    XLS_TableSrc,
-    /// <summary>
-    /// CSV数据源目录
-    /// </summary>
-    [EditorApplicationFolder("CSV数据源目录", "Assets/Game/Editor/CSV", "XLS数据源目录")]
-    CSV_TableSrc,
-    /// <summary>
-    /// XLS表映射目录
-    /// </summary>
-    [EditorApplicationFolder("XLS表字段映射目录", "Assets/Game/Editor/XLS/TableMaping", "XLS表字段映射目录")]
-    XLS_TableMaping,
     #endregion
 
     #region Assets
