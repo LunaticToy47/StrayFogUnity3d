@@ -51,12 +51,22 @@ public class EditorSelectionSpritePackingTagAsset : EditorSelectionAsset
     /// <param name="_isClear">是否清除</param>
     void OnSaveSpritePackingTag(bool _isClear)
     {
+        bool isSetTag = true;
         if (_isClear)
         {
+            if (mTextureImporter != null)
+            {
+                isSetTag = !string.IsNullOrEmpty(mTextureImporter.spritePackingTag);
+            }            
             spritePackingTag = string.Empty;
         }
-        if (mTextureImporter != null && isFile)
+        else
         {
+            isSetTag = !string.IsNullOrEmpty(spritePackingTag);
+        }
+
+        if (mTextureImporter != null && isFile && isSetTag)
+        {           
             mTextureImporter.spritePackingTag = spritePackingTag;
             //EditorUtility.SetDirty(mTextureImporter);
             mTextureImporter.SaveAndReimport();
