@@ -1166,50 +1166,57 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildPackage()
     {
-        StringBuilder sbLog = new StringBuilder();
-        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
-        List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
-
-        StrayFogSQLiteHelper.sqlHelper.Close();
-        EditorStrayFogUtility.cmd.DeleteFolder(path);
-
-        if (Directory.Exists(path))
+        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
         {
-            string error = string.Format("The folder can't delete, it will restart editor.");
-            if (EditorUtility.DisplayDialog("Error", error, "Yes", "No"))
+            StringBuilder sbLog = new StringBuilder();
+            string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
+            List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
+
+            StrayFogSQLiteHelper.sqlHelper.Close();
+            EditorStrayFogUtility.cmd.DeleteFolder(path);
+
+            if (Directory.Exists(path))
             {
-                EditorStrayFogUtility.cmd.Restart();
+                string error = string.Format("The folder can't delete, it will restart editor.");
+                if (EditorUtility.DisplayDialog("Error", error, "Yes", "No"))
+                {
+                    EditorStrayFogUtility.cmd.Restart();
+                }
+                throw new UnityException(error);
             }
-            throw new UnityException(error);
+            else
+            {
+                Directory.CreateDirectory(path);
+            }
+            ExecuteClearAllSpritePackingTag();
+            ExecuteClearAllAssetBundleName();
+
+            ExecuteSetSpritePackingTag();
+            ExecuteSetAssetBundleName();
+
+            ExecuteBuildAllXlsData();
+
+            ExecuteExportXlsDataToSqlite();
+            ExecuteBuildDllToPackage();
+            ExecuteCopySQLiteDbToPackage();
+            ExecuteBuildDeleteNouseAssetBatToPackage();
+
+            EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+            BuildPipeline.BuildAssetBundles(path,
+                BuildAssetBundleOptions.ChunkBasedCompression,
+                EditorUserBuildSettings.activeBuildTarget);
+            EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+            EditorStrayFogUtility.cmd.ExcuteFile(Path.GetFullPath(mDeleteManifestBat.fileName));
+            EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+            EditorUtility.RevealInFinder(path);
+            sbLog.AppendLine(path);
+            sbLog.AppendLine("ExecuteBuildPackage Succeed!");
+            Debug.Log(sbLog.ToString());
         }
         else
         {
-            Directory.CreateDirectory(path);
+            EditorUtility.DisplayDialog("Error Resource Load Mode","Please Set 【Resource Load Mode】 to 【Internal】", "OK");
         }
-        ExecuteClearAllSpritePackingTag();
-        ExecuteClearAllAssetBundleName();
-
-        ExecuteSetSpritePackingTag();
-        ExecuteSetAssetBundleName();
-
-        ExecuteBuildAllXlsData();
-
-        ExecuteExportXlsDataToSqlite();
-        ExecuteBuildDllToPackage();
-        ExecuteCopySQLiteDbToPackage();
-        ExecuteBuildDeleteNouseAssetBatToPackage();
-
-        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        BuildPipeline.BuildAssetBundles(path,
-            BuildAssetBundleOptions.ChunkBasedCompression,
-            EditorUserBuildSettings.activeBuildTarget);
-        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        EditorStrayFogUtility.cmd.ExcuteFile(Path.GetFullPath(mDeleteManifestBat.fileName));
-        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        EditorUtility.RevealInFinder(path);
-        sbLog.AppendLine(path);
-        sbLog.AppendLine("ExecuteBuildPackage Succeed!");
-        Debug.Log(sbLog.ToString());
     }
     #endregion
 

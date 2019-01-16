@@ -240,6 +240,7 @@ public sealed class EditorStrayFogXLS
     {
         List<EditorXlsTableSchema> tables = ReadXlsSchema();
         OnCreateTableSchemaToSQLite(tables);
+        OnCreateScriptFromSQLite();
     }
 
     /// <summary>
@@ -457,6 +458,13 @@ public sealed class EditorStrayFogXLS
         EditorUtility.ClearProgressBar();
     }
 
+    /// <summary>
+    /// 从SQLite创建脚本
+    /// </summary>
+    static void OnCreateScriptFromSQLite()
+    {
+        
+    }
     #endregion
 
     #region ExportXlsDataToSqlite
