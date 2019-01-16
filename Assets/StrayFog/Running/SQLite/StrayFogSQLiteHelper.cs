@@ -8,6 +8,10 @@ using System.Collections.Generic;
 public partial class StrayFogSQLiteHelper
 {
     /// <summary>
+    /// 连接字符串
+    /// </summary>
+    public string connectionString { get { return mDbConnection.ConnectionString; } }
+    /// <summary>
     /// 数据库连接定义
     /// </summary>
     private SqliteConnection mDbConnection;
@@ -19,7 +23,7 @@ public partial class StrayFogSQLiteHelper
     /// 构造函数    
     /// </summary>
     /// <param name="_connectionString">数据库连接字符串</param>
-    StrayFogSQLiteHelper(string _connectionString)
+    public StrayFogSQLiteHelper(string _connectionString)
     {
         try
         {
@@ -356,5 +360,17 @@ public partial class StrayFogSQLiteHelper
         return ExecuteQuery(string.Format("PRAGMA table_info({0})", _tableName));
     }
     #endregion
+
+    #region ReadTableSqlite_master 读取sqlite_master表
+    /// <summary>
+    /// 读取sqlite_master表
+    /// </summary>
+    /// <returns>sqlite_master表信息</returns>
+    public SqliteDataReader ReadTableSqlite_master()
+    {
+        return ExecuteQuery("SELECT * FROM sqlite_master WHERE (type='table' OR type='view')");
+    }
+    #endregion
+    
 }
 

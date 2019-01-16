@@ -3,6 +3,6 @@
 -- ----------------------------
 DROP VIEW IF EXISTS "main"."View_DeterminantVT";
 CREATE VIEW View_DeterminantVT AS
-#Determinant#
-SELECT '#Name#' AS vtName UNION
-#Determinant#
+#View_Determinant#
+SELECT '#Name#' AS vtName
+#View_Determinant#

@@ -235,11 +235,47 @@ string.Empty;
 #endif
     #endregion
 
-    #region assetBundleDbName 资源包数据库名称
+    #region GetSQLiteDbName
     /// <summary>
-    /// 资源包数据库名称
+    /// 获得Db数据库名称
     /// </summary>
-    public string assetBundleDbName { get { return "c_" + mcStrayFogDb.GetHashCode().ToString().Replace("-", "_"); } }
+    /// <param name="_dbName">名称</param>
+    /// <returns>Db数据库名称</returns>
+    public string GetSQLiteDbName(string _dbName)
+    {        
+#if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
+        return _dbName;
+#else
+        return "c_" + _dbName.UniqueHashCode().ToString().Replace("-", "_");
+#endif
+    }
+    #endregion
+
+    #region GetSQLiteConnectionString 获得SQLite数据库连接字符串
+    /// <summary>
+    /// 获得SQLite数据库连接字符串
+    /// </summary>
+    /// <param name="_dbPath">数据库路径</param>
+    /// <returns>数据库连接字符串</returns>
+    public string GetSQLiteConnectionString(string _dbPath)
+    {
+#if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
+        _dbPath = string.Format("data source={0}", dbSource);
+#elif UNITY_ANDROID
+        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, GetSQLiteDbName(Path.GetFileName(_dbPath))).Replace("-", "_"));
+#else
+        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, GetSQLiteDbName(Path.GetFileName(_dbPath))).Replace("-", "_"));
+#endif
+        return _dbPath;
+    }
+
+#endregion
+
+    #region assetBundleDbName 资源包数据库名称
+/// <summary>
+/// 资源包数据库名称
+/// </summary>
+public string assetBundleDbName { get { return "c_" + mcStrayFogDb.GetHashCode().ToString().Replace("-", "_"); } }
     #endregion
 
     #region dbSource 数据库资源文件路径

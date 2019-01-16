@@ -70,6 +70,10 @@ public sealed class EditorStrayFogXLS
     /// 列分隔符
     /// </summary>
     static readonly string msrColumnSeparate =",";
+    /// <summary>
+    /// UNION符号
+    /// </summary>
+    static readonly string msrUnionSymbol = "UNION";    
     #endregion
 
     #region OnTransDescToSummary 转换描述为Summary形式
@@ -245,7 +249,10 @@ public sealed class EditorStrayFogXLS
     static void OnCreateTableSchemaToSQLite(List<EditorXlsTableSchema> _tables)
     {
         string sqliteCreateTableTemplete = EditorResxTemplete.SQLiteCreateTableTemplete;
-        List<string> sbExcuteSql = new List<string>();
+        string sqliteView_DeterminantVTTemplete = EditorResxTemplete.SQLiteCreateDeterminantViewTemplete;
+        Dictionary<int, StrayFogSQLiteHelper> dicDbPath = new Dictionary<int, StrayFogSQLiteHelper>();
+        Dictionary<int, List<string>> dicExcuteSql = new Dictionary<int, List<string>>();
+        int dbKey = 0;
 
         #region #Column# Templete
         string columnMark = "#Column#";
@@ -271,56 +278,139 @@ public sealed class EditorStrayFogXLS
         pksTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(primaryKeyTemplete, pksMark, out pksReplaceTemplete);
         #endregion
 
+        #region #View_Determinant# Templete
+        string view_DeterminantMark = "#View_Determinant#";
+        string view_DeterminantReplaceTemplete = string.Empty;
+        string view_DeterminantTemplete = string.Empty;
+        StringBuilder sbView_DeterminantReplace = new StringBuilder();
+        view_DeterminantTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(sqliteView_DeterminantVTTemplete, view_DeterminantMark, out view_DeterminantReplaceTemplete);
+        #endregion
+
         List<string> columnCodes = new List<string>();
         List<string> pksCodes = new List<string>();
-        
+        Dictionary<int, List<string>> determinantTables = new Dictionary<int, List<string>>();
 
+        #region 创建SQL语句
+    
         foreach (EditorXlsTableSchema table in _tables)
         {
-            sbColumnReplace.Length = 0;
-            sbPrimaryKeyReplace.Length = 0;
-            sbPksReplace.Length = 0;
-            columnCodes = new List<string>();
-            pksCodes = new List<string>();
-            if (table.columns != null && table.columns.Length > 0)
+            dbKey = table.dbPath.GetHashCode();
+            if (!dicDbPath.ContainsKey(dbKey))
             {
-                foreach (EditorXlsTableColumnSchema c in table.columns)
-                {
-                    columnCodes.Add(
-                       columnTemplete
-                       .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
-                       .Replace("#Name#", c.name)
-                       .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.type, c.arrayDimension))
-                    );
-                    if (c.isPK)
-                    {
-                        pksCodes.Add(
-                            pksTemplete
-                            .Replace("#Name#",c.name));
-                    }
-                }
+                dicDbPath.Add(dbKey,new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(table.dbPath)));
+            }
+            if (!dicExcuteSql.ContainsKey(dbKey))
+            {
+                dicExcuteSql.Add(dbKey, new List<string>());
+            }
+            if (!determinantTables.ContainsKey(dbKey))
+            {
+                determinantTables.Add(dbKey, new List<string>());
             }
 
-            sbColumnReplace.Append(string.Join(msrColumnSeparate, columnCodes.ToArray()));
-            if (pksCodes.Count > 0)
-            {
-                sbColumnReplace.Append(msrColumnSeparate);
-                sbPrimaryKeyReplace.Append(
-                primaryKeyTemplete
-                .Replace(pksReplaceTemplete, string.Join(msrColumnSeparate, pksCodes.ToArray()))
-                );
-            }           
+            #region 创建表SQL语句
+                sbColumnReplace.Length = 0;
+                sbPrimaryKeyReplace.Length = 0;
+                sbPksReplace.Length = 0;
+                columnCodes = new List<string>();
+                pksCodes = new List<string>();
+                if (table.columns != null && table.columns.Length > 0)
+                {
+                    foreach (EditorXlsTableColumnSchema c in table.columns)
+                    {
+                        columnCodes.Add(
+                           columnTemplete
+                           .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
+                           .Replace("#Name#", c.name)
+                           .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.type, c.arrayDimension))
+                        );
+                        if (c.isPK)
+                        {
+                            pksCodes.Add(
+                                pksTemplete
+                                .Replace("#Name#", c.name));
+                        }
+                    }
+                }
 
-            sbExcuteSql.Add(
-                sqliteCreateTableTemplete
-                .Replace("#TableName#",table.name)
-                .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
-                .Replace(primaryKeyReplaceTemplete, sbPrimaryKeyReplace.ToString())
-                );
+                sbColumnReplace.Append(string.Join(msrColumnSeparate, columnCodes.ToArray()));
+                if (pksCodes.Count > 0)
+                {
+                    sbColumnReplace.Append(msrColumnSeparate);
+                    sbPrimaryKeyReplace.Append(
+                    primaryKeyTemplete
+                    .Replace(pksReplaceTemplete, string.Join(msrColumnSeparate, pksCodes.ToArray()))
+                    );
+                }
+
+                dicExcuteSql[dbKey].Add(
+                    sqliteCreateTableTemplete
+                    .Replace("#TableName#", table.name)
+                    .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
+                    .Replace(primaryKeyReplaceTemplete, sbPrimaryKeyReplace.ToString())
+                    );
+                #endregion
+
+            if (table.isDeterminant)
+            {
+                #region 收集Determinant表
+                determinantTables[dbKey].Add(view_DeterminantTemplete.Replace("#Name#", table.name));
+                #endregion
+            }
         }
 
-        Debug.Log(sbExcuteSql);
+        #region 创建View_DeterminantVT语句
+        foreach (int dbPath in determinantTables.Keys)
+        {
+            sbView_DeterminantReplace.Length = 0;
+            if (determinantTables[dbPath].Count > 0)
+            {
+                sbView_DeterminantReplace.Append(string.Join(msrUnionSymbol, determinantTables[dbPath].ToArray()));
+            }
+            else
+            {
+                sbView_DeterminantReplace.Append(view_DeterminantTemplete.Replace("#Name#", Guid.NewGuid().ToString().UniqueHashCode().ToString()));
+            }
+            dicExcuteSql[dbPath].Add(
+                sqliteView_DeterminantVTTemplete
+                .Replace(view_DeterminantReplaceTemplete, sbView_DeterminantReplace.ToString())
+                );
+        }
+        #endregion
 
+        #endregion
+
+        float progress = 0;
+
+        #region 清理数据库SQL语句
+        foreach (KeyValuePair<int, StrayFogSQLiteHelper> key in dicDbPath)
+        {
+            progress++;
+            SqliteDataReader reader = key.Value.ReadTableSqlite_master();
+            while (reader.Read())
+            {
+                dicExcuteSql[key.Key].Insert(0, string.Format("DROP {0} {1}", reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name"))));
+            }
+            reader.Close();
+            reader = null;
+            EditorUtility.DisplayProgressBar("Collect Clear SQLite SQL",
+                    key.Value.connectionString, progress / dicDbPath.Count);
+        }
+        #endregion
+
+        progress = 0;
+        foreach (KeyValuePair<int, List<string>> key in dicExcuteSql)
+        {
+            progress++;            
+            for (int i = 0; i < key.Value.Count; i++)
+            {
+                dicDbPath[key.Key].ExecuteNonQuery(key.Value[i]);
+                EditorUtility.DisplayProgressBar("Build SQLite Schema", 
+                    dicDbPath[key.Key].connectionString, 
+                    (progress / dicExcuteSql.Count + (i+1)/ key.Value.Count) * 0.5f);
+            }
+        }
+        EditorUtility.ClearProgressBar();
     }
 
     #endregion
