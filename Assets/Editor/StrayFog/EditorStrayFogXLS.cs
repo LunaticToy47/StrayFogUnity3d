@@ -296,6 +296,7 @@ public sealed class EditorStrayFogXLS
         #region 初始化数据
         foreach (EditorXlsTableSchema table in _tables)
         {
+            progress++;
             dbKey = table.dbPath.GetHashCode();
             if (!dicDbPath.ContainsKey(dbKey))
             {
@@ -313,10 +314,13 @@ public sealed class EditorStrayFogXLS
             {
                 dicSqlPath.Add(dbKey, Path.GetDirectoryName(table.fileName));
             }
+            EditorUtility.DisplayProgressBar("Init SQLite Data",
+                    string.Format("【{0}】=>{1}", table.tableName, table.dbPath), progress / dicDbPath.Count);
         }
         #endregion
 
         #region 清理数据库SQL语句
+        progress = 0;
         foreach (KeyValuePair<int, StrayFogSQLiteHelper> key in dicDbPath)
         {
             progress++;
@@ -332,9 +336,11 @@ public sealed class EditorStrayFogXLS
         }
         #endregion
 
-        #region 创建SQL语句
+        #region 创建表SQL语句
+        progress = 0;
         foreach (EditorXlsTableSchema table in _tables)
         {
+            progress++;
             dbKey = table.dbPath.GetHashCode();
 
             #region 创建表SQL语句
@@ -382,28 +388,34 @@ public sealed class EditorStrayFogXLS
 
             #region 收集Determinant表
             if (table.isDeterminant)
-            {                
-                determinantTables[dbKey].Add(view_DeterminantTemplete.Replace("#Name#", table.name));                
+            {
+                determinantTables[dbKey].Add(view_DeterminantTemplete.Replace("#Name#", table.name));
             }
             #endregion
+
+            EditorUtility.DisplayProgressBar("Build Table SQL",
+                    string.Format("【{0}】=>{1}",table.tableName,table.dbPath), progress / _tables.Count);
         }
 
         #region 创建View_DeterminantVT语句
-        foreach (int dbPath in determinantTables.Keys)
+        progress = 0;
+        foreach (int key in determinantTables.Keys)
         {
+            progress++;
             sbView_DeterminantReplace.Length = 0;
-            if (determinantTables[dbPath].Count > 0)
+            if (determinantTables[key].Count > 0)
             {
-                sbView_DeterminantReplace.Append(string.Join(msrUnionSymbol, determinantTables[dbPath].ToArray()));
+                sbView_DeterminantReplace.Append(string.Join(msrUnionSymbol, determinantTables[key].ToArray()));
             }
             else
             {
                 sbView_DeterminantReplace.Append(view_DeterminantTemplete.Replace("#Name#", Guid.NewGuid().ToString().UniqueHashCode().ToString()));
             }
-            dicExcuteSql[dbPath].Add(
+            dicExcuteSql[key].Add(
                 sqliteView_DeterminantVTTemplete
                 .Replace(view_DeterminantReplaceTemplete, sbView_DeterminantReplace.ToString())
                 );
+            EditorUtility.DisplayProgressBar("Create View_Determinant SQL",dicDbPath[key].connectionString, progress / _tables.Count);
         }
         #endregion
 
@@ -420,12 +432,13 @@ public sealed class EditorStrayFogXLS
                 {
                     progress++;
                     dicExcuteSql[key.Key].Add(File.ReadAllText(n.path));
-                    EditorUtility.DisplayProgressBar("Collection View", string.Format("【{0}】=>{1}",n.path, dicDbPath[key.Key].connectionString), progress / sqlAssets.Count);
+                    EditorUtility.DisplayProgressBar("Build View SQL", string.Format("【{0}】=>{1}",n.path, dicDbPath[key.Key].connectionString), progress / sqlAssets.Count);
                 }
             }
         }
         #endregion
 
+        #region 创建数据库
         progress = 0;
         foreach (KeyValuePair<int, List<string>> key in dicExcuteSql)
         {
@@ -439,6 +452,8 @@ public sealed class EditorStrayFogXLS
             }
             dicDbPath[key.Key].Close();
         }
+        #endregion
+
         EditorUtility.ClearProgressBar();
     }
 
