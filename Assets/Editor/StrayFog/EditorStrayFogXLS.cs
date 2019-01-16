@@ -320,7 +320,7 @@ public sealed class EditorStrayFogXLS
         foreach (KeyValuePair<int, StrayFogSQLiteHelper> key in dicDbPath)
         {
             progress++;
-            SqliteDataReader reader = key.Value.ReadTableSqlite_master();
+            SqliteDataReader reader = key.Value.ReadSQLiteTableViewSchema();
             while (reader.Read())
             {
                 dicExcuteSql[key.Key].Add(string.Format("DROP {0} {1}", reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name"))));

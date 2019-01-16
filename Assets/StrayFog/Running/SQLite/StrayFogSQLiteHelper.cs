@@ -299,78 +299,40 @@ public partial class StrayFogSQLiteHelper
         string queryString = "SELECT * FROM " + _tableName;
         return ExecuteQuery(queryString);
     }
-    #endregion
+    #endregion    
 
-    #region ReadTableCount
+    #region ReadDeterminantTableNames 读取行列式表名称
     /// <summary>
-    /// 读取表行数
+    /// 读取行列式表名称
     /// </summary>
-    /// <param name="_tableName">数据表名称</param>
-    /// <returns>表行数</returns>
-    public Int64 ReadTableCount(string _tableName)
+    /// <returns>行列式表名称</returns>
+    public SqliteDataReader ReadDeterminantTableNames()
     {
-        string queryString = "SELECT COUNT(*) FROM " + _tableName;
-        return (Int64)ExecuteScalar(queryString);
-    }
-    #endregion
-
-    #region ReadEntityNamesCount
-    /// <summary>
-    /// 读取所有实体名称数量
-    /// </summary>
-    /// <returns>数量</returns>
-    public Int64 ReadEntityNamesCount()
-    {
-        string queryString = "SELECT COUNT(*) FROM sqlite_master WHERE (type='table' OR type='view')";
-        return (Int64)ExecuteScalar(queryString);
-    }
-    #endregion
-
-    #region ReadEntityNames
-    /// <summary>
-    /// 读取所有实体名称
-    /// </summary>
-    /// <returns>实体名称集合</returns>
-    public SqliteDataReader ReadEntityNames()
-    {
-        return ExecuteQuery("SELECT *,(SELECT COUNT(*) FROM View_DeterminantVT WHERE vtName =name) isDetermainant FROM sqlite_master WHERE (type='table' OR type='view')");
+        return ExecuteQuery("SELECT * FROM View_DeterminantVT");
     }
     #endregion
 
     #region ReadTableSchema
     /// <summary>
-    /// 获得表Schema信息
+    /// 获得表架构
     /// </summary>
     /// <param name="_tableName">表名</param>
-    /// <returns>表Schema信息</returns>
+    /// <returns>表架构</returns>
     public SqliteDataReader ReadTableSchema(string _tableName)
-    {
-        return ExecuteQuery(string.Format("SELECT * FROM {0} LIMIT 0", _tableName));
-    }
-    #endregion
-
-    #region ReadTablePragma
-    /// <summary>
-    /// 获得表Pragma信息
-    /// </summary>
-    /// <param name="_tableName">表名</param>
-    /// <returns>表Pragma信息</returns>
-    public SqliteDataReader ReadTablePragma(string _tableName)
     {
         return ExecuteQuery(string.Format("PRAGMA table_info({0})", _tableName));
     }
     #endregion
 
-    #region ReadTableSqlite_master 读取sqlite_master表
+    #region ReadSQLiteTableViewSchema 读取数据库表视图架构
     /// <summary>
-    /// 读取sqlite_master表
+    /// 读取数据库表视图架构
     /// </summary>
-    /// <returns>sqlite_master表信息</returns>
-    public SqliteDataReader ReadTableSqlite_master()
+    /// <returns>数据库表视图架构</returns>
+    public SqliteDataReader ReadSQLiteTableViewSchema()
     {
         return ExecuteQuery("SELECT * FROM sqlite_master WHERE (type='table' OR type='view')");
     }
-    #endregion
-    
+    #endregion    
 }
 
