@@ -260,7 +260,7 @@ string.Empty;
     public string GetSQLiteConnectionString(string _dbPath)
     {
 #if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
-        _dbPath = string.Format("data source={0}", dbSource);
+        _dbPath = string.Format("data source={0}", _dbPath);
 #elif UNITY_ANDROID
         _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, GetSQLiteDbName(Path.GetFileName(_dbPath))).Replace("-", "_"));
 #else

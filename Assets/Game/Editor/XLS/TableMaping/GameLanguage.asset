@@ -14,7 +14,7 @@ MonoBehaviour:
   tableName: GameLanguage
   fileName: Assets/Game/Editor/XLS/GameLanguage.xlsx
   dbName: XLS.db
-  dbPath: Assets/Game/Editor/XLS.db
+  dbPath: Assets/Game/Editor/XLS/XLS.db
   isDeterminant: 1
   isCreateScript: 1
   columns:

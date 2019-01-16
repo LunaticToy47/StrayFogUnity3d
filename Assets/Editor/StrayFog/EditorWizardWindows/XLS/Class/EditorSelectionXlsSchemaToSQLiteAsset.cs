@@ -17,8 +17,8 @@ public class EditorSelectionXlsSchemaToSQLiteAsset : EditorSelectionAsset
             tableAssetConfig.CreateAsset();
         }
         tableAssetConfig.LoadAsset();
-        dbPath = (directory + enFileExt.SQLiteDb.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
         dbName = (Path.GetFileName(directory) + enFileExt.SQLiteDb.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
+        dbPath = Path.Combine(directory, dbName).TransPathSeparatorCharToUnityChar();
     }
 
     /// <summary>

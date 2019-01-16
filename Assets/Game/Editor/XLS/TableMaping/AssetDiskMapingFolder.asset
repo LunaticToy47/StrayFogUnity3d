@@ -14,7 +14,7 @@ MonoBehaviour:
   tableName: AssetDiskMapingFolder
   fileName: Assets/Game/Editor/XLS/AssetDiskMapingFolder.xlsx
   dbName: XLS.db
-  dbPath: Assets/Game/Editor/XLS.db
+  dbPath: Assets/Game/Editor/XLS/XLS.db
   isDeterminant: 0
   isCreateScript: 0
   columns:

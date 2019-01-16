@@ -543,6 +543,7 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
                 {
                     StartCoroutine(DispathActiveEvent(OnGetWindow<AbsUIWindowView>(id), false));
                     mWindowInstanceMaping[id].Dispose();
+                    Destroy(mWindowInstanceMaping[id].gameObject);
                     mWindowInstanceMaping[id] = null;
                     mWindowInstanceMaping.Remove(id);
                     mCacheWindowInstances.Remove(id);

@@ -14,7 +14,7 @@ MonoBehaviour:
   tableName: UserGuideValidate
   fileName: Assets/Game/Editor/XLS/UserGuideValidate.xlsx
   dbName: XLS.db
-  dbPath: Assets/Game/Editor/XLS.db
+  dbPath: Assets/Game/Editor/XLS/XLS.db
   isDeterminant: 0
   isCreateScript: 1
   columns:
