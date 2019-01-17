@@ -14,9 +14,8 @@ MonoBehaviour:
   tableName: UIWindowSetting
   fileName: Assets/Game/Editor/XLS/UIWindowSetting.xlsx
   dbName: XLS.db
-  dbPath: Assets/Game/Editor/XLS/XLS.db
+  dbConnectionString: 
   isDeterminant: 0
-  isCreateScript: 1
   columns:
   - name: id
     desc: "\u7A97\u53E3id"

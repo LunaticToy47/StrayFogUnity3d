@@ -81,10 +81,9 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
             if (GUILayout.Button("Setting"))
             {
                 EditorStrayFogApplication.PingObject(mXlsTableSchemas[i]);
-            }
-
-            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表", mXlsTableSchemas[i].isDeterminant);      
-            mXlsTableSchemas[i].isCreateScript = EditorGUILayout.ToggleLeft("是否生成脚本", mXlsTableSchemas[i].isCreateScript);
+            }         
+            
+            mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表", mXlsTableSchemas[i].isDeterminant);
             EditorUtility.SetDirty(mXlsTableSchemas[i]);            
             if (GUILayout.Button("Brower"))
             {

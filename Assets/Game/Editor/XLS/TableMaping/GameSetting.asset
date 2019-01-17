@@ -14,9 +14,8 @@ MonoBehaviour:
   tableName: GameSetting
   fileName: Assets/Game/Editor/XLS/GameSetting.xlsx
   dbName: XLS.db
-  dbPath: Assets/Game/Editor/XLS/XLS.db
+  dbConnectionString: 
   isDeterminant: 1
-  isCreateScript: 1
   columns:
   - name: name
     desc: "\u540D\u79F0"

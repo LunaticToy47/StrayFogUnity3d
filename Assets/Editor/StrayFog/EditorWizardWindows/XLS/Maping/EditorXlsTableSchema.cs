@@ -26,17 +26,12 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// </summary>
     [AliasTooltip("数据库路径")]
     [ReadOnly]
-    public string dbPath;
+    public string dbConnectionString;
     /// <summary>
     /// 是否是行列式表
     /// </summary>
     [AliasTooltip("是否是行列式表")]
     public bool isDeterminant;
-    /// <summary>
-    /// 是否生成脚本
-    /// </summary>
-    [AliasTooltip("是否生成脚本")]
-    public bool isCreateScript;
     /// <summary>
     /// 列
     /// </summary>

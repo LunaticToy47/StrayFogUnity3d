@@ -52,7 +52,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         if (!msEntitySQLitePropertyTypeNameMaping.ContainsKey(_entitySetting.id))
         {
             msEntitySQLitePropertyTypeNameMaping.Add(_entitySetting.id, new Dictionary<int, string>());
-            SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ReadTableSchema(_entitySetting.name);
+            SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ReadPragmaTableInfo(_entitySetting.name);
             int key = 0;
             while (reader.Read())
             {

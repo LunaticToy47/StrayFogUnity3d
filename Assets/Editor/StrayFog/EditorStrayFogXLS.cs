@@ -142,6 +142,7 @@ public sealed class EditorStrayFogXLS
     /// <returns>XLS表结构框架</returns>
     public static List<EditorXlsTableSchema> ReadXlsSchema()
     {
+        EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
         string extXlsx = enFileExt.Xlsx.GetAttribute<FileExtAttribute>().ext;
         List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedConfigAssetFile.setXlsSchemaToSqlite.file.folders,
@@ -201,7 +202,7 @@ public sealed class EditorStrayFogXLS
                     #endregion
 
                     tempTable.fileName = f.path;
-                    tempTable.dbPath = f.dbPath;
+                    tempTable.dbConnectionString = StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(f.dbPath);
                     tempTable.dbName = f.dbName;
                     tempTable.tableName = f.nameWithoutExtension;
                     if (sheet.Dimension.Rows >= msrColumnNameRowIndex)
@@ -238,16 +239,17 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     public static void ExportXlsSchemaToSQLite()
     {
+        EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tables = ReadXlsSchema();
-        OnCreateTableSchemaToSQLite(tables);
-        OnCreateScriptFromSQLite();
+        Dictionary<int, StrayFogSQLiteHelper> dicDb = OnCreateTableSchemaToSQLite(tables);
+        OnCreateScriptFromSQLite(tables,dicDb);
     }
 
     /// <summary>
     /// 创建表结构到SQLite数据库
     /// </summary>
     /// <param name="_tables">表结构</param>
-    static void OnCreateTableSchemaToSQLite(List<EditorXlsTableSchema> _tables)
+    static Dictionary<int, StrayFogSQLiteHelper> OnCreateTableSchemaToSQLite(List<EditorXlsTableSchema> _tables)
     {
         string sqliteCreateTableTemplete = EditorResxTemplete.SQLiteCreateTableTemplete;
         string sqliteView_DeterminantVTTemplete = EditorResxTemplete.SQLiteCreateDeterminantViewTemplete;
@@ -298,10 +300,10 @@ public sealed class EditorStrayFogXLS
         foreach (EditorXlsTableSchema table in _tables)
         {
             progress++;
-            dbKey = table.dbPath.GetHashCode();
+            dbKey = table.dbConnectionString.GetHashCode();
             if (!dicDbPath.ContainsKey(dbKey))
             {
-                dicDbPath.Add(dbKey, new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(table.dbPath)));
+                dicDbPath.Add(dbKey, new StrayFogSQLiteHelper(table.dbConnectionString));
             }
             if (!dicExcuteSql.ContainsKey(dbKey))
             {
@@ -316,19 +318,28 @@ public sealed class EditorStrayFogXLS
                 dicSqlPath.Add(dbKey, Path.GetDirectoryName(table.fileName));
             }
             EditorUtility.DisplayProgressBar("Init SQLite Data",
-                    string.Format("【{0}】=>{1}", table.tableName, table.dbPath), progress / dicDbPath.Count);
+                    string.Format("【{0}】=>{1}", table.tableName, table.dbConnectionString), progress / dicDbPath.Count);
         }
         #endregion
 
         #region 清理数据库SQL语句
         progress = 0;
+        SqliteDataReader reader = null;
         foreach (KeyValuePair<int, StrayFogSQLiteHelper> key in dicDbPath)
         {
             progress++;
-            SqliteDataReader reader = key.Value.ReadSQLiteTableViewSchema();
+            reader = key.Value.ReadSQLiteTableSchema();
             while (reader.Read())
             {
-                dicExcuteSql[key.Key].Add(string.Format("DROP {0} {1}", reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name"))));
+                dicExcuteSql[key.Key].Add(string.Format("DROP {0} '{1}'", reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name"))));
+            }
+            reader.Close();
+            reader = null;
+
+            reader = key.Value.ReadSQLiteViewSchema();
+            while (reader.Read())
+            {
+                dicExcuteSql[key.Key].Add(string.Format("DROP {0} '{1}'", reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name"))));
             }
             reader.Close();
             reader = null;
@@ -342,7 +353,7 @@ public sealed class EditorStrayFogXLS
         foreach (EditorXlsTableSchema table in _tables)
         {
             progress++;
-            dbKey = table.dbPath.GetHashCode();
+            dbKey = table.dbConnectionString.GetHashCode();
 
             #region 创建表SQL语句
             sbColumnReplace.Length = 0;
@@ -395,7 +406,7 @@ public sealed class EditorStrayFogXLS
             #endregion
 
             EditorUtility.DisplayProgressBar("Build Table SQL",
-                    string.Format("【{0}】=>{1}",table.tableName,table.dbPath), progress / _tables.Count);
+                    string.Format("【{0}】=>{1}",table.tableName,table.dbConnectionString), progress / _tables.Count);
         }
 
         #region 创建View_DeterminantVT语句
@@ -456,14 +467,64 @@ public sealed class EditorStrayFogXLS
         #endregion
 
         EditorUtility.ClearProgressBar();
+
+        return dicDbPath;
     }
 
     /// <summary>
     /// 从SQLite创建脚本
     /// </summary>
-    static void OnCreateScriptFromSQLite()
+    /// <param name="_tables">要生成的表</param>
+    /// <param name="_dbPath">数据库</param>
+    static void OnCreateScriptFromSQLite(List<EditorXlsTableSchema> _tables, Dictionary<int, StrayFogSQLiteHelper> _dbPath)
     {
-        
+        string folderRoot = enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path;
+        SqliteDataReader reader = null;
+        float progress = 0;
+        int dbKey = 0;
+
+        List<string> viewNames = new List<string>();
+        string tempName = string.Empty;
+        string schemaColumnOrdinalName = "name";
+        EditorXlsTableSchema tempTable = null;
+        #region 初始化数据
+        foreach (KeyValuePair<int, StrayFogSQLiteHelper> db in _dbPath)
+        {
+            #region 搜索要生成的视图
+            reader = db.Value.ReadSQLiteViewSchema();
+            while (reader.Read())
+            {
+                tempName = reader.GetString(reader.GetOrdinal(schemaColumnOrdinalName));
+                if (!viewNames.Contains(tempName))
+                {
+                    viewNames.Add(tempName);
+                }
+            }
+            reader.Close();
+            reader = null;
+            #endregion
+
+            #region 收集视图类信息
+            foreach (string tn in viewNames)
+            {
+                tempTable = new EditorXlsTableSchema();
+                tempTable.tableName = tn;
+                reader = db.Value.ReadPragmaTableInfo(tn);
+                while (reader.Read())
+                {
+
+                }
+                reader.Close();
+                reader = null;
+                
+            }
+            #endregion
+
+            //EditorUtility.DisplayProgressBar("Build View Table Script",
+            //       string.Format("【{0}】=>{1}", tn, db.Value.connectionString), progress / viewNames.Count);
+        }
+        #endregion
+        EditorUtility.ClearProgressBar();
     }
     #endregion
 

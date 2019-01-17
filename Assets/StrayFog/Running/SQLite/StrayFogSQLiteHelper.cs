@@ -312,26 +312,37 @@ public partial class StrayFogSQLiteHelper
     }
     #endregion
 
-    #region ReadTableSchema
+    #region ReadPragmaTableInfo 获得表信息
     /// <summary>
-    /// 获得表架构
+    /// 获得表信息
     /// </summary>
-    /// <param name="_tableName">表名</param>
+    /// <param name="_tableName">名称</param>
     /// <returns>表架构</returns>
-    public SqliteDataReader ReadTableSchema(string _tableName)
+    public SqliteDataReader ReadPragmaTableInfo(string _tableName)
     {
         return ExecuteQuery(string.Format("PRAGMA table_info({0})", _tableName));
     }
     #endregion
 
-    #region ReadSQLiteTableViewSchema 读取数据库表视图架构
+    #region ReadSQLiteViewSchema 读取数据库视图架构
     /// <summary>
-    /// 读取数据库表视图架构
+    /// 读取数据库视图架构
     /// </summary>
-    /// <returns>数据库表视图架构</returns>
-    public SqliteDataReader ReadSQLiteTableViewSchema()
+    /// <returns>读取数据库视图架构</returns>
+    public SqliteDataReader ReadSQLiteViewSchema()
     {
-        return ExecuteQuery("SELECT * FROM sqlite_master WHERE (type='table' OR type='view')");
+        return ExecuteQuery("SELECT * FROM sqlite_master WHERE type='view'");
+    }
+    #endregion    
+
+    #region ReadSQLiteTableSchema 读取数据库表架构
+    /// <summary>
+    /// 读取数据库表架构
+    /// </summary>
+    /// <returns>数据库表架构</returns>
+    public SqliteDataReader ReadSQLiteTableSchema()
+    {
+        return ExecuteQuery("SELECT * FROM sqlite_master WHERE type='table'");
     }
     #endregion    
 }

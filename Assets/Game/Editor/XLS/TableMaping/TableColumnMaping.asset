@@ -14,9 +14,8 @@ MonoBehaviour:
   tableName: TableColumnMaping
   fileName: Assets/Game/Editor/XLS/TableColumnMaping.xlsx
   dbName: XLS.db
-  dbPath: Assets/Game/Editor/XLS/XLS.db
+  dbConnectionString: 
   isDeterminant: 0
-  isCreateScript: 1
   columns:
   - name: boolCol
     desc: "bool\u975E\u6570\u7EC4"
