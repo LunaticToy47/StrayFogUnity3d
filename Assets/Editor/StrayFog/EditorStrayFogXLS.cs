@@ -225,7 +225,7 @@ public sealed class EditorStrayFogXLS
                             tempTable.columns[i - 1] = tempTableCell;
                         }
                     }
-                    tableSchemas.Add(tempTable);
+                    tableSchemas.Add(tempTable.Copy());
                 }
             }
         }
@@ -392,7 +392,7 @@ public sealed class EditorStrayFogXLS
 
             dicExcuteSql[dbKey].Add(
                 sqliteCreateTableTemplete
-                .Replace("#TableName#", table.name)
+                .Replace("#TableName#", table.tableName)
                 .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
                 .Replace(primaryKeyReplaceTemplete, sbPrimaryKeyReplace.ToString())
                 );
@@ -493,7 +493,7 @@ public sealed class EditorStrayFogXLS
         EditorXlsTableSchema tempTable = null;
         EditorXlsTableColumnSchema tempTableColumn = null;
         List<EditorXlsTableColumnSchema> tempColumns = new List<EditorXlsTableColumnSchema>();
-
+        
         foreach (KeyValuePair<int, StrayFogSQLiteHelper> db in _dbPath)
         {
             #region 搜索要生成的视图
@@ -553,7 +553,7 @@ public sealed class EditorStrayFogXLS
             if (t.isDeterminant)
             {
                 //如果是行列式表，则需要重新生成列的设置信息
-
+                OnResolveDeterminantTableSchema(t);
             }
             EditorUtility.DisplayProgressBar("Collection Determinant Table",
                    string.Format("【{0}】Is Determinant【{1}】=>{2}", t.name, t.isDeterminant, t.dbConnectionString), progress / _tables.Count);
@@ -572,6 +572,15 @@ public sealed class EditorStrayFogXLS
         #endregion
               
         EditorUtility.ClearProgressBar();
+    }
+
+    /// <summary>
+    /// 解析行列式表
+    /// </summary>
+    /// <param name="_table">行列式表</param>
+    static EditorXlsTableSchema OnResolveDeterminantTableSchema(EditorXlsTableSchema _table)
+    {
+        return _table;
     }
     #endregion
 

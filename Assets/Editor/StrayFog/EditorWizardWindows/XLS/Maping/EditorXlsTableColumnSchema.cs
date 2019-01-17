@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 /// <summary>
 /// XLS表格列架构
 /// </summary>
@@ -36,4 +35,20 @@ public class EditorXlsTableColumnSchema
     /// </summary>
     [AliasTooltip("是否允许为空")]
     public bool isNull;
+
+    /// <summary>
+    /// Copy
+    /// </summary>
+    /// <returns>XLS表格列架构</returns>
+    public EditorXlsTableColumnSchema Copy()
+    {
+        EditorXlsTableColumnSchema column = new EditorXlsTableColumnSchema();
+        column.name = name;
+        column.desc = desc;
+        column.isPK = isPK;
+        column.isNull = isNull;
+        column.type = type;
+        column.arrayDimension = arrayDimension;
+        return column;
+    }
 }

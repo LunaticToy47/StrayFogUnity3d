@@ -37,4 +37,31 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// </summary>
     [AliasTooltip("列")]
     public EditorXlsTableColumnSchema[] columns;
+
+    /// <summary>
+    /// Copy
+    /// </summary>
+    /// <returns>XLS表格架构</returns>
+    public EditorXlsTableSchema Copy()
+    {
+        EditorXlsTableSchema table = new EditorXlsTableSchema();
+        table.tableName = tableName;
+        table.fileName = fileName;
+        table.dbName = dbName;
+        table.dbConnectionString = dbConnectionString;
+        table.isDeterminant = isDeterminant;
+        if (columns != null && columns.Length > 0)
+        {
+            table.columns = new EditorXlsTableColumnSchema[columns.Length];
+            for (int i = 0; i < columns.Length; i++)
+            {
+                table.columns[i] = columns[i].Copy();
+            }
+        }
+        else
+        {
+            table.columns = new EditorXlsTableColumnSchema[0];
+        }
+        return table;
+    }
 }
