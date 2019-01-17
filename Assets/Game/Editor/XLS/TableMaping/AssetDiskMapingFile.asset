@@ -14,7 +14,7 @@ MonoBehaviour:
   tableName: AssetDiskMapingFile
   fileName: Assets/Game/Editor/XLS/AssetDiskMapingFile.xlsx
   dbName: XLS.db
-  dbConnectionString: 
+  dbConnectionString: data source=Assets/Game/Editor/XLS/XLS.db
   isDeterminant: 0
   columns:
   - name: fileId

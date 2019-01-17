@@ -11,11 +11,12 @@ public partial class Table_AssetDiskMapingFile: AbsStrayFogSQLiteEntity
     /// </summary>
     public override object[] pks { get { return new List<object>() { fileId,folderId,}.ToArray(); } }
 
-	
-	/// <summary>
-	/// 文件id
-	/// </summary>
-	public int fileId { get; private set; }
+
+    /// <summary>
+    /// 文件id
+    /// </summary>
+    [SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray)]
+    public int fileId { get; private set; }
 	/// <summary>
 	/// 文件夹id
 	/// </summary>

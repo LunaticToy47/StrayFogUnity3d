@@ -15,5 +15,6 @@ public partial class #ClassName#: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// #Desc#
 	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.#DataType#,enSQLiteDataTypeArrayDimension.#ArrayDimension#)]
 	public #Type# #Name# { get; private set; }#Properties#
 }

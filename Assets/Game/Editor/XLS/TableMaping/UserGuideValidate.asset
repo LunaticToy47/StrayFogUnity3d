@@ -14,7 +14,7 @@ MonoBehaviour:
   tableName: UserGuideValidate
   fileName: Assets/Game/Editor/XLS/UserGuideValidate.xlsx
   dbName: XLS.db
-  dbConnectionString: 
+  dbConnectionString: data source=Assets/Game/Editor/XLS/XLS.db
   isDeterminant: 0
   columns:
   - name: id

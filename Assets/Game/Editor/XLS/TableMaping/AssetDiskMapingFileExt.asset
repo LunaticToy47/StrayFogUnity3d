@@ -14,7 +14,7 @@ MonoBehaviour:
   tableName: AssetDiskMapingFileExt
   fileName: Assets/Game/Editor/XLS/AssetDiskMapingFileExt.xlsx
   dbName: XLS.db
-  dbConnectionString: 
+  dbConnectionString: data source=Assets/Game/Editor/XLS/XLS.db
   isDeterminant: 0
   columns:
   - name: extId

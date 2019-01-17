@@ -481,13 +481,19 @@ public sealed class EditorStrayFogXLS
         string folderRoot = enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path;
         SqliteDataReader reader = null;
         float progress = 0;
-        int dbKey = 0;
 
         List<string> viewNames = new List<string>();
         string tempName = string.Empty;
+        string tempType = string.Empty;
         string schemaColumnOrdinalName = "name";
+        string schemaColumnOrdinalType = "type";
+        enSQLiteDataType tempDataType = enSQLiteDataType.String;
+        enSQLiteDataTypeArrayDimension tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+
         EditorXlsTableSchema tempTable = null;
-        #region 初始化数据
+        EditorXlsTableColumnSchema tempTableColumn = null;
+        List<EditorXlsTableColumnSchema> tempColumns = new List<EditorXlsTableColumnSchema>();
+
         foreach (KeyValuePair<int, StrayFogSQLiteHelper> db in _dbPath)
         {
             #region 搜索要生成的视图
@@ -505,25 +511,66 @@ public sealed class EditorStrayFogXLS
             #endregion
 
             #region 收集视图类信息
+            progress = 0;
             foreach (string tn in viewNames)
             {
+                progress++;
                 tempTable = new EditorXlsTableSchema();
                 tempTable.tableName = tn;
+                tempTable.dbConnectionString = db.Value.connectionString;
+
+                tempColumns = new List<EditorXlsTableColumnSchema>();
                 reader = db.Value.ReadPragmaTableInfo(tn);
                 while (reader.Read())
                 {
-
+                    tempName = reader.GetString(reader.GetOrdinal(schemaColumnOrdinalName));
+                    tempType = reader.GetString(reader.GetOrdinal(schemaColumnOrdinalType));
+                    tempDataType = enSQLiteDataType.String;
+                    tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+                    StrayFogSQLiteDataTypeHelper.ResolveSQLiteDataType(tempType, ref tempDataType, ref tempDataTypeArrayDimension);
+                    tempTableColumn = new EditorXlsTableColumnSchema();
+                    tempTableColumn.name = tempName;
+                    tempTableColumn.type = tempDataType;
+                    tempTableColumn.arrayDimension = tempDataTypeArrayDimension;
+                    tempTableColumn.desc = tempName;
+                    tempColumns.Add(tempTableColumn);
                 }
                 reader.Close();
                 reader = null;
-                
+                tempTable.columns = tempColumns.ToArray();
+                _tables.Add(tempTable);
+                EditorUtility.DisplayProgressBar("Collection View",
+                       string.Format("【{0}】=>{1}", tn, db.Value.connectionString), progress / viewNames.Count);
             }
-            #endregion
+            #endregion          
+        }
 
-            //EditorUtility.DisplayProgressBar("Build View Table Script",
-            //       string.Format("【{0}】=>{1}", tn, db.Value.connectionString), progress / viewNames.Count);
+        #region 行列式表整理
+        progress = 0;
+        foreach (EditorXlsTableSchema t in _tables)
+        {
+            progress++;
+            if (t.isDeterminant)
+            {
+                //如果是行列式表，则需要重新生成列的设置信息
+
+            }
+            EditorUtility.DisplayProgressBar("Collection Determinant Table",
+                   string.Format("【{0}】Is Determinant【{1}】=>{2}", t.name, t.isDeterminant, t.dbConnectionString), progress / _tables.Count);
         }
         #endregion
+
+        #region 生成表脚本
+        progress = 0;
+        foreach (EditorXlsTableSchema t in _tables)
+        {
+            progress++;
+            
+            EditorUtility.DisplayProgressBar("Build Table Script",
+                   string.Format("【{0}】=>{1}", t.name, t.dbConnectionString), progress / _tables.Count);
+        }
+        #endregion
+              
         EditorUtility.ClearProgressBar();
     }
     #endregion
