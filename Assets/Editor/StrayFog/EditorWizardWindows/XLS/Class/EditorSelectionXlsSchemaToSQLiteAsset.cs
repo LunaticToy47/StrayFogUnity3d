@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR
+using System.IO;
 /// <summary>
 /// XlsSchemaToSQLite选择节点
 /// </summary>
@@ -38,3 +39,4 @@ public class EditorSelectionXlsSchemaToSQLiteAsset : EditorSelectionAsset
     /// </summary>
     public EditorEngineAssetConfig tableAssetConfig { get; private set; }
 }
+#endif

@@ -22,6 +22,7 @@ public enum enAssetDiskMapingFolder
 	Assets_Game_AssetBundles_SpriteAtlas_Share = 502646517,
 	Assets_Game_AssetBundles_SpriteAtlas_Shop = -1087550218,
 	Assets_Game_AssetBundles_SpriteAtlas_Skill = 1508121002,
+	Assets_Game_AssetBundles_Terrain = 498482096,
 	Assets_Game_AssetBundles_UIWindow_Guide = -2023891807,
 	Assets_Game_AssetBundles_UIWindow_Lobby = -1392412074,
 	Assets_Game_AssetBundles_UIWindow_MessageBox = -833208201,	
