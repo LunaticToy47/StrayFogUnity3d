@@ -513,6 +513,7 @@ public sealed class EditorStrayFogXLS
                 tempTable = new EditorXlsTableSchema();
                 tempTable.tableName = tn;
                 tempTable.dbConnectionString = db.Value.connectionString;
+                tempTable.dbName = Path.GetFileName(db.Value.connectionString);
                 tempTable.classify = enSQLiteEntityClassify.View;
                 tempColumns = new List<EditorXlsTableColumnSchema>();
                 reader = db.Value.ReadPragmaTableInfo(tn);
@@ -692,7 +693,8 @@ public sealed class EditorStrayFogXLS
                 .Replace("#xlsColumnDataIndex#", xlsColumnDataIndex.ToString())
                 .Replace("#xlsColumnTypeIndex#", xlsColumnTypeIndex.ToString())
                 .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
-                .Replace("#dbSQLiteKey#", t.dbKey.ToString())                
+                .Replace("#dbSQLiteKey#", t.dbKey.ToString())
+                .Replace("#dbSQLiteName#", t.dbName.ToString())
                 );
             EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / _tables.Count);
         }
