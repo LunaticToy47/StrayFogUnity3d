@@ -235,19 +235,15 @@ string.Empty;
 #endif
     #endregion
 
-    #region GetSQLiteDbName
+    #region GetAssetBundleDbName
     /// <summary>
-    /// 获得Db数据库名称
+    /// 获得资源包Db数据库名称
     /// </summary>
     /// <param name="_dbName">名称</param>
     /// <returns>Db数据库名称</returns>
-    public string GetSQLiteDbName(string _dbName)
-    {        
-#if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
-        return _dbName;
-#else
+    public string GetAssetBundleDbName(string _dbName)
+    {
         return "c_" + _dbName.UniqueHashCode().ToString().Replace("-", "_");
-#endif
     }
     #endregion
 
@@ -262,14 +258,13 @@ string.Empty;
 #if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
         _dbPath = string.Format("data source={0}", _dbPath);
 #elif UNITY_ANDROID
-        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, GetSQLiteDbName(Path.GetFileName(_dbPath))).Replace("-", "_"));
+        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, GetAssetBundleDbName(Path.GetFileName(_dbPath))).Replace("-", "_"));
 #else
-        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, GetSQLiteDbName(Path.GetFileName(_dbPath))).Replace("-", "_"));
+        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, GetAssetBundleDbName(Path.GetFileName(_dbPath))).Replace("-", "_"));
 #endif
         return _dbPath;
     }
-
-#endregion
+    #endregion
 
     #region assetBundleDbName 资源包数据库名称
 /// <summary>
