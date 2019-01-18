@@ -542,6 +542,18 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
                 if (!config.isDonotDestroyInstance)
                 {
                     StartCoroutine(DispathActiveEvent(OnGetWindow<AbsUIWindowView>(id), false));
+                    if (mWindowLayerSiblingIndex[mWindowInstanceMaping[id].config.layer].ContainsKey(id))
+                    {
+                        mWindowLayerSiblingIndex[mWindowInstanceMaping[id].config.layer].Remove(id);
+                    }
+                    if (mWindowCoroutineMaping.ContainsKey(id))
+                    {
+                        mWindowCoroutineMaping.Remove(id);
+                    }
+                    if (mActiveWindowMaping.Contains(id))
+                    {
+                        mActiveWindowMaping.Remove(id);
+                    }
                     mWindowInstanceMaping[id].Dispose();
                     Destroy(mWindowInstanceMaping[id].gameObject);
                     mWindowInstanceMaping[id] = null;
@@ -554,9 +566,6 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
                 }
             }
         }
-        mWindowLayerSiblingIndex.Clear();
-        mWindowCoroutineMaping.Clear();
-        mActiveWindowMaping.Clear();
         int layer = 0;
         foreach (AbsUIWindowView w in mWindowInstanceMaping.Values)
         {
