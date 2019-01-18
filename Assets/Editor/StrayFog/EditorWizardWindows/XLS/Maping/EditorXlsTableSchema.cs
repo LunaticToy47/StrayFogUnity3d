@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using System.IO;
+/// <summary>
 /// XLS表格架构
 /// </summary>
 public class EditorXlsTableSchema : AbsScriptableObject
@@ -44,11 +45,25 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [AliasTooltip("列")]
     public EditorXlsTableColumnSchema[] columns;
 
-    #region ClassName 类名称
+    #region dbKey 数据库Key值
+    /// <summary>
+    /// 数据库Key值
+    /// </summary>
+    public int dbKey { get { return dbConnectionString.UniqueHashCode(); } }
+    #endregion
+
+    #region dbEnumName 数据库枚举值
+    /// <summary>
+    /// 数据库枚举值
+    /// </summary>
+    public string dbEnumName { get { return Path.GetFileNameWithoutExtension(dbName); } }
+    #endregion
+
+    #region className 类名称
     /// <summary>
     /// 类名称
     /// </summary>
-    public string ClassName { get {
+    public string className { get {
             string prefix = classify.ToString() + "_";
             string className = string.Empty;
             if (tableName.StartsWith(prefix))

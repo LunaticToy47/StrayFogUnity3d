@@ -257,7 +257,6 @@ public sealed class EditorStrayFogXLS
         Dictionary<int, List<string>> dicExcuteSql = new Dictionary<int, List<string>>();
         Dictionary<int, string> dicSqlPath = new Dictionary<int, string>();
         FileExtAttribute attSqlExt = enFileExt.TextAsset.GetAttribute<FileExtAttribute>();
-        int dbKey = 0;
 
         #region #Column# Templete
         string columnMark = "#Column#";
@@ -300,22 +299,21 @@ public sealed class EditorStrayFogXLS
         foreach (EditorXlsTableSchema table in _tables)
         {
             progress++;
-            dbKey = table.dbConnectionString.GetHashCode();
-            if (!dicDbPath.ContainsKey(dbKey))
+            if (!dicDbPath.ContainsKey(table.dbKey))
             {
-                dicDbPath.Add(dbKey, new StrayFogSQLiteHelper(table.dbConnectionString));
+                dicDbPath.Add(table.dbKey, new StrayFogSQLiteHelper(table.dbConnectionString));
             }
-            if (!dicExcuteSql.ContainsKey(dbKey))
+            if (!dicExcuteSql.ContainsKey(table.dbKey))
             {
-                dicExcuteSql.Add(dbKey, new List<string>());
+                dicExcuteSql.Add(table.dbKey, new List<string>());
             }
-            if (!determinantTables.ContainsKey(dbKey))
+            if (!determinantTables.ContainsKey(table.dbKey))
             {
-                determinantTables.Add(dbKey, new List<string>());
+                determinantTables.Add(table.dbKey, new List<string>());
             }
-            if (!dicSqlPath.ContainsKey(dbKey))
+            if (!dicSqlPath.ContainsKey(table.dbKey))
             {
-                dicSqlPath.Add(dbKey, Path.GetDirectoryName(table.fileName));
+                dicSqlPath.Add(table.dbKey, Path.GetDirectoryName(table.fileName));
             }
             EditorUtility.DisplayProgressBar("Init SQLite Data",
                     string.Format("【{0}】=>{1}", table.tableName, table.dbConnectionString), progress / dicDbPath.Count);
@@ -353,8 +351,6 @@ public sealed class EditorStrayFogXLS
         foreach (EditorXlsTableSchema table in _tables)
         {
             progress++;
-            dbKey = table.dbConnectionString.GetHashCode();
-
             #region 创建表SQL语句
             sbColumnReplace.Length = 0;
             sbPrimaryKeyReplace.Length = 0;
@@ -390,7 +386,7 @@ public sealed class EditorStrayFogXLS
                 );
             }
 
-            dicExcuteSql[dbKey].Add(
+            dicExcuteSql[table.dbKey].Add(
                 sqliteCreateTableTemplete
                 .Replace("#TableName#", table.tableName)
                 .Replace(columnReplaceTemplete, sbColumnReplace.ToString())
@@ -401,7 +397,7 @@ public sealed class EditorStrayFogXLS
             #region 收集Determinant表
             if (table.isDeterminant)
             {
-                determinantTables[dbKey].Add(view_DeterminantTemplete.Replace("#Name#", table.name));
+                determinantTables[table.dbKey].Add(view_DeterminantTemplete.Replace("#Name#", table.name));
             }
             #endregion
 
@@ -492,7 +488,7 @@ public sealed class EditorStrayFogXLS
         EditorXlsTableSchema tempTable = null;
         EditorXlsTableColumnSchema tempTableColumn = null;
         List<EditorXlsTableColumnSchema> tempColumns = new List<EditorXlsTableColumnSchema>();
-        
+        Dictionary<int, string> dicSQLiteClassifyEnum = new Dictionary<int, string>();
         foreach (KeyValuePair<int, StrayFogSQLiteHelper> db in _dbPath)
         {
             #region 搜索要生成的视图
@@ -544,6 +540,14 @@ public sealed class EditorStrayFogXLS
             #endregion          
         }
 
+        foreach (EditorXlsTableSchema t in _tables)
+        {
+            if (!dicSQLiteClassifyEnum.ContainsKey(t.dbKey))
+            {
+                dicSQLiteClassifyEnum.Add(t.dbKey, t.dbEnumName);
+            }
+        }
+
         #region 行列式表整理
         progress = 0;
         foreach (EditorXlsTableSchema t in _tables)
@@ -576,7 +580,7 @@ public sealed class EditorStrayFogXLS
         #endregion
 
         List<string> pksNames = new List<string>();
-        
+
         string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
         string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
         string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
@@ -592,12 +596,12 @@ public sealed class EditorStrayFogXLS
             sbPropertyReplace.Length = 0;
             sbPksReplace.Length = 0;
             foreach (EditorXlsTableColumnSchema c in t.columns)
-            {        
+            {
                 sbPropertyReplace.Append(
                     propertyTemplete
                     .Replace("#Name#", c.name)
                     .Replace("#Desc#", c.desc)
-                    .Replace("#DataType#",c.dataType.ToString())
+                    .Replace("#DataType#", c.dataType.ToString())
                      .Replace("#ArrayDimension#", c.arrayDimension.ToString())
                     .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                     );
@@ -606,12 +610,12 @@ public sealed class EditorStrayFogXLS
                     pksNames.Add(pksTemplete.Replace("#Name#", c.name));
                 }
             }
-            sbPksReplace.Append(string.Join(msrColumnSeparate,pksNames.ToArray()));
+            sbPksReplace.Append(string.Join(msrColumnSeparate, pksNames.ToArray()));
 
-            cfgEntityScript.SetName(t.ClassName);
+            cfgEntityScript.SetName(t.className);
             cfgEntityScript.SetText(entityScriptTemplete
                .Replace("#EntityName#", t.tableName)
-               .Replace("#ClassName#", t.ClassName)
+               .Replace("#ClassName#", t.className)
                .Replace(pksReplaceTemplete, sbPksReplace.ToString())
                .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString()));
             if (t.isDeterminant)
@@ -622,12 +626,84 @@ public sealed class EditorStrayFogXLS
             {
                 cfgEntityScript.SetDirectory(sqliteEntityFolder);
             }
-            Debug.LogFormat("【{0}->{1}】【{2}】=>{3}", t.tableName, t.ClassName, cfgEntityScript.directory, cfgEntityScript.text);
+            Debug.LogFormat("【{0}->{1}】【{2}】=>{3}", t.tableName, t.className, cfgEntityScript.directory, cfgEntityScript.text);
             cfgEntityScript.CreateAsset();
             EditorUtility.DisplayProgressBar("Build Table Script",
                    string.Format("【{0}】=>{1}", t.tableName, t.dbConnectionString), progress / _tables.Count);
         }
         #endregion
+
+        #region 生成实体操作扩展
+        EditorTextAssetConfig cfgHeplerExtendScript = new EditorTextAssetConfig("StrayFogSQLiteEntityHelperExtend", sqliteFolder, enFileExt.CS, "");
+        string helperScriptTemplete = EditorResxTemplete.SQLiteEntityHelperExtendTemplete;
+
+        #region #EntityMaping#
+        string entityMapingMark = "#EntityMaping#";
+        string entityMapingReplaceTemplete = string.Empty;
+        string entityMapingTemplete = string.Empty;
+        StringBuilder sbEntityMapingReplace = new StringBuilder();
+        entityMapingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, entityMapingMark, out entityMapingReplaceTemplete);
+        #endregion
+
+        #region #SQLiteClassifyEnums#
+        string sqliteClassifyEnumsMark = "#SQLiteClassifyEnums#";
+        string sqliteClassifyEnumsReplaceTemplete = string.Empty;
+        string sqliteClassifyEnumsTemplete = string.Empty;
+        StringBuilder sbSqliteClassifyEnumsReplace = new StringBuilder();
+        sqliteClassifyEnumsTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, sqliteClassifyEnumsMark, out sqliteClassifyEnumsReplaceTemplete);
+        #endregion
+
+        progress = 0;
+        int xlsColumnNameIndex = 0;
+        int xlsColumnDataIndex = 0;
+        int xlsColumnTypeIndex = 0;
+        int xlsDataStartRowIndex = msrColumnDataRowStartIndex;
+        List<string> sqliteClassifyEnumNames = new List<string>();
+
+        foreach (KeyValuePair<int, string> key in dicSQLiteClassifyEnum)
+        {
+            sqliteClassifyEnumNames.Add(sqliteClassifyEnumsTemplete.Replace("#Name#",key.Value).Replace("#HashCode#", key.Key.ToString()));
+        }
+        sbSqliteClassifyEnumsReplace.Append(string.Join(msrColumnSeparate, sqliteClassifyEnumNames.ToArray()));
+
+        foreach (EditorXlsTableSchema t in _tables)
+        {
+            progress++;
+            if (t.isDeterminant)
+            {
+                xlsColumnNameIndex = msrDeterminantColumnNameColumnIndex;
+                xlsColumnDataIndex = msrDeterminantColumnDataColumnIndex;
+                xlsColumnTypeIndex = msrDeterminantColumnTypeColumnIndex;
+            }
+            else
+            {
+                xlsColumnNameIndex = msrColumnNameRowIndex;
+                xlsColumnDataIndex = msrColumnDataRowStartIndex;
+                xlsColumnTypeIndex = msrColumnTypeRowIndex;
+            }
+            sbEntityMapingReplace.Append(
+                entityMapingTemplete
+                .Replace("#ClassName#", t.className)
+                .Replace("#TableName#", t.name)
+                .Replace("#XlsFileName#", t.fileName)
+                .Replace("#IsDeterminant#", Convert.ToString(t.isDeterminant).ToLower())
+                .Replace("#Classify#", t.classify.ToString())
+                .Replace("#xlsColumnNameIndex#", xlsColumnNameIndex.ToString())
+                .Replace("#xlsColumnDataIndex#", xlsColumnDataIndex.ToString())
+                .Replace("#xlsColumnTypeIndex#", xlsColumnTypeIndex.ToString())
+                .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
+                .Replace("#dbSQLiteKey#", t.dbKey.ToString())                
+                );
+            EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / _tables.Count);
+        }
+        cfgHeplerExtendScript.SetText(
+            helperScriptTemplete
+            .Replace(entityMapingReplaceTemplete, sbEntityMapingReplace.ToString())
+            .Replace(sqliteClassifyEnumsReplaceTemplete, sbSqliteClassifyEnumsReplace.ToString())
+            );
+        cfgHeplerExtendScript.CreateAsset();
+        #endregion
+
         EditorUtility.ClearProgressBar();
     }
 

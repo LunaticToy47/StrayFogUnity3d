@@ -15,8 +15,9 @@ public class StrayFogSQLiteEntitySetting
     /// <param name="_xlsColumnDataIndex">XLS表列值索引</param>
     /// <param name="_xlsColumnTypeIndex">XLS表列类型索引</param>
     /// <param name="_xlsDataStartRowIndex">XLS表数据起始行索引</param>
+    /// <param name="_dbSQLiteKey">数据库Key</param>
     public StrayFogSQLiteEntitySetting(int _id, string _name, string _xlsFileName, bool _isDeterminant, enSQLiteEntityClassify _classify,
-        int _xlsColumnNameIndex, int _xlsColumnDataIndex, int _xlsColumnTypeIndex, int _xlsDataStartRowIndex)
+        int _xlsColumnNameIndex, int _xlsColumnDataIndex, int _xlsColumnTypeIndex, int _xlsDataStartRowIndex,int _dbSQLiteKey)
     {
         id = _id;
         name = _name;
@@ -27,6 +28,7 @@ public class StrayFogSQLiteEntitySetting
         xlsColumnDataIndex = _xlsColumnDataIndex;
         xlsColumnTypeIndex = _xlsColumnTypeIndex;
         xlsDataStartRowIndex = _xlsDataStartRowIndex;
+        dbSQLiteKey = _dbSQLiteKey;
     }
     /// <summary>
     /// 实体id
@@ -64,4 +66,8 @@ public class StrayFogSQLiteEntitySetting
     /// XLS表数据起始行索引
     /// </summary>
     public int xlsDataStartRowIndex { get; private set; }
+    /// <summary>
+    /// 数据库Key
+    /// </summary>
+    public int dbSQLiteKey { get; private set; }
 }
