@@ -9,7 +9,7 @@ public partial class #ClassName#: AbsStrayFogSQLiteEntity
 	/// <summary>
     /// PK键组
     /// </summary>
-    public override object[] pks { get { return new List<object>() { #PK##Name#,#PK#}.ToArray(); } }
+    public override object[] pks { get { return new List<object>() { #PKS##Name##PKS#}.ToArray(); } }
 
 	#Properties#
 	/// <summary>

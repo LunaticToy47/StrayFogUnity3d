@@ -24,7 +24,7 @@ public class EditorXlsTableColumnSchema
     /// 列类型
     /// </summary>
     [AliasTooltip("列类型")]
-    public enSQLiteDataType type;
+    public enSQLiteDataType dataType;
     /// <summary>
     /// 数组维度
     /// </summary>
@@ -47,7 +47,7 @@ public class EditorXlsTableColumnSchema
         column.desc = desc;
         column.isPK = isPK;
         column.isNull = isNull;
-        column.type = type;
+        column.dataType = dataType;
         column.arrayDimension = arrayDimension;
         return column;
     }

@@ -213,7 +213,7 @@ public sealed class EditorStrayFogXLS
                             tempTableCell = new EditorXlsTableColumnSchema();
                             tempTableCell.name = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString();
                             tempTableCell.desc = sheet.GetValue<string>(msrColumnDescriptionRowIndex, i).ToString();
-                            tempTableCell.type = enSQLiteDataType.String;
+                            tempTableCell.dataType = enSQLiteDataType.String;
                             tempTableCell.arrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
                             tempColumnName = tempTableCell.name.ToUpper();
                             if (srcEditorXlsTableColumnSchemaMaping.ContainsKey(tempColumnName))
@@ -221,7 +221,7 @@ public sealed class EditorStrayFogXLS
                                 tempTableCell.isPK = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isPK;
                                 tempTableCell.isNull = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isNull;
                             }
-                            StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(msrColumnTypeRowIndex, i).ToString(), ref tempTableCell.type, ref tempTableCell.arrayDimension);
+                            StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(msrColumnTypeRowIndex, i).ToString(), ref tempTableCell.dataType, ref tempTableCell.arrayDimension);
                             tempTable.columns[i - 1] = tempTableCell;
                         }
                     }
@@ -369,7 +369,7 @@ public sealed class EditorStrayFogXLS
                        columnTemplete
                        .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
                        .Replace("#Name#", c.name)
-                       .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.type, c.arrayDimension))
+                       .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.dataType, c.arrayDimension))
                     );
                     if (c.isPK)
                     {
@@ -478,7 +478,6 @@ public sealed class EditorStrayFogXLS
     /// <param name="_dbPath">数据库</param>
     static void OnCreateScriptFromSQLite(List<EditorXlsTableSchema> _tables, Dictionary<int, StrayFogSQLiteHelper> _dbPath)
     {
-        string folderRoot = enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path;
         SqliteDataReader reader = null;
         float progress = 0;
 
@@ -518,7 +517,7 @@ public sealed class EditorStrayFogXLS
                 tempTable = new EditorXlsTableSchema();
                 tempTable.tableName = tn;
                 tempTable.dbConnectionString = db.Value.connectionString;
-
+                tempTable.classify = enSQLiteEntityClassify.View;
                 tempColumns = new List<EditorXlsTableColumnSchema>();
                 reader = db.Value.ReadPragmaTableInfo(tn);
                 while (reader.Read())
@@ -530,7 +529,7 @@ public sealed class EditorStrayFogXLS
                     StrayFogSQLiteDataTypeHelper.ResolveSQLiteDataType(tempType, ref tempDataType, ref tempDataTypeArrayDimension);
                     tempTableColumn = new EditorXlsTableColumnSchema();
                     tempTableColumn.name = tempName;
-                    tempTableColumn.type = tempDataType;
+                    tempTableColumn.dataType = tempDataType;
                     tempTableColumn.arrayDimension = tempDataTypeArrayDimension;
                     tempTableColumn.desc = tempName;
                     tempColumns.Add(tempTableColumn);
@@ -550,36 +549,125 @@ public sealed class EditorStrayFogXLS
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
-            if (t.isDeterminant)
-            {
-                //如果是行列式表，则需要重新生成列的设置信息
-                OnResolveDeterminantTableSchema(t);
-            }
-            EditorUtility.DisplayProgressBar("Collection Determinant Table",
-                   string.Format("【{0}】Is Determinant【{1}】=>{2}", t.name, t.isDeterminant, t.dbConnectionString), progress / _tables.Count);
+            OnResolveTableSchema(t);
+            EditorUtility.DisplayProgressBar("Resolve Table",
+                   string.Format("【{0}】Is Determinant【{1}】=>{2}", t.tableName, t.isDeterminant, t.dbConnectionString), progress / _tables.Count);
         }
         #endregion
 
         #region 生成表脚本
         progress = 0;
+        string entityScriptTemplete = EditorResxTemplete.SQLiteEntityScriptTemplete;
+
+        #region #Properties#
+        string propertyMark = "#Properties#";
+        string propertyReplaceTemplete = string.Empty;
+        string propertyTemplete = string.Empty;
+        StringBuilder sbPropertyReplace = new StringBuilder();
+        propertyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, propertyMark, out propertyReplaceTemplete);
+        #endregion
+
+        #region #PKS#
+        string pksMark = "#PKS#";
+        string pksReplaceTemplete = string.Empty;
+        string pksTemplete = string.Empty;
+        StringBuilder sbPksReplace = new StringBuilder();
+        pksTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, pksMark, out pksReplaceTemplete);
+        #endregion
+
+        List<string> pksNames = new List<string>();
+        
+        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
+        string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
+        string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
+        EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
+
+        EditorStrayFogUtility.cmd.DeleteFolder(sqliteEntityFolder);
+        EditorStrayFogUtility.cmd.DeleteFolder(sqliteDeterminantEntitiesFolder);
+
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
-            
+            pksNames = new List<string>();
+            sbPropertyReplace.Length = 0;
+            sbPksReplace.Length = 0;
+            foreach (EditorXlsTableColumnSchema c in t.columns)
+            {        
+                sbPropertyReplace.Append(
+                    propertyTemplete
+                    .Replace("#Name#", c.name)
+                    .Replace("#Desc#", c.desc)
+                    .Replace("#DataType#",c.dataType.ToString())
+                     .Replace("#ArrayDimension#", c.arrayDimension.ToString())
+                    .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
+                    );
+                if (c.isPK)
+                {
+                    pksNames.Add(pksTemplete.Replace("#Name#", c.name));
+                }
+            }
+            sbPksReplace.Append(string.Join(msrColumnSeparate,pksNames.ToArray()));
+
+            cfgEntityScript.SetName(t.ClassName);
+            cfgEntityScript.SetText(entityScriptTemplete
+               .Replace("#EntityName#", t.tableName)
+               .Replace("#ClassName#", t.ClassName)
+               .Replace(pksReplaceTemplete, sbPksReplace.ToString())
+               .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString()));
+            if (t.isDeterminant)
+            {
+                cfgEntityScript.SetDirectory(sqliteDeterminantEntitiesFolder);
+            }
+            else
+            {
+                cfgEntityScript.SetDirectory(sqliteEntityFolder);
+            }
+            Debug.LogFormat("【{0}->{1}】【{2}】=>{3}", t.tableName, t.ClassName, cfgEntityScript.directory, cfgEntityScript.text);
+            cfgEntityScript.CreateAsset();
             EditorUtility.DisplayProgressBar("Build Table Script",
-                   string.Format("【{0}】=>{1}", t.name, t.dbConnectionString), progress / _tables.Count);
+                   string.Format("【{0}】=>{1}", t.tableName, t.dbConnectionString), progress / _tables.Count);
         }
         #endregion
-              
         EditorUtility.ClearProgressBar();
     }
 
     /// <summary>
-    /// 解析行列式表
+    /// 解析表
     /// </summary>
-    /// <param name="_table">行列式表</param>
-    static EditorXlsTableSchema OnResolveDeterminantTableSchema(EditorXlsTableSchema _table)
+    /// <param name="_table">表</param>
+    static EditorXlsTableSchema OnResolveTableSchema(EditorXlsTableSchema _table)
     {
+        if (_table.isDeterminant)
+        {
+            List<EditorXlsTableColumnSchema> columns = new List<EditorXlsTableColumnSchema>();
+            EditorXlsTableColumnSchema tempColumn = null;
+            enSQLiteDataType tempDataType = enSQLiteDataType.String;
+            enSQLiteDataTypeArrayDimension tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+            using (FileStream fs = new FileStream(_table.fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                ExcelPackage pck = new ExcelPackage(fs);
+                if (pck.Workbook.Worksheets.Count > 0)
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
+                    {
+                        for (int i = msrColumnDataRowStartIndex; i <= sheet.Dimension.Rows; i++)
+                        {
+                            tempColumn = new EditorXlsTableColumnSchema();
+                            tempColumn.name = sheet.GetValue<string>(i, msrDeterminantColumnNameColumnIndex).ToString();
+                            tempDataType = enSQLiteDataType.String;
+                            tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+                            StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(i, msrDeterminantColumnTypeColumnIndex).ToString(), ref tempDataType, ref tempDataTypeArrayDimension);
+                            tempColumn.dataType = tempDataType;
+                            tempColumn.arrayDimension = tempDataTypeArrayDimension;
+                            tempColumn.desc = sheet.GetValue<string>(i, msrDeterminantColumnDescriptionColumnIndex).ToString();
+                            columns.Add(tempColumn);
+                        }
+                    }
+                }
+            }
+            _table.columns = columns.ToArray();
+        }
         return _table;
     }
     #endregion

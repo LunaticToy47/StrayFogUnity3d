@@ -15,9 +15,11 @@ public partial class Table_GameLanguage: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// 引导提示
 	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray)]
 	public string GuideTip { get; private set; }
 	/// <summary>
 	/// 大厅提示
 	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray)]
 	public string LobbyTip { get; private set; }
 }

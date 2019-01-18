@@ -15,5 +15,6 @@ public partial class View_DeterminantVT: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// vtName
 	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray)]
 	public string vtName { get; private set; }
 }

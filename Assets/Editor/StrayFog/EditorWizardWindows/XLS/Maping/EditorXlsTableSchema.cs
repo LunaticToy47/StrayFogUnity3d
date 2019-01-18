@@ -28,6 +28,12 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [ReadOnly]
     public string dbConnectionString;
     /// <summary>
+    /// 表分类
+    /// </summary>
+    [AliasTooltip("表分类")]
+    [ReadOnly]
+    public enSQLiteEntityClassify classify = enSQLiteEntityClassify.Table;
+    /// <summary>
     /// 是否是行列式表
     /// </summary>
     [AliasTooltip("是否是行列式表")]
@@ -38,6 +44,26 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [AliasTooltip("列")]
     public EditorXlsTableColumnSchema[] columns;
 
+    #region ClassName 类名称
+    /// <summary>
+    /// 类名称
+    /// </summary>
+    public string ClassName { get {
+            string prefix = classify.ToString() + "_";
+            string className = string.Empty;
+            if (tableName.StartsWith(prefix))
+            {
+                className = tableName;
+            }
+            else
+            {
+                className = prefix + tableName;
+            }
+            return className;
+        } }
+    #endregion
+
+    #region Copy 复制
     /// <summary>
     /// Copy
     /// </summary>
@@ -50,6 +76,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
         table.dbName = dbName;
         table.dbConnectionString = dbConnectionString;
         table.isDeterminant = isDeterminant;
+        table.classify = classify;
         if (columns != null && columns.Length > 0)
         {
             table.columns = new EditorXlsTableColumnSchema[columns.Length];
@@ -64,4 +91,5 @@ public class EditorXlsTableSchema : AbsScriptableObject
         }
         return table;
     }
+    #endregion
 }
