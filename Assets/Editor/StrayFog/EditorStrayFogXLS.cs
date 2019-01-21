@@ -923,6 +923,12 @@ public sealed class EditorStrayFogXLS
                 }
             }
         }
+        else
+        {
+            string error = "UIWindowSetting.xlsx file is not set,please set one.";
+            EditorUtility.DisplayDialog("Error", error, "Yes", "No");
+            throw new UnityException(error);
+        }
     }
     #endregion
     #endregion
