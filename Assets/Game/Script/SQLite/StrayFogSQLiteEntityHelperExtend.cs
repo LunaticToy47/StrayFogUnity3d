@@ -8,16 +8,16 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// 实体设定映射
     /// </summary>
     static readonly Dictionary<int, StrayFogSQLiteEntitySetting> msrEntityMaping = new Dictionary<int, StrayFogSQLiteEntitySetting>() {
-		{ typeof(Table_AssetDiskMapingFile).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(Table_AssetDiskMapingFile).GetHashCode(),"AssetDiskMapingFile","Assets/Game/Editor/XLS/AssetDiskMapingFile.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
-		{ typeof(Table_AssetDiskMapingFolder).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(Table_AssetDiskMapingFolder).GetHashCode(),"AssetDiskMapingFolder","Assets/Game/Editor/XLS/AssetDiskMapingFolder.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
-		{ typeof(Table_GameLanguage).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(Table_GameLanguage).GetHashCode(),"GameLanguage","Assets/Game/Editor/XLS/GameLanguage.xlsx","c_298028678",true,enSQLiteEntityClassify.Table,1,2,3,4)},
-		{ typeof(Table_GameSetting).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(Table_GameSetting).GetHashCode(),"GameSetting","Assets/Game/Editor/XLS/GameSetting.xlsx","c_298028678",true,enSQLiteEntityClassify.Table,1,2,3,4)},
-		{ typeof(Table_TableColumnMaping).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(Table_TableColumnMaping).GetHashCode(),"TableColumnMaping","Assets/Game/Editor/XLS/TableColumnMaping.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
-		{ typeof(Table_UIWindowSetting).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(Table_UIWindowSetting).GetHashCode(),"UIWindowSetting","Assets/Game/Editor/XLS/UIWindowSetting.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
-		{ typeof(Table_UserGuideTrigger).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(Table_UserGuideTrigger).GetHashCode(),"UserGuideTrigger","Assets/Game/Editor/XLS/UserGuideTrigger.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
-		{ typeof(Table_UserGuideValidate).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(Table_UserGuideValidate).GetHashCode(),"UserGuideValidate","Assets/Game/Editor/XLS/UserGuideValidate.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
-		{ typeof(View_DeterminantVT).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(View_DeterminantVT).GetHashCode(),"View_DeterminantVT","","c_298028678",false,enSQLiteEntityClassify.View,1,4,2,4)},
-		{ typeof(View_AssetDiskMaping).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(View_AssetDiskMaping).GetHashCode(),"View_AssetDiskMaping","","c_298028678",false,enSQLiteEntityClassify.View,1,4,2,4)},
+		{ 1220685668,new StrayFogSQLiteEntitySetting(1220685668,"AssetDiskMapingFile","Assets/Game/Editor/XLS/AssetDiskMapingFile.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
+		{ -1572136496,new StrayFogSQLiteEntitySetting(-1572136496,"AssetDiskMapingFolder","Assets/Game/Editor/XLS/AssetDiskMapingFolder.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
+		{ 129506310,new StrayFogSQLiteEntitySetting(129506310,"GameLanguage","Assets/Game/Editor/XLS/GameLanguage.xlsx","c_298028678",true,enSQLiteEntityClassify.Table,1,2,3,4)},
+		{ 475961400,new StrayFogSQLiteEntitySetting(475961400,"GameSetting","Assets/Game/Editor/XLS/GameSetting.xlsx","c_298028678",true,enSQLiteEntityClassify.Table,1,2,3,4)},
+		{ -1153414000,new StrayFogSQLiteEntitySetting(-1153414000,"TableColumnMaping","Assets/Game/Editor/XLS/TableColumnMaping.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
+		{ 1214988366,new StrayFogSQLiteEntitySetting(1214988366,"UIWindowSetting","Assets/Game/Editor/XLS/UIWindowSetting.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
+		{ -488128482,new StrayFogSQLiteEntitySetting(-488128482,"UserGuideTrigger","Assets/Game/Editor/XLS/UserGuideTrigger.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
+		{ -1929576880,new StrayFogSQLiteEntitySetting(-1929576880,"UserGuideValidate","Assets/Game/Editor/XLS/UserGuideValidate.xlsx","c_298028678",false,enSQLiteEntityClassify.Table,1,4,2,4)},
+		{ -1421965245,new StrayFogSQLiteEntitySetting(-1421965245,"View_DeterminantVT","","c_298028678",false,enSQLiteEntityClassify.View,1,4,2,4)},
+		{ -1287889953,new StrayFogSQLiteEntitySetting(-1287889953,"View_AssetDiskMaping","","c_298028678",false,enSQLiteEntityClassify.View,1,4,2,4)},
     };
 
     /// <summary>

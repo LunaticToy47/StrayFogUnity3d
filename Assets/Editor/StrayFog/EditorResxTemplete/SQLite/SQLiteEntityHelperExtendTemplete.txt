@@ -8,7 +8,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// 实体设定映射
     /// </summary>
     static readonly Dictionary<int, StrayFogSQLiteEntitySetting> msrEntityMaping = new Dictionary<int, StrayFogSQLiteEntitySetting>() {#EntityMaping#
-		{ typeof(#ClassName#).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(#ClassName#).GetHashCode(),"#TableName#","#XlsFileName#","#assetBundleDbName#",#IsDeterminant#,enSQLiteEntityClassify.#Classify#,#xlsColumnNameIndex#,#xlsColumnDataIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#)},#EntityMaping#
+		{ #TableHashCode#,new StrayFogSQLiteEntitySetting(#TableHashCode#,"#TableName#","#XlsFileName#","#assetBundleDbName#",#IsDeterminant#,enSQLiteEntityClassify.#Classify#,#xlsColumnNameIndex#,#xlsColumnDataIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#)},#EntityMaping#
     };
 
     /// <summary>
