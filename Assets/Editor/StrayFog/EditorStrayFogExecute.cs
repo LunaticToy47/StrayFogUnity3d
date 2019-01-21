@@ -1273,6 +1273,11 @@ public sealed class EditorStrayFogExecute
                     dbKeys.Add(t.dbKey);
                     string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, 
                         StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetAssetBundleDbName(t.dbName));
+                    string dir = Path.GetDirectoryName(db);
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
                     File.Copy(t.dbPath, db);
                 }
             }

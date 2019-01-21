@@ -15,25 +15,13 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// </summary>
     [AliasTooltip("文件路径")]
     [ReadOnly]
-    public string fileName;
-    /// <summary>
-    /// 数据库名称
-    /// </summary>
-    [AliasTooltip("数据库名称")]
-    [ReadOnly]
-    public string dbName;
+    public string fileName;    
     /// <summary>
     /// 数据库路径
     /// </summary>
     [AliasTooltip("数据库路径")]
     [ReadOnly]
     public string dbPath;
-    /// <summary>
-    /// 数据库连接字符串
-    /// </summary>
-    [AliasTooltip("数据库连接字符串")]
-    [ReadOnly]
-    public string dbConnectionString;
     /// <summary>
     /// 表分类
     /// </summary>
@@ -50,6 +38,20 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// </summary>
     [AliasTooltip("列")]
     public EditorXlsTableColumnSchema[] columns;
+
+    #region dbName 数据库名称
+    /// <summary>
+    /// 数据库名称
+    /// </summary>
+    public string dbName { get { return Path.GetFileName(dbPath); } }
+    #endregion
+
+    #region dbConnectionString 数据库连接字符串
+    /// <summary>
+    /// 数据库连接字符串
+    /// </summary>
+    public string dbConnectionString { get { return StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(dbPath); } }
+    #endregion
 
     #region dbKey 数据库Key值
     /// <summary>
@@ -94,9 +96,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
         EditorXlsTableSchema table = new EditorXlsTableSchema();
         table.tableName = tableName;
         table.fileName = fileName;
-        table.dbName = dbName;
         table.dbPath = dbPath;
-        table.dbConnectionString = dbConnectionString;
         table.isDeterminant = isDeterminant;
         table.classify = classify;
         if (columns != null && columns.Length > 0)
