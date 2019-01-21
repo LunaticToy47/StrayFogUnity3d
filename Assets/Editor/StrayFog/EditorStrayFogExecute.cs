@@ -1271,8 +1271,7 @@ public sealed class EditorStrayFogExecute
                 if (!dbKeys.Contains(t.dbKey))
                 {
                     dbKeys.Add(t.dbKey);
-                    string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, 
-                        StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetAssetBundleDbName(t.dbName));
+                    string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, t.assetBundleDbName);
                     string dir = Path.GetDirectoryName(db);
                     if (!Directory.Exists(dir))
                     {

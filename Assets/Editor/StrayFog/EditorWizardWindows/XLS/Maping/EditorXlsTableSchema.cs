@@ -53,6 +53,13 @@ public class EditorXlsTableSchema : AbsScriptableObject
     public string dbConnectionString { get { return StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(dbPath); } }
     #endregion
 
+    #region assetBundleDbName 数据库外部资源名称
+    /// <summary>
+    /// 数据库外部资源名称
+    /// </summary>
+    public string assetBundleDbName { get { return StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetAssetBundleDbName(dbPath); } }
+    #endregion
+
     #region dbKey 数据库Key值
     /// <summary>
     /// 数据库Key值

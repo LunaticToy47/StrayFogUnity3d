@@ -73,7 +73,43 @@ public sealed class EditorStrayFogXLS
     /// <summary>
     /// UNION符号
     /// </summary>
-    static readonly string msrUnionSymbol = "UNION";    
+    static readonly string msrUnionSymbol = "UNION";
+    #endregion
+
+    #region TableSQLiteHelper帮助类
+    /// <summary>
+    /// TableSQLiteHelper帮助类
+    /// </summary>
+    class TableSQLiteHelper
+    {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="_table">表格架构</param>
+        public TableSQLiteHelper(EditorXlsTableSchema _table)
+        {
+            dbKey = _table.dbKey;
+            dbPath = _table.dbPath;
+            dbDirectory = Path.GetDirectoryName(_table.dbPath);
+            sqlite = new StrayFogSQLiteHelper(_table.dbConnectionString);
+        }
+        /// <summary>
+        /// 数据库Key
+        /// </summary>
+        public int dbKey { get; private set; }
+        /// <summary>
+        /// 数据路径
+        /// </summary>
+        public string dbPath { get; private set; }
+        /// <summary>
+        /// 数据库目录
+        /// </summary>
+        public string dbDirectory { get; private set; }
+        /// <summary>
+        /// 数据库
+        /// </summary>
+        public StrayFogSQLiteHelper sqlite { get; private set; }
+    }
     #endregion
 
     #region OnTransDescToSummary 转换描述为Summary形式
@@ -284,40 +320,7 @@ public sealed class EditorStrayFogXLS
     }
     #endregion
 
-    #region ExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库
-    /// <summary>
-    /// TableSQLiteHelper帮助类
-    /// </summary>
-    class TableSQLiteHelper
-    {
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="_table">表格架构</param>
-        public TableSQLiteHelper(EditorXlsTableSchema _table)
-        {
-            dbKey = _table.dbKey;
-            dbPath = _table.dbPath;
-            dbDirectory = Path.GetDirectoryName(_table.dbPath);
-            sqlite = new StrayFogSQLiteHelper(_table.dbConnectionString);
-        }
-        /// <summary>
-        /// 数据库Key
-        /// </summary>
-        public int dbKey { get; private set; }
-        /// <summary>
-        /// 数据路径
-        /// </summary>
-        public string dbPath { get; private set; }
-        /// <summary>
-        /// 数据库目录
-        /// </summary>
-        public string dbDirectory { get; private set; }
-        /// <summary>
-        /// 数据库
-        /// </summary>
-        public StrayFogSQLiteHelper sqlite { get; private set; }
-    }
+    #region ExportXlsSchemaToSqlite 生成Xls表结构到Sqlite数据库    
     /// <summary>
     /// 生成Xls表结构到Sqlite数据库
     /// </summary>
@@ -749,7 +752,7 @@ public sealed class EditorStrayFogXLS
                 .Replace("#ClassName#", t.className)
                 .Replace("#TableName#", t.tableName)
                 .Replace("#XlsFileName#", t.fileName)
-                .Replace("#dbSQLitePath#", t.dbPath.ToString())
+                .Replace("#assetBundleDbName#", t.assetBundleDbName)
                 .Replace("#IsDeterminant#", Convert.ToString(t.isDeterminant).ToLower())
                 .Replace("#Classify#", t.classify.ToString())
                 .Replace("#xlsColumnNameIndex#", xlsColumnNameIndex.ToString())
@@ -855,7 +858,7 @@ public sealed class EditorStrayFogXLS
                     for (int row = msrColumnDataRowStartIndex; row <= sheet.Dimension.Rows; row++)
                     {
                         tempIsAllValueNull = true;
-                        _progressCallback("Read【" + tables[i].tableName + "】 Row Data ", "Row【" + row + "】", (row - msrColumnDataRowStartIndex + 1) / (float)tables.Count);
+                        _progressCallback(string.Format("Read Table【{0}】", tables[i].tableName), string.Format("Row 【 {0}】 Data", row), (row - msrColumnDataRowStartIndex + 1) / (float)tables.Count);
 
                         tempSPName = new List<string>();
                         tempSPS = new List<SqliteParameter>();
@@ -870,7 +873,7 @@ public sealed class EditorStrayFogXLS
                             tempIsAllValueNull &= (tempValue == null);
                             tempSPName.Add("@" + tempName + row + col);
                             tempSPS.Add(new SqliteParameter("@" + tempName + row + col, tempValue));
-                            _progressCallback("Read 【" + tables[i].tableName + "】 Column Data", "Row【" + row + "】Col【" + col + "】【" + tempName + "】", col / (float)sheet.Dimension.Columns);
+                            _progressCallback(string.Format("Read 【{0}】 Column Data", tables[i].tableName), string.Format("Row【{0}】Col【{1}->{2}】", row, col, tempName), col / (float)sheet.Dimension.Columns);
                         }
                         if (tempIsAllValueNull)
                         {//如果所有列为空，则认为是数据结束
@@ -893,7 +896,7 @@ public sealed class EditorStrayFogXLS
             progress++;
             foreach (KeyValuePair<string, Dictionary<string, List<SqliteParameter>>> key in db.Value)
             {
-                _progressCallback("Excute Sql", string.Format("【0】Insert Table【{1}】Data Count 【{2}】", dicDbHelper[db.Key].sqlite.connectionString, key.Key, key.Value.Count - 1), progress / tempInsertTable.Count);
+                _progressCallback(string.Format("Update SQLite 【{0}】", dicDbHelper[db.Key].dbPath), string.Format("Insert Table【{0}】Data Count 【{1}】",  key.Key, key.Value.Count - 1), progress / tempInsertTable.Count);
                 dicDbHelper[db.Key].sqlite.ExecuteTransaction(key.Value);
             }
         }

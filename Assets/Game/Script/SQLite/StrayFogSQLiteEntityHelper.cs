@@ -57,7 +57,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         if (!msStrayFogSQLiteHelperMaping.ContainsKey(_entitySetting.dbSQLiteKey))
         {
             msStrayFogSQLiteHelperMaping.Add(_entitySetting.dbSQLiteKey,
-                new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(_entitySetting.dbSQLitePath)));
+                new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(_entitySetting.assetBundleDbName)));
         }
         if (!msEntitySQLitePropertyTypeNameMaping.ContainsKey(_entitySetting.id))
         {
