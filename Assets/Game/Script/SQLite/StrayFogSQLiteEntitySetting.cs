@@ -9,17 +9,15 @@ public class StrayFogSQLiteEntitySetting
     /// <param name="_id">id</param>
     /// <param name="_name">实体名称</param>
     /// <param name="_xlsFileName">xls文件名称</param>
+    /// <param name="_dbSQLitePath">数据库路径</param>
     /// <param name="_isDeterminant">是否是行列式</param>
     /// <param name="_classify">实体分类</param>
     /// <param name="_xlsColumnNameIndex">XLS表列名称索引</param>
     /// <param name="_xlsColumnDataIndex">XLS表列值索引</param>
     /// <param name="_xlsColumnTypeIndex">XLS表列类型索引</param>
     /// <param name="_xlsDataStartRowIndex">XLS表数据起始行索引</param>
-    /// <param name="_dbSQLiteKey">数据库Key</param>
-    /// <param name="_dbSQLiteName">数据库名称</param>
-    /// <param name="_dbSQLitePath">数据库路径</param>
-    public StrayFogSQLiteEntitySetting(int _id, string _name, string _xlsFileName, bool _isDeterminant, enSQLiteEntityClassify _classify,
-        int _xlsColumnNameIndex, int _xlsColumnDataIndex, int _xlsColumnTypeIndex, int _xlsDataStartRowIndex,int _dbSQLiteKey,string _dbSQLiteName,string _dbSQLitePath)
+    public StrayFogSQLiteEntitySetting(int _id, string _name, string _xlsFileName, string _dbSQLitePath, bool _isDeterminant, enSQLiteEntityClassify _classify,
+        int _xlsColumnNameIndex, int _xlsColumnDataIndex, int _xlsColumnTypeIndex, int _xlsDataStartRowIndex)
     {
         id = _id;
         name = _name;
@@ -30,8 +28,6 @@ public class StrayFogSQLiteEntitySetting
         xlsColumnDataIndex = _xlsColumnDataIndex;
         xlsColumnTypeIndex = _xlsColumnTypeIndex;
         xlsDataStartRowIndex = _xlsDataStartRowIndex;
-        dbSQLiteKey = _dbSQLiteKey;
-        dbSQLiteName = _dbSQLiteName;
         dbSQLitePath = _dbSQLitePath;
     }
     /// <summary>
@@ -71,15 +67,11 @@ public class StrayFogSQLiteEntitySetting
     /// </summary>
     public int xlsDataStartRowIndex { get; private set; }
     /// <summary>
-    /// 数据库Key
-    /// </summary>
-    public int dbSQLiteKey { get; private set; }
-    /// <summary>
-    /// 数据库名称
-    /// </summary>
-    public string dbSQLiteName { get; private set; }
-    /// <summary>
     /// 数据库路径
     /// </summary>
-    public string dbSQLitePath { get; private set; }    
+    public string dbSQLitePath { get; private set; }
+    /// <summary>
+    /// 数据库Key
+    /// </summary>
+    public int dbSQLiteKey { get { return dbSQLitePath.UniqueHashCode(); } }
 }

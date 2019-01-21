@@ -239,11 +239,11 @@ string.Empty;
     /// <summary>
     /// 获得资源包Db数据库名称
     /// </summary>
-    /// <param name="_dbName">名称</param>
+    /// <param name="_dbPath">数据库路径</param>
     /// <returns>Db数据库名称</returns>
-    public string GetAssetBundleDbName(string _dbName)
+    public string GetAssetBundleDbName(string _dbPath)
     {
-        return "c_" + _dbName.UniqueHashCode().ToString().Replace("-", "_");
+        return "c_" + _dbPath.UniqueHashCode().ToString().Replace("-", "_");
     }
     #endregion
 
@@ -258,9 +258,9 @@ string.Empty;
 #if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
         _dbPath = string.Format("data source={0}", _dbPath);
 #elif UNITY_ANDROID
-        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, GetAssetBundleDbName(Path.GetFileName(_dbPath))));
+        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, GetAssetBundleDbName(_dbPath)));
 #else
-        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, GetAssetBundleDbName(Path.GetFileName(_dbPath))));
+        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, GetAssetBundleDbName(_dbPath)));
 #endif
         return _dbPath;
     }

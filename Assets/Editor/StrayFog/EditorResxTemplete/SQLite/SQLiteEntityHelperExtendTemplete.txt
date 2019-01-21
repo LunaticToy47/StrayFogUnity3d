@@ -1,13 +1,5 @@
 ﻿using System.Collections.Generic;
 /// <summary>
-/// 数据库分类枚举
-/// </summary>
-public enum enSQLiteClassify
-{#SQLiteClassifyEnums#
-	#Name# = #HashCode##SQLiteClassifyEnums#
-}
-
-/// <summary>
 /// StrayFogSQLite表实体帮助类
 /// </summary>
 public sealed partial class StrayFogSQLiteEntityHelper
@@ -16,7 +8,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// 实体设定映射
     /// </summary>
     static readonly Dictionary<int, StrayFogSQLiteEntitySetting> msrEntityMaping = new Dictionary<int, StrayFogSQLiteEntitySetting>() {#EntityMaping#
-		{ typeof(#ClassName#).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(#ClassName#).GetHashCode(),"#TableName#","#XlsFileName#",#IsDeterminant#,enSQLiteEntityClassify.#Classify#,#xlsColumnNameIndex#,#xlsColumnDataIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#,#dbSQLiteKey#,"#dbSQLiteName#","#dbSQLitePath#")},#EntityMaping#
+		{ typeof(#ClassName#).GetHashCode(),new StrayFogSQLiteEntitySetting(typeof(#ClassName#).GetHashCode(),"#TableName#","#XlsFileName#","#dbSQLitePath#",#IsDeterminant#,enSQLiteEntityClassify.#Classify#,#xlsColumnNameIndex#,#xlsColumnDataIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#)},#EntityMaping#
     };
 
     /// <summary>

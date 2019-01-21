@@ -724,27 +724,11 @@ public sealed class EditorStrayFogXLS
         entityMapingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, entityMapingMark, out entityMapingReplaceTemplete);
         #endregion
 
-        #region #SQLiteClassifyEnums#
-        string sqliteClassifyEnumsMark = "#SQLiteClassifyEnums#";
-        string sqliteClassifyEnumsReplaceTemplete = string.Empty;
-        string sqliteClassifyEnumsTemplete = string.Empty;
-        StringBuilder sbSqliteClassifyEnumsReplace = new StringBuilder();
-        sqliteClassifyEnumsTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, sqliteClassifyEnumsMark, out sqliteClassifyEnumsReplaceTemplete);
-        #endregion
-
         progress = 0;
         int xlsColumnNameIndex = 0;
         int xlsColumnDataIndex = 0;
         int xlsColumnTypeIndex = 0;
         int xlsDataStartRowIndex = msrColumnDataRowStartIndex;
-        List<string> sqliteClassifyEnumNames = new List<string>();
-
-        foreach (KeyValuePair<int, string> key in dicSQLiteClassifyEnum)
-        {
-            sqliteClassifyEnumNames.Add(sqliteClassifyEnumsTemplete.Replace("#Name#",key.Value).Replace("#HashCode#", key.Key.ToString()));
-        }
-        sbSqliteClassifyEnumsReplace.Append(string.Join(msrColumnSeparate, sqliteClassifyEnumNames.ToArray()));
-
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
@@ -765,22 +749,19 @@ public sealed class EditorStrayFogXLS
                 .Replace("#ClassName#", t.className)
                 .Replace("#TableName#", t.tableName)
                 .Replace("#XlsFileName#", t.fileName)
+                .Replace("#dbSQLitePath#", t.dbPath.ToString())
                 .Replace("#IsDeterminant#", Convert.ToString(t.isDeterminant).ToLower())
                 .Replace("#Classify#", t.classify.ToString())
                 .Replace("#xlsColumnNameIndex#", xlsColumnNameIndex.ToString())
                 .Replace("#xlsColumnDataIndex#", xlsColumnDataIndex.ToString())
                 .Replace("#xlsColumnTypeIndex#", xlsColumnTypeIndex.ToString())
-                .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
-                .Replace("#dbSQLiteKey#", t.dbKey.ToString())
-                .Replace("#dbSQLiteName#", t.dbName.ToString())
-                .Replace("#dbSQLitePath#", t.dbPath.ToString())
+                .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())                
                 );
             EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / _tables.Count);
         }
         cfgHeplerExtendScript.SetText(
             helperScriptTemplete
             .Replace(entityMapingReplaceTemplete, sbEntityMapingReplace.ToString())
-            .Replace(sqliteClassifyEnumsReplaceTemplete, sbSqliteClassifyEnumsReplace.ToString())
             );
         cfgHeplerExtendScript.CreateAsset();
         #endregion
