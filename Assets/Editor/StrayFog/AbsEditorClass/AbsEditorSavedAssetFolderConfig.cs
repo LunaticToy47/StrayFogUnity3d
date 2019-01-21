@@ -3,14 +3,14 @@ using UnityEditor;
 /// <summary>
 /// 编辑器设定保存资源
 /// </summary>
-public abstract class AbsEditorSavedAssetConfig<C, F> : EditorEngineAssetConfig
-    where C : AbsEditorSavedAssetConfig<C, F>
-    where F : AbsEditorSavedAssetFile
+public abstract class AbsEditorSavedAssetFolderConfig<C, F> : EditorEngineAssetConfig
+    where C : AbsEditorSavedAssetFolderConfig<C, F>
+    where F : AbsEditorSavedAssetFolder
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public AbsEditorSavedAssetConfig()
+    public AbsEditorSavedAssetFolderConfig()
         : base(typeof(C).Name,
               enEditorApplicationFolder.Editor.GetAttribute<EditorApplicationFolderAttribute>().path,
               enFileExt.Asset, typeof(F).FullName)

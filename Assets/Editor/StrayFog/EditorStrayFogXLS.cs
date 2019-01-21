@@ -830,7 +830,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
     {
-       
+
     }
     #endregion
     #endregion

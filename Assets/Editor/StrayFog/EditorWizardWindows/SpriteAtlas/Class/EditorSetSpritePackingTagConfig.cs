@@ -3,7 +3,7 @@
 /// SetAssetBundleName配置
 /// </summary>
 public class EditorSetSpritePackingTagConfig :
-    AbsEditorSavedAssetConfig<EditorSetSpritePackingTagConfig, EditorSetSpritePackingTagFile>
+    AbsEditorSavedAssetFolderConfig<EditorSetSpritePackingTagConfig, EditorSetSpritePackingTagFile>
 {
 }
 #endif

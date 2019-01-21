@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 可保存的资源文本
 /// </summary>
-public abstract class AbsEditorSavedAssetFile : AbsScriptableObject
+public abstract class AbsEditorSavedAssetFolder : AbsScriptableObject
 {
     /// <summary>
     /// 目录组

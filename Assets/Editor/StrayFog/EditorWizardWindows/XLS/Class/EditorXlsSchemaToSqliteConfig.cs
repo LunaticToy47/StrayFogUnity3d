@@ -3,7 +3,7 @@
 /// XlsSchemaToSqlite配置
 /// </summary>
 public class EditorXlsSchemaToSqliteConfig :
-    AbsEditorSavedAssetConfig<EditorXlsSchemaToSqliteConfig, EditorXlsSchemaToSqliteFile>
+    AbsEditorSavedAssetFolderConfig<EditorXlsSchemaToSqliteConfig, EditorXlsSchemaToSqliteFile>
 {
 }
 #endif
