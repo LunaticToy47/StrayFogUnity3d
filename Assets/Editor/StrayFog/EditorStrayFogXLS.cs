@@ -135,6 +135,47 @@ public sealed class EditorStrayFogXLS
     }
     #endregion
 
+    #region OnDeleteXlsData 删除XLS表指定数据
+    /// <summary>
+    /// 删除XLS表指定数据
+    /// </summary>
+    /// <param name="_xlsPath">XLS表路径</param>
+    /// <param name="_isDeleteFunc">是否清除</param>
+    static void OnDeleteXlsData(string _xlsPath,Func<ExcelWorksheet,int,bool> _isDeleteFunc)
+    {
+        string newXlsPath = _xlsPath + "_New";
+        bool isDel = false;
+        int delCount = 0;
+        using (FileStream fs = new FileStream(_xlsPath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            ExcelPackage pck = new ExcelPackage(fs);
+            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+            if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
+            {
+                int maxRow = sheet.Dimension.Rows;
+                for (int row = msrColumnDataRowStartIndex; row <= maxRow; row++)
+                {
+                    if (_isDeleteFunc(sheet,row-delCount))
+                    {
+                        sheet.DeleteRow(row - delCount, 1, true);
+                        isDel |= true;
+                        delCount++;
+                    }
+                }               
+            }
+            if (isDel)
+            {
+                pck.SaveAs(new FileInfo(newXlsPath));
+            }
+        }
+        if (File.Exists(newXlsPath))
+        {
+            File.Delete(_xlsPath);
+            File.Move(newXlsPath, _xlsPath);
+        }
+    }
+    #endregion
+
     #region ReadXlsSchema 读取XLS表结构框架
     /// <summary>
     /// 读取XLS表结构框架
@@ -807,18 +848,32 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     public static void DeleteAllUIWindowSetting()
     {
-        
+        EditorUIWinodwConfig wfg = EditorStrayFogSavedConfigAssetFile.setUIWindowConfig;
+        if (wfg.file.files != null && wfg.file.files.Length > 0)
+        {
+            foreach (string file in wfg.file.files)
+            {
+                OnClearXlsData(file);
+            }
+        }
     }
     #endregion
 
     #region DeleteUIWindowSetting 删除指定窗口设置
     /// <summary>
-    /// 删除所有窗口设置
+    /// 删除指定窗口设置
     /// </summary>
     /// <param name="_winId">窗口id</param>
     public static void DeleteUIWindowSetting(int _winId)
     {
-        
+        EditorUIWinodwConfig wfg = EditorStrayFogSavedConfigAssetFile.setUIWindowConfig;
+        if (wfg.file.files != null && wfg.file.files.Length > 0)
+        {
+            foreach (string file in wfg.file.files)
+            {
+                OnDeleteXlsData(file, (sheet, row) => { return sheet.GetValue<int>(row, 1) == _winId; });
+            }
+        }       
     }
     #endregion
 
@@ -830,7 +885,44 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
     {
-
+        DeleteAllUIWindowSetting();
+        EditorUIWinodwConfig wfg = EditorStrayFogSavedConfigAssetFile.setUIWindowConfig;
+        if (wfg.file.files != null && wfg.file.files.Length > 0)
+        {
+            foreach (string file in wfg.file.files)
+            {
+                string newXlsPath = file + "_New";
+                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+                {
+                    ExcelPackage pck = new ExcelPackage(fs);
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    for (int i = 0; i < _windows.Count; i++)
+                    {
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 1].Value = _windows[i].winId;
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 2].Value = _windows[i].nameWithoutExtension;
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 3].Value = _windows[i].fileId;
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 4].Value = _windows[i].folderId;
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 5].Value = (int)_windows[i].assetNode.renderMode;
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 6].Value = (int)_windows[i].assetNode.layer;
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 7].Value = (int)_windows[i].assetNode.openMode;
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 8].Value = (int)_windows[i].assetNode.closeMode;
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 9].Value = Convert.ToInt32(_windows[i].assetNode.isIgnoreOpenCloseMode);
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 10].Value = Convert.ToInt32(_windows[i].assetNode.isNotAutoRestoreSequenceWindow);
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 11].Value = Convert.ToInt32(_windows[i].assetNode.isDonotDestroyInstance);
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 12].Value = Convert.ToInt32(_windows[i].assetNode.isImmediateDisplay);
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 13].Value = Convert.ToInt32(_windows[i].assetNode.isManualCloseWhenGotoScene);
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 14].Value = Convert.ToInt32(_windows[i].assetNode.isGuideWindow);
+                        _progressCallback(_windows[i].path, (i + 1) / (float)_windows.Count);
+                    }
+                    pck.SaveAs(new FileInfo(newXlsPath));
+                }
+                if (File.Exists(newXlsPath))
+                {
+                    File.Delete(file);
+                    File.Move(newXlsPath, file);
+                }
+            }
+        }
     }
     #endregion
     #endregion

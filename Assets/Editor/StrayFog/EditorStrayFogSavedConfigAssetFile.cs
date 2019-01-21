@@ -20,6 +20,10 @@ public sealed class EditorStrayFogSavedConfigAssetFile
     /// 设置XlsSchemaToSqlite
     /// </summary>
     public static EditorXlsSchemaToSqliteConfig setXlsSchemaToSqlite = new EditorXlsSchemaToSqliteConfig();
+    /// <summary>
+    /// 设置UIWindowConfig
+    /// </summary>
+    public static EditorUIWinodwConfig setUIWindowConfig = new EditorUIWinodwConfig();
     
 }
 #endif

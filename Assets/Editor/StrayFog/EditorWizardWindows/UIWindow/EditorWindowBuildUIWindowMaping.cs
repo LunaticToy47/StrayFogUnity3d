@@ -55,14 +55,19 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// 信息
     /// </summary>
     StringBuilder mSbInfo = new StringBuilder();
+
+    /// <summary>
+    /// 配置
+    /// </summary>
+    EditorUIWinodwConfig mConfig;
     /// <summary>
     /// OnFocus
     /// </summary>
     void OnFocus()
     {
         mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
+        mConfig = EditorStrayFogSavedConfigAssetFile.setUIWindowConfig;
     }
-
     /// <summary>
     /// OnGUI
     /// </summary>
@@ -78,7 +83,11 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
-
+        if (mConfig.file != null)
+        {
+            mConfig.file.DrawGUI();
+        }
+        EditorGUILayout.Separator();
     }
     #endregion
 
