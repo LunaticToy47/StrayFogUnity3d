@@ -23,15 +23,9 @@ public sealed partial class StrayFogSQLiteEntityHelper
             {
                 #region View_AssetDiskMaping 数据组装                                
                 List<Table_AssetDiskMapingFile> files = Select<Table_AssetDiskMapingFile>();
-                List<Table_AssetDiskMapingFileExt> fileExts = Select<Table_AssetDiskMapingFileExt>();
                 List<Table_AssetDiskMapingFolder> folders = Select<Table_AssetDiskMapingFolder>();
-                Dictionary<int, Table_AssetDiskMapingFile> dicFile = new Dictionary<int, Table_AssetDiskMapingFile>();
-                Dictionary<int, Table_AssetDiskMapingFileExt> dicFileExt = new Dictionary<int, Table_AssetDiskMapingFileExt>();
-                Dictionary<int, Table_AssetDiskMapingFolder> dicFolder = new Dictionary<int, Table_AssetDiskMapingFolder>();
-                foreach (Table_AssetDiskMapingFileExt t in fileExts)
-                {
-                    dicFileExt.Add(t.extId, t);
-                }
+                Dictionary<int, Table_AssetDiskMapingFile> dicFile = new Dictionary<int, Table_AssetDiskMapingFile>();              
+                Dictionary<int, Table_AssetDiskMapingFolder> dicFolder = new Dictionary<int, Table_AssetDiskMapingFolder>();               
                 foreach (Table_AssetDiskMapingFolder t in folders)
                 {
                     dicFolder.Add(t.folderId, t);
@@ -47,8 +41,8 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     tempEntity = Activator.CreateInstance<T>();
                     msEntityPropertyInfoMaping[_entitySetting.id][fileId].SetValue(tempEntity, t.fileId, null);
                     msEntityPropertyInfoMaping[_entitySetting.id][folderId].SetValue(tempEntity, t.folderId, null);
-                    msEntityPropertyInfoMaping[_entitySetting.id][fileName].SetValue(tempEntity, t.inSide + dicFileExt[t.extId].ext, null);
-                    msEntityPropertyInfoMaping[_entitySetting.id][inAssetPath].SetValue(tempEntity,Path.Combine(dicFolder[t.folderId].inSide, t.inSide + dicFileExt[t.extId].ext).TransPathSeparatorCharToUnityChar(), null);
+                    msEntityPropertyInfoMaping[_entitySetting.id][fileName].SetValue(tempEntity, t.inSide + t.ext, null);
+                    msEntityPropertyInfoMaping[_entitySetting.id][inAssetPath].SetValue(tempEntity,Path.Combine(dicFolder[t.folderId].inSide, t.inSide + t.ext).TransPathSeparatorCharToUnityChar(), null);
                     msEntityPropertyInfoMaping[_entitySetting.id][outAssetPath].SetValue(tempEntity, t.outSide, null);
                     msEntityPropertyInfoMaping[_entitySetting.id][extEnumValue].SetValue(tempEntity, t.extEnumValue, null);
                     result.Add(tempEntity);

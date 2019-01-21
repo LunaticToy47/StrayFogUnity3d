@@ -245,6 +245,7 @@ public sealed class EditorStrayFogXLS
                     tempTable.fileName = f.path;
                     tempTable.dbConnectionString = StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(f.dbPath);
                     tempTable.dbName = f.dbName;
+                    tempTable.dbPath = f.dbPath;
                     tempTable.tableName = f.nameWithoutExtension;
                     if (sheet.Dimension.Rows >= msrColumnNameRowIndex)
                     {
@@ -282,19 +283,21 @@ public sealed class EditorStrayFogXLS
     {
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tables = ReadXlsSchema();
-        Dictionary<int, StrayFogSQLiteHelper> dicDb = OnCreateTableSchemaToSQLite(tables);
-        OnCreateScriptFromSQLite(tables,dicDb);
+        Dictionary<int, string> dbPath = new Dictionary<int, string>();
+        Dictionary<int, StrayFogSQLiteHelper> dicHelper = OnCreateTableSchemaToSQLite(tables,ref dbPath);
+        OnCreateScriptFromSQLite(tables, dicHelper, dbPath);
     }
 
     /// <summary>
     /// 创建表结构到SQLite数据库
     /// </summary>
     /// <param name="_tables">表结构</param>
-    static Dictionary<int, StrayFogSQLiteHelper> OnCreateTableSchemaToSQLite(List<EditorXlsTableSchema> _tables)
+    /// <param name="_dbPath">数据库路径</param>
+    static Dictionary<int, StrayFogSQLiteHelper> OnCreateTableSchemaToSQLite(List<EditorXlsTableSchema> _tables, ref Dictionary<int, string> _dbPath)
     {
         string sqliteCreateTableTemplete = EditorResxTemplete.SQLiteCreateTableTemplete;
         string sqliteView_DeterminantVTTemplete = EditorResxTemplete.SQLiteCreateDeterminantViewTemplete;
-        Dictionary<int, StrayFogSQLiteHelper> dicDbPath = new Dictionary<int, StrayFogSQLiteHelper>();
+        Dictionary<int, StrayFogSQLiteHelper> dicDbHelper = new Dictionary<int, StrayFogSQLiteHelper>();
         Dictionary<int, List<string>> dicExcuteSql = new Dictionary<int, List<string>>();
         Dictionary<int, string> dicSqlPath = new Dictionary<int, string>();
         FileExtAttribute attSqlExt = enFileExt.TextAsset.GetAttribute<FileExtAttribute>();
@@ -340,9 +343,13 @@ public sealed class EditorStrayFogXLS
         foreach (EditorXlsTableSchema table in _tables)
         {
             progress++;
-            if (!dicDbPath.ContainsKey(table.dbKey))
+            if (!dicDbHelper.ContainsKey(table.dbKey))
             {
-                dicDbPath.Add(table.dbKey, new StrayFogSQLiteHelper(table.dbConnectionString));
+                dicDbHelper.Add(table.dbKey, new StrayFogSQLiteHelper(table.dbConnectionString));
+            }
+            if (!_dbPath.ContainsKey(table.dbKey))
+            {
+                _dbPath.Add(table.dbKey, table.dbPath);
             }
             if (!dicExcuteSql.ContainsKey(table.dbKey))
             {
@@ -357,14 +364,14 @@ public sealed class EditorStrayFogXLS
                 dicSqlPath.Add(table.dbKey, Path.GetDirectoryName(table.fileName));
             }
             EditorUtility.DisplayProgressBar("Init SQLite Data",
-                    string.Format("【{0}】=>{1}", table.tableName, table.dbConnectionString), progress / dicDbPath.Count);
+                    string.Format("【{0}】=>{1}", table.tableName, table.dbConnectionString), progress / dicDbHelper.Count);
         }
         #endregion
 
         #region 清理数据库SQL语句
         progress = 0;
         SqliteDataReader reader = null;
-        foreach (KeyValuePair<int, StrayFogSQLiteHelper> key in dicDbPath)
+        foreach (KeyValuePair<int, StrayFogSQLiteHelper> key in dicDbHelper)
         {
             progress++;
             reader = key.Value.ReadSQLiteTableSchema();
@@ -383,7 +390,7 @@ public sealed class EditorStrayFogXLS
             reader.Close();
             reader = null;
             EditorUtility.DisplayProgressBar("Collect Clear SQLite SQL",
-                    key.Value.connectionString, progress / dicDbPath.Count);
+                    key.Value.connectionString, progress / dicDbHelper.Count);
         }
         #endregion
 
@@ -464,7 +471,7 @@ public sealed class EditorStrayFogXLS
                 sqliteView_DeterminantVTTemplete
                 .Replace(view_DeterminantReplaceTemplete, sbView_DeterminantReplace.ToString())
                 );
-            EditorUtility.DisplayProgressBar("Create View_Determinant SQL",dicDbPath[key].connectionString, progress / _tables.Count);
+            EditorUtility.DisplayProgressBar("Create View_Determinant SQL",dicDbHelper[key].connectionString, progress / _tables.Count);
         }
         #endregion
 
@@ -481,7 +488,7 @@ public sealed class EditorStrayFogXLS
                 {
                     progress++;
                     dicExcuteSql[key.Key].Add(File.ReadAllText(n.path));
-                    EditorUtility.DisplayProgressBar("Build View SQL", string.Format("【{0}】=>{1}",n.path, dicDbPath[key.Key].connectionString), progress / sqlAssets.Count);
+                    EditorUtility.DisplayProgressBar("Build View SQL", string.Format("【{0}】=>{1}",n.path, dicDbHelper[key.Key].connectionString), progress / sqlAssets.Count);
                 }
             }
         }
@@ -494,26 +501,27 @@ public sealed class EditorStrayFogXLS
             progress++;
             for (int i = 0; i < key.Value.Count; i++)
             {
-                dicDbPath[key.Key].ExecuteNonQuery(key.Value[i]);
+                dicDbHelper[key.Key].ExecuteNonQuery(key.Value[i]);
                 EditorUtility.DisplayProgressBar("Build SQLite Schema",
-                    dicDbPath[key.Key].connectionString,
+                    dicDbHelper[key.Key].connectionString,
                     (progress / dicExcuteSql.Count + (i + 1) / key.Value.Count) * 0.5f);
             }
-            dicDbPath[key.Key].Close();
+            dicDbHelper[key.Key].Close();
         }
         #endregion
 
         EditorUtility.ClearProgressBar();
 
-        return dicDbPath;
+        return dicDbHelper;
     }
 
     /// <summary>
     /// 从SQLite创建脚本
     /// </summary>
     /// <param name="_tables">要生成的表</param>
-    /// <param name="_dbPath">数据库</param>
-    static void OnCreateScriptFromSQLite(List<EditorXlsTableSchema> _tables, Dictionary<int, StrayFogSQLiteHelper> _dbPath)
+    /// <param name="_dbHelper">数据库</param>
+    /// <param name="_dbPath">数据库路径</param>
+    static void OnCreateScriptFromSQLite(List<EditorXlsTableSchema> _tables, Dictionary<int, StrayFogSQLiteHelper> _dbHelper, Dictionary<int, string> _dbPath)
     {
         SqliteDataReader reader = null;
         float progress = 0;
@@ -530,7 +538,7 @@ public sealed class EditorStrayFogXLS
         EditorXlsTableColumnSchema tempTableColumn = null;
         List<EditorXlsTableColumnSchema> tempColumns = new List<EditorXlsTableColumnSchema>();
         Dictionary<int, string> dicSQLiteClassifyEnum = new Dictionary<int, string>();
-        foreach (KeyValuePair<int, StrayFogSQLiteHelper> db in _dbPath)
+        foreach (KeyValuePair<int, StrayFogSQLiteHelper> db in _dbHelper)
         {
             #region 搜索要生成的视图
             reader = db.Value.ReadSQLiteViewSchema();
@@ -555,6 +563,7 @@ public sealed class EditorStrayFogXLS
                 tempTable.tableName = tn;
                 tempTable.dbConnectionString = db.Value.connectionString;
                 tempTable.dbName = Path.GetFileName(db.Value.connectionString);
+                tempTable.dbPath = _dbPath[db.Key];
                 tempTable.classify = enSQLiteEntityClassify.View;
                 tempColumns = new List<EditorXlsTableColumnSchema>();
                 reader = db.Value.ReadPragmaTableInfo(tn);
@@ -726,7 +735,7 @@ public sealed class EditorStrayFogXLS
             sbEntityMapingReplace.Append(
                 entityMapingTemplete
                 .Replace("#ClassName#", t.className)
-                .Replace("#TableName#", t.name)
+                .Replace("#TableName#", t.tableName)
                 .Replace("#XlsFileName#", t.fileName)
                 .Replace("#IsDeterminant#", Convert.ToString(t.isDeterminant).ToLower())
                 .Replace("#Classify#", t.classify.ToString())
@@ -736,6 +745,7 @@ public sealed class EditorStrayFogXLS
                 .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
                 .Replace("#dbSQLiteKey#", t.dbKey.ToString())
                 .Replace("#dbSQLiteName#", t.dbName.ToString())
+                .Replace("#dbSQLitePath#", t.dbPath.ToString())
                 );
             EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / _tables.Count);
         }
@@ -798,7 +808,73 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void ExportXlsDataToSqlite(Action<string, string, float> _progressCallback)
     {
-        
+        List<EditorXlsTableSchema> tables = ReadXlsSchema();
+        Dictionary<string, Dictionary<string, List<SqliteParameter>>> tempInsertTable = new Dictionary<string, Dictionary<string, List<SqliteParameter>>>();
+        StringBuilder tempInsertSql = new StringBuilder();
+        List<string> tempSPName = new List<string>();
+        List<string> tempValueSql = new List<string>();
+        List<SqliteParameter> tempSPS = new List<SqliteParameter>();
+        for (int i = 0; i < tables.Count; i++)
+        {
+            _progressCallback("Import Table To Sqlite", tables[i].fileName, (i + 1) / (float)tables.Count);
+
+            tempInsertTable.Add(tables[i].name, new Dictionary<string, List<SqliteParameter>>());
+            tempInsertSql.Length = 0;
+            tempValueSql = new List<string>();
+
+            tempInsertTable[tables[i].name].Add(string.Format("DELETE FROM {0}", tables[i].name), new List<SqliteParameter>());
+            using (FileStream fs = new FileStream(tables[i].fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+            {
+                ExcelPackage pck = new ExcelPackage(fs);
+                ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                bool tempIsAllValueNull = false;
+                object tempValue = null;
+                string tempName = string.Empty;
+
+                if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
+                {
+                    for (int row = msrColumnDataRowStartIndex; row <= sheet.Dimension.Rows; row++)
+                    {
+                        tempIsAllValueNull = true;
+                        _progressCallback("Read【" + tables[i].name + "】 Row Data ", "Row【" + row + "】", (row - msrColumnDataRowStartIndex + 1) / (float)tables.Count);
+
+                        tempSPName = new List<string>();
+                        tempSPS = new List<SqliteParameter>();
+                        tempValueSql = new List<string>();
+                        tempInsertSql.Length = 0;
+                        tempInsertSql.AppendFormat("INSERT INTO {0} VALUES", tables[i].name);
+
+                        for (int col = 1; col <= sheet.Dimension.Columns; col++)
+                        {
+                            tempName = sheet.GetValue<string>(msrColumnNameRowIndex, col).Trim();
+                            tempValue = sheet.GetValue<string>(row, col);
+                            tempIsAllValueNull &= (tempValue == null);
+                            tempSPName.Add("@" + tempName + row + col);
+                            tempSPS.Add(new SqliteParameter("@" + tempName + row + col, tempValue));
+                            _progressCallback("Read 【" + tables[i].name + "】 Column Data", "Row【" + row + "】Col【" + col + "】【" + tempName + "】", col / (float)sheet.Dimension.Columns);
+                        }
+                        if (tempIsAllValueNull)
+                        {//如果所有列为空，则认为是数据结束
+                            break;
+                        }
+                        else
+                        {
+                            tempValueSql.Add(string.Format("({0})", string.Join(",", tempSPName.ToArray())));
+                            tempInsertSql.Append(string.Join(",", tempValueSql.ToArray()));
+                            tempInsertTable[tables[i].name].Add(tempInsertSql.ToString(), tempSPS);
+                        }
+                    }
+                }
+            }
+        }
+
+        float progress = 0;
+        foreach (KeyValuePair<string, Dictionary<string, List<SqliteParameter>>> key in tempInsertTable)
+        {
+            progress++;
+            _progressCallback("Excute Sql", string.Format("Insert Table【{0}】Data Count 【{1}】", key.Key, key.Value.Count - 1), progress / tempInsertTable.Count);
+            //StrayFogSQLiteHelper.sqlHelper.ExecuteTransaction(key.Value);
+        }
     }
     #endregion
 
@@ -811,19 +887,49 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFolder(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        
-    }
-    #endregion
-
-    #region InsertDataToAssetDiskMapingFileExt 插入数据到AssetDiskMapingFileExt表
-    /// <summary>
-    /// 插入数据到AssetDiskMapingFileExt表
-    /// </summary>
-    /// <param name="_nodes">节点</param>
-    /// <param name="_progressCallback">进度回调</param>
-    public static void InsertDataToAssetDiskMapingFileExt(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
-    {
-        
+        EditorSetAssetDiskMapingFolderXlsMapingConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetDiskMapingFolderXlsMapingConfig;
+        if (cfg.file.files != null && cfg.file.files.Length > 0)
+        {
+            foreach (string file in cfg.file.files)
+            {
+                OnClearXlsData(file);
+                string newXlsPath = file + "_New";
+                List<int> saveIds = new List<int>();
+                int sameRows = 0;
+                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+                {
+                    ExcelPackage pck = new ExcelPackage(fs);
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    for (int i = 0; i < _nodes.Count; i++)
+                    {
+                        if (!saveIds.Contains(_nodes[i].folderId))
+                        {
+                            saveIds.Add(_nodes[i].folderId);
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 1].Value = _nodes[i].folderId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 2].Value = _nodes[i].folderInSide;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 3].Value = _nodes[i].folderOutSide;
+                        }
+                        else
+                        {
+                            sameRows++;
+                        }
+                        _progressCallback(_nodes[i].name, (i + 1) / (float)_nodes.Count);
+                    }
+                    pck.SaveAs(new FileInfo(newXlsPath));
+                }
+                if (File.Exists(newXlsPath))
+                {
+                    File.Delete(file);
+                    File.Move(newXlsPath, file);
+                }
+            }
+        }
+        else
+        {
+            string error = "AssetDiskMapingFolder.xlsx file is not set,please set one.";
+            EditorUtility.DisplayDialog("Error", error, "Yes", "No");
+            throw new UnityException(error);
+        }
     }
     #endregion
 
@@ -835,7 +941,52 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFile(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        
+        EditorSetAssetDiskMapingFileXlsMapingConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetDiskMapingFileXlsMapingConfig;
+        if (cfg.file.files != null && cfg.file.files.Length > 0)
+        {
+            foreach (string file in cfg.file.files)
+            {
+                OnClearXlsData(file);
+                string newXlsPath = file + "_New";
+                List<int> saveIds = new List<int>();
+                int sameRows = 0;
+                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+                {
+                    ExcelPackage pck = new ExcelPackage(fs);
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    for (int i = 0; i < _nodes.Count; i++)
+                    {
+                        if (!saveIds.Contains(_nodes[i].guidHashCode))
+                        {
+                            saveIds.Add(_nodes[i].guidHashCode);
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 1].Value = _nodes[i].fileId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 2].Value = _nodes[i].folderId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 3].Value = _nodes[i].fileInSide;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 4].Value = _nodes[i].ext;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 5].Value = _nodes[i].fileOutSide;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - sameRows, 6].Value = _nodes[i].fileExtEnumValue;
+                        }
+                        else
+                        {
+                            sameRows++;
+                        }
+                        _progressCallback(_nodes[i].name, (i + 1) / (float)_nodes.Count);
+                    }
+                    pck.SaveAs(new FileInfo(newXlsPath));
+                }
+                if (File.Exists(newXlsPath))
+                {
+                    File.Delete(file);
+                    File.Move(newXlsPath, file);
+                }
+            }
+        }
+        else
+        {
+            string error = "AssetDiskMapingFile.xlsx file is not set,please set one.";
+            EditorUtility.DisplayDialog("Error", error, "Yes", "No");
+            throw new UnityException(error);
+        }
     }
     #endregion
 

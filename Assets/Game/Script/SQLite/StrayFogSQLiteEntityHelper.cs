@@ -21,6 +21,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static Dictionary<int, Dictionary<int, string>> msEntitySQLitePropertyTypeNameMaping = new Dictionary<int, Dictionary<int, string>>();
 
     /// <summary>
+    /// SQLite数据库映射
+    /// </summary>
+    static Dictionary<int,StrayFogSQLiteHelper> msStrayFogSQLiteHelperMaping = new Dictionary<int, StrayFogSQLiteHelper>();
+
+    /// <summary>
     /// 读取所有数据
     /// </summary>
     /// <typeparam name="T">实体类型</typeparam>
@@ -29,7 +34,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static List<T> OnReadAll<T>(StrayFogSQLiteEntitySetting _entitySetting)
         where T : AbsStrayFogSQLiteEntity
     {
-        List<T> result = new List<T>();
+        List<T> result = new List<T>();        
         if (!msEntityPropertyInfoMaping.ContainsKey(_entitySetting.id))
         {
             msEntityPropertyInfoMaping.Add(_entitySetting.id, new Dictionary<int, PropertyInfo>());
@@ -49,10 +54,15 @@ public sealed partial class StrayFogSQLiteEntityHelper
             }
         }
 
+        if (!msStrayFogSQLiteHelperMaping.ContainsKey(_entitySetting.dbSQLiteKey))
+        {
+            msStrayFogSQLiteHelperMaping.Add(_entitySetting.dbSQLiteKey,
+                new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(_entitySetting.dbSQLitePath)));
+        }
         if (!msEntitySQLitePropertyTypeNameMaping.ContainsKey(_entitySetting.id))
         {
             msEntitySQLitePropertyTypeNameMaping.Add(_entitySetting.id, new Dictionary<int, string>());
-            SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ReadPragmaTableInfo(_entitySetting.name);
+            SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_entitySetting.dbSQLiteKey].ReadPragmaTableInfo(_entitySetting.name);
             int key = 0;
             while (reader.Read())
             {
@@ -189,7 +199,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
-        SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.name));
+        SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_entitySetting.dbSQLiteKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.name));
         T tempEntity = default(T);
         string tempPropertyName = string.Empty;
         int tempPropertyKey = 0;

@@ -4,11 +4,10 @@
 DROP VIEW IF EXISTS "main"."View_AssetDiskMaping";
 CREATE VIEW View_AssetDiskMaping AS
 SELECT fi.fileId,fi.folderId,
-CAST(fi.inSide||fe.ext AS TEXT) fileName,
-CAST(fo.inSide || '/' || fi.inSide || fe.ext AS TEXT) inAssetPath,
+CAST(fi.inSide||fi.ext AS TEXT) fileName,
+CAST(fo.inSide || '/' || fi.inSide || fi.ext AS TEXT) inAssetPath,
 fi.outSide outAssetPath,
 fi.extEnumValue
 FROM AssetDiskMapingFile fi
-LEFT JOIN AssetDiskMapingFileExt fe
 LEFT JOIN AssetDiskMapingFolder fo
-WHERE fi.extId = fe.extId and fi.folderId = fo.folderId
+WHERE fi.folderId = fo.folderId

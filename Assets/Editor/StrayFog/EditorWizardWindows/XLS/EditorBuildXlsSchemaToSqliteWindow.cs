@@ -46,6 +46,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
+        EditorGUILayout.LabelField("XlsSchemaToSqlite Folders:");
         if (mConfig.file != null)
         {
             mConfig.file.DrawGUI();

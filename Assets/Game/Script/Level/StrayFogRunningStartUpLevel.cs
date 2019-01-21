@@ -47,8 +47,9 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
     /// </summary>
     void OnGUI()
     {
-        GUILayout.Label(StrayFogGamePools.setting.dbSource);
-        GUILayout.Label(StrayFogGamePools.setting.dbConnectionString);
+        Debug.LogError("StrayFogRunningStartUpLevel=>SQLite");
+        //GUILayout.Label(StrayFogGamePools.setting.dbSource);
+        //GUILayout.Label(StrayFogGamePools.setting.dbConnectionString);
         foreach (Table_TableColumnMaping t in mTables)
         {
             GUILayout.Label(t.JsonSerialize());

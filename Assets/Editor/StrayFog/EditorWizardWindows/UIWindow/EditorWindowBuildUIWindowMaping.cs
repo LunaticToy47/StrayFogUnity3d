@@ -83,6 +83,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
+        EditorGUILayout.LabelField("UIWindowSetting.xlsx Tables:");
         if (mConfig.file != null)
         {
             mConfig.file.DrawGUI();

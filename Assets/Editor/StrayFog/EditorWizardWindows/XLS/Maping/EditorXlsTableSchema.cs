@@ -27,6 +27,12 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// </summary>
     [AliasTooltip("数据库路径")]
     [ReadOnly]
+    public string dbPath;
+    /// <summary>
+    /// 数据库连接字符串
+    /// </summary>
+    [AliasTooltip("数据库连接字符串")]
+    [ReadOnly]
     public string dbConnectionString;
     /// <summary>
     /// 表分类
@@ -89,6 +95,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
         table.tableName = tableName;
         table.fileName = fileName;
         table.dbName = dbName;
+        table.dbPath = dbPath;
         table.dbConnectionString = dbConnectionString;
         table.isDeterminant = isDeterminant;
         table.classify = classify;

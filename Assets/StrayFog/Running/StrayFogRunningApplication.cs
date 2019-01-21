@@ -37,7 +37,8 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
     /// </summary>
     void OnApplicationQuit()
     {
-        StrayFogSQLiteHelper.sqlHelper.Close();
+        Debug.LogError("Close All SQLite");
+        //StrayFogSQLiteHelper.sqlHelper.Close();
     }
     #endregion
 

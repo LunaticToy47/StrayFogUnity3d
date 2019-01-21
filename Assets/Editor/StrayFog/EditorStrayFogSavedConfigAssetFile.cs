@@ -24,6 +24,13 @@ public sealed class EditorStrayFogSavedConfigAssetFile
     /// 设置UIWindowConfig
     /// </summary>
     public static EditorUIWinodwConfig setUIWindowConfig = new EditorUIWinodwConfig();
-    
+    /// <summary>
+    /// 设置SetAssetDiskMapingFileXlsMapingConfig
+    /// </summary>
+    public static EditorSetAssetDiskMapingFileXlsMapingConfig setAssetDiskMapingFileXlsMapingConfig = new EditorSetAssetDiskMapingFileXlsMapingConfig();
+    /// <summary>
+    /// 设置SetAssetDiskMapingFolderXlsMapingConfig
+    /// </summary>
+    public static EditorSetAssetDiskMapingFolderXlsMapingConfig setAssetDiskMapingFolderXlsMapingConfig = new EditorSetAssetDiskMapingFolderXlsMapingConfig();
 }
 #endif

@@ -939,9 +939,9 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteBuildAllAssetDiskMaping()
     {
         EditorSetAssetBundleNameConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetBundleName;
+        string error = string.Empty;
         if (cfg.file != null)
-        {
-            string error = string.Empty;
+        {            
             List<EditorSelectionAssetDiskMaping> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetDiskMaping>(cfg.file.folders, out error);
             if (string.IsNullOrEmpty(error))
             {
@@ -950,7 +950,14 @@ public sealed class EditorStrayFogExecute
             else
             {
                 Debug.LogError(error);
+                throw new UnityException(error);
             }
+        }
+        else
+        {
+            error = "ExecuteBuildAllAssetDiskMaping , there are not SetAssetBundleName folders,please set.";
+            EditorUtility.DisplayDialog("Error", error, "Yes", "No");
+            throw new UnityException(error);
         }
     }
 
@@ -981,43 +988,6 @@ public sealed class EditorStrayFogExecute
 
             EditorUtility.ClearProgressBar();
 
-            #region 插入目录
-            progress = 0;
-            foreach (EditorSelectionAssetDiskMaping n in _nodes)
-            {
-                if (!folderEnum.ContainsKey(n.folderId))
-                {
-                    folderEnum.Add(n.folderId, n.folderEnumName);
-                }
-                progress++;
-                EditorUtility.DisplayProgressBar("Folder Enum",
-                                n.path, progress / _nodes.Count);
-            }
-            EditorStrayFogXLS.InsertDataToAssetDiskMapingFolder(_nodes,(n,p)=>
-            {
-                EditorUtility.DisplayProgressBar("Insert Data To AssetDiskMapingFolder", n, p);
-            });
-            #endregion            
-
-            #region 插入文件后缀            
-            List<int> extHashCode = new List<int>();
-            progress = 0;
-            foreach (EditorSelectionAssetDiskMaping n in _nodes)
-            {
-                if (!extHashCode.Contains(n.fileExtHashCode))
-                {
-                    extHashCode.Add(n.fileExtHashCode);
-                }
-                EditorUtility.DisplayProgressBar("FileExt Enum",
-                                n.path, progress / _nodes.Count);
-                progress++;
-            }
-            EditorStrayFogXLS.InsertDataToAssetDiskMapingFileExt(_nodes, (n, p) =>
-            {
-                EditorUtility.DisplayProgressBar("Insert Data To AssetDiskMapingFileExt", n, p);
-            });
-            #endregion            
-
             #region 插入文件            
             progress = 0;
             foreach (EditorSelectionAssetDiskMaping n in _nodes)
@@ -1033,6 +1003,24 @@ public sealed class EditorStrayFogExecute
             EditorStrayFogXLS.InsertDataToAssetDiskMapingFile(_nodes, (n, p) =>
             {
                 EditorUtility.DisplayProgressBar("Insert Data To AssetDiskMapingFile", n, p);
+            });
+            #endregion
+
+            #region 插入目录
+            progress = 0;
+            foreach (EditorSelectionAssetDiskMaping n in _nodes)
+            {
+                if (!folderEnum.ContainsKey(n.folderId))
+                {
+                    folderEnum.Add(n.folderId, n.folderEnumName);
+                }
+                progress++;
+                EditorUtility.DisplayProgressBar("Folder Enum",
+                                n.path, progress / _nodes.Count);
+            }
+            EditorStrayFogXLS.InsertDataToAssetDiskMapingFolder(_nodes, (n, p) =>
+            {
+                EditorUtility.DisplayProgressBar("Insert Data To AssetDiskMapingFolder", n, p);
             });
             #endregion
 
@@ -1089,7 +1077,7 @@ public sealed class EditorStrayFogExecute
                 .Replace(enumReplaceTemplete, sbEnumTableReplace.ToString()));
             cfgEnumScript.CreateAsset();
             #endregion
-            StrayFogSQLiteHelper.sqlHelper.Close();
+
             EditorUtility.ClearProgressBar();
         }
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
@@ -1171,7 +1159,6 @@ public sealed class EditorStrayFogExecute
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
 
-        StrayFogSQLiteHelper.sqlHelper.Close();
         EditorStrayFogUtility.cmd.DeleteFolder(path);
 
         if (Directory.Exists(path))
@@ -1275,8 +1262,21 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteCopySQLiteDbToPackage()
     {
         StringBuilder sbLog = new StringBuilder();
-        string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleDbName);
-        File.Copy(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().dbSource, db);
+        List<EditorXlsTableSchema> tables = EditorStrayFogXLS.ReadXlsSchema();
+        List<int> dbKeys = new List<int>();
+        if (tables != null && tables.Count > 0)
+        {
+            foreach (EditorXlsTableSchema t in tables)
+            {
+                if (!dbKeys.Contains(t.dbKey))
+                {
+                    dbKeys.Add(t.dbKey);
+                    string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, 
+                        StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetAssetBundleDbName(t.dbName));
+                    File.Copy(t.dbPath, db);
+                }
+            }
+        }        
         sbLog.AppendLine("ExecuteBuildSQLiteDbToPackage Succeed!");
         Debug.Log(sbLog.ToString());
     }

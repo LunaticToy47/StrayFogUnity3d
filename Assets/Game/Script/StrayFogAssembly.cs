@@ -21,25 +21,25 @@ public sealed class StrayFogAssembly
         if (mDynamicAssemblyArray == null)
         {
             mDynamicAssemblyArray = new List<Assembly>();
-            SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
-            string path = string.Empty;
-            while (reader.Read())
-            {
-                if (StrayFogGamePools.setting.isInternal)
-                {
-                    path = reader.GetString(0).Replace(@"\", "/");
-                }
-                else
-                {
-                    path = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, reader.GetString(1)).Replace(@"\", "/");
-                }
-                if (File.Exists(path))
-                {
-                    mDynamicAssemblyArray.Add(Assembly.LoadFile(path));
-                }
-            }
-            reader.Close();
-            reader = null;
+            //SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
+            //string path = string.Empty;
+            //while (reader.Read())
+            //{
+            //    if (StrayFogGamePools.setting.isInternal)
+            //    {
+            //        path = reader.GetString(0).Replace(@"\", "/");
+            //    }
+            //    else
+            //    {
+            //        path = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, reader.GetString(1)).Replace(@"\", "/");
+            //    }
+            //    if (File.Exists(path))
+            //    {
+            //        mDynamicAssemblyArray.Add(Assembly.LoadFile(path));
+            //    }
+            //}
+            //reader.Close();
+            //reader = null;
         }
     }
     #endregion

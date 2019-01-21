@@ -34,8 +34,17 @@ static class EditorAssetDiskMapingMenuItem
     [MenuItem(mcHierarchy + mcBuildAllAssetDiskMaping, false, mcPriority + 1)]
     static void EditorDevelopMenuItem_BuildAllAssetDiskMapingWindow()
     {
-        EditorStrayFogExecute.ExecuteBuildAllAssetDiskMaping();
-        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAllAssetDiskMaping);
+        if (EditorStrayFogApplication.IsExecuteMethodInCmd())
+        {
+            EditorStrayFogExecute.ExecuteBuildAllAssetDiskMaping();
+            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAllAssetDiskMaping);
+        }
+        else
+        {
+            EditorBuildAllAssetDiskMapingWindow win =
+               EditorWindow.GetWindow<EditorBuildAllAssetDiskMapingWindow>(mcBuildAllAssetDiskMaping);
+            win.Show();
+        }
     }
     #endregion
 }

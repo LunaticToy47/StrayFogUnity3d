@@ -28,15 +28,15 @@ public partial class Table_AssetDiskMapingFile: AbsStrayFogSQLiteEntity
 	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray)]
 	public string inSide { get; private set; }
 	/// <summary>
+	/// 扩展名
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray)]
+	public string ext { get; private set; }
+	/// <summary>
 	/// 外部资源路径
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray)]
 	public string outSide { get; private set; }
-	/// <summary>
-	/// 扩展名id
-	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray)]
-	public int extId { get; private set; }
 	/// <summary>
 	/// 扩展名枚举值
 	/// </summary>
