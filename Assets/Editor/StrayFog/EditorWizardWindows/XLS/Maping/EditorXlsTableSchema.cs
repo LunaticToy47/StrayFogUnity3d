@@ -57,7 +57,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// <summary>
     /// 数据库外部资源名称
     /// </summary>
-    public string assetBundleDbName { get { return StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetAssetBundleDbName(dbPath); } }
+    public string assetBundleDbName { get { return "c_" + dbPath.UniqueHashCode().ToString().Replace("-", "_"); } }
     #endregion
 
     #region dbKey 数据库Key值

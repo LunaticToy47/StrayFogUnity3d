@@ -62,7 +62,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         if (!msEntitySQLitePropertyTypeNameMaping.ContainsKey(_entitySetting.id))
         {
             msEntitySQLitePropertyTypeNameMaping.Add(_entitySetting.id, new Dictionary<int, string>());
-            SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_entitySetting.dbSQLiteKey].ReadPragmaTableInfo(_entitySetting.name);
+            SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_entitySetting.dbSQLiteKey].ReadPragmaTableInfo(_entitySetting.tableName);
             int key = 0;
             while (reader.Read())
             {
@@ -182,7 +182,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         }
         else
         {
-            result = OnLoadFromXLS<T>(_entitySetting);
+            result = OnLoadFromXLSView<T>(_entitySetting);
         }
         return result;
     }
@@ -199,7 +199,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
-        SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_entitySetting.dbSQLiteKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.name));
+        SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_entitySetting.dbSQLiteKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.tableName));
         T tempEntity = default(T);
         string tempPropertyName = string.Empty;
         int tempPropertyKey = 0;

@@ -12,14 +12,14 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_entitySetting">实体设置</param>
     /// <returns>数据</returns>
-    static List<T> OnLoadFromXLS<T>(StrayFogSQLiteEntitySetting _entitySetting)
+    static List<T> OnLoadFromXLSView<T>(StrayFogSQLiteEntitySetting _entitySetting)
         where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
         T tempEntity = default(T);        
         if (_entitySetting.classify == enSQLiteEntityClassify.View)
         {
-            if (_entitySetting.id == typeof(View_AssetDiskMaping).GetHashCode())
+            if (_entitySetting.id == OnGetTypeKey<View_AssetDiskMaping>())
             {
                 #region View_AssetDiskMaping 数据组装                                
                 List<Table_AssetDiskMapingFile> files = Select<Table_AssetDiskMapingFile>();
@@ -49,7 +49,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                 }
                 #endregion
             }
-            else if (_entitySetting.id == typeof(View_DeterminantVT).GetHashCode())
+            else if (_entitySetting.id == OnGetTypeKey<View_DeterminantVT>())
             {
                 #region View_DeterminantVT 数据组装
                 int vtNameKey = "vtName".UniqueHashCode();
@@ -58,7 +58,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     if (key.isDeterminant)
                     {
                         tempEntity = Activator.CreateInstance<T>();
-                        msEntityPropertyInfoMaping[_entitySetting.id][vtNameKey].SetValue(tempEntity, key.name, null);
+                        msEntityPropertyInfoMaping[_entitySetting.id][vtNameKey].SetValue(tempEntity, key.tableName, null);
                         result.Add(tempEntity);
                     }
                 }

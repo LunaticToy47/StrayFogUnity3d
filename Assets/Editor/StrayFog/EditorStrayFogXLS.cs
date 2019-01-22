@@ -749,7 +749,7 @@ public sealed class EditorStrayFogXLS
             }
             sbEntityMapingReplace.Append(
                 entityMapingTemplete
-                .Replace("#TableHashCode#", t.tableName.UniqueHashCode().ToString())
+                .Replace("#ClassHashCode#", t.className.UniqueHashCode().ToString())
                 .Replace("#TableName#", t.tableName)
                 .Replace("#XlsFileName#", t.fileName)
                 .Replace("#assetBundleDbName#", t.assetBundleDbName)

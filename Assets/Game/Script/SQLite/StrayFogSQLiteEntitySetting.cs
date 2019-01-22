@@ -7,7 +7,7 @@ public class StrayFogSQLiteEntitySetting
     /// 构造函数
     /// </summary>
     /// <param name="_id">id</param>
-    /// <param name="_name">实体名称</param>
+    /// <param name="_tableName">表名称</param>
     /// <param name="_xlsFileName">xls文件名称</param>
     /// <param name="_assetBundleDbName">数据库外部资源路径</param>
     /// <param name="_isDeterminant">是否是行列式</param>
@@ -16,11 +16,11 @@ public class StrayFogSQLiteEntitySetting
     /// <param name="_xlsColumnDataIndex">XLS表列值索引</param>
     /// <param name="_xlsColumnTypeIndex">XLS表列类型索引</param>
     /// <param name="_xlsDataStartRowIndex">XLS表数据起始行索引</param>
-    public StrayFogSQLiteEntitySetting(int _id, string _name, string _xlsFileName, string _assetBundleDbName, bool _isDeterminant, enSQLiteEntityClassify _classify,
+    public StrayFogSQLiteEntitySetting(int _id, string _tableName, string _xlsFileName, string _assetBundleDbName, bool _isDeterminant, enSQLiteEntityClassify _classify,
         int _xlsColumnNameIndex, int _xlsColumnDataIndex, int _xlsColumnTypeIndex, int _xlsDataStartRowIndex)
     {
         id = _id;
-        name = _name;
+        tableName = _tableName;
         xlsFileName = _xlsFileName;
         isDeterminant = _isDeterminant;
         classify = _classify;
@@ -35,9 +35,9 @@ public class StrayFogSQLiteEntitySetting
     /// </summary>
     public int id { get; private set; }
     /// <summary>
-    /// 实体名称
+    /// 表名称
     /// </summary>
-    public string name { get; private set; }
+    public string tableName { get; private set; }
     /// <summary>
     /// 实体XLS表名称
     /// </summary>

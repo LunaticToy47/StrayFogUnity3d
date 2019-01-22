@@ -235,18 +235,6 @@ string.Empty;
 #endif
     #endregion
 
-    #region GetAssetBundleDbName
-    /// <summary>
-    /// 获得资源包Db数据库名称
-    /// </summary>
-    /// <param name="_dbPath">数据库路径</param>
-    /// <returns>Db数据库名称</returns>
-    public string GetAssetBundleDbName(string _dbPath)
-    {
-        return "c_" + _dbPath.UniqueHashCode().ToString().Replace("-", "_");
-    }
-    #endregion
-
     #region GetSQLiteConnectionString 获得SQLite数据库连接字符串
     /// <summary>
     /// 获得SQLite数据库连接字符串
@@ -258,9 +246,13 @@ string.Empty;
 #if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
         _dbPath = string.Format("data source={0}", _dbPath);
 #elif UNITY_ANDROID
-        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, GetAssetBundleDbName(_dbPath)));
+        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, _dbPath));
 #else
-        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, GetAssetBundleDbName(_dbPath)));
+        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, _dbPath));
+#endif
+
+#if UNITY_EDITOR
+        Debug.LogFormat("GetSQLiteConnectionString=>【{0}】", _dbPath);
 #endif
         return _dbPath;
     }
