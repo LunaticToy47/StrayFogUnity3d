@@ -665,13 +665,18 @@ public sealed class EditorStrayFogXLS
         List<string> pksNames = new List<string>();
 
         string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
-        string sqliteEntityFolder = Path.Combine(sqliteFolder, "Entities");
-        string sqliteDeterminantEntitiesFolder = Path.Combine(sqliteFolder, "DeterminantEntities");
+
+        Dictionary<int, string> dicSqliteEntityFolder = new Dictionary<int, string>();
+        Dictionary<int, string> dicSqliteDeterminantEntitiesFolder = new Dictionary<int, string>();
+        foreach (KeyValuePair<int, TableSQLiteHelper> key in _dbHelper)
+        {
+            dicSqliteEntityFolder.Add(key.Key, Path.Combine(sqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_Entities"));
+            dicSqliteDeterminantEntitiesFolder.Add(key.Key, Path.Combine(sqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_DeterminantEntities"));
+            EditorStrayFogUtility.cmd.DeleteFolder(dicSqliteEntityFolder[key.Key]);
+            EditorStrayFogUtility.cmd.DeleteFolder(dicSqliteDeterminantEntitiesFolder[key.Key]);
+        }
+
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
-
-        EditorStrayFogUtility.cmd.DeleteFolder(sqliteEntityFolder);
-        EditorStrayFogUtility.cmd.DeleteFolder(sqliteDeterminantEntitiesFolder);
-
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
@@ -703,11 +708,11 @@ public sealed class EditorStrayFogXLS
                .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString()));
             if (t.isDeterminant)
             {
-                cfgEntityScript.SetDirectory(sqliteDeterminantEntitiesFolder);
+                cfgEntityScript.SetDirectory(dicSqliteDeterminantEntitiesFolder[t.dbKey]);
             }
             else
             {
-                cfgEntityScript.SetDirectory(sqliteEntityFolder);
+                cfgEntityScript.SetDirectory(dicSqliteEntityFolder[t.dbKey]);
             }
             Debug.LogFormat("【{0}->{1}】【{2}】=>{3}", t.tableName, t.className, cfgEntityScript.directory, cfgEntityScript.text);
             cfgEntityScript.CreateAsset();

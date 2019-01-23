@@ -417,7 +417,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
             {
                 OnTriggerFinished.Invoke(t);
             }
-            DestroyObject(t);
+            Destroy(t);
         }
         mGuideTriggerMaping.Remove(_guideTrigger.config.id);
         int nextId = _guideTrigger.config.nextId;

@@ -25,11 +25,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// SQLite数据库映射
     /// </summary>
     static Dictionary<int,StrayFogSQLiteHelper> msStrayFogSQLiteHelperMaping = new Dictionary<int, StrayFogSQLiteHelper>();
-
-    /// <summary>
-    /// 是否是ScriptableObject类
-    /// </summary>
-    static Dictionary<int, bool> msIsScriptableObject = new Dictionary<int, bool>();
+     
     /// <summary>
     /// 读取所有数据
     /// </summary>
@@ -245,12 +241,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static T OnCreateInstance<T>()
         where T : AbsStrayFogSQLiteEntity
     {
-        int key = OnGetTypeKey<T>();
-        if (!msIsScriptableObject.ContainsKey(key))
-        {
-            msIsScriptableObject.Add(key, typeof(T).IsTypeOrSubTypeOf(typeof(ScriptableObject)));
-        }
-        return msIsScriptableObject[key] ? ScriptableObject.CreateInstance<T>() : Activator.CreateInstance<T>();
+        return Activator.CreateInstance<T>();
     }
     #endregion
 

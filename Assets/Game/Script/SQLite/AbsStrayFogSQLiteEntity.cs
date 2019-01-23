@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// StrayFogSQLite实体
 /// </summary>
-public abstract class AbsStrayFogSQLiteEntity : AbsScriptableObject
+public abstract class AbsStrayFogSQLiteEntity
 {
     /// <summary>
     /// PK键组
