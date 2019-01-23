@@ -574,6 +574,7 @@ public sealed class EditorStrayFogXLS
         foreach (KeyValuePair<int, TableSQLiteHelper> db in _dbHelper)
         {
             #region 搜索要生成的视图
+            viewNames.Clear();
             reader = db.Value.sqlite.ReadSQLiteViewSchema();
             while (reader.Read())
             {
