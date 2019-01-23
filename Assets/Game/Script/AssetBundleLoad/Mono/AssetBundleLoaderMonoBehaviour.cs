@@ -180,7 +180,7 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
     /// <param name="_params">额外参数</param>
     /// <param name="_callback">回调</param>
     /// <returns>对象</returns>
-    void OnInstantiate(View_AssetDiskMaping _assetDiskMaping, System.Type _type, object[] _params, 
+    void OnInstantiate(XLS_Config_View_AssetDiskMaping _assetDiskMaping, System.Type _type, object[] _params, 
         System.Action<Object, object[]> _callback)
     {
         Object result = null;
@@ -247,7 +247,7 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         foreach (object key in mCacheAssetRequestCallback[callbackKey])
         {
             object[] p = (object[])key;
-            OnInstantiateCallback(req.asset,(View_AssetDiskMaping)p[0],(object[])p[1],(System.Action<Object, object[]>)p[2]);
+            OnInstantiateCallback(req.asset,(XLS_Config_View_AssetDiskMaping)p[0],(object[])p[1],(System.Action<Object, object[]>)p[2]);
         }
     }
 
@@ -258,7 +258,7 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
     /// <param name="_assetDiskMaping">磁盘映射</param>
     /// <param name="_params">额外参数</param>
     /// <param name="_callback">回调</param>
-    void OnInstantiateCallback(Object _asset, View_AssetDiskMaping _assetDiskMaping, object[] _params,
+    void OnInstantiateCallback(Object _asset, XLS_Config_View_AssetDiskMaping _assetDiskMaping, object[] _params,
         System.Action<Object, object[]> _callback)
     {
         if (_asset != null)

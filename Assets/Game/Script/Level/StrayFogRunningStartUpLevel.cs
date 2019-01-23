@@ -10,7 +10,7 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
     /// <summary>
     /// 表格
     /// </summary>
-    List<Table_TableColumnMaping> mTables = new List<Table_TableColumnMaping>();
+    List<XLS_Config_Table_TableColumnMaping> mTables = new List<XLS_Config_Table_TableColumnMaping>();
     /// <summary>
     /// 错误信息
     /// </summary>
@@ -25,7 +25,7 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
         {
             try
             {
-                mTables = StrayFogSQLiteEntityHelper.Select<Table_TableColumnMaping>();
+                mTables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_TableColumnMaping>();
             }
             catch (Exception ep)
             {
@@ -50,7 +50,7 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
         Debug.LogError("StrayFogRunningStartUpLevel=>SQLite");
         //GUILayout.Label(StrayFogGamePools.setting.dbSource);
         //GUILayout.Label(StrayFogGamePools.setting.dbConnectionString);
-        foreach (Table_TableColumnMaping t in mTables)
+        foreach (XLS_Config_Table_TableColumnMaping t in mTables)
         {
             GUILayout.Label(t.JsonSerialize());
         }

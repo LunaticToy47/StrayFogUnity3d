@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Name: EditorXlsSchemaToSqliteConfig
   m_EditorClassIdentifier: 
   folders:
-  - Assets/Game/Editor/XLS
+  - Assets/Game/Editor/XLS_Config
+  - Assets/Game/Editor/XLS_Report
   invoke: 

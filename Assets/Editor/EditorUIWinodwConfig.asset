@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: EditorUIWinodwConfig
   m_EditorClassIdentifier: 
   files:
-  - Assets/Game/Editor/XLS/UIWindowSetting.xlsx
+  - Assets/Game/Editor/XLS_Config/UIWindowSetting.xlsx
   invoke: 

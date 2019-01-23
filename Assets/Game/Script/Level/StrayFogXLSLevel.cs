@@ -13,7 +13,7 @@ public class StrayFogXLSLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            List<Table_TableColumnMaping> tables = StrayFogSQLiteEntityHelper.Select<Table_TableColumnMaping>();
+            List<XLS_Config_Table_TableColumnMaping> tables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_TableColumnMaping>();
             Debug.Log(tables);
         });
     }

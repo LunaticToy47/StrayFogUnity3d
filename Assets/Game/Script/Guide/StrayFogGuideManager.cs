@@ -53,11 +53,11 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 触发配置映射
     /// </summary>
-    Dictionary<int, Table_UserGuideTrigger> mTriggerConfigMaping = new Dictionary<int, Table_UserGuideTrigger>();
+    Dictionary<int, XLS_Config_Table_UserGuideTrigger> mTriggerConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideTrigger>();
     /// <summary>
     /// 验证配置映射
     /// </summary>
-    Dictionary<int, Table_UserGuideValidate> mValidateConfigMaping = new Dictionary<int, Table_UserGuideValidate>();
+    Dictionary<int, XLS_Config_Table_UserGuideValidate> mValidateConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideValidate>();
     /// <summary>
     /// 等待触发引导
     /// </summary>
@@ -68,11 +68,11 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     protected override void OnAfterConstructor()
     {
         #region 初始化引导窗口
-        List<Table_UIWindowSetting> guides = StrayFogGamePools.uiWindowManager.GetWindowSettings((w) => { return w.isGuideWindow; });
+        List<XLS_Config_Table_UIWindowSetting> guides = StrayFogGamePools.uiWindowManager.GetWindowSettings((w) => { return w.isGuideWindow; });
         if (guides != null && guides.Count > 0)
         {
             List<int> ids = new List<int>();
-            foreach (Table_UIWindowSetting w in guides)
+            foreach (XLS_Config_Table_UIWindowSetting w in guides)
             {
                 if (!ids.Contains(w.id))
                 {
@@ -88,10 +88,10 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
         #endregion
 
         #region 初始化引导数据
-        List<Table_UserGuideTrigger> triggers = StrayFogSQLiteEntityHelper.Select<Table_UserGuideTrigger>();
+        List<XLS_Config_Table_UserGuideTrigger> triggers = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideTrigger>();
         if (triggers != null && triggers.Count > 0)
         {
-            foreach (Table_UserGuideTrigger t in triggers)
+            foreach (XLS_Config_Table_UserGuideTrigger t in triggers)
             {
                 if (!mTriggerConfigMaping.ContainsKey(t.id))
                 {
@@ -104,10 +104,10 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
             }
         }
 
-        List<Table_UserGuideValidate> validates = StrayFogSQLiteEntityHelper.Select<Table_UserGuideValidate>();
+        List<XLS_Config_Table_UserGuideValidate> validates = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideValidate>();
         if (validates != null && validates.Count > 0)
         {
-            foreach (Table_UserGuideValidate t in validates)
+            foreach (XLS_Config_Table_UserGuideValidate t in validates)
             {
                 if (!mValidateConfigMaping.ContainsKey(t.id))
                 {
@@ -214,7 +214,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 当前运行的引导
     /// </summary>
-    Table_UserGuideTrigger mRunningUserGuideTrigger = null;
+    XLS_Config_Table_UserGuideTrigger mRunningUserGuideTrigger = null;
     /// <summary>
     /// 触发检测同步
     /// </summary>
@@ -277,7 +277,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// 显示引导窗口
     /// </summary>
     /// <param name="_guideTrigger">引导触发配置</param>
-    void OnDisplayGuideWindow(Table_UserGuideTrigger _guideTrigger)
+    void OnDisplayGuideWindow(XLS_Config_Table_UserGuideTrigger _guideTrigger)
     {
         if (_guideTrigger != null)
         {
@@ -306,7 +306,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// </summary>
     /// <param name="_cfg">配置</param>
     /// <returns>true:触发引导,false:不触发引导</returns>
-    bool OnIsTrigger(Table_UserGuideTrigger _cfg)
+    bool OnIsTrigger(XLS_Config_Table_UserGuideTrigger _cfg)
     {
         bool? isTrigger = true;
         if (_cfg.levelId > 0)
@@ -368,7 +368,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
             isEnd = mValidateConfigMaping.ContainsKey(_guideWidget.config.validateId);
             if (isEnd)
             {
-                Table_UserGuideValidate vfg = mValidateConfigMaping[_guideWidget.config.validateId];
+                XLS_Config_Table_UserGuideValidate vfg = mValidateConfigMaping[_guideWidget.config.validateId];
                 foreach (enGuideValidateCondition c in vfg.validateCondition)
                 {
                     switch (c)

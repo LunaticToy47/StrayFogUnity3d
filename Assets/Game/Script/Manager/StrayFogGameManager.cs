@@ -21,8 +21,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
         if (!m_isInitialized)
         {
             m_isInitialized = true;
-            StrayFogSQLiteEntityHelper.Select<View_DeterminantVT>();
-            runningSetting = StrayFogSQLiteEntityHelper.Select<Table_GameSetting>()[0];
+            runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_GameSetting>()[0];
             StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
@@ -40,7 +39,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 游戏运行时设定
     /// </summary>
-    public Table_GameSetting runningSetting { get; private set; }
+    public XLS_Config_Table_GameSetting runningSetting { get; private set; }
     #endregion
 
     #region 引导相关事件

@@ -10,7 +10,7 @@ public class UIGuideValidate : AbsMonoBehaviour
     /// <summary>
     /// config
     /// </summary>
-    public Table_UserGuideValidate config { get; private set; }
+    public XLS_Config_Table_UserGuideValidate config { get; private set; }
     #endregion
 
     #region maskGraphic
@@ -25,7 +25,7 @@ public class UIGuideValidate : AbsMonoBehaviour
     /// 设置配置
     /// </summary>
     /// <param name="_config">配置</param>
-    public void SetConfig(Table_UserGuideValidate _config)
+    public void SetConfig(XLS_Config_Table_UserGuideValidate _config)
     {
         config = _config;
         maskGraphic = gameObject.GetComponent<Graphic>();

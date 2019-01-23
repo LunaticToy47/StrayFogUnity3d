@@ -12,13 +12,13 @@ public delegate void AssetResultCallbackEventHandle(AssetBundleResult _result);
 /// </summary>
 /// <param name="_args">参数</param>
 /// <param name="_progress">进度</param>
-public delegate void AssetProgressCallbackEventHandle(View_AssetDiskMaping _args, float _progress);
+public delegate void AssetProgressCallbackEventHandle(XLS_Config_View_AssetDiskMaping _args, float _progress);
 /// <summary>
 /// 资源错误进度回调句柄
 /// </summary>
 /// <param name="_args">参数</param>
 /// <param name="_error">错误信息</param>
-public delegate void AssetErrorCallbackEventHandle(View_AssetDiskMaping _args, string  _error);
+public delegate void AssetErrorCallbackEventHandle(XLS_Config_View_AssetDiskMaping _args, string  _error);
 /// <summary>
 /// 资源管理器
 /// </summary>
@@ -58,25 +58,25 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 获得磁盘映射数据
     /// </summary>
-    static Dictionary<int, Dictionary<int, View_AssetDiskMaping>> msAssetDiskMaping = new Dictionary<int, Dictionary<int, View_AssetDiskMaping>>();
+    static Dictionary<int, Dictionary<int, XLS_Config_View_AssetDiskMaping>> msAssetDiskMaping = new Dictionary<int, Dictionary<int, XLS_Config_View_AssetDiskMaping>>();
     /// <summary>
     /// 获得指定磁盘映射
     /// </summary>
     /// <param name="_fileId">文件id</param>
     /// <param name="_folderId">文件夹id</param>
-    View_AssetDiskMaping OnGetAssetDiskMaping(int _fileId, int _folderId)
+    XLS_Config_View_AssetDiskMaping OnGetAssetDiskMaping(int _fileId, int _folderId)
     {
-        View_AssetDiskMaping result = null;
+        XLS_Config_View_AssetDiskMaping result = null;
         if (msAssetDiskMaping.Count <= 0)
         {
-            List<View_AssetDiskMaping> mapings = StrayFogSQLiteEntityHelper.Select<View_AssetDiskMaping>();
+            List<XLS_Config_View_AssetDiskMaping> mapings = StrayFogSQLiteEntityHelper.Select<XLS_Config_View_AssetDiskMaping>();
             if (mapings.Count > 0)
             {
-                foreach (View_AssetDiskMaping v in mapings)
+                foreach (XLS_Config_View_AssetDiskMaping v in mapings)
                 {
                     if (!msAssetDiskMaping.ContainsKey(v.folderId))
                     {
-                        msAssetDiskMaping.Add(v.folderId, new Dictionary<int, View_AssetDiskMaping>());
+                        msAssetDiskMaping.Add(v.folderId, new Dictionary<int, XLS_Config_View_AssetDiskMaping>());
                     }
                     if (!msAssetDiskMaping[v.folderId].ContainsKey(v.fileId))
                     {
@@ -275,7 +275,7 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         {
             throw new UnityException("The parameter '_onCallback' is not empty.");
         }
-        View_AssetDiskMaping adm = OnGetAssetDiskMaping(_fileId, _folderId);
+        XLS_Config_View_AssetDiskMaping adm = OnGetAssetDiskMaping(_fileId, _folderId);
         if (adm != null)
         {
             AssetBundleLoaderParameter ablp = new AssetBundleLoaderParameter(adm, _onResultCallback, _onProgressCallback, _onErrorCallback, _extraParameter);

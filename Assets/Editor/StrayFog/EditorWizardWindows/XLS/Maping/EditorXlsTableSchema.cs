@@ -89,7 +89,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
             {
                 className = prefix + tableName;
             }
-            return className;
+            return Path.GetFileNameWithoutExtension(dbName) + "_" + className;
         } }
     #endregion
 

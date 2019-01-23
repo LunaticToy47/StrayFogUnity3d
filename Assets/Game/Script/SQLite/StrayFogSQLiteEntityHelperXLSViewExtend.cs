@@ -19,14 +19,14 @@ public sealed partial class StrayFogSQLiteEntityHelper
         T tempEntity = default(T);        
         if (_entitySetting.classify == enSQLiteEntityClassify.View)
         {
-            if (_entitySetting.id == OnGetTypeKey<View_AssetDiskMaping>())
+            if (_entitySetting.id == OnGetTypeKey<XLS_Config_View_AssetDiskMaping>())
             {
                 #region View_AssetDiskMaping 数据组装                                
-                List<Table_AssetDiskMapingFile> files = Select<Table_AssetDiskMapingFile>();
-                List<Table_AssetDiskMapingFolder> folders = Select<Table_AssetDiskMapingFolder>();
-                Dictionary<int, Table_AssetDiskMapingFile> dicFile = new Dictionary<int, Table_AssetDiskMapingFile>();              
-                Dictionary<int, Table_AssetDiskMapingFolder> dicFolder = new Dictionary<int, Table_AssetDiskMapingFolder>();               
-                foreach (Table_AssetDiskMapingFolder t in folders)
+                List<XLS_Config_Table_AssetDiskMapingFile> files = Select<XLS_Config_Table_AssetDiskMapingFile>();
+                List<XLS_Config_Table_AssetDiskMapingFolder> folders = Select<XLS_Config_Table_AssetDiskMapingFolder>();
+                Dictionary<int, XLS_Config_Table_AssetDiskMapingFile> dicFile = new Dictionary<int, XLS_Config_Table_AssetDiskMapingFile>();              
+                Dictionary<int, XLS_Config_Table_AssetDiskMapingFolder> dicFolder = new Dictionary<int, XLS_Config_Table_AssetDiskMapingFolder>();               
+                foreach (XLS_Config_Table_AssetDiskMapingFolder t in folders)
                 {
                     dicFolder.Add(t.folderId, t);
                 }
@@ -36,7 +36,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                 int inAssetPath = "inAssetPath".UniqueHashCode();
                 int outAssetPath = "outAssetPath".UniqueHashCode();
                 int extEnumValue = "extEnumValue".UniqueHashCode();
-                foreach (Table_AssetDiskMapingFile t in files)
+                foreach (XLS_Config_Table_AssetDiskMapingFile t in files)
                 {
                     tempEntity = Activator.CreateInstance<T>();
                     msEntityPropertyInfoMaping[_entitySetting.id][fileId].SetValue(tempEntity, t.fileId, null);
@@ -49,7 +49,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                 }
                 #endregion
             }
-            else if (_entitySetting.id == OnGetTypeKey<View_DeterminantVT>())
+            else if (_entitySetting.id == OnGetTypeKey<XLS_Config_View_DeterminantVT>())
             {
                 #region View_DeterminantVT 数据组装
                 int vtNameKey = "vtName".UniqueHashCode();

@@ -10,7 +10,7 @@ public partial class StrayFogUIWindowManager
     /// <summary>
     /// 窗口设置映射
     /// </summary>
-    Dictionary<int, Table_UIWindowSetting> mWindowSettingMaping = new Dictionary<int, Table_UIWindowSetting>();
+    Dictionary<int, XLS_Config_Table_UIWindowSetting> mWindowSettingMaping = new Dictionary<int, XLS_Config_Table_UIWindowSetting>();
     /// <summary>
     /// 资源磁盘与窗口ID映射
     /// Key:FolderId
@@ -22,8 +22,8 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     void OnInitializSQLite()
     {
-        List<Table_UIWindowSetting> tables = StrayFogSQLiteEntityHelper.Select<Table_UIWindowSetting>();
-        foreach (Table_UIWindowSetting t in tables)
+        List<XLS_Config_Table_UIWindowSetting> tables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UIWindowSetting>();
+        foreach (XLS_Config_Table_UIWindowSetting t in tables)
         {
             mWindowSettingMaping.Add(t.id, t);
             if (!mFolderIdFileIdForWinIdMaping.ContainsKey(t.folderId))
@@ -129,9 +129,9 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     /// <param name="_winIds">窗口Id组</param>
     /// <returns>窗口设定</returns>
-    Table_UIWindowSetting[] OnGetWindowSetting(params int[] _winIds)
+    XLS_Config_Table_UIWindowSetting[] OnGetWindowSetting(params int[] _winIds)
     {
-        List<Table_UIWindowSetting> result = new List<Table_UIWindowSetting>();
+        List<XLS_Config_Table_UIWindowSetting> result = new List<XLS_Config_Table_UIWindowSetting>();
         if (_winIds != null && _winIds.Length > 0)
         {
             foreach (int id in _winIds)

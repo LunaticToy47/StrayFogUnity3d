@@ -11,7 +11,7 @@ public class AssetBundleLoaderParameter
     /// <param name="_onProgressCallback">进度回调</param>
     /// <param name="_onErrorCallback">错误回调</param>
     /// <param name="_extraParameter">额外参数</param>
-    public AssetBundleLoaderParameter(View_AssetDiskMaping _assetDiskMaping,
+    public AssetBundleLoaderParameter(XLS_Config_View_AssetDiskMaping _assetDiskMaping,
         AssetResultCallbackEventHandle _onResultCallback,
         AssetProgressCallbackEventHandle _onProgressCallback,
         AssetErrorCallbackEventHandle _onErrorCallback,
@@ -26,7 +26,7 @@ public class AssetBundleLoaderParameter
     /// <summary>
     /// 磁盘映射
     /// </summary>
-    public View_AssetDiskMaping assetDiskMaping { get; private set; }
+    public XLS_Config_View_AssetDiskMaping assetDiskMaping { get; private set; }
     /// <summary>
     /// 结果回调
     /// </summary>

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: EditorAnimatorControllerFMSMapingConfig
   m_EditorClassIdentifier: 
   folders:
-  - Assets/Game/Resources/Animator/Ani/Player
+  - Assets/Game/Resources/Animator
   invoke: 

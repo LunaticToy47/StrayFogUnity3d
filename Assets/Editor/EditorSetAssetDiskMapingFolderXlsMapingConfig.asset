@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: EditorSetAssetDiskMapingFolderXlsMapingConfig
   m_EditorClassIdentifier: 
   files:
-  - Assets/Game/Editor/XLS/AssetDiskMapingFolder.xlsx
+  - Assets/Game/Editor/XLS_Config/AssetDiskMapingFolder.xlsx
   invoke: 

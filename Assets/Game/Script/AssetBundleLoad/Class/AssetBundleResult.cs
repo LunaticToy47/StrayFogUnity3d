@@ -8,7 +8,7 @@ using System.IO;
 /// <param name="_type">资源类型</param>
 /// <param name="_params">额外参数</param>
 /// <param name="_callback">回调函数【参数一：资源实例，参数二：额外参数】</param>
-public delegate void AssetBundleResultCallbackEventHandle(View_AssetDiskMaping _assetDiskMaping, Type _type, object[] _params,Action<UnityEngine.Object, object[]> _callback);
+public delegate void AssetBundleResultCallbackEventHandle(XLS_Config_View_AssetDiskMaping _assetDiskMaping, Type _type, object[] _params,Action<UnityEngine.Object, object[]> _callback);
 
 /// <summary>
 /// AssetBundle结果
@@ -21,7 +21,7 @@ public class AssetBundleResult
     /// <param name="_assetDiskMaping">资源磁盘映射</param>
     /// <param name="_instantiate">实例化函数</param>
     /// <param name="_extraParameter">额外参数</param>
-    public AssetBundleResult(View_AssetDiskMaping _assetDiskMaping,
+    public AssetBundleResult(XLS_Config_View_AssetDiskMaping _assetDiskMaping,
         AssetBundleResultCallbackEventHandle _instantiate,
         object[] _extraParameter)
     {
@@ -37,7 +37,7 @@ public class AssetBundleResult
     /// <summary>
     /// 资源磁盘映射
     /// </summary>
-    public View_AssetDiskMaping assetDiskMaping { get; private set; }
+    public XLS_Config_View_AssetDiskMaping assetDiskMaping { get; private set; }
     /// <summary>
     /// 额外参数
     /// </summary>
