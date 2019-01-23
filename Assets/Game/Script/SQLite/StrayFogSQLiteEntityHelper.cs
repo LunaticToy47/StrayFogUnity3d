@@ -237,6 +237,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
     #endregion
 
     #region OnCreateInstance
+    /// <summary>
+    /// OnCreateInstance
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <returns>实例</returns>
     static T OnCreateInstance<T>()
         where T : AbsStrayFogSQLiteEntity
     {
