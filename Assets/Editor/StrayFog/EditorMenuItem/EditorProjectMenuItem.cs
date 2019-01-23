@@ -39,5 +39,21 @@ static class EditorProjectMenuItem
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildProjectAssets);
     }
     #endregion
+
+    #region Setting Project Config
+    const string mcSettingProjectConfig = "Setting Project Config";
+    /// <summary>
+    /// 设置工程配置
+    /// </summary>
+    [MenuItem(mcMenu + mcSettingProjectConfig, false, mcPriority + 2)]
+    [MenuItem(mcAssetMenu + mcSettingProjectConfig, false, mcPriority + 2)]
+    [MenuItem(mcHierarchy + mcSettingProjectConfig, false, mcPriority + 2)]
+    static void EditorDevelopMenuItem_SettingProjectConfigWindow()
+    {
+        EditorWindowSettingProjectConfig win =
+              EditorWindow.GetWindow<EditorWindowSettingProjectConfig>(mcSettingProjectConfig);
+        win.Show();
+    }
+    #endregion
 }
 #endif

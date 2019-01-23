@@ -33,9 +33,9 @@ public class EditorWindowAnimatorControllerFMSMaping : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
-        if (mConfig.file != null)
+        if (mConfig.folder != null)
         {
-            mConfig.file.DrawGUI();
+            mConfig.folder.DrawGUI();
         }
     }
     #endregion

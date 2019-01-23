@@ -3,7 +3,7 @@ using UnityEditor;
 /// <summary>
 /// 编辑器设定保存资源
 /// </summary>
-public abstract class AbsEditorSavedAssetFolderConfig<C, F> : EditorEngineAssetConfig
+public abstract class AbsEditorSavedAssetFolderConfig<C, F> : EditorEngineAssetConfig, IEditorSavedAssetDrawUI
     where C : AbsEditorSavedAssetFolderConfig<C, F>
     where F : AbsEditorSavedAssetFolder
 {
@@ -18,18 +18,27 @@ public abstract class AbsEditorSavedAssetFolderConfig<C, F> : EditorEngineAssetC
     }
 
     /// <summary>
-    /// 文件
+    /// 绘制GUI
     /// </summary>
-    public F file { get { if (mFile == null) { mFile = OnLoadFile(); } return mFile; } }
+    public void DrawGUI()
+    {
+        if (folder != null) { folder.DrawGUI(); }
+    }
+
     /// <summary>
-    /// 文件
+    /// 文件夹
     /// </summary>
-    F mFile;
+    public F folder { get { if (mFolder == null) { mFolder = OnLoadFolderAsset(); } return mFolder; } }
+
     /// <summary>
-    /// 加载文件
+    /// 文件夹
     /// </summary>
-    /// <returns>文件</returns>
-    F OnLoadFile()
+    F mFolder;
+    /// <summary>
+    /// 加载文件夹资源
+    /// </summary>
+    /// <returns>文件夹资源</returns>
+    F OnLoadFolderAsset()
     {
         if (!Exists())
         {

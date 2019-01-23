@@ -222,7 +222,7 @@ public sealed class EditorStrayFogXLS
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
         string extXlsx = enFileExt.Xlsx.GetAttribute<FileExtAttribute>().ext;
-        List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedConfigAssetFile.setXlsSchemaToSqlite.file.folders,
+        List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedConfigAssetFile.setXlsSchemaToSqlite.folder.folders,
             enEditorAssetFilterClassify.DefaultAsset, false,
             (n) => { return n.ext.ToUpper() == extXlsx.ToUpper(); });
         foreach (EditorSelectionXlsSchemaToSQLiteAsset f in xlsFiles)

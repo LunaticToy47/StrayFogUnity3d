@@ -186,10 +186,10 @@ public sealed class EditorStrayFogExecute
     {
         EditorAnimatorControllerFMSMapingConfig cfg = EditorStrayFogSavedConfigAssetFile.setAnimatorControllerFMSMaping;
         StringBuilder sbLog = new StringBuilder();
-        if (cfg.file != null)
+        if (cfg.folder != null)
         {
             FileExtAttribute animatorControllerExt = enFileExt.AnimatorController.GetAttribute<FileExtAttribute>();
-            List<EditorSelectionAnimatorControllerFMSMapingAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAnimatorControllerFMSMapingAsset>(cfg.file.folders, enEditorAssetFilterClassify.Object, true, (n) => { return n.ext.Equals(animatorControllerExt.ext); });
+            List<EditorSelectionAnimatorControllerFMSMapingAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAnimatorControllerFMSMapingAsset>(cfg.folder.folders, enEditorAssetFilterClassify.Object, true, (n) => { return n.ext.Equals(animatorControllerExt.ext); });
             if (nodes != null && nodes.Count > 0)
             {
                 OnBuilderAnimatorControllerMaping(nodes);
@@ -699,9 +699,9 @@ public sealed class EditorStrayFogExecute
     {
         EditorSetSpritePackingTagConfig cfg = EditorStrayFogSavedConfigAssetFile.setSpritePackingTag;
         StringBuilder sbLog = new StringBuilder();
-        if (cfg.file != null)
+        if (cfg.folder != null)
         {
-            List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.file.folders, enEditorAssetFilterClassify.Texture2D);
+            List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.folder.folders, enEditorAssetFilterClassify.Texture2D);
             float progress = 0;
             foreach (EditorSelectionSpritePackingTagAsset n in nodes)
             {
@@ -727,9 +727,9 @@ public sealed class EditorStrayFogExecute
     {
         EditorSetSpritePackingTagConfig cfg = EditorStrayFogSavedConfigAssetFile.setSpritePackingTag;
         StringBuilder sbLog = new StringBuilder();
-        if (cfg.file != null)
+        if (cfg.folder != null)
         {
-            List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.file.folders, enEditorAssetFilterClassify.Texture2D);
+            List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.folder.folders, enEditorAssetFilterClassify.Texture2D);
             float progress = 0;
             foreach (EditorSelectionSpritePackingTagAsset n in nodes)
             {
@@ -783,9 +783,9 @@ public sealed class EditorStrayFogExecute
         EditorSetAssetBundleNameConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetBundleName;
         StringBuilder sbLog = new StringBuilder();
         string error = string.Empty;
-        if (cfg.file != null)
+        if (cfg.folder != null)
         {            
-            List<EditorSelectionAssetBundleNameAsset> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetBundleNameAsset>(cfg.file.folders, out error);
+            List<EditorSelectionAssetBundleNameAsset> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetBundleNameAsset>(cfg.folder.folders, out error);
             if (string.IsNullOrEmpty(error))
             {                
                 if (nodes != null && nodes.Count > 0)
@@ -940,9 +940,9 @@ public sealed class EditorStrayFogExecute
     {
         EditorSetAssetBundleNameConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetBundleName;
         string error = string.Empty;
-        if (cfg.file != null)
+        if (cfg.folder != null)
         {            
-            List<EditorSelectionAssetDiskMaping> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetDiskMaping>(cfg.file.folders, out error);
+            List<EditorSelectionAssetDiskMaping> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetDiskMaping>(cfg.folder.folders, out error);
             if (string.IsNullOrEmpty(error))
             {
                 OnBuildSingleAssetDiskMaping(nodes);
