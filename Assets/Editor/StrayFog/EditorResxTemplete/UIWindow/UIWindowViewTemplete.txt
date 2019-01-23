@@ -1,6 +1,8 @@
-﻿/// <summary>
+﻿using UnityEngine;
+/// <summary>
 /// #NAME#
 /// </summary>
+[AddComponentMenu("Game/UIWindow/#NAME#")]
 public class #NAME# : AbsUIWindowView
 {
 

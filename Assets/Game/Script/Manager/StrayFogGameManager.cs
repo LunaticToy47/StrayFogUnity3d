@@ -81,4 +81,14 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
 
     }
     #endregion
+
+    #region OnApplicationQuit
+    /// <summary>
+    /// OnApplicationQuit
+    /// </summary>
+    void OnApplicationQuit()
+    {
+        StrayFogSQLiteEntityHelper.CloseSQLite();
+    }
+    #endregion
 }

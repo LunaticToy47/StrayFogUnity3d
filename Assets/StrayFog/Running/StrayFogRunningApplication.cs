@@ -29,18 +29,7 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
         return null;
 #endif
     }
-    #endregion
-
-    #region OnApplicationQuit
-    /// <summary>
-    /// OnApplicationQuit
-    /// </summary>
-    void OnApplicationQuit()
-    {
-        Debug.LogError("Close All SQLite");
-        //StrayFogSQLiteHelper.sqlHelper.Close();
-    }
-    #endregion
+    #endregion    
 
     #region OnGuideRegister 引导注册事件
     /// <summary>

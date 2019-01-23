@@ -283,4 +283,20 @@ public sealed partial class StrayFogSQLiteEntityHelper
         return result;
     }
     #endregion
+
+    #region CloseDb 关闭所有用到的SQLite数据库
+    /// <summary>
+    /// 关闭所有用到的SQLite数据库
+    /// </summary>
+    public static void CloseSQLite()
+    {
+        if (msStrayFogSQLiteHelperMaping.Count > 0)
+        {
+            foreach (StrayFogSQLiteHelper db in msStrayFogSQLiteHelperMaping.Values)
+            {
+                db.Close();
+            }
+        }
+    }
+    #endregion
 }
