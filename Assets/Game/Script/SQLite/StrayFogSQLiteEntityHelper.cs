@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using UnityEngine;
 /// <summary>
 /// StrayFogSQLite表实体帮助类
 /// </summary>
@@ -25,6 +26,10 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// </summary>
     static Dictionary<int,StrayFogSQLiteHelper> msStrayFogSQLiteHelperMaping = new Dictionary<int, StrayFogSQLiteHelper>();
 
+    /// <summary>
+    /// 是否是ScriptableObject类
+    /// </summary>
+    static Dictionary<int, bool> msIsScriptableObject = new Dictionary<int, bool>();
     /// <summary>
     /// 读取所有数据
     /// </summary>
@@ -104,7 +109,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         #region 行列式数据写入
                         if (sheet.Dimension.Rows >= _entitySetting.xlsColumnDataIndex)
                         {
-                            tempEntity = Activator.CreateInstance<T>();
+                            tempEntity = OnCreateInstance<T>();
                             for (int row = _entitySetting.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
                             {
                                 tempName = sheet.GetValue<string>(row, _entitySetting.xlsColumnNameIndex).Trim();
@@ -133,7 +138,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         {
                             for (int row = _entitySetting.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
                             {
-                                tempEntity = Activator.CreateInstance<T>();
+                                tempEntity = OnCreateInstance<T>();
                                 tempIsAllValueNull = true;
                                 for (int col = 1; col <= sheet.Dimension.Columns; col++)
                                 {                                   
@@ -192,7 +197,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
 
         if (_entitySetting.isDeterminant)
         {
-            tempEntity = Activator.CreateInstance<T>();
+            tempEntity = OnCreateInstance<T>();
             #region 行列式表
             while (reader.Read())
             {
@@ -211,7 +216,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
             #region 普通表
             while (reader.Read())
             {
-                tempEntity = Activator.CreateInstance<T>();
+                tempEntity = OnCreateInstance<T>();
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
                     tempPropertyName = reader.GetName(i);
@@ -228,6 +233,19 @@ public sealed partial class StrayFogSQLiteEntityHelper
             #endregion
         }
         return result;
+    }
+    #endregion
+
+    #region OnCreateInstance
+    static T OnCreateInstance<T>()
+        where T : AbsStrayFogSQLiteEntity
+    {
+        int key = OnGetTypeKey<T>();
+        if (!msIsScriptableObject.ContainsKey(key))
+        {
+            msIsScriptableObject.Add(key, typeof(T).IsTypeOrSubTypeOf(typeof(ScriptableObject)));
+        }
+        return msIsScriptableObject[key] ? ScriptableObject.CreateInstance<T>() : Activator.CreateInstance<T>();
     }
     #endregion
 

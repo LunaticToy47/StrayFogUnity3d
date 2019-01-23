@@ -38,7 +38,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                 int extEnumValue = "extEnumValue".UniqueHashCode();
                 foreach (XLS_Config_Table_AssetDiskMapingFile t in files)
                 {
-                    tempEntity = Activator.CreateInstance<T>();
+                    tempEntity = OnCreateInstance<T>();
                     msEntityPropertyInfoMaping[_entitySetting.id][fileId].SetValue(tempEntity, t.fileId, null);
                     msEntityPropertyInfoMaping[_entitySetting.id][folderId].SetValue(tempEntity, t.folderId, null);
                     msEntityPropertyInfoMaping[_entitySetting.id][fileName].SetValue(tempEntity, t.inSide + t.ext, null);
@@ -57,7 +57,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                 {
                     if (key.isDeterminant)
                     {
-                        tempEntity = Activator.CreateInstance<T>();
+                        tempEntity = OnCreateInstance<T>();
                         msEntityPropertyInfoMaping[_entitySetting.id][vtNameKey].SetValue(tempEntity, key.tableName, null);
                         result.Add(tempEntity);
                     }
