@@ -55,7 +55,9 @@ public class EditorWindowSettingProjectConfig : AbsEditorWindow
         {
             foreach (IEditorSavedAssetDrawUI d in mSavedAssetDrawUIMaping)
             {
-                d.DrawGUI();
+                d.DrawGUI();                               
+                GUILayout.HorizontalSlider(0, 0, 0, GUILayout.Height(1));
+                EditorGUILayout.Separator();
                 EditorGUILayout.Separator();
             }
         }
@@ -69,19 +71,6 @@ public class EditorWindowSettingProjectConfig : AbsEditorWindow
     /// </summary>
     private void DrawAssetNodes()
     {
-        //EditorGUILayout.BeginHorizontal();
-        //if (GUILayout.Button("Set Name"))
-        //{
-        //    EditorStrayFogExecute.ExecuteSetAssetBundleName();
-        //    EditorUtility.DisplayDialog("Set AssetBundleName", "set AssetBundle success", "OK");
-        //}
-
-        //if (GUILayout.Button("Clear Name"))
-        //{
-        //    EditorStrayFogExecute.ExecuteClearAllAssetBundleName();
-        //    EditorUtility.DisplayDialog("Clear AssetBundleName", "clear AssetBundle success", "OK");
-        //}
-        //EditorGUILayout.EndHorizontal();
     }
     #endregion
 }
