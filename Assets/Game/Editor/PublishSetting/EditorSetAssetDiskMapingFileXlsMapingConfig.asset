@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abdad4827b4f31540a91433154801272, type: 3}
   m_Name: EditorSetAssetDiskMapingFileXlsMapingConfig
   m_EditorClassIdentifier: 
-  paths: []
+  paths:
+  - Assets/Game/Editor/XLS_Config/AssetDiskMapingFile.xlsx
   invoke: 

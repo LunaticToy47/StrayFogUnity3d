@@ -168,6 +168,9 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
             paths = mTempPaths.ToArray();
         }
         OnDrawGUI();
+        GUILayout.HorizontalSlider(0, 0, 0, GUILayout.Height(1));
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
         if (mTempIsDirty)
         {
             EditorUtility.SetDirty(this);

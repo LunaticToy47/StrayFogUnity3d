@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 340d092543f9eaa4b89e27ae9b89dc61, type: 3}
   m_Name: EditorUIWindowSettingConfig
   m_EditorClassIdentifier: 
-  paths: []
+  paths:
+  - Assets/Game/Editor/XLS_Config/UIWindowSetting.xlsx
   invoke: 

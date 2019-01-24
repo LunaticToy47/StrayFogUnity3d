@@ -370,5 +370,17 @@ public class EditorUtility_GUILayout : AbsSingle
         return isNonZeroPositive;
     }
     #endregion
+
+    #region DrawSeparator 绘制分隔线
+    /// <summary>
+    /// 绘制分隔线
+    /// </summary>
+    public void DrawSeparator()
+    {
+        GUILayout.HorizontalSlider(0, 0, 0, GUILayout.Height(1));
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+    }    
+    #endregion
 }
 #endif

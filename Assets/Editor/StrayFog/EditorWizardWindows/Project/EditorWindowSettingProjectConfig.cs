@@ -55,10 +55,7 @@ public class EditorWindowSettingProjectConfig : AbsEditorWindow
         {
             foreach (IEditorSavedAssetDrawUI d in mSavedAssetDrawUIMaping)
             {
-                d.DrawGUI();                               
-                GUILayout.HorizontalSlider(0, 0, 0, GUILayout.Height(1));
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
+                d.DrawGUI();
             }
         }
         EditorGUILayout.EndScrollView();
