@@ -174,17 +174,6 @@ public class EditorResxTemplete
     }
 
     /// <summary>
-    /// SQLiteEntityHelperExtendTemplete
-    /// </summary>
-    public static string SQLiteEntityHelperExtendTemplete
-    {
-        get
-        {
-            return GetFileString("SQLite/SQLiteEntityHelperExtendTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
-        }
-    }
-
-    /// <summary>
     /// SQLiteEntityScriptTemplete
     /// </summary>
     public static string SQLiteEntityScriptTemplete

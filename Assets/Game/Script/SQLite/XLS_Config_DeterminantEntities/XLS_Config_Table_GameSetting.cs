@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 /// <summary>
 /// GameSetting实体
 /// </summary>
+[SQLiteTableMap(-1936055589,"Assets/Game/Editor/XLS_Config/GameSetting.xlsx","GameSetting", enSQLiteEntityClassify.Table,true, 1,2,3,4,"c__1581584321",typeof(XLS_Config_Table_GameSetting))]
 public partial class XLS_Config_Table_GameSetting: AbsStrayFogSQLiteEntity
 {
 	/// <summary>

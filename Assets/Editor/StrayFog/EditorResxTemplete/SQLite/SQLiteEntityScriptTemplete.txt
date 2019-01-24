@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-using System;
 /// <summary>
 /// #EntityName#实体
 /// </summary>
+[SQLiteTableMap(#classHashCode#,"#xlsFilePath#","#sqliteTableName#", enSQLiteEntityClassify.#sqliteTableType#,#isDeterminant#, #xlsColumnNameIndex#,#xlsColumnValueIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#,"#dbSQLiteAssetBundleName#",typeof(#ClassName#))]
 public partial class #ClassName#: AbsStrayFogSQLiteEntity
 {
 	/// <summary>

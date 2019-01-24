@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 /// <summary>
 /// AssetDiskMapingFile实体
 /// </summary>
+[SQLiteTableMap(-206577796,"Assets/Game/Editor/XLS_Config/AssetDiskMapingFile.xlsx","AssetDiskMapingFile", enSQLiteEntityClassify.Table,false, 1,4,2,4,"c__1581584321",typeof(XLS_Config_Table_AssetDiskMapingFile))]
 public partial class XLS_Config_Table_AssetDiskMapingFile: AbsStrayFogSQLiteEntity
 {
 	/// <summary>

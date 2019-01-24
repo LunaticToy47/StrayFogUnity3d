@@ -266,7 +266,7 @@ public sealed class EditorStrayFogXLS
                         }
                         else
                         {
-                            throw new UnityException(string.Format("There are same column【{0}】 in xls【{1}】",
+                            throw new UnityException(string.Format("There are same column【{0}】 in 【{1}】",
                                 sheet.GetValue<string>(msrColumnNameRowIndex, i), _xlsAsset.path));
                         }
                     }
@@ -426,6 +426,8 @@ public sealed class EditorStrayFogXLS
             }
             reader.Close();
             reader = null;
+
+            key.Value.sqlite.Close();
             EditorUtility.DisplayProgressBar("Collect Clear SQLite SQL",
                     key.Value.sqlite.connectionString, progress / dicDbHelper.Count);
         }
@@ -589,6 +591,7 @@ public sealed class EditorStrayFogXLS
             }
             reader.Close();
             reader = null;
+            db.Value.sqlite.Close();
             #endregion
 
             #region 收集视图类信息
@@ -618,6 +621,7 @@ public sealed class EditorStrayFogXLS
                 }
                 reader.Close();
                 reader = null;
+                db.Value.sqlite.Close();
                 tempTable.columns = tempColumns.ToArray();
                 _tables.Add(tempTable);
                 EditorUtility.DisplayProgressBar("Collection View",
@@ -636,10 +640,28 @@ public sealed class EditorStrayFogXLS
 
         #region 行列式表整理
         progress = 0;
+        List<string> tempSameColumnNames = new List<string>();
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
             OnResolveTableSchema(t);
+            if (t.isDeterminant)
+            {
+                tempSameColumnNames.Clear();
+                foreach (EditorXlsTableColumnSchema c in t.columns)
+                {
+                    if (!tempSameColumnNames.Contains(c.columnName.ToUpper()))
+                    {
+                        tempSameColumnNames.Add(c.columnName.ToUpper());
+                    }
+                    else
+                    {
+                        EditorUtility.ClearProgressBar();
+                        throw new UnityException(string.Format("The Determinant Table has same value【{0}】 in column index 【{1}】in 【{2}】",
+                                c.columnName, msrDeterminantColumnNameColumnIndex,t.fileName));
+                    }
+                }                
+            }
             EditorUtility.DisplayProgressBar("Resolve Table",
                    string.Format("【{0}】Is Determinant【{1}】=>{2}", t.tableName, t.isDeterminant, t.dbConnectionString), progress / _tables.Count);
         }
@@ -647,6 +669,10 @@ public sealed class EditorStrayFogXLS
 
         #region 生成表脚本
         progress = 0;
+        int xlsColumnNameIndex = 0;
+        int xlsColumnDataIndex = 0;
+        int xlsColumnTypeIndex = 0;
+        int xlsDataStartRowIndex = msrColumnDataRowStartIndex;
         string entityScriptTemplete = EditorResxTemplete.SQLiteEntityScriptTemplete;
 
         #region #Properties#
@@ -683,6 +709,18 @@ public sealed class EditorStrayFogXLS
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
+            if (t.isDeterminant)
+            {
+                xlsColumnNameIndex = msrDeterminantColumnNameColumnIndex;
+                xlsColumnDataIndex = msrDeterminantColumnDataColumnIndex;
+                xlsColumnTypeIndex = msrDeterminantColumnTypeColumnIndex;
+            }
+            else
+            {
+                xlsColumnNameIndex = msrColumnNameRowIndex;
+                xlsColumnDataIndex = msrColumnDataRowStartIndex;
+                xlsColumnTypeIndex = msrColumnTypeRowIndex;
+            }
             pksNames = new List<string>();
             sbPropertyReplace.Length = 0;
             sbPksReplace.Length = 0;
@@ -705,10 +743,20 @@ public sealed class EditorStrayFogXLS
 
             cfgEntityScript.SetName(t.className);
             cfgEntityScript.SetText(entityScriptTemplete
-               .Replace("#EntityName#", t.tableName)
-               .Replace("#ClassName#", t.className)
-               .Replace(pksReplaceTemplete, sbPksReplace.ToString())
-               .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString()));
+                .Replace("#classHashCode#", t.className.UniqueHashCode().ToString())
+                .Replace("#xlsFilePath#", t.fileName)
+                .Replace("#sqliteTableName#", t.tableName)
+                .Replace("#sqliteTableType#", t.classify.ToString())
+                .Replace("#isDeterminant#", Convert.ToString(t.isDeterminant).ToLower())
+                .Replace("#xlsColumnNameIndex#", xlsColumnNameIndex.ToString())
+                .Replace("#xlsColumnValueIndex#", xlsColumnDataIndex.ToString())
+                .Replace("#xlsColumnTypeIndex#", xlsColumnTypeIndex.ToString())
+                .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
+                .Replace("#dbSQLiteAssetBundleName#", t.assetBundleDbName)                
+                .Replace("#EntityName#", t.tableName)
+                .Replace("#ClassName#", t.className)
+                .Replace(pksReplaceTemplete, sbPksReplace.ToString())
+                .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString()));
             if (t.isDeterminant)
             {
                 cfgEntityScript.SetDirectory(dicSqliteDeterminantEntitiesFolder[t.dbKey]);
@@ -722,60 +770,6 @@ public sealed class EditorStrayFogXLS
             EditorUtility.DisplayProgressBar("Build Table Script",
                    string.Format("【{0}】=>{1}", t.tableName, t.dbConnectionString), progress / _tables.Count);
         }
-        #endregion
-
-        #region 生成实体操作扩展
-        EditorTextAssetConfig cfgHeplerExtendScript = new EditorTextAssetConfig("StrayFogSQLiteEntityHelperExtend", sqliteFolder, enFileExt.CS, "");
-        string helperScriptTemplete = EditorResxTemplete.SQLiteEntityHelperExtendTemplete;
-
-        #region #EntityMaping#
-        string entityMapingMark = "#EntityMaping#";
-        string entityMapingReplaceTemplete = string.Empty;
-        string entityMapingTemplete = string.Empty;
-        StringBuilder sbEntityMapingReplace = new StringBuilder();
-        entityMapingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(helperScriptTemplete, entityMapingMark, out entityMapingReplaceTemplete);
-        #endregion
-
-        progress = 0;
-        int xlsColumnNameIndex = 0;
-        int xlsColumnDataIndex = 0;
-        int xlsColumnTypeIndex = 0;
-        int xlsDataStartRowIndex = msrColumnDataRowStartIndex;
-        foreach (EditorXlsTableSchema t in _tables)
-        {
-            progress++;
-            if (t.isDeterminant)
-            {
-                xlsColumnNameIndex = msrDeterminantColumnNameColumnIndex;
-                xlsColumnDataIndex = msrDeterminantColumnDataColumnIndex;
-                xlsColumnTypeIndex = msrDeterminantColumnTypeColumnIndex;
-            }
-            else
-            {
-                xlsColumnNameIndex = msrColumnNameRowIndex;
-                xlsColumnDataIndex = msrColumnDataRowStartIndex;
-                xlsColumnTypeIndex = msrColumnTypeRowIndex;
-            }
-            sbEntityMapingReplace.Append(
-                entityMapingTemplete
-                .Replace("#ClassHashCode#", t.className.UniqueHashCode().ToString())
-                .Replace("#SqliteTableName#", t.tableName)
-                .Replace("#XlsFilePath#", t.fileName)
-                .Replace("#assetBundleDbName#", t.assetBundleDbName)
-                .Replace("#IsDeterminant#", Convert.ToString(t.isDeterminant).ToLower())
-                .Replace("#Classify#", t.classify.ToString())
-                .Replace("#xlsColumnNameIndex#", xlsColumnNameIndex.ToString())
-                .Replace("#xlsColumnDataIndex#", xlsColumnDataIndex.ToString())
-                .Replace("#xlsColumnTypeIndex#", xlsColumnTypeIndex.ToString())
-                .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())                
-                );
-            EditorUtility.DisplayProgressBar("Build Entity Extend", t.name, progress / _tables.Count);
-        }
-        cfgHeplerExtendScript.SetText(
-            helperScriptTemplete
-            .Replace(entityMapingReplaceTemplete, sbEntityMapingReplace.ToString())
-            );
-        cfgHeplerExtendScript.CreateAsset();
         #endregion
 
         EditorUtility.ClearProgressBar();

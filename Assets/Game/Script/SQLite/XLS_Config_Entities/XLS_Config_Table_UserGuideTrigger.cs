@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 /// <summary>
 /// UserGuideTrigger实体
 /// </summary>
+[SQLiteTableMap(248584192,"Assets/Game/Editor/XLS_Config/UserGuideTrigger.xlsx","UserGuideTrigger", enSQLiteEntityClassify.Table,false, 1,4,2,4,"c__1581584321",typeof(XLS_Config_Table_UserGuideTrigger))]
 public partial class XLS_Config_Table_UserGuideTrigger: AbsStrayFogSQLiteEntity
 {
 	/// <summary>
