@@ -12,92 +12,92 @@ MonoBehaviour:
   m_Name: UIWindowSetting
   m_EditorClassIdentifier: 
   tableName: UIWindowSetting
-  fileName: Assets/Game/Editor/XLS/UIWindowSetting.xlsx
-  dbName: XLS.db
-  dbConnectionString: data source=Assets/Game/Editor/XLS/XLS.db
+  fileName: Assets/Game/Editor/XLS_Config/UIWindowSetting.xlsx
+  dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
+  classify: 0
   isDeterminant: 0
   columns:
-  - name: id
+  - columnName: id
     desc: "\u7A97\u53E3id"
     isPK: 1
-    type: 6
+    dataType: 6
     arrayDimension: 0
     isNull: 0
-  - name: name
+  - columnName: name
     desc: "\u7A97\u53E3\u540D\u79F0"
     isPK: 0
-    type: 14
+    dataType: 14
     arrayDimension: 0
     isNull: 0
-  - name: fileId
+  - columnName: fileId
     desc: "\u6587\u4EF6id"
     isPK: 0
-    type: 6
+    dataType: 6
     arrayDimension: 0
     isNull: 0
-  - name: folderId
+  - columnName: folderId
     desc: "\u6587\u4EF6\u5939id"
     isPK: 0
-    type: 6
+    dataType: 6
     arrayDimension: 0
     isNull: 0
-  - name: renderMode
+  - columnName: renderMode
     desc: "\u753B\u5E03\u7ED8\u5236\u6A21\u5F0F"
     isPK: 0
-    type: 6
+    dataType: 6
     arrayDimension: 0
     isNull: 0
-  - name: layer
+  - columnName: layer
     desc: "\u7A97\u53E3Layer"
     isPK: 0
-    type: 6
+    dataType: 6
     arrayDimension: 0
     isNull: 0
-  - name: openMode
+  - columnName: openMode
     desc: "\u7A97\u53E3\u6253\u5F00\u6A21\u5F0F"
     isPK: 0
-    type: 6
+    dataType: 6
     arrayDimension: 0
     isNull: 0
-  - name: closeMode
+  - columnName: closeMode
     desc: "\u7A97\u53E3\u5173\u95ED\u6A21\u5F0F"
     isPK: 0
-    type: 6
+    dataType: 6
     arrayDimension: 0
     isNull: 0
-  - name: isIgnoreOpenCloseMode
+  - columnName: isIgnoreOpenCloseMode
     desc: "\u662F\u5426\u5FFD\u7565\u6253\u5F00\u5173\u95ED\u6A21\u5F0F"
     isPK: 0
-    type: 0
+    dataType: 0
     arrayDimension: 0
     isNull: 0
-  - name: isNotAutoRestoreSequenceWindow
+  - columnName: isNotAutoRestoreSequenceWindow
     desc: "\u662F\u5426\u662F\u4E0D\u53EF\u81EA\u52A8\u6062\u590D\u5E8F\u5217\u7A97\u53E3"
     isPK: 0
-    type: 0
+    dataType: 0
     arrayDimension: 0
     isNull: 0
-  - name: isDonotDestroyInstance
+  - columnName: isDonotDestroyInstance
     desc: "\u662F\u5426\u662F\u4E0D\u53EF\u9500\u6BC1\u5B9E\u4F8B"
     isPK: 0
-    type: 0
+    dataType: 0
     arrayDimension: 0
     isNull: 0
-  - name: isImmediateDisplay
+  - columnName: isImmediateDisplay
     desc: "\u662F\u5426\u7ACB\u5373\u663E\u793A"
     isPK: 0
-    type: 0
+    dataType: 0
     arrayDimension: 0
     isNull: 0
-  - name: isManualCloseWhenGotoScene
+  - columnName: isManualCloseWhenGotoScene
     desc: "\u8DF3\u8F6C\u573A\u666F\u65F6\u662F\u5426\u624B\u52A8\u5173\u95ED"
     isPK: 0
-    type: 0
+    dataType: 0
     arrayDimension: 0
     isNull: 0
-  - name: isGuideWindow
+  - columnName: isGuideWindow
     desc: "\u662F\u5426\u662F\u5F15\u5BFC\u7A97\u53E3"
     isPK: 0
-    type: 0
+    dataType: 0
     arrayDimension: 0
     isNull: 0

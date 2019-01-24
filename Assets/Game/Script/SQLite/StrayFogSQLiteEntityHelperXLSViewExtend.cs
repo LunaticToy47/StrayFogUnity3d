@@ -58,7 +58,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     if (key.isDeterminant)
                     {
                         tempEntity = OnCreateInstance<T>();
-                        msEntityPropertyInfoMaping[_entitySetting.id][vtNameKey].SetValue(tempEntity, key.tableName, null);
+                        msEntityPropertyInfoMaping[_entitySetting.id][vtNameKey].SetValue(tempEntity, key.sqliteTableName, null);
                         result.Add(tempEntity);
                     }
                 }

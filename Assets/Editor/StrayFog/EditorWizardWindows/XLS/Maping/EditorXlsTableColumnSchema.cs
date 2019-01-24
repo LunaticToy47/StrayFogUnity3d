@@ -9,7 +9,7 @@ public class EditorXlsTableColumnSchema
     /// 列名称
     /// </summary>
     [AliasTooltip("列名称")]
-    public string name;
+    public string columnName;
     /// <summary>
     /// 列描述
     /// </summary>
@@ -35,20 +35,4 @@ public class EditorXlsTableColumnSchema
     /// </summary>
     [AliasTooltip("是否允许为空")]
     public bool isNull;
-
-    /// <summary>
-    /// Copy
-    /// </summary>
-    /// <returns>XLS表格列架构</returns>
-    public EditorXlsTableColumnSchema Copy()
-    {
-        EditorXlsTableColumnSchema column = new EditorXlsTableColumnSchema();
-        column.name = name;
-        column.desc = desc;
-        column.isPK = isPK;
-        column.isNull = isNull;
-        column.dataType = dataType;
-        column.arrayDimension = arrayDimension;
-        return column;
-    }
 }

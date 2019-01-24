@@ -92,33 +92,4 @@ public class EditorXlsTableSchema : AbsScriptableObject
             return Path.GetFileNameWithoutExtension(dbName) + "_" + className;
         } }
     #endregion
-
-    #region Copy 复制
-    /// <summary>
-    /// Copy
-    /// </summary>
-    /// <returns>XLS表格架构</returns>
-    public EditorXlsTableSchema Copy()
-    {
-        EditorXlsTableSchema table = new EditorXlsTableSchema();
-        table.tableName = tableName;
-        table.fileName = fileName;
-        table.dbPath = dbPath;
-        table.isDeterminant = isDeterminant;
-        table.classify = classify;
-        if (columns != null && columns.Length > 0)
-        {
-            table.columns = new EditorXlsTableColumnSchema[columns.Length];
-            for (int i = 0; i < columns.Length; i++)
-            {
-                table.columns[i] = columns[i].Copy();
-            }
-        }
-        else
-        {
-            table.columns = new EditorXlsTableColumnSchema[0];
-        }
-        return table;
-    }
-    #endregion
 }

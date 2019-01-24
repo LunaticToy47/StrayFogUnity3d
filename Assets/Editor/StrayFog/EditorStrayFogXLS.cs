@@ -243,7 +243,8 @@ public sealed class EditorStrayFogXLS
     {
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         EditorXlsTableSchema tempTable = null;
-        EditorXlsTableColumnSchema tempTableCell = null;
+        EditorXlsTableColumnSchema tempColumn = null;
+        Dictionary<string,EditorXlsTableColumnSchema> tempSrcTableColumns = new Dictionary<string, EditorXlsTableColumnSchema>();        
         string tempColumnName = string.Empty;
         using (FileStream fs = new FileStream(_xlsAsset.path, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
@@ -271,52 +272,54 @@ public sealed class EditorStrayFogXLS
                     }
                 }
                 #endregion
-
-                #region 读取已保存的表架构
-                tempTable = (EditorXlsTableSchema)_xlsAsset.tableAssetConfig.engineAsset;
-                #endregion
-
-                #region 保存原始列架构
-                Dictionary<string, EditorXlsTableColumnSchema> srcEditorXlsTableColumnSchemaMaping = new Dictionary<string, EditorXlsTableColumnSchema>();
-                if (tempTable.columns != null && tempTable.columns.Length > 0)
-                {
-                    foreach (EditorXlsTableColumnSchema c in tempTable.columns)
-                    {
-                        tempColumnName = c.name.ToUpper();
-                        if (!srcEditorXlsTableColumnSchemaMaping.ContainsKey(tempColumnName))
-                        {
-                            srcEditorXlsTableColumnSchemaMaping.Add(tempColumnName, c);
-                        }
-                    }
-                }
-                #endregion
-
+                                
+                tempTable =(EditorXlsTableSchema)_xlsAsset.tableAssetConfig.engineAsset;
                 tempTable.fileName = _xlsAsset.path;
                 tempTable.dbPath = _xlsAsset.dbPath;
                 tempTable.tableName = _xlsAsset.nameWithoutExtension;
-                if (sheet.Dimension.Rows >= msrColumnNameRowIndex)
+                tempSrcTableColumns = new Dictionary<string, EditorXlsTableColumnSchema>();
+
+                #region 收集已有的列
+                if (tempTable.columns != null && tempTable.columns.Length > 0)
                 {
-                    tempTable.columns = new EditorXlsTableColumnSchema[sheet.Dimension.Columns];
-                    for (int i = 1; i <= sheet.Dimension.Columns; i++)
+                    foreach (EditorXlsTableColumnSchema col in tempTable.columns)
                     {
-                        tempTableCell = new EditorXlsTableColumnSchema();
-                        tempTableCell.name = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString();
-                        tempTableCell.desc = sheet.GetValue<string>(msrColumnDescriptionRowIndex, i).ToString();
-                        tempTableCell.dataType = enSQLiteDataType.String;
-                        tempTableCell.arrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
-                        tempColumnName = tempTableCell.name.ToUpper();
-                        if (srcEditorXlsTableColumnSchemaMaping.ContainsKey(tempColumnName))
+                        if (!string.IsNullOrEmpty(col.columnName))
                         {
-                            tempTableCell.isPK = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isPK;
-                            tempTableCell.isNull = srcEditorXlsTableColumnSchemaMaping[tempColumnName].isNull;
-                        }
-                        StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(msrColumnTypeRowIndex, i).ToString(), ref tempTableCell.dataType, ref tempTableCell.arrayDimension);
-                        tempTable.columns[i - 1] = tempTableCell;
+                            tempColumnName = col.columnName.ToUpper();
+                            tempSrcTableColumns.Add(tempColumnName, col);
+                        }                        
                     }
                 }
+                #endregion
+
+                List<EditorXlsTableColumnSchema> targetColumns = new List<EditorXlsTableColumnSchema>();
+                if (sheet.Dimension.Rows >= msrColumnNameRowIndex)
+                {                    
+                    for (int i = 1; i <= sheet.Dimension.Columns; i++)
+                    {
+                        tempColumnName = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString().ToUpper();
+                        if (tempSrcTableColumns.ContainsKey(tempColumnName))
+                        {
+                            targetColumns.Add(tempSrcTableColumns[tempColumnName]);
+                        }
+                        else
+                        {
+                            tempColumn = new EditorXlsTableColumnSchema();
+                            tempColumn.columnName = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString();
+                            tempColumn.desc = sheet.GetValue<string>(msrColumnDescriptionRowIndex, i).ToString();
+                            tempColumn.dataType = enSQLiteDataType.String;
+                            tempColumn.arrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+                            StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(msrColumnTypeRowIndex, i).ToString(), ref tempColumn.dataType, ref tempColumn.arrayDimension);
+                            targetColumns.Add(tempColumn);
+                        }
+                    }
+                }
+                tempTable.columns = targetColumns.ToArray();
+                EditorUtility.SetDirty(tempTable);
             }
         }
-        return tempTable.Copy();
+        return ScriptableObject.Instantiate(tempTable);
     }
     #endregion
 
@@ -446,14 +449,14 @@ public sealed class EditorStrayFogXLS
                     columnCodes.Add(
                        columnTemplete
                        .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
-                       .Replace("#Name#", c.name)
+                       .Replace("#Name#", c.columnName)
                        .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.dataType, c.arrayDimension))
                     );
                     if (c.isPK)
                     {
                         pksCodes.Add(
                             pksTemplete
-                            .Replace("#Name#", c.name));
+                            .Replace("#Name#", c.columnName));
                     }
                 }
             }
@@ -607,7 +610,7 @@ public sealed class EditorStrayFogXLS
                     tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
                     StrayFogSQLiteDataTypeHelper.ResolveSQLiteDataType(tempType, ref tempDataType, ref tempDataTypeArrayDimension);
                     tempTableColumn = new EditorXlsTableColumnSchema();
-                    tempTableColumn.name = tempName;
+                    tempTableColumn.columnName = tempName;
                     tempTableColumn.dataType = tempDataType;
                     tempTableColumn.arrayDimension = tempDataTypeArrayDimension;
                     tempTableColumn.desc = tempName;
@@ -687,7 +690,7 @@ public sealed class EditorStrayFogXLS
             {
                 sbPropertyReplace.Append(
                     propertyTemplete
-                    .Replace("#Name#", c.name)
+                    .Replace("#Name#", c.columnName)
                     .Replace("#Desc#", c.desc)
                     .Replace("#DataType#", c.dataType.ToString())
                      .Replace("#ArrayDimension#", c.arrayDimension.ToString())
@@ -695,7 +698,7 @@ public sealed class EditorStrayFogXLS
                     );
                 if (c.isPK)
                 {
-                    pksNames.Add(pksTemplete.Replace("#Name#", c.name));
+                    pksNames.Add(pksTemplete.Replace("#Name#", c.columnName));
                 }
             }
             sbPksReplace.Append(string.Join(msrColumnSeparate, pksNames.ToArray()));
@@ -756,8 +759,8 @@ public sealed class EditorStrayFogXLS
             sbEntityMapingReplace.Append(
                 entityMapingTemplete
                 .Replace("#ClassHashCode#", t.className.UniqueHashCode().ToString())
-                .Replace("#TableName#", t.tableName)
-                .Replace("#XlsFileName#", t.fileName)
+                .Replace("#SqliteTableName#", t.tableName)
+                .Replace("#XlsFilePath#", t.fileName)
                 .Replace("#assetBundleDbName#", t.assetBundleDbName)
                 .Replace("#IsDeterminant#", Convert.ToString(t.isDeterminant).ToLower())
                 .Replace("#Classify#", t.classify.ToString())
@@ -801,7 +804,7 @@ public sealed class EditorStrayFogXLS
                         for (int i = msrColumnDataRowStartIndex; i <= sheet.Dimension.Rows; i++)
                         {
                             tempColumn = new EditorXlsTableColumnSchema();
-                            tempColumn.name = sheet.GetValue<string>(i, msrDeterminantColumnNameColumnIndex).ToString();
+                            tempColumn.columnName = sheet.GetValue<string>(i, msrDeterminantColumnNameColumnIndex).ToString();
                             tempDataType = enSQLiteDataType.String;
                             tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
                             StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(i, msrDeterminantColumnTypeColumnIndex).ToString(), ref tempDataType, ref tempDataTypeArrayDimension);

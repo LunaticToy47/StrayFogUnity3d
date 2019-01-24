@@ -12,28 +12,26 @@ MonoBehaviour:
   m_Name: AssetDiskMapingFolder
   m_EditorClassIdentifier: 
   tableName: AssetDiskMapingFolder
-  fileName: Assets/Game/Editor/XLS/AssetDiskMapingFolder.xlsx
-  dbName: XLS.db
-  dbPath: Assets/Game/Editor/XLS/XLS.db
-  dbConnectionString: data source=Assets/Game/Editor/XLS/XLS.db
+  fileName: Assets/Game/Editor/XLS_Config/AssetDiskMapingFolder.xlsx
+  dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
   classify: 0
   isDeterminant: 0
   columns:
-  - name: folderId
+  - columnName: folderId
     desc: "\u6587\u4EF6\u5939Id"
     isPK: 1
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - name: inSide
+  - columnName: inSide
     desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - name: outSide
+  - columnName: outSide
     desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
     dataType: 14
     arrayDimension: 0
-    isNull: 1
+    isNull: 0

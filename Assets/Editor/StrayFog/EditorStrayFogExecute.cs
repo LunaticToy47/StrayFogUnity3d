@@ -1171,9 +1171,10 @@ public sealed class EditorStrayFogExecute
         ExecuteSetSpritePackingTag();
         ExecuteSetAssetBundleName();
 
-        ExecuteBuildAllXlsData();
+        ExecuteExportXlsSchemaToSqlite();
 
-        ExecuteExportXlsDataToSqlite();
+        ExecuteBuildAllXlsData();       
+
         ExecuteBuildDllToPackage();
         ExecuteCopySQLiteDbToPackage();
         ExecuteBuildDeleteNouseAssetBatToPackage();
@@ -1282,9 +1283,11 @@ public sealed class EditorStrayFogExecute
     /// 生成所有XLS表数据
     /// </summary>
     public static void ExecuteBuildAllXlsData()
-    {
+    {        
         ExecuteBuildAllAssetDiskMaping();
         ExecuteBuildUIWindowSetting();
+
+        ExecuteExportXlsDataToSqlite();
     }
     #endregion
     #endregion

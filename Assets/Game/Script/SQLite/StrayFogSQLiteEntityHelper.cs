@@ -87,14 +87,14 @@ public sealed partial class StrayFogSQLiteEntityHelper
         where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();        
-        if (File.Exists(_entitySetting.xlsFileName))
+        if (File.Exists(_entitySetting.xlsFilePath))
         {         
             T tempEntity = default(T);
             int tempPropertyKey = 0;
             object tempValue = null;
             string tempName = string.Empty;
             bool tempIsAllValueNull = false;
-            using (FileStream fs = new FileStream(_entitySetting.xlsFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (FileStream fs = new FileStream(_entitySetting.xlsFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 ExcelPackage pck = new ExcelPackage(fs);
                 if (pck.Workbook.Worksheets.Count > 0)
@@ -185,7 +185,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
             msStrayFogSQLiteHelperMaping.Add(_entitySetting.dbSQLiteKey,
                 new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(_entitySetting.assetBundleDbName)));
         }
-        SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_entitySetting.dbSQLiteKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.tableName));
+        SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_entitySetting.dbSQLiteKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _entitySetting.sqliteTableName));
         T tempEntity = default(T);
         string tempPropertyName = string.Empty;
         int tempPropertyKey = 0;
