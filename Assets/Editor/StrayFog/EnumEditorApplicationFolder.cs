@@ -29,12 +29,17 @@ public enum enEditorApplicationFolder
     /// <summary>
     /// 游戏Editor的UIWindow目录
     /// </summary>
-    [EditorApplicationFolder("游戏Editor目录", "Assets/Game/Editor/UIWindow", "游戏Editor的UIWindow目录")]
+    [EditorApplicationFolder("游戏Editor的UIWindow目录", "Assets/Game/Editor/UIWindow", "游戏Editor的UIWindow目录")]
     Game_Editor_UIWindow,
+    /// <summary>
+    /// 游戏Editor的PublishSetting目录
+    /// </summary>
+    [EditorApplicationFolder("游戏Editor的PublishSetting目录", "Assets/Game/Editor/PublishSetting", "游戏Editor的PublishSetting目录")]
+    Game_Editor_PublishSetting,
     /// <summary>
     /// 游戏目录
     /// </summary>
-    [EditorApplicationFolder("游戏目录", "Assets/Game", "游戏根目录")]
+    [EditorApplicationFolder("游戏目录", "Assets/Game", "游戏目录")]
     Game,
     #endregion
 
@@ -75,9 +80,9 @@ public enum enEditorApplicationFolder
 
     #region UIWindow
     /// <summary>
-    /// 游戏UIWindow目录
+    /// 游戏UIWindow的AssetBundles目录
     /// </summary>
-    [EditorApplicationFolder("游戏UIWindow目录", "Assets/Game/AssetBundles/UIWindow", "游戏UIWindow目录")]
+    [EditorApplicationFolder("游戏UIWindow的AssetBundles目录", "Assets/Game/AssetBundles/UIWindow", "游戏UIWindow的AssetBundles目录")]
     Game_AssetBundles_UIWindow,
 
     /// <summary>

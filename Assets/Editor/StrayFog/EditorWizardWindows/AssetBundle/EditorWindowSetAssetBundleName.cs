@@ -15,7 +15,7 @@ public class EditorWindowSetAssetBundleName : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedConfigAssetFile.setAssetBundleName;
+        mConfig = EditorStrayFogSavedAssetConfig.setAssetBundleName;
     }
 
     /// <summary>
@@ -33,10 +33,7 @@ public class EditorWindowSetAssetBundleName : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
-        if (mConfig.folder != null)
-        {
-            mConfig.folder.DrawGUI();
-        }
+        mConfig.DrawGUI();
     }
     #endregion
 

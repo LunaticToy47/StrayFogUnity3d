@@ -184,17 +184,16 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildAnimatorControllerFMSMaping()
     {
-        EditorAnimatorControllerFMSMapingConfig cfg = EditorStrayFogSavedConfigAssetFile.setAnimatorControllerFMSMaping;
+        EditorAnimatorControllerFMSMapingConfig cfg = EditorStrayFogSavedAssetConfig.setAnimatorControllerFMSMaping;
         StringBuilder sbLog = new StringBuilder();
-        if (cfg.folder != null)
+
+        FileExtAttribute animatorControllerExt = enFileExt.AnimatorController.GetAttribute<FileExtAttribute>();
+        List<EditorSelectionAnimatorControllerFMSMapingAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAnimatorControllerFMSMapingAsset>(cfg.paths, enEditorAssetFilterClassify.Object, true, (n) => { return n.ext.Equals(animatorControllerExt.ext); });
+        if (nodes != null && nodes.Count > 0)
         {
-            FileExtAttribute animatorControllerExt = enFileExt.AnimatorController.GetAttribute<FileExtAttribute>();
-            List<EditorSelectionAnimatorControllerFMSMapingAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAnimatorControllerFMSMapingAsset>(cfg.folder.folders, enEditorAssetFilterClassify.Object, true, (n) => { return n.ext.Equals(animatorControllerExt.ext); });
-            if (nodes != null && nodes.Count > 0)
-            {
-                OnBuilderAnimatorControllerMaping(nodes);
-            }
+            OnBuilderAnimatorControllerMaping(nodes);
         }
+
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendLine("ExecuteBuildAnimatorControllerFMSMaping Succeed!");
@@ -697,22 +696,19 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteSetSpritePackingTag()
     {
-        EditorSetSpritePackingTagConfig cfg = EditorStrayFogSavedConfigAssetFile.setSpritePackingTag;
+        EditorSetSpritePackingTagConfig cfg = EditorStrayFogSavedAssetConfig.setSpritePackingTag;
         StringBuilder sbLog = new StringBuilder();
-        if (cfg.folder != null)
+        List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.paths, enEditorAssetFilterClassify.Texture2D);
+        float progress = 0;
+        foreach (EditorSelectionSpritePackingTagAsset n in nodes)
         {
-            List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.folder.folders, enEditorAssetFilterClassify.Texture2D);
-            float progress = 0;
-            foreach (EditorSelectionSpritePackingTagAsset n in nodes)
-            {
-                progress++;
-                n.SaveSpritePackingTag();
-                EditorUtility.DisplayProgressBar("Save Sprite Packing Tag", n.path, progress / nodes.Count);
-            }
-            EditorUtility.ClearProgressBar();
-            AssetDatabase.SaveAssets();
-            EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+            progress++;
+            n.SaveSpritePackingTag();
+            EditorUtility.DisplayProgressBar("Save Sprite Packing Tag", n.path, progress / nodes.Count);
         }
+        EditorUtility.ClearProgressBar();
+        AssetDatabase.SaveAssets();
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendLine("ExecuteSetSpritePackingTag Succeed!");
         Debug.Log(sbLog.ToString());
     }
@@ -725,22 +721,19 @@ public sealed class EditorStrayFogExecute
     /// <returns>执行节点</returns>
     public static void ExecuteClearSpritePackingTag()
     {
-        EditorSetSpritePackingTagConfig cfg = EditorStrayFogSavedConfigAssetFile.setSpritePackingTag;
+        EditorSetSpritePackingTagConfig cfg = EditorStrayFogSavedAssetConfig.setSpritePackingTag;
         StringBuilder sbLog = new StringBuilder();
-        if (cfg.folder != null)
+        List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.paths, enEditorAssetFilterClassify.Texture2D);
+        float progress = 0;
+        foreach (EditorSelectionSpritePackingTagAsset n in nodes)
         {
-            List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.folder.folders, enEditorAssetFilterClassify.Texture2D);
-            float progress = 0;
-            foreach (EditorSelectionSpritePackingTagAsset n in nodes)
-            {
-                progress++;
-                n.ClearSpritePackingTag();
-                EditorUtility.DisplayProgressBar("Clear Sprite Packing Tag", n.path, progress / nodes.Count);
-            }
-            EditorUtility.ClearProgressBar();
-            AssetDatabase.SaveAssets();
-            EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+            progress++;
+            n.ClearSpritePackingTag();
+            EditorUtility.DisplayProgressBar("Clear Sprite Packing Tag", n.path, progress / nodes.Count);
         }
+        EditorUtility.ClearProgressBar();
+        AssetDatabase.SaveAssets();
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendLine("ExecuteClearSpritePackingTag Succeed!");
         Debug.Log(sbLog.ToString());
     }
@@ -780,84 +773,82 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteSetAssetBundleName()
     {
-        EditorSetAssetBundleNameConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetBundleName;
+        EditorSetAssetBundleNameConfig cfg = EditorStrayFogSavedAssetConfig.setAssetBundleName;
         StringBuilder sbLog = new StringBuilder();
         string error = string.Empty;
-        if (cfg.folder != null)
-        {            
-            List<EditorSelectionAssetBundleNameAsset> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetBundleNameAsset>(cfg.folder.folders, out error);
-            if (string.IsNullOrEmpty(error))
-            {                
-                if (nodes != null && nodes.Count > 0)
-                {
-                    float progress = 0;
-                    Dictionary<int, EditorSelectionAssetBundleNameAsset> nodeMaping = new Dictionary<int, EditorSelectionAssetBundleNameAsset>();
-                    #region 构建拓扑起始节点                        
-                    foreach (EditorSelectionAssetBundleNameAsset n in nodes)
-                    {
-                        if (!nodeMaping.ContainsKey(n.guidHashCode))
-                        {
-                            nodeMaping.Add(n.guidHashCode, n);
-                        }
-                        progress++;
-                        EditorUtility.DisplayProgressBar("Build Topolopy Node", n.path, progress / nodes.Count);
-                    }
-                    #endregion
 
-                    #region 构建依赖链      
-                    progress = 0;
-                    foreach (EditorSelectionAssetBundleNameAsset n in nodes)
-                    {
-                        n.BuildDependencyLink(nodeMaping);
-                        progress++;
-                        EditorUtility.DisplayProgressBar("Build DependencyLink", n.path, progress / nodes.Count);
-                    }
-                    #endregion
-
-                    #region 收缩合并                        
-                    OnRecursiveShrinkMerge(nodeMaping);
-                    #endregion
-
-                    #region 设置AssetBundleName
-                    progress = 0;
-                    foreach (EditorSelectionAssetBundleNameAsset n in nodeMaping.Values)
-                    {
-                        progress++;
-                        n.SaveAssetBundleName(null);
-                        EditorUtility.DisplayProgressBar("Set AssetBundleName", n.path, progress / nodeMaping.Count);
-                    }
-                    #endregion
-
-                    EditorUtility.ClearProgressBar();
-                    AssetDatabase.SaveAssets();
-                    AssetDatabase.RemoveUnusedAssetBundleNames();
-                    EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-
-                    #region 节点日志
-                    progress++;
-                    foreach (EditorSelectionAssetBundleNameAsset n in nodeMaping.Values)
-                    {
-                        sbLog.AppendLine(n.ToLog());
-                        EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodeMaping.Count);
-                    }
-                    EditorUtility.ClearProgressBar();
-                    if (EditorStrayFogApplication.IsExecuteMethodInCmd())
-                    {
-                        //Debug.Log(sbLog.ToString());
-                    }
-                    else
-                    {
-                        string logFilename = Path.Combine(Path.GetTempPath(), "AssetBundleName.log");
-                        File.WriteAllText(logFilename, sbLog.ToString());
-                        sbLog.AppendLine(string.Format("Log=>{0}", logFilename));
-                    }
-                    #endregion
-                }
-            }
-            else
+        List<EditorSelectionAssetBundleNameAsset> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetBundleNameAsset>(cfg.paths, out error);
+        if (string.IsNullOrEmpty(error))
+        {
+            if (nodes != null && nodes.Count > 0)
             {
-                Debug.LogError(error);
+                float progress = 0;
+                Dictionary<int, EditorSelectionAssetBundleNameAsset> nodeMaping = new Dictionary<int, EditorSelectionAssetBundleNameAsset>();
+                #region 构建拓扑起始节点                        
+                foreach (EditorSelectionAssetBundleNameAsset n in nodes)
+                {
+                    if (!nodeMaping.ContainsKey(n.guidHashCode))
+                    {
+                        nodeMaping.Add(n.guidHashCode, n);
+                    }
+                    progress++;
+                    EditorUtility.DisplayProgressBar("Build Topolopy Node", n.path, progress / nodes.Count);
+                }
+                #endregion
+
+                #region 构建依赖链      
+                progress = 0;
+                foreach (EditorSelectionAssetBundleNameAsset n in nodes)
+                {
+                    n.BuildDependencyLink(nodeMaping);
+                    progress++;
+                    EditorUtility.DisplayProgressBar("Build DependencyLink", n.path, progress / nodes.Count);
+                }
+                #endregion
+
+                #region 收缩合并                        
+                OnRecursiveShrinkMerge(nodeMaping);
+                #endregion
+
+                #region 设置AssetBundleName
+                progress = 0;
+                foreach (EditorSelectionAssetBundleNameAsset n in nodeMaping.Values)
+                {
+                    progress++;
+                    n.SaveAssetBundleName(null);
+                    EditorUtility.DisplayProgressBar("Set AssetBundleName", n.path, progress / nodeMaping.Count);
+                }
+                #endregion
+
+                EditorUtility.ClearProgressBar();
+                AssetDatabase.SaveAssets();
+                AssetDatabase.RemoveUnusedAssetBundleNames();
+                EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+
+                #region 节点日志
+                progress++;
+                foreach (EditorSelectionAssetBundleNameAsset n in nodeMaping.Values)
+                {
+                    sbLog.AppendLine(n.ToLog());
+                    EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodeMaping.Count);
+                }
+                EditorUtility.ClearProgressBar();
+                if (EditorStrayFogApplication.IsExecuteMethodInCmd())
+                {
+                    //Debug.Log(sbLog.ToString());
+                }
+                else
+                {
+                    string logFilename = Path.Combine(Path.GetTempPath(), "AssetBundleName.log");
+                    File.WriteAllText(logFilename, sbLog.ToString());
+                    sbLog.AppendLine(string.Format("Log=>{0}", logFilename));
+                }
+                #endregion
             }
+        }
+        else
+        {
+            Debug.LogError(error);
         }
 
         sbLog.AppendLine("ExecuteSetAssetBundleName Succeed!");
@@ -938,11 +929,11 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildAllAssetDiskMaping()
     {
-        EditorSetAssetBundleNameConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetBundleName;
+        EditorSetAssetBundleNameConfig cfg = EditorStrayFogSavedAssetConfig.setAssetBundleName;
         string error = string.Empty;
-        if (cfg.folder != null)
+        if (cfg.paths.Length > 0)
         {            
-            List<EditorSelectionAssetDiskMaping> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetDiskMaping>(cfg.folder.folders, out error);
+            List<EditorSelectionAssetDiskMaping> nodes = EditorStrayFogUtility.assetBundleName.Collect<EditorSelectionAssetDiskMaping>(cfg.paths, out error);
             if (string.IsNullOrEmpty(error))
             {
                 OnBuildSingleAssetDiskMaping(nodes);

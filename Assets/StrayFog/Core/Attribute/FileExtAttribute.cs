@@ -240,7 +240,6 @@ public class FileExtAttribute : PropertyAttribute
         ext = _ext;
         noDotExt = _ext.Replace(".", "");
     }
-
     /// <summary>
     /// 扩展名
     /// </summary>
@@ -249,4 +248,14 @@ public class FileExtAttribute : PropertyAttribute
     /// 不带点扩展名
     /// </summary>
     public string noDotExt { get; private set; }
+
+    /// <summary>
+    /// 是否是指定的后缀
+    /// </summary>
+    /// <param name="_ext">指定的后缀</param>
+    /// <returns>true:是,false:否</returns>
+    public bool IsExt(string _ext)
+    {
+        return !string.IsNullOrEmpty(_ext) && ext.ToUpper().Equals(_ext.ToUpper());
+    }
 }

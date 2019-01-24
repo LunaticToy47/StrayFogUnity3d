@@ -24,7 +24,7 @@ public class EditorWindowSettingProjectConfig : AbsEditorWindow
     void OnFocus()
     {
         mSavedAssetDrawUIMaping.Clear();
-        FieldInfo[] fields = typeof(EditorStrayFogSavedConfigAssetFile).GetFields();
+        FieldInfo[] fields = typeof(EditorStrayFogSavedAssetConfig).GetFields();
         foreach (FieldInfo f in fields)
         {
             object value = f.GetValue(null);

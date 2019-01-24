@@ -334,7 +334,7 @@ public sealed class EditorStrayFogAssembly
                 }
                 catch (Exception ep)
                 {
-                    Debug.Log(ep.Message);
+                    Debug.LogWarning(ep.Message);
                 }
             }
         }

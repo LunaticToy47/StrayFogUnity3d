@@ -59,14 +59,14 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// <summary>
     /// 配置
     /// </summary>
-    EditorUIWinodwConfig mConfig;
+    EditorUIWindowSettingConfig mConfig;
     /// <summary>
     /// OnFocus
     /// </summary>
     void OnFocus()
     {
         mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
-        mConfig = EditorStrayFogSavedConfigAssetFile.setUIWindowConfig;
+        mConfig = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
     }
     /// <summary>
     /// OnGUI
@@ -83,11 +83,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
-        EditorGUILayout.LabelField("UIWindowSetting.xlsx Tables:");
-        if (mConfig.file != null)
-        {
-            mConfig.file.DrawGUI();
-        }
+        mConfig.DrawGUI();
         EditorGUILayout.Separator();
     }
     #endregion

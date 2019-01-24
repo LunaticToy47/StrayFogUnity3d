@@ -20,8 +20,8 @@ public class EditorBuildAllAssetDiskMapingWindow : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mFileMapingConfig = EditorStrayFogSavedConfigAssetFile.setAssetDiskMapingFileXlsMapingConfig;
-        mFolderMapingConfig = EditorStrayFogSavedConfigAssetFile.setAssetDiskMapingFolderXlsMapingConfig;
+        mFileMapingConfig = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFileXlsMapingConfig;
+        mFolderMapingConfig = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFolderXlsMapingConfig;
     }
 
     /// <summary>
@@ -40,15 +40,9 @@ public class EditorBuildAllAssetDiskMapingWindow : AbsEditorWindow
     void DrawBrower()
     {
         EditorGUILayout.LabelField("AssetDiskMapingFile Config:");
-        if (mFileMapingConfig.file != null)
-        {
-            mFileMapingConfig.file.DrawGUI();
-        }
+        mFileMapingConfig.DrawGUI();
         EditorGUILayout.LabelField("AssetDiskMapingFolder Config:");
-        if (mFolderMapingConfig.file != null)
-        {
-            mFolderMapingConfig.file.DrawGUI();
-        }      
+        mFolderMapingConfig.DrawGUI();
     }
     #endregion
 

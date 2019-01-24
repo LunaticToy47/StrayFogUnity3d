@@ -18,7 +18,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedConfigAssetFile.setXlsSchemaToSqlite;
+        mConfig = EditorStrayFogSavedAssetConfig.setXlsSchemaToSqlite;
     }
 
     /// <summary>
@@ -47,10 +47,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     void DrawBrower()
     {
         EditorGUILayout.LabelField("XlsSchemaToSqlite Folders:");
-        if (mConfig.folder != null)
-        {
-            mConfig.folder.DrawGUI();
-        }
+        mConfig.DrawGUI();
         EditorGUILayout.Separator();
         EditorGUILayout.HelpBox(EditorStrayFogXLS.msrSeparateDescription, MessageType.None);
         if (GUILayout.Button("SQLiteDataType Code Sequence"))

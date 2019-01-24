@@ -43,7 +43,7 @@ public class EditorUtility_AssetBundleName : AbsSingle
             for (int i = 0; i < msrIgnoreAssetBundleNames.Count; i++)
             {
                 attr = msrIgnoreAssetBundleNames[i].GetAttribute<FileExtAttribute>();
-                isIgnore |= attr.ext.ToUpper().Equals(_ext.ToUpper());
+                isIgnore |= attr.IsExt(_ext);
                 if (isIgnore)
                 {
                     break;

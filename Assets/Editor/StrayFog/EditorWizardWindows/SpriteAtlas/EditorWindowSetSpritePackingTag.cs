@@ -15,7 +15,7 @@ public class EditorWindowSetSpritePackingTag : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedConfigAssetFile.setSpritePackingTag;
+        mConfig = EditorStrayFogSavedAssetConfig.setSpritePackingTag;
     }
 
     /// <summary>
@@ -33,10 +33,7 @@ public class EditorWindowSetSpritePackingTag : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
-        if (mConfig.folder != null)
-        {
-            mConfig.folder.DrawGUI();
-        }
+        mConfig.DrawGUI();
     }
     #endregion
 

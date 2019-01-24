@@ -1,14 +1,14 @@
 ﻿#if UNITY_EDITOR
 using System.IO;
 /// <summary>
-/// SetAssetDiskMaping配置资源File表映射
+/// UIWindowSetting配置资源文件夹
 /// </summary>
-public class EditorSetAssetDiskMapingFileXlsMapingFile : AbsEditorSavedAsset
+public class EditorUIWindowSettingFile : AbsEditorSavedAsset
 {
     /// <summary>
     /// 文件后缀
     /// </summary>
-    static FileExtAttribute msFileExt = enFileExt.Xlsx.GetAttribute<FileExtAttribute>();
+    static FileExtAttribute msFileExt =  enFileExt.Xlsx.GetAttribute<FileExtAttribute>();
 
     /// <summary>
     /// 可保存资源分类
@@ -28,7 +28,7 @@ public class EditorSetAssetDiskMapingFileXlsMapingFile : AbsEditorSavedAsset
     {
         get
         {
-            return string.Format("Setting 【AssetDiskMapingFile{0} Maping File 】{1}", msFileExt.ext, classify);
+            return string.Format("Setting 【UIWindowSetting{0} 】{1}", msFileExt.ext, classify);
         }
     }
 

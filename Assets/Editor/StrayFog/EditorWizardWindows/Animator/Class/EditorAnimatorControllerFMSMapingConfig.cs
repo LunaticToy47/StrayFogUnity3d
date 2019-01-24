@@ -3,7 +3,7 @@
 /// AnimatorControllerFMSMaping配置
 /// </summary>
 public class EditorAnimatorControllerFMSMapingConfig :
-    AbsEditorSavedAssetFolderConfig<EditorAnimatorControllerFMSMapingConfig, EditorAnimatorControllerFMSMapingFile>
-{
+    AbsEditorSavedAssetConfig<EditorAnimatorControllerFMSMapingConfig, EditorAnimatorControllerFMSMapingFolder>
+{    
 }
 #endif

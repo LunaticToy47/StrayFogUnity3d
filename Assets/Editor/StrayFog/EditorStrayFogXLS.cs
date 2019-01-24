@@ -222,7 +222,7 @@ public sealed class EditorStrayFogXLS
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
         string extXlsx = enFileExt.Xlsx.GetAttribute<FileExtAttribute>().ext;
-        List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedConfigAssetFile.setXlsSchemaToSqlite.folder.folders,
+        List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedAssetConfig.setXlsSchemaToSqlite.paths,
             enEditorAssetFilterClassify.DefaultAsset, false,
             (n) => { return n.ext.ToUpper() == extXlsx.ToUpper(); });
         foreach (EditorSelectionXlsSchemaToSQLiteAsset f in xlsFiles)
@@ -918,10 +918,10 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFolder(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        EditorSetAssetDiskMapingFolderXlsMapingConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetDiskMapingFolderXlsMapingConfig;
-        if (cfg.file.files != null && cfg.file.files.Length > 0)
+        EditorSetAssetDiskMapingFolderXlsMapingConfig cfg = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFolderXlsMapingConfig;
+        if (cfg.paths.Length > 0)
         {
-            foreach (string file in cfg.file.files)
+            foreach (string file in cfg.paths)
             {
                 OnClearXlsData(file);
                 string newXlsPath = file + "_New";
@@ -972,10 +972,10 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFile(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        EditorSetAssetDiskMapingFileXlsMapingConfig cfg = EditorStrayFogSavedConfigAssetFile.setAssetDiskMapingFileXlsMapingConfig;
-        if (cfg.file.files != null && cfg.file.files.Length > 0)
+        EditorSetAssetDiskMapingFileXlsMapingConfig cfg = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFileXlsMapingConfig;
+        if (cfg.paths.Length > 0)
         {
-            foreach (string file in cfg.file.files)
+            foreach (string file in cfg.paths)
             {
                 OnClearXlsData(file);
                 string newXlsPath = file + "_New";
@@ -1030,10 +1030,10 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     public static void DeleteAllUIWindowSetting()
     {
-        EditorUIWinodwConfig wfg = EditorStrayFogSavedConfigAssetFile.setUIWindowConfig;
-        if (wfg.file.files != null && wfg.file.files.Length > 0)
+        EditorUIWindowSettingConfig wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
+        if (wfg.paths.Length > 0)
         {
-            foreach (string file in wfg.file.files)
+            foreach (string file in wfg.paths)
             {
                 OnClearXlsData(file);
             }
@@ -1048,10 +1048,10 @@ public sealed class EditorStrayFogXLS
     /// <param name="_winId">窗口id</param>
     public static void DeleteUIWindowSetting(int _winId)
     {
-        EditorUIWinodwConfig wfg = EditorStrayFogSavedConfigAssetFile.setUIWindowConfig;
-        if (wfg.file.files != null && wfg.file.files.Length > 0)
+        EditorUIWindowSettingConfig wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
+        if (wfg.paths.Length > 0)
         {
-            foreach (string file in wfg.file.files)
+            foreach (string file in wfg.paths)
             {
                 OnDeleteXlsData(file, (sheet, row) => { return sheet.GetValue<int>(row, 1) == _winId; });
             }
@@ -1068,10 +1068,10 @@ public sealed class EditorStrayFogXLS
     public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
     {
         DeleteAllUIWindowSetting();
-        EditorUIWinodwConfig wfg = EditorStrayFogSavedConfigAssetFile.setUIWindowConfig;
-        if (wfg.file.files != null && wfg.file.files.Length > 0)
+        EditorUIWindowSettingConfig wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
+        if (wfg.paths.Length > 0)
         {
-            foreach (string file in wfg.file.files)
+            foreach (string file in wfg.paths)
             {
                 string newXlsPath = file + "_New";
                 using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))

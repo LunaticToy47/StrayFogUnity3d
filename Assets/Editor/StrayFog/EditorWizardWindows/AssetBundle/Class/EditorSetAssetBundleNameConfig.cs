@@ -3,7 +3,7 @@
 /// SetAssetBundleName配置
 /// </summary>
 public class EditorSetAssetBundleNameConfig :
-    AbsEditorSavedAssetFolderConfig<EditorSetAssetBundleNameConfig, EditorSetAssetBundleNameFile>
+    AbsEditorSavedAssetConfig<EditorSetAssetBundleNameConfig, EditorSetAssetBundleNameFolder>
 {
 }
 #endif

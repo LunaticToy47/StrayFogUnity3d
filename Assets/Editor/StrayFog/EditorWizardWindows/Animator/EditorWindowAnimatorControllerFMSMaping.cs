@@ -15,7 +15,7 @@ public class EditorWindowAnimatorControllerFMSMaping : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedConfigAssetFile.setAnimatorControllerFMSMaping;
+        mConfig = EditorStrayFogSavedAssetConfig.setAnimatorControllerFMSMaping;
     }
 
     /// <summary>
@@ -33,10 +33,7 @@ public class EditorWindowAnimatorControllerFMSMaping : AbsEditorWindow
     /// </summary>
     void DrawBrower()
     {
-        if (mConfig.folder != null)
-        {
-            mConfig.folder.DrawGUI();
-        }
+        mConfig.DrawGUI();
     }
     #endregion
 
