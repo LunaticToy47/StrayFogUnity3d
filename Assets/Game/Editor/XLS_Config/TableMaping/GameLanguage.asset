@@ -12,30 +12,35 @@ MonoBehaviour:
   m_Name: GameLanguage
   m_EditorClassIdentifier: 
   tableName: GameLanguage
+  tableSchemaAssetPath: Assets/Game/Editor/XLS_Config/TableMaping/GameLanguage.asset
   fileName: Assets/Game/Editor/XLS_Config/GameLanguage.xlsx
   dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
   classify: 0
   isDeterminant: 1
   columns:
-  - columnName: name
+  - xlsColumnIndex: 1
+    columnName: name
     desc: "\u540D\u79F0"
     isPK: 1
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: value
+  - xlsColumnIndex: 2
+    columnName: value
     desc: "\u503C"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: valueType
+  - xlsColumnIndex: 3
+    columnName: valueType
     desc: "\u503C\u7C7B\u578B"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: desc
+  - xlsColumnIndex: 4
+    columnName: desc
     desc: "\u8BF4\u660E"
     isPK: 0
     dataType: 14

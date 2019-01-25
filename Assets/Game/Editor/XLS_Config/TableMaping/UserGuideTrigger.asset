@@ -12,60 +12,70 @@ MonoBehaviour:
   m_Name: UserGuideTrigger
   m_EditorClassIdentifier: 
   tableName: UserGuideTrigger
+  tableSchemaAssetPath: Assets/Game/Editor/XLS_Config/TableMaping/UserGuideTrigger.asset
   fileName: Assets/Game/Editor/XLS_Config/UserGuideTrigger.xlsx
   dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
   classify: 0
   isDeterminant: 0
   columns:
-  - columnName: id
+  - xlsColumnIndex: 1
+    columnName: id
     desc: "\u6807\u8BC6id"
     isPK: 1
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: desc
+  - xlsColumnIndex: 2
+    columnName: desc
     desc: "\u63CF\u8FF0"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: nextId
+  - xlsColumnIndex: 3
+    columnName: nextId
     desc: "\u4E0B\u4E00\u5F15\u5BFCid"
     isPK: 0
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: guideType
+  - xlsColumnIndex: 4
+    columnName: guideType
     desc: "\u5F15\u5BFC\u7C7B\u578B"
     isPK: 0
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: displayType
+  - xlsColumnIndex: 5
+    columnName: displayType
     desc: "\u663E\u793A\u7C7B\u578B"
     isPK: 0
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: levelId
+  - xlsColumnIndex: 6
+    columnName: levelId
     desc: "\u5173\u5361id"
     isPK: 0
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: conditions
+  - xlsColumnIndex: 7
+    columnName: conditions
     desc: "\u6761\u4EF6"
     isPK: 0
     dataType: 6
     arrayDimension: 1
     isNull: 0
-  - columnName: intValues
+  - xlsColumnIndex: 8
+    columnName: intValues
     desc: "\u6761\u4EF6Int\u503C"
     isPK: 0
     dataType: 6
     arrayDimension: 1
     isNull: 0
-  - columnName: validateId
+  - xlsColumnIndex: 9
+    columnName: validateId
     desc: "\u9A8C\u8BC1id"
     isPK: 0
     dataType: 6

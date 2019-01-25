@@ -6,6 +6,12 @@
 public class EditorXlsTableColumnSchema
 {
     /// <summary>
+    /// XLS表列索引
+    /// </summary>
+    [AliasTooltip("XLS表列索引")]
+    [ReadOnly]
+    public int xlsColumnIndex;
+    /// <summary>
     /// 列名称
     /// </summary>
     [AliasTooltip("列名称")]
@@ -35,4 +41,11 @@ public class EditorXlsTableColumnSchema
     /// </summary>
     [AliasTooltip("是否允许为空")]
     public bool isNull;
+
+    #region sqliteParameterName 数据为参数名称
+    /// <summary>
+    /// 数据为参数名称
+    /// </summary>
+    public string sqliteParameterName { get { return string.Format("@{0}{1}", columnName, xlsColumnIndex); } }
+    #endregion
 }

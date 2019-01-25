@@ -9,351 +9,409 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c155114dd274da4881773358ac43f3f, type: 3}
-  m_Name: TableColumnMaping
+  m_Name: ReportColumnMaping
   m_EditorClassIdentifier: 
-  tableName: TableColumnMaping
-  fileName: Assets/Game/Editor/XLS_Report/TableColumnMaping.xlsx
+  tableName: ReportColumnMaping
+  tableSchemaAssetPath: Assets/Game/Editor/XLS_Report/TableMaping/ReportColumnMaping.asset
+  fileName: Assets/Game/Editor/XLS_Report/ReportColumnMaping.xlsx
   dbPath: Assets/Game/Editor/XLS_Report/XLS_Report.db
   classify: 0
   isDeterminant: 0
   columns:
-  - columnName: boolCol
+  - xlsColumnIndex: 1
+    columnName: boolCol
     desc: "bool\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 0
     arrayDimension: 0
     isNull: 0
-  - columnName: charCol
+  - xlsColumnIndex: 2
+    columnName: charCol
     desc: "char\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 1
     arrayDimension: 0
     isNull: 0
-  - columnName: sbyteCol
+  - xlsColumnIndex: 3
+    columnName: sbyteCol
     desc: "sbyte\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 2
     arrayDimension: 0
     isNull: 0
-  - columnName: byteCol
+  - xlsColumnIndex: 4
+    columnName: byteCol
     desc: "byte\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 3
     arrayDimension: 0
     isNull: 0
-  - columnName: shortCol
+  - xlsColumnIndex: 5
+    columnName: shortCol
     desc: "short\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 4
     arrayDimension: 0
     isNull: 0
-  - columnName: ushortCol
+  - xlsColumnIndex: 6
+    columnName: ushortCol
     desc: "ushort\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 5
     arrayDimension: 0
     isNull: 0
-  - columnName: intCol
+  - xlsColumnIndex: 7
+    columnName: intCol
     desc: "int\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: uintCol
+  - xlsColumnIndex: 8
+    columnName: uintCol
     desc: "uint\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 7
     arrayDimension: 0
     isNull: 0
-  - columnName: longCol
+  - xlsColumnIndex: 9
+    columnName: longCol
     desc: "long\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 8
     arrayDimension: 0
     isNull: 0
-  - columnName: ulongCol
+  - xlsColumnIndex: 10
+    columnName: ulongCol
     desc: "ulong\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 9
     arrayDimension: 0
     isNull: 0
-  - columnName: floatCol
+  - xlsColumnIndex: 11
+    columnName: floatCol
     desc: "float\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 10
     arrayDimension: 0
     isNull: 0
-  - columnName: doubleCol
+  - xlsColumnIndex: 12
+    columnName: doubleCol
     desc: "double\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 11
     arrayDimension: 0
     isNull: 0
-  - columnName: decimalCol
+  - xlsColumnIndex: 13
+    columnName: decimalCol
     desc: "decimal\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 12
     arrayDimension: 0
     isNull: 0
-  - columnName: DateTimeCol
+  - xlsColumnIndex: 14
+    columnName: DateTimeCol
     desc: "DateTime\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 13
     arrayDimension: 0
     isNull: 0
-  - columnName: stringCol
+  - xlsColumnIndex: 15
+    columnName: stringCol
     desc: "string\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: GuidCol
+  - xlsColumnIndex: 16
+    columnName: GuidCol
     desc: "Guid\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 15
     arrayDimension: 0
     isNull: 0
-  - columnName: Vector2Col
+  - xlsColumnIndex: 17
+    columnName: Vector2Col
     desc: "Vector2\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 16
     arrayDimension: 0
     isNull: 0
-  - columnName: Vector3Col
+  - xlsColumnIndex: 18
+    columnName: Vector3Col
     desc: "Vector3\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 17
     arrayDimension: 0
     isNull: 0
-  - columnName: Vector4Col
+  - xlsColumnIndex: 19
+    columnName: Vector4Col
     desc: "Vector4\u975E\u6570\u7EC4"
     isPK: 0
     dataType: 18
     arrayDimension: 0
     isNull: 0
-  - columnName: boolDIMCol
+  - xlsColumnIndex: 20
+    columnName: boolDIMCol
     desc: "bool\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 0
     arrayDimension: 1
     isNull: 0
-  - columnName: charDIMCol
+  - xlsColumnIndex: 21
+    columnName: charDIMCol
     desc: "char\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 1
     arrayDimension: 1
     isNull: 0
-  - columnName: sbyteDIMCol
+  - xlsColumnIndex: 22
+    columnName: sbyteDIMCol
     desc: "sbyte\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 2
     arrayDimension: 1
     isNull: 0
-  - columnName: byteDIMCol
+  - xlsColumnIndex: 23
+    columnName: byteDIMCol
     desc: "byte\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 3
     arrayDimension: 1
     isNull: 0
-  - columnName: shortDIMCol
+  - xlsColumnIndex: 24
+    columnName: shortDIMCol
     desc: "short\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 4
     arrayDimension: 1
     isNull: 0
-  - columnName: ushortDIMCol
+  - xlsColumnIndex: 25
+    columnName: ushortDIMCol
     desc: "ushort\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 5
     arrayDimension: 1
     isNull: 0
-  - columnName: intDIMCol
+  - xlsColumnIndex: 26
+    columnName: intDIMCol
     desc: "int\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 6
     arrayDimension: 1
     isNull: 0
-  - columnName: uintDIMCol
+  - xlsColumnIndex: 27
+    columnName: uintDIMCol
     desc: "uint\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 7
     arrayDimension: 1
     isNull: 0
-  - columnName: longDIMCol
+  - xlsColumnIndex: 28
+    columnName: longDIMCol
     desc: "long\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 8
     arrayDimension: 1
     isNull: 0
-  - columnName: ulongDIMCol
+  - xlsColumnIndex: 29
+    columnName: ulongDIMCol
     desc: "ulong\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 9
     arrayDimension: 1
     isNull: 0
-  - columnName: floatDIMCol
+  - xlsColumnIndex: 30
+    columnName: floatDIMCol
     desc: "float\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 10
     arrayDimension: 1
     isNull: 0
-  - columnName: doubleDIMCol
+  - xlsColumnIndex: 31
+    columnName: doubleDIMCol
     desc: "double\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 11
     arrayDimension: 1
     isNull: 0
-  - columnName: decimalDIMCol
+  - xlsColumnIndex: 32
+    columnName: decimalDIMCol
     desc: "decimal\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 12
     arrayDimension: 1
     isNull: 0
-  - columnName: DateTimeDIMCol
+  - xlsColumnIndex: 33
+    columnName: DateTimeDIMCol
     desc: "DateTime\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 13
     arrayDimension: 1
     isNull: 0
-  - columnName: stringDIMCol
+  - xlsColumnIndex: 34
+    columnName: stringDIMCol
     desc: "string\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 14
     arrayDimension: 1
     isNull: 0
-  - columnName: GuidDIMCol
+  - xlsColumnIndex: 35
+    columnName: GuidDIMCol
     desc: "Guid\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 15
     arrayDimension: 1
     isNull: 0
-  - columnName: Vector2DIMCol
+  - xlsColumnIndex: 36
+    columnName: Vector2DIMCol
     desc: "Vector2\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 16
     arrayDimension: 1
     isNull: 0
-  - columnName: Vector3DIMCol
+  - xlsColumnIndex: 37
+    columnName: Vector3DIMCol
     desc: "Vector3\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 17
     arrayDimension: 1
     isNull: 0
-  - columnName: Vector4DIMCol
+  - xlsColumnIndex: 38
+    columnName: Vector4DIMCol
     desc: "Vector4\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 18
     arrayDimension: 1
     isNull: 0
-  - columnName: boolDIM2Col
+  - xlsColumnIndex: 39
+    columnName: boolDIM2Col
     desc: "bool\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 0
     arrayDimension: 2
     isNull: 0
-  - columnName: charDIM2Col
+  - xlsColumnIndex: 40
+    columnName: charDIM2Col
     desc: "char\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 1
     arrayDimension: 2
     isNull: 0
-  - columnName: sbyteDIM2Col
+  - xlsColumnIndex: 41
+    columnName: sbyteDIM2Col
     desc: "sbyte\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 2
     arrayDimension: 2
     isNull: 0
-  - columnName: byteDIM2Col
+  - xlsColumnIndex: 42
+    columnName: byteDIM2Col
     desc: "byte\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 3
     arrayDimension: 2
     isNull: 0
-  - columnName: shortDIM2Col
+  - xlsColumnIndex: 43
+    columnName: shortDIM2Col
     desc: "short\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 4
     arrayDimension: 2
     isNull: 0
-  - columnName: ushortDIM2Col
+  - xlsColumnIndex: 44
+    columnName: ushortDIM2Col
     desc: "ushort\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 5
     arrayDimension: 2
     isNull: 0
-  - columnName: intDIM2Col
+  - xlsColumnIndex: 45
+    columnName: intDIM2Col
     desc: "int\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 6
     arrayDimension: 2
     isNull: 0
-  - columnName: uintDIM2Col
+  - xlsColumnIndex: 46
+    columnName: uintDIM2Col
     desc: "uint\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 7
     arrayDimension: 2
     isNull: 0
-  - columnName: longDIM2Col
+  - xlsColumnIndex: 47
+    columnName: longDIM2Col
     desc: "long\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 8
     arrayDimension: 2
     isNull: 0
-  - columnName: ulongDIM2Col
+  - xlsColumnIndex: 48
+    columnName: ulongDIM2Col
     desc: "ulong\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 9
     arrayDimension: 2
     isNull: 0
-  - columnName: floatDIM2Col
+  - xlsColumnIndex: 49
+    columnName: floatDIM2Col
     desc: "float\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 10
     arrayDimension: 2
     isNull: 0
-  - columnName: doubleDIM2Col
+  - xlsColumnIndex: 50
+    columnName: doubleDIM2Col
     desc: "double\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 11
     arrayDimension: 2
     isNull: 0
-  - columnName: decimalDIM2Col
+  - xlsColumnIndex: 51
+    columnName: decimalDIM2Col
     desc: "decimal\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 12
     arrayDimension: 2
     isNull: 0
-  - columnName: DateTimeDIM2Col
+  - xlsColumnIndex: 52
+    columnName: DateTimeDIM2Col
     desc: "DateTime\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 13
     arrayDimension: 2
     isNull: 0
-  - columnName: stringDIM2Col
+  - xlsColumnIndex: 53
+    columnName: stringDIM2Col
     desc: "string\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 14
     arrayDimension: 2
     isNull: 0
-  - columnName: GuidDIM2Col
+  - xlsColumnIndex: 54
+    columnName: GuidDIM2Col
     desc: "Guid\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 15
     arrayDimension: 2
     isNull: 0
-  - columnName: Vector2DIM2Col
+  - xlsColumnIndex: 55
+    columnName: Vector2DIM2Col
     desc: "Vector2\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 16
     arrayDimension: 2
     isNull: 0
-  - columnName: Vector3DIM2Col
+  - xlsColumnIndex: 56
+    columnName: Vector3DIM2Col
     desc: "Vector3\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 17
     arrayDimension: 2
     isNull: 0
-  - columnName: Vector4DIM2Col
+  - xlsColumnIndex: 57
+    columnName: Vector4DIM2Col
     desc: "Vector4\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
     dataType: 18

@@ -7,15 +7,10 @@ using UnityEngine;
 [SQLiteTableMap(#classHashCode#,"#xlsFilePath#","#sqliteTableName#", enSQLiteEntityClassify.#sqliteTableType#,#isDeterminant#, #xlsColumnNameIndex#,#xlsColumnValueIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#,"#dbSQLiteAssetBundleName#",typeof(#ClassName#))]
 public partial class #ClassName#: AbsStrayFogSQLiteEntity
 {
-	/// <summary>
-    /// PK键组
-    /// </summary>
-    public override object[] pks { get { return new List<object>() { #PKS##Name##PKS#}.ToArray(); } }
-
 	#Properties#
 	/// <summary>
 	/// #Desc#
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.#DataType#,enSQLiteDataTypeArrayDimension.#ArrayDimension#)]
+	[SQLiteFieldType(enSQLiteDataType.#DataType#,enSQLiteDataTypeArrayDimension.#ArrayDimension#,#XlsColumnIndex#,"#SqliteParameterName#",#IsPK#)]
 	public #Type# #Name# { get; private set; }#Properties#
 }

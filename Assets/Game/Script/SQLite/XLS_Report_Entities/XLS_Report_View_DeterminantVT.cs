@@ -7,15 +7,10 @@ using UnityEngine;
 [SQLiteTableMap(1342827752,"","View_DeterminantVT", enSQLiteEntityClassify.View,false, 1,4,2,4,"c__1833182787",typeof(XLS_Report_View_DeterminantVT))]
 public partial class XLS_Report_View_DeterminantVT: AbsStrayFogSQLiteEntity
 {
-	/// <summary>
-    /// PK键组
-    /// </summary>
-    public override object[] pks { get { return new List<object>() { }.ToArray(); } }
-
 	
 	/// <summary>
 	/// vtName
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray)]
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"@vtName0",false)]
 	public string vtName { get; private set; }
 }

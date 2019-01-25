@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Name: Report
   m_EditorClassIdentifier: 
   tableName: Report
+  tableSchemaAssetPath: Assets/Game/Editor/XLS_Report/TableMaping/Report.asset
   fileName: Assets/Game/Editor/XLS_Report/Report.xlsx
   dbPath: Assets/Game/Editor/XLS_Report/XLS_Report.db
   classify: 0
   isDeterminant: 0
   columns:
-  - columnName: idCol
+  - xlsColumnIndex: 1
+    columnName: idCol
     desc: "id\u4E3B\u952E"
-    isPK: 0
+    isPK: 1
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: stringCol
+  - xlsColumnIndex: 2
+    columnName: stringCol
     desc: "\u5B57\u7B26\u4E32"
     isPK: 0
     dataType: 14

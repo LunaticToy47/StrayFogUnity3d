@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// TableColumnMaping实体
+/// ReportColumnMaping实体
 /// </summary>
-[SQLiteTableMap(-2027841950,"Assets/Game/Editor/XLS_Config/TableColumnMaping.xlsx","TableColumnMaping", enSQLiteEntityClassify.Table,false, 1,4,2,4,"c__1581584321",typeof(XLS_Config_Table_TableColumnMaping))]
-public partial class XLS_Config_Table_TableColumnMaping: AbsStrayFogSQLiteEntity
+[SQLiteTableMap(-417602184,"Assets/Game/Editor/XLS_Report/ReportColumnMaping.xlsx","ReportColumnMaping", enSQLiteEntityClassify.Table,false, 1,4,2,4,"c__1833182787",typeof(XLS_Report_Table_ReportColumnMaping))]
+public partial class XLS_Report_Table_ReportColumnMaping: AbsStrayFogSQLiteEntity
 {
 	
 	/// <summary>

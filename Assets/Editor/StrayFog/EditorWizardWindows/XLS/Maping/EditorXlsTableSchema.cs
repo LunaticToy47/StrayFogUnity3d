@@ -11,6 +11,12 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [ReadOnly]
     public string tableName;
     /// <summary>
+    /// 表架构配置路径
+    /// </summary>
+    [AliasTooltip("表架构配置路径")]
+    [ReadOnly]
+    public string tableSchemaAssetPath;
+    /// <summary>
     /// 文件路径
     /// </summary>
     [AliasTooltip("文件路径")]

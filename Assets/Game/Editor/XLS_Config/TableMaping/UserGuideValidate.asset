@@ -12,36 +12,42 @@ MonoBehaviour:
   m_Name: UserGuideValidate
   m_EditorClassIdentifier: 
   tableName: UserGuideValidate
+  tableSchemaAssetPath: Assets/Game/Editor/XLS_Config/TableMaping/UserGuideValidate.asset
   fileName: Assets/Game/Editor/XLS_Config/UserGuideValidate.xlsx
   dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
   classify: 0
   isDeterminant: 0
   columns:
-  - columnName: id
+  - xlsColumnIndex: 1
+    columnName: id
     desc: "\u6807\u8BC6id"
     isPK: 1
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: desc
+  - xlsColumnIndex: 2
+    columnName: desc
     desc: "\u63CF\u8FF0"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: conditions
+  - xlsColumnIndex: 3
+    columnName: conditions
     desc: "\u6761\u4EF6"
     isPK: 0
     dataType: 6
     arrayDimension: 1
     isNull: 0
-  - columnName: intValues
+  - xlsColumnIndex: 4
+    columnName: intValues
     desc: "\u6761\u4EF6Int\u503C"
     isPK: 0
     dataType: 6
     arrayDimension: 1
     isNull: 0
-  - columnName: vector2Values
+  - xlsColumnIndex: 5
+    columnName: vector2Values
     desc: "\u6761\u4EF6Vector2\u503C"
     isPK: 0
     dataType: 16

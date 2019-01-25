@@ -10,22 +10,19 @@ public class SQLiteFieldTypeAttribute : AliasTooltipAttribute
     /// </summary>
     /// <param name="_dataType">数据类型</param>
     /// <param name="_arrayDimension">数组维度</param>
-    public SQLiteFieldTypeAttribute(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _arrayDimension)
-        : this(_dataType.ToString() +"_" + _arrayDimension.ToString(), _dataType, _arrayDimension)
-    {
-    }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="_alias">别名</param>
-    /// <param name="_dataType">数据类型</param>
-    /// <param name="_arrayDimension">数组维度</param>
-    public SQLiteFieldTypeAttribute(string _alias, enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _arrayDimension)
-        : base(_alias)
+    /// <param name="_xlsColumnIndex">XLS表列索引</param>
+    /// <param name="_sqliteParameterName">数据库参数名称</param>
+    /// <param name="_isPK">是否是主键</param>
+    public SQLiteFieldTypeAttribute(enSQLiteDataType _dataType,
+        enSQLiteDataTypeArrayDimension _arrayDimension,
+        int _xlsColumnIndex, string _sqliteParameterName, bool _isPK)
+        : base(_dataType.ToString() + "_" + _arrayDimension.ToString())
     {
         dataType = _dataType;
         arrayDimension = _arrayDimension;
+        xlsColumnIndex = _xlsColumnIndex;
+        sqliteParameterName = _sqliteParameterName;
+        isPK = _isPK;
     }
 
     /// <summary>
@@ -36,4 +33,16 @@ public class SQLiteFieldTypeAttribute : AliasTooltipAttribute
     /// 数组维度
     /// </summary>
     public enSQLiteDataTypeArrayDimension arrayDimension { get; private set; }
+    /// <summary>
+    /// XLS表列索引
+    /// </summary>
+    public int xlsColumnIndex { get; private set; }
+    /// <summary>
+    /// 数据库参数名称
+    /// </summary>
+    public string sqliteParameterName { get; private set; }
+    /// <summary>
+    /// 是否是主键
+    /// </summary>
+    public bool isPK { get; private set; }
 }

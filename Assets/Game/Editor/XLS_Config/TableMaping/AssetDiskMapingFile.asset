@@ -12,42 +12,49 @@ MonoBehaviour:
   m_Name: AssetDiskMapingFile
   m_EditorClassIdentifier: 
   tableName: AssetDiskMapingFile
+  tableSchemaAssetPath: Assets/Game/Editor/XLS_Config/TableMaping/AssetDiskMapingFile.asset
   fileName: Assets/Game/Editor/XLS_Config/AssetDiskMapingFile.xlsx
   dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
   classify: 0
   isDeterminant: 0
   columns:
-  - columnName: fileId
+  - xlsColumnIndex: 1
+    columnName: fileId
     desc: "\u6587\u4EF6id"
     isPK: 1
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: folderId
+  - xlsColumnIndex: 2
+    columnName: folderId
     desc: "\u6587\u4EF6\u5939id"
     isPK: 1
     dataType: 6
     arrayDimension: 0
     isNull: 0
-  - columnName: inSide
+  - xlsColumnIndex: 3
+    columnName: inSide
     desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: ext
+  - xlsColumnIndex: 4
+    columnName: ext
     desc: "\u6269\u5C55\u540D"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: outSide
+  - xlsColumnIndex: 5
+    columnName: outSide
     desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - columnName: extEnumValue
+  - xlsColumnIndex: 6
+    columnName: extEnumValue
     desc: "\u6269\u5C55\u540D\u679A\u4E3E\u503C"
     isPK: 0
     dataType: 6
