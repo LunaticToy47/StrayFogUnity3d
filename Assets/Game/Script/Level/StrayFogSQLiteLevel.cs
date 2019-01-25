@@ -16,9 +16,9 @@ public class StrayFogSQLiteLevel : AbsLevel
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
-            List<XLS_Config_Table_TableColumnMaping> data = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_TableColumnMaping>();
+            List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
             watch.Stop();
-            UnityEngine.Debug.LogFormat("SQLite Data=>{0} , Time=>{1}", data, watch.Elapsed);
+            UnityEngine.Debug.LogFormat("SQLite Data=>{0} , Time=>{1}", reports.Count, watch.Elapsed);
         });
     }
 }

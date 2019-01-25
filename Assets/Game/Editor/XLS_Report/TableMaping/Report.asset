@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c155114dd274da4881773358ac43f3f, type: 3}
+  m_Name: Report
+  m_EditorClassIdentifier: 
+  tableName: Report
+  fileName: Assets/Game/Editor/XLS_Report/Report.xlsx
+  dbPath: Assets/Game/Editor/XLS_Report/XLS_Report.db
+  classify: 0
+  isDeterminant: 0
+  columns:
+  - columnName: idCol
+    desc: "id\u4E3B\u952E"
+    isPK: 0
+    dataType: 6
+    arrayDimension: 0
+    isNull: 0
+  - columnName: stringCol
+    desc: "\u5B57\u7B26\u4E32"
+    isPK: 0
+    dataType: 14
+    arrayDimension: 0
+    isNull: 0
