@@ -335,6 +335,7 @@ public sealed class EditorStrayFogXLS
         List<EditorXlsTableSchema> tables = ReadXlsSchema();
         Dictionary<int, TableSQLiteHelper> dicHelper = OnCreateTableSchemaToSQLite(tables);
         OnCreateScriptFromSQLite(tables, dicHelper);
+        OnClearUnusedMapAsset(tables);
     }
 
     /// <summary>
@@ -800,6 +801,18 @@ public sealed class EditorStrayFogXLS
             _table.columns = columns.ToArray();
         }
         return _table;
+    }
+
+    /// <summary>
+    /// 清除未使用的映射资源
+    /// </summary>
+    /// <param name="_tables">要生成的表</param>
+    static void OnClearUnusedMapAsset(List<EditorXlsTableSchema> _tables)
+    {
+        foreach (EditorXlsTableSchema t in _tables)
+        {
+
+        }
     }
     #endregion
 
