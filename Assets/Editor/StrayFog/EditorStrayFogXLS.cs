@@ -221,12 +221,13 @@ public sealed class EditorStrayFogXLS
     {
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
-        string extXlsx = enFileExt.Xlsx.GetAttribute<FileExtAttribute>().ext;
+        FileExtAttribute xlsxExt = enFileExt.Xlsx.GetAttribute<FileExtAttribute>();
         List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedAssetConfig.setXlsSchemaToSqlite.paths,
             enEditorAssetFilterClassify.DefaultAsset, false,
-            (n) => { return n.ext.ToUpper() == extXlsx.ToUpper(); });
+            (n) => { return xlsxExt.IsExt(n.ext); });
         foreach (EditorSelectionXlsSchemaToSQLiteAsset f in xlsFiles)
         {
+            f.Resolve();
             tableSchemas.Add(ReadXlsSchema(f));
         }
         return tableSchemas;
@@ -809,9 +810,30 @@ public sealed class EditorStrayFogXLS
     /// <param name="_tables">要生成的表</param>
     static void OnClearUnusedMapAsset(List<EditorXlsTableSchema> _tables)
     {
+        List<string> tableSchemaAssetFolders = new List<string>();
+        string tempFolder = string.Empty;
+        List<string> xlsTableSchemaPaths = new List<string>();
         foreach (EditorXlsTableSchema t in _tables)
         {
+            tempFolder = Path.GetDirectoryName(t.tableSchemaAssetPath);
+            if (!string.IsNullOrEmpty(tempFolder) && !tableSchemaAssetFolders.Contains(tempFolder))
+            {
+                tableSchemaAssetFolders.Add(tempFolder);
+            }
+            if (!xlsTableSchemaPaths.Contains(t.tableSchemaAssetPath))
+            {
+                xlsTableSchemaPaths.Add(t.tableSchemaAssetPath);
+            }
+        }
+        FileExtAttribute assetExt = enFileExt.Asset.GetAttribute<FileExtAttribute>();
+        List<EditorSelectionAsset> assetFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(tableSchemaAssetFolders.ToArray(),
+            enEditorAssetFilterClassify.Object, false,
+            (n) => { return assetExt.IsExt(n.ext) && !xlsTableSchemaPaths.Contains(n.path); });
 
+        foreach (EditorSelectionAsset af in assetFiles)
+        {
+            Debug.LogFormat("Delete Unused Asset 【{0}】", af.path);
+            File.Delete(af.path);
         }
     }
     #endregion

@@ -12,14 +12,21 @@ public class EditorSelectionXlsSchemaToSQLiteAsset : EditorSelectionAsset
     public EditorSelectionXlsSchemaToSQLiteAsset(string _pathOrGuid) : base(_pathOrGuid)
     {
         tableMapingDirectory = Path.Combine(directory, "TableMaping").TransPathSeparatorCharToUnityChar();
-        tableAssetConfig = new EditorEngineAssetConfig(nameWithoutExtension, tableMapingDirectory, enFileExt.Asset, typeof(EditorXlsTableSchema).FullName);
+        tableAssetConfig = new EditorEngineAssetConfig(nameWithoutExtension, tableMapingDirectory, enFileExt.Asset, typeof(EditorXlsTableSchema).FullName);        
+        dbName = (Path.GetFileName(directory) + enFileExt.SQLiteDb.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
+        dbPath = Path.Combine(directory, dbName).TransPathSeparatorCharToUnityChar();
+    }
+
+    /// <summary>
+    /// 解析数据
+    /// </summary>
+    public void Resolve()
+    {
         if (!tableAssetConfig.Exists())
         {
             tableAssetConfig.CreateAsset();
         }
         tableAssetConfig.LoadAsset();
-        dbName = (Path.GetFileName(directory) + enFileExt.SQLiteDb.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
-        dbPath = Path.Combine(directory, dbName).TransPathSeparatorCharToUnityChar();
     }
 
     /// <summary>
