@@ -687,6 +687,47 @@ public sealed class EditorStrayFogXLS
         propertyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, propertyMark, out propertyReplaceTemplete);
         #endregion
 
+        #region #SetProperties#
+        string setPropertyMark = "#SetProperties#";
+        string setPropertyReplaceTemplete = string.Empty;
+        string setPropertyTemplete = string.Empty;
+        StringBuilder sbSetPropertyReplace = new StringBuilder();
+        setPropertyTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, setPropertyMark, out setPropertyReplaceTemplete);
+        #endregion
+
+        #region #TableConstructor#
+        string tableConstructorMark = "#TableConstructor#";
+        string tableConstructorReplaceTemplete = string.Empty;
+        string tableConstructorTemplete = string.Empty;
+        StringBuilder sbTableConstructorReplace = new StringBuilder();
+        tableConstructorTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, tableConstructorMark, out tableConstructorReplaceTemplete);
+        #endregion
+
+        #region #ConstructorParamSummary#
+        string constructorParamSummaryMark = "#ConstructorParamSummary#";
+        string constructorParamSummaryReplaceTemplete = string.Empty;
+        string constructorParamSummaryTemplete = string.Empty;
+        StringBuilder sbConstructorParamSummaryReplace = new StringBuilder();
+        constructorParamSummaryTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(tableConstructorTemplete, constructorParamSummaryMark, out constructorParamSummaryReplaceTemplete);
+        #endregion
+
+        #region #ConstructorFormalParams#
+        string constructorFormalParamsMark = "#ConstructorFormalParams#";
+        string constructorFormalParamsReplaceTemplete = string.Empty;
+        string constructorFormalParamsTemplete = string.Empty;
+        StringBuilder sbConstructorFormalParamsReplace = new StringBuilder();
+        constructorFormalParamsTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(tableConstructorTemplete, constructorFormalParamsMark, out constructorFormalParamsReplaceTemplete);
+        #endregion
+
+        #region #ConstructorSetParams#
+        string constructorSetParamsMark = "#ConstructorSetParams#";
+        string constructorSetParamsReplaceTemplete = string.Empty;
+        string constructorSetParamsTemplete = string.Empty;
+        StringBuilder sbConstructorSetParamsReplace = new StringBuilder();
+        constructorSetParamsTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(tableConstructorTemplete, constructorSetParamsMark, out constructorSetParamsReplaceTemplete);
+        #endregion
+
+
         string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
 
         Dictionary<int, string> dicSqliteEntityFolder = new Dictionary<int, string>();
@@ -700,6 +741,10 @@ public sealed class EditorStrayFogXLS
         }
 
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
+        List<string> tempConstructorParamSummary = new List<string>();
+        List<string> tempConstructorFormalParams = new List<string>();
+        List<string> tempConstructorSetParams = new List<string>();
+        bool hasPK = false;
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
@@ -716,23 +761,90 @@ public sealed class EditorStrayFogXLS
                 xlsColumnTypeIndex = msrColumnTypeRowIndex;
             }         
             sbPropertyReplace.Length = 0;
+            sbSetPropertyReplace.Length = 0;
+            sbTableConstructorReplace.Length = 0;
+            sbConstructorParamSummaryReplace.Length = 0;
+            sbConstructorFormalParamsReplace.Length = 0;
+            sbConstructorSetParamsReplace.Length = 0;
+            tempConstructorParamSummary.Clear();
+            tempConstructorFormalParams.Clear();
+            tempConstructorSetParams.Clear();
+            hasPK = false;
             foreach (EditorXlsTableColumnSchema c in t.columns)
             {
                 sbPropertyReplace.Append(
                     propertyTemplete
                     .Replace("#Name#", c.columnName)
                     .Replace("#Desc#", c.desc)
+                    .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                     .Replace("#DataType#", c.dataType.ToString())
                     .Replace("#ArrayDimension#", c.arrayDimension.ToString())
                     .Replace("#XlsColumnIndex#", c.xlsColumnIndex.ToString())
                     .Replace("#SqliteParameterName#", c.sqliteParameterName)
                     .Replace("#IsPK#", c.isPK.ToString().ToLower())
-                    .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                     );
+                hasPK |= c.isPK;
+                if (!t.isDeterminant)
+                {
+                    if (c.isPK)
+                    {
+                        tempConstructorParamSummary.Add(
+                        constructorParamSummaryTemplete
+                            .Replace("#Name#", c.columnName)
+                        );
+                        tempConstructorFormalParams.Add(
+                        constructorFormalParamsTemplete
+                            .Replace("#Name#", c.columnName)
+                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
+                        );
+                        tempConstructorSetParams.Add(
+                        constructorSetParamsTemplete
+                            .Replace("#Name#", c.columnName)
+                        );
+                    }
+                    else
+                    {
+                        sbSetPropertyReplace.Append(
+                            setPropertyTemplete
+                            .Replace("#Name#", c.columnName)
+                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
+                        );
+                    }
+                }
             }
 
+            if (tempConstructorParamSummary.Count > 0)
+            {
+                sbConstructorParamSummaryReplace.Append(string.Join("", tempConstructorParamSummary.ToArray()));
+            }
+            if (tempConstructorFormalParams.Count > 0)
+            {
+                sbConstructorFormalParamsReplace.Append(string.Join(msrColumnSeparate, tempConstructorFormalParams.ToArray()));
+            }
+            if (tempConstructorSetParams.Count > 0)
+            {
+                sbConstructorSetParamsReplace.Append(string.Join("", tempConstructorSetParams.ToArray()));
+            }
+
+            if (hasPK)
+            {
+                sbTableConstructorReplace.Append(
+                    tableConstructorTemplete
+                    .Replace(constructorParamSummaryReplaceTemplete, sbConstructorParamSummaryReplace.ToString())
+                    .Replace(constructorFormalParamsReplaceTemplete, sbConstructorFormalParamsReplace.ToString())
+                    .Replace(constructorSetParamsReplaceTemplete, sbConstructorSetParamsReplace.ToString())
+                    );
+            }
             cfgEntityScript.SetName(t.className);
             cfgEntityScript.SetText(entityScriptTemplete
+
+                .Replace(tableConstructorReplaceTemplete, sbTableConstructorReplace.ToString())
+                .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString())
+                .Replace(setPropertyReplaceTemplete, sbSetPropertyReplace.ToString())
+
+                .Replace("#ClassName#", t.className)
+                .Replace("#EntityName#", t.tableName)
+                
                 .Replace("#classHashCode#", t.className.UniqueHashCode().ToString())
                 .Replace("#xlsFilePath#", t.fileName)
                 .Replace("#sqliteTableName#", t.tableName)
@@ -743,9 +855,8 @@ public sealed class EditorStrayFogXLS
                 .Replace("#xlsColumnTypeIndex#", xlsColumnTypeIndex.ToString())
                 .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
                 .Replace("#dbSQLiteAssetBundleName#", t.assetBundleDbName)                
-                .Replace("#EntityName#", t.tableName)
-                .Replace("#ClassName#", t.className)
-                .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString()));
+                );
+
             if (t.isDeterminant)
             {
                 cfgEntityScript.SetDirectory(dicSqliteDeterminantEntitiesFolder[t.dbKey]);

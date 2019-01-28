@@ -7,10 +7,39 @@ using UnityEngine;
 [SQLiteTableMap(#classHashCode#,"#xlsFilePath#","#sqliteTableName#", enSQLiteEntityClassify.#sqliteTableType#,#isDeterminant#, #xlsColumnNameIndex#,#xlsColumnValueIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#,"#dbSQLiteAssetBundleName#",typeof(#ClassName#))]
 public partial class #ClassName#: AbsStrayFogSQLiteEntity
 {
-	#Properties#
+	#TableConstructor#	
+	#region constructor
+    /// <summary>
+    /// constructor
+    /// </summary>#ConstructorParamSummary#
+   /// <param name="_#Name#">#Name#</param>#ConstructorParamSummary#	
+    public #ClassName#(#ConstructorFormalParams##Type# _#Name##ConstructorFormalParams#)
+    {#ConstructorSetParams#
+		#Name# = _#Name#;#ConstructorSetParams#
+    }
+    #endregion
+	#TableConstructor#
+
+	#region Properties	
+	#Properties#	
 	/// <summary>
 	/// #Desc#
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.#DataType#,enSQLiteDataTypeArrayDimension.#ArrayDimension#,#XlsColumnIndex#,"#SqliteParameterName#",#IsPK#)]
-	public #Type# #Name# { get; private set; }#Properties#
+	[SQLiteFieldType(enSQLiteDataType.#DataType#,enSQLiteDataTypeArrayDimension.#ArrayDimension#,#XlsColumnIndex#,"#SqliteParameterName#",#IsPK#)]	
+	public #Type# #Name# { get; private set; }	
+	#Properties#
+	#endregion
+
+	#region Set Properties
+	#SetProperties#
+	/// <summary>
+	/// Set #Name#
+	/// </summary>
+	/// <param name="_#Name#">#Name# value</param>
+	public void Set_#Name#(#Type# _#Name#)
+	{
+		#Name# = _#Name#;
+	}
+	#SetProperties#
+	#endregion
 }

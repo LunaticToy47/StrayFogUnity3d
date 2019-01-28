@@ -324,6 +324,30 @@ public sealed partial class StrayFogSQLiteEntityHelper
     }
     #endregion
 
+    #region 插入数据
+    /// <summary>
+    /// 插入数据
+    /// </summary>
+    /// <typeparam name="T">实体类型</typeparam>
+    /// <param name="_entity">实体</param>
+    /// <returns>true:成功,false:失败</returns>
+    public bool Insert<T>(T _entity)
+         where T : AbsStrayFogSQLiteEntity
+    {
+        bool result = false;
+
+        return result;
+    }
+    #endregion
+
+    #region 更新数据集
+
+    #endregion
+
+    #region 删除数据集
+
+    #endregion
+
     #region CloseDb 关闭所有用到的SQLite数据库
     /// <summary>
     /// 关闭所有用到的SQLite数据库

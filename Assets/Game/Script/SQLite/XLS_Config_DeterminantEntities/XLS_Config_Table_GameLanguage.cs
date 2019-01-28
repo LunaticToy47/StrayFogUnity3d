@@ -8,14 +8,24 @@ using UnityEngine;
 public partial class XLS_Config_Table_GameLanguage: AbsStrayFogSQLiteEntity
 {
 	
+
+	#region Properties	
+		
 	/// <summary>
 	/// 引导提示
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"@GuideTip0",false)]
-	public string GuideTip { get; private set; }
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"@GuideTip0",false)]	
+	public string GuideTip { get; private set; }	
+		
 	/// <summary>
 	/// 大厅提示
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"@LobbyTip0",false)]
-	public string LobbyTip { get; private set; }
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"@LobbyTip0",false)]	
+	public string LobbyTip { get; private set; }	
+	
+	#endregion
+
+	#region Set Properties
+	
+	#endregion
 }
