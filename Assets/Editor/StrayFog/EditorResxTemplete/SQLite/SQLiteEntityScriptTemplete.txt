@@ -4,11 +4,18 @@ using UnityEngine;
 /// <summary>
 /// #EntityName#实体
 /// </summary>
-[SQLiteTableMap(#classHashCode#,"#xlsFilePath#","#sqliteTableName#", enSQLiteEntityClassify.#sqliteTableType#,#isDeterminant#, #xlsColumnNameIndex#,#xlsColumnValueIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#,"#dbSQLiteAssetBundleName#",typeof(#ClassName#))]
+[SQLiteTableMap(#classHashCode#,"#xlsFilePath#","#sqliteTableName#", enSQLiteEntityClassify.#sqliteTableType#,#isDeterminant#, #xlsColumnNameIndex#,#xlsColumnValueIndex#,#xlsColumnTypeIndex#,#xlsDataStartRowIndex#,"#dbSQLiteAssetBundleName#",typeof(#ClassName#),#hasPKColumn#)]
 public partial class #ClassName#: AbsStrayFogSQLiteEntity
 {
 	#TableConstructor#	
 	#region constructor
+	/// <summary>
+    /// constructor
+    /// </summary>
+    #ClassName#()
+    {
+    }
+
     /// <summary>
     /// constructor
     /// </summary>#ConstructorParamSummary#

@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// GameLanguage实体
 /// </summary>
-[SQLiteTableMap(294742871,"Assets/Game/Editor/XLS_Config/GameLanguage.xlsx","GameLanguage", enSQLiteEntityClassify.Table,true, 1,2,3,4,"c__1581584321",typeof(XLS_Config_Table_GameLanguage))]
+[SQLiteTableMap(294742871,"Assets/Game/Editor/XLS_Config/GameLanguage.xlsx","GameLanguage", enSQLiteEntityClassify.Table,true, 1,2,3,4,"c__1581584321",typeof(XLS_Config_Table_GameLanguage),false)]
 public partial class XLS_Config_Table_GameLanguage: AbsStrayFogSQLiteEntity
 {
 	

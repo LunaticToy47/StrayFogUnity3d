@@ -19,9 +19,11 @@ public class SQLiteTableMapAttribute : AliasTooltipAttribute
     /// <param name="_xlsDataStartRowIndex">XLS表数据起始行索引</param>
     /// <param name="_dbSQLiteAssetBundleName">数据库外部资源包路径</param>
     /// <param name="_tableClassType">表类类型</param>
+    /// <param name="_hasPkColumn">是否有主键列</param>
     public SQLiteTableMapAttribute(int _id,string _xlsFilePath,string _sqliteTableName, enSQLiteEntityClassify _sqliteTableType,
     bool _isDeterminant, int _xlsColumnNameIndex, int _xlsColumnValueIndex,
-    int _xlsColumnTypeIndex,int _xlsDataStartRowIndex, string _dbSQLiteAssetBundleName,Type _tableClassType)
+    int _xlsColumnTypeIndex,int _xlsDataStartRowIndex, string _dbSQLiteAssetBundleName,
+    Type _tableClassType,bool _hasPkColumn)
         : base(_sqliteTableName, _xlsFilePath)
     {
         id = _id;
@@ -36,6 +38,7 @@ public class SQLiteTableMapAttribute : AliasTooltipAttribute
         dbSQLiteAssetBundleName = _dbSQLiteAssetBundleName;
         dbSQLiteAssetBundleKey = _dbSQLiteAssetBundleName.UniqueHashCode();
         tableClassType = _tableClassType;
+        hasPkColumn = _hasPkColumn;
     }
     /// <summary>
     /// ID
@@ -85,5 +88,9 @@ public class SQLiteTableMapAttribute : AliasTooltipAttribute
     /// 表类类型
     /// </summary>
     public Type tableClassType { get; private set; }
+    /// <summary>
+    /// 是否有主键列
+    /// </summary>
+    public bool hasPkColumn { get; private set; }
 }
 

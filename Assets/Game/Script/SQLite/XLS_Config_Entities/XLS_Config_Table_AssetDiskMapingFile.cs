@@ -4,11 +4,18 @@ using UnityEngine;
 /// <summary>
 /// AssetDiskMapingFile实体
 /// </summary>
-[SQLiteTableMap(-206577796,"Assets/Game/Editor/XLS_Config/AssetDiskMapingFile.xlsx","AssetDiskMapingFile", enSQLiteEntityClassify.Table,false, 1,4,2,4,"c__1581584321",typeof(XLS_Config_Table_AssetDiskMapingFile))]
+[SQLiteTableMap(-206577796,"Assets/Game/Editor/XLS_Config/AssetDiskMapingFile.xlsx","AssetDiskMapingFile", enSQLiteEntityClassify.Table,false, 1,4,2,4,"c__1581584321",typeof(XLS_Config_Table_AssetDiskMapingFile),true)]
 public partial class XLS_Config_Table_AssetDiskMapingFile: AbsStrayFogSQLiteEntity
 {
 		
 	#region constructor
+	/// <summary>
+    /// constructor
+    /// </summary>
+    XLS_Config_Table_AssetDiskMapingFile()
+    {
+    }
+
     /// <summary>
     /// constructor
     /// </summary>
