@@ -253,13 +253,13 @@ public sealed partial class StrayFogSQLiteEntityHelper
     }
     #endregion
 
-    #region Select 获得数据集
+    #region Select 查询数据集
     /// <summary>
     /// 实体缓存数据
     /// </summary>
     static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
     /// <summary>
-    /// 获得指定条件的数据集
+    /// 查询数据集
     /// </summary>
     /// <typeparam name="T">实体类型</typeparam>
     /// <returns>数据集</returns>
@@ -270,7 +270,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     }
 
     /// <summary>
-    /// 获得指定条件的数据集
+    /// 查询指定条件的数据集
     /// </summary>
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_condition">条件</param>

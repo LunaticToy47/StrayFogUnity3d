@@ -9,7 +9,7 @@ using System.Reflection;
 /// </summary>
 public sealed partial class StrayFogSQLiteEntityHelper
 {
-    #region 插入数据
+    #region Insert 插入数据
     /// <summary>
     /// 插入数据
     /// </summary>
