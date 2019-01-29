@@ -19,24 +19,31 @@ MonoBehaviour:
   isDeterminant: 1
   canModifyData: 0
   columns:
-  - xlsColumnIndex: 0
-    columnName: resolution
-    desc: "\u5206\u8FA8\u7387"
+  - xlsColumnIndex: 1
+    columnName: name
+    desc: "\u540D\u79F0"
     isPK: 0
-    dataType: 16
+    dataType: 14
     arrayDimension: 0
     isNull: 0
-  - xlsColumnIndex: 0
-    columnName: targetFrameRate
-    desc: "\u5E27\u7387"
+  - xlsColumnIndex: 2
+    columnName: value
+    desc: "\u503C"
     isPK: 0
-    dataType: 6
+    dataType: 14
     arrayDimension: 0
     isNull: 0
-  - xlsColumnIndex: 0
-    columnName: isRunGuide
-    desc: "\u662F\u5426\u8FD0\u884C\u5F15\u5BFC"
+  - xlsColumnIndex: 3
+    columnName: valueType
+    desc: "\u503C\u7C7B\u578B"
     isPK: 0
-    dataType: 0
+    dataType: 14
+    arrayDimension: 0
+    isNull: 0
+  - xlsColumnIndex: 4
+    columnName: desc
+    desc: "\u8BF4\u660E"
+    isPK: 0
+    dataType: 14
     arrayDimension: 0
     isNull: 0

@@ -372,86 +372,118 @@ public sealed class StrayFogSQLiteDataTypeHelper
     public static object GetValueFromEntityPropertyToXlsColumn(object _entity, PropertyInfo _propertyInfo, SQLiteFieldTypeAttribute _fieldAttribute)
     {        
         object srcValue = _propertyInfo.GetValue(_entity, null);
+        ArrayList arrayListOne = null;
+        ArrayList arrayListTwo = null;
+        List<string> arrayValueOne = null;
+        List<string> arrayValueTwo = null;
         switch (_fieldAttribute.arrayDimension)
         {
-            case enSQLiteDataTypeArrayDimension.OneDimensionArray:
-                break;
             case enSQLiteDataTypeArrayDimension.TwoDimensionArray:
+                arrayListOne = new ArrayList((ICollection)srcValue);
+                arrayValueOne = new List<string>();
+                for (int i = 0; i < arrayListOne.Count; i++)
+                {
+                    arrayListTwo = new ArrayList((ICollection)arrayListOne[i]);
+                    arrayValueTwo = new List<string>();
+                    for (int k = 0; k < arrayListTwo.Count; k++)
+                    {
+                        arrayValueTwo.Add(OnGetValueFromEntityToXls(arrayListTwo[k], _fieldAttribute.dataType).ToString());
+                    }
+                    arrayValueOne.Add(string.Join(msrElementSeparate[0], arrayValueTwo.ToArray()));
+                }
+                srcValue = string.Join(msrArraySeparate[0], arrayValueOne.ToArray());
                 break;
+            case enSQLiteDataTypeArrayDimension.OneDimensionArray:
+                arrayListOne = new ArrayList((ICollection)srcValue);
+                arrayValueOne = new List<string>();
+                for (int i = 0; i < arrayListOne.Count; i++)
+                {
+                    arrayValueOne.Add(OnGetValueFromEntityToXls(arrayListOne[i], _fieldAttribute.dataType).ToString());                    
+                }
+                srcValue = string.Join(msrArraySeparate[0], arrayValueOne.ToArray());
+                break;            
             default:
-
+                srcValue = OnGetValueFromEntityToXls(srcValue, _fieldAttribute.dataType);
                 break;
         }
-        Debug.Log(srcValue);
-        //string[] tempArray = new string[0];
-        //string[] tempArrayTwo = new string[0];
-        //ArrayList oneResult = new ArrayList();
-        //ArrayList twoResult = new ArrayList();
-        //int step = 1;
-        //switch (_SQLiteDataTypeArrayDimension)
-        //{
-        //    case enSQLiteDataTypeArrayDimension.TwoDimensionArray:
-        //        if (_xlsValue != null)
-        //        {
-        //            tempArrayTwo = _xlsValue.ToString().Split(msrOneArraySeparate, StringSplitOptions.RemoveEmptyEntries);
-        //            if (tempArrayTwo != null)
-        //            {
-        //                switch (_SQLiteDataType)
-        //                {
-        //                    case enSQLiteDataType.Vector2:
-        //                        step = 2;
-        //                        break;
-        //                    case enSQLiteDataType.Vector3:
-        //                        step = 3;
-        //                        break;
-        //                    case enSQLiteDataType.Vector4:
-        //                        step = 4;
-        //                        break;
-        //                    default:
-        //                        step = 1;
-        //                        break;
-        //                }
-        //                foreach (string oneArray in tempArrayTwo)
-        //                {
-        //                    oneResult = new ArrayList();
-        //                    tempArray = oneArray.ToString().Split(msrElementSeparate, StringSplitOptions.RemoveEmptyEntries);
-        //                    if (tempArray != null)
-        //                    {
-        //                        for (int i = 0; i < tempArray.Length; i += step)
-        //                        {
-        //                            oneResult.Add(Convert.ChangeType(OnGetValue(string.Join(msrElementSeparate[0], tempArray, i, step), _SQLiteDataType),
-        //                                _propertyInfo.PropertyType.GetElementType().GetElementType()));
-        //                        }
-        //                    }
-        //                    twoResult.Add(oneResult.ToArray(_propertyInfo.PropertyType.GetElementType().GetElementType()));
-        //                }
-        //            }
-        //            _xlsValue = twoResult.ToArray(_propertyInfo.PropertyType.GetElementType());
-        //        }
-        //        break;
-        //    case enSQLiteDataTypeArrayDimension.OneDimensionArray:
-        //        if (_xlsValue != null)
-        //        {
-        //            tempArray = _xlsValue.ToString().Split(msrOneArraySeparate, StringSplitOptions.RemoveEmptyEntries);
-        //            if (tempArray != null)
-        //            {
-        //                for (int i = 0; i < tempArray.Length; i++)
-        //                {
-        //                    oneResult.Add(Convert.ChangeType(OnGetValue(tempArray[i], _SQLiteDataType), _propertyInfo.PropertyType.GetElementType()));
-        //                }
-        //            }
-        //            _xlsValue = oneResult.ToArray(_propertyInfo.PropertyType.GetElementType());
-        //        }
-        //        break;
-        //    default:
-        //        if (_xlsValue != null)
-        //        {
-        //            _xlsValue = OnGetValue(_xlsValue, _SQLiteDataType);
-        //        }
-        //        break;
-        //}
-        //return _xlsValue;
-        return srcValue;
+        return srcValue.ToString();
+    }
+    #endregion
+
+    #region OnGetValueFromEntityToXls 获得指定的值从实体到XLS
+    /// <summary>
+    /// 获得指定的值从实体到XLS
+    /// </summary>
+    /// <param name="_value">值</param>
+    /// <param name="_SQLiteDataType">类型</param>
+    /// <returns>值</returns>
+    static object OnGetValueFromEntityToXls(object _value, enSQLiteDataType _SQLiteDataType)
+    {
+        switch (_SQLiteDataType)
+        {
+            case enSQLiteDataType.Boolean:
+                _value = _value != null && (bool)_value ? 1 : 0;
+                break;
+            case enSQLiteDataType.Byte:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.Char:
+                _value = _value == null ? char.MinValue : _value;
+                break;
+            case enSQLiteDataType.DateTime:
+                _value = _value == null ? DateTime.Now : _value;
+                _value = ((DateTime)_value).ToString(@"yyyy-MM-dd ss:hh:mm");
+                break;
+            case enSQLiteDataType.Decimal:
+                _value = _value == null ? 0: _value;
+                break;
+            case enSQLiteDataType.Double:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.Guid:
+                _value = _value == null ? Guid.NewGuid() : _value;
+                break;
+            case enSQLiteDataType.Int16:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.Int32:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.Int64:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.SByte:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.Single:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.String:
+                _value = _value == null ? string.Empty : _value;
+                break;
+            case enSQLiteDataType.UInt16:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.UInt32:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.UInt64:
+                _value = _value == null ? 0 : _value;
+                break;
+            case enSQLiteDataType.Vector2:
+                Vector2 v2 = _value == null ? Vector2.zero : (Vector2)_value;
+                _value = v2.x + msrElementSeparate[0] + v2.y;
+                break;
+            case enSQLiteDataType.Vector3:
+                Vector3 v3 = _value == null ? Vector3.zero : (Vector3)_value;
+                _value = v3.x + msrElementSeparate[0] + v3.y + msrElementSeparate[0] + v3.z;
+                break;
+            case enSQLiteDataType.Vector4:
+                Vector4 v4 = _value == null ? Vector4.zero : (Vector4)_value;
+                _value = v4.x + msrElementSeparate[0] + v4.y + msrElementSeparate[0] + v4.z + msrElementSeparate[0] + v4.w;
+                break;
+        }
+        return _value;
     }
     #endregion
 

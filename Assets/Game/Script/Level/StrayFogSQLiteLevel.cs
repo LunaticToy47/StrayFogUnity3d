@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define PK_TABLE
+#define NoPK_TABLE
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
@@ -13,9 +15,15 @@ public class StrayFogSQLiteLevel : AbsLevel
     /// </summary>
     void Awake()
     {
+        Stopwatch watch = new Stopwatch();
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            Stopwatch watch = new Stopwatch();
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("StrayFogGamePools.gameManager.Initialization=>{0}",watch.Elapsed.ToString());
+            
+            #region PK Table
+#if PK_TABLE
+            watch.Reset();
             watch.Start();
             List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
             watch.Stop();
@@ -30,6 +38,28 @@ public class StrayFogSQLiteLevel : AbsLevel
             reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
             watch.Stop();
             UnityEngine.Debug.LogFormat("SQLite Data=>{0} , Time=>{1}", reports.Count, watch.Elapsed);
+#endif
+            #endregion
+
+            #region NoPK_TABLE
+#if NoPK_TABLE
+            watch.Reset();
+            watch.Start();
+            List<XLS_Report_Table_ReportColumnMaping> reportColumnMapings = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_ReportColumnMaping>();
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("SQLite Data=>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
+
+            StrayFogSQLiteEntityHelper.Insert(reportColumnMapings[0]);
+
+            watch.Reset();
+            watch.Start();
+            reportColumnMapings = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_ReportColumnMaping>();
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("SQLite Data=>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
+            #endif
+            #endregion
         });
+        
+        
     }
 }

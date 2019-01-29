@@ -19,16 +19,30 @@ MonoBehaviour:
   isDeterminant: 1
   canModifyData: 0
   columns:
-  - xlsColumnIndex: 0
-    columnName: GuideTip
-    desc: "\u5F15\u5BFC\u63D0\u793A"
+  - xlsColumnIndex: 1
+    columnName: name
+    desc: "\u540D\u79F0"
     isPK: 0
     dataType: 14
     arrayDimension: 0
     isNull: 0
-  - xlsColumnIndex: 0
-    columnName: LobbyTip
-    desc: "\u5927\u5385\u63D0\u793A"
+  - xlsColumnIndex: 2
+    columnName: value
+    desc: "\u503C"
+    isPK: 0
+    dataType: 14
+    arrayDimension: 0
+    isNull: 0
+  - xlsColumnIndex: 3
+    columnName: valueType
+    desc: "\u503C\u7C7B\u578B"
+    isPK: 0
+    dataType: 14
+    arrayDimension: 0
+    isNull: 0
+  - xlsColumnIndex: 4
+    columnName: desc
+    desc: "\u8BF4\u660E"
     isPK: 0
     dataType: 14
     arrayDimension: 0

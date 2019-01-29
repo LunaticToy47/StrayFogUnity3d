@@ -78,9 +78,10 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         if (sheet.Dimension.Rows >= _tableAttribute.xlsColumnValueIndex)
                         {
                             for (int row = _tableAttribute.xlsDataStartRowIndex; row <= sheet.Dimension.Rows; row++)
-                            {                               
+                            {
+                                insertRowIndex = row;
                                 tempPksValueIsNull = true;
-                                isExistsData = true;
+                                isExistsData = _tableAttribute.hasPkColumn;
                                 foreach (KeyValuePair<int,SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
                                 {                                                                        
                                     if (key.Value.isPK)
@@ -96,7 +97,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                         }                                        
                                     }                                    
                                 }
-
+                                
                                 if (isExistsData)
                                 {//如果有相同的数据
                                     break;
@@ -104,10 +105,6 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                 else if (tempPksValueIsNull)
                                 {//如果所有PK列为空                                    
                                     break;
-                                }
-                                else
-                                {
-                                    insertRowIndex = row;
                                 }
                             }
                         }
