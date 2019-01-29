@@ -25,9 +25,9 @@ public sealed class StrayFogSQLiteDataTypeHelper
 {
     #region 分隔符 readonly 变量
     /// <summary>
-    /// 一维数组分隔符
+    /// 数组分隔符
     /// </summary>
-    static readonly string[] msrOneArraySeparate = new string[] { @"|" };
+    static readonly string[] msrArraySeparate = new string[] { @"|" };
     /// <summary>
     /// 元素分隔符
     /// </summary>
@@ -300,7 +300,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
             case enSQLiteDataTypeArrayDimension.TwoDimensionArray:
                 if (_xlsValue != null)
                 {
-                    tempArrayTwo = _xlsValue.ToString().Split(msrOneArraySeparate, StringSplitOptions.RemoveEmptyEntries);
+                    tempArrayTwo = _xlsValue.ToString().Split(msrArraySeparate, StringSplitOptions.RemoveEmptyEntries);
                     if (tempArrayTwo != null)
                     {
                         switch (_SQLiteDataType)
@@ -339,7 +339,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
             case enSQLiteDataTypeArrayDimension.OneDimensionArray:
                 if (_xlsValue != null)
                 {
-                    tempArray = _xlsValue.ToString().Split(msrOneArraySeparate, StringSplitOptions.RemoveEmptyEntries);
+                    tempArray = _xlsValue.ToString().Split(msrArraySeparate, StringSplitOptions.RemoveEmptyEntries);
                     if (tempArray != null)
                     {
                         for (int i = 0; i < tempArray.Length; i++)
