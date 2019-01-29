@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// GameSetting实体
 /// </summary>
-[SQLiteTableMap(-1936055589,"Assets/Game/Editor/XLS_Config/GameSetting.xlsx","GameSetting", enSQLiteEntityClassify.Table,true, 1,2,3,4,"c__1581584321",typeof(XLS_Config_Table_GameSetting),false)]
+[SQLiteTableMap(-1936055589,"Assets/Game/Editor/XLS_Config/GameSetting.xlsx","GameSetting", enSQLiteEntityClassify.Table,true, 1,2,3,4,"c__1581584321",typeof(XLS_Config_Table_GameSetting),false,false)]
 public partial class XLS_Config_Table_GameSetting: AbsStrayFogSQLiteEntity
 {
 	

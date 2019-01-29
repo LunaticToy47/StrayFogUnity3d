@@ -40,9 +40,15 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [AliasTooltip("是否是行列式表")]
     public bool isDeterminant;
     /// <summary>
+    /// 是否可修改数据
+    /// </summary>
+    [AliasTooltip("是否可修改数据")]
+    public bool canModifyData;
+    /// <summary>
     /// 列
     /// </summary>
     [AliasTooltip("列")]
+    [ReadOnly]
     public EditorXlsTableColumnSchema[] columns;
 
     #region dbName 数据库名称

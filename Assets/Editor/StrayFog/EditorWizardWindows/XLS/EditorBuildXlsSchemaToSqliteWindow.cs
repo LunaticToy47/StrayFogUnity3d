@@ -26,6 +26,8 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     /// </summary>
     List<EditorXlsTableSchema> mXlsTableSchemas = new List<EditorXlsTableSchema>();
 
+    
+
     /// <summary>
     /// 滚动视图位置
     /// </summary>
@@ -79,9 +81,11 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
             if (GUILayout.Button("Setting"))
             {
                 EditorStrayFogApplication.PingObject(mXlsTableSchemas[i].tableSchemaAssetPath);
-            }         
+            }
             
             mXlsTableSchemas[i].isDeterminant = EditorGUILayout.ToggleLeft("是否是行列式表", mXlsTableSchemas[i].isDeterminant);
+            mXlsTableSchemas[i].canModifyData = EditorGUILayout.ToggleLeft("是否可修改数据", mXlsTableSchemas[i].canModifyData);
+
             EditorUtility.SetDirty(mXlsTableSchemas[i]);            
             if (GUILayout.Button("Brower"))
             {

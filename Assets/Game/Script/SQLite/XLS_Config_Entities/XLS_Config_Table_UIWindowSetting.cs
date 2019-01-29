@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// UIWindowSetting实体
 /// </summary>
-[SQLiteTableMap(2031098619,"Assets/Game/Editor/XLS_Config/UIWindowSetting.xlsx","UIWindowSetting", enSQLiteEntityClassify.Table,false, 1,4,2,4,"c__1581584321",typeof(XLS_Config_Table_UIWindowSetting),true)]
+[SQLiteTableMap(2031098619,"Assets/Game/Editor/XLS_Config/UIWindowSetting.xlsx","UIWindowSetting", enSQLiteEntityClassify.Table,false, 1,4,2,4,"c__1581584321",typeof(XLS_Config_Table_UIWindowSetting),true,false)]
 public partial class XLS_Config_Table_UIWindowSetting: AbsStrayFogSQLiteEntity
 {
 		

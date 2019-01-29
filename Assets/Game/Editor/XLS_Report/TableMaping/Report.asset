@@ -17,6 +17,7 @@ MonoBehaviour:
   dbPath: Assets/Game/Editor/XLS_Report/XLS_Report.db
   classify: 0
   isDeterminant: 0
+  canModifyData: 0
   columns:
   - xlsColumnIndex: 1
     columnName: idCol

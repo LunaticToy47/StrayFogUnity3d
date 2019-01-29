@@ -950,5 +950,119 @@ public static class ReflectionExtend
     }
     #endregion
 
+    #region GetPropertyInfoAttribute 获得PropertyInfo与指定Attribute映射
+    /// <summary>
+    /// PropertyInfo与Attribute字典映射
+    /// </summary>
+    static Dictionary<int, Dictionary<int, Dictionary<int, object>>> msPropertyInfoAttributeDictionaryMaping =
+        new Dictionary<int, Dictionary<int, Dictionary<int, object>>>();
+
+    /// <summary>
+    /// 获得PropertyInfo与指定Attribute映射
+    /// </summary>
+    /// <typeparam name="A">属性</typeparam>
+    /// <param name="_type">类型</param>
+    /// <returns>PropertyInfo属性映射字典</returns>
+    public static Dictionary<PropertyInfo, A> GetPropertyInfoAttribute<A>(this Type _type)
+        where A : Attribute
+    {
+        return _type.GetPropertyInfoAttribute<A>((p) => { return true; });
+    }
+
+    /// <summary>
+    /// 获得PropertyInfo与指定Attribute映射
+    /// </summary>
+    /// <typeparam name="A">属性</typeparam>
+    /// <param name="_type">类型</param>
+    /// <param name="_condition">过渡条件</param>
+    /// <returns>PropertyInfo属性映射字典</returns>
+    public static Dictionary<PropertyInfo, A> GetPropertyInfoAttribute<A>(this Type _type, Func<PropertyInfo, bool> _condition)
+    where A : Attribute
+    {
+        int tKey = _type.GetHashCode();
+        int aKey = typeof(A).GetHashCode();
+        int cKey = _condition == null ? 0 : _condition.GetHashCode();
+        if (!msPropertyInfoAttributeDictionaryMaping.ContainsKey(tKey))
+        {
+            msPropertyInfoAttributeDictionaryMaping.Add(tKey, new Dictionary<int, Dictionary<int, object>>());
+        }
+        if (!msPropertyInfoAttributeDictionaryMaping[tKey].ContainsKey(aKey))
+        {
+            msPropertyInfoAttributeDictionaryMaping[tKey].Add(aKey, new Dictionary<int, object>());
+        }
+        if (!msPropertyInfoAttributeDictionaryMaping[tKey][aKey].ContainsKey(cKey))
+        {
+            Dictionary<PropertyInfo, A> dic = new Dictionary<PropertyInfo, A>();
+            foreach (PropertyInfo p in _type.GetProperties())
+            {
+                if (_condition == null || _condition(p))
+                {
+                    dic.Add(p, p.GetFirstAttribute<A>());
+                }
+            }
+            msPropertyInfoAttributeDictionaryMaping[tKey][aKey].Add(cKey, dic);
+        }
+        return (Dictionary<PropertyInfo, A>)msPropertyInfoAttributeDictionaryMaping[tKey][aKey][cKey];
+    }
     #endregion
+
+    #region GetFieldInfoAttribute 获得FieldInfo与指定Attribute映射
+    /// <summary>
+    /// FieldInfo与Attribute字典映射
+    /// </summary>
+    static Dictionary<int, Dictionary<int, Dictionary<int, object>>> msFieldInfoAttributeDictionaryMaping =
+        new Dictionary<int, Dictionary<int, Dictionary<int, object>>>();
+
+    /// <summary>
+    /// 获得FieldInfo与指定Attribute映射
+    /// </summary>
+    /// <typeparam name="A">属性</typeparam>
+    /// <param name="_type">类型</param>
+    /// <returns>FieldInfo属性映射字典</returns>
+    public static Dictionary<FieldInfo, A> GetFieldInfoAttribute<A>(this Type _type)
+        where A : Attribute
+    {
+        return _type.GetFieldInfoAttribute<A>((p) => { return true; });
+    }
+
+    /// <summary>
+    /// 获得FieldInfo与指定Attribute映射
+    /// </summary>
+    /// <typeparam name="A">属性</typeparam>
+    /// <param name="_type">类型</param>
+    /// <param name="_condition">过渡条件</param>
+    /// <returns>FieldInfo属性映射字典</returns>
+    public static Dictionary<FieldInfo, A> GetFieldInfoAttribute<A>(this Type _type, Func<FieldInfo, bool> _condition)
+    where A : Attribute
+    {
+        int tKey = _type.GetHashCode();
+        int aKey = typeof(A).GetHashCode();
+        int cKey = _condition == null ? 0 : _condition.GetHashCode();
+        if (!msFieldInfoAttributeDictionaryMaping.ContainsKey(tKey))
+        {
+            msFieldInfoAttributeDictionaryMaping.Add(tKey, new Dictionary<int, Dictionary<int, object>>());
+        }
+        if (!msFieldInfoAttributeDictionaryMaping[tKey].ContainsKey(aKey))
+        {
+            msFieldInfoAttributeDictionaryMaping[tKey].Add(aKey, new Dictionary<int, object>());
+        }
+        if (!msFieldInfoAttributeDictionaryMaping[tKey][aKey].ContainsKey(cKey))
+        {
+            Dictionary<FieldInfo, A> dic = new Dictionary<FieldInfo, A>();
+            foreach (FieldInfo f in _type.GetFields())
+            {
+                if (_condition == null || _condition(f))
+                {
+                    dic.Add(f, f.GetFirstAttribute<A>());
+                }
+            }
+            msFieldInfoAttributeDictionaryMaping[tKey][aKey].Add(cKey, dic);
+        }
+        return (Dictionary<FieldInfo, A>)msFieldInfoAttributeDictionaryMaping[tKey][aKey][cKey];
+    }
+    #endregion
+
+    #endregion
+
+
 }

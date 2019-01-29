@@ -739,7 +739,6 @@ public sealed class EditorStrayFogXLS
             EditorStrayFogUtility.cmd.DeleteFolder(dicSqliteEntityFolder[key.Key]);
             EditorStrayFogUtility.cmd.DeleteFolder(dicSqliteDeterminantEntitiesFolder[key.Key]);
         }
-
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
         List<string> tempConstructorParamSummary = new List<string>();
         List<string> tempConstructorFormalParams = new List<string>();
@@ -856,6 +855,7 @@ public sealed class EditorStrayFogXLS
                 .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
                 .Replace("#dbSQLiteAssetBundleName#", t.assetBundleDbName)
                 .Replace("#hasPKColumn#", Convert.ToString(hasPK).ToLower())
+                .Replace("#canModifyData#", Convert.ToString(t.canModifyData).ToLower())
                 );
 
             if (t.isDeterminant)

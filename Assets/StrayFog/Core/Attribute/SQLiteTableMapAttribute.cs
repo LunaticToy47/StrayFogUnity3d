@@ -20,10 +20,11 @@ public class SQLiteTableMapAttribute : AliasTooltipAttribute
     /// <param name="_dbSQLiteAssetBundleName">数据库外部资源包路径</param>
     /// <param name="_tableClassType">表类类型</param>
     /// <param name="_hasPkColumn">是否有主键列</param>
+    /// <param name="_canModifyData">是否可修改数据</param>
     public SQLiteTableMapAttribute(int _id,string _xlsFilePath,string _sqliteTableName, enSQLiteEntityClassify _sqliteTableType,
     bool _isDeterminant, int _xlsColumnNameIndex, int _xlsColumnValueIndex,
     int _xlsColumnTypeIndex,int _xlsDataStartRowIndex, string _dbSQLiteAssetBundleName,
-    Type _tableClassType,bool _hasPkColumn)
+    Type _tableClassType,bool _hasPkColumn,bool _canModifyData)
         : base(_sqliteTableName, _xlsFilePath)
     {
         id = _id;
@@ -39,6 +40,7 @@ public class SQLiteTableMapAttribute : AliasTooltipAttribute
         dbSQLiteAssetBundleKey = _dbSQLiteAssetBundleName.UniqueHashCode();
         tableClassType = _tableClassType;
         hasPkColumn = _hasPkColumn;
+        canModifyData = _canModifyData;
     }
     /// <summary>
     /// ID
@@ -92,5 +94,10 @@ public class SQLiteTableMapAttribute : AliasTooltipAttribute
     /// 是否有主键列
     /// </summary>
     public bool hasPkColumn { get; private set; }
+
+    /// <summary>
+    /// 是否可修改数据
+    /// </summary>
+    public bool canModifyData { get; private set; }
 }
 
