@@ -20,7 +20,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
          where T : AbsStrayFogSQLiteEntity
     {
         bool result = false;
-
+        SQLiteTableMapAttribute tableAttribute =  OnGetTableAttribute<T>();
         return result;
     }
     #endregion
