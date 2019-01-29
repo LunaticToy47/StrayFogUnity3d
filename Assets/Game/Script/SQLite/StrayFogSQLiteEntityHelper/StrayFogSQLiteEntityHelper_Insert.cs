@@ -19,9 +19,12 @@ public sealed partial class StrayFogSQLiteEntityHelper
     public bool Insert<T>(T _entity)
          where T : AbsStrayFogSQLiteEntity
     {
-        bool result = false;
-        SQLiteTableMapAttribute tableAttribute =  OnGetTableAttribute<T>();
+        SQLiteTableMapAttribute tableAttribute = OnGetTableAttribute<T>();
+        bool result = tableAttribute.canModifyData;        
+        if (result)
+        {
 
+        }
         return result;
     }
     #endregion
