@@ -253,10 +253,28 @@ public sealed partial class StrayFogSQLiteEntityHelper
     }
     #endregion
 
-    #region Select 查询数据集
+    #region OnInsertToCacheEntityData
     /// <summary>
-    /// 实体缓存数据
+    /// 插入数据到缓存
     /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_entity">实体</param>
+    /// <param name="_tableAttribute">表属性</param>
+    static void OnInsertToCacheEntityData<T>(T _entity, SQLiteTableMapAttribute _tableAttribute)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        if (mCacheEntityData.ContainsKey(_tableAttribute.id))
+        {
+            List<T> result = (List<T>)mCacheEntityData[_tableAttribute.id];
+            result.Add(_entity);
+        }
+    }
+    #endregion
+
+        #region Select 查询数据集
+        /// <summary>
+        /// 实体缓存数据
+        /// </summary>
     static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
     /// <summary>
     /// 查询数据集

@@ -322,7 +322,7 @@ public sealed class EditorStrayFogXLS
                 EditorUtility.SetDirty(tempTable);
             }
         }
-        return ScriptableObject.Instantiate(tempTable);
+        return tempTable;
     }
     #endregion
 

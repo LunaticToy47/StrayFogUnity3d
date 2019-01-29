@@ -87,9 +87,9 @@ public sealed partial class StrayFogSQLiteEntityHelper
     }
     #endregion
 
-    #region OnCreateInstance
+    #region OnCreateInstance 创建实体
     /// <summary>
-    /// OnCreateInstance
+    /// 创建实体
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>

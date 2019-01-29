@@ -361,6 +361,91 @@ public sealed class StrayFogSQLiteDataTypeHelper
     }
     #endregion
 
+    #region GetValueFromEntityPropertyToXlsColumn 获得实体属性值从实体属性值到XLS列值
+    /// <summary>
+    /// 获得实体属性值从实体属性值到XLS列值
+    /// </summary>
+    /// <param name="_entity">实体</param>
+    /// <param name="_propertyInfo">属性</param>
+    /// <param name="_SQLiteDataType">代码类型</param>
+    /// <param name="_SQLiteDataTypeArrayDimension">数组维度</param>
+    /// <returns>转换后的列值</returns>
+    public static object GetValueFromEntityPropertyToXlsColumn(object _entity, PropertyInfo _propertyInfo, enSQLiteDataType _SQLiteDataType, enSQLiteDataTypeArrayDimension _SQLiteDataTypeArrayDimension)
+    {
+        object srcValue = _propertyInfo.GetValue(_entity, null);
+        Debug.Log(srcValue);
+        //string[] tempArray = new string[0];
+        //string[] tempArrayTwo = new string[0];
+        //ArrayList oneResult = new ArrayList();
+        //ArrayList twoResult = new ArrayList();
+        //int step = 1;
+        //switch (_SQLiteDataTypeArrayDimension)
+        //{
+        //    case enSQLiteDataTypeArrayDimension.TwoDimensionArray:
+        //        if (_xlsValue != null)
+        //        {
+        //            tempArrayTwo = _xlsValue.ToString().Split(msrOneArraySeparate, StringSplitOptions.RemoveEmptyEntries);
+        //            if (tempArrayTwo != null)
+        //            {
+        //                switch (_SQLiteDataType)
+        //                {
+        //                    case enSQLiteDataType.Vector2:
+        //                        step = 2;
+        //                        break;
+        //                    case enSQLiteDataType.Vector3:
+        //                        step = 3;
+        //                        break;
+        //                    case enSQLiteDataType.Vector4:
+        //                        step = 4;
+        //                        break;
+        //                    default:
+        //                        step = 1;
+        //                        break;
+        //                }
+        //                foreach (string oneArray in tempArrayTwo)
+        //                {
+        //                    oneResult = new ArrayList();
+        //                    tempArray = oneArray.ToString().Split(msrElementSeparate, StringSplitOptions.RemoveEmptyEntries);
+        //                    if (tempArray != null)
+        //                    {
+        //                        for (int i = 0; i < tempArray.Length; i += step)
+        //                        {
+        //                            oneResult.Add(Convert.ChangeType(OnGetValue(string.Join(msrElementSeparate[0], tempArray, i, step), _SQLiteDataType),
+        //                                _propertyInfo.PropertyType.GetElementType().GetElementType()));
+        //                        }
+        //                    }
+        //                    twoResult.Add(oneResult.ToArray(_propertyInfo.PropertyType.GetElementType().GetElementType()));
+        //                }
+        //            }
+        //            _xlsValue = twoResult.ToArray(_propertyInfo.PropertyType.GetElementType());
+        //        }
+        //        break;
+        //    case enSQLiteDataTypeArrayDimension.OneDimensionArray:
+        //        if (_xlsValue != null)
+        //        {
+        //            tempArray = _xlsValue.ToString().Split(msrOneArraySeparate, StringSplitOptions.RemoveEmptyEntries);
+        //            if (tempArray != null)
+        //            {
+        //                for (int i = 0; i < tempArray.Length; i++)
+        //                {
+        //                    oneResult.Add(Convert.ChangeType(OnGetValue(tempArray[i], _SQLiteDataType), _propertyInfo.PropertyType.GetElementType()));
+        //                }
+        //            }
+        //            _xlsValue = oneResult.ToArray(_propertyInfo.PropertyType.GetElementType());
+        //        }
+        //        break;
+        //    default:
+        //        if (_xlsValue != null)
+        //        {
+        //            _xlsValue = OnGetValue(_xlsValue, _SQLiteDataType);
+        //        }
+        //        break;
+        //}
+        //return _xlsValue;
+        return srcValue;
+    }
+    #endregion
+
     #region OnGetValue 获得指定类型的值
     /// <summary>
     /// 获得指定类型的值
