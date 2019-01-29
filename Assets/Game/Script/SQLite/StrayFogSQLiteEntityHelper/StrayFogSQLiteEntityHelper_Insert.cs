@@ -90,7 +90,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                         tempPksValueIsNull &= (tempXlsValue == null);
                                         if (tempXlsValue != null)
                                         {
-                                            tempXlsValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempXlsValue, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][key.Key].dataType, msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][key.Key].arrayDimension);
+                                            tempXlsValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempXlsValue, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value.dataType, key.Value.arrayDimension);
                                             tempPropertyValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(_entity, null);
                                             isExistsData &= tempXlsValue.Equals(tempPropertyValue);
                                         }                                        
@@ -115,7 +115,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         {//插入数据
                             foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
                             {
-                                sheet.Cells[insertRowIndex + 1, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][key.Key].dataType, msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][key.Key].arrayDimension);
+                                sheet.Cells[insertRowIndex + 1, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value);
                             }
                         }
                         #endregion

@@ -326,7 +326,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
                             {
                                 for (int i = 0; i < tempArray.Length; i += step)
                                 {
-                                    oneResult.Add(Convert.ChangeType(OnGetValue(string.Join(msrElementSeparate[0], tempArray, i, step), _SQLiteDataType), 
+                                    oneResult.Add(Convert.ChangeType(OnGetValueFromXlsToEntity(string.Join(msrElementSeparate[0], tempArray, i, step), _SQLiteDataType), 
                                         _propertyInfo.PropertyType.GetElementType().GetElementType()));
                                 }
                             }
@@ -344,7 +344,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
                     {
                         for (int i = 0; i < tempArray.Length; i++)
                         {
-                            oneResult.Add(Convert.ChangeType(OnGetValue(tempArray[i], _SQLiteDataType), _propertyInfo.PropertyType.GetElementType()));
+                            oneResult.Add(Convert.ChangeType(OnGetValueFromXlsToEntity(tempArray[i], _SQLiteDataType), _propertyInfo.PropertyType.GetElementType()));
                         }
                     }
                     _xlsValue = oneResult.ToArray(_propertyInfo.PropertyType.GetElementType());
@@ -353,7 +353,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
             default:
                 if (_xlsValue != null)
                 {
-                    _xlsValue = OnGetValue(_xlsValue, _SQLiteDataType);
+                    _xlsValue = OnGetValueFromXlsToEntity(_xlsValue, _SQLiteDataType);
                 }                
                 break;
         }
@@ -366,13 +366,22 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// 获得实体属性值从实体属性值到XLS列值
     /// </summary>
     /// <param name="_entity">实体</param>
-    /// <param name="_propertyInfo">属性</param>
-    /// <param name="_SQLiteDataType">代码类型</param>
-    /// <param name="_SQLiteDataTypeArrayDimension">数组维度</param>
+    /// <param name="_propertyInfo">属性信息</param>
+    /// <param name="_fieldAttribute">字段属性</param>
     /// <returns>转换后的列值</returns>
-    public static object GetValueFromEntityPropertyToXlsColumn(object _entity, PropertyInfo _propertyInfo, enSQLiteDataType _SQLiteDataType, enSQLiteDataTypeArrayDimension _SQLiteDataTypeArrayDimension)
-    {
+    public static object GetValueFromEntityPropertyToXlsColumn(object _entity, PropertyInfo _propertyInfo, SQLiteFieldTypeAttribute _fieldAttribute)
+    {        
         object srcValue = _propertyInfo.GetValue(_entity, null);
+        switch (_fieldAttribute.arrayDimension)
+        {
+            case enSQLiteDataTypeArrayDimension.OneDimensionArray:
+                break;
+            case enSQLiteDataTypeArrayDimension.TwoDimensionArray:
+                break;
+            default:
+
+                break;
+        }
         Debug.Log(srcValue);
         //string[] tempArray = new string[0];
         //string[] tempArrayTwo = new string[0];
@@ -446,14 +455,14 @@ public sealed class StrayFogSQLiteDataTypeHelper
     }
     #endregion
 
-    #region OnGetValue 获得指定类型的值
+    #region OnGetValueFromXlsToEntity 获得指定的值从XLS到实体
     /// <summary>
-    /// 获得指定类型的值
+    /// 获得指定的值从XLS到实体
     /// </summary>
     /// <param name="_value">值</param>
     /// <param name="_SQLiteDataType">类型</param>
     /// <returns>值</returns>
-    static object OnGetValue(object _value, enSQLiteDataType _SQLiteDataType)
+    static object OnGetValueFromXlsToEntity(object _value, enSQLiteDataType _SQLiteDataType)
     {
         switch (_SQLiteDataType)
         {
@@ -618,28 +627,28 @@ public sealed class StrayFogSQLiteDataTypeHelper
                 }
                 break;
             case enSQLiteDataType.Vector2:
-                _value = ToVectorX(_value, 2, msrElementSeparate);
+                _value = ToVectorXFromXlsToEntity(_value, 2, msrElementSeparate);
                 break;
             case enSQLiteDataType.Vector3:
-                _value = ToVectorX(_value, 3, msrElementSeparate);
+                _value = ToVectorXFromXlsToEntity(_value, 3, msrElementSeparate);
                 break;
             case enSQLiteDataType.Vector4:
-                _value = ToVectorX(_value, 4, msrElementSeparate);
+                _value = ToVectorXFromXlsToEntity(_value, 4, msrElementSeparate);
                 break;
         }
         return _value;
     }
     #endregion
 
-    #region ToVectorX 值转为VectorX
+    #region ToVectorXFromXlsToEntity 值转为VectorX从XLS到实体
     /// <summary>
-    /// 值转为VectorX
+    /// 值转为VectorX从XLS到实体
     /// </summary>
     /// <param name="_src">源值</param>
     /// <param name="_dimension">Vector向量维度</param>
     /// <param name="_separator">分隔符</param>
     /// <returns>转换后的值</returns>
-    static object ToVectorX(object _src, int _dimension, string[] _separator)
+    static object ToVectorXFromXlsToEntity(object _src, int _dimension, string[] _separator)
     {
         object result = null;
         Vector4 v4 = Vector4.zero;
