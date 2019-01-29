@@ -21,6 +21,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     {
         bool result = false;
         SQLiteTableMapAttribute tableAttribute =  OnGetTableAttribute<T>();
+
         return result;
     }
     #endregion
