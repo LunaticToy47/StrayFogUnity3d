@@ -19,53 +19,60 @@ public sealed partial class StrayFogSQLiteEntityHelper
     public static bool Insert<T>(T _entity)
          where T : AbsStrayFogSQLiteEntity
     {
-        SQLiteTableMapAttribute tableAttribute = OnGetTableAttribute<T>();
+        SQLiteTableMapAttribute tableAttribute = GetTableAttribute<T>();
         bool result = false;
         if (tableAttribute.canModifyData)
         {
-            if (tableAttribute.isDeterminant)
+            switch (tableAttribute.sqliteTableType)
             {
-                Debug.LogErrorFormat("The determinant table 【{0}】【{1}】can't be insert data.", tableAttribute.sqliteTableName, tableAttribute.xlsFilePath);
-            }
-            else
-            {
-                int xlsRowIndex = -1;
-                result = OnInsertToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
-                if (result)
-                {
-                    if (StrayFogGamePools.setting.isInternal)
+                case enSQLiteEntityClassify.Table:
+                    if (tableAttribute.isDeterminant)
                     {
-                        #region 插入内部资源 XLS表                      
-                        if (File.Exists(tableAttribute.xlsFilePath))
-                        {
-                            ExcelPackage pck = OnGetExcelPackage(tableAttribute);
-                            {
-                                if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
-                                {
-                                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                                    if (sheet.Dimension.Rows >= tableAttribute.xlsColumnValueIndex)
-                                    {
-                                        foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
-                                        {
-                                            sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
-                                        }
-                                    }
-                                }                                
-                            }
-                        }
-                        #endregion
+                        throw new UnityException(string.Format("Can't be insert data into determinant table 【{0}】【{1}】.", tableAttribute.sqliteTableName, tableAttribute.xlsFilePath));
                     }
                     else
                     {
-                        #region 插入外部资源 SQLite
-                        #endregion
+                        int xlsRowIndex = -1;
+                        result = OnInsertToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
+                        if (result)
+                        {
+                            if (StrayFogGamePools.setting.isInternal)
+                            {
+                                #region 插入内部资源 XLS表                      
+                                if (File.Exists(tableAttribute.xlsFilePath))
+                                {
+                                    ExcelPackage pck = OnGetExcelPackage(tableAttribute);
+                                    {
+                                        if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
+                                        {
+                                            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                                            if (sheet.Dimension.Rows >= tableAttribute.xlsColumnValueIndex)
+                                            {
+                                                foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
+                                                {
+                                                    sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                #endregion
+                            }
+                            else
+                            {
+                                #region 插入外部资源 SQLite
+                                #endregion
+                            }
+                        }
                     }
-                }
-            }
+                    break;
+                default:
+                    throw new UnityException(string.Format("Can't be insert data to 【{0}】【{1}】 .", tableAttribute.sqliteTableType, tableAttribute.sqliteTableName));
+            }            
         }
         else
         {
-            Debug.LogErrorFormat("The table 【{0}】can't be canModifyData.", tableAttribute.sqliteTableName);
+            throw new UnityException(string.Format("Can't be insert data to canModifyData【{0}】 table 【{1}】 .", tableAttribute.canModifyData, tableAttribute.sqliteTableName));
         }
         return result;
     }

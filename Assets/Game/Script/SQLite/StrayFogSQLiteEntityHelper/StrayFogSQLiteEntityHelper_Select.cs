@@ -347,7 +347,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
-        SQLiteTableMapAttribute tableAttribute = OnGetTableAttribute<T>();
+        SQLiteTableMapAttribute tableAttribute = GetTableAttribute<T>();
         if (mCacheReadFromXLS.Contains(tableAttribute.id))
         {
             result = OnGetCacheData<T>(tableAttribute);

@@ -31,65 +31,6 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static Dictionary<int, Dictionary<int, SQLiteFieldTypeAttribute>> msEntitySQLitePropertySQLiteFieldTypeAttributeMaping = new Dictionary<int, Dictionary<int, SQLiteFieldTypeAttribute>>();
     #endregion
 
-    #region OnGetTableAttribute 获得表属性
-    /// <summary>
-    /// 获得表属性
-    /// </summary>
-    /// <typeparam name="T">类型</typeparam>
-    /// <returns>表属性</returns>
-    static SQLiteTableMapAttribute OnGetTableAttribute<T>()
-        where T : AbsStrayFogSQLiteEntity
-    {
-        int key = typeof(T).GetHashCode();
-        int propertyKey = 0;
-        Type entityType = typeof(T);
-        SQLiteTableMapAttribute tableAttribute = null;
-        SQLiteFieldTypeAttribute fieldAttribute = null;
-        if (!msSQLiteTableMapAttributeMaping.ContainsKey(key))
-        {
-            tableAttribute = typeof(T).GetFirstAttribute<SQLiteTableMapAttribute>();
-            msSQLiteTableMapAttributeMaping.Add(key, tableAttribute);
-        }
-        else
-        {
-            tableAttribute = msSQLiteTableMapAttributeMaping[key];
-        }
-
-        if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping.ContainsKey(tableAttribute.id))
-        {
-            msEntitySQLitePropertySQLiteFieldTypeAttributeMaping.Add(tableAttribute.id, new Dictionary<int, SQLiteFieldTypeAttribute>());
-        }
-
-        if (!msEntityPropertyInfoMaping.ContainsKey(tableAttribute.id))
-        {
-            msEntityPropertyInfoMaping.Add(tableAttribute.id, new Dictionary<int, PropertyInfo>());
-
-            PropertyInfo[] pps = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.DeclaredOnly);
-            if (pps != null && pps.Length > 0)
-            {
-                foreach (PropertyInfo p in pps)
-                {
-                    propertyKey = p.Name.UniqueHashCode();
-                    fieldAttribute = p.GetFirstAttribute<SQLiteFieldTypeAttribute>();
-                    if (fieldAttribute != null)
-                    {
-                        if (!msEntityPropertyInfoMaping[tableAttribute.id].ContainsKey(propertyKey))
-                        {
-                            msEntityPropertyInfoMaping[tableAttribute.id].Add(propertyKey, p);
-                        }
-                        if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id].ContainsKey(propertyKey))
-                        {
-                            msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id].Add(propertyKey, fieldAttribute);
-                        }
-                    }
-                }
-            }
-        }
-
-        return tableAttribute;
-    }
-    #endregion
-
     #region OnCreateInstance 创建实体
     /// <summary>
     /// 创建实体
@@ -160,6 +101,65 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static List<T> OnGetCacheData<T>(SQLiteTableMapAttribute _tableAttribute) where T : AbsStrayFogSQLiteEntity
     {
         return mCacheEntityData.ContainsKey(_tableAttribute.id) ? (List<T>)mCacheEntityData[_tableAttribute.id] : new List<T>();
+    }
+    #endregion
+
+    #region GetTableAttribute 获得表属性
+    /// <summary>
+    /// 获得表属性
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <returns>表属性</returns>
+    public static SQLiteTableMapAttribute GetTableAttribute<T>()
+        where T : AbsStrayFogSQLiteEntity
+    {
+        int key = typeof(T).GetHashCode();
+        int propertyKey = 0;
+        Type entityType = typeof(T);
+        SQLiteTableMapAttribute tableAttribute = null;
+        SQLiteFieldTypeAttribute fieldAttribute = null;
+        if (!msSQLiteTableMapAttributeMaping.ContainsKey(key))
+        {
+            tableAttribute = typeof(T).GetFirstAttribute<SQLiteTableMapAttribute>();
+            msSQLiteTableMapAttributeMaping.Add(key, tableAttribute);
+        }
+        else
+        {
+            tableAttribute = msSQLiteTableMapAttributeMaping[key];
+        }
+
+        if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping.ContainsKey(tableAttribute.id))
+        {
+            msEntitySQLitePropertySQLiteFieldTypeAttributeMaping.Add(tableAttribute.id, new Dictionary<int, SQLiteFieldTypeAttribute>());
+        }
+
+        if (!msEntityPropertyInfoMaping.ContainsKey(tableAttribute.id))
+        {
+            msEntityPropertyInfoMaping.Add(tableAttribute.id, new Dictionary<int, PropertyInfo>());
+
+            PropertyInfo[] pps = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.DeclaredOnly);
+            if (pps != null && pps.Length > 0)
+            {
+                foreach (PropertyInfo p in pps)
+                {
+                    propertyKey = p.Name.UniqueHashCode();
+                    fieldAttribute = p.GetFirstAttribute<SQLiteFieldTypeAttribute>();
+                    if (fieldAttribute != null)
+                    {
+                        if (!msEntityPropertyInfoMaping[tableAttribute.id].ContainsKey(propertyKey))
+                        {
+                            msEntityPropertyInfoMaping[tableAttribute.id].Add(propertyKey, p);
+                        }
+                        if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id].ContainsKey(propertyKey))
+                        {
+                            msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id].Add(propertyKey, fieldAttribute);
+                        }
+                    }
+                }
+            }
+        }
+
+        return tableAttribute;
     }
     #endregion
 

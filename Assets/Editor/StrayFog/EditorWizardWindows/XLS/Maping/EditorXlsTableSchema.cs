@@ -91,8 +91,14 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// 类名称
     /// </summary>
     public string className { get {
-            string prefix = classify.ToString() + "_";
+            string prefix = string.Empty;
             string className = string.Empty;
+            if (isDeterminant)
+            {
+                prefix = "Determinant_";
+            }
+            prefix += classify.ToString() + "_";
+
             if (tableName.StartsWith(prefix))
             {
                 className = tableName;
@@ -100,7 +106,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
             else
             {
                 className = prefix + tableName;
-            }
+            }            
             return Path.GetFileNameWithoutExtension(dbName) + "_" + className;
         } }
     #endregion
