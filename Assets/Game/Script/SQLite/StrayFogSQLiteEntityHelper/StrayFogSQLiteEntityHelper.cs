@@ -72,14 +72,20 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
     #endregion
 
-    #region OnRefreshCacheData 刷新内存
+    #region OnUpdateCacheData 变更内存数据
+    /// <summary>
+    /// 变更内存数据
+    /// </summary>
+    static List<int> mUpdateCacheData = new List<int>();
     /// <summary>
     /// 刷新内存
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <param name="_data">数据</param>
-    static void OnRefreshCacheData<T>(SQLiteTableMapAttribute _tableAttribute, List<T> _data) where T : AbsStrayFogSQLiteEntity
+    /// <param name="_isReadFromDisk">是否是从磁盘读取数据</param>
+    static void OnUpdateCacheData<T>(SQLiteTableMapAttribute _tableAttribute, 
+        List<T> _data,bool _isReadFromDisk) where T : AbsStrayFogSQLiteEntity
     {
         if (!mCacheEntityData.ContainsKey(_tableAttribute.id))
         {
@@ -88,6 +94,10 @@ public sealed partial class StrayFogSQLiteEntityHelper
         else
         {
             mCacheEntityData[_tableAttribute.id] = _data;
+        }
+        if (!_isReadFromDisk && !mUpdateCacheData.Contains(_tableAttribute.id))
+        {
+            mUpdateCacheData.Add(_tableAttribute.id);
         }
     }
     #endregion
@@ -169,14 +179,19 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// </summary>
     public static void SaveExcelPackage()
     {
-        foreach (ExcelPackage p in mExcelPackageMaping.Values)
-        {
-            p.Save();
 #if UNITY_EDITOR
-            Debug.LogFormat("Save ExcelPackage =>{0}", p.File.FullName);
-#endif
+        foreach (KeyValuePair<int, ExcelPackage> key in mExcelPackageMaping)
+        {
+            if (mUpdateCacheData.Contains(key.Key))
+            {
+                key.Value.Save();
+
+                Debug.LogFormat("Save ExcelPackage =>{0}", key.Value.File.FullName);
+            }
         }
+        mUpdateCacheData.Clear();
         mExcelPackageMaping.Clear();
+#endif
     }
     #endregion
 }

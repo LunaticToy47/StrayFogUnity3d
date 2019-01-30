@@ -28,9 +28,13 @@ public class StrayFogSQLiteLevel : AbsLevel
     {
         #region Insert
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Insert 【PK】 Table"))
+        if (GUILayout.Button("Insert 【PK】【Same Key】 Table"))
         {
-            InsertPKTable();
+            InsertPKSameKeyTable();
+        }
+        if (GUILayout.Button("Insert 【PK】 【Different Key】 Table"))
+        {
+            InsertPKDifferentKeyTable();
         }
         if (GUILayout.Button("Insert 【No PK 】Table"))
         {
@@ -41,27 +45,51 @@ public class StrayFogSQLiteLevel : AbsLevel
     }
 
     #region Insert
-    #region 插入PK表数据
+    #region 插入PK表有重复键数据
     /// <summary>
-    /// 插入PK表数据
+    /// 插入PK表有重复键数据
     /// </summary>
-    void InsertPKTable()
+    void InsertPKSameKeyTable()
     {
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
         SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
-        UnityEngine.Debug.LogFormat("PK Table 【{0}->{1}】Insert", tableAttribute.xlsFilePath, tableAttribute.sqliteTableName);
+        UnityEngine.Debug.LogFormat("【PK Table 】【Same Key】【{0}->{1}】Insert", tableAttribute.xlsFilePath, tableAttribute.sqliteTableName);
 
         List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
-        UnityEngine.Debug.LogFormat("【PK Table 】SQLite Data Select=>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        UnityEngine.Debug.LogFormat("【PK Table 】【Same Key】SQLite Data Select=>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
         watch.Reset();
         watch.Start();
         StrayFogSQLiteEntityHelper.Insert(reports[0]);
         watch.Stop();
-        UnityEngine.Debug.LogFormat("【PK Table】SQLite Data Insert 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        UnityEngine.Debug.LogFormat("【PK Table】【Same Key】SQLite Data Insert 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+
+        watch.Reset();
+        watch.Start();
+        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("【PK Table】【Same Key】SQLite Data Select=>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
+    }
+    #endregion
+
+    #region 插入PK表无重复键数据
+    /// <summary>
+    /// 插入PK表无重复键数据
+    /// </summary>
+    void InsertPKDifferentKeyTable()
+    {
+        Stopwatch watch = new Stopwatch();
+        watch.Start();
+
+        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        UnityEngine.Debug.LogFormat("【PK Table 】【Different Key】 【{0}->{1}】Insert", tableAttribute.xlsFilePath, tableAttribute.sqliteTableName);
+
+        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("【PK Table 】【Different Key】SQLite Data Select=>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
         watch.Reset();
         watch.Start();
@@ -69,13 +97,13 @@ public class StrayFogSQLiteLevel : AbsLevel
         insertReport.Set_stringCol(Guid.NewGuid().ToString());
         StrayFogSQLiteEntityHelper.Insert(insertReport);
         watch.Stop();
-        UnityEngine.Debug.LogFormat("【PK Table】SQLite Data Insert 【Different PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        UnityEngine.Debug.LogFormat("【PK Table】【Different Key】SQLite Data Insert 【Different PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
         watch.Reset();
         watch.Start();
         reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
-        UnityEngine.Debug.LogFormat("【PK Table】SQLite Data Select=>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        UnityEngine.Debug.LogFormat("【PK Table】【Different Key】SQLite Data Select=>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
     #endregion
 

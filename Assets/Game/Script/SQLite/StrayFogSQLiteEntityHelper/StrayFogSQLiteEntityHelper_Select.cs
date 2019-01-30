@@ -252,80 +252,13 @@ public sealed partial class StrayFogSQLiteEntityHelper
         }
         return result;
     }
-    #endregion
-    
-    #region OnInsertToCacheEntityData
-    /// <summary>
-    /// 插入数据到缓存
-    /// </summary>
-    /// <typeparam name="T">类型</typeparam>
-    /// <param name="_entity">实体</param>
-    /// <param name="_tableAttribute">表属性</param>
-    /// <param name="_xlsRowIndex">XLS表行索引</param>
-    /// <returns>true:成功,false:失败</returns>
-    static bool OnInsertToCacheEntityData<T>(T _entity, SQLiteTableMapAttribute _tableAttribute,out int _xlsRowIndex)
-        where T : AbsStrayFogSQLiteEntity
-    {
-        bool result = false;
-        List<T> data = Select<T>();
-        StringBuilder sbLog = new StringBuilder();
-        _xlsRowIndex = -1;
-        if (_tableAttribute.hasPkColumn)
-        {
-            object cacheValue = null;
-            object entityValue = null;
-            bool hasSamePKValue = true;
-            int sameRowIndex = 0;
-            #region 查询缓存数据中是否有相同主键数据
-            for (int i = 0; i < data.Count; i++)
-            {
-                hasSamePKValue = true;
-                sameRowIndex = _tableAttribute.xlsDataStartRowIndex + i;
-                foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
-                {
-                    if (key.Value.isPK)
-                    {
-                        cacheValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(data[i], null);
-                        entityValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(_entity, null);
-                        hasSamePKValue &= cacheValue.Equals(entityValue);
-                        sbLog.AppendFormat("【{0}->{1}】", msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].Name, entityValue);
-                    }
-                }
-                if (hasSamePKValue)
-                {
-                    break;
-                }
-            }
-            #endregion
-
-            if (hasSamePKValue)
-            {
-                Debug.LogErrorFormat("【{0}】has the same value 【row->{1}】{2}", _tableAttribute.xlsFilePath, sameRowIndex, sbLog.ToString());
-            }
-            else
-            {
-                _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
-                data.Add(_entity);
-                OnRefreshCacheData<T>(_tableAttribute,data);
-                result = true;
-            }
-        }
-        else
-        {
-            _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
-            data.Add(_entity);
-            OnRefreshCacheData<T>(_tableAttribute, data);
-            result = true;
-        }
-        return result;
-    }
     #endregion    
 
     #region Select 查询数据集
     /// <summary>
-    /// 已从XLS读取数据的数据表
+    /// 是否已从磁盘读取数据
     /// </summary>
-    static List<int> mCacheReadFromXLS = new List<int>();
+    static List<int> mCacheIsReadFromDisk = new List<int>();
     /// <summary>
     /// 查询数据集
     /// </summary>
@@ -348,15 +281,15 @@ public sealed partial class StrayFogSQLiteEntityHelper
     {
         List<T> result = new List<T>();
         SQLiteTableMapAttribute tableAttribute = GetTableAttribute<T>();
-        if (mCacheReadFromXLS.Contains(tableAttribute.id))
+        if (mCacheIsReadFromDisk.Contains(tableAttribute.id))
         {
             result = OnGetCacheData<T>(tableAttribute);
         }
         else
         {
             result = OnReadAll<T>(tableAttribute);
-            OnRefreshCacheData<T>(tableAttribute, result);
-            mCacheReadFromXLS.Add(tableAttribute.id);
+            OnUpdateCacheData<T>(tableAttribute, result, true);
+            mCacheIsReadFromDisk.Add(tableAttribute.id);
         }
 
         if (_condition != null)
