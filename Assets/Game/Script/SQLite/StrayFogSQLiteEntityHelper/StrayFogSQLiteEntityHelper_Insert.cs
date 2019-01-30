@@ -48,7 +48,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                         foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
                                         {
                                             sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
-                                        }                                        
+                                        }
                                     }
                                 }
                                 pck.Save();//消耗2秒

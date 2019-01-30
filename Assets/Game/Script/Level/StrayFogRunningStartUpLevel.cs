@@ -8,10 +8,6 @@ using UnityEngine;
 public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
 {
     /// <summary>
-    /// 表格
-    /// </summary>
-    List<XLS_Config_Table_TableColumnMaping> mTables = new List<XLS_Config_Table_TableColumnMaping>();
-    /// <summary>
     /// 错误信息
     /// </summary>
     string mError;
@@ -23,14 +19,6 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            try
-            {
-                mTables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_TableColumnMaping>();
-            }
-            catch (Exception ep)
-            {
-                mError = ep.Message;
-            }
             StrayFogGamePools.assetBundleManager.LoadAssetInMemory(
                 enAssetDiskMapingFile.f_ExampleGuide_unity,
                 enAssetDiskMapingFolder.Assets_Game_AssetBundles_Scene,
@@ -48,12 +36,7 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
     void OnGUI()
     {
         Debug.LogError("StrayFogRunningStartUpLevel=>SQLite");
-        //GUILayout.Label(StrayFogGamePools.setting.dbSource);
-        //GUILayout.Label(StrayFogGamePools.setting.dbConnectionString);
-        foreach (XLS_Config_Table_TableColumnMaping t in mTables)
-        {
-            GUILayout.Label(t.JsonSerialize());
-        }
+        GUILayout.Label(StrayFogGamePools.setting.JsonSerialize());
         GUILayout.Label(mError);
     }
 }
