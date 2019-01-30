@@ -115,7 +115,7 @@ public class StrayFogSQLiteLevel : AbsLevel
         watch.Reset();
         watch.Start();
         XLS_Report_Table_Report insertReport = new XLS_Report_Table_Report(Guid.NewGuid().ToString().GetHashCode());
-        insertReport.Set_stringCol(Guid.NewGuid().ToString());
+        insertReport.Set_stringCol("Insert PK Table");
         StrayFogSQLiteEntityHelper.Insert(insertReport);
         watch.Stop();
         UnityEngine.Debug.LogFormat("【Insert PK Table】【Different Key】SQLite Data  【Different PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
@@ -148,6 +148,7 @@ public class StrayFogSQLiteLevel : AbsLevel
 
         watch.Reset();
         watch.Start();
+        reportColumnMapings[0].Set_stringCol("Insert NoPk Table");
         StrayFogSQLiteEntityHelper.Insert(reportColumnMapings[0]);
         watch.Stop();
         UnityEngine.Debug.LogFormat("Insert【NoPk Table】SQLite Data  =>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
@@ -180,7 +181,7 @@ public class StrayFogSQLiteLevel : AbsLevel
 
         watch.Reset();
         watch.Start();
-        reports[0].Set_stringCol(Guid.NewGuid().ToString());
+        reports[0].Set_stringCol("UpdateNormal Table");
         StrayFogSQLiteEntityHelper.Update(reports[0]);
         watch.Stop();
         UnityEngine.Debug.LogFormat("Update【Normal Table】SQLite Data 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
@@ -211,7 +212,7 @@ public class StrayFogSQLiteLevel : AbsLevel
 
         watch.Reset();
         watch.Start();
-        reports[0].Set_ReportTip(Guid.NewGuid().ToString());
+        reports[0].Set_ReportTip("Update Determinant Table");
         reports[0].Set_DeterminantTip(Guid.NewGuid().ToString());
         StrayFogSQLiteEntityHelper.Update(reports[0]);
         watch.Stop();
