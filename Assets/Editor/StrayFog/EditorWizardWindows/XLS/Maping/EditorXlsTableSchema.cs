@@ -47,8 +47,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// <summary>
     /// 列
     /// </summary>
-    [AliasTooltip("列")]
-    [ReadOnly]
+    [AliasTooltip("列")]    
     public EditorXlsTableColumnSchema[] columns;
 
     #region dbName 数据库名称

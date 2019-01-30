@@ -12,40 +12,50 @@ public class EditorXlsTableColumnSchema
     [ReadOnly]
     public int xlsColumnIndex;
     /// <summary>
-    /// 列名称
+    /// XLS表列名称
     /// </summary>
-    [AliasTooltip("列名称")]
-    public string columnName;
+    [AliasTooltip("XLS表列名称")]
+    [ReadOnly]
+    public string xlsColumnName;
+    /// <summary>
+    /// SQLite列名称
+    /// </summary>
+    [AliasTooltip("SQLite列名称")]
+    [ReadOnly]
+    public string sqliteColumnName;
     /// <summary>
     /// 列描述
     /// </summary>
     [AliasTooltip("列描述")]
+    [ReadOnly]
     public string desc;
     /// <summary>
     /// 是否是主键
     /// </summary>
     [AliasTooltip("是否是主键")]
-    public bool isPK;    
-    /// <summary>
-    /// 列类型
-    /// </summary>
-    [AliasTooltip("列类型")]
-    public enSQLiteDataType dataType;
-    /// <summary>
-    /// 数组维度
-    /// </summary>
-    [AliasTooltip("数组维度")]
-    public enSQLiteDataTypeArrayDimension arrayDimension;
+    public bool isPK;
     /// <summary>
     /// 是否允许为空
     /// </summary>
     [AliasTooltip("是否允许为空")]
     public bool isNull;
+    /// <summary>
+    /// 列类型
+    /// </summary>
+    [AliasTooltip("列类型")]
+    [ReadOnly]
+    public enSQLiteDataType dataType;
+    /// <summary>
+    /// 数组维度
+    /// </summary>
+    [AliasTooltip("数组维度")]
+    [ReadOnly]
+    public enSQLiteDataTypeArrayDimension arrayDimension;    
 
     #region sqliteParameterName 数据为参数名称
     /// <summary>
     /// 数据为参数名称
     /// </summary>
-    public string sqliteParameterName { get { return string.Format("@{0}{1}", columnName, xlsColumnIndex); } }
+    public string sqliteParameterName { get { return string.Format("@{0}{1}", xlsColumnName, xlsColumnIndex); } }
     #endregion
 }

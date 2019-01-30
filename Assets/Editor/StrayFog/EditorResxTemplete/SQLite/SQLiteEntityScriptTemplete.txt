@@ -32,7 +32,7 @@ public partial class #ClassName#: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// #Desc#
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.#DataType#,enSQLiteDataTypeArrayDimension.#ArrayDimension#,#XlsColumnIndex#,"#SqliteParameterName#",#IsPK#)]	
+	[SQLiteFieldType(enSQLiteDataType.#DataType#,enSQLiteDataTypeArrayDimension.#ArrayDimension#,#XlsColumnIndex#,"#SqliteColumnName#","#SqliteParameterName#",#IsPK#)]	
 	public #Type# #Name# { get; private set; }	
 	#Properties#
 	#endregion

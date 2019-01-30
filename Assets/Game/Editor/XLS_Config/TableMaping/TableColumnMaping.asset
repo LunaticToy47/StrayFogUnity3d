@@ -20,401 +20,458 @@ MonoBehaviour:
   canModifyData: 0
   columns:
   - xlsColumnIndex: 1
-    columnName: boolCol
+    xlsColumnName: boolCol
+    sqliteColumnName: boolCol
     desc: "bool\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 0
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 2
-    columnName: charCol
+    xlsColumnName: charCol
+    sqliteColumnName: charCol
     desc: "char\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 1
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 3
-    columnName: sbyteCol
+    xlsColumnName: sbyteCol
+    sqliteColumnName: sbyteCol
     desc: "sbyte\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 2
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 4
-    columnName: byteCol
+    xlsColumnName: byteCol
+    sqliteColumnName: byteCol
     desc: "byte\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 3
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 5
-    columnName: shortCol
+    xlsColumnName: shortCol
+    sqliteColumnName: shortCol
     desc: "short\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 4
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 6
-    columnName: ushortCol
+    xlsColumnName: ushortCol
+    sqliteColumnName: ushortCol
     desc: "ushort\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 5
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 7
-    columnName: intCol
+    xlsColumnName: intCol
+    sqliteColumnName: intCol
     desc: "int\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 6
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 8
-    columnName: uintCol
+    xlsColumnName: uintCol
+    sqliteColumnName: uintCol
     desc: "uint\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 7
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 9
-    columnName: longCol
+    xlsColumnName: longCol
+    sqliteColumnName: longCol
     desc: "long\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 8
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 10
-    columnName: ulongCol
+    xlsColumnName: ulongCol
+    sqliteColumnName: ulongCol
     desc: "ulong\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 9
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 11
-    columnName: floatCol
+    xlsColumnName: floatCol
+    sqliteColumnName: floatCol
     desc: "float\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 10
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 12
-    columnName: doubleCol
+    xlsColumnName: doubleCol
+    sqliteColumnName: doubleCol
     desc: "double\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 11
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 13
-    columnName: decimalCol
+    xlsColumnName: decimalCol
+    sqliteColumnName: decimalCol
     desc: "decimal\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 12
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 14
-    columnName: DateTimeCol
+    xlsColumnName: DateTimeCol
+    sqliteColumnName: DateTimeCol
     desc: "DateTime\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 13
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 15
-    columnName: stringCol
+    xlsColumnName: stringCol
+    sqliteColumnName: stringCol
     desc: "string\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 14
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 16
-    columnName: GuidCol
+    xlsColumnName: GuidCol
+    sqliteColumnName: GuidCol
     desc: "Guid\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 15
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 17
-    columnName: Vector2Col
+    xlsColumnName: Vector2Col
+    sqliteColumnName: Vector2Col
     desc: "Vector2\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 16
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 18
-    columnName: Vector3Col
+    xlsColumnName: Vector3Col
+    sqliteColumnName: Vector3Col
     desc: "Vector3\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 17
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 19
-    columnName: Vector4Col
+    xlsColumnName: Vector4Col
+    sqliteColumnName: Vector4Col
     desc: "Vector4\u975E\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 18
     arrayDimension: 0
-    isNull: 0
   - xlsColumnIndex: 20
-    columnName: boolDIMCol
+    xlsColumnName: boolDIMCol
+    sqliteColumnName: boolDIMCol
     desc: "bool\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 0
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 21
-    columnName: charDIMCol
+    xlsColumnName: charDIMCol
+    sqliteColumnName: charDIMCol
     desc: "char\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 1
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 22
-    columnName: sbyteDIMCol
+    xlsColumnName: sbyteDIMCol
+    sqliteColumnName: sbyteDIMCol
     desc: "sbyte\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 2
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 23
-    columnName: byteDIMCol
+    xlsColumnName: byteDIMCol
+    sqliteColumnName: byteDIMCol
     desc: "byte\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 3
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 24
-    columnName: shortDIMCol
+    xlsColumnName: shortDIMCol
+    sqliteColumnName: shortDIMCol
     desc: "short\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 4
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 25
-    columnName: ushortDIMCol
+    xlsColumnName: ushortDIMCol
+    sqliteColumnName: ushortDIMCol
     desc: "ushort\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 5
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 26
-    columnName: intDIMCol
+    xlsColumnName: intDIMCol
+    sqliteColumnName: intDIMCol
     desc: "int\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 6
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 27
-    columnName: uintDIMCol
+    xlsColumnName: uintDIMCol
+    sqliteColumnName: uintDIMCol
     desc: "uint\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 7
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 28
-    columnName: longDIMCol
+    xlsColumnName: longDIMCol
+    sqliteColumnName: longDIMCol
     desc: "long\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 8
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 29
-    columnName: ulongDIMCol
+    xlsColumnName: ulongDIMCol
+    sqliteColumnName: ulongDIMCol
     desc: "ulong\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 9
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 30
-    columnName: floatDIMCol
+    xlsColumnName: floatDIMCol
+    sqliteColumnName: floatDIMCol
     desc: "float\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 10
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 31
-    columnName: doubleDIMCol
+    xlsColumnName: doubleDIMCol
+    sqliteColumnName: doubleDIMCol
     desc: "double\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 11
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 32
-    columnName: decimalDIMCol
+    xlsColumnName: decimalDIMCol
+    sqliteColumnName: decimalDIMCol
     desc: "decimal\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 12
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 33
-    columnName: DateTimeDIMCol
+    xlsColumnName: DateTimeDIMCol
+    sqliteColumnName: DateTimeDIMCol
     desc: "DateTime\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 13
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 34
-    columnName: stringDIMCol
+    xlsColumnName: stringDIMCol
+    sqliteColumnName: stringDIMCol
     desc: "string\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 14
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 35
-    columnName: GuidDIMCol
+    xlsColumnName: GuidDIMCol
+    sqliteColumnName: GuidDIMCol
     desc: "Guid\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 15
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 36
-    columnName: Vector2DIMCol
+    xlsColumnName: Vector2DIMCol
+    sqliteColumnName: Vector2DIMCol
     desc: "Vector2\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 16
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 37
-    columnName: Vector3DIMCol
+    xlsColumnName: Vector3DIMCol
+    sqliteColumnName: Vector3DIMCol
     desc: "Vector3\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 17
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 38
-    columnName: Vector4DIMCol
+    xlsColumnName: Vector4DIMCol
+    sqliteColumnName: Vector4DIMCol
     desc: "Vector4\u4E00\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 18
     arrayDimension: 1
-    isNull: 0
   - xlsColumnIndex: 39
-    columnName: boolDIM2Col
+    xlsColumnName: boolDIM2Col
+    sqliteColumnName: boolDIM2Col
     desc: "bool\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 0
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 40
-    columnName: charDIM2Col
+    xlsColumnName: charDIM2Col
+    sqliteColumnName: charDIM2Col
     desc: "char\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 1
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 41
-    columnName: sbyteDIM2Col
+    xlsColumnName: sbyteDIM2Col
+    sqliteColumnName: sbyteDIM2Col
     desc: "sbyte\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 2
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 42
-    columnName: byteDIM2Col
+    xlsColumnName: byteDIM2Col
+    sqliteColumnName: byteDIM2Col
     desc: "byte\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 3
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 43
-    columnName: shortDIM2Col
+    xlsColumnName: shortDIM2Col
+    sqliteColumnName: shortDIM2Col
     desc: "short\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 4
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 44
-    columnName: ushortDIM2Col
+    xlsColumnName: ushortDIM2Col
+    sqliteColumnName: ushortDIM2Col
     desc: "ushort\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 5
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 45
-    columnName: intDIM2Col
+    xlsColumnName: intDIM2Col
+    sqliteColumnName: intDIM2Col
     desc: "int\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 6
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 46
-    columnName: uintDIM2Col
+    xlsColumnName: uintDIM2Col
+    sqliteColumnName: uintDIM2Col
     desc: "uint\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 7
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 47
-    columnName: longDIM2Col
+    xlsColumnName: longDIM2Col
+    sqliteColumnName: longDIM2Col
     desc: "long\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 8
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 48
-    columnName: ulongDIM2Col
+    xlsColumnName: ulongDIM2Col
+    sqliteColumnName: ulongDIM2Col
     desc: "ulong\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 9
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 49
-    columnName: floatDIM2Col
+    xlsColumnName: floatDIM2Col
+    sqliteColumnName: floatDIM2Col
     desc: "float\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 10
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 50
-    columnName: doubleDIM2Col
+    xlsColumnName: doubleDIM2Col
+    sqliteColumnName: doubleDIM2Col
     desc: "double\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 11
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 51
-    columnName: decimalDIM2Col
+    xlsColumnName: decimalDIM2Col
+    sqliteColumnName: decimalDIM2Col
     desc: "decimal\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 12
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 52
-    columnName: DateTimeDIM2Col
+    xlsColumnName: DateTimeDIM2Col
+    sqliteColumnName: DateTimeDIM2Col
     desc: "DateTime\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 13
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 53
-    columnName: stringDIM2Col
+    xlsColumnName: stringDIM2Col
+    sqliteColumnName: stringDIM2Col
     desc: "string\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 14
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 54
-    columnName: GuidDIM2Col
+    xlsColumnName: GuidDIM2Col
+    sqliteColumnName: GuidDIM2Col
     desc: "Guid\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 15
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 55
-    columnName: Vector2DIM2Col
+    xlsColumnName: Vector2DIM2Col
+    sqliteColumnName: Vector2DIM2Col
     desc: "Vector2\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 16
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 56
-    columnName: Vector3DIM2Col
+    xlsColumnName: Vector3DIM2Col
+    sqliteColumnName: Vector3DIM2Col
     desc: "Vector3\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 17
     arrayDimension: 2
-    isNull: 0
   - xlsColumnIndex: 57
-    columnName: Vector4DIM2Col
+    xlsColumnName: Vector4DIM2Col
+    sqliteColumnName: Vector4DIM2Col
     desc: "Vector4\u4E8C\u7EF4\u6570\u7EC4"
     isPK: 0
+    isNull: 0
     dataType: 18
     arrayDimension: 2
-    isNull: 0

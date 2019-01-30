@@ -271,9 +271,9 @@ public sealed class EditorStrayFogXLS
                 {
                     foreach (EditorXlsTableColumnSchema col in tempTable.columns)
                     {
-                        if (!string.IsNullOrEmpty(col.columnName))
+                        if (!string.IsNullOrEmpty(col.xlsColumnName))
                         {
-                            tempColumnName = col.columnName.ToUpper();
+                            tempColumnName = col.xlsColumnName.ToUpper();
                             tempSrcTableColumns.Add(tempColumnName, col);
                         }
                     }
@@ -295,7 +295,8 @@ public sealed class EditorStrayFogXLS
                             tempColumn = new EditorXlsTableColumnSchema();
                         }
                         tempColumn.xlsColumnIndex = i;
-                        tempColumn.columnName = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString();
+                        tempColumn.xlsColumnName = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString();
+                        tempColumn.sqliteColumnName = tempColumn.xlsColumnName;
                         tempColumn.desc = sheet.GetValue<string>(msrColumnDescriptionRowIndex, i).ToString();
                         tempColumn.dataType = enSQLiteDataType.String;
                         tempColumn.arrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
@@ -440,14 +441,14 @@ public sealed class EditorStrayFogXLS
                     columnCodes.Add(
                        columnTemplete
                        .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
-                       .Replace("#Name#", c.columnName)
+                       .Replace("#Name#", c.xlsColumnName)
                        .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.dataType, c.arrayDimension))
                     );
                     if (c.isPK)
                     {
                         pksCodes.Add(
                             pksTemplete
-                            .Replace("#Name#", c.columnName));
+                            .Replace("#Name#", c.xlsColumnName));
                     }
                 }
             }
@@ -602,7 +603,7 @@ public sealed class EditorStrayFogXLS
                     tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
                     StrayFogSQLiteDataTypeHelper.ResolveSQLiteDataType(tempType, ref tempDataType, ref tempDataTypeArrayDimension);
                     tempTableColumn = new EditorXlsTableColumnSchema();
-                    tempTableColumn.columnName = tempName;
+                    tempTableColumn.xlsColumnName = tempName;
                     tempTableColumn.dataType = tempDataType;
                     tempTableColumn.arrayDimension = tempDataTypeArrayDimension;
                     tempTableColumn.desc = tempName;
@@ -639,15 +640,15 @@ public sealed class EditorStrayFogXLS
                 tempSameColumnNames.Clear();
                 foreach (EditorXlsTableColumnSchema c in t.columns)
                 {
-                    if (!tempSameColumnNames.Contains(c.columnName.ToUpper()))
+                    if (!tempSameColumnNames.Contains(c.xlsColumnName.ToUpper()))
                     {
-                        tempSameColumnNames.Add(c.columnName.ToUpper());
+                        tempSameColumnNames.Add(c.xlsColumnName.ToUpper());
                     }
                     else
                     {
                         EditorUtility.ClearProgressBar();
                         throw new UnityException(string.Format("The Determinant Table has same value【{0}】 in column index 【{1}】in 【{2}】",
-                                c.columnName, msrDeterminantColumnNameColumnIndex,t.fileName));
+                                c.xlsColumnName, msrDeterminantColumnNameColumnIndex,t.fileName));
                     }
                 }                
             }
@@ -758,39 +759,48 @@ public sealed class EditorStrayFogXLS
             {
                 sbPropertyReplace.Append(
                     propertyTemplete
-                    .Replace("#Name#", c.columnName)
+                    .Replace("#Name#", c.xlsColumnName)
                     .Replace("#Desc#", c.desc)
                     .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                     .Replace("#DataType#", c.dataType.ToString())
                     .Replace("#ArrayDimension#", c.arrayDimension.ToString())
                     .Replace("#XlsColumnIndex#", c.xlsColumnIndex.ToString())
+                    .Replace("#SqliteColumnName#", c.sqliteColumnName)
                     .Replace("#SqliteParameterName#", c.sqliteParameterName)
                     .Replace("#IsPK#", c.isPK.ToString().ToLower())
                     );
                 hasPK |= c.isPK;
-                if (!t.isDeterminant)
+                if (t.isDeterminant)
+                {
+                    sbSetPropertyReplace.Append(
+                            setPropertyTemplete
+                            .Replace("#Name#", c.xlsColumnName)
+                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
+                        );
+                }
+                else
                 {
                     if (c.isPK)
                     {
                         tempConstructorParamSummary.Add(
                         constructorParamSummaryTemplete
-                            .Replace("#Name#", c.columnName)
+                            .Replace("#Name#", c.xlsColumnName)
                         );
                         tempConstructorFormalParams.Add(
                         constructorFormalParamsTemplete
-                            .Replace("#Name#", c.columnName)
+                            .Replace("#Name#", c.xlsColumnName)
                             .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                         );
                         tempConstructorSetParams.Add(
                         constructorSetParamsTemplete
-                            .Replace("#Name#", c.columnName)
+                            .Replace("#Name#", c.xlsColumnName)
                         );
                     }
                     else
                     {
                         sbSetPropertyReplace.Append(
                             setPropertyTemplete
-                            .Replace("#Name#", c.columnName)
+                            .Replace("#Name#", c.xlsColumnName)
                             .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                         );
                     }
@@ -819,6 +829,13 @@ public sealed class EditorStrayFogXLS
                     .Replace(constructorSetParamsReplaceTemplete, sbConstructorSetParamsReplace.ToString())
                     );
             }
+
+            if (!t.canModifyData)
+            {
+                sbSetPropertyReplace.Length = 0;
+                sbTableConstructorReplace.Length = 0;
+            }
+
             cfgEntityScript.SetName(t.className);
             cfgEntityScript.SetText(entityScriptTemplete
 
@@ -883,7 +900,8 @@ public sealed class EditorStrayFogXLS
                         for (int i = msrColumnDataRowStartIndex; i <= sheet.Dimension.Rows; i++)
                         {
                             tempColumn = new EditorXlsTableColumnSchema();
-                            tempColumn.columnName = sheet.GetValue<string>(i, msrDeterminantColumnNameColumnIndex).ToString();
+                            tempColumn.xlsColumnName = sheet.GetValue<string>(i, msrDeterminantColumnNameColumnIndex).ToString();
+                            tempColumn.sqliteColumnName = sheet.GetValue<string>(msrColumnNameRowIndex, msrDeterminantColumnNameColumnIndex).ToString();
                             tempDataType = enSQLiteDataType.String;
                             tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
                             StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(i, msrDeterminantColumnTypeColumnIndex).ToString(), ref tempDataType, ref tempDataTypeArrayDimension);

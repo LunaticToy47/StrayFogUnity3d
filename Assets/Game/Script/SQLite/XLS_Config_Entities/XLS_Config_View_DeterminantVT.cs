@@ -14,21 +14,12 @@ public partial class XLS_Config_View_DeterminantVT: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// vtName
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"@vtName0",false)]	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"","@vtName0",false)]	
 	public string vtName { get; private set; }	
 	
 	#endregion
 
 	#region Set Properties
-	
-	/// <summary>
-	/// Set vtName
-	/// </summary>
-	/// <param name="_vtName">vtName value</param>
-	public void Set_vtName(string _vtName)
-	{
-		vtName = _vtName;
-	}
 	
 	#endregion
 }

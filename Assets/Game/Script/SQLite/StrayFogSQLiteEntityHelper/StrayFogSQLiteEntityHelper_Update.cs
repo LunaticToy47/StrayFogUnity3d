@@ -125,29 +125,29 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     {
                         if (StrayFogGamePools.setting.isInternal)
                         {
-                            #region 更新内部资源 XLS表                      
-                            //if (File.Exists(tableAttribute.xlsFilePath))
-                            //{
-                            //    ExcelPackage pck = OnGetExcelPackage(tableAttribute);
-                            //    {
-                            //        if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
-                            //        {
-                            //            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                            //            if (sheet.Dimension.Rows >= tableAttribute.xlsColumnValueIndex)
-                            //            {
-                            //                foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
-                            //                {
-                            //                    sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
-                            //                }
-                            //            }
-                            //        }
-                            //    }
-                            //}
+                            #region 更新内部资源 XLS表
+                            if (File.Exists(tableAttribute.xlsFilePath))
+                            {
+                                ExcelPackage pck = OnGetExcelPackage(tableAttribute);
+                                {
+                                    if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
+                                    {
+                                        ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                                        if (sheet.Dimension.Rows >= tableAttribute.xlsColumnValueIndex)
+                                        {
+                                            foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
+                                            {
+                                                sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             #endregion
                         }
                         else
                         {
-                            #region 插入外部资源 SQLite
+                            #region 更新外部资源 SQLite
                             #endregion
                         }
                     }

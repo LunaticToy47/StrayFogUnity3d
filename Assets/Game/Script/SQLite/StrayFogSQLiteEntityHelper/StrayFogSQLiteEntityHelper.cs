@@ -41,7 +41,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static T OnCreateInstance<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        return (T)Activator.CreateInstance(typeof(T), _tableAttribute.hasPkColumn);
+        return (T)Activator.CreateInstance(typeof(T), _tableAttribute.hasPkColumn && _tableAttribute.canModifyData);
     }
     #endregion
 
