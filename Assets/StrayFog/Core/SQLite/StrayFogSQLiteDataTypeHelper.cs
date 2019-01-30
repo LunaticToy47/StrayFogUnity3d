@@ -370,7 +370,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <param name="_fieldAttribute">字段属性</param>
     /// <returns>转换后的列值</returns>
     public static object GetValueFromEntityPropertyToXlsColumn(object _entity, PropertyInfo _propertyInfo, SQLiteFieldTypeAttribute _fieldAttribute)
-    {        
+    {
         object srcValue = _propertyInfo.GetValue(_entity, null);
         ArrayList arrayListOne = null;
         ArrayList arrayListTwo = null;

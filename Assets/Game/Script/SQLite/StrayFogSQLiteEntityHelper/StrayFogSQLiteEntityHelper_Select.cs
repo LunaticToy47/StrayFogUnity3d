@@ -3,6 +3,8 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using UnityEngine;
 /// <summary>
 /// StrayFogSQLite表实体帮助类【Select】
 /// </summary>
@@ -252,7 +254,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         return result;
     }
     #endregion
-
+    
     #region OnInsertToCacheEntityData
     /// <summary>
     /// 插入数据到缓存
@@ -260,21 +262,67 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// <typeparam name="T">类型</typeparam>
     /// <param name="_entity">实体</param>
     /// <param name="_tableAttribute">表属性</param>
-    static void OnInsertToCacheEntityData<T>(T _entity, SQLiteTableMapAttribute _tableAttribute)
+    /// <param name="_xlsRowIndex">XLS表行索引</param>
+    /// <returns>true:成功,false:失败</returns>
+    static bool OnInsertToCacheEntityData<T>(T _entity, SQLiteTableMapAttribute _tableAttribute,out int _xlsRowIndex)
         where T : AbsStrayFogSQLiteEntity
     {
-        if (mCacheEntityData.ContainsKey(_tableAttribute.id))
+        bool result = false;
+        List<T> data = Select<T>();
+        StringBuilder sbLog = new StringBuilder();
+        _xlsRowIndex = -1;
+        if (_tableAttribute.hasPkColumn)
         {
-            List<T> result = (List<T>)mCacheEntityData[_tableAttribute.id];
-            result.Add(_entity);
+            object cacheValue = null;
+            object entityValue = null;
+            bool hasSamePKValue = true;
+            int sameRowIndex = 0;
+            #region 查询缓存数据中是否有相同主键数据
+            for (int i = 0; i < data.Count; i++)
+            {
+                hasSamePKValue = true;
+                sameRowIndex = _tableAttribute.xlsDataStartRowIndex + i;
+                foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
+                {
+                    if (key.Value.isPK)
+                    {
+                        cacheValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(data[i], null);
+                        entityValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(_entity, null);
+                        hasSamePKValue &= cacheValue.Equals(entityValue);
+                        sbLog.AppendFormat("【{0}->{1}】", msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].Name, entityValue);
+                    }
+                }
+                if (hasSamePKValue)
+                {
+                    break;
+                }
+            }
+            #endregion
+
+            if (hasSamePKValue)
+            {
+                Debug.LogErrorFormat("【{0}】has the same value 【row->{1}】{2}", _tableAttribute.xlsFilePath, sameRowIndex, sbLog.ToString());
+            }
+            else
+            {
+                _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
+                data.Add(_entity);
+                result = true;
+            }
         }
+        else
+        {
+            _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
+            result = true;
+        }
+        return result;
     }
     #endregion
 
-        #region Select 查询数据集
-        /// <summary>
-        /// 实体缓存数据
-        /// </summary>
+    #region Select 查询数据集
+    /// <summary>
+    /// 实体缓存数据
+    /// </summary>
     static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
     /// <summary>
     /// 查询数据集
