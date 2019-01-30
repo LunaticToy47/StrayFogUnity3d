@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using UnityEngine;
+/// <summary>
 /// StrayFogSQLite表实体帮助类【DbSQLite】
 /// </summary>
 public sealed partial class StrayFogSQLiteEntityHelper
@@ -14,6 +15,9 @@ public sealed partial class StrayFogSQLiteEntityHelper
             foreach (StrayFogSQLiteHelper db in msStrayFogSQLiteHelperMaping.Values)
             {
                 db.Close();
+#if UNITY_EDITOR
+                Debug.LogFormat("Close DbSQlite =>{0}",db.connectionString);
+#endif
             }
         }
     }

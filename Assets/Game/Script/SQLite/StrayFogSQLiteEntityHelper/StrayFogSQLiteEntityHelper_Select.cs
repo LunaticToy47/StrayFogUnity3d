@@ -28,7 +28,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
             object tempValue = null;
             string tempName = string.Empty;
             bool tempIsAllValueNull = false;
-            using (ExcelPackage pck = new ExcelPackage(new FileInfo(_tableAttribute.xlsFilePath)))
+            ExcelPackage pck = OnGetExcelPackage(_tableAttribute);
             {
                 if (pck.Workbook.Worksheets.Count > 0)
                 {
@@ -306,23 +306,26 @@ public sealed partial class StrayFogSQLiteEntityHelper
             {
                 _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
                 data.Add(_entity);
+                OnRefreshCacheData<T>(_tableAttribute,data);
                 result = true;
             }
         }
         else
         {
             _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
+            data.Add(_entity);
+            OnRefreshCacheData<T>(_tableAttribute, data);
             result = true;
         }
         return result;
     }
-    #endregion
+    #endregion    
 
     #region Select 查询数据集
     /// <summary>
-    /// 实体缓存数据
+    /// 已从XLS读取数据的数据表
     /// </summary>
-    static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
+    static List<int> mCacheReadFromXLS = new List<int>();
     /// <summary>
     /// 查询数据集
     /// </summary>
@@ -345,14 +348,15 @@ public sealed partial class StrayFogSQLiteEntityHelper
     {
         List<T> result = new List<T>();
         SQLiteTableMapAttribute tableAttribute = OnGetTableAttribute<T>();
-        if (mCacheEntityData.ContainsKey(tableAttribute.id))
+        if (mCacheReadFromXLS.Contains(tableAttribute.id))
         {
-            result = (List<T>)mCacheEntityData[tableAttribute.id];
+            result = OnGetCacheData<T>(tableAttribute);
         }
         else
         {
             result = OnReadAll<T>(tableAttribute);
-            mCacheEntityData.Add(tableAttribute.id, result);
+            OnRefreshCacheData<T>(tableAttribute, result);
+            mCacheReadFromXLS.Add(tableAttribute.id);
         }
 
         if (_condition != null)

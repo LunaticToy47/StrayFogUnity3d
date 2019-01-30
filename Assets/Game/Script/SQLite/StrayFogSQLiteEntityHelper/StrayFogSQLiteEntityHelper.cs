@@ -1,6 +1,9 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using UnityEngine;
 /// <summary>
 /// StrayFogSQLite表实体帮助类
 /// </summary>
@@ -66,7 +69,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
             {
                 foreach (PropertyInfo p in pps)
                 {
-                    propertyKey = p.Name.UniqueHashCode();                    
+                    propertyKey = p.Name.UniqueHashCode();
                     fieldAttribute = p.GetFirstAttribute<SQLiteFieldTypeAttribute>();
                     if (fieldAttribute != null)
                     {
@@ -77,8 +80,8 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id].ContainsKey(propertyKey))
                         {
                             msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id].Add(propertyKey, fieldAttribute);
-                        }                       
-                    }                    
+                        }
+                    }
                 }
             }
         }
@@ -98,6 +101,82 @@ public sealed partial class StrayFogSQLiteEntityHelper
         where T : AbsStrayFogSQLiteEntity
     {
         return (T)Activator.CreateInstance(typeof(T), _tableAttribute.hasPkColumn);
+    }
+    #endregion
+
+    #region OnGetExcelPackage 获得ExcelPackage
+    /// <summary>
+    /// ExcelPackage映射
+    /// </summary>
+    static Dictionary<int, ExcelPackage> mExcelPackageMaping = new Dictionary<int, ExcelPackage>();
+    /// <summary>
+    /// 获得ExcelPackage
+    /// </summary>
+    /// <param name="_tableAttribute">表属性</param>
+    /// <returns>ExcelPackage</returns>
+    static ExcelPackage OnGetExcelPackage(SQLiteTableMapAttribute _tableAttribute)
+    {
+        if (!mExcelPackageMaping.ContainsKey(_tableAttribute.id))
+        {
+            mExcelPackageMaping.Add(_tableAttribute.id, new ExcelPackage(new FileInfo(_tableAttribute.xlsFilePath)));
+        }
+        return mExcelPackageMaping[_tableAttribute.id];
+    }
+    #endregion
+
+    #region mCacheEntityData 实体缓存数据
+    /// <summary>
+    /// 实体缓存数据
+    /// </summary>
+    static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
+    #endregion
+
+    #region OnRefreshCacheData 刷新内存
+    /// <summary>
+    /// 刷新内存
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_tableAttribute">表属性</param>
+    /// <param name="_data">数据</param>
+    static void OnRefreshCacheData<T>(SQLiteTableMapAttribute _tableAttribute, List<T> _data) where T : AbsStrayFogSQLiteEntity
+    {
+        if (!mCacheEntityData.ContainsKey(_tableAttribute.id))
+        {
+            mCacheEntityData.Add(_tableAttribute.id, _data);
+        }
+        else
+        {
+            mCacheEntityData[_tableAttribute.id] = _data;
+        }
+    }
+    #endregion
+
+    #region OnGetCacheData 获得内存数据
+    /// <summary>
+    /// 获得内存数据
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_tableAttribute">表属性</param>
+    static List<T> OnGetCacheData<T>(SQLiteTableMapAttribute _tableAttribute) where T : AbsStrayFogSQLiteEntity
+    {
+        return mCacheEntityData.ContainsKey(_tableAttribute.id) ? (List<T>)mCacheEntityData[_tableAttribute.id] : new List<T>();
+    }
+    #endregion
+
+    #region SaveExcelPackage 保存ExcelPackage
+    /// <summary>
+    /// 保存ExcelPackage
+    /// </summary>
+    public static void SaveExcelPackage()
+    {
+        foreach (ExcelPackage p in mExcelPackageMaping.Values)
+        {
+            p.Save();
+#if UNITY_EDITOR
+            Debug.LogFormat("Save ExcelPackage =>{0}", p.File.FullName);
+#endif
+        }
+        mExcelPackageMaping.Clear();
     }
     #endregion
 }
