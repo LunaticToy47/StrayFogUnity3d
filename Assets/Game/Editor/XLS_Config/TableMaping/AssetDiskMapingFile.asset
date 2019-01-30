@@ -20,7 +20,7 @@ MonoBehaviour:
   canModifyData: 0
   columns:
   - xlsColumnIndex: 1
-    xlsColumnName: fileId
+    columnName: fileId
     sqliteColumnName: fileId
     desc: "\u6587\u4EF6id"
     isPK: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
     dataType: 6
     arrayDimension: 0
   - xlsColumnIndex: 2
-    xlsColumnName: folderId
+    columnName: folderId
     sqliteColumnName: folderId
     desc: "\u6587\u4EF6\u5939id"
     isPK: 1
@@ -36,7 +36,7 @@ MonoBehaviour:
     dataType: 6
     arrayDimension: 0
   - xlsColumnIndex: 3
-    xlsColumnName: inSide
+    columnName: inSide
     sqliteColumnName: inSide
     desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
     dataType: 14
     arrayDimension: 0
   - xlsColumnIndex: 4
-    xlsColumnName: ext
+    columnName: ext
     sqliteColumnName: ext
     desc: "\u6269\u5C55\u540D"
     isPK: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
     dataType: 14
     arrayDimension: 0
   - xlsColumnIndex: 5
-    xlsColumnName: outSide
+    columnName: outSide
     sqliteColumnName: outSide
     desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
     dataType: 14
     arrayDimension: 0
   - xlsColumnIndex: 6
-    xlsColumnName: extEnumValue
+    columnName: extEnumValue
     sqliteColumnName: extEnumValue
     desc: "\u6269\u5C55\u540D\u679A\u4E3E\u503C"
     isPK: 0

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 /// <summary>
 /// XLS表格列架构
 /// </summary>
@@ -12,16 +13,17 @@ public class EditorXlsTableColumnSchema
     [ReadOnly]
     public int xlsColumnIndex;
     /// <summary>
-    /// XLS表列名称
+    /// 列名称
     /// </summary>
-    [AliasTooltip("XLS表列名称")]
+    [AliasTooltip("列名称")]
     [ReadOnly]
-    public string xlsColumnName;
+    public string columnName;
     /// <summary>
     /// SQLite列名称
     /// </summary>
     [AliasTooltip("SQLite列名称")]
     [ReadOnly]
+    [HideInInspector]
     public string sqliteColumnName;
     /// <summary>
     /// 列描述
@@ -56,6 +58,6 @@ public class EditorXlsTableColumnSchema
     /// <summary>
     /// 数据为参数名称
     /// </summary>
-    public string sqliteParameterName { get { return string.Format("@{0}{1}", xlsColumnName, xlsColumnIndex); } }
+    public string sqliteParameterName { get { return string.Format("@{0}{1}", columnName, xlsColumnIndex); } }
     #endregion
 }

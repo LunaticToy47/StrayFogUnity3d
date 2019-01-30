@@ -19,16 +19,16 @@ MonoBehaviour:
   isDeterminant: 1
   canModifyData: 0
   columns:
-  - xlsColumnIndex: 0
-    xlsColumnName: GuideTip
+  - xlsColumnIndex: 4
+    columnName: GuideTip
     sqliteColumnName: name
     desc: "\u5F15\u5BFC\u63D0\u793A"
     isPK: 0
     isNull: 0
     dataType: 14
     arrayDimension: 0
-  - xlsColumnIndex: 0
-    xlsColumnName: LobbyTip
+  - xlsColumnIndex: 5
+    columnName: LobbyTip
     sqliteColumnName: name
     desc: "\u5927\u5385\u63D0\u793A"
     isPK: 0

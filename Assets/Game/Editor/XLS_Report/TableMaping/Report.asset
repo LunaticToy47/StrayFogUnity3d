@@ -20,7 +20,7 @@ MonoBehaviour:
   canModifyData: 1
   columns:
   - xlsColumnIndex: 1
-    xlsColumnName: idCol
+    columnName: idCol
     sqliteColumnName: idCol
     desc: "id\u4E3B\u952E"
     isPK: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
     dataType: 6
     arrayDimension: 0
   - xlsColumnIndex: 2
-    xlsColumnName: stringCol
+    columnName: stringCol
     sqliteColumnName: stringCol
     desc: "\u5B57\u7B26\u4E32"
     isPK: 0

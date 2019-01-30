@@ -20,7 +20,7 @@ MonoBehaviour:
   canModifyData: 0
   columns:
   - xlsColumnIndex: 1
-    xlsColumnName: folderId
+    columnName: folderId
     sqliteColumnName: folderId
     desc: "\u6587\u4EF6\u5939Id"
     isPK: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
     dataType: 6
     arrayDimension: 0
   - xlsColumnIndex: 2
-    xlsColumnName: inSide
+    columnName: inSide
     sqliteColumnName: inSide
     desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
     dataType: 14
     arrayDimension: 0
   - xlsColumnIndex: 3
-    xlsColumnName: outSide
+    columnName: outSide
     sqliteColumnName: outSide
     desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0

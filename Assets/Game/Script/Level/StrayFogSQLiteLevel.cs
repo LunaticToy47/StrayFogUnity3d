@@ -212,6 +212,7 @@ public class StrayFogSQLiteLevel : AbsLevel
         watch.Reset();
         watch.Start();
         reports[0].Set_ReportTip(Guid.NewGuid().ToString());
+        reports[0].Set_DeterminantTip(Guid.NewGuid().ToString());
         StrayFogSQLiteEntityHelper.Update(reports[0]);
         watch.Stop();
         UnityEngine.Debug.LogFormat("Update【Determinant Table】SQLite Data 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());

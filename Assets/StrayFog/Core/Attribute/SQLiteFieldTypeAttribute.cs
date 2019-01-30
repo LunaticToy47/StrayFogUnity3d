@@ -16,7 +16,7 @@ public class SQLiteFieldTypeAttribute : AliasTooltipAttribute
     /// <param name="_isPK">是否是主键</param>
     public SQLiteFieldTypeAttribute(enSQLiteDataType _dataType,
         enSQLiteDataTypeArrayDimension _arrayDimension,
-        int _xlsColumnIndex,string _sqliteColumnName, string _sqliteParameterName, bool _isPK)
+        int _xlsColumnIndex, string _sqliteColumnName, string _sqliteParameterName, bool _isPK)
         : base(_dataType.ToString() + "_" + _arrayDimension.ToString())
     {
         dataType = _dataType;

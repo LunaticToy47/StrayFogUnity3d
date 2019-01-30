@@ -19,16 +19,16 @@ MonoBehaviour:
   isDeterminant: 1
   canModifyData: 1
   columns:
-  - xlsColumnIndex: 0
-    xlsColumnName: ReportTip
+  - xlsColumnIndex: 4
+    columnName: ReportTip
     sqliteColumnName: name
     desc: "\u62A5\u8868\u63D0\u793A"
     isPK: 0
     isNull: 0
     dataType: 14
     arrayDimension: 0
-  - xlsColumnIndex: 0
-    xlsColumnName: DeterminantTip
+  - xlsColumnIndex: 5
+    columnName: DeterminantTip
     sqliteColumnName: name
     desc: "\u884C\u5217\u5F0F\u63D0\u793A"
     isPK: 0

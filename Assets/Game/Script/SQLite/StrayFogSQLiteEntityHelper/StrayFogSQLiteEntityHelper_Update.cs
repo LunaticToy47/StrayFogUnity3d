@@ -36,7 +36,12 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     if (_tableAttribute.isDeterminant)
                     {
                         #region 更新行列式表
-
+                        if (data.Count > 0)
+                        {
+                            data[0] = _entity;
+                            OnUpdateCacheData(data, _tableAttribute, false);
+                            result = true;
+                        }
                         #endregion
                     }
                     else
@@ -133,13 +138,23 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                     if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
                                     {
                                         ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                                        if (sheet.Dimension.Rows >= tableAttribute.xlsColumnValueIndex)
+                                        if (tableAttribute.isDeterminant)
                                         {
                                             foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
                                             {
-                                                sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
+                                                sheet.Cells[key.Value.xlsColumnIndex, tableAttribute.xlsColumnValueIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
                                             }
                                         }
+                                        else
+                                        {
+                                            if (sheet.Dimension.Rows >= tableAttribute.xlsColumnValueIndex)
+                                            {
+                                                foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
+                                                {
+                                                    sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
+                                                }
+                                            }
+                                        }                                        
                                     }
                                 }
                             }
