@@ -151,23 +151,15 @@ public sealed class EditorStrayFogXLS
     /// <param name="_xlsPath">XLS表路径</param>
     static void OnClearXlsData(string _xlsPath)
     {
-        string newXlsPath = _xlsPath + "_New";
-        using (FileStream fs = new FileStream(_xlsPath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        using (ExcelPackage pck = new ExcelPackage(new FileInfo(_xlsPath)))
         {
-            ExcelPackage pck = new ExcelPackage(fs);
             ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
             if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
             {
                 sheet.DeleteRow(msrColumnDataRowStartIndex, sheet.Dimension.Rows);
-                pck.SaveAs(new FileInfo(newXlsPath));
+                pck.Save();
             }
-        }
-
-        if (File.Exists(newXlsPath))
-        {
-            File.Delete(_xlsPath);
-            File.Move(newXlsPath, _xlsPath);
-        }
+        }        
     }
     #endregion
 
@@ -177,37 +169,31 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     /// <param name="_xlsPath">XLS表路径</param>
     /// <param name="_isDeleteFunc">是否清除</param>
-    static void OnDeleteXlsData(string _xlsPath,Func<ExcelWorksheet,int,bool> _isDeleteFunc)
+    static void OnDeleteXlsData(string _xlsPath, Func<ExcelWorksheet, int, bool> _isDeleteFunc)
     {
         string newXlsPath = _xlsPath + "_New";
         bool isDel = false;
         int delCount = 0;
-        using (FileStream fs = new FileStream(_xlsPath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        using (ExcelPackage pck = new ExcelPackage(new FileInfo(_xlsPath)))
         {
-            ExcelPackage pck = new ExcelPackage(fs);
             ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
             if (sheet.Dimension.Rows >= msrColumnDataRowStartIndex)
             {
                 int maxRow = sheet.Dimension.Rows;
                 for (int row = msrColumnDataRowStartIndex; row <= maxRow; row++)
                 {
-                    if (_isDeleteFunc(sheet,row-delCount))
+                    if (_isDeleteFunc(sheet, row - delCount))
                     {
                         sheet.DeleteRow(row - delCount, 1, true);
                         isDel |= true;
                         delCount++;
                     }
-                }               
+                }
             }
             if (isDel)
             {
-                pck.SaveAs(new FileInfo(newXlsPath));
+                pck.Save();
             }
-        }
-        if (File.Exists(newXlsPath))
-        {
-            File.Delete(_xlsPath);
-            File.Move(newXlsPath, _xlsPath);
         }
     }
     #endregion
@@ -245,11 +231,10 @@ public sealed class EditorStrayFogXLS
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         EditorXlsTableSchema tempTable = null;
         EditorXlsTableColumnSchema tempColumn = null;
-        Dictionary<string,EditorXlsTableColumnSchema> tempSrcTableColumns = new Dictionary<string, EditorXlsTableColumnSchema>();        
+        Dictionary<string, EditorXlsTableColumnSchema> tempSrcTableColumns = new Dictionary<string, EditorXlsTableColumnSchema>();
         string tempColumnName = string.Empty;
-        using (FileStream fs = new FileStream(_xlsAsset.path, FileMode.Open, FileAccess.Read, FileShare.Read))
+        using (ExcelPackage pck = new ExcelPackage(new FileInfo(_xlsAsset.path)))
         {
-            ExcelPackage pck = new ExcelPackage(fs);
             if (pck.Workbook.Worksheets.Count > 0)
             {
                 ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
@@ -274,7 +259,7 @@ public sealed class EditorStrayFogXLS
                 }
                 #endregion
 
-                tempTable =(EditorXlsTableSchema)_xlsAsset.tableAssetConfig.engineAsset;
+                tempTable = (EditorXlsTableSchema)_xlsAsset.tableAssetConfig.engineAsset;
                 tempTable.fileName = _xlsAsset.path;
                 tempTable.dbPath = _xlsAsset.dbPath;
                 tempTable.tableName = _xlsAsset.nameWithoutExtension;
@@ -290,14 +275,14 @@ public sealed class EditorStrayFogXLS
                         {
                             tempColumnName = col.columnName.ToUpper();
                             tempSrcTableColumns.Add(tempColumnName, col);
-                        }                        
+                        }
                     }
                 }
                 #endregion
 
                 List<EditorXlsTableColumnSchema> targetColumns = new List<EditorXlsTableColumnSchema>();
                 if (sheet.Dimension.Rows >= msrColumnNameRowIndex)
-                {                    
+                {
                     for (int i = 1; i <= sheet.Dimension.Columns; i++)
                     {
                         tempColumnName = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString().ToUpper();
@@ -307,7 +292,7 @@ public sealed class EditorStrayFogXLS
                         }
                         else
                         {
-                            tempColumn = new EditorXlsTableColumnSchema();                           
+                            tempColumn = new EditorXlsTableColumnSchema();
                         }
                         tempColumn.xlsColumnIndex = i;
                         tempColumn.columnName = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString();
@@ -888,9 +873,8 @@ public sealed class EditorStrayFogXLS
             EditorXlsTableColumnSchema tempColumn = null;
             enSQLiteDataType tempDataType = enSQLiteDataType.String;
             enSQLiteDataTypeArrayDimension tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
-            using (FileStream fs = new FileStream(_table.fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (ExcelPackage pck = new ExcelPackage(new FileInfo(_table.fileName)))
             {
-                ExcelPackage pck = new ExcelPackage(fs);
                 if (pck.Workbook.Worksheets.Count > 0)
                 {
                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
@@ -982,9 +966,8 @@ public sealed class EditorStrayFogXLS
             tempValueSql = new List<string>();
 
             tempInsertTable[tables[i].dbKey][tables[i].tableName].Add(string.Format("DELETE FROM {0}", tables[i].tableName), new List<SqliteParameter>());
-            using (FileStream fs = new FileStream(tables[i].fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+            using (ExcelPackage pck = new ExcelPackage(new FileInfo(tables[i].fileName)))
             {
-                ExcelPackage pck = new ExcelPackage(fs);
                 ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
                 bool tempIsAllValueNull = false;
                 object tempValue = null;
@@ -1055,12 +1038,10 @@ public sealed class EditorStrayFogXLS
             foreach (string file in cfg.paths)
             {
                 OnClearXlsData(file);
-                string newXlsPath = file + "_New";
                 List<int> saveIds = new List<int>();
                 int sameRows = 0;
-                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+                using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
                 {
-                    ExcelPackage pck = new ExcelPackage(fs);
                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
                     for (int i = 0; i < _nodes.Count; i++)
                     {
@@ -1077,12 +1058,7 @@ public sealed class EditorStrayFogXLS
                         }
                         _progressCallback(_nodes[i].name, (i + 1) / (float)_nodes.Count);
                     }
-                    pck.SaveAs(new FileInfo(newXlsPath));
-                }
-                if (File.Exists(newXlsPath))
-                {
-                    File.Delete(file);
-                    File.Move(newXlsPath, file);
+                    pck.Save();
                 }
             }
         }
@@ -1109,12 +1085,10 @@ public sealed class EditorStrayFogXLS
             foreach (string file in cfg.paths)
             {
                 OnClearXlsData(file);
-                string newXlsPath = file + "_New";
                 List<int> saveIds = new List<int>();
                 int sameRows = 0;
-                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+                using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
                 {
-                    ExcelPackage pck = new ExcelPackage(fs);
                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
                     for (int i = 0; i < _nodes.Count; i++)
                     {
@@ -1134,12 +1108,7 @@ public sealed class EditorStrayFogXLS
                         }
                         _progressCallback(_nodes[i].name, (i + 1) / (float)_nodes.Count);
                     }
-                    pck.SaveAs(new FileInfo(newXlsPath));
-                }
-                if (File.Exists(newXlsPath))
-                {
-                    File.Delete(file);
-                    File.Move(newXlsPath, file);
+                    pck.Save();
                 }
             }
         }
@@ -1204,10 +1173,8 @@ public sealed class EditorStrayFogXLS
         {
             foreach (string file in wfg.paths)
             {
-                string newXlsPath = file + "_New";
-                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+                using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
                 {
-                    ExcelPackage pck = new ExcelPackage(fs);
                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
                     for (int i = 0; i < _windows.Count; i++)
                     {
@@ -1227,12 +1194,7 @@ public sealed class EditorStrayFogXLS
                         sheet.Cells[msrColumnDataRowStartIndex + i, 14].Value = Convert.ToInt32(_windows[i].assetNode.isGuideWindow);
                         _progressCallback(_windows[i].path, (i + 1) / (float)_windows.Count);
                     }
-                    pck.SaveAs(new FileInfo(newXlsPath));
-                }
-                if (File.Exists(newXlsPath))
-                {
-                    File.Delete(file);
-                    File.Move(newXlsPath, file);
+                    pck.Save();
                 }
             }
         }

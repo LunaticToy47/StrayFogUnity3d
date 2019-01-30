@@ -28,9 +28,8 @@ public sealed partial class StrayFogSQLiteEntityHelper
             object tempValue = null;
             string tempName = string.Empty;
             bool tempIsAllValueNull = false;
-            using (FileStream fs = new FileStream(_tableAttribute.xlsFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (ExcelPackage pck = new ExcelPackage(new FileInfo(_tableAttribute.xlsFilePath)))
             {
-                ExcelPackage pck = new ExcelPackage(fs);
                 if (pck.Workbook.Worksheets.Count > 0)
                 {
                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];

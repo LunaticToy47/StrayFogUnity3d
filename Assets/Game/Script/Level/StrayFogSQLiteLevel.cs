@@ -76,4 +76,15 @@ public class StrayFogSQLiteLevel : AbsLevel
 
         });
     }
+
+    /// <summary>
+    /// OnGUI
+    /// </summary>
+    void OnGUI()
+    {
+        if (GUILayout.Button("Excute"))
+        {
+            Awake();
+        }
+    }
 }

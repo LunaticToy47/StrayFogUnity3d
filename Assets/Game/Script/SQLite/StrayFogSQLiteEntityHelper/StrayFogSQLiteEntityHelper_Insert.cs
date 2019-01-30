@@ -21,8 +21,6 @@ public sealed partial class StrayFogSQLiteEntityHelper
     {
         SQLiteTableMapAttribute tableAttribute = OnGetTableAttribute<T>();
         bool result = false;
-        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-        watch.Start();
         if (tableAttribute.canModifyData)
         {
             if (tableAttribute.isDeterminant)
@@ -31,18 +29,17 @@ public sealed partial class StrayFogSQLiteEntityHelper
             }
             else
             {
-                int xlsRowIndex = -1;               
-                if (OnInsertToCacheEntityData(_entity, tableAttribute, out xlsRowIndex))
+                int xlsRowIndex = -1;
+                result = OnInsertToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
+                if (result)
                 {                    
                     if (StrayFogGamePools.setting.isInternal)
                     {                                                
-                        #region 插入内部资源 XLS表
-                        string newXlsFilePath = tableAttribute.xlsFilePath + "_New";
+                        #region 插入内部资源 XLS表                      
                         if (File.Exists(tableAttribute.xlsFilePath))
                         {
-                            using (FileStream fs = new FileStream(tableAttribute.xlsFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                            {                                
-                                ExcelPackage pck = new ExcelPackage(fs);                                
+                           using (ExcelPackage pck = new ExcelPackage(new FileInfo(tableAttribute.xlsFilePath)))
+                            {
                                 if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
                                 {
                                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];                                    
@@ -53,15 +50,9 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                             sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
                                         }                                        
                                     }
-                                }                                
-                                pck.SaveAs(new FileInfo(newXlsFilePath));//消耗2秒
+                                }
+                                pck.Save();//消耗2秒
                             }
-                        }
-                        if (File.Exists(newXlsFilePath))
-                        {
-                            File.Delete(tableAttribute.xlsFilePath);
-                            File.Move(newXlsFilePath, tableAttribute.xlsFilePath);
-                            result = true;
                         }
                         #endregion
                     }
