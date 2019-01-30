@@ -81,11 +81,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// 刷新内存
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
-    /// <param name="_tableAttribute">表属性</param>
     /// <param name="_data">数据</param>
+    /// <param name="_tableAttribute">表属性</param>
     /// <param name="_isReadFromDisk">是否是从磁盘读取数据</param>
-    static void OnUpdateCacheData<T>(SQLiteTableMapAttribute _tableAttribute, 
-        List<T> _data,bool _isReadFromDisk) where T : AbsStrayFogSQLiteEntity
+    static void OnUpdateCacheData<T>(List<T> _data, SQLiteTableMapAttribute _tableAttribute, 
+        bool _isReadFromDisk) where T : AbsStrayFogSQLiteEntity
     {
         if (!mCacheEntityData.ContainsKey(_tableAttribute.id))
         {

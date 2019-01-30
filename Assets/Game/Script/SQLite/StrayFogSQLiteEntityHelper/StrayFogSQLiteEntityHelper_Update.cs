@@ -24,6 +24,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         where T : AbsStrayFogSQLiteEntity
     {
         bool result = false;
+        _xlsRowIndex = -1;
         if (_tableAttribute.canModifyData)
         {
             switch (_tableAttribute.sqliteTableType)
@@ -32,19 +33,20 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     #region 更新数据
                     List<T> data = Select<T>();
                     StringBuilder sbLog = new StringBuilder();
-                    _xlsRowIndex = -1;
-                    if (_tableAttribute.hasPkColumn)
+                    if (_tableAttribute.isDeterminant)
                     {
-                        object cacheValue = null;
-                        object entityValue = null;
-                        bool hasSamePKValue = true;
-                        if (_tableAttribute.isDeterminant)
-                        {
+                        #region 更新行列式表
 
-                        }
-                        else
+                        #endregion
+                    }
+                    else
+                    {
+                        #region 更新普通表                        
+                        if (_tableAttribute.hasPkColumn)
                         {
-                            #region 更新普通表
+                            object cacheValue = null;
+                            object entityValue = null;
+                            bool hasSamePKValue = true;
                             int sameRowIndex = 0;
                             #region 查询缓存数据中是否有相同主键数据
                             for (int i = 0; i < data.Count; i++)
@@ -71,19 +73,19 @@ public sealed partial class StrayFogSQLiteEntityHelper
                             {
                                 _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + sameRowIndex;
                                 data[sameRowIndex] = _entity;
-                                OnUpdateCacheData<T>(_tableAttribute, data, false);
+                                OnUpdateCacheData(data, _tableAttribute, false);
                                 result = true;
                             }
                             else
                             {
                                 throw new UnityException(string.Format("【{0}】can't find value 【{1}】", _tableAttribute.xlsFilePath, sbLog.ToString()));
                             }
-                            #endregion
-                        }                        
-                    }
-                    else
-                    {
-                        throw new UnityException(string.Format("Can't be update data table 【{0}->{1}】has't 【PK】column.", _tableAttribute.sqliteTableName, _tableAttribute.xlsFilePath));
+                        }
+                        else
+                        {
+                            throw new UnityException(string.Format("Can't be update data table 【{0}->{1}】has't 【PK】column.", _tableAttribute.sqliteTableName, _tableAttribute.xlsFilePath));
+                        }
+                        #endregion
                     }
                     #endregion
                     break;

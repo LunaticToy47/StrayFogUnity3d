@@ -73,7 +73,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                             {
                                 _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
                                 data.Add(_entity);
-                                OnUpdateCacheData<T>(_tableAttribute, data, false);
+                                OnUpdateCacheData(data, _tableAttribute, false);
                                 result = true;
                             }
                         }
@@ -81,7 +81,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         {
                             _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
                             data.Add(_entity);
-                            OnUpdateCacheData<T>(_tableAttribute, data, false);
+                            OnUpdateCacheData(data, _tableAttribute, false);
                             result = true;
                         }
                         #endregion
