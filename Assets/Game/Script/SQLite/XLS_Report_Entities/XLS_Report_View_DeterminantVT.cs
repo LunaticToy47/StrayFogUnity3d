@@ -14,7 +14,7 @@ public partial class XLS_Report_View_DeterminantVT: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// vtName
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"","@vtName0",false)]	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,0,"","","@vtName0",false)]	
 	public string vtName { get; private set; }	
 	
 	#endregion

@@ -14,13 +14,13 @@ public partial class XLS_Config_Determinant_Table_GameLanguage: AbsStrayFogSQLit
 	/// <summary>
 	/// 引导提示
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"name","@GuideTip4",false)]	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"name","value","@GuideTip4",false)]	
 	public string GuideTip { get; private set; }	
 		
 	/// <summary>
 	/// 大厅提示
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"name","@LobbyTip5",false)]	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"name","value","@LobbyTip5",false)]	
 	public string LobbyTip { get; private set; }	
 	
 	#endregion

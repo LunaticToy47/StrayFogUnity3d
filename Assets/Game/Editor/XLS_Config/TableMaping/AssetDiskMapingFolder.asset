@@ -22,6 +22,7 @@ MonoBehaviour:
   - xlsColumnIndex: 1
     columnName: folderId
     sqliteColumnName: folderId
+    sqliteColumnValue: 
     desc: "\u6587\u4EF6\u5939Id"
     isPK: 1
     isNull: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   - xlsColumnIndex: 2
     columnName: inSide
     sqliteColumnName: inSide
+    sqliteColumnValue: 
     desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
     isNull: 0
@@ -38,6 +40,7 @@ MonoBehaviour:
   - xlsColumnIndex: 3
     columnName: outSide
     sqliteColumnName: outSide
+    sqliteColumnValue: 
     desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
     isPK: 0
     isNull: 0

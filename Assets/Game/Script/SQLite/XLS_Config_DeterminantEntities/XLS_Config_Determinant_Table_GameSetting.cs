@@ -14,19 +14,19 @@ public partial class XLS_Config_Determinant_Table_GameSetting: AbsStrayFogSQLite
 	/// <summary>
 	/// 分辨率
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Vector2,enSQLiteDataTypeArrayDimension.NoArray,4,"name","@resolution4",false)]	
+	[SQLiteFieldType(enSQLiteDataType.Vector2,enSQLiteDataTypeArrayDimension.NoArray,4,"name","value","@resolution4",false)]	
 	public Vector2 resolution { get; private set; }	
 		
 	/// <summary>
 	/// 帧率
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,5,"name","@targetFrameRate5",false)]	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,5,"name","value","@targetFrameRate5",false)]	
 	public int targetFrameRate { get; private set; }	
 		
 	/// <summary>
 	/// 是否运行引导
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Boolean,enSQLiteDataTypeArrayDimension.NoArray,6,"name","@isRunGuide6",false)]	
+	[SQLiteFieldType(enSQLiteDataType.Boolean,enSQLiteDataTypeArrayDimension.NoArray,6,"name","value","@isRunGuide6",false)]	
 	public bool isRunGuide { get; private set; }	
 	
 	#endregion

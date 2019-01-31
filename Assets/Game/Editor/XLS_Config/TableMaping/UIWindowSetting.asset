@@ -22,6 +22,7 @@ MonoBehaviour:
   - xlsColumnIndex: 1
     columnName: id
     sqliteColumnName: id
+    sqliteColumnValue: 
     desc: "\u7A97\u53E3id"
     isPK: 1
     isNull: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   - xlsColumnIndex: 2
     columnName: name
     sqliteColumnName: name
+    sqliteColumnValue: 
     desc: "\u7A97\u53E3\u540D\u79F0"
     isPK: 0
     isNull: 0
@@ -38,6 +40,7 @@ MonoBehaviour:
   - xlsColumnIndex: 3
     columnName: fileId
     sqliteColumnName: fileId
+    sqliteColumnValue: 
     desc: "\u6587\u4EF6id"
     isPK: 0
     isNull: 0
@@ -46,6 +49,7 @@ MonoBehaviour:
   - xlsColumnIndex: 4
     columnName: folderId
     sqliteColumnName: folderId
+    sqliteColumnValue: 
     desc: "\u6587\u4EF6\u5939id"
     isPK: 0
     isNull: 0
@@ -54,6 +58,7 @@ MonoBehaviour:
   - xlsColumnIndex: 5
     columnName: renderMode
     sqliteColumnName: renderMode
+    sqliteColumnValue: 
     desc: "\u753B\u5E03\u7ED8\u5236\u6A21\u5F0F"
     isPK: 0
     isNull: 0
@@ -62,6 +67,7 @@ MonoBehaviour:
   - xlsColumnIndex: 6
     columnName: layer
     sqliteColumnName: layer
+    sqliteColumnValue: 
     desc: "\u7A97\u53E3Layer"
     isPK: 0
     isNull: 0
@@ -70,6 +76,7 @@ MonoBehaviour:
   - xlsColumnIndex: 7
     columnName: openMode
     sqliteColumnName: openMode
+    sqliteColumnValue: 
     desc: "\u7A97\u53E3\u6253\u5F00\u6A21\u5F0F"
     isPK: 0
     isNull: 0
@@ -78,6 +85,7 @@ MonoBehaviour:
   - xlsColumnIndex: 8
     columnName: closeMode
     sqliteColumnName: closeMode
+    sqliteColumnValue: 
     desc: "\u7A97\u53E3\u5173\u95ED\u6A21\u5F0F"
     isPK: 0
     isNull: 0
@@ -86,6 +94,7 @@ MonoBehaviour:
   - xlsColumnIndex: 9
     columnName: isIgnoreOpenCloseMode
     sqliteColumnName: isIgnoreOpenCloseMode
+    sqliteColumnValue: 
     desc: "\u662F\u5426\u5FFD\u7565\u6253\u5F00\u5173\u95ED\u6A21\u5F0F"
     isPK: 0
     isNull: 0
@@ -94,6 +103,7 @@ MonoBehaviour:
   - xlsColumnIndex: 10
     columnName: isNotAutoRestoreSequenceWindow
     sqliteColumnName: isNotAutoRestoreSequenceWindow
+    sqliteColumnValue: 
     desc: "\u662F\u5426\u662F\u4E0D\u53EF\u81EA\u52A8\u6062\u590D\u5E8F\u5217\u7A97\u53E3"
     isPK: 0
     isNull: 0
@@ -102,6 +112,7 @@ MonoBehaviour:
   - xlsColumnIndex: 11
     columnName: isDonotDestroyInstance
     sqliteColumnName: isDonotDestroyInstance
+    sqliteColumnValue: 
     desc: "\u662F\u5426\u662F\u4E0D\u53EF\u9500\u6BC1\u5B9E\u4F8B"
     isPK: 0
     isNull: 0
@@ -110,6 +121,7 @@ MonoBehaviour:
   - xlsColumnIndex: 12
     columnName: isImmediateDisplay
     sqliteColumnName: isImmediateDisplay
+    sqliteColumnValue: 
     desc: "\u662F\u5426\u7ACB\u5373\u663E\u793A"
     isPK: 0
     isNull: 0
@@ -118,6 +130,7 @@ MonoBehaviour:
   - xlsColumnIndex: 13
     columnName: isManualCloseWhenGotoScene
     sqliteColumnName: isManualCloseWhenGotoScene
+    sqliteColumnValue: 
     desc: "\u8DF3\u8F6C\u573A\u666F\u65F6\u662F\u5426\u624B\u52A8\u5173\u95ED"
     isPK: 0
     isNull: 0
@@ -126,6 +139,7 @@ MonoBehaviour:
   - xlsColumnIndex: 14
     columnName: isGuideWindow
     sqliteColumnName: isGuideWindow
+    sqliteColumnValue: 
     desc: "\u662F\u5426\u662F\u5F15\u5BFC\u7A97\u53E3"
     isPK: 0
     isNull: 0

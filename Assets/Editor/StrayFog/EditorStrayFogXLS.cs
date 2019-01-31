@@ -766,6 +766,7 @@ public sealed class EditorStrayFogXLS
                     .Replace("#ArrayDimension#", c.arrayDimension.ToString())
                     .Replace("#XlsColumnIndex#", c.xlsColumnIndex.ToString())
                     .Replace("#SqliteColumnName#", c.sqliteColumnName)
+                    .Replace("#SqliteColumnValue#", c.sqliteColumnValue)
                     .Replace("#SqliteParameterName#", c.sqliteParameterName)
                     .Replace("#IsPK#", c.isPK.ToString().ToLower())
                     );
@@ -904,6 +905,7 @@ public sealed class EditorStrayFogXLS
                             tempColumn.xlsColumnIndex = i;
                             tempColumn.columnName = sheet.GetValue<string>(i, msrDeterminantColumnNameColumnIndex).ToString();
                             tempColumn.sqliteColumnName = sheet.GetValue<string>(msrColumnNameRowIndex, msrDeterminantColumnNameColumnIndex).ToString();
+                            tempColumn.sqliteColumnValue = sheet.GetValue<string>(msrColumnNameRowIndex, msrDeterminantColumnDataColumnIndex).ToString();
                             tempDataType = enSQLiteDataType.String;
                             tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
                             StrayFogSQLiteDataTypeHelper.ResolveCSDataType(sheet.GetValue<string>(i, msrDeterminantColumnTypeColumnIndex).ToString(), ref tempDataType, ref tempDataTypeArrayDimension);

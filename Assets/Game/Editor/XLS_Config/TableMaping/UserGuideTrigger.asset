@@ -22,6 +22,7 @@ MonoBehaviour:
   - xlsColumnIndex: 1
     columnName: id
     sqliteColumnName: id
+    sqliteColumnValue: 
     desc: "\u6807\u8BC6id"
     isPK: 1
     isNull: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   - xlsColumnIndex: 2
     columnName: desc
     sqliteColumnName: desc
+    sqliteColumnValue: 
     desc: "\u63CF\u8FF0"
     isPK: 0
     isNull: 0
@@ -38,6 +40,7 @@ MonoBehaviour:
   - xlsColumnIndex: 3
     columnName: nextId
     sqliteColumnName: nextId
+    sqliteColumnValue: 
     desc: "\u4E0B\u4E00\u5F15\u5BFCid"
     isPK: 0
     isNull: 0
@@ -46,6 +49,7 @@ MonoBehaviour:
   - xlsColumnIndex: 4
     columnName: guideType
     sqliteColumnName: guideType
+    sqliteColumnValue: 
     desc: "\u5F15\u5BFC\u7C7B\u578B"
     isPK: 0
     isNull: 0
@@ -54,6 +58,7 @@ MonoBehaviour:
   - xlsColumnIndex: 5
     columnName: displayType
     sqliteColumnName: displayType
+    sqliteColumnValue: 
     desc: "\u663E\u793A\u7C7B\u578B"
     isPK: 0
     isNull: 0
@@ -62,6 +67,7 @@ MonoBehaviour:
   - xlsColumnIndex: 6
     columnName: levelId
     sqliteColumnName: levelId
+    sqliteColumnValue: 
     desc: "\u5173\u5361id"
     isPK: 0
     isNull: 0
@@ -70,6 +76,7 @@ MonoBehaviour:
   - xlsColumnIndex: 7
     columnName: conditions
     sqliteColumnName: conditions
+    sqliteColumnValue: 
     desc: "\u6761\u4EF6"
     isPK: 0
     isNull: 0
@@ -78,6 +85,7 @@ MonoBehaviour:
   - xlsColumnIndex: 8
     columnName: intValues
     sqliteColumnName: intValues
+    sqliteColumnValue: 
     desc: "\u6761\u4EF6Int\u503C"
     isPK: 0
     isNull: 0
@@ -86,6 +94,7 @@ MonoBehaviour:
   - xlsColumnIndex: 9
     columnName: validateId
     sqliteColumnName: validateId
+    sqliteColumnValue: 
     desc: "\u9A8C\u8BC1id"
     isPK: 0
     isNull: 0

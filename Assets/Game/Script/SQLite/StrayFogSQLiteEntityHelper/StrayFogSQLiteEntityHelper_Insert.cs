@@ -140,15 +140,15 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static void OnInsertIntoSQLite<T>(T _entity, SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        List<string> pks = new List<string>();
-        List<SqliteParameter> sps = new List<SqliteParameter>();
+        List<string> values = new List<string>();
+        List<SqliteParameter> valueSps = new List<SqliteParameter>();
         foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
         {
-            pks.Add(key.Value.sqliteParameterName);
-            sps.Add(new SqliteParameter(key.Value.sqliteParameterName, StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value)));
+            values.Add(key.Value.sqliteParameterName);
+            valueSps.Add(new SqliteParameter(key.Value.sqliteParameterName, StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value)));
         }
-        string sql = string.Format("INSERT INTO {0} VALUES({1})", _tableAttribute.sqliteTableName, string.Join(",", pks.ToArray()));
-        msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteNonQuery(sql, sps.ToArray());
+        string sql = string.Format("INSERT INTO {0} VALUES({1})", _tableAttribute.sqliteTableName, string.Join(",", values.ToArray()));
+        msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteNonQuery(sql, valueSps.ToArray());
     }
     #endregion
 

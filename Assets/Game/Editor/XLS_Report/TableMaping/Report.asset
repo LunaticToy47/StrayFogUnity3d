@@ -22,6 +22,7 @@ MonoBehaviour:
   - xlsColumnIndex: 1
     columnName: idCol
     sqliteColumnName: idCol
+    sqliteColumnValue: 
     desc: "id\u4E3B\u952E"
     isPK: 1
     isNull: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   - xlsColumnIndex: 2
     columnName: stringCol
     sqliteColumnName: stringCol
+    sqliteColumnValue: 
     desc: "\u5B57\u7B26\u4E32"
     isPK: 0
     isNull: 0

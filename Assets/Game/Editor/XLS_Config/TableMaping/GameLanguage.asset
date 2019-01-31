@@ -22,6 +22,7 @@ MonoBehaviour:
   - xlsColumnIndex: 1
     columnName: name
     sqliteColumnName: name
+    sqliteColumnValue: 
     desc: "\u540D\u79F0"
     isPK: 0
     isNull: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   - xlsColumnIndex: 2
     columnName: value
     sqliteColumnName: value
+    sqliteColumnValue: 
     desc: "\u503C"
     isPK: 0
     isNull: 0
@@ -38,6 +40,7 @@ MonoBehaviour:
   - xlsColumnIndex: 3
     columnName: valueType
     sqliteColumnName: valueType
+    sqliteColumnValue: 
     desc: "\u503C\u7C7B\u578B"
     isPK: 0
     isNull: 0
@@ -46,6 +49,7 @@ MonoBehaviour:
   - xlsColumnIndex: 4
     columnName: desc
     sqliteColumnName: desc
+    sqliteColumnValue: 
     desc: "\u8BF4\u660E"
     isPK: 0
     isNull: 0

@@ -104,6 +104,97 @@ public sealed partial class StrayFogSQLiteEntityHelper
     }
     #endregion    
 
+    #region OnUpdateToXLS 更新数据到XLS表
+    /// <summary>
+    /// 更新数据到XLS表
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_entity">实体</param>
+    /// <param name="_tableAttribute">表属性</param>
+    /// <param name="_xlsRowIndex">行索引</param>
+    static void OnUpdateToXLS<T>(T _entity, SQLiteTableMapAttribute _tableAttribute, int _xlsRowIndex)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        if (File.Exists(_tableAttribute.xlsFilePath))
+        {
+            ExcelPackage pck = OnGetExcelPackage(_tableAttribute);
+            {
+                if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    if (_tableAttribute.isDeterminant)
+                    {
+                        foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
+                        {
+                            sheet.Cells[key.Value.xlsColumnIndex, _tableAttribute.xlsColumnValueIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value);
+                        }
+                    }
+                    else
+                    {
+                        if (sheet.Dimension.Rows >= _tableAttribute.xlsColumnValueIndex)
+                        {
+                            foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
+                            {
+                                sheet.Cells[_xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region OnUpdateToSQLite 更新数据到SQLite
+    /// <summary>
+    /// 更新数据到SQLite
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_entity">实体</param>
+    /// <param name="_tableAttribute">表属性</param>
+    static void OnUpdateToSQLite<T>(T _entity, SQLiteTableMapAttribute _tableAttribute)
+        where T : AbsStrayFogSQLiteEntity
+    {        
+        Dictionary<string, List<SqliteParameter>> dicSql = new Dictionary<string, List<SqliteParameter>>();
+        if (_tableAttribute.isDeterminant)
+        {
+            string pfxSet = "Set";
+            foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
+            {
+                dicSql.Add(string.Format("UPDATE {0} SET {1} WHERE {2}",
+                    _tableAttribute.sqliteTableName,
+                    key.Value.sqliteColumnValue + "=" + key.Value.sqliteParameterName + pfxSet,
+                    key.Value.sqliteColumnName + "=" + key.Value.sqliteParameterName),
+                    new List<SqliteParameter>() {
+                        new SqliteParameter(key.Value.sqliteParameterName + pfxSet, StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value)),
+                        new SqliteParameter(key.Value.sqliteParameterName,msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].Name) }
+                    );
+            }
+            msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteTransaction(dicSql);
+        }
+        else
+        {
+            List<string> pks = new List<string>();
+            List<string> sets = new List<string>();
+            List<SqliteParameter> sps = new List<SqliteParameter>();
+            foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
+            {
+                if (key.Value.isPK)
+                {
+                    pks.Add(key.Value.sqliteColumnName + "=" + key.Value.sqliteParameterName);
+                }
+                else
+                {
+                    sets.Add(key.Value.sqliteColumnName+"="+key.Value.sqliteParameterName);
+                }
+                sps.Add(new SqliteParameter(key.Value.sqliteParameterName, StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value)));
+            }
+            string sql = string.Format("UPDATE {0} SET {1} WHERE {2}", _tableAttribute.sqliteTableName, string.Join(",", sets.ToArray()), string.Join(",", pks.ToArray()));
+            msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteNonQuery(sql, sps.ToArray());
+        }
+    }
+    #endregion
+
     #region 更新数据集
     /// <summary>
     /// 插入数据
@@ -128,40 +219,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     {
                         if (StrayFogGamePools.setting.isUseSQLite)
                         {
-                            #region 更新SQLite
-                            #endregion
+                            OnUpdateToSQLite(_entity,tableAttribute);
                         }
                         else
                         {
-                            #region 更新XLS表
-                            if (File.Exists(tableAttribute.xlsFilePath))
-                            {
-                                ExcelPackage pck = OnGetExcelPackage(tableAttribute);
-                                {
-                                    if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
-                                    {
-                                        ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                                        if (tableAttribute.isDeterminant)
-                                        {
-                                            foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
-                                            {
-                                                sheet.Cells[key.Value.xlsColumnIndex, tableAttribute.xlsColumnValueIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (sheet.Dimension.Rows >= tableAttribute.xlsColumnValueIndex)
-                                            {
-                                                foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
-                                                {
-                                                    sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            #endregion
+                            OnUpdateToXLS(_entity, tableAttribute, xlsRowIndex);
                         }
                     }
                     #endregion

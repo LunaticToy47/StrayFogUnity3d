@@ -26,6 +26,13 @@ public class EditorXlsTableColumnSchema
     [HideInInspector]
     public string sqliteColumnName;
     /// <summary>
+    /// SQLite列值
+    /// </summary>
+    [AliasTooltip("SQLite列值")]
+    [ReadOnly]
+    [HideInInspector]
+    public string sqliteColumnValue;
+    /// <summary>
     /// 列描述
     /// </summary>
     [AliasTooltip("列描述")]
