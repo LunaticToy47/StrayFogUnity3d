@@ -288,7 +288,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         else
         {
             result = OnReadAll<T>(tableAttribute);
-            OnUpdateCacheData(result, tableAttribute, true);
+            OnRefreshCacheData(result, tableAttribute, true);
             mCacheIsReadFromDisk.Add(tableAttribute.id);
         }
 

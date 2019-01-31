@@ -72,19 +72,19 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
     #endregion
 
-    #region OnUpdateCacheData 变更内存数据
+    #region OnRefreshCacheData 刷新内存数据
     /// <summary>
-    /// 变更内存数据
+    /// 需要刷新的内存数据
     /// </summary>
-    static List<int> mUpdateCacheData = new List<int>();
+    static List<int> mRefreshCacheData = new List<int>();
     /// <summary>
-    /// 刷新内存
+    /// 刷新内存数据
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
     /// <param name="_data">数据</param>
     /// <param name="_tableAttribute">表属性</param>
     /// <param name="_isReadFromDisk">是否是从磁盘读取数据</param>
-    static void OnUpdateCacheData<T>(List<T> _data, SQLiteTableMapAttribute _tableAttribute, 
+    static void OnRefreshCacheData<T>(List<T> _data, SQLiteTableMapAttribute _tableAttribute, 
         bool _isReadFromDisk) where T : AbsStrayFogSQLiteEntity
     {
         if (!mCacheEntityData.ContainsKey(_tableAttribute.id))
@@ -95,9 +95,9 @@ public sealed partial class StrayFogSQLiteEntityHelper
         {
             mCacheEntityData[_tableAttribute.id] = _data;
         }
-        if (!_isReadFromDisk && !mUpdateCacheData.Contains(_tableAttribute.id))
+        if (!_isReadFromDisk && !mRefreshCacheData.Contains(_tableAttribute.id))
         {
-            mUpdateCacheData.Add(_tableAttribute.id);
+            mRefreshCacheData.Add(_tableAttribute.id);
         }
     }
     #endregion
@@ -182,14 +182,14 @@ public sealed partial class StrayFogSQLiteEntityHelper
 #if UNITY_EDITOR
         foreach (KeyValuePair<int, ExcelPackage> key in mExcelPackageMaping)
         {
-            if (mUpdateCacheData.Contains(key.Key))
+            if (mRefreshCacheData.Contains(key.Key))
             {
                 key.Value.Save();
 
                 Debug.LogFormat("Save ExcelPackage =>{0}", key.Value.File.FullName);
             }
         }
-        mUpdateCacheData.Clear();
+        mRefreshCacheData.Clear();
         mExcelPackageMaping.Clear();
 #endif
     }

@@ -19,9 +19,7 @@ public class StrayFogSQLiteLevel : AbsLevel
             watch.Stop();
             UnityEngine.Debug.LogFormat("StrayFogGamePools.gameManager.Initialization=>{0}", watch.Elapsed.ToString());
 
-            SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
-            List<XLS_Config_Table_TableColumnMaping> maps = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_TableColumnMaping>();            
-            UnityEngine.Debug.LogFormat("Select Table【{0}->{1}】Count->{2}", tableAttribute.xlsFilePath, tableAttribute.sqliteTableName, maps.Count);
+            
         });
     }
 
@@ -30,6 +28,15 @@ public class StrayFogSQLiteLevel : AbsLevel
     /// </summary>
     void OnGUI()
     {
+        #region Select
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Select Table"))
+        {
+            SelectTable();
+        }
+        GUILayout.EndHorizontal();
+        #endregion
+
         #region Insert
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Insert 【PK】【Same Key】 Table"))
@@ -57,13 +64,32 @@ public class StrayFogSQLiteLevel : AbsLevel
         {
             UpdateDeterminantTable();
         }
-        //if (GUILayout.Button("Insert 【No PK 】Table"))
-        //{
-        //    InsertNoPKTable();
-        //}
+        GUILayout.EndHorizontal();
+        #endregion
+
+        #region Delete
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Delete Table"))
+        {
+            DeleteTable();
+        }
         GUILayout.EndHorizontal();
         #endregion
     }
+
+    #region Select
+    /// <summary>
+    /// SelectTable
+    /// </summary>
+    void SelectTable()
+    {
+        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        UnityEngine.Debug.LogFormat("【Select  Table 】【{0}->{1}】", tableAttribute.xlsFilePath, tableAttribute.sqliteTableName);
+
+        List<XLS_Config_Table_TableColumnMaping> maps = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_TableColumnMaping>();
+        UnityEngine.Debug.LogFormat("Select Table【{0}->{1}】Count->{2}", tableAttribute.xlsFilePath, tableAttribute.sqliteTableName, maps.Count);
+    }
+    #endregion
 
     #region Insert
     #region 插入PK表有重复键数据
@@ -225,5 +251,35 @@ public class StrayFogSQLiteLevel : AbsLevel
         UnityEngine.Debug.LogFormat("Select【Determinant Table】SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
     #endregion
+    #endregion
+
+    #region Delete
+    /// <summary>
+    /// DeleteTable
+    /// </summary>
+    void DeleteTable()
+    {
+        Stopwatch watch = new Stopwatch();
+        watch.Start();
+
+        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        UnityEngine.Debug.LogFormat("Delete Table【{0}->{1}】", tableAttribute.xlsFilePath, tableAttribute.sqliteTableName);
+
+        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+
+        watch.Reset();
+        watch.Start();
+        StrayFogSQLiteEntityHelper.Delete(reports[0]);
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("Delete Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+
+        watch.Reset();
+        watch.Start();
+        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
+    }
     #endregion
 }
