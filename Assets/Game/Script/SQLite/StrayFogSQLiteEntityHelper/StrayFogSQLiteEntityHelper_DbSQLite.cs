@@ -20,6 +20,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
 #endif
             }
         }
+        msStrayFogSQLiteHelperMaping.Clear();
     }
     #endregion
 }

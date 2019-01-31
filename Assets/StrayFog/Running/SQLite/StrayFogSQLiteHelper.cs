@@ -10,15 +10,17 @@ public partial class StrayFogSQLiteHelper
     /// <summary>
     /// 连接字符串
     /// </summary>
-    public string connectionString { get { return mDbConnection.ConnectionString; } }
+    public string connectionString { get; private set; }
     /// <summary>
     /// 数据库连接定义
     /// </summary>
-    private SqliteConnection mDbConnection;
+    SqliteConnection mDbConnection;
     /// <summary>
     /// Reader队列
     /// </summary>
     Queue<SqliteDataReader> mQueueSqliteDataReader = new Queue<SqliteDataReader>();
+
+    #region StrayFogSQLiteHelper 构造函数
     /// <summary>
     /// 构造函数    
     /// </summary>
@@ -27,6 +29,7 @@ public partial class StrayFogSQLiteHelper
     {
         try
         {
+            connectionString = _connectionString;
             //构造数据库连接
             mDbConnection = new SqliteConnection(_connectionString);
         }
@@ -35,7 +38,9 @@ public partial class StrayFogSQLiteHelper
             Debug.Log(e.Message);
         }
     }
+    #endregion
 
+    #region Close 关闭数据库连接
     /// <summary>
     /// 关闭数据库连接
     /// </summary>
@@ -55,11 +60,30 @@ public partial class StrayFogSQLiteHelper
         {
             mDbConnection.Close();
             mDbConnection.Dispose();
+            mDbConnection = null;
         }
         SqliteConnection.ClearAllPools();
         GC.Collect();
         GC.WaitForPendingFinalizers();
     }
+    #endregion
+
+    #region OnOpenDbConnection 打开DbConnection
+    /// <summary>
+    /// 打开DbConnection
+    /// </summary>
+    void OnOpenDbConnection()
+    {
+        if (mDbConnection == null)
+        {
+            mDbConnection = new SqliteConnection(connectionString);
+        }
+        if (mDbConnection.State == System.Data.ConnectionState.Closed)
+        {
+            mDbConnection.Open();
+        }
+    }
+    #endregion
 
     #region ExecuteQuery
     /// <summary>
@@ -69,13 +93,8 @@ public partial class StrayFogSQLiteHelper
     /// <returns>数据集</returns>
     public SqliteDataReader ExecuteQuery(string _queryString)
     {
-        SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
-        //SqliteCommand cmd = mDbConnection.CreateCommand();
-        //cmd.CommandText = _queryString;
-        if (mDbConnection.State == System.Data.ConnectionState.Closed)
-        {
-            mDbConnection.Open();
-        }
+        OnOpenDbConnection();
+        SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);    
         SqliteDataReader reader = cmd.ExecuteReader();
         cmd.Dispose();
         cmd = null;
@@ -91,14 +110,9 @@ public partial class StrayFogSQLiteHelper
     /// <returns>数据集</returns>
     public SqliteDataReader ExecuteQuery(string _queryString, params SqliteParameter[] _parameters)
     {
+        OnOpenDbConnection();
         SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
-        cmd.Parameters.AddRange(_parameters);
-        //SqliteCommand cmd = mDbConnection.CreateCommand();
-        //cmd.CommandText = _queryString;
-        if (mDbConnection.State == System.Data.ConnectionState.Closed)
-        {
-            mDbConnection.Open();
-        }
+        cmd.Parameters.AddRange(_parameters);        
         SqliteDataReader reader = cmd.ExecuteReader();
         cmd.Dispose();
         cmd = null;
@@ -115,13 +129,8 @@ public partial class StrayFogSQLiteHelper
     /// <returns>条数</returns>
     public int ExecuteNonQuery(string _queryString)
     {
-        SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
-        //SqliteCommand cmd = mDbConnection.CreateCommand();
-        //cmd.CommandText = _queryString;
-        if (mDbConnection.State == System.Data.ConnectionState.Closed)
-        {
-            mDbConnection.Open();
-        }
+        OnOpenDbConnection();
+        SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);        
         int result = cmd.ExecuteNonQuery();
         cmd.Dispose();
         cmd = null;
@@ -137,14 +146,9 @@ public partial class StrayFogSQLiteHelper
     /// <returns>条数</returns>
     public int ExecuteNonQuery(string _queryString,params SqliteParameter[] _parameters)
     {
+        OnOpenDbConnection();
         SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
-        cmd.Parameters.AddRange(_parameters);
-        //SqliteCommand cmd = mDbConnection.CreateCommand();
-        //cmd.CommandText = _queryString;
-        if (mDbConnection.State == System.Data.ConnectionState.Closed)
-        {
-            mDbConnection.Open();
-        }
+        cmd.Parameters.AddRange(_parameters);        
         int result = cmd.ExecuteNonQuery();        
         cmd.Dispose();
         cmd = null;        
@@ -164,13 +168,8 @@ public partial class StrayFogSQLiteHelper
         bool result = false;
         if (_queryStrings != null && _queryStrings.Length > 0)
         {
-            SqliteCommand cmd = new SqliteCommand(mDbConnection);
-            //SqliteCommand cmd = mDbConnection.CreateCommand();
-            //cmd.CommandText = _queryString;
-            if (mDbConnection.State == System.Data.ConnectionState.Closed)
-            {
-                mDbConnection.Open();
-            }
+            OnOpenDbConnection();
+            SqliteCommand cmd = new SqliteCommand(mDbConnection);            
             SqliteTransaction trans = mDbConnection.BeginTransaction();
             try
             {
@@ -207,13 +206,8 @@ public partial class StrayFogSQLiteHelper
         bool result = false;
         if (_queryStringParametersPair != null && _queryStringParametersPair.Count > 0)
         {
-            SqliteCommand cmd = new SqliteCommand(mDbConnection);
-            //SqliteCommand cmd = mDbConnection.CreateCommand();
-            //cmd.CommandText = _queryString;
-            if (mDbConnection.State == System.Data.ConnectionState.Closed)
-            {
-                mDbConnection.Open();
-            }
+            OnOpenDbConnection();
+            SqliteCommand cmd = new SqliteCommand(mDbConnection);            
             SqliteTransaction trans = mDbConnection.BeginTransaction();
             try
             {
@@ -250,13 +244,8 @@ public partial class StrayFogSQLiteHelper
     /// <returns>第一行第一列</returns>
     public object ExecuteScalar(string _queryString)
     {
-        SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
-        //SqliteCommand cmd = mDbConnection.CreateCommand();
-        //cmd.CommandText = _queryString;
-        if (mDbConnection.State == System.Data.ConnectionState.Closed)
-        {
-            mDbConnection.Open();
-        }
+        OnOpenDbConnection();
+        SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);       
         object result = cmd.ExecuteScalar();
         cmd.Dispose();
         cmd = null;
@@ -272,14 +261,9 @@ public partial class StrayFogSQLiteHelper
     /// <returns>第一行第一列</returns>
     public object ExecuteScalar(string _queryString, params SqliteParameter[] _parameters)
     {
+        OnOpenDbConnection();
         SqliteCommand cmd = new SqliteCommand(_queryString, mDbConnection);
-        cmd.Parameters.AddRange(_parameters);
-        //SqliteCommand cmd = mDbConnection.CreateCommand();
-        //cmd.CommandText = _queryString;
-        if (mDbConnection.State == System.Data.ConnectionState.Closed)
-        {
-            mDbConnection.Open();
-        }
+        cmd.Parameters.AddRange(_parameters);        
         object result = cmd.ExecuteScalar();
         cmd.Dispose();
         cmd = null;
