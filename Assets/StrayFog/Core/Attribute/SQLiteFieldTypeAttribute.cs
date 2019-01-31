@@ -22,6 +22,7 @@ public class SQLiteFieldTypeAttribute : AliasTooltipAttribute
         dataType = _dataType;
         arrayDimension = _arrayDimension;
         xlsColumnIndex = _xlsColumnIndex;
+        sqliteColumnName = _sqliteColumnName;
         sqliteParameterName = _sqliteParameterName;
         isPK = _isPK;
     }

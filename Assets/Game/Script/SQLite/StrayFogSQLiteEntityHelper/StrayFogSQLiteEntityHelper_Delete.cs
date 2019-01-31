@@ -1,9 +1,7 @@
 ﻿using Mono.Data.Sqlite;
 using OfficeOpenXml;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using UnityEngine;
 /// <summary>
@@ -96,7 +94,53 @@ public sealed partial class StrayFogSQLiteEntityHelper
         }
         return result;
     }
-    #endregion    
+    #endregion
+
+    #region OnDeleteFromXLS 从XLS表删除数据
+    /// <summary>
+    /// 从XLS表删除数据
+    /// </summary>
+    /// <param name="_xlsRowIndex">删除行索引</param>
+    /// <param name="_tableAttribute">表属性</param>
+    static void OnDeleteFromXLS(int _xlsRowIndex, SQLiteTableMapAttribute _tableAttribute)
+    {
+        if (File.Exists(_tableAttribute.xlsFilePath))
+        {
+            ExcelPackage pck = OnGetExcelPackage(_tableAttribute);
+            {
+                if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    sheet.DeleteRow(_xlsRowIndex);
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region OnDeleteFromSQLite 从SQLite删除数据
+    /// <summary>
+    /// 从SQLite删除数据
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_entity">实体</param>
+    /// <param name="_tableAttribute">表属性</param>
+    static void OnDeleteFromSQLite<T>(T _entity, SQLiteTableMapAttribute _tableAttribute)
+    {
+        List<string> pks = new List<string>();
+        List<SqliteParameter> sps = new List<SqliteParameter>();
+        foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
+        {
+            if (key.Value.isPK)
+            {
+                pks.Add(key.Value.sqliteColumnName + "=" + key.Value.sqliteParameterName);
+                sps.Add(new SqliteParameter(key.Value.sqliteParameterName, StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value)));
+            }
+        }
+        string sql = string.Format("DELETE FROM {0} WHERE {1}",_tableAttribute.sqliteTableName,string.Join(",", pks.ToArray()));
+        msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteNonQuery(sql, sps.ToArray());
+    }
+    #endregion
 
     #region Delete 删除数据集
     /// <summary>
@@ -115,24 +159,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
         {
             if (StrayFogGamePools.setting.isUseSQLite)
             {
-                #region 删除SQLite
-                #endregion                
+                OnDeleteFromSQLite(_entity, tableAttribute);
             }
             else
             {
-                #region 删除XLS表                      
-                if (File.Exists(tableAttribute.xlsFilePath))
-                {
-                    ExcelPackage pck = OnGetExcelPackage(tableAttribute);
-                    {
-                        if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
-                        {
-                            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                            sheet.DeleteRow(xlsRowIndex);
-                        }
-                    }
-                }
-                #endregion
+                OnDeleteFromXLS(xlsRowIndex, tableAttribute);
             }
         }
         return result;

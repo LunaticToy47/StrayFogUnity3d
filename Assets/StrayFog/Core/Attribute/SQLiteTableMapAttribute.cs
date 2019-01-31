@@ -39,7 +39,7 @@ public class SQLiteTableMapAttribute : AliasTooltipAttribute
         xlsDataStartRowIndex = _xlsDataStartRowIndex;
         dbSQLitePath = _dbSQLitePath;
         dbSQLiteAssetBundleName = _dbSQLiteAssetBundleName;
-        dbSQLiteAssetBundleKey = _dbSQLiteAssetBundleName.UniqueHashCode();
+        dbSQLiteKey = Guid.NewGuid().ToString().UniqueHashCode();
         tableClassType = _tableClassType;
         hasPkColumn = _hasPkColumn;
         canModifyData = _canModifyData;
@@ -89,9 +89,9 @@ public class SQLiteTableMapAttribute : AliasTooltipAttribute
     /// </summary>
     public string dbSQLiteAssetBundleName { get; private set; }
     /// <summary>
-    /// 数据库外部资源包Key
+    /// 数据库Key
     /// </summary>
-    public int dbSQLiteAssetBundleKey { get; private set; }
+    public int dbSQLiteKey { get; private set; }
     /// <summary>
     /// 表类类型
     /// </summary>

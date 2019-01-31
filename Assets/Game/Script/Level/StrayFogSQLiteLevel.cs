@@ -137,11 +137,14 @@ public class StrayFogSQLiteLevel : AbsLevel
         watch.Stop();
         UnityEngine.Debug.LogFormat("【Select PK Table 】【Same Key】SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
-        watch.Reset();
-        watch.Start();
-        StrayFogSQLiteEntityHelper.Insert(reports[0]);
-        watch.Stop();
-        UnityEngine.Debug.LogFormat("【Insert PK Table】【Same Key】SQLite Data  【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        if (reports.Count > 0)
+        {
+            watch.Reset();
+            watch.Start();
+            StrayFogSQLiteEntityHelper.Insert(reports[0]);
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("【Insert PK Table】【Same Key】SQLite Data  【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        }
 
         watch.Reset();
         watch.Start();
@@ -201,12 +204,15 @@ public class StrayFogSQLiteLevel : AbsLevel
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【NoPk Table】SQLite Data =>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
 
-        watch.Reset();
-        watch.Start();
-        reportColumnMapings[0].Set_stringCol("Insert NoPk Table");
-        StrayFogSQLiteEntityHelper.Insert(reportColumnMapings[0]);
-        watch.Stop();
-        UnityEngine.Debug.LogFormat("Insert【NoPk Table】SQLite Data  =>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
+        if (reportColumnMapings.Count > 0)
+        {
+            watch.Reset();
+            watch.Start();
+            reportColumnMapings[0].Set_stringCol("Insert NoPk Table");
+            StrayFogSQLiteEntityHelper.Insert(reportColumnMapings[0]);
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("Insert【NoPk Table】SQLite Data  =>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
+        }
 
         watch.Reset();
         watch.Start();
@@ -234,12 +240,15 @@ public class StrayFogSQLiteLevel : AbsLevel
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【Normal Table 】SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
-        watch.Reset();
-        watch.Start();
-        reports[0].Set_stringCol("UpdateNormal Table");
-        StrayFogSQLiteEntityHelper.Update(reports[0]);
-        watch.Stop();
-        UnityEngine.Debug.LogFormat("Update【Normal Table】SQLite Data 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        if (reports.Count > 0)
+        {
+            watch.Reset();
+            watch.Start();
+            reports[0].Set_stringCol("UpdateNormal Table");
+            StrayFogSQLiteEntityHelper.Update(reports[0]);
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("Update【Normal Table】SQLite Data 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        }
 
         watch.Reset();
         watch.Start();
@@ -265,13 +274,16 @@ public class StrayFogSQLiteLevel : AbsLevel
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【Determinant Table 】SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
-        watch.Reset();
-        watch.Start();
-        reports[0].Set_ReportTip("Update Determinant Table");
-        reports[0].Set_DeterminantTip(Guid.NewGuid().ToString());
-        StrayFogSQLiteEntityHelper.Update(reports[0]);
-        watch.Stop();
-        UnityEngine.Debug.LogFormat("Update【Determinant Table】SQLite Data 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        if (reports.Count > 0)
+        {
+            watch.Reset();
+            watch.Start();
+            reports[0].Set_ReportTip("Update Determinant Table");
+            reports[0].Set_DeterminantTip(Guid.NewGuid().ToString());
+            StrayFogSQLiteEntityHelper.Update(reports[0]);
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("Update【Determinant Table】SQLite Data 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        }
 
         watch.Reset();
         watch.Start();
@@ -298,11 +310,14 @@ public class StrayFogSQLiteLevel : AbsLevel
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
-        watch.Reset();
-        watch.Start();
-        StrayFogSQLiteEntityHelper.Delete(reports[0]);
-        watch.Stop();
-        UnityEngine.Debug.LogFormat("Delete Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        if (reports.Count > 0)
+        {
+            watch.Reset();
+            watch.Start();
+            StrayFogSQLiteEntityHelper.Delete(reports[0]);
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("Delete Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        }
 
         watch.Reset();
         watch.Start();

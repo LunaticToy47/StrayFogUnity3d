@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public sealed partial class StrayFogSQLiteEntityHelper
 {
-    #region OnInsertToCacheEntityData
+    #region OnInsertToCacheEntityData 插入数据到缓存
     /// <summary>
     /// 插入数据到缓存
     /// </summary>
@@ -97,7 +97,60 @@ public sealed partial class StrayFogSQLiteEntityHelper
         }        
         return result;
     }
-    #endregion    
+    #endregion
+
+    #region OnInsertIntoXLS 插入数据到XLS表
+    /// <summary>
+    /// 插入数据到XLS表
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_entity">实体</param>
+    /// <param name="_tableAttribute">表属性</param>
+    /// <param name="_xlsRowIndex">行索引</param>
+    static void OnInsertIntoXLS<T>(T _entity, SQLiteTableMapAttribute _tableAttribute,int _xlsRowIndex)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        if (File.Exists(_tableAttribute.xlsFilePath))
+        {
+            ExcelPackage pck = OnGetExcelPackage(_tableAttribute);
+            {
+                if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    if (sheet.Dimension.Rows >= _tableAttribute.xlsColumnValueIndex)
+                    {
+                        foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
+                        {
+                            sheet.Cells[_xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region OnInsertIntoSQLite 插入数据到SQLite
+    /// <summary>
+    /// 插入数据到SQLite
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_entity">实体</param>
+    /// <param name="_tableAttribute">表属性</param>
+    static void OnInsertIntoSQLite<T>(T _entity, SQLiteTableMapAttribute _tableAttribute)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        List<string> pks = new List<string>();
+        List<SqliteParameter> sps = new List<SqliteParameter>();
+        foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
+        {
+            pks.Add(key.Value.sqliteParameterName);
+            sps.Add(new SqliteParameter(key.Value.sqliteParameterName, StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[_tableAttribute.id][key.Key], key.Value)));
+        }
+        string sql = string.Format("INSERT INTO {0} VALUES({1})", _tableAttribute.sqliteTableName, string.Join(",", pks.ToArray()));
+        msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteNonQuery(sql, sps.ToArray());
+    }
+    #endregion
 
     #region Insert 插入数据
     /// <summary>
@@ -116,31 +169,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
         {
             if (StrayFogGamePools.setting.isUseSQLite)
             {
-                #region 插入SQLite
-                #endregion
-                
+                OnInsertIntoSQLite(_entity, tableAttribute);
             }
             else
             {
-                #region 插入XLS表                      
-                if (File.Exists(tableAttribute.xlsFilePath))
-                {
-                    ExcelPackage pck = OnGetExcelPackage(tableAttribute);
-                    {
-                        if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
-                        {
-                            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                            if (sheet.Dimension.Rows >= tableAttribute.xlsColumnValueIndex)
-                            {
-                                foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
-                                {
-                                    sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
-                                }
-                            }
-                        }
-                    }
-                }
-                #endregion
+                OnInsertIntoXLS(_entity, tableAttribute, xlsRowIndex);
             }
         }
         return result;

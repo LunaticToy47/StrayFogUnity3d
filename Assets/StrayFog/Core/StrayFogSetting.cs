@@ -271,10 +271,6 @@ string.Empty;
 #else
         _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, _dbPath));
 #endif
-
-#if UNITY_EDITOR
-        Debug.LogFormat("GetSQLiteConnectionString=>【{0}】", _dbPath);
-#endif
         return _dbPath;
     }
     #endregion
