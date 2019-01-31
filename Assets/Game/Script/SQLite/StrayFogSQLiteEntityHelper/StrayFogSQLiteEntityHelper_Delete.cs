@@ -113,9 +113,14 @@ public sealed partial class StrayFogSQLiteEntityHelper
         bool result = OnDeleteToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
         if (result)
         {
-            if (StrayFogGamePools.setting.isInternal)
+            if (StrayFogGamePools.setting.isUseSQLite)
             {
-                #region 删除内部资源 XLS表                      
+                #region 删除SQLite
+                #endregion                
+            }
+            else
+            {
+                #region 删除XLS表                      
                 if (File.Exists(tableAttribute.xlsFilePath))
                 {
                     ExcelPackage pck = OnGetExcelPackage(tableAttribute);
@@ -127,11 +132,6 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         }
                     }
                 }
-                #endregion
-            }
-            else
-            {
-                #region 删除外部资源 SQLite
                 #endregion
             }
         }

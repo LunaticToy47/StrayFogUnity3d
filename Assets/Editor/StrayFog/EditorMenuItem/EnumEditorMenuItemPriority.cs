@@ -9,6 +9,10 @@ enum enEditorMenuItemPriority
     /// </summary>
     ResourceLoadingMode,
     /// <summary>
+    /// 数据模式
+    /// </summary>
+    DataMode,
+    /// <summary>
     /// UIWindow
     /// </summary>
     UIWindow,

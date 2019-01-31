@@ -128,9 +128,14 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     result = OnUpdateToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
                     if (result)
                     {
-                        if (StrayFogGamePools.setting.isInternal)
+                        if (StrayFogGamePools.setting.isUseSQLite)
                         {
-                            #region 更新内部资源 XLS表
+                            #region 更新SQLite
+                            #endregion
+                        }
+                        else
+                        {
+                            #region 更新XLS表
                             if (File.Exists(tableAttribute.xlsFilePath))
                             {
                                 ExcelPackage pck = OnGetExcelPackage(tableAttribute);
@@ -154,15 +159,10 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                                     sheet.Cells[xlsRowIndex, key.Value.xlsColumnIndex].Value = StrayFogSQLiteDataTypeHelper.GetValueFromEntityPropertyToXlsColumn(_entity, msEntityPropertyInfoMaping[tableAttribute.id][key.Key], key.Value);
                                                 }
                                             }
-                                        }                                        
+                                        }
                                     }
                                 }
                             }
-                            #endregion
-                        }
-                        else
-                        {
-                            #region 更新外部资源 SQLite
                             #endregion
                         }
                     }

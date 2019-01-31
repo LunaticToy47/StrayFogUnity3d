@@ -114,9 +114,15 @@ public sealed partial class StrayFogSQLiteEntityHelper
         bool result = OnInsertToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
         if (result)
         {
-            if (StrayFogGamePools.setting.isInternal)
+            if (StrayFogGamePools.setting.isUseSQLite)
             {
-                #region 插入内部资源 XLS表                      
+                #region 插入SQLite
+                #endregion
+                
+            }
+            else
+            {
+                #region 插入XLS表                      
                 if (File.Exists(tableAttribute.xlsFilePath))
                 {
                     ExcelPackage pck = OnGetExcelPackage(tableAttribute);
@@ -134,11 +140,6 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         }
                     }
                 }
-                #endregion
-            }
-            else
-            {
-                #region 插入外部资源 SQLite
                 #endregion
             }
         }

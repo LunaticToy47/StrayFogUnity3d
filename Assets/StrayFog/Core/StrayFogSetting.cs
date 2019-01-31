@@ -178,6 +178,27 @@ string.Empty;
         }
     }
     #endregion
+    
+    #region isUseSQLite 是否使用数据库
+    /// <summary>
+    /// 是否使用数据库
+    /// </summary>
+    public bool isUseSQLite
+    {
+        get
+        {
+#if UNITY_EDITOR
+#if FORCEUSESQLITE
+            return true;
+#else
+            return !isInternal;
+#endif
+#else
+            return true;
+#endif
+        }
+    }
+    #endregion
 
     #region ToData 数据字符串
     /// <summary>

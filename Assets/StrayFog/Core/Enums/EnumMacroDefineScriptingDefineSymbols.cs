@@ -47,5 +47,10 @@ public enum enSystemDefine
     /// </summary>
     [AliasTooltip("强制外部资源加载")]
     FORCEEXTERNALLOADASSET,
+    /// <summary>
+    /// 强制使用数据库
+    /// </summary>
+    [AliasTooltip("强制使用数据库")]
+    FORCEUSESQLITE
 }
 #endregion

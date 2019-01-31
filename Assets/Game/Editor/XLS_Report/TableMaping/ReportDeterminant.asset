@@ -19,18 +19,34 @@ MonoBehaviour:
   isDeterminant: 1
   canModifyData: 1
   columns:
-  - xlsColumnIndex: 4
-    columnName: ReportTip
+  - xlsColumnIndex: 1
+    columnName: name
     sqliteColumnName: name
-    desc: "\u62A5\u8868\u63D0\u793A"
+    desc: "\u540D\u79F0"
     isPK: 0
     isNull: 0
     dataType: 14
     arrayDimension: 0
-  - xlsColumnIndex: 5
-    columnName: DeterminantTip
-    sqliteColumnName: name
-    desc: "\u884C\u5217\u5F0F\u63D0\u793A"
+  - xlsColumnIndex: 2
+    columnName: value
+    sqliteColumnName: value
+    desc: "\u503C"
+    isPK: 0
+    isNull: 0
+    dataType: 14
+    arrayDimension: 0
+  - xlsColumnIndex: 3
+    columnName: valueType
+    sqliteColumnName: valueType
+    desc: "\u503C\u7C7B\u578B"
+    isPK: 0
+    isNull: 0
+    dataType: 14
+    arrayDimension: 0
+  - xlsColumnIndex: 4
+    columnName: desc
+    sqliteColumnName: desc
+    desc: "\u8BF4\u660E"
     isPK: 0
     isNull: 0
     dataType: 14

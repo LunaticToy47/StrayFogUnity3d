@@ -112,12 +112,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
     static List<T> OnReadFromSQLite<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        List<T> result = new List<T>();
-        if (!msStrayFogSQLiteHelperMaping.ContainsKey(_tableAttribute.dbSQLiteAssetBundleKey))
-        {
-            msStrayFogSQLiteHelperMaping.Add(_tableAttribute.dbSQLiteAssetBundleKey,
-                new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(_tableAttribute.dbSQLiteAssetBundleName)));
-        }
+        List<T> result = new List<T>();        
         SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteAssetBundleKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _tableAttribute.sqliteTableName));
         T tempEntity = default(T);
         string tempPropertyName = string.Empty;
@@ -176,15 +171,13 @@ public sealed partial class StrayFogSQLiteEntityHelper
         where T : AbsStrayFogSQLiteEntity
     {
         List<T> result = new List<T>();
-        if (StrayFogGamePools.setting.isInternal)
+        if (StrayFogGamePools.setting.isUseSQLite)
         {
-            //内部资源加载
-            result = OnReadFromXLS<T>(_tableAttribute);
+            result = OnReadFromSQLite<T>(_tableAttribute);
         }
         else
         {
-            //外部资源加载
-            result = OnReadFromSQLite<T>(_tableAttribute);
+            result = OnReadFromXLS<T>(_tableAttribute);
         }
         return result;
     }

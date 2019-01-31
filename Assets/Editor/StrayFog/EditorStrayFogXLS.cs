@@ -855,6 +855,7 @@ public sealed class EditorStrayFogXLS
                 .Replace("#xlsColumnValueIndex#", xlsColumnDataIndex.ToString())
                 .Replace("#xlsColumnTypeIndex#", xlsColumnTypeIndex.ToString())
                 .Replace("#xlsDataStartRowIndex#", xlsDataStartRowIndex.ToString())
+                .Replace("#dbSQLitePath#", t.dbPath.ToString())
                 .Replace("#dbSQLiteAssetBundleName#", t.assetBundleDbName)
                 .Replace("#hasPKColumn#", Convert.ToString(hasPK).ToLower())
                 .Replace("#canModifyData#", Convert.ToString(t.canModifyData).ToLower())
