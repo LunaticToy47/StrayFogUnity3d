@@ -142,9 +142,81 @@ public sealed partial class StrayFogSQLiteEntityHelper
     }
     #endregion
 
-    #region Delete 删除数据集
+    #region OnDeleteAllToCacheEntityData 从缓存删除所有数据
     /// <summary>
-    /// Delete 删除数据集
+    /// 从缓存删除所有数据
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="_tableAttribute">表属性</param>
+    /// <returns>true:成功,false:失败</returns>
+    static bool OnDeleteAllToCacheEntityData<T>(SQLiteTableMapAttribute _tableAttribute)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        bool result = false;
+        if (_tableAttribute.canModifyData)
+        {
+            switch (_tableAttribute.sqliteTableType)
+            {
+                case enSQLiteEntityClassify.Table:
+                    if (_tableAttribute.isDeterminant)
+                    {
+                        throw new UnityException(string.Format("Can't be delete data from determinant table 【{0}->{1}】.", _tableAttribute.sqliteTableName, _tableAttribute.xlsFilePath));
+                    }
+                    else
+                    {
+                        OnRefreshCacheData(new List<T>(), _tableAttribute, false);
+                        result = true;
+                    }
+                    break;
+                default:
+                    throw new UnityException(string.Format("Can't be delete data to 【{0}->{1}】 .", _tableAttribute.sqliteTableType, _tableAttribute.sqliteTableName));
+            }
+        }
+        else
+        {
+            throw new UnityException(string.Format("Can't be delete data to table 【{0}】's canModifyData【{1}】  .", _tableAttribute.sqliteTableName, _tableAttribute.canModifyData));
+        }
+        return result;
+    }
+    #endregion
+
+    #region OnDeleteAllFromXLS 从XLS表删除所有数据
+    /// <summary>
+    /// 从XLS表删除所有数据
+    /// </summary>
+    /// <param name="_tableAttribute">表属性</param>
+    static void OnDeleteAllFromXLS(SQLiteTableMapAttribute _tableAttribute)
+    {
+        if (File.Exists(_tableAttribute.xlsFilePath))
+        {
+            ExcelPackage pck = OnGetExcelPackage(_tableAttribute);
+            {
+                if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    sheet.DeleteRow(_tableAttribute.xlsDataStartRowIndex, sheet.Dimension.Rows);
+                    pck.Save();
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region OnDeleteAllFromSQLite 从SQLite删除所有数据
+    /// <summary>
+    /// 从SQLite删除所有数据
+    /// </summary>
+    /// <param name="_tableAttribute">表属性</param>
+    static void OnDeleteAllFromSQLite(SQLiteTableMapAttribute _tableAttribute)
+    {
+        string sql = string.Format("DELETE FROM {0}", _tableAttribute.sqliteTableName);
+        msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteNonQuery(sql);
+    }
+    #endregion
+
+    #region Delete 删除指定数据
+    /// <summary>
+    /// Delete 删除指定数据
     /// </summary>
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_entity">实体</param>
@@ -164,6 +236,31 @@ public sealed partial class StrayFogSQLiteEntityHelper
             else
             {
                 OnDeleteFromXLS(xlsRowIndex, tableAttribute);
+            }
+        }
+        return result;
+    }
+    #endregion
+
+    #region DeleteAll 删除数据集
+    /// <summary>
+    /// DeleteAll 删除数据集
+    /// </summary>
+    /// <returns>true:成功,false:失败</returns>
+    public static bool DeleteAll<T>()
+         where T : AbsStrayFogSQLiteEntity
+    {
+        SQLiteTableMapAttribute tableAttribute = GetTableAttribute<T>();
+        bool result = OnDeleteAllToCacheEntityData<T>(tableAttribute);
+        if (result)
+        {
+            if (StrayFogGamePools.setting.isUseSQLite)
+            {
+                OnDeleteAllFromSQLite(tableAttribute);
+            }
+            else
+            {
+                OnDeleteAllFromXLS(tableAttribute);
             }
         }
         return result;

@@ -19,7 +19,7 @@ public class StrayFogSQLiteLevel : AbsLevel
             watch.Stop();
             UnityEngine.Debug.LogFormat("StrayFogGamePools.gameManager.Initialization=>{0}", watch.Elapsed.ToString());
 
-            
+
         });
     }
 
@@ -72,6 +72,10 @@ public class StrayFogSQLiteLevel : AbsLevel
         if (GUILayout.Button("Delete Table"))
         {
             DeleteTable();
+        }
+        if (GUILayout.Button("Delete All Table"))
+        {
+            DeleteAllTable();
         }
         GUILayout.EndHorizontal();
         #endregion
@@ -318,6 +322,35 @@ public class StrayFogSQLiteLevel : AbsLevel
             watch.Stop();
             UnityEngine.Debug.LogFormat("Delete Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
         }
+
+        watch.Reset();
+        watch.Start();
+        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
+    }
+
+    /// <summary>
+    /// DeleteAllTable
+    /// </summary>
+    void DeleteAllTable()
+    {
+        Stopwatch watch = new Stopwatch();
+        watch.Start();
+
+        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        UnityEngine.Debug.LogFormat("Delete Table【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
+
+        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+
+        watch.Reset();
+        watch.Start();
+        StrayFogSQLiteEntityHelper.DeleteAll<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("DeleteAll Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+
 
         watch.Reset();
         watch.Start();
