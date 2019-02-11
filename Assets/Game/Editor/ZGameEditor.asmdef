@@ -1,6 +1,11 @@
 {
     "name": "ZGameEditor",
-    "references": [],
+    "references": [
+        "EditorStrayFog",
+        "StrayFogCore",
+        "StrayFogRunning",
+        "ZGame"
+    ],
     "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
