@@ -41,12 +41,12 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         {
                             object cacheValue = null;
                             object entityValue = null;
-                            bool hasSamePKValue = true;
+                            bool hasSamePKValue = data.Count > 0;
                             int sameRowIndex = 0;
                             #region 查询缓存数据中是否有相同主键数据
                             for (int i = 0; i < data.Count; i++)
                             {
-                                hasSamePKValue = true;
+                                hasSamePKValue = data.Count > 0;
                                 sameRowIndex = _tableAttribute.xlsDataStartRowIndex + i;
                                 foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
                                 {
