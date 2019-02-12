@@ -601,7 +601,7 @@ PlayerSettings:
   webGLLinkerTarget: 1
   scriptingDefineSymbols:
     1: 
-    7: FORCEEXTERNALLOADASSET
+    7: 
     21: UNITY_XBOXONE_DEVELOPMENT_BUILD;FORCEEXTERNALLOADASSET
   platformArchitecture: {}
   scriptingBackend: {}
