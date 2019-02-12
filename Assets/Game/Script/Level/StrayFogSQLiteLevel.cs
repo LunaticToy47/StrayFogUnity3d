@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// FMS关卡
 /// </summary>
-[AddComponentMenu("Game/StrayFogSQLiteLevel")]
+[AddComponentMenu("Game/ExampleLevel/StrayFogSQLiteLevel")]
 public class StrayFogSQLiteLevel : AbsLevel
 {
     /// <summary>
@@ -79,6 +79,8 @@ public class StrayFogSQLiteLevel : AbsLevel
         }
         GUILayout.EndHorizontal();
         #endregion
+
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
     }
 
     /// <summary>

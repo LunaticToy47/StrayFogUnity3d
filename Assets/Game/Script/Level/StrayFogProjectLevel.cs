@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-[AddComponentMenu("ExampleProject/Script/PropertyAttributeExample")]
-public class PropertyAttributeExample : AbsMonoBehaviour
+[AddComponentMenu("Game/ExampleLevel/StrayFogProjectLevel")]
+public class StrayFogProjectLevel : AbsMonoBehaviour
 {
     [AliasTooltip("属性数量")]
     public int attCount = 2;
@@ -77,4 +77,12 @@ public class PropertyAttributeExample : AbsMonoBehaviour
         File.WriteAllText(path, text, Encoding.UTF8);
     }
 #endif
+
+    /// <summary>
+    /// OnGUI
+    /// </summary>
+    private void OnGUI()
+    {
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+    }
 }

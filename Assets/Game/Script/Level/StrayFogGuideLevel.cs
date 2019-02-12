@@ -7,9 +7,13 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// 引导关卡
 /// </summary>
-[AddComponentMenu("Game/StrayFogGuideLevel")]
+[AddComponentMenu("Game/ExampleLevel/StrayFogGuideLevel")]
 public class StrayFogGuideLevel : AbsLevel
 {
+    /// <summary>
+    /// 滚动视图
+    /// </summary>
+    Vector2 mScrollViewPosition = Vector2.zero;
     /// <summary>
     /// Awake
     /// </summary>
@@ -27,6 +31,9 @@ public class StrayFogGuideLevel : AbsLevel
         {
             StartCoroutine(OnOpenLobby());
         }
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+
+        mScrollViewPosition = GUILayout.BeginScrollView(mScrollViewPosition);
         GUI.skin.label.fontSize = 40;
         GUI.color = Color.black;
         GUILayout.Label(StrayFogGamePools.setting.ToData());
@@ -40,6 +47,7 @@ public class StrayFogGuideLevel : AbsLevel
         GUILayout.Label(File.Exists(path).ToString());
         File.WriteAllText(path+".txt", "11111");
         GUILayout.Label(File.Exists(path).ToString());
+        GUILayout.EndScrollView();
     }
 
     /// <summary>

@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// XLS关卡
 /// </summary>
-[AddComponentMenu("Game/StrayFogXLSLevel")]
+[AddComponentMenu("Game/ExampleLevel/StrayFogXLSLevel")]
 public class StrayFogXLSLevel : AbsLevel
 {
     /// <summary>
@@ -16,5 +16,13 @@ public class StrayFogXLSLevel : AbsLevel
             List<XLS_Config_Table_TableColumnMaping> tables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_TableColumnMaping>();
             Debug.Log(tables);
         });
+    }
+
+    /// <summary>
+    /// OnGUI
+    /// </summary>
+    private void OnGUI()
+    {
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
     }
 }

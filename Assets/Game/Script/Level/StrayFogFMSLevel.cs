@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// FMS关卡
 /// </summary>
-[AddComponentMenu("Game/StrayFogFMSLevel")]
+[AddComponentMenu("Game/ExampleLevel/StrayFogFMSLevel")]
 public class StrayFogFMSLevel : AbsLevel
 {
     /// <summary>
@@ -128,6 +128,7 @@ public class StrayFogFMSLevel : AbsLevel
                 GUILayout.EndVertical();
             }            
         }
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
     }
 
     private void Update()

@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 游戏运行时启动关卡
 /// </summary>
-[AddComponentMenu("Game/StrayFogRunningStartUpLevel")]
+[AddComponentMenu("Game/Level/StrayFogRunningStartUpLevel")]
 public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
 {
     /// <summary>
@@ -38,5 +38,6 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
         Debug.LogError("StrayFogRunningStartUpLevel=>SQLite");
         GUILayout.Label(StrayFogGamePools.setting.JsonSerialize());
         GUILayout.Label(mError);
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
     }
 }

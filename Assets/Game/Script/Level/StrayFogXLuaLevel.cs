@@ -14,7 +14,7 @@ public class PropertyChangedEventArgs : EventArgs
     public object value;
 }
 
-[AddComponentMenu("Game/StrayFogXLuaLevel")]
+[AddComponentMenu("Game/ExampleLevel/StrayFogXLuaLevel")]
 [LuaCallCSharp]
 public class StrayFogXLuaLevel : AbsLevel
 {
@@ -189,6 +189,14 @@ public class StrayFogXLuaLevel : AbsLevel
     void Notify(object sender, PropertyChangedEventArgs e)
     {
         Debug.Log(string.Format("{0} has property changed {1}={2}", sender, e.name, e.value));
+    }
+
+    /// <summary>
+    /// OnGUI
+    /// </summary>
+    private void OnGUI()
+    {
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
     }
 }
 //ArgumentException: method arguments are incompatible

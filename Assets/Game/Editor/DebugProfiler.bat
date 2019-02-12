@@ -4,5 +4,5 @@ pause
 adb kill-server
 pause
 adb start-server
-adb forward tcp:34999 localabstract:Unity-com.Company.ProductName
+adb forward tcp:34999 localabstract:Unity-com.StrayFog.ProductName
 pause

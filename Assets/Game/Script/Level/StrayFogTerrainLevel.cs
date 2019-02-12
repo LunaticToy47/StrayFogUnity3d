@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 地形关卡
 /// </summary>
-[AddComponentMenu("Game/StrayFogTerrainLevel")]
+[AddComponentMenu("Game/ExampleLevel/StrayFogTerrainLevel")]
 public class StrayFogTerrainLevel : AbsLevel
 {
     /// <summary>
@@ -42,5 +42,13 @@ public class StrayFogTerrainLevel : AbsLevel
                 }, result.extraParameter);
 
             }, watch);
+    }
+
+    /// <summary>
+    /// OnGUI
+    /// </summary>
+    private void OnGUI()
+    {
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
     }
 }
