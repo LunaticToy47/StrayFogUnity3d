@@ -65,7 +65,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
     public XLS_Config_Determinant_Table_GameSetting runningSetting { get; private set; }
     #endregion
 
-    #region 引导相关事件
+    #region Guide 引导相关
     /// <summary>
     /// 指定窗口是否打开
     /// </summary>
