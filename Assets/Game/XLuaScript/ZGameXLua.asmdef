@@ -1,0 +1,10 @@
+{
+    "name": "ZGameXLua",
+    "references": [
+        "XLua"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

@@ -10,6 +10,14 @@ using UnityEditor;
 /// <param name="_guide">引导</param>
 public delegate void RegisterGuideEventHandle(UIGuideRegister _guide);
 /// <summary>
+/// 注册引导事件句柄
+/// </summary>
+/// <param name="_xLuaFileId">xLua文件ID</param>
+/// <param name="_xLuaFolderId">xLua文件夹ID</param>
+/// <param name="_onComplete">完成事件</param>
+public delegate void LoadXLuaEventHandle(int _xLuaFileId, int _xLuaFolderId, Action<bool,TextAsset> _onComplete);
+
+/// <summary>
 /// 引擎应用程序
 /// </summary>
 public class StrayFogRunningApplication : AbsSingleScriptableObject
@@ -31,7 +39,7 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
     }
     #endregion    
 
-    #region OnGuideRegister 引导注册事件
+    #region RegisterGuide 注册引导
     /// <summary>
     /// 注册引导事件
     /// </summary>
@@ -45,6 +53,30 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
         if (OnRegisterGuide != null)
         {
             OnRegisterGuide(_guide);
+        }
+    }
+    #endregion
+
+    #region LoadXLua 加载xLua文件
+    /// <summary>
+    /// 注册加载xLua文件事件
+    /// </summary>
+    public event LoadXLuaEventHandle OnLoadXLua;
+    /// <summary>
+    /// 加载xLua文件
+    /// </summary>
+    /// <param name="_xLuaFileId">xLua文件ID</param>
+    /// <param name="_xLuaFolderId">xLua文件夹ID</param>
+    /// <param name="_onComplete">完成回调</param>
+    public void LoadXLua(int _xLuaFileId, int _xLuaFolderId, Action<bool,TextAsset> _onComplete)
+    {
+        if (OnLoadXLua != null)
+        {
+            OnLoadXLua(_xLuaFileId, _xLuaFolderId, _onComplete);
+        }
+        else
+        {
+            _onComplete(false,null);
         }
     }
     #endregion

@@ -23,6 +23,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
             m_isInitialized = true;
             runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
             StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
+            StrayFogGamePools.runningApplication.OnLoadXLua += RunningApplication_OnLoadXLua;
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
@@ -32,6 +33,28 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
         {
             _onCallback.Invoke();
         }
+    }
+    #endregion
+
+    #region xLua相关
+    /// <summary>
+    /// 加载xLua文件
+    /// </summary>
+    /// <param name="_xLuaFileId">xLua文件ID</param>
+    /// <param name="_xLuaFolderId">xLua文件夹ID</param>
+    /// <param name="_onComplete">完成回调</param>
+    private void RunningApplication_OnLoadXLua(int _xLuaFileId, int _xLuaFolderId, Action<bool, TextAsset> _onComplete)
+    {
+        StrayFogGamePools.assetBundleManager.LoadAssetInMemory(_xLuaFileId, _xLuaFolderId,
+            (result) =>
+            {
+                result.Instantiate<TextAsset>((rst, args) =>
+                {
+                    Action<bool, TextAsset> call = (Action<bool, TextAsset>)args[2];
+                    call(rst != null, rst);
+                }, result.extraParameter);
+
+            }, _xLuaFileId, _xLuaFolderId, _onComplete);
     }
     #endregion
 

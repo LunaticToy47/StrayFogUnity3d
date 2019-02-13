@@ -151,5 +151,7 @@ public enum enAssetDiskMapingFile
 	f_Terrain_prefab = -181505390,
 	f_GuideWindow_prefab = -1287614635,
 	f_LobbyWindow_prefab = -1625153888,
-	f_MessageBoxWindow_prefab = 1299702156,	
+	f_MessageBoxWindow_prefab = 1299702156,
+	f_StrayFogXLuaLevel_xlua_txt = -1566411474,
+	f_ZGameXLua_asmdef = -1875775309,	
 }

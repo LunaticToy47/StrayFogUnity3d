@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paths:
   - Assets/Game/AssetBundles
+  - Assets/Game/XLuaScript
   invoke: 

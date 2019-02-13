@@ -12,9 +12,13 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
     /// </summary>
     readonly static string msrSceneExt = enFileExt.Scene.GetAttribute<FileExtAttribute>().ext;
     /// <summary>
-    /// 场景后缀
+    /// Dll后缀
     /// </summary>
     readonly static string msrDllExt = enFileExt.Dll.GetAttribute<FileExtAttribute>().ext;
+    /// <summary>
+    /// xLua后缀
+    /// </summary>
+    readonly static string msrXLuaTxtExt = enFileExt.XLuaTxt.GetAttribute<FileExtAttribute>().ext;
     /// <summary>
     /// 名称前缀
     /// </summary>
@@ -22,6 +26,7 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
         {
             {msrSceneExt,"s_" },
             {enFileExt.Asset.GetAttribute<FileExtAttribute>().ext,"a_" },
+            {msrXLuaTxtExt,"x_" },
             {msrDllExt,"d_" },
         };
     /// <summary>
@@ -202,6 +207,10 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
         if (msrNamePrefix.ContainsKey(ext))
         {
             mAssetBundleName = msrNamePrefix[ext];
+        }
+        else if (name.EndsWith(msrXLuaTxtExt))
+        {
+            mAssetBundleName = msrNamePrefix[msrXLuaTxtExt];
         }
         mAssetBundleName += path.UniqueHashCode();
         bool isLockName = false;
