@@ -10,9 +10,9 @@ public class StrayFogXLuaLevel : AbsLevel
         StrayFogGamePools.gameManager.Initialization(() =>
         {
             LoadXLua((int)enAssetDiskMapingFile.f_StrayFogXLuaLevel_xlua_txt,
-               (int)enAssetDiskMapingFolder.Assets_Game_XLuaScript_Level, (rst, txt) =>
+               (int)enAssetDiskMapingFolder.Assets_Game_XLuaScript_Level, (rst) =>
                {
-                   Debug.Log(rst + "=>" + (rst ? txt.text : string.Empty));
+                   Debug.Log(rst.isExists + "=>" + (rst.isExists ? rst.xLua.text : string.Empty));
                });
         });
     }

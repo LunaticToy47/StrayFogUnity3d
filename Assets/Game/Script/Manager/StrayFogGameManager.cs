@@ -43,15 +43,15 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
     /// <param name="_xLuaFileId">xLua文件ID</param>
     /// <param name="_xLuaFolderId">xLua文件夹ID</param>
     /// <param name="_onComplete">完成回调</param>
-    private void RunningApplication_OnLoadXLua(int _xLuaFileId, int _xLuaFolderId, Action<bool, TextAsset> _onComplete)
+    private void RunningApplication_OnLoadXLua(int _xLuaFileId, int _xLuaFolderId, Action<LoadXLuaResult> _onComplete)
     {
         StrayFogGamePools.assetBundleManager.LoadAssetInMemory(_xLuaFileId, _xLuaFolderId,
             (result) =>
             {
                 result.Instantiate<TextAsset>((rst, args) =>
                 {
-                    Action<bool, TextAsset> call = (Action<bool, TextAsset>)args[2];
-                    call(rst != null, rst);
+                    Action<LoadXLuaResult> call = (Action<LoadXLuaResult>)args[2];
+                    call(new LoadXLuaResult((int)args[0], (int)args[1],rst));
                 }, result.extraParameter);
 
             }, _xLuaFileId, _xLuaFolderId, _onComplete);
