@@ -5,6 +5,7 @@
 /// 开发者宏定义
 /// </summary>
 [Serializable]
+[AliasTooltip("开发者宏定义")]
 public enum enDeveloperDefine
 {
     /// <summary>
@@ -30,6 +31,7 @@ public enum enDeveloperDefine
 /// 系统宏定义
 /// </summary>
 [Serializable]
+[AliasTooltip("系统宏定义")]
 public enum enSystemDefine
 {
     /// <summary>
@@ -52,5 +54,31 @@ public enum enSystemDefine
     /// </summary>
     [AliasTooltip("强制使用数据库")]
     FORCEUSESQLITE
+}
+#endregion
+
+#region enXLuaDefine xLua宏定义
+/// <summary>
+/// xLua宏定义
+/// </summary>
+[Serializable]
+[AliasTooltip("xLua宏定义")]
+public enum enXLuaDefine
+{
+    /// <summary>
+    /// 打开hotfix功能
+    /// </summary>
+    [AliasTooltip("打开hotfix功能")]
+    HOTFIX_ENABLE,
+    /// <summary>
+    /// 反射时打印warning
+    /// </summary>
+    [AliasTooltip("反射时打印warning")]
+    NOT_GEN_WARNING,
+    /// <summary>
+    /// 以偏向减少代码段的方式生成代码
+    /// </summary>
+    [AliasTooltip("以偏向减少代码段的方式生成代码")]
+    GEN_CODE_MINIMIZE,
 }
 #endregion

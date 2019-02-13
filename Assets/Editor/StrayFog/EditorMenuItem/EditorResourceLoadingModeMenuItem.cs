@@ -80,28 +80,15 @@ static class EditorResourceLoadingModeMenuItem
     /// <param name="_isInternal">是否是内部资源加载</param>
     static void OnEditorToggleLoadingResourceMode(bool _isInternal)
     {
-        string forceexternalloadasset = enSystemDefine.FORCEEXTERNALLOADASSET.ToString();
-        List<string> saveDefines = new List<string>();
-        string[] symbol = EditorStrayFogApplication.GetScriptingDefineSymbolsForGroup();
-        if (symbol != null)
-        {
-            foreach (string s in symbol)
-            {
-                saveDefines.Add(s);
-            }
-        }
+        string forceexternalloadasset = enSystemDefine.FORCEEXTERNALLOADASSET.ToString();       
         if (_isInternal)
         {
-            saveDefines.Remove(forceexternalloadasset);
+            EditorStrayFogApplication.RemoveScriptingDefineSymbol(forceexternalloadasset);
         }
         else
         {
-            if (!saveDefines.Contains(forceexternalloadasset))
-            {
-                saveDefines.Add(forceexternalloadasset);
-            }
+            EditorStrayFogApplication.AddScriptingDefineSymbol(forceexternalloadasset);
         }
-        EditorStrayFogApplication.SetScriptingDefineSymbolsForGroup(saveDefines.ToArray());
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
     }
     #endregion

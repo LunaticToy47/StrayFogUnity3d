@@ -25,13 +25,13 @@ public sealed class EditorStrayFogApplication
     public readonly static Type curvePresetLibrary = Type.GetType("UnityEditor.CurvePresetLibrary, UnityEditor");
     #endregion
 
-    #region SaveScriptingDefineSymbols 保存脚本宏定义
+    #region SetScriptingDefineSymbolsForGroup 设置脚本宏定义
     /// <summary>
     /// 脚本宏定义分隔符
     /// </summary>
     static readonly string msrScriptingDefineSymbolSpeatorChar = ";";
     /// <summary>
-    /// 保存脚本宏定义
+    /// 设置脚本宏定义
     /// </summary>
     /// <param name="_defines">宏定义</param>
     /// <returns>宏字符串</returns>
@@ -49,6 +49,9 @@ public sealed class EditorStrayFogApplication
         PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, sb.ToString());
         return sb.ToString();
     }
+    #endregion
+
+    #region GetScriptingDefineSymbolsForGroup 获得脚本宏定义
     /// <summary>
     /// 获得脚本宏定义
     /// </summary>
@@ -66,6 +69,72 @@ public sealed class EditorStrayFogApplication
             symbol = new string[0];
         }
         return symbol;
+    }
+    #endregion
+
+    #region AddScriptingDefineSymbol 添加脚本宏定义
+    /// <summary>
+    /// 添加脚本宏定义
+    /// </summary>
+    /// <param name="_defines">脚本宏定义</param>
+    public static void AddScriptingDefineSymbol(params string[] _defines)
+    {
+        string[] exists = GetScriptingDefineSymbolsForGroup();
+        List<string> saves = new List<string>();
+        if (exists != null && exists.Length > 0)
+        {
+            foreach (string d in exists)
+            {
+                if (!saves.Contains(d))
+                {
+                    saves.Add(d);
+                }
+            }
+        }
+        if (_defines != null && _defines.Length > 0)
+        {
+            foreach (string d in _defines)
+            {
+                if (!saves.Contains(d))
+                {
+                    saves.Add(d);
+                }
+            }
+        }
+        SetScriptingDefineSymbolsForGroup(saves.ToArray());
+    }
+    #endregion
+
+    #region RemoveScriptingDefineSymbol 移除脚本宏定义
+    /// <summary>
+    /// 移除脚本宏定义
+    /// </summary>
+    /// <param name="_defines">脚本宏定义</param>
+    public static void RemoveScriptingDefineSymbol(params string[] _defines)
+    {
+        string[] exists = GetScriptingDefineSymbolsForGroup();
+        List<string> saves = new List<string>();
+        if (exists != null && exists.Length > 0)
+        {
+            foreach (string d in exists)
+            {
+                if (!saves.Contains(d))
+                {
+                    saves.Add(d);
+                }
+            }
+        }
+        if (_defines != null && _defines.Length > 0)
+        {
+            foreach (string d in _defines)
+            {
+                if (saves.Contains(d))
+                {
+                    saves.Remove(d);
+                }
+            }
+        }
+        SetScriptingDefineSymbolsForGroup(saves.ToArray());
     }
     #endregion
 

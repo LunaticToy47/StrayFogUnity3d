@@ -85,27 +85,14 @@ static class EditorDataModeMenuItem
     static void OnEditorToggleDataMode(bool _isXLSData)
     {
         string forceusesqlite = enSystemDefine.FORCEUSESQLITE.ToString();
-        List<string> saveDefines = new List<string>();
-        string[] symbol = EditorStrayFogApplication.GetScriptingDefineSymbolsForGroup();
-        if (symbol != null)
-        {
-            foreach (string s in symbol)
-            {
-                saveDefines.Add(s);
-            }
-        }
         if (_isXLSData)
         {
-            saveDefines.Remove(forceusesqlite);
+            EditorStrayFogApplication.RemoveScriptingDefineSymbol(forceusesqlite);
         }
         else
         {
-            if (!saveDefines.Contains(forceusesqlite))
-            {
-                saveDefines.Add(forceusesqlite);
-            }
+            EditorStrayFogApplication.AddScriptingDefineSymbol(forceusesqlite);
         }
-        EditorStrayFogApplication.SetScriptingDefineSymbolsForGroup(saveDefines.ToArray());
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
     }
 #endregion

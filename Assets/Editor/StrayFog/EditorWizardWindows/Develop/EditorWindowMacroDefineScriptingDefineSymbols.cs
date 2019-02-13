@@ -9,95 +9,77 @@ using UnityEngine;
 public class EditorWindowMacroDefineScriptingDefineSymbols : AbsEditorWindow
 {
     /// <summary>
-    /// 系统指令状态
+    /// 宏状态
+    /// Key:宏枚举
+    /// Value:枚举状态【Key:检举名称HashCode,Value:是否选择】
     /// </summary>
-    Dictionary<string, bool> mSystemDefineState = new Dictionary<string, bool>();
-    /// <summary>
-    /// 系统指令描述
-    /// </summary>
-    Dictionary<string, AliasTooltipAttribute> mSystemDefineAttribute = typeof(enSystemDefine).NameToAttribute<AliasTooltipAttribute>();
-    /// <summary>
-    /// 系统指令组
-    /// </summary>
-    List<string> mSystemDefine = new List<string>();
-
+    static Dictionary<int, Dictionary<string, bool>> mDefineStates = new Dictionary<int, Dictionary<string, bool>>();
 
     /// <summary>
-    /// 开发指令组状态
+    /// 宏状态
+    /// Key:宏枚举
+    /// Value:枚举属性【Key:检举名称HashCode,Value:属性】
     /// </summary>
-    Dictionary<string, bool> mDeveloperDefineState = new Dictionary<string, bool>();
+    static Dictionary<int, Dictionary<string, AliasTooltipAttribute>> mDefineAttributes = new Dictionary<int, Dictionary<string, AliasTooltipAttribute>>();
+
     /// <summary>
-    /// 开发指令描述
+    /// 宏枚举类型
     /// </summary>
-    Dictionary<string, AliasTooltipAttribute> mDeveloperDefineAttribute = typeof(enDeveloperDefine).NameToAttribute<AliasTooltipAttribute>();
+    static List<Type> mDefineTypes = new List<Type>() { typeof(enSystemDefine),typeof(enDeveloperDefine),typeof(enXLuaDefine) };
+
     /// <summary>
-    /// 开发指令组
+    /// 宏枚举类型属性
     /// </summary>
-    List<string> mDeveloperDefine = new List<string>();
+    static Dictionary<int, AliasTooltipAttribute> mDefineTypeAttributes = new Dictionary<int, AliasTooltipAttribute>();
+
+    /// <summary>
+    /// OnFocus
+    /// </summary>
     void OnFocus()
     {
-        if (mSystemDefineState.Count <= 0)
-        {
-            mSystemDefine.AddRange(Enum.GetNames(typeof(enSystemDefine)));
-            foreach (string sys in mSystemDefine)
-            {
-                mSystemDefineState.Add(sys, false);
-            }
-        }
-        if (mDeveloperDefineState.Count <= 0)
-        {
-            mDeveloperDefine.AddRange(Enum.GetNames(typeof(enDeveloperDefine)));
-            foreach (string dev in mDeveloperDefine)
-            {
-                mDeveloperDefineState.Add(dev, false);
-            }
-        }
-        string[] symbol = EditorStrayFogApplication.GetScriptingDefineSymbolsForGroup();
-        if (symbol != null)
-        {
-            foreach (string s in symbol)
-            {
-                if (mSystemDefineState.ContainsKey(s))
-                {
-                    mSystemDefineState[s] = mSystemDefineState.ContainsKey(s);
-                }
-                if (mDeveloperDefineState.ContainsKey(s))
-                {
-                    mDeveloperDefineState[s] = mDeveloperDefineState.ContainsKey(s);
-                }
-            }
-        }
-    }
+        int tKey = 0;
+        List<string> symbols = new List<string>(EditorStrayFogApplication.GetScriptingDefineSymbolsForGroup());
 
-    void OnLostFocus()
-    {
-        mSystemDefine.Clear();
-        mSystemDefineState.Clear();
-        mDeveloperDefine.Clear();
-        mDeveloperDefineState.Clear();
+        foreach (Type t in mDefineTypes)
+        {
+            tKey = t.GetHashCode();
+            if (!mDefineStates.ContainsKey(tKey))
+            {
+                mDefineStates.Add(tKey, new Dictionary<string, bool>());
+            }
+            if (!mDefineAttributes.ContainsKey(tKey))
+            {
+                mDefineAttributes.Add(tKey, t.NameToAttribute<AliasTooltipAttribute>());
+            }
+            if (!mDefineTypeAttributes.ContainsKey(tKey))
+            {
+                mDefineTypeAttributes.Add(tKey, t.GetFirstAttribute<AliasTooltipAttribute>());
+            }
+            foreach (KeyValuePair<string, AliasTooltipAttribute> key in mDefineAttributes[tKey])
+            {
+                if (!mDefineStates[tKey].ContainsKey(key.Key))
+                {
+                    mDefineStates[tKey].Add(key.Key, false);
+                }
+                mDefineStates[tKey][key.Key] = symbols.Contains(key.Key);
+            }
+        }
     }
 
     void OnGUI()
     {
-        EditorGUILayout.HelpBox("The System and Develop macro define is setting in StrayFogPlugins.Enums.EnumMacroDefineScriptingDefineSymbols.cs file.", MessageType.Info);
-        EditorGUILayout.LabelField("1.System Defines");
-        if (mSystemDefineState.Count > 0)
+        EditorGUILayout.HelpBox("The System and Develop macro define is setting in EnumMacroDefineScriptingDefineSymbols.cs file.", MessageType.Info);
+        foreach (KeyValuePair<int, AliasTooltipAttribute> define in mDefineTypeAttributes)
         {
-            foreach (string define in mSystemDefine)
+            EditorGUILayout.LabelField(string.Format("【{0}】",define.Value.alias));
+            foreach (KeyValuePair<string, AliasTooltipAttribute> attribute in mDefineAttributes[define.Key])
             {
-                mSystemDefineState[define] = EditorGUILayout.ToggleLeft(
-                    string.Format("{0}【{1}】", define, mSystemDefineAttribute[define].alias), mSystemDefineState[define]);
+                mDefineStates[define.Key][attribute.Key] = EditorGUILayout.ToggleLeft(
+                    string.Format("{0}【{1}】", attribute.Key, attribute.Value.alias), mDefineStates[define.Key][attribute.Key]);
             }
-        }
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("2.Developer Defines");
-        if (mDeveloperDefine.Count > 0)
-        {
-            foreach (string define in mDeveloperDefine)
-            {
-                mDeveloperDefineState[define] = EditorGUILayout.ToggleLeft(
-                    string.Format("{0}【{1}】", define, mDeveloperDefineAttribute[define].alias), mDeveloperDefineState[define]);
-            }
+            GUILayout.HorizontalSlider(0, 0, 0, GUILayout.Height(1));
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
         }
 
         if (GUILayout.Button("Save Define"))
@@ -109,22 +91,16 @@ public class EditorWindowMacroDefineScriptingDefineSymbols : AbsEditorWindow
     void SaveDefine()
     {
         List<string> saveDefines = new List<string>();
-        foreach (KeyValuePair<string, bool> k in mSystemDefineState)
+        foreach (Dictionary<string, bool> key in mDefineStates.Values)
         {
-            if (k.Value)
+            foreach (KeyValuePair<string, bool> k in key)
             {
-                saveDefines.Add(k.Key);
-            }
+                if (k.Value)
+                {
+                    saveDefines.Add(k.Key);
+                }
+            }            
         }
-
-        foreach (KeyValuePair<string, bool> k in mDeveloperDefineState)
-        {
-            if (k.Value)
-            {
-                saveDefines.Add(k.Key);
-            }
-        }
-
         string defineChar = EditorStrayFogApplication.SetScriptingDefineSymbolsForGroup(saveDefines.ToArray());
         EditorUtility.DisplayDialog("Setting ScriptDefineSymbols", "Setting ScriptDefineSymbols【" + defineChar + "】 Success.", "OK");
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
