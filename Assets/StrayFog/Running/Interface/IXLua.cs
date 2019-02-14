@@ -9,24 +9,18 @@ public class LoadXLuaResult
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="_xLuaFileId">xLua文件ID</param>
-    /// <param name="_xLuaFolderId">xLua文件夹ID</param>
+    /// <param name="_xLuaId">xLua文件ID</param>
     /// <param name="_xLua">xLua资源</param>
-    public LoadXLuaResult(int _xLuaFileId, int _xLuaFolderId,TextAsset _xLua)
+    public LoadXLuaResult(int _xLuaId, TextAsset _xLua)
     {
-        xLuaFileId = _xLuaFileId;
-        xLuaFolderId = _xLuaFolderId;
+        xLuaId = _xLuaId;
         xLua = _xLua;
         isExists = _xLua != null;
     }
     /// <summary>
-    /// 文件ID
+    /// xLua文件ID
     /// </summary>
-    public int xLuaFileId { get; private set; }
-    /// <summary>
-    /// 文件夹ID
-    /// </summary>
-    public int xLuaFolderId { get; private set; }
+    public int xLuaId { get; private set; }
     /// <summary>
     /// xLua资源
     /// </summary>
@@ -40,10 +34,9 @@ public class LoadXLuaResult
 /// <summary>
 /// 注册引导事件句柄
 /// </summary>
-/// <param name="_xLuaFileId">xLua文件ID</param>
-/// <param name="_xLuaFolderId">xLua文件夹ID</param>
+/// <param name="xLua文件ID">_xLuaId</param>
 /// <param name="_onComplete">完成事件</param>
-public delegate void LoadXLuaEventHandle(int _xLuaFileId, int _xLuaFolderId, Action<LoadXLuaResult> _onComplete);
+public delegate void LoadXLuaEventHandle(int _xLuaId, Action<LoadXLuaResult> _onComplete);
 
 /// <summary>
 /// xLua接口
@@ -52,9 +45,7 @@ public interface IXLua
 {
     /// <summary>
     /// 加载xLua文件
-    /// </summary>
-    /// <param name="_xLuaFileId">xLua文件ID</param>
-    /// <param name="_xLuaFolderId">xLua文件夹ID</param>
+    /// </summary>   
     /// <param name="_onComplete">完成回调</param>
-    void LoadXLua(int _xLuaFileId,int _xLuaFolderId,Action<LoadXLuaResult> _onComplete);
+    void LoadXLua(Action<LoadXLuaResult> _onComplete);
 }

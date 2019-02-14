@@ -174,19 +174,22 @@ public sealed partial class StrayFogSQLiteEntityHelper
         }
 
         //SQLiteHelper
-        if (!msStrayFogSQLiteHelperMaping.ContainsKey(tableAttribute.dbSQLiteKey))
+        if (StrayFogGamePools.setting.isUseSQLite)
         {
-            if (StrayFogGamePools.setting.isInternal)
+            if (!msStrayFogSQLiteHelperMaping.ContainsKey(tableAttribute.dbSQLiteKey))
             {
-                msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
-                    new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(tableAttribute.dbSQLitePath)));
+                if (StrayFogGamePools.setting.isInternal)
+                {
+                    msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
+                        new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(tableAttribute.dbSQLitePath)));
+                }
+                else
+                {
+                    msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
+                        new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(tableAttribute.dbSQLiteAssetBundleName)));
+                }
             }
-            else
-            {
-                msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
-                    new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(tableAttribute.dbSQLiteAssetBundleName)));
-            }
-        }
+        }        
         return tableAttribute;
     }
     #endregion

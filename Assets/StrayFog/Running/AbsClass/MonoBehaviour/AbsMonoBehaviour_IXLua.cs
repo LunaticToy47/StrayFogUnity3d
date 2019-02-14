@@ -9,12 +9,10 @@ public abstract partial class AbsMonoBehaviour : IXLua
     /// <summary>
     /// 加载xLua文件
     /// </summary>
-    /// <param name="_xLuaFileId">xLua文件ID</param>
-    /// <param name="_xLuaFolderId">xLua文件夹ID</param>
     /// <param name="_onComplete">完成回调</param>
-    public void LoadXLua(int _xLuaFileId, int _xLuaFolderId, Action<LoadXLuaResult> _onComplete)
+    public void LoadXLua(Action<LoadXLuaResult> _onComplete)
     {
-        StrayFogRunningUtility.SingleScriptableObject<StrayFogRunningApplication>().LoadXLua(_xLuaFileId, _xLuaFolderId, _onComplete);
+        StrayFogRunningUtility.SingleScriptableObject<StrayFogRunningApplication>().LoadXLua(GetType().FullName.UniqueHashCode(), _onComplete);
     }
     #endregion
 }

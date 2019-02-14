@@ -59,18 +59,17 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
     /// <summary>
     /// 加载xLua文件
     /// </summary>
-    /// <param name="_xLuaFileId">xLua文件ID</param>
-    /// <param name="_xLuaFolderId">xLua文件夹ID</param>
+    /// <param name="xLua文件ID">_xLuaId</param>
     /// <param name="_onComplete">完成回调</param>
-    public void LoadXLua(int _xLuaFileId, int _xLuaFolderId, Action<LoadXLuaResult> _onComplete)
+    public void LoadXLua(int _xLuaId, Action<LoadXLuaResult> _onComplete)
     {
         if (OnLoadXLua != null)
         {
-            OnLoadXLua(_xLuaFileId, _xLuaFolderId, _onComplete);
+            OnLoadXLua(_xLuaId, _onComplete);
         }
         else
         {
-            _onComplete(new LoadXLuaResult(_xLuaFileId,_xLuaFolderId,null));
+            _onComplete(new LoadXLuaResult(_xLuaId, null));
         }
     }
     #endregion
