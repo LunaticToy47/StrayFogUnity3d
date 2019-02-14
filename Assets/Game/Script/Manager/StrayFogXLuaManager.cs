@@ -7,7 +7,7 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
     /// <summary>
     /// lua引擎
     /// </summary>
-    public LuaEnv luaEnv  { get; private set; }
+    public LuaEnv xLuaEnv  { get; private set; }
 
     #region OnAfterConstructor
     /// <summary>
@@ -19,7 +19,7 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
     /// </summary>
     protected override void OnAfterConstructor()
     {
-        luaEnv = new LuaEnv();
+        xLuaEnv = new LuaEnv();
         List<XLS_Config_Table_XLuaMap> src = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_XLuaMap>();
         foreach (XLS_Config_Table_XLuaMap r in src)
         {

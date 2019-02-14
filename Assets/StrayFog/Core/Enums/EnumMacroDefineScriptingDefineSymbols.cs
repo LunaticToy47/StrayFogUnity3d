@@ -71,6 +71,11 @@ public enum enXLuaDefine
     [AliasTooltip("打开hotfix功能")]
     HOTFIX_ENABLE,
     /// <summary>
+    /// 采用内嵌到编辑器的方式注入
+    /// </summary>
+    [AliasTooltip("采用内嵌到编辑器的方式注入")]
+    INJECT_WITHOUT_TOOL,
+    /// <summary>
     /// 反射时打印warning
     /// </summary>
     [AliasTooltip("反射时打印warning")]
