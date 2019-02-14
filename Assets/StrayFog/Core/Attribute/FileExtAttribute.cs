@@ -222,6 +222,11 @@ public enum enFileExt
     /// </summary>
     [FileExt(".db")]
     SQLiteDb,
+    /// <summary>
+    /// asmdef文件
+    /// </summary>
+    [FileExt(".asmdef")]
+    Asmdef,
 }
 #endregion
 

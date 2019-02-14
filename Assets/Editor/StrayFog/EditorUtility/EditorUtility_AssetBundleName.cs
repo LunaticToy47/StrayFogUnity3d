@@ -23,7 +23,7 @@ public class EditorUtility_AssetBundleName : AbsSingle
     /// </summary>
     static readonly List<enFileExt> msrIgnoreAssetBundleNames =
         new List<enFileExt>() {
-            enFileExt.CS, enFileExt.LightMapExr,enFileExt.Javascript,enFileExt.Dll_MDB,enFileExt.Dll_PDB,enFileExt.Cginc };
+            enFileExt.CS, enFileExt.LightMapExr,enFileExt.Javascript,enFileExt.Dll_MDB,enFileExt.Dll_PDB,enFileExt.Cginc,enFileExt.Asmdef };
     /// <summary>
     /// 是否是忽略后缀名映射
     /// </summary>

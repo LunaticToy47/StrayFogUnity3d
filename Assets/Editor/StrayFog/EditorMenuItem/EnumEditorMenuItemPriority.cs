@@ -69,6 +69,10 @@ enum enEditorMenuItemPriority
     /// </summary>
     AssetDiskMaping,
     /// <summary>
+    /// EditorXLuaMenuItem
+    /// </summary>
+    XLua,
+    /// <summary>
     /// EditorDllMenuItem
     /// </summary>
     Dll,

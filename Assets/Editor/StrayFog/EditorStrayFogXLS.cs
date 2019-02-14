@@ -1146,22 +1146,6 @@ public sealed class EditorStrayFogXLS
     #endregion
 
     #region UIWindowSetting表操作
-    #region DeleteAllUIWindowSetting 删除所有窗口设置
-    /// <summary>
-    /// 删除所有窗口设置
-    /// </summary>
-    public static void DeleteAllUIWindowSetting()
-    {
-        EditorUIWindowSettingConfig wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
-        if (wfg.paths.Length > 0)
-        {
-            foreach (string file in wfg.paths)
-            {
-                OnClearXlsData(file);
-            }
-        }
-    }
-    #endregion
 
     #region DeleteUIWindowSetting 删除指定窗口设置
     /// <summary>
@@ -1183,18 +1167,18 @@ public sealed class EditorStrayFogXLS
 
     #region InsertUIWindowSetting 插入窗口设置
     /// <summary>
-    /// 删除所有窗口设置
+    /// 插入窗口设置
     /// </summary>
     /// <param name="_windows">窗口组</param>
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
     {
-        DeleteAllUIWindowSetting();
         EditorUIWindowSettingConfig wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
         if (wfg.paths.Length > 0)
         {
             foreach (string file in wfg.paths)
             {
+                OnClearXlsData(file);
                 using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
                 {
                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
@@ -1223,6 +1207,58 @@ public sealed class EditorStrayFogXLS
         else
         {
             string error = "UIWindowSetting.xlsx file is not set,please set one.";
+            EditorUtility.DisplayDialog("Error", error, "Yes", "No");
+            throw new UnityException(error);
+        }
+    }
+    #endregion
+    #endregion
+
+    #region XLuaMap表操作
+    #region InsertXLuaMap 插入XLua映射
+    /// <summary>
+    /// 插入XLua映射
+    /// </summary>
+    /// <param name="_progressCallback">进度回调</param>
+    public static void InsertXLuaMap(Action<string, float> _progressCallback)
+    {
+        List<EditorXLuaMapAsset> xLuaMaps = EditorStrayFogGlobalVariable.CollectXLuaMapAssets();
+        EditorXLuaMapConfig wfg = EditorStrayFogSavedAssetConfig.setXLuaMapConfig;
+        if (wfg.paths.Length > 0)
+        {
+            foreach (string file in wfg.paths)
+            {
+                OnClearXlsData(file);
+                using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    int rowIndex = 0;
+                    for (int i = 0; i < xLuaMaps.Count; i++)
+                    {
+                        if (xLuaMaps[i].xLuaTextAsset != null)
+                        {
+                            EditorSelectionXLuaMapSetting set = new EditorSelectionXLuaMapSetting(AssetDatabase.GetAssetPath(xLuaMaps[i].xLuaTextAsset));
+                            set.Resolve();
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaMaps[i].xLuaId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = set.fileId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = set.folderId;
+                        }
+                        else
+                        {
+                            rowIndex++;
+                        }
+                        if (_progressCallback != null)
+                        {
+                            _progressCallback(xLuaMaps[i].classFullName, (i + 1) / (float)xLuaMaps.Count);
+                        }
+                    }
+                    pck.Save();
+                }
+            }
+        }
+        else
+        {
+            string error = "XLuaMap.xlsx file is not set,please set one.";
             EditorUtility.DisplayDialog("Error", error, "Yes", "No");
             throw new UnityException(error);
         }

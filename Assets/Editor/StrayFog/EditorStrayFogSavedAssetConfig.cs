@@ -30,14 +30,19 @@ public sealed class EditorStrayFogSavedAssetConfig
     [AliasTooltip("Setting 【UIWindowConfig】")]
     public static EditorUIWindowSettingConfig setUIWindowConfig = new EditorUIWindowSettingConfig();
     /// <summary>
-    /// 设置SetAssetDiskMapingFileXlsMapingConfig
+    /// 设置AssetDiskMapingFileXlsMapingConfig
     /// </summary>
     [AliasTooltip("Setting 【AssetDiskMapingFileXlsMapingConfig】")]
     public static EditorSetAssetDiskMapingFileXlsMapingConfig setAssetDiskMapingFileXlsMapingConfig = new EditorSetAssetDiskMapingFileXlsMapingConfig();
     /// <summary>
-    /// 设置SetAssetDiskMapingFolderXlsMapingConfig
+    /// 设置AssetDiskMapingFolderXlsMapingConfig
     /// </summary>
     [AliasTooltip("Setting 【AssetDiskMapingFolderXlsMapingConfig】")]
     public static EditorSetAssetDiskMapingFolderXlsMapingConfig setAssetDiskMapingFolderXlsMapingConfig = new EditorSetAssetDiskMapingFolderXlsMapingConfig();
+    /// <summary>
+    /// 设置XLuaMapConfig
+    /// </summary>
+    [AliasTooltip("Setting 【XLuaMapConfig】")]
+    public static EditorXLuaMapConfig setXLuaMapConfig = new EditorXLuaMapConfig();
 }
 #endif

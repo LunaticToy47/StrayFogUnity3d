@@ -1079,6 +1079,27 @@ public sealed class EditorStrayFogExecute
 
     #endregion
 
+    #region XLua菜单
+
+    #region ExportXLuaMapToXLS 导出XLua映射到XLS表
+    /// <summary>
+    /// 导出XLua映射到XLS表
+    /// </summary>
+    public static void ExportXLuaMapToXLS()
+    {
+        StringBuilder sbLog = new StringBuilder();                
+        EditorStrayFogXLS.InsertXLuaMap((m, p) => {
+            EditorUtility.DisplayProgressBar("Insert XLuaMap", m, p);
+        });
+        EditorUtility.ClearProgressBar();
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        sbLog.AppendLine("ExportXLuaMapToXLS Succeed!");
+        Debug.Log(sbLog.ToString());
+    }
+    #endregion
+
+    #endregion
+
     #region Dll菜单
 
     #region ExecuteLookPackageDll 查看要打包的dll
@@ -1286,7 +1307,7 @@ public sealed class EditorStrayFogExecute
     {        
         ExecuteBuildAllAssetDiskMaping();
         ExecuteBuildUIWindowSetting();
-
+        ExportXLuaMapToXLS();
         ExecuteExportXlsDataToSqlite();
     }
     #endregion

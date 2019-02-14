@@ -117,7 +117,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                 if (pck.Workbook.Worksheets.Count > 0)//消耗2秒
                 {
                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                    if (sheet.Dimension.Rows >= _tableAttribute.xlsColumnValueIndex)
+                    if (sheet.Dimension.Rows >= _tableAttribute.xlsColumnValueIndex - 1)
                     {
                         foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
                         {

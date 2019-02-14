@@ -37,6 +37,11 @@ public enum enEditorApplicationFolder
     [EditorApplicationFolder("游戏Editor的PublishSetting目录", "Assets/Game/Editor/PublishSetting", "游戏Editor的PublishSetting目录")]
     Game_Editor_PublishSetting,
     /// <summary>
+    /// 游戏Editor的XLua目录
+    /// </summary>
+    [EditorApplicationFolder("游戏Editor的XLua目录", "Assets/Game/Editor/XLua", "游戏Editor的XLua目录")]
+    Game_Editor_XLua,
+    /// <summary>
     /// 游戏目录
     /// </summary>
     [EditorApplicationFolder("游戏目录", "Assets/Game", "游戏目录")]
