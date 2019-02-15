@@ -13,7 +13,7 @@ using System.Reflection;
 using System.Linq;
 
 //配置的详细介绍请看Doc下《XLua的配置.doc》
-public static class ExampleConfig
+public static class EditorHotfixConfig
 {
     /***************如果你全lua编程，可以参考这份自动化配置***************/
     //--------------begin 纯lua编程配置参考----------------------------
@@ -132,72 +132,72 @@ public static class ExampleConfig
     //--------------end 纯lua编程配置参考----------------------------
 
     /***************热补丁可以参考这份自动化配置***************/
-    //[Hotfix]
-    //static IEnumerable<Type> HotfixInject
-    //{
-    //    get
-    //    {
-    //        return (from type in Assembly.Load("Assembly-CSharp").GetExportedTypes()
-    //                           where type.Namespace == null || !type.Namespace.StartsWith("XLua")
-    //                           select type);
-    //    }
-    //}
+    [Hotfix]
+    static IEnumerable<Type> HotfixInject
+    {
+        get
+        {
+            return (from type in Assembly.Load("Assembly-CSharp").GetExportedTypes()
+                    where type.Namespace == null || !type.Namespace.StartsWith("XLua")
+                    select type);
+        }
+    }
     //--------------begin 热补丁自动化配置-------------------------
-    //static bool hasGenericParameter(Type type)
-    //{
-    //    if (type.IsGenericTypeDefinition) return true;
-    //    if (type.IsGenericParameter) return true;
-    //    if (type.IsByRef || type.IsArray)
-    //    {
-    //        return hasGenericParameter(type.GetElementType());
-    //    }
-    //    if (type.IsGenericType)
-    //    {
-    //        foreach (var typeArg in type.GetGenericArguments())
-    //        {
-    //            if (hasGenericParameter(typeArg))
-    //            {
-    //                return true;
-    //            }
-    //        }
-    //    }
-    //    return false;
-    //}
+    static bool hasGenericParameter(Type type)
+    {
+        if (type.IsGenericTypeDefinition) return true;
+        if (type.IsGenericParameter) return true;
+        if (type.IsByRef || type.IsArray)
+        {
+            return hasGenericParameter(type.GetElementType());
+        }
+        if (type.IsGenericType)
+        {
+            foreach (var typeArg in type.GetGenericArguments())
+            {
+                if (hasGenericParameter(typeArg))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     // 配置某Assembly下所有涉及到的delegate到CSharpCallLua下，Hotfix下拿不准那些delegate需要适配到lua function可以这么配置
-    //[CSharpCallLua]
-    //static IEnumerable<Type> AllDelegate
-    //{
-    //    get
-    //    {
-    //        BindingFlags flag = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
-    //        List<Type> allTypes = new List<Type>();
-    //        var allAssemblys = new Assembly[]
-    //        {
-    //            Assembly.Load("Assembly-CSharp")
-    //        };
-    //        foreach (var t in (from assembly in allAssemblys from type in assembly.GetTypes() select type))
-    //        {
-    //            var p = t;
-    //            while (p != null)
-    //            {
-    //                allTypes.Add(p);
-    //                p = p.BaseType;
-    //            }
-    //        }
-    //        allTypes = allTypes.Distinct().ToList();
-    //        var allMethods = from type in allTypes
-    //                         from method in type.GetMethods(flag)
-    //                         select method;
-    //        var returnTypes = from method in allMethods
-    //                          select method.ReturnType;
-    //        var paramTypes = allMethods.SelectMany(m => m.GetParameters()).Select(pinfo => pinfo.ParameterType.IsByRef ? pinfo.ParameterType.GetElementType() : pinfo.ParameterType);
-    //        var fieldTypes = from type in allTypes
-    //                         from field in type.GetFields(flag)
-    //                         select field.FieldType;
-    //        return (returnTypes.Concat(paramTypes).Concat(fieldTypes)).Where(t => t.BaseType == typeof(MulticastDelegate) && !hasGenericParameter(t)).Distinct();
-    //    }
-    //}
+    [CSharpCallLua]
+    static IEnumerable<Type> AllDelegate
+    {
+        get
+        {
+            BindingFlags flag = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
+            List<Type> allTypes = new List<Type>();
+            var allAssemblys = new Assembly[]
+            {
+                Assembly.Load("Assembly-CSharp")
+            };
+            foreach (var t in (from assembly in allAssemblys from type in assembly.GetTypes() select type))
+            {
+                var p = t;
+                while (p != null)
+                {
+                    allTypes.Add(p);
+                    p = p.BaseType;
+                }
+            }
+            allTypes = allTypes.Distinct().ToList();
+            var allMethods = from type in allTypes
+                             from method in type.GetMethods(flag)
+                             select method;
+            var returnTypes = from method in allMethods
+                              select method.ReturnType;
+            var paramTypes = allMethods.SelectMany(m => m.GetParameters()).Select(pinfo => pinfo.ParameterType.IsByRef ? pinfo.ParameterType.GetElementType() : pinfo.ParameterType);
+            var fieldTypes = from type in allTypes
+                             from field in type.GetFields(flag)
+                             select field.FieldType;
+            return (returnTypes.Concat(paramTypes).Concat(fieldTypes)).Where(t => t.BaseType == typeof(MulticastDelegate) && !hasGenericParameter(t)).Distinct();
+        }
+    }
     //--------------end 热补丁自动化配置-------------------------
 
     //黑名单

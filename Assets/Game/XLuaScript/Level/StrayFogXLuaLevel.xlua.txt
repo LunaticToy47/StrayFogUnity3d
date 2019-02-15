@@ -7,15 +7,23 @@
 local speed = 10
 local lightCpnt = nil
 
+function awake()
+	print("lua awake...")	
+end
+
 function start()
 	print("lua start...")
 	lightCpnt= CS.UnityEngine.GameObject.FindObjectOfType(typeof(CS.UnityEngine.Light))
 end
 
 function update()
-	local r = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * speed
-	self.transform:Rotate(r)
-	lightCpnt.color = CS.UnityEngine.Color(CS.UnityEngine.Mathf.Sin(CS.UnityEngine.Time.time) / 2 + 0.5, 0, 0, 1)
+	print("lua update...")
+	if(lightCpnt ~= nil)
+	then
+		local r = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * speed
+		self.transform:Rotate(r)
+		lightCpnt.color = CS.UnityEngine.Color(CS.UnityEngine.Mathf.Sin(CS.UnityEngine.Time.time) / 2 + 0.5, 0, 0, 1)
+	end
 end
 
 function ondestroy()

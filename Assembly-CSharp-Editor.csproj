@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\XLua\Editor\ExampleConfig.cs" />
+    <Compile Include="Assets\XLua\Editor\EditorHotfixConfig.cs" />
     <Compile Include="Assets\XLua\Src\Editor\Generator.cs" />
     <Compile Include="Assets\XLua\Src\Editor\Hotfix.cs" />
     <Compile Include="Assets\XLua\Src\Editor\LinkXmlGen\LinkXmlGen.cs" />
@@ -80,18 +80,6 @@
     <None Include="Assets\XLua\Src\Editor\Template\LuaClassWrap.tpl.txt" />
     <None Include="Assets\XLua\Src\Editor\Template\LuaEnumWrapGCM.tpl.txt" />
     <None Include="Assets\XLua\Src\Editor\Template\PackUnpack.tpl.txt" />
-    <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>E:/UnityFramework/StrayFogUnity3d/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/UnityFramework/StrayFogUnity3d/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/UnityFramework/StrayFogUnity3d/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Editor">
-      <HintPath>E:/UnityFramework/StrayFogUnity3d/Library/ScriptAssemblies/Editor.dll</HintPath>
-    </Reference>
     <Reference Include="XiaomiSupport">
       <HintPath>E:/UnityFramework/StrayFogUnity3d/Library/ScriptAssemblies/XiaomiSupport.dll</HintPath>
     </Reference>

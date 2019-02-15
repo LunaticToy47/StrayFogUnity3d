@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using XLua;
 
 [AddComponentMenu("Game/ExampleLevel/StrayFogXLuaLevel")]
-[LuaCallCSharp]
 public class StrayFogXLuaLevel : AbsLevel
 {
     LuaTable mScriptEnv;
@@ -47,9 +47,19 @@ public class StrayFogXLuaLevel : AbsLevel
     // Use this for initialization
     void Start()
     {
+        StartCoroutine(OnLuaStart());
+    }
+
+    private IEnumerator OnLuaStart()
+    {
+        yield return new WaitForEndOfFrame();
         if (luaStart != null)
         {
             luaStart();
+        }
+        else
+        {
+            StartCoroutine(OnLuaStart());
         }
     }
 
