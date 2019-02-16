@@ -18,29 +18,36 @@ public class StrayFogXLuaLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
+            StrayFogGamePools.xLuaManager.xLuaEnv.AddLoader((ref string filepath) =>
+            {
+                Debug.Log(filepath);
+                return null;
+            });
+            StrayFogGamePools.xLuaManager.xLuaEnv.DoString(@"require '"+ xLuaFileId + "'");
             LoadXLua((rst) =>
-               {
-                   if (rst.isExists)
                    {
-                       mScriptEnv = StrayFogGamePools.xLuaManager.xLuaEnv.NewTable();
-                       LuaTable meta = StrayFogGamePools.xLuaManager.xLuaEnv.NewTable();
-                       meta.Set("__index", StrayFogGamePools.xLuaManager.xLuaEnv.Global);
-                       mScriptEnv.SetMetaTable(meta);
-                       meta.Dispose();
-
-                       mScriptEnv.Set("self", this);
-                       StrayFogGamePools.xLuaManager.xLuaEnv.DoString(rst.xLua.text, "StrayFogXLuaLevel", mScriptEnv);
-                       Action luaAwake = mScriptEnv.Get<Action>("awake");
-                       luaStart = mScriptEnv.Get<Action>("start");
-                       luaUpdate = mScriptEnv.Get<Action>("update");
-                       luaOnDestroy = mScriptEnv.Get<Action>("ondestroy");
-                       if (luaAwake != null)
+                       if (rst.isExists)
                        {
-                           luaAwake();
+                           mScriptEnv = StrayFogGamePools.xLuaManager.xLuaEnv.NewTable();
+                           LuaTable meta = StrayFogGamePools.xLuaManager.xLuaEnv.NewTable();
+                           meta.Set("__index", StrayFogGamePools.xLuaManager.xLuaEnv.Global);
+                           mScriptEnv.SetMetaTable(meta);
+                           meta.Dispose();
+
+                           mScriptEnv.Set("self", this);
+                           StrayFogGamePools.xLuaManager.xLuaEnv.DoString(rst.xLua.text, "StrayFogXLuaLevel", mScriptEnv);
+
+                           Action luaAwake = mScriptEnv.Get<Action>("awake");
+                           luaStart = mScriptEnv.Get<Action>("start");
+                           luaUpdate = mScriptEnv.Get<Action>("update");
+                           luaOnDestroy = mScriptEnv.Get<Action>("ondestroy");
+                           if (luaAwake != null)
+                           {
+                               luaAwake();
+                           }
                        }
-                   }
-                   Debug.Log(rst.isExists + "=>" + (rst.isExists ? rst.xLua.text : string.Empty));
-               });
+                       Debug.Log(rst.isExists + "=>" + (rst.isExists ? rst.xLua.text : string.Empty));
+                   });
         });
     }
 

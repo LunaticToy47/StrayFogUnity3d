@@ -44,6 +44,10 @@ public delegate void LoadXLuaEventHandle(int _xLuaId, Action<LoadXLuaResult> _on
 public interface IXLua
 {
     /// <summary>
+    /// xLua文件ID
+    /// </summary>
+    int xLuaFileId { get; }
+    /// <summary>
     /// 加载xLua文件
     /// </summary>   
     /// <param name="_onComplete">完成回调</param>

@@ -215,7 +215,7 @@ public enum enFileExt
     /// <summary>
     /// xlua文件
     /// </summary>
-    [FileExt(".xlua.txt")]
+    [FileExt(".lua.txt")]
     XLuaTxt,
     /// <summary>
     /// SQLite数据库
