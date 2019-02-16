@@ -60,4 +60,21 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
         }
     }
     #endregion
+
+    #region GetXLuaPath 获得xLua文件路径
+    /// <summary>
+    /// 获得xLua文件路径
+    /// </summary>
+    /// <param name="xLua文件ID">_xLuaId</param>
+    /// <returns>xLua文件路径</returns>
+    public string GetXLuaPath(int _xLuaId)
+    {
+        string path = string.Empty;
+        if (mXLuaMaping.ContainsKey(_xLuaId))
+        {
+            path = StrayFogGamePools.assetBundleManager.GetAssetPath(mXLuaMaping[_xLuaId].xLuaFileId, mXLuaMaping[_xLuaId].xLuaFolderId);
+        }
+        return path;
+     }
+    #endregion
 }

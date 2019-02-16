@@ -19,8 +19,8 @@ public class StrayFogXLuaLevel : AbsLevel
         StrayFogGamePools.gameManager.Initialization(() =>
         {
             StrayFogGamePools.xLuaManager.xLuaEnv.AddLoader((ref string filepath) =>
-            {
-                Debug.Log(filepath);
+            {                
+                Debug.Log(StrayFogGamePools.xLuaManager.GetXLuaPath(int.Parse(filepath)));
                 return null;
             });
             StrayFogGamePools.xLuaManager.xLuaEnv.DoString(@"require '"+ xLuaFileId + "'");

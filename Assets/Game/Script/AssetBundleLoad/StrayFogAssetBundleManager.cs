@@ -288,4 +288,32 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
     }
     #endregion
     #endregion
+
+    #region GetAssetPath 获得资源路径
+    /// <summary>
+    /// 获得资源路径
+    /// </summary>
+    /// <param name="_fileId">文件Id</param>
+    /// <param name="_folderId">文件夹Id</param>
+    /// <returns>资源路径</returns>
+    public string GetAssetPath(int _fileId, int _folderId)
+    {
+        XLS_Config_View_AssetDiskMaping adm = OnGetAssetDiskMaping(_fileId, _folderId);
+        int key = 0;
+        string path = string.Empty;
+        OnGetKey(adm.outAssetPath, out key, out path);
+        return path;
+    }
+
+    /// <summary>
+    /// 获得资源路径
+    /// </summary>
+    /// <param name="_file">文件</param>
+    /// <param name="_folder">文件夹</param>
+    /// <returns>资源路径</returns>
+    public string GetAssetPath(Enum _file, Enum _folder)
+    {
+        return GetAssetPath(Convert.ToInt32(_file), Convert.ToInt32(_folder));
+    }
+    #endregion
 }
