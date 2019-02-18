@@ -11,15 +11,4 @@ public abstract partial class AbsMonoBehaviour : IXLua
     /// </summary>
     public int xLuaFileId { get { return GetType().FullName.UniqueHashCode(); } }
     #endregion
-
-    #region LoadXLua 加载xLua文件
-    /// <summary>
-    /// 加载xLua文件
-    /// </summary>
-    /// <param name="_onComplete">完成回调</param>
-    public void LoadXLua(Action<LoadXLuaResult> _onComplete)
-    {
-        StrayFogRunningUtility.SingleScriptableObject<StrayFogRunningApplication>().LoadXLua(xLuaFileId, _onComplete);
-    }
-    #endregion
 }

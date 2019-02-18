@@ -51,29 +51,6 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
     }
     #endregion
 
-    #region LoadXLua 加载xLua文件
-    /// <summary>
-    /// 注册加载xLua文件事件
-    /// </summary>
-    public event LoadXLuaEventHandle OnLoadXLua;
-    /// <summary>
-    /// 加载xLua文件
-    /// </summary>
-    /// <param name="xLua文件ID">_xLuaId</param>
-    /// <param name="_onComplete">完成回调</param>
-    public void LoadXLua(int _xLuaId, Action<LoadXLuaResult> _onComplete)
-    {
-        if (OnLoadXLua != null)
-        {
-            OnLoadXLua(_xLuaId, _onComplete);
-        }
-        else
-        {
-            _onComplete(new LoadXLuaResult(_xLuaId, null));
-        }
-    }
-    #endregion
-
     #region UNITY_EDITOR
 #if UNITY_EDITOR
     [InvokeMethod("EditorDisplayParameter")]

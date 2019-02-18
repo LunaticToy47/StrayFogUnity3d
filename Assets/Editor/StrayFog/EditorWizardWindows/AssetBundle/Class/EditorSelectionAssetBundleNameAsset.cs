@@ -204,6 +204,7 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
     public void SaveAssetBundleName(EditorSelectionAssetBundleNameAsset _sync)
     {
         mAssetBundleName = "o_";
+        int hashCode = path.UniqueHashCode();
         if (msrNamePrefix.ContainsKey(ext))
         {
             mAssetBundleName = msrNamePrefix[ext];
@@ -212,7 +213,7 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
         {
             mAssetBundleName = msrNamePrefix[msrXLuaTxtExt];
         }
-        mAssetBundleName += path.UniqueHashCode();
+        mAssetBundleName += hashCode;
         bool isLockName = false;
         AssetImporter importer = AssetImporter.GetAtPath(path);
         if (importer is TextureImporter)

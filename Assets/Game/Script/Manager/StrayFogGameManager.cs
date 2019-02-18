@@ -23,7 +23,6 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
             m_isInitialized = true;
             runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
             StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
-            StrayFogGamePools.runningApplication.OnLoadXLua += StrayFogGamePools.xLuaManager.LoadXLua;
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;

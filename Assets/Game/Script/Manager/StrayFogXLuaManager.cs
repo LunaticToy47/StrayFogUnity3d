@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using XLua;
 public class StrayFogXLuaManager : AbsSingleMonoBehaviour
@@ -11,70 +12,76 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
 
     #region OnAfterConstructor
     /// <summary>
-    /// XLua文件映射
+    /// XLua配置映射
     /// </summary>
-    static Dictionary<int, XLS_Config_Table_XLuaMap> mXLuaMaping = new Dictionary<int, XLS_Config_Table_XLuaMap>();
+    static Dictionary<int, XLS_Config_Table_XLuaMap> mXLuaConfigMaping = new Dictionary<int, XLS_Config_Table_XLuaMap>();
     /// <summary>
     /// OnAfterConstructor
     /// </summary>
     protected override void OnAfterConstructor()
     {
-        xLuaEnv = new LuaEnv();
         List<XLS_Config_Table_XLuaMap> src = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_XLuaMap>();
         foreach (XLS_Config_Table_XLuaMap r in src)
         {
-            if (!mXLuaMaping.ContainsKey(r.id))
+            if (!mXLuaConfigMaping.ContainsKey(r.id))
             {
-                mXLuaMaping.Add(r.id, r);
+                mXLuaConfigMaping.Add(r.id, r);
             }
         }
+
+        xLuaEnv = new LuaEnv();
+        xLuaEnv.AddLoader((ref string filepath) =>
+        {
+            return System.Text.Encoding.UTF8.GetBytes(StrayFogGamePools.xLuaManager.GetXLua(int.Parse(filepath)));
+        });
         base.OnAfterConstructor();
     }
     #endregion
 
-    #region xLua相关
+    #region GetXLua 获得xLua文件路径
     /// <summary>
-    /// 加载xLua文件
+    /// xLua脚本映射
     /// </summary>
-    /// <param name="xLua文件ID">_xLuaId</param>
-    /// <param name="_onComplete">完成回调</param>
-    public void LoadXLua(int _xLuaId, Action<LoadXLuaResult> _onComplete)
-    {
-        if (mXLuaMaping.ContainsKey(_xLuaId))
-        {
-            StrayFogGamePools.assetBundleManager.LoadAssetInMemory(mXLuaMaping[_xLuaId].xLuaFileId, 
-                mXLuaMaping[_xLuaId].xLuaFolderId,
-                (result) =>
-                {
-                    result.Instantiate<TextAsset>((rst, args) =>
-                    {
-                        Action<LoadXLuaResult> call = (Action<LoadXLuaResult>)args[1];
-                        call(new LoadXLuaResult(((XLS_Config_Table_XLuaMap)args[0]).id, rst));
-                    }, result.extraParameter);
-
-                }, mXLuaMaping[_xLuaId], _onComplete);
-        }
-        else
-        {
-            _onComplete(new LoadXLuaResult(_xLuaId, null));
-        }
-    }
-    #endregion
-
-    #region GetXLuaPath 获得xLua文件路径
+    static Dictionary<int, string> mXLuaScriptMaping = new Dictionary<int, string>();
     /// <summary>
     /// 获得xLua文件路径
     /// </summary>
     /// <param name="xLua文件ID">_xLuaId</param>
     /// <returns>xLua文件路径</returns>
-    public string GetXLuaPath(int _xLuaId)
+    public string GetXLua(int _xLuaId)
     {
-        string path = string.Empty;
-        if (mXLuaMaping.ContainsKey(_xLuaId))
+        string xlua = string.Empty;
+        if (mXLuaConfigMaping.ContainsKey(_xLuaId))
         {
-            path = StrayFogGamePools.assetBundleManager.GetAssetPath(mXLuaMaping[_xLuaId].xLuaFileId, mXLuaMaping[_xLuaId].xLuaFolderId);
+            string path = string.Empty;
+            XLS_Config_View_AssetDiskMaping adm = StrayFogGamePools.assetBundleManager.GetAssetPath(mXLuaConfigMaping[_xLuaId].xLuaFileId, mXLuaConfigMaping[_xLuaId].xLuaFolderId, out path);
+            if (adm != null)
+            {
+                if (!mXLuaScriptMaping.ContainsKey(_xLuaId))
+                {
+                    TextAsset ta = null;
+                    if (StrayFogGamePools.setting.isInternal)
+                    {
+                        ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(adm.inAssetPath, typeof(TextAsset));
+                        xlua = ta.text;
+                    }
+                    else
+                    {
+                        AssetBundle ab = AssetBundle.LoadFromFile(path);
+                        ta = ab.LoadAsset<TextAsset>(adm.fileName);
+                        xlua = ta.text;
+                        ab.Unload(false);
+                        ab = null;
+                    }
+                    mXLuaScriptMaping.Add(_xLuaId, xlua);
+                }
+                else
+                {
+                    xlua = mXLuaScriptMaping[_xLuaId];
+                }
+            }
         }
-        return path;
+        return xlua;
      }
     #endregion
 }
