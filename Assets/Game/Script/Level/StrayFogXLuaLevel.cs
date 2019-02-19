@@ -18,8 +18,8 @@ public class StrayFogXLuaLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            
-            InitXLua(@"require '" + xLuaFileId + "'");
+            //InitXLua(@"require '" + xLuaFileId + "'");
+            InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
         });
     }
 
@@ -36,8 +36,9 @@ public class StrayFogXLuaLevel : AbsLevel
         meta.Dispose();
 
         mScriptEnv.Set("self", this);
-        StrayFogGamePools.xLuaManager.xLuaEnv.DoString(_xlua, "StrayFogXLuaLevel", mScriptEnv);
-        
+        LuaFunction fun = StrayFogGamePools.xLuaManager.xLuaEnv.LoadString(_xlua);
+        fun.SetEnv(mScriptEnv);
+        fun.Call();
 
         Action luaAwake = mScriptEnv.Get<Action>("awake");
         luaStart = mScriptEnv.Get<Action>("start");

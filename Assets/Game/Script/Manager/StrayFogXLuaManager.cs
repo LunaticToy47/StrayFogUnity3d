@@ -32,7 +32,7 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
         xLuaEnv = new LuaEnv();
         xLuaEnv.AddLoader((ref string filepath) =>
         {
-            return System.Text.Encoding.UTF8.GetBytes(StrayFogGamePools.xLuaManager.GetXLua(int.Parse(filepath)));
+            return System.Text.Encoding.UTF8.GetBytes(GetXLua(int.Parse(filepath)));
         });
         base.OnAfterConstructor();
     }
