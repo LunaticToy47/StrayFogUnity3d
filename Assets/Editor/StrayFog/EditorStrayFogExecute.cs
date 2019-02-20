@@ -1198,14 +1198,14 @@ public sealed class EditorStrayFogExecute
 
         ExecuteBuildDllToPackage();
         ExecuteCopySQLiteDbToPackage();
-        ExecuteBuildDeleteNouseAssetBatToPackage();
+        ExecuteBuildBatToPackage();
 
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         BuildPipeline.BuildAssetBundles(path,
             BuildAssetBundleOptions.ChunkBasedCompression,
             EditorUserBuildSettings.activeBuildTarget);
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        EditorStrayFogUtility.cmd.ExcuteFile(Path.GetFullPath(mDeleteManifestBat.fileName));
+        EditorStrayFogUtility.cmd.ExcuteFile(Path.GetFullPath(mPackageManifestBat.fileName));
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         EditorUtility.RevealInFinder(path);
         sbLog.AppendLine(path);
@@ -1214,11 +1214,11 @@ public sealed class EditorStrayFogExecute
     }
     #endregion
 
-    #region ExecuteBuildDeleteNouseAssetBatToPackage 生成删除包中无用资源的bat文件
+    #region ExecuteBuildBatToPackage 生成打包后的bat批处理文件
     /// <summary>
-    /// 删除Manifest批处理
+    /// 打包Manifest批处理
     /// </summary>
-    static readonly EditorTextAssetConfig mDeleteManifestBat = new EditorTextAssetConfig("DeleteManifest", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_DeleteManifestTemplete);
+    static readonly EditorTextAssetConfig mPackageManifestBat = new EditorTextAssetConfig("PackageManifest", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_PackageManifestTemplete);
 
     /// <summary>
     /// DebugProfiler批处理
@@ -1230,19 +1230,19 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     static readonly EditorTextAssetConfig mClearSvnReg = new EditorTextAssetConfig("ClearSvn", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_ClearSvnTemplete);
     /// <summary>
-    /// 生成删除包中无用资源的bat文件
+    /// 生成打包后的bat批处理文件
     /// </summary>
-    public static void ExecuteBuildDeleteNouseAssetBatToPackage()
+    public static void ExecuteBuildBatToPackage()
     {
         StringBuilder sbLog = new StringBuilder();
-        EditorTextAssetConfig deleteManifestBat = (EditorTextAssetConfig)mDeleteManifestBat.Clone();
+        EditorTextAssetConfig packageManifestBat = (EditorTextAssetConfig)mPackageManifestBat.Clone();
         EditorTextAssetConfig debugProfilerBat = (EditorTextAssetConfig)mDebugProfilerBat.Clone();
         EditorTextAssetConfig clearSvnReg = (EditorTextAssetConfig)mClearSvnReg.Clone();
 
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
-        string scriptTemplete = deleteManifestBat.text;
+        string scriptTemplete = packageManifestBat.text;
         string replaceTemplete = string.Empty;
-        string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#DelCmd#", out replaceTemplete);
+        string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#BatCmd#", out replaceTemplete);
         StringBuilder sbTemplete = new StringBuilder();
         string[] directories = new string[0];
         if (Directory.Exists(path))
@@ -1256,14 +1256,14 @@ public sealed class EditorStrayFogExecute
         sbTemplete.AppendLine(formatTemplete.Replace("#Folder#", path));
         string result = scriptTemplete.Replace(replaceTemplete, sbTemplete.ToString());
         result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
-        deleteManifestBat.SetText(result);
-        deleteManifestBat.CreateAsset();
+        packageManifestBat.SetText(result);
+        packageManifestBat.CreateAsset();
 
         debugProfilerBat.SetText(debugProfilerBat.text.Replace("#DebugProfiler#", PlayerSettings.applicationIdentifier));
         debugProfilerBat.CreateAsset();
 
         clearSvnReg.CreateAsset();
-        sbLog.AppendLine("ExecuteBuildPackageDeleteNouseAssetBat Succeed!");
+        sbLog.AppendLine("ExecuteBuildBatToPackage Succeed!");
         Debug.Log(sbLog.ToString());
     }
     #endregion

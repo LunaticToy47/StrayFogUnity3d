@@ -1,3 +1,0 @@
-﻿@echo on
-#DelCmd#del /s/q #Folder#\*.manifest#DelCmd#
-ping -n 3 127.1>nul & exit

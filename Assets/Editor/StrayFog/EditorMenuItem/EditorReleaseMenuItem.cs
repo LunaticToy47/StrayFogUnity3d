@@ -39,18 +39,18 @@ static class EditorReleaseMenuItem
     }
     #endregion
 
-    #region Build Delete Nouse Asset Bat To Package
-    const string mcBuildDeleteNouseAssetBatToPackage = "Build Delete Nouse Asset Bat To Package";
+    #region Build Bat To Package
+    const string mcBuildBatToPackage = "BuildBat To Package";
     /// <summary>
     /// 资源包删除未使用资源批处理
     /// </summary>
-    [MenuItem(mcMenu + mcBuildDeleteNouseAssetBatToPackage, false, mcPriority + 2)]
-    [MenuItem(mcAssetMenu + mcBuildDeleteNouseAssetBatToPackage, false, mcPriority + 2)]
-    [MenuItem(mcHierarchy + mcBuildDeleteNouseAssetBatToPackage, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_BuildDeleteNouseAssetBatToPackage()
+    [MenuItem(mcMenu + mcBuildBatToPackage, false, mcPriority + 2)]
+    [MenuItem(mcAssetMenu + mcBuildBatToPackage, false, mcPriority + 2)]
+    [MenuItem(mcHierarchy + mcBuildBatToPackage, false, mcPriority + 2)]
+    static void EditorDevelopMenuItem_BuildBatToPackage()
     {
-        EditorStrayFogExecute.ExecuteBuildDeleteNouseAssetBatToPackage();
-        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildDeleteNouseAssetBatToPackage);
+        EditorStrayFogExecute.ExecuteBuildBatToPackage();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildBatToPackage);
     }
     #endregion
 

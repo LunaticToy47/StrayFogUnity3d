@@ -64,13 +64,13 @@ public class EditorResxTemplete
     }
 
     /// <summary>
-    /// Cmd_DeleteManifestTemplete
+    /// Cmd_PackageManifestTemplete
     /// </summary>
-    public static string Cmd_DeleteManifestTemplete
+    public static string Cmd_PackageManifestTemplete
     {
         get
         {
-            return GetFileString("Cmd/Cmd_DeleteManifestTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Cmd/Cmd_PackageManifestTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
 

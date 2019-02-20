@@ -1,0 +1,9 @@
+﻿@echo on
+#BatCmd#
+set srcFolder=#Folder#\
+set destFolder=#Folder#_manifest\
+RMDIR /s/q %destFolder%
+MD %destFolder%
+FOR %%F IN (%srcFolder%*.manifest) DO (MOVE %%F  %destFolder%)
+#BatCmd#
+ping -n 3 127.1>nul & exit

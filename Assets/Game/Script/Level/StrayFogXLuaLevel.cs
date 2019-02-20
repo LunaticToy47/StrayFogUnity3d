@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using XLua;
-
 [AddComponentMenu("Game/ExampleLevel/StrayFogXLuaLevel")]
 public class StrayFogXLuaLevel : AbsLevel
 {
@@ -18,8 +17,8 @@ public class StrayFogXLuaLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            //InitXLua(@"require '" + xLuaFileId + "'");
-            InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
+            InitXLua(@"require '" + xLuaFileId + "'");
+            //InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
         });
     }
 
