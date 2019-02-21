@@ -212,6 +212,7 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
         else if (name.EndsWith(msrXLuaTxtExt))
         {
             mAssetBundleName = msrNamePrefix[msrXLuaTxtExt];
+            hashCode = directory.UniqueHashCode();
         }
         mAssetBundleName += hashCode;
         bool isLockName = false;

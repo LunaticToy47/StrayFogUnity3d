@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Game/AssetBundles/Scene/ExampleXLua.unity
-    guid: 3c27efb278533514eb79cbf8a6092149
+    path: Assets/Game/AssetBundles/Scene/ExampleTerrain.unity
+    guid: 9de38b26f167af340ad33561c00558b9
   m_configObjects: {}

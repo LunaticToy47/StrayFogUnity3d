@@ -1222,46 +1222,46 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertXLuaMap(Action<string, float> _progressCallback)
     {
-        List<EditorXLuaMapAsset> xLuaMaps = EditorStrayFogGlobalVariable.CollectXLuaMapAssets();
-        EditorXLuaMapConfig wfg = EditorStrayFogSavedAssetConfig.setXLuaMapConfig;
-        if (wfg.paths.Length > 0)
-        {
-            foreach (string file in wfg.paths)
-            {
-                OnClearXlsData(file);
-                using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
-                {
-                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-                    int rowIndex = 0;
-                    for (int i = 0; i < xLuaMaps.Count; i++)
-                    {
-                        if (xLuaMaps[i].xLuaTextAsset != null)
-                        {
-                            EditorSelectionXLuaMapSetting set = new EditorSelectionXLuaMapSetting(AssetDatabase.GetAssetPath(xLuaMaps[i].xLuaTextAsset));
-                            set.Resolve();
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaMaps[i].xLuaId;
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = set.fileId;
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = set.folderId;
-                        }
-                        else
-                        {
-                            rowIndex++;
-                        }
-                        if (_progressCallback != null)
-                        {
-                            _progressCallback(xLuaMaps[i].classFullName, (i + 1) / (float)xLuaMaps.Count);
-                        }
-                    }
-                    pck.Save();
-                }
-            }
-        }
-        else
-        {
-            string error = "XLuaMap.xlsx file is not set,please set one.";
-            EditorUtility.DisplayDialog("Error", error, "Yes", "No");
-            throw new UnityException(error);
-        }
+        //List<EditorXLuaMapAsset> xLuaMaps = EditorStrayFogGlobalVariable.CollectXLuaMapAssets();
+        //EditorXLuaMapConfig wfg = EditorStrayFogSavedAssetConfig.setXLuaMapConfig;
+        //if (wfg.paths.Length > 0)
+        //{
+        //    foreach (string file in wfg.paths)
+        //    {
+        //        OnClearXlsData(file);
+        //        using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
+        //        {
+        //            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+        //            int rowIndex = 0;
+        //            for (int i = 0; i < xLuaMaps.Count; i++)
+        //            {
+        //                if (xLuaMaps[i].xLuaTextAsset != null)
+        //                {
+        //                    EditorSelectionXLuaMapSetting set = new EditorSelectionXLuaMapSetting(AssetDatabase.GetAssetPath(xLuaMaps[i].xLuaTextAsset));
+        //                    set.Resolve();
+        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaMaps[i].xLuaId;
+        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = set.fileId;
+        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = set.folderId;
+        //                }
+        //                else
+        //                {
+        //                    rowIndex++;
+        //                }
+        //                if (_progressCallback != null)
+        //                {
+        //                    _progressCallback(xLuaMaps[i].classFullName, (i + 1) / (float)xLuaMaps.Count);
+        //                }
+        //            }
+        //            pck.Save();
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    string error = "XLuaMap.xlsx file is not set,please set one.";
+        //    EditorUtility.DisplayDialog("Error", error, "Yes", "No");
+        //    throw new UnityException(error);
+        //}
     }
     #endregion
     #endregion

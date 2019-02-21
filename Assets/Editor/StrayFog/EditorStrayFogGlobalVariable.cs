@@ -55,39 +55,5 @@ public sealed class EditorStrayFogGlobalVariable
         return result;
     }
     #endregion
-
-    #region XLua
-    /// <summary>
-    /// 收集XLuaMap资源
-    /// </summary>
-    /// <returns>XLuaMap资源</returns>
-    public static List<EditorXLuaMapAsset> CollectXLuaMapAssets()
-    {
-        List<EditorXLuaMapAsset> result = new List<EditorXLuaMapAsset>();
-        List<Type> types = EditorStrayFogAssembly.GetExportedTypes(typeof(IXLua));
-        if (types != null && types.Count > 0)
-        {
-            foreach (Type t in types)
-            {
-                EditorEngineAssetConfig absCfg = new EditorEngineAssetConfig(t.Name,
-                    enEditorApplicationFolder.Game_Editor_XLua.GetAttribute<EditorApplicationFolderAttribute>().path,
-                    enFileExt.Asset, typeof(EditorXLuaMapAsset).FullName);
-                if (!absCfg.Exists())
-                {
-                    absCfg.CreateAsset();
-                }
-                absCfg.LoadAsset();
-                EditorXLuaMapAsset node = (EditorXLuaMapAsset)absCfg.engineAsset;
-                node.classFullName = t.FullName;
-                result.Add(node);
-            }
-        }
-        result.Sort((x, y) =>
-        {
-            return x.classFullName.CompareTo(y.classFullName);
-        });
-        return result;
-    }
-    #endregion
 }
 #endif
