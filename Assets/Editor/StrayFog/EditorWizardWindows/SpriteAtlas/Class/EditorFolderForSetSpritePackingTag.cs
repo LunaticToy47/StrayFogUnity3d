@@ -2,7 +2,7 @@
 /// <summary>
 /// SetSpritePackingTag配置资源文件夹
 /// </summary>
-public class EditorSetSpritePackingTagFolder : AbsEditorSavedAsset
+public class EditorFolderForSetSpritePackingTag : AbsEditorSavedAsset
 {
     /// <summary>
     /// 可保存资源分类

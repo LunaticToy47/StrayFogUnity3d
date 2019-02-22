@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 340d092543f9eaa4b89e27ae9b89dc61, type: 3}
-  m_Name: EditorUIWindowSettingConfig
+  m_Script: {fileID: 11500000, guid: a1a92ec268abfdf44bcc760e6b334c11, type: 3}
+  m_Name: EditorXlsFileConfigForSetAssetDiskMapingFolder
   m_EditorClassIdentifier: 
   paths:
-  - Assets/Game/Editor/XLS_Config/UIWindowSetting.xlsx
+  - Assets/Game/Editor/XLS_Config/AssetDiskMapingFolder.xlsx
   invoke: 

@@ -59,7 +59,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// <summary>
     /// 配置
     /// </summary>
-    EditorUIWindowSettingConfig mConfig;
+    EditorXlsFileConfigForUIWindowSetting mConfig;
     /// <summary>
     /// OnFocus
     /// </summary>

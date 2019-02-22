@@ -1,8 +1,8 @@
 ﻿#if UNITY_EDITOR
 /// <summary>
-/// XlsSchemaToSqlite配置资源文件夹
+/// AnimatorControllerFMSMaping配置资源文件夹
 /// </summary>
-public class EditorXlsSchemaToSqliteFolder : AbsEditorSavedAsset
+public class EditorFolderForAnimatorControllerFMSMaping : AbsEditorSavedAsset
 {
     /// <summary>
     /// 可保存资源分类
@@ -22,7 +22,7 @@ public class EditorXlsSchemaToSqliteFolder : AbsEditorSavedAsset
     {
         get
         {
-            return string.Format("Setting 【XlsSchemaToSqlite 】{0}", classify);
+            return string.Format("Setting 【Animator FMS Maping】 {0}", classify);
         }
     }
 }

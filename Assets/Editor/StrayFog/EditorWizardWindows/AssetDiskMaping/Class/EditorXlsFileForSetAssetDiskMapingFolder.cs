@@ -1,13 +1,15 @@
 ﻿#if UNITY_EDITOR
+using System.IO;
 /// <summary>
-/// XLuaMap配置资源文件
+/// SetAssetDiskMaping配置资源Folder表映射
 /// </summary>
-public class EditorXLuaMapFile : AbsEditorSavedAsset
+public class EditorXlsFileForSetAssetDiskMapingFolder : AbsEditorSavedAsset
 {
     /// <summary>
     /// 文件后缀
     /// </summary>
     static FileExtAttribute msFileExt = enFileExt.Xlsx.GetAttribute<FileExtAttribute>();
+
     /// <summary>
     /// 可保存资源分类
     /// </summary>
@@ -26,7 +28,7 @@ public class EditorXLuaMapFile : AbsEditorSavedAsset
     {
         get
         {
-            return string.Format("Setting 【XLuaMap{0} 】{1}", msFileExt.ext, classify);
+            return string.Format("Setting 【AssetDiskMapingFolder{0} Maping File 】{1}", msFileExt.ext, classify);
         }
     }
 

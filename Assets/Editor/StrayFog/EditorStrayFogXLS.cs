@@ -1054,7 +1054,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFolder(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        EditorSetAssetDiskMapingFolderXlsMapingConfig cfg = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFolderXlsMapingConfig;
+        EditorXlsFileConfigForSetAssetDiskMapingFolder cfg = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFolderXlsMapingConfig;
         if (cfg.paths.Length > 0)
         {
             foreach (string file in cfg.paths)
@@ -1101,7 +1101,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFile(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        EditorSetAssetDiskMapingFileXlsMapingConfig cfg = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFileXlsMapingConfig;
+        EditorXlsFileConfigForSetAssetDiskMapingFile cfg = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFileXlsMapingConfig;
         if (cfg.paths.Length > 0)
         {
             foreach (string file in cfg.paths)
@@ -1154,7 +1154,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_winId">窗口id</param>
     public static void DeleteUIWindowSetting(int _winId)
     {
-        EditorUIWindowSettingConfig wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
+        EditorXlsFileConfigForUIWindowSetting wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
         if (wfg.paths.Length > 0)
         {
             foreach (string file in wfg.paths)
@@ -1173,7 +1173,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
     {
-        EditorUIWindowSettingConfig wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
+        EditorXlsFileConfigForUIWindowSetting wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
         if (wfg.paths.Length > 0)
         {
             foreach (string file in wfg.paths)

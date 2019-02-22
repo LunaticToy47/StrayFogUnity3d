@@ -55,5 +55,19 @@ public sealed class EditorStrayFogGlobalVariable
         return result;
     }
     #endregion
+
+    #region xLua
+    /// <summary>
+    /// 获得要打包的XLua文件
+    /// </summary>
+    /// <typeparam name="T">XLua设定</typeparam>
+    /// <returns></returns>
+    public static List<T> CollectionXLua<T>()
+        where T:EditorSelectionXLuaMapSetting
+    {
+        string[] folders = null;
+        return EditorStrayFogUtility.collectAsset.CollectAsset<T>(folders, enEditorAssetFilterClassify.Prefab, false);
+    }
+    #endregion
 }
 #endif

@@ -9,7 +9,7 @@ public class EditorWindowSetAssetBundleName : AbsEditorWindow
     /// <summary>
     /// 配置
     /// </summary>
-    EditorSetAssetBundleNameConfig mConfig;
+    EditorFolderConfigForSetAssetBundleName mConfig;
     /// <summary>
     /// OnFocus
     /// </summary>

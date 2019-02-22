@@ -11,7 +11,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     /// <summary>
     /// 配置
     /// </summary>
-    EditorXlsSchemaToSqliteConfig mConfig;
+    EditorFolderConfigForSchemaToSqlite mConfig;
 
     /// <summary>
     /// OnFocus

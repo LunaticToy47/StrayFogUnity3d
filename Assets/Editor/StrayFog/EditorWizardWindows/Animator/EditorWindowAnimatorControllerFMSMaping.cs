@@ -9,7 +9,7 @@ public class EditorWindowAnimatorControllerFMSMaping : AbsEditorWindow
     /// <summary>
     /// 配置
     /// </summary>
-    EditorAnimatorControllerFMSMapingConfig mConfig;
+    EditorFolderConfigForAnimatorControllerFMSMaping mConfig;
     /// <summary>
     /// OnFocus
     /// </summary>

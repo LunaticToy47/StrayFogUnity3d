@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eee48dc4c264d7e45834785b2b6ba5c8, type: 3}
-  m_Name: EditorSetAssetBundleNameConfig
+  m_Name: EditorFolderConfigForSetAssetBundleName
   m_EditorClassIdentifier: 
   paths:
   - Assets/Game/AssetBundles

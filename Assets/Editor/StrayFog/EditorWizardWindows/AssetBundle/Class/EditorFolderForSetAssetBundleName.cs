@@ -2,7 +2,7 @@
 /// <summary>
 /// SetAssetBundleName配置资源文件夹
 /// </summary>
-public class EditorSetAssetBundleNameFolder : AbsEditorSavedAsset
+public class EditorFolderForSetAssetBundleName : AbsEditorSavedAsset
 {
     /// <summary>
     /// 可保存资源分类

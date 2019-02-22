@@ -9,7 +9,7 @@ public class EditorWindowSetSpritePackingTag : AbsEditorWindow
     /// <summary>
     /// 配置
     /// </summary>
-    EditorSetSpritePackingTagConfig mConfig;
+    EditorFolderConfigForSetSpritePackingTag mConfig;
     /// <summary>
     /// OnFocus
     /// </summary>

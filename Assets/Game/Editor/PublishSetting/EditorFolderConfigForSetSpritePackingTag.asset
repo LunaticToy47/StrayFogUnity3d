@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abdad4827b4f31540a91433154801272, type: 3}
-  m_Name: EditorSetAssetDiskMapingFileXlsMapingConfig
+  m_Script: {fileID: 11500000, guid: 2686eb8a839d20c44bf2a286930d30c1, type: 3}
+  m_Name: EditorFolderConfigForSetSpritePackingTag
   m_EditorClassIdentifier: 
   paths:
-  - Assets/Game/Editor/XLS_Config/AssetDiskMapingFile.xlsx
+  - Assets/Game/AssetBundles/SpriteAtlas
   invoke: 

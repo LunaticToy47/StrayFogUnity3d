@@ -13,7 +13,7 @@ public class EditorBuildXLuaMapWindow : AbsEditorWindow
     /// <summary>
     /// XLua配置
     /// </summary>
-    EditorXLuaMapConfig mConfig;
+    EditorXlsFileConfigForXLuaMap mConfig;
     /// <summary>
     /// OnFocus
     /// </summary>

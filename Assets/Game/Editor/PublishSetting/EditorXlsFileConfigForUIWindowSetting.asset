@@ -8,10 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05caf870784e4da44a50e9b05a611a98, type: 3}
-  m_Name: EditorXlsSchemaToSqliteConfig
+  m_Script: {fileID: 11500000, guid: 340d092543f9eaa4b89e27ae9b89dc61, type: 3}
+  m_Name: EditorXlsFileConfigForUIWindowSetting
   m_EditorClassIdentifier: 
   paths:
-  - Assets/Game/Editor/XLS_Config
-  - Assets/Game/Editor/XLS_Report
+  - Assets/Game/Editor/XLS_Config/UIWindowSetting.xlsx
   invoke: 

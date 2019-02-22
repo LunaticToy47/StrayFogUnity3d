@@ -3,7 +3,7 @@ using System.IO;
 /// <summary>
 /// SetAssetDiskMaping配置资源File表映射
 /// </summary>
-public class EditorSetAssetDiskMapingFileXlsMapingFile : AbsEditorSavedAsset
+public class EditorXlsFileForSetAssetDiskMapingFile : AbsEditorSavedAsset
 {
     /// <summary>
     /// 文件后缀

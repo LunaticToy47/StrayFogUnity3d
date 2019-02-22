@@ -9,11 +9,11 @@ public class EditorBuildAllAssetDiskMapingWindow : AbsEditorWindow
     /// <summary>
     /// 文件映射配置
     /// </summary>
-    EditorSetAssetDiskMapingFileXlsMapingConfig mFileMapingConfig;
+    EditorXlsFileConfigForSetAssetDiskMapingFile mFileMapingConfig;
     /// <summary>
     /// 文件夹映射配置
     /// </summary>
-    EditorSetAssetDiskMapingFolderXlsMapingConfig mFolderMapingConfig;
+    EditorXlsFileConfigForSetAssetDiskMapingFolder mFolderMapingConfig;
     
     /// <summary>
     /// OnFocus

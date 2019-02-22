@@ -3,7 +3,7 @@ using System.IO;
 /// <summary>
 /// UIWindowSetting配置资源文件夹
 /// </summary>
-public class EditorUIWindowSettingFile : AbsEditorSavedAsset
+public class EditorXlsFileForUIWindowSetting : AbsEditorSavedAsset
 {
     /// <summary>
     /// 文件后缀
