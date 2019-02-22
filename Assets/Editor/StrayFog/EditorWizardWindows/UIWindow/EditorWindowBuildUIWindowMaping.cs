@@ -66,7 +66,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     void OnFocus()
     {
         mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
-        mConfig = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
+        mConfig = EditorStrayFogSavedAssetConfig.setXlsFileConfigForUIWindowSetting;
     }
     /// <summary>
     /// OnGUI

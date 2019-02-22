@@ -9,6 +9,10 @@ public interface IEditorSavedAssetDrawUI
     /// </summary>
     string[] paths { get; }
     /// <summary>
+    /// 分类
+    /// </summary>
+    enEditorSavedAssetClassify classify { get; }
+    /// <summary>
     /// 绘制GUI
     /// </summary>
     void DrawGUI();

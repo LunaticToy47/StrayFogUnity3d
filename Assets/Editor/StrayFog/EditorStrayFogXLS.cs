@@ -208,7 +208,7 @@ public sealed class EditorStrayFogXLS
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
         FileExtAttribute xlsxExt = enFileExt.Xlsx.GetAttribute<FileExtAttribute>();
-        List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedAssetConfig.setXlsSchemaToSqlite.paths,
+        List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedAssetConfig.setFolderConfigForSchemaToSqlite.paths,
             enEditorAssetFilterClassify.DefaultAsset, false,
             (n) => { return xlsxExt.IsExt(n.ext); });
         foreach (EditorSelectionXlsSchemaToSQLiteAsset f in xlsFiles)
@@ -1054,7 +1054,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFolder(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        EditorXlsFileConfigForSetAssetDiskMapingFolder cfg = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFolderXlsMapingConfig;
+        EditorXlsFileConfigForSetAssetDiskMapingFolder cfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForSetAssetDiskMapingFolder;
         if (cfg.paths.Length > 0)
         {
             foreach (string file in cfg.paths)
@@ -1101,7 +1101,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertDataToAssetDiskMapingFile(List<EditorSelectionAssetDiskMaping> _nodes, Action<string, float> _progressCallback)
     {
-        EditorXlsFileConfigForSetAssetDiskMapingFile cfg = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFileXlsMapingConfig;
+        EditorXlsFileConfigForSetAssetDiskMapingFile cfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForSetAssetDiskMapingFile;
         if (cfg.paths.Length > 0)
         {
             foreach (string file in cfg.paths)
@@ -1154,7 +1154,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_winId">窗口id</param>
     public static void DeleteUIWindowSetting(int _winId)
     {
-        EditorXlsFileConfigForUIWindowSetting wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
+        EditorXlsFileConfigForUIWindowSetting wfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForUIWindowSetting;
         if (wfg.paths.Length > 0)
         {
             foreach (string file in wfg.paths)
@@ -1173,7 +1173,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertUIWindowSetting(List<EditorSelectionUIWindowSetting> _windows, Action<string, float> _progressCallback)
     {
-        EditorXlsFileConfigForUIWindowSetting wfg = EditorStrayFogSavedAssetConfig.setUIWindowConfig;
+        EditorXlsFileConfigForUIWindowSetting wfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForUIWindowSetting;
         if (wfg.paths.Length > 0)
         {
             foreach (string file in wfg.paths)
@@ -1222,46 +1222,47 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertXLuaMap(Action<string, float> _progressCallback)
     {
-        //List<EditorXLuaMapAsset> xLuaMaps = EditorStrayFogGlobalVariable.CollectXLuaMapAssets();
-        //EditorXLuaMapConfig wfg = EditorStrayFogSavedAssetConfig.setXLuaMapConfig;
-        //if (wfg.paths.Length > 0)
-        //{
-        //    foreach (string file in wfg.paths)
-        //    {
-        //        OnClearXlsData(file);
-        //        using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
-        //        {
-        //            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-        //            int rowIndex = 0;
-        //            for (int i = 0; i < xLuaMaps.Count; i++)
-        //            {
-        //                if (xLuaMaps[i].xLuaTextAsset != null)
-        //                {
-        //                    EditorSelectionXLuaMapSetting set = new EditorSelectionXLuaMapSetting(AssetDatabase.GetAssetPath(xLuaMaps[i].xLuaTextAsset));
-        //                    set.Resolve();
-        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaMaps[i].xLuaId;
-        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = set.fileId;
-        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = set.folderId;
-        //                }
-        //                else
-        //                {
-        //                    rowIndex++;
-        //                }
-        //                if (_progressCallback != null)
-        //                {
-        //                    _progressCallback(xLuaMaps[i].classFullName, (i + 1) / (float)xLuaMaps.Count);
-        //                }
-        //            }
-        //            pck.Save();
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    string error = "XLuaMap.xlsx file is not set,please set one.";
-        //    EditorUtility.DisplayDialog("Error", error, "Yes", "No");
-        //    throw new UnityException(error);
-        //}
+        List<EditorSelectionXLuaMapSetting> xLuaScripts = EditorStrayFogGlobalVariable.CollectionXLua<EditorSelectionXLuaMapSetting>();
+
+        EditorXlsFileConfigForXLuaMap wfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForXLuaMap;
+        if (wfg.paths.Length > 0)
+        {
+            foreach (string file in wfg.paths)
+            {
+                OnClearXlsData(file);
+                using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    int rowIndex = 0;
+                    for (int i = 0; i < xLuaScripts.Count; i++)
+                    {
+                        //if (xLuaScripts[i].xLuaTextAsset != null)
+                        //{
+                            //EditorSelectionXLuaMapSetting set = new EditorSelectionXLuaMapSetting(AssetDatabase.GetAssetPath(xLuaMaps[i].xLuaTextAsset));
+                            //set.Resolve();
+                            //sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaMaps[i].xLuaId;
+                            //sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = set.fileId;
+                            //sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = set.folderId;
+                        //}
+                        //else
+                        //{
+                        //    rowIndex++;
+                        //}
+                        //if (_progressCallback != null)
+                        //{
+                        //    _progressCallback(xLuaMaps[i].classFullName, (i + 1) / (float)xLuaMaps.Count);
+                        //}
+                    }
+                    pck.Save();
+                }
+            }
+        }
+        else
+        {
+            string error = "XLuaMap.xlsx file is not set,please set one.";
+            EditorUtility.DisplayDialog("Error", error, "Yes", "No");
+            throw new UnityException(error);
+        }
     }
     #endregion
     #endregion

@@ -65,8 +65,13 @@ public sealed class EditorStrayFogGlobalVariable
     public static List<T> CollectionXLua<T>()
         where T:EditorSelectionXLuaMapSetting
     {
-        string[] folders = null;
-        return EditorStrayFogUtility.collectAsset.CollectAsset<T>(folders, enEditorAssetFilterClassify.Prefab, false);
+        List<T> result = new List<T>();
+        string[] folders = EditorStrayFogSavedAssetConfig.setXlsFileConfigForXLuaMap.paths;
+        if (folders != null && folders.Length > 0)
+        {
+            result = EditorStrayFogUtility.collectAsset.CollectAsset<T>(folders, enEditorAssetFilterClassify.TextAsset, false);
+        }
+        return result;
     }
     #endregion
 }

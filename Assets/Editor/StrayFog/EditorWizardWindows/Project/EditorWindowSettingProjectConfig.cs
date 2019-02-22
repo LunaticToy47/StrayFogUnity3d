@@ -33,6 +33,7 @@ public class EditorWindowSettingProjectConfig : AbsEditorWindow
                 mSavedAssetDrawUIMaping.Add((IEditorSavedAssetDrawUI)value);
             }
         }
+        mSavedAssetDrawUIMaping.Sort((x,y) => { return x.classify >= y.classify ? 1 : -1; });
     }
 
     /// <summary>

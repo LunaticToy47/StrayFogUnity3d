@@ -184,7 +184,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildAnimatorControllerFMSMaping()
     {
-        EditorFolderConfigForAnimatorControllerFMSMaping cfg = EditorStrayFogSavedAssetConfig.setAnimatorControllerFMSMaping;
+        EditorFolderConfigForAnimatorControllerFMSMaping cfg = EditorStrayFogSavedAssetConfig.setFolderConfigForAnimatorControllerFMSMaping;
         StringBuilder sbLog = new StringBuilder();
 
         FileExtAttribute animatorControllerExt = enFileExt.AnimatorController.GetAttribute<FileExtAttribute>();
@@ -696,7 +696,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteSetSpritePackingTag()
     {
-        EditorFolderConfigForSetSpritePackingTag cfg = EditorStrayFogSavedAssetConfig.setSpritePackingTag;
+        EditorFolderConfigForSetSpritePackingTag cfg = EditorStrayFogSavedAssetConfig.setFolderConfigForSetSpritePackingTag;
         StringBuilder sbLog = new StringBuilder();
         List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.paths, enEditorAssetFilterClassify.Texture2D);
         float progress = 0;
@@ -721,7 +721,7 @@ public sealed class EditorStrayFogExecute
     /// <returns>执行节点</returns>
     public static void ExecuteClearSpritePackingTag()
     {
-        EditorFolderConfigForSetSpritePackingTag cfg = EditorStrayFogSavedAssetConfig.setSpritePackingTag;
+        EditorFolderConfigForSetSpritePackingTag cfg = EditorStrayFogSavedAssetConfig.setFolderConfigForSetSpritePackingTag;
         StringBuilder sbLog = new StringBuilder();
         List<EditorSelectionSpritePackingTagAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionSpritePackingTagAsset>(cfg.paths, enEditorAssetFilterClassify.Texture2D);
         float progress = 0;
@@ -773,7 +773,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteSetAssetBundleName()
     {
-        EditorFolderConfigForSetAssetBundleName cfg = EditorStrayFogSavedAssetConfig.setAssetBundleName;
+        EditorFolderConfigForSetAssetBundleName cfg = EditorStrayFogSavedAssetConfig.setFolderConfigForSetAssetBundleName;
         StringBuilder sbLog = new StringBuilder();
         string error = string.Empty;
 
@@ -929,7 +929,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildAllAssetDiskMaping()
     {
-        EditorFolderConfigForSetAssetBundleName cfg = EditorStrayFogSavedAssetConfig.setAssetBundleName;
+        EditorFolderConfigForSetAssetBundleName cfg = EditorStrayFogSavedAssetConfig.setFolderConfigForSetAssetBundleName;
         string error = string.Empty;
         if (cfg.paths.Length > 0)
         {            

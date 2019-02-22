@@ -18,7 +18,7 @@ public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedAssetConfig.setXlsSchemaToSqlite;
+        mConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForSchemaToSqlite;
     }
 
     /// <summary>

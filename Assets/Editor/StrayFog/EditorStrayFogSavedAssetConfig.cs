@@ -8,46 +8,46 @@ public sealed class EditorStrayFogSavedAssetConfig
     /// 设置AssetBundleName
     /// </summary>
     [AliasTooltip("Setting 【AssetBundleName】")]
-    public static EditorFolderConfigForSetAssetBundleName setAssetBundleName = new EditorFolderConfigForSetAssetBundleName();
+    public static EditorFolderConfigForSetAssetBundleName setFolderConfigForSetAssetBundleName = new EditorFolderConfigForSetAssetBundleName();
     /// <summary>
     /// 设置SpritePackingTag
     /// </summary>
     [AliasTooltip("Setting 【SpritePackingTag】")]
-    public static EditorFolderConfigForSetSpritePackingTag setSpritePackingTag = new EditorFolderConfigForSetSpritePackingTag();
+    public static EditorFolderConfigForSetSpritePackingTag setFolderConfigForSetSpritePackingTag = new EditorFolderConfigForSetSpritePackingTag();
     /// <summary>
     /// 设置Animator FMS Maping
     /// </summary>
     [AliasTooltip("Setting 【Animator FMS Maping】")]
-    public static EditorFolderConfigForAnimatorControllerFMSMaping setAnimatorControllerFMSMaping = new EditorFolderConfigForAnimatorControllerFMSMaping();
+    public static EditorFolderConfigForAnimatorControllerFMSMaping setFolderConfigForAnimatorControllerFMSMaping = new EditorFolderConfigForAnimatorControllerFMSMaping();
     /// <summary>
     /// 设置XlsSchemaToSqlite
     /// </summary>
     [AliasTooltip("Setting 【XlsSchema To Sqlite】")]
-    public static EditorFolderConfigForSchemaToSqlite setXlsSchemaToSqlite = new EditorFolderConfigForSchemaToSqlite();
+    public static EditorFolderConfigForSchemaToSqlite setFolderConfigForSchemaToSqlite = new EditorFolderConfigForSchemaToSqlite();
     /// <summary>
     /// 设置UIWindowConfig
     /// </summary>
     [AliasTooltip("Setting 【UIWindowConfig】")]
-    public static EditorXlsFileConfigForUIWindowSetting setUIWindowConfig = new EditorXlsFileConfigForUIWindowSetting();
+    public static EditorXlsFileConfigForUIWindowSetting setXlsFileConfigForUIWindowSetting = new EditorXlsFileConfigForUIWindowSetting();
     /// <summary>
     /// 设置AssetDiskMapingFileXlsMapingConfig
     /// </summary>
     [AliasTooltip("Setting 【AssetDiskMapingFileXlsMapingConfig】")]
-    public static EditorXlsFileConfigForSetAssetDiskMapingFile setAssetDiskMapingFileXlsMapingConfig = new EditorXlsFileConfigForSetAssetDiskMapingFile();
+    public static EditorXlsFileConfigForSetAssetDiskMapingFile setXlsFileConfigForSetAssetDiskMapingFile = new EditorXlsFileConfigForSetAssetDiskMapingFile();
     /// <summary>
     /// 设置AssetDiskMapingFolderXlsMapingConfig
     /// </summary>
     [AliasTooltip("Setting 【AssetDiskMapingFolderXlsMapingConfig】")]
-    public static EditorXlsFileConfigForSetAssetDiskMapingFolder setAssetDiskMapingFolderXlsMapingConfig = new EditorXlsFileConfigForSetAssetDiskMapingFolder();
+    public static EditorXlsFileConfigForSetAssetDiskMapingFolder setXlsFileConfigForSetAssetDiskMapingFolder = new EditorXlsFileConfigForSetAssetDiskMapingFolder();
     /// <summary>
     /// 设置XLuaMapXlsConfig
     /// </summary>
     [AliasTooltip("Setting 【XLuaMapXlsConfig】")]
-    public static EditorXlsFileConfigForXLuaMap setXLuaMapXlsConfig = new EditorXlsFileConfigForXLuaMap();
+    public static EditorXlsFileConfigForXLuaMap setXlsFileConfigForXLuaMap = new EditorXlsFileConfigForXLuaMap();
     /// <summary>
     /// 设置XLuaMapFolder
     /// </summary>
     [AliasTooltip("Setting 【XLuaMapFolder】")]
-    public static EditorFolderConfigForXLuaMap setXLuaMapFolder = new EditorFolderConfigForXLuaMap();
+    public static EditorFolderConfigForXLuaMap setFolderConfigForXLuaMap = new EditorFolderConfigForXLuaMap();
 }
 #endif

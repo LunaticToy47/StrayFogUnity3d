@@ -15,7 +15,7 @@ public class EditorWindowSetAssetBundleName : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedAssetConfig.setAssetBundleName;
+        mConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForSetAssetBundleName;
     }
 
     /// <summary>

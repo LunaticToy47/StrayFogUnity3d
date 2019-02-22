@@ -15,7 +15,7 @@ public class EditorWindowAnimatorControllerFMSMaping : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedAssetConfig.setAnimatorControllerFMSMaping;
+        mConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForAnimatorControllerFMSMaping;
     }
 
     /// <summary>

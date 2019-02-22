@@ -25,8 +25,8 @@ public class EditorBuildXLuaMapWindow : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedAssetConfig.setXLuaMapXlsConfig;
-        mFolder = EditorStrayFogSavedAssetConfig.setXLuaMapFolder;
+        mConfig = EditorStrayFogSavedAssetConfig.setXlsFileConfigForXLuaMap;
+        mFolder = EditorStrayFogSavedAssetConfig.setFolderConfigForXLuaMap;
     }
     
     /// <summary>

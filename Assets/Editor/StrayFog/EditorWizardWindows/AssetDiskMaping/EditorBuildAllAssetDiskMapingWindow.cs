@@ -20,8 +20,8 @@ public class EditorBuildAllAssetDiskMapingWindow : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mFileMapingConfig = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFileXlsMapingConfig;
-        mFolderMapingConfig = EditorStrayFogSavedAssetConfig.setAssetDiskMapingFolderXlsMapingConfig;
+        mFileMapingConfig = EditorStrayFogSavedAssetConfig.setXlsFileConfigForSetAssetDiskMapingFile;
+        mFolderMapingConfig = EditorStrayFogSavedAssetConfig.setXlsFileConfigForSetAssetDiskMapingFolder;
     }
 
     /// <summary>

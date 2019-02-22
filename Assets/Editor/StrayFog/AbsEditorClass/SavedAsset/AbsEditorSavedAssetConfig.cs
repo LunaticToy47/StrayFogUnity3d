@@ -36,7 +36,12 @@ public abstract class AbsEditorSavedAssetConfig<C, F> : EditorEngineAssetConfig,
     /// 获得保存资源路径组
     /// </summary>
     public string[] paths { get { return mAsset.paths == null ? mEmptyPaths : mAsset.paths; } }
-   
+
+    /// <summary>
+    /// 分类
+    /// </summary>
+    public enEditorSavedAssetClassify classify { get { return mAsset.classify; } }
+
     /// <summary>
     /// 绘制GUI
     /// </summary>

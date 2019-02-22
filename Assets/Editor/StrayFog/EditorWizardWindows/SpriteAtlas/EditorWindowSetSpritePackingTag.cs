@@ -15,7 +15,7 @@ public class EditorWindowSetSpritePackingTag : AbsEditorWindow
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedAssetConfig.setSpritePackingTag;
+        mConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForSetSpritePackingTag;
     }
 
     /// <summary>
