@@ -40,9 +40,14 @@ public sealed class EditorStrayFogSavedAssetConfig
     [AliasTooltip("Setting 【AssetDiskMapingFolderXlsMapingConfig】")]
     public static EditorXlsFileConfigForSetAssetDiskMapingFolder setAssetDiskMapingFolderXlsMapingConfig = new EditorXlsFileConfigForSetAssetDiskMapingFolder();
     /// <summary>
-    /// 设置XLuaMapConfig
+    /// 设置XLuaMapXlsConfig
     /// </summary>
-    [AliasTooltip("Setting 【XLuaMapConfig】")]
-    public static EditorXlsFileConfigForXLuaMap setXLuaMapConfig = new EditorXlsFileConfigForXLuaMap();
+    [AliasTooltip("Setting 【XLuaMapXlsConfig】")]
+    public static EditorXlsFileConfigForXLuaMap setXLuaMapXlsConfig = new EditorXlsFileConfigForXLuaMap();
+    /// <summary>
+    /// 设置XLuaMapFolder
+    /// </summary>
+    [AliasTooltip("Setting 【XLuaMapFolder】")]
+    public static EditorFolderConfigForXLuaMap setXLuaMapFolder = new EditorFolderConfigForXLuaMap();
 }
 #endif

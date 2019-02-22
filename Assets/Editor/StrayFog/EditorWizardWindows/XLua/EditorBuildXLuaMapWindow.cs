@@ -14,12 +14,19 @@ public class EditorBuildXLuaMapWindow : AbsEditorWindow
     /// XLua配置
     /// </summary>
     EditorXlsFileConfigForXLuaMap mConfig;
+
+    /// <summary>
+    /// XLua配置
+    /// </summary>
+    EditorFolderConfigForXLuaMap mFolder;
+
     /// <summary>
     /// OnFocus
     /// </summary>
     void OnFocus()
     {
-        mConfig = EditorStrayFogSavedAssetConfig.setXLuaMapConfig;
+        mConfig = EditorStrayFogSavedAssetConfig.setXLuaMapXlsConfig;
+        mFolder = EditorStrayFogSavedAssetConfig.setXLuaMapFolder;
     }
     
     /// <summary>
@@ -39,6 +46,8 @@ public class EditorBuildXLuaMapWindow : AbsEditorWindow
     {
         EditorGUILayout.LabelField("XLua Map Config File:");
         mConfig.DrawGUI();
+        EditorGUILayout.LabelField("XLua Script Folder:");
+        mFolder.DrawGUI();
         EditorGUILayout.Separator();
     }
     #endregion
