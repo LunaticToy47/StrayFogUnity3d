@@ -760,7 +760,7 @@ public sealed class EditorStrayFogXLS
                 sbPropertyReplace.Append(
                     propertyTemplete
                     .Replace("#Name#", c.columnName)
-                    .Replace("#Desc#", c.desc)
+                    .Replace("#Desc#", OnTransDescToSummary(c.desc))
                     .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                     .Replace("#DataType#", c.dataType.ToString())
                     .Replace("#ArrayDimension#", c.arrayDimension.ToString())

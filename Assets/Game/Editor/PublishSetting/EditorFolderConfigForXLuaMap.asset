@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e602e0cf28f20f448a4734a6a1496b72, type: 3}
   m_Name: EditorFolderConfigForXLuaMap
   m_EditorClassIdentifier: 
-  paths: []
+  paths:
+  - Assets/Game/XLuaScript
   invoke: 
