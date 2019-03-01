@@ -80,6 +80,15 @@ public class StrayFogSQLiteLevel : AbsLevel
         GUILayout.EndHorizontal();
         #endregion
 
+        #region Refresh
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Refresh Table"))
+        {
+            RefreshTable();
+        }
+        GUILayout.EndHorizontal();
+        #endregion
+
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
     }
 
@@ -359,6 +368,39 @@ public class StrayFogSQLiteLevel : AbsLevel
         reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
+    }
+    #endregion
+
+    #region RefreshTable
+    /// <summary>
+    /// RefreshTable
+    /// </summary>
+    void RefreshTable()
+    {
+        //Stopwatch watch = new Stopwatch();
+        //watch.Start();
+
+        //SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        //UnityEngine.Debug.LogFormat("Delete Table【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
+
+        //List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        //watch.Stop();
+        //UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+
+        //if (reports.Count > 0)
+        //{
+        //    watch.Reset();
+        //    watch.Start();
+        //    StrayFogSQLiteEntityHelper.Delete(reports[0]);
+        //    watch.Stop();
+        //    UnityEngine.Debug.LogFormat("Delete Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        //}
+
+        //watch.Reset();
+        //watch.Start();
+        //reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        //watch.Stop();
+        //UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
     #endregion
 }
