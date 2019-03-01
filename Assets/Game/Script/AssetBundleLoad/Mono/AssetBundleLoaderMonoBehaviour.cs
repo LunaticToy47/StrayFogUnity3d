@@ -289,7 +289,12 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
     /// <param name="_callback">回调</param>
     IEnumerator OnCallback(Object _asset, object[] _params, System.Action<Object, object[]> _callback)
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();        
+        if (_asset is GameObject)
+        {
+            bool isActive = (bool)_params[2];
+            ((GameObject)_asset).SetActive(isActive);
+        }
         _asset = Instantiate(_asset);
         _callback(_asset, _params);
     }

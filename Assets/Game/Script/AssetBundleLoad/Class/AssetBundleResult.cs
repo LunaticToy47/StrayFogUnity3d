@@ -53,9 +53,21 @@ public class AssetBundleResult
     /// <param name="_callback">回调</param>
     /// <param name="_extraParameter">额外参数</param>
     /// <returns>对象</returns>
-    public void Instantiate<T>(Action<T,object[]> _callback,params object[] _extraParameter) where T : UnityEngine.Object
+    public void Instantiate<T>(Action<T, object[]> _callback, params object[] _extraParameter) where T : UnityEngine.Object
     {
-        mInstantiate(assetDiskMaping, typeof(T), new object[2] { _callback, _extraParameter },(asset,args)=> {
+        Instantiate<T>(true, _callback, _extraParameter);
+    }
+    /// <summary>
+    /// 实例化对象
+    /// </summary>
+    /// <typeparam name="T">对象类型</typeparam>
+    /// <param name="_isActive">是否激活</param>
+    /// <param name="_callback">回调</param>
+    /// <param name="_extraParameter">额外参数</param>
+    /// <returns>对象</returns>
+    public void Instantiate<T>(bool _isActive,Action<T,object[]> _callback,params object[] _extraParameter) where T : UnityEngine.Object
+    {
+        mInstantiate(assetDiskMaping, typeof(T), new object[3] { _callback, _extraParameter,_isActive },(asset,args)=> {
             Action<T, object[]> cb = (Action<T, object[]>)args[0];
             object[] eps = (object[])args[1];
             cb((T)asset, eps);
