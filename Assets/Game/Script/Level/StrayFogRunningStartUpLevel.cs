@@ -19,13 +19,8 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            StrayFogGamePools.assetBundleManager.LoadAssetInMemory(
-                enAssetDiskMapingFile.f_ExampleGuide_unity,
-                enAssetDiskMapingFolder.Assets_Game_AssetBundles_Scene,
-                (result) =>
-                {
-                    StrayFogGamePools.sceneManager.LoadScene(result.assetName);
-                }, 1, "A");
+            StrayFogGamePools.sceneManager.LoadScene(enAssetDiskMapingFile.f_ExampleGuide_unity,
+                enAssetDiskMapingFolder.Assets_Game_AssetBundles_Scene);
         });
     }
 

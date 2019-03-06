@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 /// <summary>
@@ -38,12 +40,42 @@ public class StrayFogSceneManager : AbsSingleMonoBehaviour
     }
 
     /// <summary>
+    /// 允许激活场景
+    /// </summary>
+    public void AllowSceneActivation()
+    {
+        if (mSceneAsync != null)
+        {
+            mSceneAsync.allowSceneActivation = true;
+        }
+    }
+
+    /// <summary>
+    /// 场景异步
+    /// </summary>
+    AsyncOperation mSceneAsync = null;
+    /// <summary>
     /// 加载场景
     /// </summary>
-    /// <param name="_sceneName">场景名称</param>
-    public void LoadScene(string _sceneName)
+    /// <param name="_file">场景文件</param>
+    public void LoadScene(enAssetDiskMapingFile _file, enAssetDiskMapingFolder _folder)
     {
-        SceneManager.LoadScene(_sceneName);
+        StrayFogGamePools.assetBundleManager.LoadAssetInMemory(_file, _folder,
+                (result) =>
+                {
+                    mSceneAsync = SceneManager.LoadSceneAsync(result.assetName);
+                    mSceneAsync.allowSceneActivation = false;
+                    StartCoroutine(OnActiveScene());
+                });
+    }
+
+    IEnumerator OnActiveScene()
+    {
+        yield return new WaitForSeconds(4);
+        StrayFogGamePools.uiWindowManager.OpenWindow<LobbyWindow>(enUIWindow.LobbyWindow, (wins, wargs) =>
+        {
+            AllowSceneActivation();
+        });
     }
 
     /// <summary>
@@ -58,12 +90,7 @@ public class StrayFogSceneManager : AbsSingleMonoBehaviour
         {
             if (GUILayout.Button(f.ToString()))
             {
-                StrayFogGamePools.assetBundleManager.LoadAssetInMemory(
-                    f, enAssetDiskMapingFolder.Assets_Game_AssetBundles_Scene,
-                (result) =>
-                {
-                    SceneManager.LoadScene(result.assetName);
-                });
+                LoadScene(f, enAssetDiskMapingFolder.Assets_Game_AssetBundles_Scene);
             }
         }
         GUILayout.EndHorizontal();

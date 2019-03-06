@@ -377,6 +377,7 @@ public class StrayFogSQLiteLevel : AbsLevel
     /// </summary>
     void RefreshTable()
     {
+
         //Stopwatch watch = new Stopwatch();
         //watch.Start();
 
