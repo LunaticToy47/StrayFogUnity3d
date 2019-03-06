@@ -10,9 +10,9 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     /// <param name="_window">窗口</param>
     /// <param name="_parameters">参数组</param>
-    public void GetWindow<W>(Enum _window, params object[] _parameters)
+    public void GetWindow(Enum _window, params object[] _parameters)
     {
-        GetWindow(_window, (wins, paras) => { }, _parameters);
+        GetWindow<AbsUIWindowView>(_window, (wins, paras) => { }, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -21,7 +21,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(Enum[] _windows, params object[] _parameters)
     {
-        GetWindow(_windows, (wins, paras) => { }, _parameters);
+        GetWindow<AbsUIWindowView>(_windows, (wins, paras) => { }, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -31,7 +31,19 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(Enum _window, UIWindowEntityEventHandler<AbsUIWindowView> _onCallback, params object[] _parameters)
     {
-        GetWindow(new Enum[1] { _window }, _onCallback, _parameters);
+        GetWindow<AbsUIWindowView>(_window, _onCallback, _parameters);
+    }
+    /// <summary>
+    /// 获得窗口
+    /// </summary>
+    /// <typeparam name="W">窗口类型</typeparam>
+    /// <param name="_window">窗口</param>
+    /// <param name="_onCallback">回调</param>
+    /// <param name="_parameters">参数组</param>
+    public void GetWindow<W>(Enum _window, UIWindowEntityEventHandler<W> _onCallback, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
+        GetWindow<W>(new Enum[1] { _window }, _onCallback, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -41,7 +53,19 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(Enum[] _windows, UIWindowEntityEventHandler<AbsUIWindowView> _onCallback, params object[] _parameters)
     {
-        GetWindow(OnGetWindowSetting(_windows), _onCallback, _parameters);
+        GetWindow<AbsUIWindowView>(_windows, _onCallback, _parameters);
+    }
+    /// <summary>
+    /// 获得窗口
+    /// </summary>
+    /// <typeparam name="W">窗口类型</typeparam>
+    /// <param name="_windows">窗口组</param>
+    /// <param name="_onCallback">回调</param>
+    /// <param name="_parameters">参数组</param>
+    public void GetWindow<W>(Enum[] _windows, UIWindowEntityEventHandler<W> _onCallback, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
+        GetWindow<W>(OnGetWindowSetting(_windows), _onCallback, _parameters);
     }
     #endregion
 
@@ -54,7 +78,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(int _folderId, int _fileId, params object[] _parameters)
     {
-        GetWindow(_folderId, _fileId, (wins, paras) => { }, _parameters);
+        GetWindow<AbsUIWindowView>(_folderId, _fileId, (wins, paras) => { }, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -64,7 +88,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(int[] _folderIds, int[] _fileIds, params object[] _parameters)
     {
-        GetWindow(_folderIds, _fileIds, (wins, paras) => { }, _parameters);
+        GetWindow<AbsUIWindowView>(_folderIds, _fileIds, (wins, paras) => { }, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -75,7 +99,20 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(int _folderId, int _fileId, UIWindowEntityEventHandler<AbsUIWindowView> _onCallback, params object[] _parameters)
     {
-        GetWindow(OnGetWindowSetting(_folderId, _fileId), _onCallback, _parameters);
+        GetWindow<AbsUIWindowView>(_folderId, _fileId, _onCallback, _parameters);
+    }
+    /// <summary>
+    /// 获得窗口
+    /// </summary>
+    /// <typeparam name="W">窗口类型</typeparam>
+    /// <param name="_folderId">文件夹id</param>
+    /// <param name="_fileId">文件id</param>
+    /// <param name="_onCallback">回调</param>
+    /// <param name="_parameters">参数组</param>
+    public void GetWindow<W>(int _folderId, int _fileId, UIWindowEntityEventHandler<W> _onCallback, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
+        GetWindow<W>(OnGetWindowSetting(_folderId, _fileId), _onCallback, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -86,7 +123,20 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(int[] _folderIds, int[] _fileIds, UIWindowEntityEventHandler<AbsUIWindowView> _onCallback, params object[] _parameters)
     {
-        GetWindow(OnGetWindowSetting(_folderIds, _fileIds), _onCallback, _parameters);
+        GetWindow<AbsUIWindowView>(_folderIds, _fileIds, _onCallback, _parameters);
+    }
+    /// <summary>
+    /// 获得窗口
+    /// </summary>
+    /// <typeparam name="W">窗口类型</typeparam>
+    /// <param name="_folderIds">文件夹id组</param>
+    /// <param name="_fileIds">文件id组</param>
+    /// <param name="_onCallback">回调</param>
+    /// <param name="_parameters">参数组</param>
+    public void GetWindow<W>(int[] _folderIds, int[] _fileIds, UIWindowEntityEventHandler<W> _onCallback, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
+        GetWindow<W>(OnGetWindowSetting(_folderIds, _fileIds), _onCallback, _parameters);
     }
     #endregion
 
@@ -98,7 +148,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(int _windowId, params object[] _parameters)
     {
-        GetWindow(_windowId, (wins, paras) => { }, _parameters);
+        GetWindow<AbsUIWindowView>(_windowId, (wins, paras) => { }, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -107,7 +157,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(int[] _windowIds, params object[] _parameters)
     {
-        GetWindow(_windowIds, (wins, paras) => { }, _parameters);
+        GetWindow<AbsUIWindowView>(_windowIds, (wins, paras) => { }, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -117,7 +167,19 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(int _windowId, UIWindowEntityEventHandler<AbsUIWindowView> _onCallback, params object[] _parameters)
     {
-        GetWindow(new int[1] { _windowId }, _onCallback, _parameters);
+        GetWindow<AbsUIWindowView>(_windowId, _onCallback, _parameters);
+    }
+    /// <summary>
+    /// 获得窗口
+    /// </summary>
+    /// <typeparam name="W">窗口类型</typeparam>
+    /// <param name="_windowId">窗口Id</param>
+    /// <param name="_onCallback">回调</param>
+    /// <param name="_parameters">参数组</param>
+    public void GetWindow<W>(int _windowId, UIWindowEntityEventHandler<W> _onCallback, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
+        GetWindow<W>(new int[1] { _windowId }, _onCallback, _parameters);
     }
     /// <summary>
     /// 获得窗口
@@ -127,7 +189,19 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void GetWindow(int[] _windowIds, UIWindowEntityEventHandler<AbsUIWindowView> _onCallback, params object[] _parameters)
     {
-        OnGetWindow(OnGetWindowSetting(_windowIds), _onCallback, _parameters);
+        GetWindow<AbsUIWindowView>(_windowIds, _onCallback, _parameters);
+    }
+    /// <summary>
+    /// 获得窗口
+    /// </summary>
+    /// <typeparam name="W">窗口类型</typeparam>
+    /// <param name="_windowIds">窗口Id组</param>
+    /// <param name="_onCallback">回调</param>
+    /// <param name="_parameters">参数组</param>
+    public void GetWindow<W>(int[] _windowIds, UIWindowEntityEventHandler<W> _onCallback, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
+        OnGetWindow<W>(OnGetWindowSetting(_windowIds), _onCallback, _parameters);
     }
     #endregion
 }

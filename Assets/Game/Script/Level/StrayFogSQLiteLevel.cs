@@ -377,7 +377,7 @@ public class StrayFogSQLiteLevel : AbsLevel
     /// </summary>
     void RefreshTable()
     {
-
+        StrayFogGamePools.uiWindowManager.GetWindow(enUIWindow.LobbyWindow, (wins, args) => { });
         //Stopwatch watch = new Stopwatch();
         //watch.Start();
 
