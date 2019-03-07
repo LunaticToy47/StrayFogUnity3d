@@ -376,32 +376,32 @@ public class StrayFogSQLiteLevel : AbsLevel
     /// RefreshTable
     /// </summary>
     void RefreshTable()
-    {
-        StrayFogGamePools.uiWindowManager.GetWindow(enUIWindow.LobbyWindow, (wins, args) => { });
-        //Stopwatch watch = new Stopwatch();
-        //watch.Start();
+    {       
+        Stopwatch watch = new Stopwatch();
+        watch.Start();
 
-        //SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
-        //UnityEngine.Debug.LogFormat("Delete Table【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
+        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        UnityEngine.Debug.LogFormat("Refresh Table【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
-        //List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
-        //watch.Stop();
-        //UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
-        //if (reports.Count > 0)
-        //{
-        //    watch.Reset();
-        //    watch.Start();
-        //    StrayFogSQLiteEntityHelper.Delete(reports[0]);
-        //    watch.Stop();
-        //    UnityEngine.Debug.LogFormat("Delete Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
-        //}
+        if (reports.Count > 0)
+        {
+            watch.Reset();
+            watch.Start();
+            reports[0].Set_stringCol("Refresh Table");
+            watch.Stop();
+            UnityEngine.Debug.LogFormat("Modify Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        }
 
-        //watch.Reset();
-        //watch.Start();
-        //reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
-        //watch.Stop();
-        //UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
+        watch.Reset();
+        watch.Start();
+        StrayFogSQLiteEntityHelper.Reload<XLS_Report_Table_Report>();
+        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        watch.Stop();
+        UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.JsonSerialize(), watch.Elapsed, reports.JsonSerialize());
     }
     #endregion
 }

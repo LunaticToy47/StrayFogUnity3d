@@ -7,15 +7,15 @@ using System.Text;
 public enum enSQLiteReloadClassify
 {
     /// <summary>
-    /// 追加数据
+    /// 磁盘覆盖所有缓存数据
     /// </summary>
-    [AliasTooltip("追加数据")]
-    Append,
+    [AliasTooltip("磁盘覆盖所有缓存数据")]
+    DiskCoverAllCahche,
     /// <summary>
-    /// 覆盖数据
+    /// 磁盘覆盖与缓存相同的数据
     /// </summary>
-    [AliasTooltip("覆盖数据")]
-    Cover,
+    [AliasTooltip("磁盘覆盖与缓存相同的数据")]
+    DiskCoverSameCache,
 }
 /// <summary>
 /// StrayFogSQLite表实体帮助类【Reload】
@@ -31,7 +31,19 @@ public sealed partial class StrayFogSQLiteEntityHelper
     public static List<T> Reload<T>()
         where T : AbsStrayFogSQLiteEntity
     {
-        return Select<T>(null);
+        return Reload<T>(enSQLiteReloadClassify.DiskCoverSameCache);
+    }
+
+    /// <summary>
+    /// 重新加载数据集【速度很慢，慎用】
+    /// </summary>
+    /// <typeparam name="T">实体类型</typeparam>
+    /// <param name="_reloadClassify">重新加载分类</param>
+    /// <returns>数据集</returns>
+    public static List<T> Reload<T>(enSQLiteReloadClassify _reloadClassify)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        return Reload<T>(_reloadClassify, null);
     }
 
     /// <summary>
@@ -49,8 +61,8 @@ public sealed partial class StrayFogSQLiteEntityHelper
         List<T> fromDisk = OnReadAll<T>(tableAttribute);
         switch (_reloadClassify)
         {
-            case enSQLiteReloadClassify.Append:
-                #region 追加数据
+            case enSQLiteReloadClassify.DiskCoverSameCache:
+                #region 覆盖相同数据
                 if (tableAttribute.hasPkColumn && fromDisk.Count > 0)
                 {   //如果有磁盘数据，则进行对比处理
                     //如果有主键，则相同主键的磁盘数据覆盖缓存数据
@@ -117,9 +129,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
                 }
                 #endregion
                 break;
-            case enSQLiteReloadClassify.Cover:
+            case enSQLiteReloadClassify.DiskCoverAllCahche:
+                #region 覆盖所有数据
                 fromCache = fromDisk;
                 OnRefreshCacheData(fromCache, tableAttribute, true);
+                #endregion
                 break;
         }
         
