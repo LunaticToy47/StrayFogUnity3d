@@ -15,13 +15,11 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     void OnLoadWindowInMemory(XLS_Config_Table_UIWindowSetting[] _winCfgs,bool _isInstance, UIWindowSettingEventHandler _callback, params object[] _parameters)
     {
-        _callback(_winCfgs, _parameters);
         int index = 0;
         Dictionary<int, AssetBundleResult> resultMaping = new Dictionary<int, AssetBundleResult>();
         int count = _winCfgs.Length;
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
-        {
-            Debug.Log(cfg.JsonSerialize());
+        {            
             StrayFogGamePools.assetBundleManager.LoadAssetInMemory(cfg.fileId, cfg.folderId,
             (result) =>
             {
@@ -72,16 +70,26 @@ public partial class StrayFogUIWindowManager
     {        
         OnLoadWindowInMemory(_winCfgs, true, (cfgs, args) =>
         {
-            Debug.Log(args);
-            //Dictionary<int, AssetBundleResult> winMemory = (Dictionary<int, AssetBundleResult>)args[0];                    
-            //object[] memoryArgs = (object[])args[1];
-            //UIWindowEntityEventHandler<W> call = (UIWindowEntityEventHandler<W>)memoryArgs[0];
-            //object[] externalParameters = (object[])memoryArgs[1];
-            //foreach (object j in memoryArgs)
-            //{
-            //    Debug.Log(j);
-            //}            
+            Dictionary<int, AssetBundleResult> memoryAssetResult = (Dictionary<int, AssetBundleResult>)args[0];
+            object[] memoryArgs = (object[])args[1];
+            UIWindowEntityEventHandler<W> call = (UIWindowEntityEventHandler<W>)memoryArgs[0];
+            object[] extArgs = (object[])memoryArgs[1];
+            OnInstanceWindow(cfgs, memoryAssetResult, call, extArgs);
         }, _callback, _parameters);
+    }
+
+    /// <summary>
+    /// 实例化窗口
+    /// </summary>
+    /// <typeparam name="W">窗口类型</typeparam>
+    /// <param name="_winCfgs">窗口配置</param>
+    /// <param name="_memoryAssetResult">内存结果</param>
+    /// <param name="_callback">回调</param>
+    /// <param name="_parameters">参数</param>
+    void OnInstanceWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _memoryAssetResult, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
+        where W : AbsUIWindowView
+    {
+
     }
     #endregion
 

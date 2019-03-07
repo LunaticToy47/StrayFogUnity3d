@@ -21,7 +21,11 @@ public class StrayFogGuideLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            
+            //StrayFogGamePools.uiWindowManager.PreloadWindow(enUIWindow.GuideWindow,
+            //(wins, args) =>
+            //{
+            //    UnityEngine.Debug.Log(args.JsonSerialize() + "【PreloadWindow】=>" + wins.JsonSerialize());
+            //}, 1);
         });
     }
 
@@ -72,7 +76,7 @@ public class StrayFogGuideLevel : AbsLevel
     /// <param name="_watch">Stopwatch</param>
     void OnOpenWindows(Stopwatch _watch)
     {
-        StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIWindowView>(
+        StrayFogGamePools.uiWindowManager.OpenWindow(
             new Enum[2] { enUIWindow.LobbyWindow, enUIWindow.MessageBoxWindow },
             (wins, args) =>
             {
