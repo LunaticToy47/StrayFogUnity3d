@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 /// <summary>
-/// UI窗口管理器【初始化】
+/// UI窗口管理器【画布】
 /// </summary>
 public partial class StrayFogUIWindowManager
 {
@@ -13,23 +13,6 @@ public partial class StrayFogUIWindowManager
     /// ui层级
     /// </summary>
     public int uiLayer { get; private set; }
-    #endregion
-
-    #region OnAfterConstructor
-    /// <summary>
-    /// 窗口枚举类型
-    /// </summary>
-    readonly Type mWindowEnumType = typeof(enUIWindow);
-    /// <summary>
-    /// OnAfterConstructor
-    /// </summary>
-    protected override void OnAfterConstructor()
-    {
-        uiLayer = LayerMask.NameToLayer("UI");
-        OnInitialization();
-        OnInitializSQLite();
-        base.OnAfterConstructor();
-    }
     #endregion
 
     #region OnInitialization 初始化
@@ -52,9 +35,9 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     StandaloneInputModule mStandaloneInputModule;
     /// <summary>
-    /// 初始化
+    /// 初始化画布和摄像机
     /// </summary>
-    void OnInitialization()
+    void OnInitializeCanvasAndCamera()
     {
         foreach (RenderMode rm in mRenderModes)
         {
@@ -63,7 +46,7 @@ public partial class StrayFogUIWindowManager
                 GameObject go = new GameObject(typeof(UICanvas).Name + "_" + rm.ToString());
                 UICanvas cvs = go.AddComponent<UICanvas>();
                 cvs.gameObject.layer = uiLayer;
-                OnInitializationCanvas(cvs, rm);
+                OnInitializeCanvas(cvs, rm);
                 mCanvasMaping.Add((int)rm, cvs);
                 DontDestroyOnLoad(go);
             }
@@ -86,7 +69,7 @@ public partial class StrayFogUIWindowManager
     }
     #endregion
 
-    #region InitializationCanvas 初始化画布
+    #region OnInitializeCanvas 初始化画布
     /// <summary>
     /// farClipPlane
     /// </summary>
@@ -108,7 +91,7 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     /// <param name="_uCanvas">画布</param>
     /// <param name="_renderMode">绘制模式</param>
-    void OnInitializationCanvas(UICanvas _uCanvas, RenderMode _renderMode)
+    void OnInitializeCanvas(UICanvas _uCanvas, RenderMode _renderMode)
     {
         _uCanvas.canvas.renderMode = _renderMode;
         _uCanvas.canvas.sortingOrder = byte.MaxValue;

@@ -127,7 +127,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void PreloadWindow(int[] _windowIds, UIWindowSettingEventHandler _onCallback, params object[] _parameters)
     {
-        OnPreloadWindow<AbsUIWindowView>(OnGetWindowSetting(_windowIds), _onCallback, null, null, _parameters);
+        OnLoadWindowInMemory(OnGetWindowSetting(_windowIds), false,_onCallback, _parameters);
     }
     #endregion
 }

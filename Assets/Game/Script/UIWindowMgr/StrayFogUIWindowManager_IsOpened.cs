@@ -65,7 +65,7 @@ public partial class StrayFogUIWindowManager
     /// <returns>true:打开,false:关闭</returns>
     public bool IsOpenedWindow(int[] _windowIds)
     {
-        return OnIsOpenedWindow(_windowIds);
+        return OnIsOpenedWindow(OnGetWindowSetting(_windowIds));
     }
     #endregion
 }

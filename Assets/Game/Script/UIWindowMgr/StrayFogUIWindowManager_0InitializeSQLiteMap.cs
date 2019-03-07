@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public partial class StrayFogUIWindowManager
 {
-    #region OnInitializSQLite 初始化SQLite映射
+    #region OnInitializeSQLite 初始化SQLite映射
     /// <summary>
     /// 窗口设置映射
     /// </summary>
@@ -18,9 +18,9 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     Dictionary<int, Dictionary<int, int>> mFolderIdFileIdForWinIdMaping = new Dictionary<int, Dictionary<int, int>>();
     /// <summary>
-    /// 初始化SQLite映射
+    /// 初始化SQLite数据
     /// </summary>
-    void OnInitializSQLite()
+    void OnInitializeSQLite()
     {
         List<XLS_Config_Table_UIWindowSetting> tables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UIWindowSetting>();
         foreach (XLS_Config_Table_UIWindowSetting t in tables)

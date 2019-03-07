@@ -65,7 +65,7 @@ public partial class StrayFogUIWindowManager
     /// <returns>true:存在,false:不存在</returns>
     public bool IsExistsWindow(int[] _windowIds)
     {
-        return OnIsExistsWindow(_windowIds);
+        return OnIsExistsWindow(OnGetWindowSetting(_windowIds));
     }
     #endregion
 }
