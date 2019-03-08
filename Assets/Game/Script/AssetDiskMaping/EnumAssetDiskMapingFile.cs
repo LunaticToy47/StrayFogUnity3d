@@ -150,7 +150,9 @@ public enum enAssetDiskMapingFile
 	f_Skill100406_png = -745009968,
 	f_Terrain_prefab = -181505390,
 	f_GuideWindow_prefab = -1287614635,
+	f_HeroListWindow_prefab = -841801683,
 	f_LobbyWindow_prefab = -1625153888,
 	f_MessageBoxWindow_prefab = 1299702156,
-	f_StrayFogXLuaLevel_lua_txt = 1735911982,	
+	f_StrayFogXLuaLevel_lua_txt = 1735911982,
+	f_StrayFogXLuaLevelFunction_lua_txt = -510167203,	
 }

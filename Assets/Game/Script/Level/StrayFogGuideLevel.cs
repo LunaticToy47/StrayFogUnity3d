@@ -64,9 +64,10 @@ public class StrayFogGuideLevel : AbsLevel
         UnityEngine.Debug.Log("Open=>" + enUIWindow.LobbyWindow);
         Stopwatch watch = new Stopwatch();
         watch.Start();
-        for (int i = 0; i < 10; i++)
+        int count = UnityEngine.Random.Range(1, 20);
+        for (int i = 0; i < count; i++)
         {
-            OnOpenWindows(watch);
+            OnOpenWindows(watch,i >= count - 1);
         }
     }
 
@@ -74,10 +75,25 @@ public class StrayFogGuideLevel : AbsLevel
     /// OnOpenWindows
     /// </summary>
     /// <param name="_watch">Stopwatch</param>
-    void OnOpenWindows(Stopwatch _watch)
+    /// <param name="_isEnd">是否是最后一个</param>
+    void OnOpenWindows(Stopwatch _watch,bool _isEnd)
     {
-        StrayFogGamePools.uiWindowManager.OpenWindow(
-            new Enum[2] { enUIWindow.LobbyWindow, enUIWindow.MessageBoxWindow },
+        Enum[] winSrc = new Enum[3] { enUIWindow.LobbyWindow, enUIWindow.MessageBoxWindow, enUIWindow.HeroListWindow };
+        int randomStart = UnityEngine.Random.Range(0, winSrc.Length - 1);
+        int randomEnd = UnityEngine.Random.Range(0, winSrc.Length - 1);
+        Enum temp = winSrc[randomStart];
+        winSrc[randomStart] = winSrc[randomEnd];
+        winSrc[randomEnd] = temp;
+        if (_isEnd)
+        {
+            UnityEngine.Debug.Log("Is End=>" + winSrc.JsonSerialize());
+        }
+        else
+        {
+            UnityEngine.Debug.Log(winSrc.JsonSerialize());
+        }
+        
+        StrayFogGamePools.uiWindowManager.OpenWindow(winSrc,
             (wins, args) =>
             {
                 Stopwatch w = (Stopwatch)args[0];
