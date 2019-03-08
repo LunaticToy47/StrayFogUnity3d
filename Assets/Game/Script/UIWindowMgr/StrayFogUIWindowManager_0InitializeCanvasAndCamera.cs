@@ -27,6 +27,12 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     Dictionary<int, UICanvas> mCanvasMaping = new Dictionary<int, UICanvas>();
     /// <summary>
+    /// 缓存SiblingIndex映射
+    /// Key:RenderMode
+    /// Value:缓存SiblingIndex根节点
+    /// </summary>
+    Dictionary<int, UIWindowSiblingIndex> mCacheSiblingIndexMaping = new Dictionary<int, UIWindowSiblingIndex>();
+    /// <summary>
     /// 事件系统
     /// </summary>
     EventSystem mEventSystem;
@@ -39,15 +45,22 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     void OnInitializeCanvasAndCamera()
     {
+        GameObject go = null;
         foreach (RenderMode rm in mRenderModes)
         {
             if (!mCanvasMaping.ContainsKey((int)rm))
             {
-                GameObject go = new GameObject(typeof(UICanvas).Name + "_" + rm.ToString());
+                go = new GameObject(typeof(UICanvas).Name + "_" + rm.ToString());
                 UICanvas cvs = go.AddComponent<UICanvas>();
                 cvs.gameObject.layer = uiLayer;
                 OnInitializeCanvas(cvs, rm);
                 mCanvasMaping.Add((int)rm, cvs);
+                DontDestroyOnLoad(go);
+            }
+            if (!mCacheSiblingIndexMaping.ContainsKey((int)rm))
+            {
+                go = new GameObject(go.name+ "_CacheSiblingIndex");
+                mCacheSiblingIndexMaping.Add((int)rm, go.AddComponent<UIWindowSiblingIndex>());
                 DontDestroyOnLoad(go);
             }
         }
@@ -170,6 +183,18 @@ public partial class StrayFogUIWindowManager
     UICanvas OnGetCanvas(RenderMode _renderMode)
     {
         return mCanvasMaping[(int)_renderMode];
+    }
+    #endregion
+
+    #region OnGetCacheSiblingIndexRoot 获得缓存CacheSiblingIndex根节点
+    /// <summary>
+    /// 获得缓存CacheSiblingIndex根节点
+    /// </summary>
+    /// <param name="_renderMode">绘制模式</param>
+    /// <returns>缓存CacheSiblingIndex根节点</returns>
+    UIWindowSiblingIndex OnGetCacheSiblingIndexRoot(RenderMode _renderMode)
+    {
+        return mCacheSiblingIndexMaping[(int)_renderMode];
     }
     #endregion
 }
