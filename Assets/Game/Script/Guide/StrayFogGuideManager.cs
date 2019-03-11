@@ -288,14 +288,14 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
                 {
                     t.ToggleTriggerValidate(true);
                 }
-                mGuideWindow.SetActiveImmediate(_guideTrigger.triggerDisplayType != enGuideDisplayType.HideWindow);
+                mGuideWindow.ToggleActive(_guideTrigger.triggerDisplayType != enGuideDisplayType.HideWindow);
                 mGuideWindow.ToggleBackgroundDisplay(_guideTrigger.triggerDisplayType != enGuideDisplayType.HideBackground);
             }
         }
         else
         {
             mGuideWindow.ClearTrigger();
-            mGuideWindow.SetActiveImmediate(false);
+            mGuideWindow.ToggleActive(false);
         }
     }
     #endregion

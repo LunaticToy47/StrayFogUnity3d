@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// UI窗口SiblingIndex
+/// UI窗口SiblingIndex画布
 /// </summary>
-[AddComponentMenu("Game/UI/UIWindowSiblingIndex")]
-public sealed class UIWindowSiblingIndex : AbsMonoBehaviour
+[AddComponentMenu("Game/UI/UISiblingIndexCanvas")]
+public sealed class UISiblingIndexCanvas : AbsMonoBehaviour
 {
     /// <summary>
     /// 层级根节点
@@ -13,11 +13,11 @@ public sealed class UIWindowSiblingIndex : AbsMonoBehaviour
     /// </summary>
     Dictionary<int, RectTransform> mLayerMaping = new Dictionary<int, RectTransform>();
     /// <summary>
-    /// 附加窗口SiblingIndex占位符
+    /// 创建窗口SiblingIndex占位符
     /// </summary>
     /// <param name="_winCfg">窗口配置</param>
     /// <returns>占位符</returns>
-    public RectTransform GetWindowSiblingIndex(XLS_Config_Table_UIWindowSetting _winCfg)
+    public RectTransform CreateWindowSiblingIndexHolder(XLS_Config_Table_UIWindowSetting _winCfg)
     {
         int layer = _winCfg.layer;
         if (!mLayerMaping.ContainsKey(layer))

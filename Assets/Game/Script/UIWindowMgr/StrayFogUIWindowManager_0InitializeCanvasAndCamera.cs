@@ -31,7 +31,7 @@ public partial class StrayFogUIWindowManager
     /// Key:RenderMode
     /// Value:缓存SiblingIndex根节点
     /// </summary>
-    Dictionary<int, UIWindowSiblingIndex> mCacheSiblingIndexMaping = new Dictionary<int, UIWindowSiblingIndex>();
+    Dictionary<int, UISiblingIndexCanvas> mSiblingIndexCanvasMaping = new Dictionary<int, UISiblingIndexCanvas>();
     /// <summary>
     /// 事件系统
     /// </summary>
@@ -57,10 +57,10 @@ public partial class StrayFogUIWindowManager
                 mCanvasMaping.Add((int)rm, cvs);
                 DontDestroyOnLoad(go);
             }
-            if (!mCacheSiblingIndexMaping.ContainsKey((int)rm))
+            if (!mSiblingIndexCanvasMaping.ContainsKey((int)rm))
             {
                 go = new GameObject(go.name+ "_CacheSiblingIndex");
-                mCacheSiblingIndexMaping.Add((int)rm, go.AddComponent<UIWindowSiblingIndex>());
+                mSiblingIndexCanvasMaping.Add((int)rm, go.AddComponent<UISiblingIndexCanvas>());
                 DontDestroyOnLoad(go);
             }
         }
@@ -186,15 +186,15 @@ public partial class StrayFogUIWindowManager
     }
     #endregion
 
-    #region OnGetCacheSiblingIndexRoot 获得缓存CacheSiblingIndex根节点
+    #region OnGetSiblingIndexCanvas 获得SiblingIndex画布
     /// <summary>
-    /// 获得缓存CacheSiblingIndex根节点
+    /// 获得SiblingIndex画布
     /// </summary>
     /// <param name="_renderMode">绘制模式</param>
     /// <returns>缓存CacheSiblingIndex根节点</returns>
-    UIWindowSiblingIndex OnGetCacheSiblingIndexRoot(RenderMode _renderMode)
+    UISiblingIndexCanvas OnGetSiblingIndexCanvas(RenderMode _renderMode)
     {
-        return mCacheSiblingIndexMaping[(int)_renderMode];
+        return mSiblingIndexCanvasMaping[(int)_renderMode];
     }
     #endregion
 }

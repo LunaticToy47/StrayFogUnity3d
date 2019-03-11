@@ -1,6 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 /// <summary>
+/// 窗口开关句柄
+/// </summary>
+/// <param name="_window">窗口</param>
+public delegate void UIWindowOnOffEventHandle(AbsUIWindowView _window);
+/// <summary>
 /// 窗口视图
 /// </summary>
 public abstract class AbsUIWindowView : AbsMonoBehaviour
@@ -34,19 +39,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     public RectTransform rectTransform { get { if (mRectTransform == null) { mRectTransform = gameObject.GetComponent<RectTransform>(); } return mRectTransform; } }
     #endregion
 
-    #region SetActive    
-    /// <summary>
-    /// 设置激活状态
-    /// </summary>
-    /// <param name="_isActive">是否激活</param>
-    public IEnumerator SetActiveYield(bool _isActive)
-    {
-        yield return new WaitForEndOfFrame();
-        SetActiveImmediate(_isActive);
-    }
-    #endregion
-
-    #region SetActiveImmediate
+    #region ToggleActive 切换激活状态
     /// <summary>
     /// 是否是第一次显示
     /// </summary>
@@ -55,7 +48,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// 立即设置激活状态
     /// </summary>
     /// <param name="_isActive">是否激活</param>
-    public void SetActiveImmediate(bool _isActive)
+    public void ToggleActive(bool _isActive)
     {
         if (gameObject.activeSelf != _isActive)
         {
@@ -105,11 +98,18 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
 
     #region CloseWindow
     /// <summary>
+    /// 关闭窗口事件
+    /// </summary>
+    public event UIWindowOnOffEventHandle OnCloseWindow;
+    /// <summary>
     /// 关闭窗口
     /// </summary>
     public void CloseWindow()
     {
-        StrayFogGamePools.uiWindowManager.CloseWindow(config.id);
+        if (OnCloseWindow != null)
+        {
+            OnCloseWindow(this);
+        }        
     }
     #endregion
 }

@@ -80,32 +80,31 @@ public partial class StrayFogUIWindowManager
             OnInstanceWindow(cfgs,memoryAssetResult, call, extArgs);
         }, _callback, _parameters);
     }
+    
+    /// <summary>
+    /// 窗口占位符
+    /// </summary>
+    Dictionary<int, UIWindowHolder> mWindowHolderMaping = new Dictionary<int, UIWindowHolder>();
 
     /// <summary>
-    /// 已实例化的窗口映射
-    /// </summary>
-    Dictionary<int, AbsUIWindowView> mInstanceWindowMaping = new Dictionary<int, AbsUIWindowView>();
-    /// <summary>
-    /// 窗口实体SiblingIndex缓存
-    /// </summary>
-    Dictionary<int, GameObject> mInstanceCacheSiblingIndexMaping = new Dictionary<int, GameObject>();
-
-    /// <summary>
-    /// 设置窗口SiblingIndex缓存
+    /// 创建窗口占位符
     /// </summary>
     /// <param name="_winCfg">窗口配置</param>
-    void OnSetInstanceCacheSiblingIndex(XLS_Config_Table_UIWindowSetting _winCfg)
+    void OnCreateWindowHolder(XLS_Config_Table_UIWindowSetting _winCfg)
     {
-        UIWindowSiblingIndex root = OnGetCacheSiblingIndexRoot((RenderMode)_winCfg.renderMode);
-        Transform holder = root.GetWindowSiblingIndex(_winCfg);
-        if (!mInstanceCacheSiblingIndexMaping.ContainsKey(_winCfg.id))
+        UISiblingIndexCanvas canvas = OnGetSiblingIndexCanvas((RenderMode)_winCfg.renderMode);
+        RectTransform root = canvas.CreateWindowSiblingIndexHolder(_winCfg);
+        if (!mWindowHolderMaping.ContainsKey(_winCfg.id))
         {
-            GameObject go = new GameObject(_winCfg.name+ "【SiblingIndex】");
-            go.transform.SetParent(holder);
+            GameObject go = new GameObject(_winCfg.name+ "【Holder】");
+            go.transform.SetParent(root);
             DontDestroyOnLoad(go);
-            mInstanceCacheSiblingIndexMaping.Add(_winCfg.id, go);
+            UIWindowHolder wh = go.AddComponent<UIWindowHolder>();
+            wh.SetWindowConfig(_winCfg);
+            wh.SetWindowCanvas(OnGetCanvas((RenderMode)_winCfg.renderMode));
+            mWindowHolderMaping.Add(_winCfg.id, wh);
         }
-        mInstanceCacheSiblingIndexMaping[_winCfg.id].transform.SetAsLastSibling();
+        mWindowHolderMaping[_winCfg.id].transform.SetAsLastSibling();
     }
 
     /// <summary>
@@ -122,10 +121,10 @@ public partial class StrayFogUIWindowManager
         foreach (KeyValuePair<int, AssetBundleResult> key in _memoryAssetResult)
         {
             XLS_Config_Table_UIWindowSetting cacheCfg = (XLS_Config_Table_UIWindowSetting)key.Value.extraParameter[1];
-            OnSetInstanceCacheSiblingIndex(cacheCfg);
-            if (!mInstanceWindowMaping.ContainsKey(key.Key))
+            OnCreateWindowHolder(cacheCfg);
+            if (!mWindowHolderMaping[key.Key].isMarkLoadedWindowInstace)
             {
-                mInstanceWindowMaping.Add(key.Key, null);
+                mWindowHolderMaping[key.Key].MarkLoadedWindowInstace();
                 key.Value.Instantiate<GameObject>(false, (win, args) =>
                 {
                     XLS_Config_Table_UIWindowSetting winCfg = (XLS_Config_Table_UIWindowSetting)args[0];
@@ -136,9 +135,8 @@ public partial class StrayFogUIWindowManager
                         Type type = Assembly.GetCallingAssembly().GetType(winCfg.name);
                         W window = (W)prefab.AddComponent(type);
                         window.SetConfig(winCfg);
-                        OnGetCanvas((RenderMode)winCfg.renderMode).AttachWindow(window);
-                        //window.rectTransform.SetSiblingIndex(mWindowLayerSiblingIndex[(int)config.layer][config.id]);
-                        mInstanceWindowMaping[winCfg.id] = window;
+                        window.OnCloseWindow += Window_OnCloseWindow;
+                        mWindowHolderMaping[winCfg.id].SetWindow(window);
                     }
                     OnCheckInstanceLoadComplete<W>((XLS_Config_Table_UIWindowSetting[])args[1], (UIWindowEntityEventHandler<W>)args[2], (object[])args[3]);                   
                 }, cacheCfg, _winCfgs, _callback, _parameters);
@@ -151,6 +149,15 @@ public partial class StrayFogUIWindowManager
     }
 
     /// <summary>
+    /// 关闭窗口
+    /// </summary>
+    /// <param name="_window">窗口</param>
+    void Window_OnCloseWindow(AbsUIWindowView _window)
+    {
+        CloseWindow(_window.config.id);
+    }
+
+    /// <summary>
     /// 检测窗口实例化是否完成
     /// </summary>
     /// <typeparam name="W">窗口类型</typeparam>
@@ -160,13 +167,12 @@ public partial class StrayFogUIWindowManager
     void OnCheckInstanceLoadComplete<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-        bool isChecked = mInstanceWindowMaping.Count >= _winCfgs.Length;
+        bool isChecked = mWindowHolderMaping.Count >= _winCfgs.Length;
         if (isChecked)
         {//当实体窗口>=要加载的窗口时，才检测是否所有的窗口都已实例化
             foreach(XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
             {
-                isChecked &= mInstanceWindowMaping.ContainsKey(cfg.id) && 
-                    mInstanceWindowMaping[cfg.id] is W;
+                isChecked &= mWindowHolderMaping[cfg.id].HasWindowInstance<W>();
             }
         }
 
