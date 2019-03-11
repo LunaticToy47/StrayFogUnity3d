@@ -45,7 +45,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// </summary>
     bool mIsFirstDisplay = true;
     /// <summary>
-    /// 立即设置激活状态
+    /// 切换激活状态
     /// </summary>
     /// <param name="_isActive">是否激活</param>
     public void ToggleActive(bool _isActive)

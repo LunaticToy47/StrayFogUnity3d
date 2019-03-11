@@ -67,7 +67,7 @@ public class StrayFogGuideLevel : AbsLevel
         int count = UnityEngine.Random.Range(1, 20);
         for (int i = 0; i < count; i++)
         {
-            OnOpenWindows(watch,i >= count - 1);
+            OnOpenWindows(watch, count, i >= count - 1);
         }
     }
 
@@ -75,12 +75,14 @@ public class StrayFogGuideLevel : AbsLevel
     /// OnOpenWindows
     /// </summary>
     /// <param name="_watch">Stopwatch</param>
+    /// <param name="_count">数量</param>
     /// <param name="_isEnd">是否是最后一个</param>
-    void OnOpenWindows(Stopwatch _watch,bool _isEnd)
+    void OnOpenWindows(Stopwatch _watch,int _count,bool _isEnd)
     {
         Enum[] winSrc = new Enum[3] { enUIWindow.LobbyWindow, enUIWindow.MessageBoxWindow, enUIWindow.HeroListWindow };
-        int randomStart = UnityEngine.Random.Range(0, winSrc.Length - 1);
-        int randomEnd = UnityEngine.Random.Range(0, winSrc.Length - 1);
+
+        int randomStart = _count % winSrc.Length;
+        int randomEnd = winSrc.Length - 1;
         Enum temp = winSrc[randomStart];
         winSrc[randomStart] = winSrc[randomEnd];
         winSrc[randomEnd] = temp;

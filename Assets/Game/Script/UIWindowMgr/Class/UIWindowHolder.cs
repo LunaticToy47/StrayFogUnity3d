@@ -55,7 +55,7 @@ public class UIWindowHolder : AbsMonoBehaviour
     /// <summary>
     /// 窗口实例
     /// </summary>
-    AbsUIWindowView mWindow;
+    public AbsUIWindowView window { get; private set; }
     /// <summary>
     /// 设置窗口实例
     /// </summary>
@@ -64,9 +64,8 @@ public class UIWindowHolder : AbsMonoBehaviour
     public void SetWindow<W>(W _window)
         where W : AbsUIWindowView
     {
-        mWindow = _window;
-        mWindowCanvas.AttachWindow(_window);
-        mWindow.rectTransform.SetSiblingIndex(transform.GetSiblingIndex());
+        window = _window;
+        mWindowCanvas.AttachWindow(_window);        
     }
 
     /// <summary>
@@ -77,7 +76,22 @@ public class UIWindowHolder : AbsMonoBehaviour
     public bool HasWindowInstance<W>()
         where W : AbsUIWindowView
     {
-        return mWindow != null && mWindow is W;
+        return window != null && window is W;
+    }
+    #endregion
+
+    #region ToggleActive 切换激活状态
+    /// <summary>
+    /// 切换激活状态
+    /// </summary>
+    /// <param name="_isActive">是否激活</param>
+    public void ToggleActive(bool _isActive)
+    {
+        if (window != null)
+        {
+            window.rectTransform.SetSiblingIndex(transform.GetSiblingIndex());
+            window.ToggleActive(_isActive);
+        }
     }
     #endregion
 
@@ -88,11 +102,11 @@ public class UIWindowHolder : AbsMonoBehaviour
     protected override void OnRecycle()
     {
         isMarkLoadedWindowInstace = false;
-        if (mWindow != null)
+        if (window != null)
         {
-            Destroy(mWindow.gameObject);
+            Destroy(window.gameObject);
         }
-        mWindow = null;
+        window = null;
         base.OnRecycle();
     }
     #endregion

@@ -70,7 +70,6 @@ public partial class StrayFogUIWindowManager
     public void OnOpenWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-
         OnLoadWindowInMemory(_winCfgs, true, (cfgs, args) =>
         {
             Dictionary<int, AssetBundleResult> memoryAssetResult = (Dictionary<int, AssetBundleResult>)args[0];
@@ -146,16 +145,7 @@ public partial class StrayFogUIWindowManager
                 OnCheckInstanceLoadComplete<W>(_winCfgs, _callback, _parameters);
             }
         }
-    }
-
-    /// <summary>
-    /// 关闭窗口
-    /// </summary>
-    /// <param name="_window">窗口</param>
-    void Window_OnCloseWindow(AbsUIWindowView _window)
-    {
-        CloseWindow(_window.config.id);
-    }
+    }   
 
     /// <summary>
     /// 检测窗口实例化是否完成
@@ -178,12 +168,27 @@ public partial class StrayFogUIWindowManager
 
         if (isChecked)
         {
-            Debug.Log(_winCfgs.Length + " " + _callback + " " + _parameters.JsonSerialize());
+            List<W> windows = new List<W>();
+            foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
+            {
+                mWindowHolderMaping[cfg.id].ToggleActive(true);
+                windows.Add((W)mWindowHolderMaping[cfg.id].window);
+            }
+            _callback(windows.ToArray(), _parameters);
         }
     }
     #endregion
 
     #region OnCloseWindow 关闭窗口
+    /// <summary>
+    /// 关闭窗口
+    /// </summary>
+    /// <param name="_window">窗口</param>
+    void Window_OnCloseWindow(AbsUIWindowView _window)
+    {
+        CloseWindow(_window.config.id);
+    }
+
     /// <summary>
     /// 关闭窗口
     /// </summary>
