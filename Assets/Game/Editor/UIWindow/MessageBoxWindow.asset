@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: MessageBoxWindow
   m_EditorClassIdentifier: 
   renderMode: 1
-  layer: 200
+  layer: 300
   openMode: 0
   closeMode: 0
   isIgnoreOpenCloseMode: 0

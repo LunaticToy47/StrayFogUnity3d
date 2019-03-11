@@ -59,6 +59,18 @@ public partial class StrayFogUIWindowManager
     }
     #endregion
 
+    #region OnSettingWindowSerialize 设置窗口序列化
+    /// <summary>
+    /// 设置窗口序列化
+    /// </summary>
+    /// <param name="_serializeId">序列ID</param>
+    /// <param name="_winCfg">窗口配置</param>
+    void OnSettingWindowSerialize(int _serializeId, XLS_Config_Table_UIWindowSetting _winCfg)
+    {
+        
+    }
+    #endregion
+
     #region OnOpenWindow 打开窗口
     /// <summary>
     /// 打开窗口
@@ -117,9 +129,11 @@ public partial class StrayFogUIWindowManager
     void OnInstanceWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _memoryAssetResult, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
+        int serializeId = Guid.NewGuid().ToString().UniqueHashCode();
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             OnCreateWindowHolder(cfg);
+            OnSettingWindowSerialize(serializeId,cfg);
             if (!mWindowHolderMaping[cfg.id].isMarkLoadedWindowInstace)
             {
                 mWindowHolderMaping[cfg.id].MarkLoadedWindowInstace();
@@ -144,7 +158,7 @@ public partial class StrayFogUIWindowManager
                 OnCheckInstanceLoadComplete<W>(_winCfgs, _callback, _parameters);
             }
         }
-    }   
+    }
 
     /// <summary>
     /// 检测窗口实例化是否完成

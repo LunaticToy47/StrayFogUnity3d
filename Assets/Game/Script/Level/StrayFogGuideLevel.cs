@@ -79,7 +79,7 @@ public class StrayFogGuideLevel : AbsLevel
     /// <param name="_isEnd">是否是最后一个</param>
     void OnOpenWindows(Stopwatch _watch,int _count,bool _isEnd)
     {
-        Enum[] winSrc = new Enum[3] { enUIWindow.LobbyWindow, enUIWindow.MessageBoxWindow, enUIWindow.HeroListWindow };
+        Enum[] winSrc = new Enum[2] { enUIWindow.LobbyWindow, enUIWindow.HeroListWindow };
 
         int randomStart = _count % winSrc.Length;
         int randomEnd = winSrc.Length - 1;

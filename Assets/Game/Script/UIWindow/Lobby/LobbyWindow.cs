@@ -18,6 +18,15 @@ public class LobbyWindow : AbsUIWindowView
             Vector3 scale = Vector3.one * 4f;
             txt.text = scale.ToString();
             btnRadarBg.transform.localScale = scale;
+
+            if (StrayFogGamePools.uiWindowManager.IsOpenedWindow(enUIWindow.MessageBoxWindow))
+            {
+                StrayFogGamePools.uiWindowManager.CloseWindow(enUIWindow.MessageBoxWindow);
+            }
+            else
+            {
+                StrayFogGamePools.uiWindowManager.OpenWindow(enUIWindow.MessageBoxWindow);
+            }            
         });
         transform.Find("btnRadar").gameObject.AddComponent<UIDragMono>();        
     }
