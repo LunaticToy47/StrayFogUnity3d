@@ -117,14 +117,13 @@ public partial class StrayFogUIWindowManager
     void OnInstanceWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _memoryAssetResult, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-        foreach (KeyValuePair<int, AssetBundleResult> key in _memoryAssetResult)
+        foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
-            XLS_Config_Table_UIWindowSetting cacheCfg = (XLS_Config_Table_UIWindowSetting)key.Value.extraParameter[1];
-            OnCreateWindowHolder(cacheCfg);
-            if (!mWindowHolderMaping[key.Key].isMarkLoadedWindowInstace)
+            OnCreateWindowHolder(cfg);
+            if (!mWindowHolderMaping[cfg.id].isMarkLoadedWindowInstace)
             {
-                mWindowHolderMaping[key.Key].MarkLoadedWindowInstace();
-                key.Value.Instantiate<GameObject>(false, (win, args) =>
+                mWindowHolderMaping[cfg.id].MarkLoadedWindowInstace();
+                _memoryAssetResult[cfg.id].Instantiate<GameObject>(false, (win, args) =>
                 {
                     XLS_Config_Table_UIWindowSetting winCfg = (XLS_Config_Table_UIWindowSetting)args[0];
                     GameObject prefab = win;
@@ -137,8 +136,8 @@ public partial class StrayFogUIWindowManager
                         window.OnCloseWindow += Window_OnCloseWindow;
                         mWindowHolderMaping[winCfg.id].SetWindow(window);
                     }
-                    OnCheckInstanceLoadComplete<W>((XLS_Config_Table_UIWindowSetting[])args[1], (UIWindowEntityEventHandler<W>)args[2], (object[])args[3]);                   
-                }, cacheCfg, _winCfgs, _callback, _parameters);
+                    OnCheckInstanceLoadComplete<W>((XLS_Config_Table_UIWindowSetting[])args[1], (UIWindowEntityEventHandler<W>)args[2], (object[])args[3]);
+                }, cfg, _winCfgs, _callback, _parameters);
             }
             else
             {
