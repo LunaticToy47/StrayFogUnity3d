@@ -2,7 +2,7 @@
 /// <summary>
 /// UIWindowSetting实体
 /// </summary>
-public partial class XLS_Config_Table_UIWindowSetting : AbsStrayFogSQLiteEntity
+public partial class XLS_Config_Table_UIWindowSetting
 {
     /// <summary>
     /// 窗口绘制模式

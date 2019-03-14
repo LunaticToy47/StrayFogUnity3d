@@ -103,7 +103,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_winCfg">窗口配置</param>
     void OnCreateWindowHolder(XLS_Config_Table_UIWindowSetting _winCfg)
     {
-        UISiblingIndexCanvas canvas = OnGetSiblingIndexCanvas((RenderMode)_winCfg.renderMode);
+        UISiblingIndexCanvas canvas = OnGetSiblingIndexCanvas(_winCfg.winRenderMode);
         RectTransform root = canvas.CreateWindowSiblingIndexHolder(_winCfg);
         if (!mWindowHolderMaping.ContainsKey(_winCfg.id))
         {
@@ -111,7 +111,7 @@ public partial class StrayFogUIWindowManager
             go.transform.SetParent(root);
             UIWindowHolder wh = go.AddComponent<UIWindowHolder>();
             wh.SetWindowConfig(_winCfg);
-            wh.SetWindowCanvas(OnGetCanvas((RenderMode)_winCfg.renderMode));
+            wh.SetWindowCanvas(OnGetCanvas(_winCfg.winRenderMode));
             mWindowHolderMaping.Add(_winCfg.id, wh);
         }
         mWindowHolderMaping[_winCfg.id].transform.SetAsLastSibling();
