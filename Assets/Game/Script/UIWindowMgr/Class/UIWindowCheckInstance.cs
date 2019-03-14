@@ -94,6 +94,14 @@ public class UIWindowCheckInstance : AbsMonoBehaviour
         mHasInstanceCallback = (XLS_Config_Table_UIWindowSetting cfg) => { return _hasInstanceCallback(cfg); };
         mCompleteCallback = () => { _completeCallback(_winCfgs, _callback, _parameters); };
         isRunCheck = true;
+        OnResetName();
+    }
+
+    /// <summary>
+    /// 重置名称
+    /// </summary>
+    void OnResetName()
+    {
 #if UNITY_EDITOR
         gameObject.name = string.Format("{0}【isRunCheck:{1}】", mNamePrefix, isRunCheck);
 #endif     
@@ -107,7 +115,8 @@ public class UIWindowCheckInstance : AbsMonoBehaviour
         isRunCheck = false;
         mWinCfgs = null;
         mHasInstanceCallback = null;
-        mCompleteCallback =null;        
+        mCompleteCallback =null;
+        OnResetName();
     }
 
     /// <summary>

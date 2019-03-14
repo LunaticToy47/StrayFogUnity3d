@@ -180,6 +180,7 @@ public partial class StrayFogUIWindowManager
             if (isRunCheck)
             {
                 check.CheckInstanceLoadComplete<W>(OnUIWindowHasInstance<W>, OnCheckInstanceComplete, _winCfgs, _callback, _parameters);
+                break;
             }
         }
         if (!isRunCheck)
