@@ -198,7 +198,7 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     /// <param name="_winCfg">窗口配置</param>
     /// <returns>true:有实例,false:无实例</returns>
-    private bool OnUIWindowHasInstance<W>(XLS_Config_Table_UIWindowSetting _winCfg)
+    bool OnUIWindowHasInstance<W>(XLS_Config_Table_UIWindowSetting _winCfg)
         where W : AbsUIWindowView
     {
         return mWindowHolderMaping[_winCfg.id].HasWindowInstance<W>();
