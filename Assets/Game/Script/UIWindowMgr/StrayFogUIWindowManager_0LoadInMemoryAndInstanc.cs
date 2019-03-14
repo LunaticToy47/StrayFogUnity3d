@@ -63,9 +63,9 @@ public partial class StrayFogUIWindowManager
     /// <summary>
     /// 设置窗口序列化
     /// </summary>
-    /// <param name="_serializeId">序列ID</param>
-    /// <param name="_winCfg">窗口配置</param>
-    void OnSettingWindowSerialize(int _serializeId, XLS_Config_Table_UIWindowSetting _winCfg)
+    /// <param name="_batchId">批ID</param>
+    /// <param name="_winCfgs">窗口配置组</param>
+    void OnSettingWindowSerialize(int _batchId, XLS_Config_Table_UIWindowSetting[] _winCfgs)
     {
         
     }
@@ -129,11 +129,16 @@ public partial class StrayFogUIWindowManager
     void OnInstanceWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _memoryAssetResult, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-        int serializeId = Guid.NewGuid().ToString().UniqueHashCode();
+        int batchId = Guid.NewGuid().ToString().UniqueHashCode();
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             OnCreateWindowHolder(cfg);
-            OnSettingWindowSerialize(serializeId,cfg);
+        }
+        OnSettingWindowSerialize(batchId, _winCfgs);
+        OnCheckInstanceLoadComplete<W>(_winCfgs, _callback, _parameters);
+
+        foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
+        {   
             if (!mWindowHolderMaping[cfg.id].isMarkLoadedWindowInstace)
             {
                 mWindowHolderMaping[cfg.id].MarkLoadedWindowInstace();
@@ -149,15 +154,10 @@ public partial class StrayFogUIWindowManager
                         window.SetConfig(winCfg);
                         window.OnCloseWindow += Window_OnCloseWindow;
                         mWindowHolderMaping[winCfg.id].SetWindow(window);
-                    }
-                    OnCheckInstanceLoadComplete<W>((XLS_Config_Table_UIWindowSetting[])args[1], (UIWindowEntityEventHandler<W>)args[2], (object[])args[3]);
+                    }                    
                 }, cfg, _winCfgs, _callback, _parameters);
             }
-            else
-            {
-                OnCheckInstanceLoadComplete<W>(_winCfgs, _callback, _parameters);
-            }
-        }
+        }        
     }
 
     /// <summary>
