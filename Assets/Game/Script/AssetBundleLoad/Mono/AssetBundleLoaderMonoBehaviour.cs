@@ -382,10 +382,12 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         }
     }
     #endregion
+
+    #region LateUpdate
     /// <summary>
-    /// Update
+    /// LateUpdate
     /// </summary>
-    void Update()
+    void LateUpdate()
     {
         switch (mLoaderState)
         {
@@ -400,4 +402,5 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
                 break;
         }
     }
+    #endregion
 }

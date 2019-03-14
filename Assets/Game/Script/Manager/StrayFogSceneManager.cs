@@ -71,7 +71,7 @@ public class StrayFogSceneManager : AbsSingleMonoBehaviour
 
     IEnumerator OnActiveScene()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForEndOfFrame();
         StrayFogGamePools.uiWindowManager.OpenWindow<LobbyWindow>(enUIWindow.LobbyWindow, (wins, wargs) =>
         {
             AllowSceneActivation();

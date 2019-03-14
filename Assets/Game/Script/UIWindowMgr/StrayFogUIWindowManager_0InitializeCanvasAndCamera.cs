@@ -45,14 +45,15 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     void OnInitializeCanvasAndCamera()
     {
+        uiLayer = LayerMask.NameToLayer("UI");
         GameObject go = null;
         foreach (RenderMode rm in mRenderModes)
         {
             if (!mCanvasMaping.ContainsKey((int)rm))
             {
                 go = new GameObject(typeof(UICanvas).Name + "_" + rm.ToString());
+                go.layer = uiLayer;
                 UICanvas cvs = go.AddComponent<UICanvas>();
-                cvs.gameObject.layer = uiLayer;
                 OnInitializeCanvas(cvs, rm);
                 mCanvasMaping.Add((int)rm, cvs);
                 DontDestroyOnLoad(go);
@@ -60,6 +61,7 @@ public partial class StrayFogUIWindowManager
             if (!mSiblingIndexCanvasMaping.ContainsKey((int)rm))
             {
                 go = new GameObject(go.name+ "_CacheSiblingIndex");
+                go.layer = uiLayer;
                 mSiblingIndexCanvasMaping.Add((int)rm, go.AddComponent<UISiblingIndexCanvas>());
                 DontDestroyOnLoad(go);
             }

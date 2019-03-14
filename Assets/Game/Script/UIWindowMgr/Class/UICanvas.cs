@@ -80,7 +80,7 @@ public sealed class UICanvas : AbsMonoBehaviour
             GameObject go = new GameObject(((enUIWindowLayer)_window.config.layer).ToString());
             go.layer = gameObject.layer;
             RectTransform rt = go.AddComponent<RectTransform>();
-            rt.SetParent(canvas.transform, false);
+            rt.SetParent(canvas.transform,false);
             rt.SetSiblingIndex(siblingIndex);
             rt.anchorMin = Vector2.zero;
             rt.anchorMax = Vector2.one;
@@ -88,7 +88,7 @@ public sealed class UICanvas : AbsMonoBehaviour
             rt.sizeDelta = Vector2.zero;
             mLayerMaping.Add(layer, rt);
         }
-        _window.rectTransform.SetParent(mLayerMaping[layer], false);
+        _window.rectTransform.SetParent(mLayerMaping[layer],false);
     }
 
     /// <summary>

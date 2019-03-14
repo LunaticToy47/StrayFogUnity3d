@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 /// <summary>
 /// 窗口占位符
 /// </summary>

@@ -156,7 +156,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
             {
                 _prefab.CreateAsset();
                 GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(_prefab.fileName);
-                prefab.layer = LayerMask.NameToLayer("UI"); ;
+                prefab.layer = LayerMask.NameToLayer("UI");
                 prefab.AddComponent<RectTransform>();
                 AssetDatabase.SaveAssets();
                 EditorStrayFogApplication.PingObject(prefab);
