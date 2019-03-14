@@ -94,6 +94,7 @@ public class UIWindowCheckInstance : AbsMonoBehaviour
         mHasInstanceCallback = (XLS_Config_Table_UIWindowSetting cfg) => { return _hasInstanceCallback(cfg); };
         mCompleteCallback = () => { _completeCallback(_winCfgs, _callback, _parameters); };
         isRunCheck = true;
+        gameObject.SetActive(true);
         OnResetName();
     }
 
@@ -117,6 +118,7 @@ public class UIWindowCheckInstance : AbsMonoBehaviour
         mHasInstanceCallback = null;
         mCompleteCallback =null;
         OnResetName();
+        gameObject.SetActive(false);
     }
 
     /// <summary>
