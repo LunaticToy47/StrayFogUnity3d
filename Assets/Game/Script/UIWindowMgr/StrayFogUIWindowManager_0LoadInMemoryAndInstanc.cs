@@ -61,13 +61,24 @@ public partial class StrayFogUIWindowManager
 
     #region OnSettingWindowSerialize 设置窗口序列化
     /// <summary>
+    /// 窗口序列
+    /// </summary>
+    UIWindowSerialize mUIWindowSerialize;
+    /// <summary>
     /// 设置窗口序列化
     /// </summary>
-    /// <param name="_batchId">批ID</param>
     /// <param name="_winCfgs">窗口配置组</param>
-    void OnSettingWindowSerialize(int _batchId, XLS_Config_Table_UIWindowSetting[] _winCfgs)
+    void OnSettingWindowSerialize(XLS_Config_Table_UIWindowSetting[] _winCfgs)
     {
-
+        if (mUIWindowSerialize == null)
+        {
+            GameObject go = new GameObject("UIWindowSerialize");
+            go.transform.SetParent(transform);
+            go.hideFlags = hideFlags;
+            mUIWindowSerialize = go.AddComponent<UIWindowSerialize>();
+            mUIWindowSerialize.OnSearchAllWindowHolders += () => { return mWindowHolderMaping; };
+        }
+        mUIWindowSerialize.EnSerialize(_winCfgs);
     }
     #endregion
 
@@ -128,12 +139,11 @@ public partial class StrayFogUIWindowManager
     void OnInstanceWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _memoryAssetResult, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-        int batchId = Guid.NewGuid().ToString().UniqueHashCode();
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             OnCreateWindowHolder(cfg);
         }
-        OnSettingWindowSerialize(batchId, _winCfgs);
+        OnSettingWindowSerialize(_winCfgs);
         OnCheckInstance<W>(_winCfgs, _callback, _parameters);
         //创建实例
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)

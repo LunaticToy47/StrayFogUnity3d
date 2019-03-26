@@ -56,6 +56,10 @@ public class UIWindowHolder : AbsMonoBehaviour
     /// </summary>
     public AbsUIWindowView window { get; private set; }
     /// <summary>
+    /// 窗口SiblingIndex
+    /// </summary>
+    public int windowSiblingIndex { get { return transform.GetSiblingIndex(); } }
+    /// <summary>
     /// 设置窗口实例
     /// </summary>
     /// <typeparam name="W">类型</typeparam>
@@ -88,7 +92,7 @@ public class UIWindowHolder : AbsMonoBehaviour
     {
         if (window != null)
         {
-            window.rectTransform.SetSiblingIndex(transform.GetSiblingIndex());
+            window.rectTransform.SetSiblingIndex(windowSiblingIndex);
             window.ToggleActive(_isActive);
         }
     }
