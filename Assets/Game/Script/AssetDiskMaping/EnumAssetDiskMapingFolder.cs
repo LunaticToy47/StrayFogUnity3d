@@ -27,5 +27,6 @@ public enum enAssetDiskMapingFolder
 	Assets_Game_AssetBundles_UIWindow_HeroList = -1493566452,
 	Assets_Game_AssetBundles_UIWindow_Lobby = -1392412074,
 	Assets_Game_AssetBundles_UIWindow_MessageBox = -833208201,
+	Assets_Game_AssetBundles_UIWindow_PlayerList = -234066055,
 	Assets_Game_XLuaScript_Level = 401643752,	
 }

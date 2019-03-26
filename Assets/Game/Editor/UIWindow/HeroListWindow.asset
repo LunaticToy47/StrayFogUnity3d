@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderMode: 1
   layer: 200
-  openMode: 0
+  openMode: 100
   closeMode: 0
   isIgnoreOpenCloseMode: 0
   isNotAutoRestoreSequenceWindow: 0

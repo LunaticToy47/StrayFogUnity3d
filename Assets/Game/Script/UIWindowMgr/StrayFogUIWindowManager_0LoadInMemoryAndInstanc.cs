@@ -78,7 +78,7 @@ public partial class StrayFogUIWindowManager
             mUIWindowSerialize = go.AddComponent<UIWindowSerialize>();
             mUIWindowSerialize.OnSearchAllWindowHolders += () => { return mWindowHolderMaping; };
         }
-        mUIWindowSerialize.EnSerialize(_winCfgs);
+        mUIWindowSerialize.OpenWindowSerialize(_winCfgs);
     }
     #endregion
 
@@ -231,6 +231,7 @@ public partial class StrayFogUIWindowManager
             mWindowHolderMaping[cfg.id].ToggleActive(true);
             windows.Add((W)mWindowHolderMaping[cfg.id].window);
         }
+        mUIWindowSerialize.ExecuteAfterOpenWindow();
         _callback(windows.ToArray(), _parameters);
     }
     #endregion

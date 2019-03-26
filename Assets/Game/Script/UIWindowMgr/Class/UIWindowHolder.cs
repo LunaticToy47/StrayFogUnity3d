@@ -25,14 +25,14 @@ public class UIWindowHolder : AbsMonoBehaviour
     /// <summary>
     /// 窗口配置
     /// </summary>
-    XLS_Config_Table_UIWindowSetting mWinCfg;
+    public XLS_Config_Table_UIWindowSetting winCfg { get; private set; }
     /// <summary>
     /// 设置窗口配置
     /// </summary>
     /// <param name="_winCfg">窗口配置</param>
     public void SetWindowConfig(XLS_Config_Table_UIWindowSetting _winCfg)
     {
-        mWinCfg = _winCfg;
+        winCfg = _winCfg;
     }
     #endregion
 
