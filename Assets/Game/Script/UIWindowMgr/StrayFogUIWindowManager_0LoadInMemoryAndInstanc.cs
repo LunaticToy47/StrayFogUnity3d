@@ -253,7 +253,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_winCfgs">窗口配置</param>
     /// <param name="_callback">回调</param>
     /// <param name="_parameters">参数组</param>
-    public void OnCloseWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
+    void OnCloseWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
 
@@ -268,10 +268,22 @@ public partial class StrayFogUIWindowManager
     /// <param name="_winCfgs">窗口配置</param>
     /// <param name="_callback">回调</param>
     /// <param name="_parameters">参数组</param>
-    public void OnGetWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
+    void OnGetWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-
+        W[] wins = new W[0];
+        if (_winCfgs != null && _winCfgs.Length > 0)
+        {
+            wins = new W[_winCfgs.Length];
+            for(int i=0;i< _winCfgs.Length;i++)
+            {
+                if (mWindowHolderMaping.ContainsKey(_winCfgs[i].id))
+                {
+                    wins[i] = (W)mWindowHolderMaping[_winCfgs[i].id].window;
+                }
+            }
+        }
+        _callback(wins, _parameters);
     }
     #endregion
 
@@ -281,9 +293,15 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     /// <param name="_winCfgs">窗口配置</param>
     /// <returns>true:存在,false:不存在</returns>
-    public bool OnIsExistsWindow(XLS_Config_Table_UIWindowSetting[] _winCfgs)
+    bool OnIsExistsWindow(XLS_Config_Table_UIWindowSetting[] _winCfgs)
     {
-        return false;
+        bool isAllOpened = _winCfgs != null && _winCfgs.Length > 0;
+        foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
+        {
+            isAllOpened &= mWindowHolderMaping.ContainsKey(cfg.id) 
+                && mWindowHolderMaping[cfg.id].window != null;
+        }
+        return isAllOpened;
     }
     #endregion
 
@@ -293,9 +311,16 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     /// <param name="_winCfgs">窗口配置</param>
     /// <returns>true:打开,false:关闭</returns>
-    public bool OnIsOpenedWindow(XLS_Config_Table_UIWindowSetting[] _winCfgs)
+    bool OnIsOpenedWindow(XLS_Config_Table_UIWindowSetting[] _winCfgs)
     {
-        return false;
+        bool isAllOpened = _winCfgs != null && _winCfgs.Length > 0;
+        foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
+        {
+            isAllOpened &= mWindowHolderMaping.ContainsKey(cfg.id) 
+                && mWindowHolderMaping[cfg.id].window != null
+                && mWindowHolderMaping[cfg.id].window.isActiveAndEnabled;
+        }        
+        return isAllOpened;
     }
     #endregion    
 }
