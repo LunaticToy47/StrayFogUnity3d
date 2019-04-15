@@ -256,7 +256,11 @@ public partial class StrayFogUIWindowManager
     void OnCloseWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-
+        foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
+        {
+            mWindowHolderMaping[cfg.id].ToggleActive(false);
+        }
+        //mUIWindowSerialize
     }
     #endregion
 

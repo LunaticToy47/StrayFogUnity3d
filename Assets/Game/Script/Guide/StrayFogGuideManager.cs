@@ -216,25 +216,33 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// </summary>
     XLS_Config_Table_UserGuideTrigger mRunningUserGuideTrigger = null;
     /// <summary>
-    /// 触发检测同步
+    /// 是否需要触发检测
     /// </summary>
-    Coroutine mTriggerCheckCoroutine = null;
+    bool mNeedTriggerCheck = false;
     /// <summary>
     /// TriggerCheck
     /// </summary>
     public void TriggerCheck()
     {
-        if (mTriggerCheckCoroutine == null)
+        if (StrayFogGamePools.gameManager.runningSetting.isRunGuide)
         {
-            mTriggerCheckCoroutine = StartCoroutine(OnTriggerCheck(new WaitForCondition((args) => {                
-                return mGuideWindow == null;
-            })));
-        }        
+            if (mGuideWindow != null)
+            {
+                OnTriggerCheck();
+            }
+            else
+            {
+                mNeedTriggerCheck = true;
+            }
+        }
     }
 
-    IEnumerator OnTriggerCheck(WaitForCondition _waitFor)
+    /// <summary>
+    /// 触发检测
+    /// </summary>
+    void OnTriggerCheck()
     {
-        yield return _waitFor;
+        mNeedTriggerCheck = false;
         bool isTrigger = false;
         if (mRunningUserGuideTrigger == null && mWaitTriggerGuides.Count > 0)
         {
@@ -268,7 +276,19 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
         {
             OnDisplayGuideWindow(null);
         }
-        mTriggerCheckCoroutine = null;
+    }
+    #endregion
+
+    #region Update
+    /// <summary>
+    /// Update
+    /// </summary>
+    private void Update()
+    {
+        if (mGuideWindow != null && mNeedTriggerCheck)
+        {
+            OnTriggerCheck();
+        }
     }
     #endregion
 

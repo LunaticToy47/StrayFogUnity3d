@@ -88,7 +88,7 @@ public class UIWindowSerialize : AbsMonoBehaviour
             }
             #endregion
         }
-
+        
 #if UNITY_EDITOR
         Debug.LogFormat("sameLayerLessThenSiblingIndex【{0}】,lessThenSiblingIndex【{1}】,hiddenWinIds【{2}】",
             sameLayerLessThenSiblingIndex.JsonSerialize(), lessThenSiblingIndex.JsonSerialize(), hiddenWinIds.JsonSerialize());

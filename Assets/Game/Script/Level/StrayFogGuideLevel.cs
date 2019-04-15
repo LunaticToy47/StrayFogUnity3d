@@ -11,10 +11,6 @@ using UnityEngine.SceneManagement;
 public class StrayFogGuideLevel : AbsLevel
 {
     /// <summary>
-    /// 按钮可操作窗口
-    /// </summary>
-    static readonly enUIWindow[] msrBtnWindows = new enUIWindow[2] { enUIWindow.PlayerListWindow, enUIWindow.HeroListWindow };
-    /// <summary>
     /// 滚动视图
     /// </summary>
     Vector2 mScrollViewPosition = Vector2.zero;
@@ -39,15 +35,7 @@ public class StrayFogGuideLevel : AbsLevel
         {
             StartCoroutine(OnOpenLobby());
         }
-        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
-
-        foreach (enUIWindow w in msrBtnWindows)
-        {
-            if (GUILayout.Button(w.ToString()))
-            {
-                StrayFogGamePools.uiWindowManager.OpenWindow(w);
-            }
-        }
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();      
         
         mScrollViewPosition = GUILayout.BeginScrollView(mScrollViewPosition);
         GUI.skin.label.fontSize = 40;
