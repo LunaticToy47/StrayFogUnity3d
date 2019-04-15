@@ -10,7 +10,7 @@ public class HeroListWindow : AbsUIWindowView
     /// Awake
     /// </summary>
     private void Awake()
-    {
+    {        
         Button btn = transform.Find(@"Table/c1_1").gameObject.GetComponent<Button>();
         btn.onClick.AddListener(() =>
         {
