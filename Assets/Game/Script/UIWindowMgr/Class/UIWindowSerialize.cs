@@ -58,9 +58,7 @@ public class UIWindowSerialize : AbsMonoBehaviour
             }
             #endregion
         }
-#if UNITY_EDITOR
         List<int> hiddenWinIds = new List<int>();
-#endif
         if (winHolders != null && winHolders.Count > 0)
         {
             #region 收集要隐藏的窗口ID
@@ -71,31 +69,30 @@ public class UIWindowSerialize : AbsMonoBehaviour
                     && holder.Value.windowSiblingIndex < sameLayerLessThenSiblingIndex[holder.Value.winCfg.layer]
                     )
                 {
-                    holder.Value.SetTargetActive(false);
-#if UNITY_EDITOR
                     if (!hiddenWinIds.Contains(holder.Key))
                     {
                         hiddenWinIds.Add(holder.Key);
                     }
-#endif
                 }
                 if (
                     lessThenSiblingIndex.Count > 0
                     && holder.Value.windowSiblingIndex < lessThenSiblingIndex[0]
                     )
                 {
-                    holder.Value.SetTargetActive(false);
-#if UNITY_EDITOR
                     if (!hiddenWinIds.Contains(holder.Key))
                     {
                         hiddenWinIds.Add(holder.Key);
                     }
-#endif
                 }
             }
             #endregion
         }
-        
+
+        foreach(int wid in hiddenWinIds)
+        {
+            winHolders[wid].SetTargetActive(false);
+        }
+
 #if UNITY_EDITOR
         Debug.LogFormat("sameLayerLessThenSiblingIndex【{0}】,lessThenSiblingIndex【{1}】,hiddenWinIds【{2}】",
             sameLayerLessThenSiblingIndex.JsonSerialize(), lessThenSiblingIndex.JsonSerialize(), hiddenWinIds.JsonSerialize());

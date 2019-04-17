@@ -145,11 +145,13 @@ public sealed class FMSMachineMaping
 			if (mStateForLayerMaping[_stateNameHash].Count > 0)
 			{
 				AnimatorStateInfo info;
-				foreach (int layer in mStateForLayerMaping[_stateNameHash])
+                AnimatorStateInfo next;
+                foreach (int layer in mStateForLayerMaping[_stateNameHash])
 				{
 					info = _animator.GetCurrentAnimatorStateInfo(layer);
-					result |= _stateNameHash == info.shortNameHash;
-					if (result)
+                    next = _animator.GetNextAnimatorStateInfo(layer);
+                    result |= _stateNameHash == info.shortNameHash || _stateNameHash == next.shortNameHash;
+                    if (result)
 					{
 						break;
 					}
@@ -158,7 +160,7 @@ public sealed class FMSMachineMaping
 		}
 		return result;
 	}
-	#endregion
+    #endregion
 }
 #region enFMSMachine
 /// <summary>
