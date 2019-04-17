@@ -22,6 +22,7 @@ public class UIWindowSerialize : AbsMonoBehaviour
     /// 被隐藏的窗口队列
     /// </summary>
     Stack<List<int>> mQueueHiddenWindow = new Stack<List<int>>();
+
     /// <summary>
     /// 开启窗口序列
     /// </summary>
@@ -35,7 +36,7 @@ public class UIWindowSerialize : AbsMonoBehaviour
         {
             #region 统计需要隐藏的各层级的最大SiblingIndex
             foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
-            {
+            {                
                 switch (cfg.winOpenMode)
                 {
                     case enUIWindowOpenMode.WhenDisplayHiddenSameLayerAndLessThanSiblingIndex:
@@ -96,7 +97,7 @@ public class UIWindowSerialize : AbsMonoBehaviour
         if (hiddenWinIds.Count > 0)
         {
             mQueueHiddenWindow.Push(hiddenWinIds);
-        }        
+        }
     }
 
     /// <summary>
@@ -117,14 +118,5 @@ public class UIWindowSerialize : AbsMonoBehaviour
         {
             winHolders[id].ToggleActive(false);
         }
-    }
-
-    /// <summary>
-    /// 导出序列
-    /// </summary>
-    /// <returns>窗口配置组</returns>
-    public XLS_Config_Table_UIWindowSetting[] DeSerialize()
-    {
-        return null;
     }
 }

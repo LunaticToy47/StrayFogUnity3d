@@ -93,6 +93,11 @@ public partial class StrayFogUIWindowManager
     public void OnOpenWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
+        foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
+        {
+            OnCreateWindowHolder(cfg);
+        }
+        OnSettingWindowSerialize(_winCfgs);
         OnLoadWindowInMemory(_winCfgs, true, (cfgs, args) =>
         {
             Dictionary<int, AssetBundleResult> memoryAssetResult = (Dictionary<int, AssetBundleResult>)args[0];
@@ -139,11 +144,6 @@ public partial class StrayFogUIWindowManager
     void OnInstanceWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _memoryAssetResult, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-        foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
-        {
-            OnCreateWindowHolder(cfg);
-        }
-        OnSettingWindowSerialize(_winCfgs);
         OnCheckInstance<W>(_winCfgs, _callback, _parameters);
         //创建实例
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
@@ -256,6 +256,7 @@ public partial class StrayFogUIWindowManager
     void OnCloseWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
+
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             mWindowHolderMaping[cfg.id].ToggleActive(false);
