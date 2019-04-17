@@ -96,6 +96,7 @@ public partial class StrayFogUIWindowManager
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             OnCreateWindowHolder(cfg);
+            mWindowHolderMaping[cfg.id].SetTargetActive(true);
         }
         OnSettingWindowSerialize(_winCfgs);
         OnLoadWindowInMemory(_winCfgs, true, (cfgs, args) =>
@@ -228,10 +229,15 @@ public partial class StrayFogUIWindowManager
         List<W> windows = new List<W>();
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
-            mWindowHolderMaping[cfg.id].ToggleActive(true);
+            mWindowHolderMaping[cfg.id].ToggleSiblingIndex();
             windows.Add((W)mWindowHolderMaping[cfg.id].window);
         }
-        mUIWindowSerialize.ExecuteAfterOpenWindow();
+
+        foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
+        {
+            holder.ToggleActive();
+        }
+       
         _callback(windows.ToArray(), _parameters);
     }
     #endregion
@@ -256,12 +262,15 @@ public partial class StrayFogUIWindowManager
     void OnCloseWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
-            mWindowHolderMaping[cfg.id].ToggleActive(false);
+            mWindowHolderMaping[cfg.id].SetTargetActive(false);
         }
         //mUIWindowSerialize
+        foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
+        {
+            holder.ToggleActive();
+        }
     }
     #endregion
 

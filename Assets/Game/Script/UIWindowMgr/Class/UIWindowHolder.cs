@@ -68,7 +68,7 @@ public class UIWindowHolder : AbsMonoBehaviour
         where W : AbsUIWindowView
     {
         window = _window;
-        mWindowCanvas.AttachWindow(_window);        
+        mWindowCanvas.AttachWindow(_window);
     }
 
     /// <summary>
@@ -83,18 +83,44 @@ public class UIWindowHolder : AbsMonoBehaviour
     }
     #endregion
 
-    #region ToggleActive 切换激活状态
+    #region ToggleSiblingIndex 变更SiblingIndex
     /// <summary>
-    /// 切换激活状态
+    /// 变更SiblingIndex
     /// </summary>
-    /// <param name="_isActive">是否激活</param>
-    public void ToggleActive(bool _isActive)
+    public void ToggleSiblingIndex()
     {
         if (window != null)
         {
             window.rectTransform.SetSiblingIndex(windowSiblingIndex);
-            window.ToggleActive(_isActive);
         }
+    }
+    #endregion
+
+    #region ToggleActive 切换状态
+    /// <summary>
+    /// 切换状态
+    /// </summary>
+    public void ToggleActive()
+    {
+        if (window != null)
+        {
+            window.ToggleActive(mTargetActive);
+        }
+    }
+    #endregion
+
+    #region SetTargetActive 设置要变更的状态
+    /// <summary>
+    /// 要变更的状态
+    /// </summary>
+    bool mTargetActive = false;
+    /// <summary>
+    /// 切换状态
+    /// </summary>
+    /// <param name="_isActive">是否激活</param>
+    public void SetTargetActive(bool _isActive)
+    {
+        mTargetActive = _isActive;
     }
     #endregion
 
@@ -110,6 +136,7 @@ public class UIWindowHolder : AbsMonoBehaviour
             Destroy(window.gameObject);
         }
         window = null;
+        mTargetActive = false;
         base.OnRecycle();
     }
     #endregion

@@ -19,11 +19,6 @@ public class UIWindowSerialize : AbsMonoBehaviour
     public event WindowHolderMapingEventHandler OnSearchAllWindowHolders;
 
     /// <summary>
-    /// 被隐藏的窗口队列
-    /// </summary>
-    Stack<List<int>> mQueueHiddenWindow = new Stack<List<int>>();
-
-    /// <summary>
     /// 开启窗口序列
     /// </summary>
     /// <param name="_winCfgs">窗口配置组</param>
@@ -63,8 +58,9 @@ public class UIWindowSerialize : AbsMonoBehaviour
             }
             #endregion
         }
-        
+#if UNITY_EDITOR
         List<int> hiddenWinIds = new List<int>();
+#endif
         if (winHolders != null && winHolders.Count > 0)
         {
             #region 收集要隐藏的窗口ID
@@ -73,18 +69,28 @@ public class UIWindowSerialize : AbsMonoBehaviour
                 if (
                     sameLayerLessThenSiblingIndex.ContainsKey(holder.Value.winCfg.layer)
                     && holder.Value.windowSiblingIndex < sameLayerLessThenSiblingIndex[holder.Value.winCfg.layer]
-                    && !hiddenWinIds.Contains(holder.Key)
                     )
                 {
-                    hiddenWinIds.Add(holder.Key);
+                    holder.Value.SetTargetActive(false);
+#if UNITY_EDITOR
+                    if (!hiddenWinIds.Contains(holder.Key))
+                    {
+                        hiddenWinIds.Add(holder.Key);
+                    }
+#endif
                 }
                 if (
                     lessThenSiblingIndex.Count > 0
                     && holder.Value.windowSiblingIndex < lessThenSiblingIndex[0]
-                    && !hiddenWinIds.Contains(holder.Key)
                     )
                 {
-                    hiddenWinIds.Add(holder.Key);
+                    holder.Value.SetTargetActive(false);
+#if UNITY_EDITOR
+                    if (!hiddenWinIds.Contains(holder.Key))
+                    {
+                        hiddenWinIds.Add(holder.Key);
+                    }
+#endif
                 }
             }
             #endregion
@@ -94,29 +100,5 @@ public class UIWindowSerialize : AbsMonoBehaviour
         Debug.LogFormat("sameLayerLessThenSiblingIndex【{0}】,lessThenSiblingIndex【{1}】,hiddenWinIds【{2}】",
             sameLayerLessThenSiblingIndex.JsonSerialize(), lessThenSiblingIndex.JsonSerialize(), hiddenWinIds.JsonSerialize());
 #endif
-        if (hiddenWinIds.Count > 0)
-        {
-            mQueueHiddenWindow.Push(hiddenWinIds);
-        }
-    }
-
-    /// <summary>
-    /// 执行打开窗口后操作
-    /// </summary>
-    public void ExecuteAfterOpenWindow()
-    {
-        Dictionary<int, UIWindowHolder> winHolders = OnSearchAllWindowHolders();
-        List<int> winIds = new List<int>();
-        if (mQueueHiddenWindow.Count > 0)
-        {
-            winIds = mQueueHiddenWindow.Peek();
-        }
-#if UNITY_EDITOR
-        Debug.LogFormat("ExecuteAfterOpenWindow【{0}】", winIds.JsonSerialize());
-#endif
-        foreach (int id in winIds)
-        {
-            winHolders[id].ToggleActive(false);
-        }
     }
 }
