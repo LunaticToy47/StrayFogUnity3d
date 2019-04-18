@@ -277,6 +277,9 @@ public partial class StrayFogUIWindowManager
         where W : AbsUIWindowView
     {
         List<int> closeWinIds = new List<int>();
+        Dictionary<int, int> sameLayerLessThenSiblingIndex = new Dictionary<int, int>();
+        List<int> lessThenSiblingIndex = new List<int>();
+
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             mWindowHolderMaping[cfg.id].SetTargetActive(false);
@@ -284,6 +287,31 @@ public partial class StrayFogUIWindowManager
             {
                 closeWinIds.Add(cfg.id);
             }
+            #region 统计需要隐藏的各层级的最大SiblingIndex
+            switch (cfg.winCloseMode)
+            {
+                case enUIWindowCloseMode.WhenCloseHiddenSameLayerAndMoreThanSiblingIndex:
+                    if (!sameLayerLessThenSiblingIndex.ContainsKey(cfg.layer))
+                    {
+                        sameLayerLessThenSiblingIndex.Add(cfg.layer, mWindowHolderMaping[cfg.id].windowSiblingIndex);
+                    }
+                    else
+                    {
+                        sameLayerLessThenSiblingIndex[cfg.layer] = Mathf.Max(sameLayerLessThenSiblingIndex[cfg.layer], mWindowHolderMaping[cfg.id].windowSiblingIndex);
+                    }
+                    break;
+                case enUIWindowCloseMode.WhenCloseHiddenMoreThanSiblingIndex:
+                    if (!lessThenSiblingIndex.Contains(mWindowHolderMaping[cfg.id].windowSiblingIndex))
+                    {
+                        lessThenSiblingIndex.Add(mWindowHolderMaping[cfg.id].windowSiblingIndex);
+                    }
+                    else
+                    {
+                        lessThenSiblingIndex[0] = Mathf.Max(lessThenSiblingIndex[0], mWindowHolderMaping[cfg.id].windowSiblingIndex);
+                    }
+                    break;
+            }
+            #endregion
         }
 
         List<int> autoOpenWindows = mUIWindowSerialize.GetAutoRestoreSequence(closeWinIds);
@@ -291,6 +319,26 @@ public partial class StrayFogUIWindowManager
         {
             mWindowHolderMaping[id].SetTargetActive(true);
         }
+
+        #region 设置要隐藏的窗口ID
+        foreach (KeyValuePair<int, UIWindowHolder> holder in mWindowHolderMaping)
+        {
+            if (
+                sameLayerLessThenSiblingIndex.ContainsKey(holder.Value.winCfg.layer)
+                && holder.Value.windowSiblingIndex < sameLayerLessThenSiblingIndex[holder.Value.winCfg.layer]
+                )
+            {
+                holder.Value.SetTargetActive(false);
+            }
+            if (
+                lessThenSiblingIndex.Count > 0
+                && holder.Value.windowSiblingIndex < lessThenSiblingIndex[0]
+                )
+            {
+                holder.Value.SetTargetActive(false);
+            }
+        }
+        #endregion
 
         foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
         {
