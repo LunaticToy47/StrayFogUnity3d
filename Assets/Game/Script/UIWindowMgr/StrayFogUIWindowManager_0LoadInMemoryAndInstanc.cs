@@ -268,11 +268,22 @@ public partial class StrayFogUIWindowManager
     void OnCloseWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
+        List<int> closeWinIds = new List<int>();
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             mWindowHolderMaping[cfg.id].SetTargetActive(false);
+            if (!closeWinIds.Contains(cfg.id))
+            {
+                closeWinIds.Add(cfg.id);
+            }
         }
-        //mUIWindowSerialize
+
+        List<int> autoOpenWindows = mUIWindowSerialize.GetAutoRestoreSequence(closeWinIds);
+        foreach (int id in autoOpenWindows)
+        {
+            mWindowHolderMaping[id].SetTargetActive(true);
+        }
+
         foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
         {
             holder.ToggleActive();

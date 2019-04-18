@@ -162,4 +162,18 @@ public class UIWindowSerialize : AbsMonoBehaviour
         }
         return mAutoRestoreSequenceStack[sceneId];
     }
+
+    /// <summary>
+    /// 获得自动存储序列
+    /// </summary>
+    /// <param name="_closeWinIds">关闭的窗口组</param>
+    /// <returns>存储序列</returns>
+    public List<int> GetAutoRestoreSequence(List<int> _closeWinIds)
+    {
+        List<int> winIds = new List<int>();
+        Stack<WindowSequence> stack = OnGetOpenWindowSequence();
+        WindowSequence ws = stack.Peek();
+
+        return winIds;
+    }
 }
