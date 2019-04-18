@@ -67,7 +67,8 @@ public partial class StrayFogUIWindowManager
     /// <summary>
     /// 创建窗口序列化
     /// </summary>
-    void OnCreateWindowSerialize()
+    /// <returns>获得窗口序列化</returns>
+    UIWindowSerialize OnGetWindowSerialize()
     {
         if (mUIWindowSerialize == null)
         {
@@ -77,6 +78,7 @@ public partial class StrayFogUIWindowManager
             mUIWindowSerialize = go.AddComponent<UIWindowSerialize>();
             mUIWindowSerialize.OnSearchAllWindowHolders += () => { return mWindowHolderMaping; };
         }
+        return mUIWindowSerialize;
     }
 
     /// <summary>
@@ -85,8 +87,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_winCfgs">窗口配置组</param>
     void OnSettingWindowSerialize(XLS_Config_Table_UIWindowSetting[] _winCfgs)
     {
-        OnCreateWindowSerialize();
-        mUIWindowSerialize.OpenWindowSerialize(_winCfgs);
+        OnGetWindowSerialize().OpenWindowSerialize(_winCfgs);
     }
     #endregion
 
@@ -314,7 +315,7 @@ public partial class StrayFogUIWindowManager
             #endregion
         }
 
-        List<int> autoOpenWindows = mUIWindowSerialize.GetAutoRestoreSequence(closeWinIds);
+        List<int> autoOpenWindows = OnGetWindowSerialize().GetAutoRestoreSequence(closeWinIds);
         foreach (int id in autoOpenWindows)
         {
             mWindowHolderMaping[id].SetTargetActive(true);

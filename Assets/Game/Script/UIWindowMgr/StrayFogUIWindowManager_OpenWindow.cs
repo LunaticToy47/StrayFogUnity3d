@@ -212,8 +212,7 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     public void BeforeToggleScene()
     {
-        OnCreateWindowSerialize();
-        mUIWindowSerialize.SaveToggleSceneWindowSequence();
+        OnGetWindowSerialize().SaveToggleSceneWindowSequence();
         //将当前所有可以关闭的窗口都关闭
         foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
         {
@@ -234,8 +233,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_callback">回调</param>
     public void AfterToggleScene(Action _callback)
     {
-        OnCreateWindowSerialize();
-        List<int> winIds = mUIWindowSerialize.RestoreToggleSceneWindowSequence();
+        List<int> winIds = OnGetWindowSerialize().RestoreToggleSceneWindowSequence();
         if (winIds.Count > 0)
         {
             OpenWindow(winIds.ToArray(),
