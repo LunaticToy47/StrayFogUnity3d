@@ -65,10 +65,9 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     UIWindowSerialize mUIWindowSerialize;
     /// <summary>
-    /// 设置窗口序列化
+    /// 创建窗口序列化
     /// </summary>
-    /// <param name="_winCfgs">窗口配置组</param>
-    void OnSettingWindowSerialize(XLS_Config_Table_UIWindowSetting[] _winCfgs)
+    void OnCreateWindowSerialize()
     {
         if (mUIWindowSerialize == null)
         {
@@ -78,6 +77,15 @@ public partial class StrayFogUIWindowManager
             mUIWindowSerialize = go.AddComponent<UIWindowSerialize>();
             mUIWindowSerialize.OnSearchAllWindowHolders += () => { return mWindowHolderMaping; };
         }
+    }
+
+    /// <summary>
+    /// 设置窗口序列化
+    /// </summary>
+    /// <param name="_winCfgs">窗口配置组</param>
+    void OnSettingWindowSerialize(XLS_Config_Table_UIWindowSetting[] _winCfgs)
+    {
+        OnCreateWindowSerialize();
         mUIWindowSerialize.OpenWindowSerialize(_winCfgs);
     }
     #endregion

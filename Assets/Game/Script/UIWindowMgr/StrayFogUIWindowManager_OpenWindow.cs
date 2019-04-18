@@ -204,4 +204,24 @@ public partial class StrayFogUIWindowManager
         OnOpenWindow<W>(OnGetWindowSetting(_windowIds), _onCallback, _parameters);
     }
     #endregion
+
+    #region 场景切换窗口序列处理
+    /// <summary>
+    /// 保存场景切换窗口序列
+    /// </summary>
+    public void SaveToggleSceneWindowSequence()
+    {
+        OnCreateWindowSerialize();
+        mUIWindowSerialize.SaveToggleSceneWindowSequence();
+    }
+
+    /// <summary>
+    /// 恢复场景切换窗口序列
+    /// </summary>
+    public void RestoreToggleSceneWindowSequence()
+    {
+        OnCreateWindowSerialize();
+        mUIWindowSerialize.RestoreToggleSceneWindowSequence();
+    }
+    #endregion
 }

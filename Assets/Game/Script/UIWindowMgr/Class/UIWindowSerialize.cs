@@ -187,4 +187,39 @@ public class UIWindowSerialize : AbsMonoBehaviour
         }
         return winIds;
     }
+
+    /// <summary>
+    /// 保存场景切换窗口序列
+    /// </summary>
+    public void SaveToggleSceneWindowSequence()
+    {
+        Stack<WindowSequence> stack = OnGetOpenWindowSequence();
+        Dictionary<int, UIWindowHolder> winHolders = OnSearchAllWindowHolders();
+        List<int> closeWinIds = new List<int>();
+        foreach (UIWindowHolder holder in winHolders.Values)
+        {
+            if (holder.winCfg.isAutoRestoreSequenceWindow && !closeWinIds.Contains(holder.winCfg.id))
+            {
+                closeWinIds.Add(holder.winCfg.id);
+            }
+        }
+        stack.Push(new WindowSequence(new List<int>(), closeWinIds));
+    }
+
+    /// <summary>
+    /// 恢复场景切换窗口序列
+    /// </summary>
+    /// <returns>窗口组</returns>
+    public List<int> RestoreToggleSceneWindowSequence()
+    {
+        List<int> winIds = new List<int>();
+        Stack<WindowSequence> stack = OnGetOpenWindowSequence();
+        if (stack.Count > 0)
+        {
+            Dictionary<int, UIWindowHolder> winHolders = OnSearchAllWindowHolders();
+            WindowSequence ws = stack.Pop();
+            winIds = ws.sequenceCloseWindows;
+        }
+        return winIds;
+    }
 }
