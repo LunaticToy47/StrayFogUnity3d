@@ -172,8 +172,19 @@ public class UIWindowSerialize : AbsMonoBehaviour
     {
         List<int> winIds = new List<int>();
         Stack<WindowSequence> stack = OnGetOpenWindowSequence();
-        WindowSequence ws = stack.Peek();
-
+        if (stack.Count > 0)
+        {
+            WindowSequence ws = stack.Peek();
+            ws.openWindows.Sort();
+            _closeWinIds.Sort();
+            int openKey = ws.openWindows.JsonSerialize().GetHashCode();
+            int closeKey = _closeWinIds.JsonSerialize().GetHashCode();
+            if (openKey == closeKey)
+            {
+                winIds = ws.sequenceCloseWindows;
+                stack.Pop();
+            }
+        }
         return winIds;
     }
 }
