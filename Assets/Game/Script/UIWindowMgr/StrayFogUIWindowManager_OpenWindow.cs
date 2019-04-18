@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 /// <summary>
 /// UI窗口管理器【打开窗口】
 /// </summary>
@@ -205,23 +206,49 @@ public partial class StrayFogUIWindowManager
     }
     #endregion
 
-    #region 场景切换窗口序列处理
+    #region BeforeToggleScene 切换场景前
     /// <summary>
-    /// 保存场景切换窗口序列
+    /// 切换场景前
     /// </summary>
-    public void SaveToggleSceneWindowSequence()
+    public void BeforeToggleScene()
     {
         OnCreateWindowSerialize();
         mUIWindowSerialize.SaveToggleSceneWindowSequence();
+        //将当前所有可以关闭的窗口都关闭
+        foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
+        {
+            if (!holder.winCfg.isManualCloseWhenGotoScene)
+            {
+                holder.SetTargetActive(false);
+                holder.ToggleActive();
+                UnityEngine.Debug.Log(holder.winCfg.name);
+            }
+        }        
     }
+    #endregion
 
+    #region AfterToggleScene 切换场景后
     /// <summary>
-    /// 恢复场景切换窗口序列
+    /// 切换场景后
     /// </summary>
-    public void RestoreToggleSceneWindowSequence()
+    /// <param name="_callback">回调</param>
+    public void AfterToggleScene(Action _callback)
     {
         OnCreateWindowSerialize();
-        mUIWindowSerialize.RestoreToggleSceneWindowSequence();
+        List<int> winIds = mUIWindowSerialize.RestoreToggleSceneWindowSequence();
+        if (winIds.Count > 0)
+        {
+            OpenWindow(winIds.ToArray(),
+            (wins, args) =>
+            {
+                Action callback = (Action)args[0];
+                callback();
+            }, _callback);
+        }
+        else
+        {
+            _callback();
+        }
     }
     #endregion
 }

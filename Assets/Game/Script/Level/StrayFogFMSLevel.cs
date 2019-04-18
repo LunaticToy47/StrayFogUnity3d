@@ -44,7 +44,10 @@ public class StrayFogFMSLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            StartCoroutine(LoadCharacter());
+            StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
+            {
+                StartCoroutine(LoadCharacter());
+            });            
         });
     }
 
@@ -54,7 +57,7 @@ public class StrayFogFMSLevel : AbsLevel
     /// <returns>异步</returns>
     IEnumerator LoadCharacter()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1);        
         Stopwatch watch = new Stopwatch();
         watch.Start();
         StrayFogGamePools.assetBundleManager.LoadAssetInMemory(enAssetDiskMapingFile.f_pf_hero_1002_prefab, enAssetDiskMapingFolder.Assets_Game_AssetBundles_Prefabs_Character,

@@ -15,7 +15,10 @@ public class StrayFogTerrainLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            StartCoroutine(LoadTerrain());
+            StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
+            {
+                StartCoroutine(LoadTerrain());
+            });            
         });
     }
 

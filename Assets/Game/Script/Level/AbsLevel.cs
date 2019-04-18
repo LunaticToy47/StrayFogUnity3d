@@ -3,5 +3,4 @@
 /// </summary>
 public abstract class AbsLevel : AbsMonoBehaviour
 {
-
 }

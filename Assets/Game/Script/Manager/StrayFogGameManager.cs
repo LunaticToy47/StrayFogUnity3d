@@ -28,6 +28,7 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
             StrayFogGamePools.guideManager.TriggerCheck();
         }
+
         if (_onCallback != null)
         {
             _onCallback.Invoke();

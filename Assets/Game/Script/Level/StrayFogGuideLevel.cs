@@ -21,11 +21,10 @@ public class StrayFogGuideLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            //StrayFogGamePools.uiWindowManager.PreloadWindow(enUIWindow.GuideWindow,
-            //(wins, args) =>
-            //{
-            //    UnityEngine.Debug.Log(args.JsonSerialize() + "【PreloadWindow】=>" + wins.JsonSerialize());
-            //}, 1);
+            StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
+            {
+
+            });
         });
     }
 

@@ -60,6 +60,7 @@ public class StrayFogSceneManager : AbsSingleMonoBehaviour
     /// <param name="_file">场景文件</param>
     public void LoadScene(enAssetDiskMapingFile _file, enAssetDiskMapingFolder _folder)
     {
+        StrayFogGamePools.uiWindowManager.BeforeToggleScene();
         StrayFogGamePools.assetBundleManager.LoadAssetInMemory(_file, _folder,
                 (result) =>
                 {
@@ -72,10 +73,7 @@ public class StrayFogSceneManager : AbsSingleMonoBehaviour
     IEnumerator OnActiveScene()
     {
         yield return new WaitForEndOfFrame();
-        StrayFogGamePools.uiWindowManager.OpenWindow<LobbyWindow>(enUIWindow.LobbyWindow, (wins, wargs) =>
-        {
-            AllowSceneActivation();
-        });
+        AllowSceneActivation();              
     }
 
     /// <summary>

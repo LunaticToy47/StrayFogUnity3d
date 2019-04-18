@@ -16,10 +16,11 @@ public class StrayFogSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            watch.Stop();
-            UnityEngine.Debug.LogFormat("StrayFogGamePools.gameManager.Initialization=>{0}", watch.Elapsed.ToString());
-
-
+            StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
+            {
+                watch.Stop();
+                UnityEngine.Debug.LogFormat("StrayFogGamePools.gameManager.Initialization=>{0}", watch.Elapsed.ToString());
+            });
         });
     }
 

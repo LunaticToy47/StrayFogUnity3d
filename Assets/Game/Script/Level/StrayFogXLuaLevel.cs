@@ -17,8 +17,11 @@ public class StrayFogXLuaLevel : AbsLevel
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
-            //InitXLua(@"require '" + xLuaFileId + "'");
-            //InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
+            StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
+            {
+                //InitXLua(@"require '" + xLuaFileId + "'");
+                //InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
+            });            
         });
     }
 
