@@ -21,43 +21,39 @@ public class UIWindowSerialize : AbsMonoBehaviour
     /// <summary>
     /// 开启窗口序列
     /// </summary>
-    /// <param name="_winCfgs">窗口配置组</param>
-    public void OpenWindowSerialize(XLS_Config_Table_UIWindowSetting[] _winCfgs)
+    /// <param name="_cfg">窗口配置</param>
+    public void OpenWindowSerialize(XLS_Config_Table_UIWindowSetting _cfg)
     {
         Dictionary<int, int> sameLayerLessThenSiblingIndex = new Dictionary<int, int>();
         List<int> lessThenSiblingIndex = new List<int>();
         Dictionary<int, UIWindowHolder> winHolders = OnSearchAllWindowHolders();
-        if (_winCfgs != null && _winCfgs.Length >0)
+
+        #region 统计需要隐藏的各层级的最大SiblingIndex
+        switch (_cfg.winOpenMode)
         {
-            #region 统计需要隐藏的各层级的最大SiblingIndex
-            foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
-            {                
-                switch (cfg.winOpenMode)
+            case enUIWindowOpenMode.WhenDisplayHiddenSameLayerAndLessThanSiblingIndex:
+                if (!sameLayerLessThenSiblingIndex.ContainsKey(_cfg.layer))
                 {
-                    case enUIWindowOpenMode.WhenDisplayHiddenSameLayerAndLessThanSiblingIndex:
-                        if (!sameLayerLessThenSiblingIndex.ContainsKey(cfg.layer))
-                        {
-                            sameLayerLessThenSiblingIndex.Add(cfg.layer, winHolders[cfg.id].windowSiblingIndex);
-                        }
-                        else
-                        {
-                            sameLayerLessThenSiblingIndex[cfg.layer] = Mathf.Max(sameLayerLessThenSiblingIndex[cfg.layer], winHolders[cfg.id].windowSiblingIndex);
-                        }
-                        break;
-                    case enUIWindowOpenMode.WhenDisplayHiddenLessThanSiblingIndex:
-                        if (!lessThenSiblingIndex.Contains(winHolders[cfg.id].windowSiblingIndex))
-                        {
-                            lessThenSiblingIndex.Add(winHolders[cfg.id].windowSiblingIndex);
-                        }
-                        else
-                        {
-                            lessThenSiblingIndex[0] = Mathf.Max(lessThenSiblingIndex[0], winHolders[cfg.id].windowSiblingIndex);
-                        }
-                        break;                    
+                    sameLayerLessThenSiblingIndex.Add(_cfg.layer, winHolders[_cfg.id].windowSiblingIndex);
                 }
-            }
-            #endregion
+                else
+                {
+                    sameLayerLessThenSiblingIndex[_cfg.layer] = Mathf.Max(sameLayerLessThenSiblingIndex[_cfg.layer], winHolders[_cfg.id].windowSiblingIndex);
+                }
+                break;
+            case enUIWindowOpenMode.WhenDisplayHiddenLessThanSiblingIndex:
+                if (!lessThenSiblingIndex.Contains(winHolders[_cfg.id].windowSiblingIndex))
+                {
+                    lessThenSiblingIndex.Add(winHolders[_cfg.id].windowSiblingIndex);
+                }
+                else
+                {
+                    lessThenSiblingIndex[0] = Mathf.Max(lessThenSiblingIndex[0], winHolders[_cfg.id].windowSiblingIndex);
+                }
+                break;
         }
+        #endregion
+
         List<int> hiddenWinIds = new List<int>();
         if (winHolders != null && winHolders.Count > 0)
         {

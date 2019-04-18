@@ -67,8 +67,8 @@ public partial class StrayFogUIWindowManager
     /// <summary>
     /// 设置窗口序列化
     /// </summary>
-    /// <param name="_winCfgs">窗口配置组</param>
-    void OnSettingWindowSerialize(XLS_Config_Table_UIWindowSetting[] _winCfgs)
+    /// <param name="_cfg">窗口配置</param>
+    void OnSettingWindowSerialize(XLS_Config_Table_UIWindowSetting _cfg)
     {
         if (mUIWindowSerialize == null)
         {
@@ -78,7 +78,7 @@ public partial class StrayFogUIWindowManager
             mUIWindowSerialize = go.AddComponent<UIWindowSerialize>();
             mUIWindowSerialize.OnSearchAllWindowHolders += () => { return mWindowHolderMaping; };
         }
-        mUIWindowSerialize.OpenWindowSerialize(_winCfgs);
+        mUIWindowSerialize.OpenWindowSerialize(_cfg);
     }
     #endregion
 
@@ -96,9 +96,10 @@ public partial class StrayFogUIWindowManager
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             OnCreateWindowHolder(cfg);
+            OnSettingWindowSerialize(cfg);
             mWindowHolderMaping[cfg.id].SetTargetActive(true);
         }
-        OnSettingWindowSerialize(_winCfgs);
+        
         OnLoadWindowInMemory(_winCfgs, true, (cfgs, args) =>
         {
             Dictionary<int, AssetBundleResult> memoryAssetResult = (Dictionary<int, AssetBundleResult>)args[0];
