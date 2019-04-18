@@ -67,8 +67,8 @@ public partial class StrayFogUIWindowManager
     /// <summary>
     /// 设置窗口序列化
     /// </summary>
-    /// <param name="_cfg">窗口配置</param>
-    void OnSettingWindowSerialize(XLS_Config_Table_UIWindowSetting _cfg)
+    /// <param name="_winCfgs">窗口配置组</param>
+    void OnSettingWindowSerialize(XLS_Config_Table_UIWindowSetting[] _winCfgs)
     {
         if (mUIWindowSerialize == null)
         {
@@ -78,7 +78,7 @@ public partial class StrayFogUIWindowManager
             mUIWindowSerialize = go.AddComponent<UIWindowSerialize>();
             mUIWindowSerialize.OnSearchAllWindowHolders += () => { return mWindowHolderMaping; };
         }
-        mUIWindowSerialize.OpenWindowSerialize(_cfg);
+        mUIWindowSerialize.OpenWindowSerialize(_winCfgs);
     }
     #endregion
 
@@ -92,14 +92,13 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     public void OnOpenWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
-    {
+    {        
+        OnCreateWindowHolder(_winCfgs);
+        OnSettingWindowSerialize(_winCfgs);
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
-            OnCreateWindowHolder(cfg);
-            OnSettingWindowSerialize(cfg);
             mWindowHolderMaping[cfg.id].SetTargetActive(true);
         }
-        
         OnLoadWindowInMemory(_winCfgs, true, (cfgs, args) =>
         {
             Dictionary<int, AssetBundleResult> memoryAssetResult = (Dictionary<int, AssetBundleResult>)args[0];
@@ -118,21 +117,27 @@ public partial class StrayFogUIWindowManager
     /// <summary>
     /// 创建窗口占位符
     /// </summary>
-    /// <param name="_winCfg">窗口配置</param>
-    void OnCreateWindowHolder(XLS_Config_Table_UIWindowSetting _winCfg)
+    /// <param name="_winCfgs">窗口配置组</param>
+    void OnCreateWindowHolder(XLS_Config_Table_UIWindowSetting[] _winCfgs)
     {
-        UISiblingIndexCanvas canvas = OnGetSiblingIndexCanvas(_winCfg.winRenderMode);
-        RectTransform root = canvas.CreateWindowSiblingIndexHolder(_winCfg);
-        if (!mWindowHolderMaping.ContainsKey(_winCfg.id))
+        if (_winCfgs != null && _winCfgs.Length > 0)
         {
-            GameObject go = new GameObject(_winCfg.name + "【Holder】");
-            go.transform.SetParent(root);
-            UIWindowHolder wh = go.AddComponent<UIWindowHolder>();
-            wh.SetWindowConfig(_winCfg);
-            wh.SetWindowCanvas(OnGetCanvas(_winCfg.winRenderMode));
-            mWindowHolderMaping.Add(_winCfg.id, wh);
+            foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
+            {
+                UISiblingIndexCanvas canvas = OnGetSiblingIndexCanvas(cfg.winRenderMode);
+                RectTransform root = canvas.CreateWindowSiblingIndexHolder(cfg);
+                if (!mWindowHolderMaping.ContainsKey(cfg.id))
+                {
+                    GameObject go = new GameObject(cfg.name + "【Holder】");
+                    go.transform.SetParent(root);
+                    UIWindowHolder wh = go.AddComponent<UIWindowHolder>();
+                    wh.SetWindowConfig(cfg);
+                    wh.SetWindowCanvas(OnGetCanvas(cfg.winRenderMode));
+                    mWindowHolderMaping.Add(cfg.id, wh);
+                }
+                mWindowHolderMaping[cfg.id].transform.SetAsLastSibling();
+            }
         }
-        mWindowHolderMaping[_winCfg.id].transform.SetAsLastSibling();
     }
 
     /// <summary>
