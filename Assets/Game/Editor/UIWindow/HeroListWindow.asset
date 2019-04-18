@@ -16,7 +16,7 @@ MonoBehaviour:
   openMode: 100
   closeMode: 0
   isIgnoreOpenCloseMode: 0
-  isNotAutoRestoreSequenceWindow: 0
+  isAutoRestoreSequenceWindow: 1
   isDonotDestroyInstance: 0
   isImmediateDisplay: 0
   isManualCloseWhenGotoScene: 0

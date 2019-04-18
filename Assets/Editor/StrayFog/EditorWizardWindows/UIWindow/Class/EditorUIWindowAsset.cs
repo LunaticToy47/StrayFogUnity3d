@@ -31,10 +31,10 @@ public class EditorUIWindowAsset : AbsScriptableObject
     [AliasTooltip("是否忽略开启关闭模式")]
     public bool isIgnoreOpenCloseMode;
     /// <summary>
-    /// 是否是不可自动恢复序列窗口
+    /// 是否是自动恢复序列窗口
     /// </summary>
-    [AliasTooltip("是否是不可自动恢复序列窗口")]
-    public bool isNotAutoRestoreSequenceWindow;
+    [AliasTooltip("是否是自动恢复序列窗口")]
+    public bool isAutoRestoreSequenceWindow;
     /// <summary>
     /// 是否是不可销毁实例
     /// </summary>

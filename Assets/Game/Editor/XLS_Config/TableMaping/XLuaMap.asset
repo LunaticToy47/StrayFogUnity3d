@@ -23,7 +23,7 @@ MonoBehaviour:
     columnName: id
     sqliteColumnName: id
     sqliteColumnValue: 
-    desc: "\u811A\u672CID"
+    desc: "\u8DEF\u5F84ID"
     isPK: 1
     isNull: 0
     dataType: 6

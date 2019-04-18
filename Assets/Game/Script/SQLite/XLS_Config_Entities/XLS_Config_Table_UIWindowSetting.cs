@@ -66,10 +66,10 @@ public partial class XLS_Config_Table_UIWindowSetting: AbsStrayFogSQLiteEntity
 	public bool isIgnoreOpenCloseMode { get; private set; }	
 		
 	/// <summary>
-	/// 是否是不可自动恢复序列窗口
+	/// 是否是自动恢复序列窗口
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Boolean,enSQLiteDataTypeArrayDimension.NoArray,10,"isNotAutoRestoreSequenceWindow","","@isNotAutoRestoreSequenceWindow10",false)]	
-	public bool isNotAutoRestoreSequenceWindow { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Boolean,enSQLiteDataTypeArrayDimension.NoArray,10,"isAutoRestoreSequenceWindow","","@isAutoRestoreSequenceWindow10",false)]	
+	public bool isAutoRestoreSequenceWindow { get; private set; }	
 		
 	/// <summary>
 	/// 是否是不可销毁实例

@@ -1193,7 +1193,7 @@ public sealed class EditorStrayFogXLS
                         sheet.Cells[msrColumnDataRowStartIndex + i, 7].Value = (int)_windows[i].assetNode.openMode;
                         sheet.Cells[msrColumnDataRowStartIndex + i, 8].Value = (int)_windows[i].assetNode.closeMode;
                         sheet.Cells[msrColumnDataRowStartIndex + i, 9].Value = Convert.ToInt32(_windows[i].assetNode.isIgnoreOpenCloseMode);
-                        sheet.Cells[msrColumnDataRowStartIndex + i, 10].Value = Convert.ToInt32(_windows[i].assetNode.isNotAutoRestoreSequenceWindow);
+                        sheet.Cells[msrColumnDataRowStartIndex + i, 10].Value = Convert.ToInt32(_windows[i].assetNode.isAutoRestoreSequenceWindow);
                         sheet.Cells[msrColumnDataRowStartIndex + i, 11].Value = Convert.ToInt32(_windows[i].assetNode.isDonotDestroyInstance);
                         sheet.Cells[msrColumnDataRowStartIndex + i, 12].Value = Convert.ToInt32(_windows[i].assetNode.isImmediateDisplay);
                         sheet.Cells[msrColumnDataRowStartIndex + i, 13].Value = Convert.ToInt32(_windows[i].assetNode.isManualCloseWhenGotoScene);

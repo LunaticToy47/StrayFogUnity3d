@@ -12,7 +12,7 @@ public partial class XLS_Config_Table_XLuaMap: AbsStrayFogSQLiteEntity
 	#region Properties	
 		
 	/// <summary>
-	/// 脚本ID
+	/// 路径ID
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"id","","@id1",true)]	
 	public int id { get; private set; }	

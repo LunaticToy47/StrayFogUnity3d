@@ -41,7 +41,7 @@ MonoBehaviour:
     columnName: conditions
     sqliteColumnName: conditions
     sqliteColumnValue: 
-    desc: "\u6761\u4EF6"
+    desc: "\u6761\u4EF6\n0\uFF1A\u65E0\u6761\u4EF6\n1\uFF1A2D\u951A\u70B9\u4F4D\u7F6E"
     isPK: 0
     isNull: 0
     dataType: 6

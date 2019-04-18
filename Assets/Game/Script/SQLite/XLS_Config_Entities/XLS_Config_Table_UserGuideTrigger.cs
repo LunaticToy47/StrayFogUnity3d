@@ -31,12 +31,17 @@ public partial class XLS_Config_Table_UserGuideTrigger: AbsStrayFogSQLiteEntity
 		
 	/// <summary>
 	/// 引导类型
+	///0：强引导【禁用玩家操作，等待引导触发】
+	///1：弱引导【玩家可操作，等待引导触发】
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,4,"guideType","","@guideType4",false)]	
 	public int guideType { get; private set; }	
 		
 	/// <summary>
 	/// 显示类型
+	///0：默认显示
+	///1：隐藏窗口
+	///2：隐藏背景
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,5,"displayType","","@displayType5",false)]	
 	public int displayType { get; private set; }	
@@ -49,6 +54,8 @@ public partial class XLS_Config_Table_UserGuideTrigger: AbsStrayFogSQLiteEntity
 		
 	/// <summary>
 	/// 条件
+	///0：无条件触发
+	///1：指定窗口
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,7,"conditions","","@conditions7",false)]	
 	public int[] conditions { get; private set; }	

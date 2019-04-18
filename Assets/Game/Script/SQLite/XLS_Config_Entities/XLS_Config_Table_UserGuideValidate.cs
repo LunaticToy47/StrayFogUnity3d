@@ -25,6 +25,8 @@ public partial class XLS_Config_Table_UserGuideValidate: AbsStrayFogSQLiteEntity
 		
 	/// <summary>
 	/// 条件
+	///0：无条件
+	///1：2D锚点位置
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,3,"conditions","","@conditions3",false)]	
 	public int[] conditions { get; private set; }	

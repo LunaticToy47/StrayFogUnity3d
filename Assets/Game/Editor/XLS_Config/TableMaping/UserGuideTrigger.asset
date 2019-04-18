@@ -50,7 +50,7 @@ MonoBehaviour:
     columnName: guideType
     sqliteColumnName: guideType
     sqliteColumnValue: 
-    desc: "\u5F15\u5BFC\u7C7B\u578B"
+    desc: "\u5F15\u5BFC\u7C7B\u578B\n0\uFF1A\u5F3A\u5F15\u5BFC\u3010\u7981\u7528\u73A9\u5BB6\u64CD\u4F5C\uFF0C\u7B49\u5F85\u5F15\u5BFC\u89E6\u53D1\u3011\n1\uFF1A\u5F31\u5F15\u5BFC\u3010\u73A9\u5BB6\u53EF\u64CD\u4F5C\uFF0C\u7B49\u5F85\u5F15\u5BFC\u89E6\u53D1\u3011"
     isPK: 0
     isNull: 0
     dataType: 6
@@ -59,7 +59,7 @@ MonoBehaviour:
     columnName: displayType
     sqliteColumnName: displayType
     sqliteColumnValue: 
-    desc: "\u663E\u793A\u7C7B\u578B"
+    desc: "\u663E\u793A\u7C7B\u578B\n0\uFF1A\u9ED8\u8BA4\u663E\u793A\n1\uFF1A\u9690\u85CF\u7A97\u53E3\n2\uFF1A\u9690\u85CF\u80CC\u666F"
     isPK: 0
     isNull: 0
     dataType: 6
@@ -77,7 +77,7 @@ MonoBehaviour:
     columnName: conditions
     sqliteColumnName: conditions
     sqliteColumnValue: 
-    desc: "\u6761\u4EF6"
+    desc: "\u6761\u4EF6\n0\uFF1A\u65E0\u6761\u4EF6\u89E6\u53D1\n1\uFF1A\u6307\u5B9A\u7A97\u53E3"
     isPK: 0
     isNull: 0
     dataType: 6
