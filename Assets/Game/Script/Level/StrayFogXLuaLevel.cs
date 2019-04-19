@@ -5,11 +5,26 @@ using XLua;
 [AddComponentMenu("Game/ExampleLevel/StrayFogXLuaLevel")]
 public class StrayFogXLuaLevel : AbsLevel
 {
+    /// <summary>
+    /// LuaTable
+    /// </summary>
     LuaTable mScriptEnv;
-
-    Action luaStart;
-    Action luaUpdate;
-    Action luaOnDestroy;
+    /// <summary>
+    /// Start函数
+    /// </summary>
+    Action mLuaStart;
+    /// <summary>
+    /// Update函数
+    /// </summary>
+    Action mLuaUpdate;
+    /// <summary>
+    /// Destroy函数
+    /// </summary>
+    Action mLuaOnDestroy;
+    /// <summary>
+    /// 是否触发Start
+    /// </summary>
+    bool mTriggerStart=false;
     /// <summary>
     /// Awake
     /// </summary>
@@ -43,21 +58,23 @@ public class StrayFogXLuaLevel : AbsLevel
         fun.Call();
 
         Action luaAwake = mScriptEnv.Get<Action>("awake");
-        luaStart = mScriptEnv.Get<Action>("start");
-        luaUpdate = mScriptEnv.Get<Action>("update");
-        luaOnDestroy = mScriptEnv.Get<Action>("ondestroy");
+        mLuaStart = mScriptEnv.Get<Action>("start");
+        mLuaUpdate = mScriptEnv.Get<Action>("update");
+        mLuaOnDestroy = mScriptEnv.Get<Action>("ondestroy");
         if (luaAwake != null)
         {
             luaAwake();
         }
+        Start();
     }
 
     // Use this for initialization
     void Start()
     {
-        if (luaStart != null)
+        if (!mTriggerStart && mLuaStart != null)
         {
-            luaStart();
+            mTriggerStart = true;
+            mLuaStart();
         }
         //StartCoroutine(OnLuaStart());
     }
@@ -65,9 +82,9 @@ public class StrayFogXLuaLevel : AbsLevel
     private IEnumerator OnLuaStart()
     {
         yield return new WaitForEndOfFrame();
-        if (luaStart != null)
+        if (mLuaStart != null)
         {
-            luaStart();
+            mLuaStart();
         }
         else
         {
@@ -78,23 +95,26 @@ public class StrayFogXLuaLevel : AbsLevel
     // Update is called once per frame
     void Update()
     {
-        if (luaUpdate != null)
+        if (mLuaUpdate != null)
         {
-            luaUpdate();
+            mLuaUpdate();
         }
         StrayFogGamePools.xLuaManager.xLuaEnv.Tick();
     }
 
     void OnDestroy()
     {
-        if (luaOnDestroy != null)
+        if (mLuaOnDestroy != null)
         {
-            luaOnDestroy();
+            mLuaOnDestroy();
         }
-        luaOnDestroy = null;
-        luaUpdate = null;
-        luaStart = null;
-        mScriptEnv.Dispose();
+        mLuaOnDestroy = null;
+        mLuaUpdate = null;
+        mLuaStart = null;
+        if (mScriptEnv != null)
+        {
+            mScriptEnv.Dispose();
+        }        
     }
 
     /// <summary>
@@ -103,6 +123,9 @@ public class StrayFogXLuaLevel : AbsLevel
     void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+        if(GUILayout.Button(string.Format("{0}=>{1}",GetType().Name, xLuaFileId)))
+        {
+            InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
+        }
     }
-
 }
