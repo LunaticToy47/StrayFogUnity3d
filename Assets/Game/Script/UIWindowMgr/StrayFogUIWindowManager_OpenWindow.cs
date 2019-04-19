@@ -220,7 +220,7 @@ public partial class StrayFogUIWindowManager
             {
                 holder.SetTargetActive(false);
                 holder.ToggleActive();
-#if UNITY_EDITOR
+#if DEBUGLOG
                 UnityEngine.Debug.Log(holder.winCfg.name);
 #endif
             }

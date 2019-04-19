@@ -204,7 +204,7 @@ public class UIWindowSerialize : AbsMonoBehaviour
     {
         List<int> winIds = new List<int>();
         Stack<WindowSequence> stack = OnGetOpenWindowSequence();
-#if UNITY_EDITOR
+#if DEBUGLOG
         Debug.LogFormat("【Before】GetAutoRestoreSequence=>Close【{0}】,Stack=>【{1}】", _closeWinIds.JsonSerialize(), stack.JsonSerialize());
 #endif
         if (stack.Count > 0)
@@ -216,7 +216,7 @@ public class UIWindowSerialize : AbsMonoBehaviour
                 stack.Pop();
             }            
         }
-#if UNITY_EDITOR
+#if DEBUGLOG
         Debug.LogFormat("【After】GetAutoRestoreSequence=>Close【{0}】,Stack=>【{1}】", _closeWinIds.JsonSerialize(), stack.JsonSerialize());
 #endif
         return winIds;
