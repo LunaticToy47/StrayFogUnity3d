@@ -315,12 +315,6 @@ public partial class StrayFogUIWindowManager
             #endregion
         }
 
-        List<int> autoOpenWindows = OnGetWindowSerialize().GetAutoRestoreSequence(closeWinIds);
-        foreach (int id in autoOpenWindows)
-        {
-            mWindowHolderMaping[id].SetTargetActive(true);
-        }
-
         #region 设置要隐藏的窗口ID
         foreach (KeyValuePair<int, UIWindowHolder> holder in mWindowHolderMaping)
         {
@@ -340,6 +334,15 @@ public partial class StrayFogUIWindowManager
             }
         }
         #endregion
+
+        List<int> autoOpenWindows = OnGetWindowSerialize().GetAutoRestoreSequence(closeWinIds);
+#if UNITY_EDITOR
+        Debug.LogFormat("OnCloseWindow【Auto Open Window】=>【{0}】", autoOpenWindows.JsonSerialize());
+#endif
+        foreach (int id in autoOpenWindows)
+        {
+            mWindowHolderMaping[id].SetTargetActive(true);
+        }
 
         foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
         {
