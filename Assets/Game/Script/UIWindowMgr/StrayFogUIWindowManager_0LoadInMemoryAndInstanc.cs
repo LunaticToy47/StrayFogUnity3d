@@ -277,6 +277,7 @@ public partial class StrayFogUIWindowManager
     void OnCloseWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
+
         List<int> closeWinIds = new List<int>();
         Dictionary<int, int> sameLayerLessThenSiblingIndex = new Dictionary<int, int>();
         List<int> lessThenSiblingIndex = new List<int>();
