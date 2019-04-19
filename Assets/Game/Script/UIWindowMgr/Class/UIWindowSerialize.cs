@@ -36,6 +36,28 @@ public class UIWindowSerialize : AbsMonoBehaviour
         }
 
         /// <summary>
+        /// 是否是相同的开启窗口
+        /// </summary>
+        /// <param name="_openWindows">开启窗口</param>
+        /// <returns>true:是,false:否</returns>
+        public bool IsSameOpenWindow(List<int> _openWindows)
+        {
+            List<int> ops = new List<int>();
+            List<int> cos = new List<int>();
+            foreach (int v in _openWindows)
+            {
+                ops.Add(v);
+            }
+            foreach (int v in openWindows)
+            {
+                cos.Add(v);
+            }
+            _openWindows.Sort();
+            openWindows.Sort();
+            return ops.JsonSerialize().UniqueHashCode() == cos.JsonSerialize().UniqueHashCode();
+        }
+
+        /// <summary>
         /// 打开的窗口
         /// </summary>
         public List<int> openWindows { get; private set; }
@@ -140,9 +162,19 @@ public class UIWindowSerialize : AbsMonoBehaviour
         }
 
         Stack<WindowSequence> winSeq = OnGetOpenWindowSequence();
-        winSeq.Push(new WindowSequence(openWinIds, sequenceCloseWinIds));
-
-#if UNITY_EDITOR
+        if (winSeq.Count > 0)
+        {
+            WindowSequence ws = winSeq.Peek();
+            if (!ws.IsSameOpenWindow(openWinIds))
+            {
+                winSeq.Push(new WindowSequence(openWinIds, sequenceCloseWinIds));
+            }
+        }
+        else if(openWinIds.Count > 0)
+        {
+            winSeq.Push(new WindowSequence(openWinIds, sequenceCloseWinIds));
+        }
+#if DEBUGLOG
         Debug.LogFormat("sameLayerLessThenSiblingIndex【{0}】,lessThenSiblingIndex【{1}】,hiddenWinIds【{2}】",
             sameLayerLessThenSiblingIndex.JsonSerialize(), lessThenSiblingIndex.JsonSerialize(), hiddenWinIds.JsonSerialize());
         Debug.LogFormat("open windows=>【{0}】,sequence close windows=>【{1}】", openWinIds.JsonSerialize(), sequenceCloseWinIds.JsonSerialize());
@@ -172,19 +204,21 @@ public class UIWindowSerialize : AbsMonoBehaviour
     {
         List<int> winIds = new List<int>();
         Stack<WindowSequence> stack = OnGetOpenWindowSequence();
+#if UNITY_EDITOR
+        Debug.LogFormat("【Before】GetAutoRestoreSequence=>Close【{0}】,Stack=>【{1}】", _closeWinIds.JsonSerialize(), stack.JsonSerialize());
+#endif
         if (stack.Count > 0)
         {
             WindowSequence ws = stack.Peek();
-            ws.openWindows.Sort();
-            _closeWinIds.Sort();
-            int openKey = ws.openWindows.JsonSerialize().GetHashCode();
-            int closeKey = _closeWinIds.JsonSerialize().GetHashCode();
-            if (openKey == closeKey)
+            if (ws.IsSameOpenWindow(_closeWinIds))
             {
                 winIds = ws.sequenceCloseWindows;
                 stack.Pop();
-            }
+            }            
         }
+#if UNITY_EDITOR
+        Debug.LogFormat("【After】GetAutoRestoreSequence=>Close【{0}】,Stack=>【{1}】", _closeWinIds.JsonSerialize(), stack.JsonSerialize());
+#endif
         return winIds;
     }
 
@@ -207,7 +241,10 @@ public class UIWindowSerialize : AbsMonoBehaviour
                 closeWinIds.Add(holder.winCfg.id);
             }
         }
-        stack.Push(new WindowSequence(new List<int>(), closeWinIds));
+        if (closeWinIds.Count > 0)
+        {
+            stack.Push(new WindowSequence(new List<int>(), closeWinIds));
+        }        
     }
 
     /// <summary>

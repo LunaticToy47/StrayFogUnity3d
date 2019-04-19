@@ -137,7 +137,7 @@ public partial class StrayFogUIWindowManager
                 RectTransform root = canvas.CreateWindowSiblingIndexHolder(cfg);
                 if (!mWindowHolderMaping.ContainsKey(cfg.id))
                 {
-                    GameObject go = new GameObject(cfg.name + "【Holder】");
+                    GameObject go = new GameObject(cfg.name + "【Holder】【" + cfg.id + "】");
                     go.transform.SetParent(root);
                     UIWindowHolder wh = go.AddComponent<UIWindowHolder>();
                     wh.SetWindowConfig(cfg);
@@ -277,7 +277,6 @@ public partial class StrayFogUIWindowManager
     void OnCloseWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-
         List<int> closeWinIds = new List<int>();
         Dictionary<int, int> sameLayerLessThenSiblingIndex = new Dictionary<int, int>();
         List<int> lessThenSiblingIndex = new List<int>();
@@ -337,9 +336,6 @@ public partial class StrayFogUIWindowManager
         #endregion
 
         List<int> autoOpenWindows = OnGetWindowSerialize().GetAutoRestoreSequence(closeWinIds);
-#if UNITY_EDITOR
-        Debug.LogFormat("OnCloseWindow【Auto Open Window】=>【{0}】", autoOpenWindows.JsonSerialize());
-#endif
         foreach (int id in autoOpenWindows)
         {
             mWindowHolderMaping[id].SetTargetActive(true);
