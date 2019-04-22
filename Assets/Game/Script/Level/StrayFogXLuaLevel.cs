@@ -52,7 +52,7 @@ public class StrayFogXLuaLevel : AbsLevel
         mScriptEnv.SetMetaTable(meta);
         meta.Dispose();
 
-        //mScriptEnv.Set("self", this);       
+        mScriptEnv.Set("self", this);
         LuaFunction fun = StrayFogGamePools.xLuaManager.xLuaEnv.LoadString(_xlua);
         fun.SetEnv(mScriptEnv);
         fun.Call();
@@ -123,10 +123,13 @@ public class StrayFogXLuaLevel : AbsLevel
     void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
-        if(GUILayout.Button(string.Format("{0}=>{1}",GetType().Name, xLuaFileId)))
+        if(GUILayout.Button(string.Format("【require】{0}=>{1}",GetType().Name, xLuaFileId)))
         {
             InitXLua(@"require '" + xLuaFileId + "'");
-            //InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
+        }
+        if (GUILayout.Button(string.Format("【code】{0}=>{1}", GetType().Name, xLuaFileId)))
+        {           
+            InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
         }
     }
 }
