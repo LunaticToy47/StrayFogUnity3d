@@ -6,6 +6,10 @@ using XLua;
 public class StrayFogXLuaLevel : AbsLevel
 {
     /// <summary>
+    /// cube
+    /// </summary>
+    public Transform cube;
+    /// <summary>
     /// LuaTable
     /// </summary>
     LuaTable mScriptEnv;
@@ -34,8 +38,6 @@ public class StrayFogXLuaLevel : AbsLevel
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-                //InitXLua(@"require '" + xLuaFileId + "'");
-                //InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
             });            
         });
     }
@@ -47,12 +49,14 @@ public class StrayFogXLuaLevel : AbsLevel
     void InitXLua(string _xlua)
     {
         mScriptEnv = StrayFogGamePools.xLuaManager.xLuaEnv.NewTable();
+
         LuaTable meta = StrayFogGamePools.xLuaManager.xLuaEnv.NewTable();
         meta.Set("__index", StrayFogGamePools.xLuaManager.xLuaEnv.Global);
         mScriptEnv.SetMetaTable(meta);
         meta.Dispose();
 
         mScriptEnv.Set("self", this);
+        mScriptEnv.Set("cube", cube);
         LuaFunction fun = StrayFogGamePools.xLuaManager.xLuaEnv.LoadString(_xlua);
         fun.SetEnv(mScriptEnv);
         fun.Call();
@@ -123,12 +127,8 @@ public class StrayFogXLuaLevel : AbsLevel
     void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
-        if(GUILayout.Button(string.Format("【require】{0}=>{1}",GetType().Name, xLuaFileId)))
+        if (GUILayout.Button(string.Format("{0}=>{1}", GetType().Name, xLuaFileId)))
         {
-            InitXLua(@"require '" + xLuaFileId + "'");
-        }
-        if (GUILayout.Button(string.Format("【code】{0}=>{1}", GetType().Name, xLuaFileId)))
-        {           
             InitXLua(StrayFogGamePools.xLuaManager.GetXLua(xLuaFileId));
         }
     }
