@@ -33,11 +33,17 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
         xLuaEnv.AddLoader((ref string filepath) =>
         {
             int xLuaId = 0;
+            string xLuaString = string.Empty;
             byte[] result = null;
-            if (int.TryParse(filepath, out xLuaId))
+            if (!int.TryParse(filepath, out xLuaId))
             {
-                result = System.Text.Encoding.UTF8.GetBytes(GetXLua(xLuaId));
+                xLuaId = filepath.UniqueHashCode();
             }
+            xLuaString = GetXLua(xLuaId);
+            if (!string.IsNullOrEmpty(xLuaString))
+            {
+                result = System.Text.Encoding.UTF8.GetBytes(xLuaString);
+            }            
             return result;
         });
         base.OnAfterConstructor();
