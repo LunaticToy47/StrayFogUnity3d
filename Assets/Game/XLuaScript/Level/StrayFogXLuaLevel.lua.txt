@@ -1,8 +1,8 @@
 ﻿local selfTable = require 'StrayFogXLuaLevelFunction';
 
 function awake()
-	print("self=>",self);
-	print("cube=>",cube);
+	print("self",self);
+	print("cube",cube);
 	selfTable.setcube(cube);
 	selfTable.awake();
 end
