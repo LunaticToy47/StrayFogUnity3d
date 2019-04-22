@@ -1238,11 +1238,11 @@ public sealed class EditorStrayFogXLS
                     {
                         //if (xLuaScripts[i].xLuaTextAsset != null)
                         //{
-                            //EditorSelectionXLuaMapSetting set = new EditorSelectionXLuaMapSetting(AssetDatabase.GetAssetPath(xLuaMaps[i].xLuaTextAsset));
-                            //set.Resolve();
-                            //sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaMaps[i].xLuaId;
-                            //sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = set.fileId;
-                            //sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = set.folderId;
+                        //    EditorSelectionXLuaMapSetting set = new EditorSelectionXLuaMapSetting(AssetDatabase.GetAssetPath(xLuaMaps[i].xLuaTextAsset));
+                        //    set.Resolve();
+                        //    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaMaps[i].xLuaId;
+                        //    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = set.fileId;
+                        //    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = set.folderId;
                         //}
                         //else
                         //{
