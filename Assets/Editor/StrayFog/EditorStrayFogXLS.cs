@@ -1223,7 +1223,6 @@ public sealed class EditorStrayFogXLS
     public static void InsertXLuaMap(Action<string, float> _progressCallback)
     {
         List<EditorSelectionXLuaMapSetting> xLuaScripts = EditorStrayFogGlobalVariable.CollectionXLua<EditorSelectionXLuaMapSetting>();
-
         EditorXlsFileConfigForXLuaMap wfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForXLuaMap;
         if (wfg.paths.Length > 0)
         {
@@ -1236,22 +1235,21 @@ public sealed class EditorStrayFogXLS
                     int rowIndex = 0;
                     for (int i = 0; i < xLuaScripts.Count; i++)
                     {
-                        //if (xLuaScripts[i].xLuaTextAsset != null)
-                        //{
-                        //    EditorSelectionXLuaMapSetting set = new EditorSelectionXLuaMapSetting(AssetDatabase.GetAssetPath(xLuaMaps[i].xLuaTextAsset));
-                        //    set.Resolve();
-                        //    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaMaps[i].xLuaId;
-                        //    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = set.fileId;
-                        //    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = set.folderId;
-                        //}
-                        //else
-                        //{
-                        //    rowIndex++;
-                        //}
-                        //if (_progressCallback != null)
-                        //{
-                        //    _progressCallback(xLuaMaps[i].classFullName, (i + 1) / (float)xLuaMaps.Count);
-                        //}
+                        if (xLuaScripts[i].isXLua)
+                        {
+                            xLuaScripts[i].Resolve();
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaScripts[i].xLuaId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = xLuaScripts[i].fileId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = xLuaScripts[i].folderId;
+                        }
+                        else
+                        {
+                            rowIndex++;
+                        }
+                        if (_progressCallback != null)
+                        {
+                            _progressCallback(xLuaScripts[i].xLuaName, (i + 1) / (float)xLuaScripts.Count);
+                        }
                     }
                     pck.Save();
                 }

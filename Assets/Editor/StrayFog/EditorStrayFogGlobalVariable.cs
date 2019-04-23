@@ -66,7 +66,7 @@ public sealed class EditorStrayFogGlobalVariable
         where T:EditorSelectionXLuaMapSetting
     {
         List<T> result = new List<T>();
-        string[] folders = EditorStrayFogSavedAssetConfig.setXlsFileConfigForXLuaMap.paths;
+        string[] folders = EditorStrayFogSavedAssetConfig.setFolderConfigForXLuaMap.paths;
         if (folders != null && folders.Length > 0)
         {
             result = EditorStrayFogUtility.collectAsset.CollectAsset<T>(folders, enEditorAssetFilterClassify.TextAsset, false);
