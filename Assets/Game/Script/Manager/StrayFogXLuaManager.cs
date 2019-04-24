@@ -39,7 +39,7 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
             {
                 xLuaId = filepath.UniqueHashCode();
             }
-            xLuaString = GetXLua(xLuaId);
+            xLuaString = OnGetXLuaScript(xLuaId);
             if (!string.IsNullOrEmpty(xLuaString))
             {
                 result = System.Text.Encoding.UTF8.GetBytes(xLuaString);
@@ -50,50 +50,86 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
     }
     #endregion
 
-    #region GetXLua 获得xLua文件路径
+    #region OnGetXLuaScript 获得xLua文件脚本
     /// <summary>
     /// xLua脚本映射
     /// </summary>
     static Dictionary<int, string> mXLuaScriptMaping = new Dictionary<int, string>();
     /// <summary>
-    /// 获得xLua文件路径
+    /// 获得xLua文件脚本
     /// </summary>
-    /// <param name="xLua文件ID">_xLuaId</param>
-    /// <returns>xLua文件路径</returns>
-    public string GetXLua(int _xLuaId)
+    /// <param name="_xLuaFileId">xLua文件ID</param>
+    /// <returns>xLua文件脚本</returns>
+    public string OnGetXLuaScript(int _xLuaFileId)
     {
-        string xlua = string.Empty;
-        if (mXLuaConfigMaping.ContainsKey(_xLuaId))
+        string xLuaScript = string.Empty;
+        if (mXLuaConfigMaping.ContainsKey(_xLuaFileId))
         {
             string path = string.Empty;
-            XLS_Config_View_AssetDiskMaping adm = StrayFogGamePools.assetBundleManager.GetAssetPath(mXLuaConfigMaping[_xLuaId].xLuaFileId, mXLuaConfigMaping[_xLuaId].xLuaFolderId, out path);
+            XLS_Config_View_AssetDiskMaping adm = StrayFogGamePools.assetBundleManager.GetAssetPath(mXLuaConfigMaping[_xLuaFileId].xLuaFileId, mXLuaConfigMaping[_xLuaFileId].xLuaFolderId, out path);
             if (adm != null)
             {
-                if (!mXLuaScriptMaping.ContainsKey(_xLuaId))
+                if (!mXLuaScriptMaping.ContainsKey(_xLuaFileId))
                 {
                     TextAsset ta = null;
                     if (StrayFogGamePools.setting.isInternal)
                     {
                         ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(adm.inAssetPath, typeof(TextAsset));
-                        xlua = ta.text;
+                        xLuaScript = ta.text;
                     }
                     else
                     {
                         AssetBundle ab = AssetBundle.LoadFromFile(path);
                         ta = ab.LoadAsset<TextAsset>(adm.fileName);
-                        xlua = ta.text;
+                        xLuaScript = ta.text;
                         ab.Unload(false);
                         ab = null;
                     }
-                    mXLuaScriptMaping.Add(_xLuaId, xlua);
+                    mXLuaScriptMaping.Add(_xLuaFileId, xLuaScript);
                 }
                 else
                 {
-                    xlua = mXLuaScriptMaping[_xLuaId];
+                    xLuaScript = mXLuaScriptMaping[_xLuaFileId];
                 }
             }
         }
-        return xlua;
+        return xLuaScript;
      }
+    #endregion
+
+    #region GetLuaTable 获得LuaTable
+    /// <summary>
+    /// LuaTable映射
+    /// </summary>
+    Dictionary<int, LuaTable> mLuaTableMaping = new Dictionary<int, LuaTable>();
+    /// <summary>
+    /// 解析xLua
+    /// </summary>
+    /// <param name="_xLuaFileId">xLua文件ID</param>
+    /// <param name="_setTableCallback">设置table回调</param>
+    /// <returns>LuaTable</returns>
+    public LuaTable GetLuaTable(int _xLuaFileId, Action<LuaTable> _setTableCallback)
+    {
+        if (!mLuaTableMaping.ContainsKey(_xLuaFileId))
+        {
+            string xLua = OnGetXLuaScript(_xLuaFileId);
+            LuaTable funLuaTable = xLuaEnv.NewTable();
+            LuaTable meta = StrayFogGamePools.xLuaManager.xLuaEnv.NewTable();
+            meta.Set("__index", StrayFogGamePools.xLuaManager.xLuaEnv.Global);
+            funLuaTable.SetMetaTable(meta);
+            meta.Dispose();
+
+            if (_setTableCallback != null)
+            {
+                _setTableCallback(funLuaTable);
+            }
+            LuaFunction fun = xLuaEnv.LoadString(xLua);
+            fun.SetEnv(funLuaTable);
+            fun.Call();
+
+            mLuaTableMaping.Add(_xLuaFileId, funLuaTable);
+        }
+        return mLuaTableMaping[_xLuaFileId];
+    }
     #endregion
 }
