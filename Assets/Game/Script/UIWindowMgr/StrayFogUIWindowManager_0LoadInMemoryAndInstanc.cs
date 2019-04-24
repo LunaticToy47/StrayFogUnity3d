@@ -175,7 +175,15 @@ public partial class StrayFogUIWindowManager
                     {
                         prefab.name = winCfg.name + "[" + winCfg.id + "]";
                         Type type = Assembly.GetCallingAssembly().GetType(winCfg.name);
-                        W window = (W)prefab.AddComponent(type);
+                        W window = default(W);
+                        if (type == null)
+                        {
+                            window = (W)(AbsUIWindowView)prefab.AddComponent<UIXLuaWindow>();
+                        }
+                        else
+                        {
+                            window = (W)prefab.AddComponent(type);
+                        }
                         window.SetConfig(winCfg);
                         window.OnCloseWindow += Window_OnCloseWindow;
                         mWindowHolderMaping[winCfg.id].SetWindow(window);
