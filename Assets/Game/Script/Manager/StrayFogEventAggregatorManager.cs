@@ -4,9 +4,8 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 事件聚合句柄
 /// </summary>
-/// <param name="_eventId">事件ID</param>
-/// <param name="_extralParameter">额外参数</param>
-public delegate void EventAggregatorHandler(int _eventId,params object[] _extralParameter);
+/// <param name="_args">参数</param>
+public delegate void EventAggregatorHandler(AbsEventAggregatorArgs _args);
 
 /// <summary>
 /// 事件聚合管理器
@@ -14,17 +13,17 @@ public delegate void EventAggregatorHandler(int _eventId,params object[] _extral
 public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
 {
 
-    public void AddListener(int _eventId, EventAggregatorHandler _event)
-    {
-        
-    }
-
-    public void RemoveListener(int _eventId, EventAggregatorHandler _event)
+    public void AddListener(Enum _eventType, EventAggregatorHandler _event)
     {
 
     }
 
-    public void Dispatch(int _eventId)
+    public void RemoveListener(Enum _eventType, EventAggregatorHandler _event)
+    {
+
+    }
+
+    public void Dispatch(AbsEventAggregatorArgs _args)
     {
 
     }    
