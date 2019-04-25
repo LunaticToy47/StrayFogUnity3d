@@ -1,11 +1,10 @@
 ﻿using System;
-using UnityEngine.EventSystems;
-
 /// <summary>
 /// 事件聚合句柄
 /// </summary>
-/// <param name="_args">参数</param>
-public delegate void EventAggregatorHandler(AbsEventAggregatorArgs _args);
+/// <typeparam name="T">参数类型</typeparam>
+/// <param name="_args">参数对象</param>
+public delegate void EventAggregatorHandler<T>(T _args) where T : AbsEventAggregatorArgs;
 
 /// <summary>
 /// 事件聚合管理器
@@ -13,17 +12,20 @@ public delegate void EventAggregatorHandler(AbsEventAggregatorArgs _args);
 public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
 {
 
-    public void AddListener(Enum _eventType, EventAggregatorHandler _event)
+    public void AddListener<T>(Enum _eventType, EventAggregatorHandler<T> _event)
+         where T : AbsEventAggregatorArgs
     {
 
     }
 
-    public void RemoveListener(Enum _eventType, EventAggregatorHandler _event)
+    public void RemoveListener<T>(Enum _eventType, EventAggregatorHandler<T> _event)
+        where T : AbsEventAggregatorArgs
     {
 
     }
 
-    public void Dispatch(AbsEventAggregatorArgs _args)
+    public void Dispatch<T>(T _args)
+        where T : AbsEventAggregatorArgs
     {
 
     }    
