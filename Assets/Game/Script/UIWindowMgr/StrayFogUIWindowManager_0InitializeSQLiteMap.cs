@@ -54,9 +54,10 @@ public partial class StrayFogUIWindowManager
         if (_wins != null && _wins.Length > 0)
         {
             int id = 0;
-            Type type = _wins[0].GetType();
+            Type type = null;
             foreach (Enum w in _wins)
             {
+                type = w.GetType();
                 if (Enum.IsDefined(type, w.ToString()))
                 {
                     id = (int)Enum.Parse(type, w.ToString());
