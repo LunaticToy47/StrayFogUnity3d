@@ -49,7 +49,6 @@ public class StrayFogXLuaLevel : AbsLevel
     void InitXLua(int _xLuaFileId)
     {
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(_xLuaFileId, (table) => {
-            Debug.Log(table);
             table.Set("self", this);
             table.Set("cube", cube);
         });
@@ -73,7 +72,6 @@ public class StrayFogXLuaLevel : AbsLevel
             mTriggerStart = true;
             mLuaStart();
         }
-        //StartCoroutine(OnLuaStart());
     }
 
     private IEnumerator OnLuaStart()
@@ -95,8 +93,7 @@ public class StrayFogXLuaLevel : AbsLevel
         if (mLuaUpdate != null)
         {
             mLuaUpdate();
-        }
-        StrayFogGamePools.xLuaManager.xLuaEnv.Tick();
+        }        
     }
 
     void OnDestroy()
@@ -108,10 +105,6 @@ public class StrayFogXLuaLevel : AbsLevel
         mLuaOnDestroy = null;
         mLuaUpdate = null;
         mLuaStart = null;
-        if (mScriptEnv != null)
-        {
-            mScriptEnv.Dispose();
-        }        
     }
 
     /// <summary>
