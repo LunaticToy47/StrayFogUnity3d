@@ -106,4 +106,17 @@ public static class StrayFogGamePools
         }
     }
     #endregion
+
+    #region StrayFogEventAggregatorManager
+    /// <summary>
+    /// StrayFogEventAggregatorManager
+    /// </summary>
+    public static StrayFogEventAggregatorManager eventAggregatorManager
+    {
+        get
+        {
+            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogEventAggregatorManager>();
+        }
+    }
+    #endregion    
 }
