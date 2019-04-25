@@ -103,6 +103,10 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
     /// </summary>
     Dictionary<int, LuaTable> mLuaTableMaping = new Dictionary<int, LuaTable>();
     /// <summary>
+    /// LuaFunction映射
+    /// </summary>
+    Dictionary<int, LuaFunction> mLuaFunctionMaping = new Dictionary<int, LuaFunction>();
+    /// <summary>
     /// 解析xLua
     /// </summary>
     /// <param name="_xLuaFileId">xLua文件ID</param>
@@ -111,24 +115,29 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
     public LuaTable GetLuaTable(int _xLuaFileId, Action<LuaTable> _setTableCallback)
     {
         if (!mLuaTableMaping.ContainsKey(_xLuaFileId))
-        {
-            string xLua = OnGetXLuaScript(_xLuaFileId);
+        {            
             LuaTable funLuaTable = xLuaEnv.NewTable();
             LuaTable meta = StrayFogGamePools.xLuaManager.xLuaEnv.NewTable();
             meta.Set("__index", StrayFogGamePools.xLuaManager.xLuaEnv.Global);
             funLuaTable.SetMetaTable(meta);
             meta.Dispose();
-
-            if (_setTableCallback != null)
-            {
-                _setTableCallback(funLuaTable);
-            }
-            LuaFunction fun = xLuaEnv.LoadString(xLua);
-            fun.SetEnv(funLuaTable);
-            fun.Call();
-
             mLuaTableMaping.Add(_xLuaFileId, funLuaTable);
         }
+
+        if (!mLuaFunctionMaping.ContainsKey(_xLuaFileId))
+        {
+            string xLua = OnGetXLuaScript(_xLuaFileId);
+            LuaFunction fun = xLuaEnv.LoadString(xLua);
+            fun.SetEnv(mLuaTableMaping[_xLuaFileId]);
+            mLuaFunctionMaping.Add(_xLuaFileId, fun);
+        }
+
+        if (_setTableCallback != null)
+        {
+            _setTableCallback(mLuaTableMaping[_xLuaFileId]);
+        }
+        mLuaFunctionMaping[_xLuaFileId].Call();
+
         return mLuaTableMaping[_xLuaFileId];
     }
     #endregion

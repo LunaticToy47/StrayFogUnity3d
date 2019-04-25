@@ -1,0 +1,12 @@
+local c1_1Btn;
+
+function Awake()
+	print('HeroListWindow');	
+	c1_1Btn = self.transform:Find('Table/c1_1').gameObject:GetComponent(typeof(CS.UnityEngine.UI.Button));
+    --print(c1_1Btn);
+	c1_1Btn.onClick:AddListener(
+		function()
+			self:CloseWindow();
+		end
+    );
+end

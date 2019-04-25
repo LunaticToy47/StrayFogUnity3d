@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using XLua;
 /// <summary>
 /// HeroListWindow
 /// </summary>
@@ -7,14 +9,22 @@ using UnityEngine.UI;
 public class HeroListWindow : AbsUIWindowView
 {
     /// <summary>
+    /// LuaTable
+    /// </summary>
+    LuaTable mScriptEnv;
+    /// <summary>
     /// Awake
     /// </summary>
     private void Awake()
-    {        
-        Button btn = transform.Find(@"Table/c1_1").gameObject.GetComponent<Button>();
-        btn.onClick.AddListener(() =>
+    {
+        mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(xLuaFileId, (table) =>
         {
-            CloseWindow();
+            table.Set("self", this);
         });
+        Action luaAwake = mScriptEnv.Get<Action>("Awake");
+        if (luaAwake != null)
+        {
+            luaAwake();
+        }
     }
 }

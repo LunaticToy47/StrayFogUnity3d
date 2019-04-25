@@ -49,6 +49,7 @@ public class StrayFogXLuaLevel : AbsLevel
     void InitXLua(int _xLuaFileId)
     {
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(_xLuaFileId, (table) => {
+            Debug.Log(table);
             table.Set("self", this);
             table.Set("cube", cube);
         });

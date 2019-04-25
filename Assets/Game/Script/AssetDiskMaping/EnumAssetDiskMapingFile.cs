@@ -156,5 +156,6 @@ public enum enAssetDiskMapingFile
 	f_MessageBoxWindow_prefab = 1299702156,
 	f_PlayerListWindow_prefab = -552127726,
 	f_StrayFogXLuaLevel_lua_txt = 1735911982,
-	f_StrayFogXLuaLevelFunction_lua_txt = -510167203,	
+	f_StrayFogXLuaLevelFunction_lua_txt = -510167203,
+	f_HeroListWindow_lua_txt = 1714968970,	
 }
