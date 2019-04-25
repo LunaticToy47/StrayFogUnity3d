@@ -6,6 +6,7 @@ function Awake()
     --print(c1_1Btn);
 	c1_1Btn.onClick:AddListener(
 		function()
+			print('Close Window',self);
 			self:CloseWindow();
 		end
     );
