@@ -97,25 +97,4 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
         return OnGetCanvas(_renderMode);
     }
     #endregion
-
-    #region RestoreWindowSequence 恢复窗口序列
-    /// <summary>
-    /// 恢复窗口序列
-    /// </summary>
-    /// <param name="_onComplete">完成回调</param>
-    public void RestoreWindowSequence(Action<AbsUIWindowView[]> _onComplete)
-    {
-        //OnRestoreWindowSequence(_onComplete);
-    }
-    #endregion
-
-    #region TransitionScene 场景切换
-    /// <summary>
-    /// 场景切换
-    /// </summary>
-    public void TransitionScene()
-    {
-        //OnRecordWindowSequence();
-    }
-    #endregion
 }

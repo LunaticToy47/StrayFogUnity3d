@@ -8,6 +8,8 @@ function Awake()
 		function()
 			print('Close Window',self);
 			self:CloseWindow();
+			print('Open Window',CS.enUIWindow.MessageBoxWindow);
+			CS.StrayFogGamePools.uiWindowManager:OpenWindow(CS.enUIWindow.MessageBoxWindow);
 		end
     );
 end
