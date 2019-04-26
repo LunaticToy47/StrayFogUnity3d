@@ -95,9 +95,13 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
 
     #region DrawLevelSelectButtonOnGUI 绘制关卡选择按钮
     /// <summary>
-    /// 事件映射
+    /// UGUI事件映射
     /// </summary>
-    static List<enUGUIEvent> mEventMaping = typeof(enUGUIEvent).ToEnums<enUGUIEvent>();
+    static List<enUGUIEvent> mEnUGUIEventMaping = typeof(enUGUIEvent).ToEnums<enUGUIEvent>();
+    /// <summary>
+    /// 游戏事件映射
+    /// </summary>
+    static List<enGameEvent> mEnGameEventMaping = typeof(enGameEvent).ToEnums<enGameEvent>();
     /// <summary>
     /// 滚动视图位置
     /// </summary>
@@ -110,12 +114,22 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
         GUILayout.Space(10);
         mScrollViewPosition = GUILayout.BeginScrollView(mScrollViewPosition);
         GUILayout.BeginHorizontal();
-        foreach (enUGUIEvent evt in mEventMaping)
+        foreach (enUGUIEvent evt in mEnUGUIEventMaping)
         {
-            if (GUILayout.Button(string.Format("Dispatch【{0}】", evt)))
+            if (GUILayout.Button(string.Format("Dispatch【UGUI】【{0}】", evt)))
             {
                 StrayFogGamePools.eventAggregatorManager
                 .Dispatch(new UGUIEventAggregatorArgs(evt, this, evt));
+            }
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        foreach (enGameEvent evt in mEnGameEventMaping)
+        {
+            if (GUILayout.Button(string.Format("Dispatch【Game】【{0}】", evt)))
+            {
+                StrayFogGamePools.eventAggregatorManager
+                .Dispatch(new GameEventAggregatorArgs(evt, this, evt));
             }
         }
         GUILayout.EndHorizontal();

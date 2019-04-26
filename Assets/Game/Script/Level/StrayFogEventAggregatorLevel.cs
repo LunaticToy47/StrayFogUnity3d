@@ -7,9 +7,13 @@ using UnityEngine;
 public class StrayFogEventAggregatorLevel : AbsLevel
 {
     /// <summary>
-    /// 事件映射
+    /// UGUI事件映射
     /// </summary>
-    static List<enUGUIEvent> mEventMaping = typeof(enUGUIEvent).ToEnums<enUGUIEvent>();
+    static List<enUGUIEvent> mEnUGUIEventMaping = typeof(enUGUIEvent).ToEnums<enUGUIEvent>();
+    /// <summary>
+    /// 游戏事件映射
+    /// </summary>
+    static List<enGameEvent> mEnGameEventMaping = typeof(enGameEvent).ToEnums<enGameEvent>();
     /// <summary>
     /// 可发布事件
     /// </summary>
@@ -24,13 +28,23 @@ public class StrayFogEventAggregatorLevel : AbsLevel
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-                foreach (enUGUIEvent evt in mEventMaping)
+                foreach (enUGUIEvent evt in mEnUGUIEventMaping)
                 {
                     StrayFogGamePools.eventAggregatorManager
                     .AddListener(evt,
                         (args) =>
                         {
-                            Debug.Log(this + " " + args.JsonSerialize());
+                            Debug.Log(this + "【enUGUIEvent】 " + args.JsonSerialize());
+                        }
+                    );
+                }
+                foreach (enGameEvent evt in mEnGameEventMaping)
+                {
+                    StrayFogGamePools.eventAggregatorManager
+                    .AddListener(evt,
+                        (args) =>
+                        {
+                            Debug.Log(this + "【enGameEvent】 " + args.JsonSerialize());
                         }
                     );
                 }
