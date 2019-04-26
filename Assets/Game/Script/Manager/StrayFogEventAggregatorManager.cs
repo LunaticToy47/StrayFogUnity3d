@@ -37,7 +37,10 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
         {
             mEventAggregatorHandlerMaping[tKey].Add(eKey, new List<EventAggregatorHandler>());
         }
-        mEventAggregatorHandlerMaping[tKey][eKey].Add(_event);
+        if (!mEventAggregatorHandlerMaping[tKey][eKey].Contains(_event))
+        {
+            mEventAggregatorHandlerMaping[tKey][eKey].Add(_event);
+        }        
 #if UNITY_EDITOR
         //UnityEngine.Debug.Log(string.Format("AddListener【Type:{0} Handler:{1}】", tKey, eKey));
 #endif
@@ -54,10 +57,16 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
     {
         int tKey = _eventType.GetType().GetHashCode();
         int eKey = _event.GetHashCode();
+        if (mEventAggregatorHandlerMaping.ContainsKey(tKey) 
+            && mEventAggregatorHandlerMaping[tKey].ContainsKey(eKey)
+            && mEventAggregatorHandlerMaping[tKey][eKey].Contains(_event))
+        {
+            mEventAggregatorHandlerMaping[tKey][eKey].Remove(_event);
+        }
 #if UNITY_EDITOR
-        //UnityEngine.Debug.Log(string.Format("RemoveListener【Type:{0} Handler:{1}】", tKey, eKey));
+            //UnityEngine.Debug.Log(string.Format("RemoveListener【Type:{0} Handler:{1}】", tKey, eKey));
 #endif
-    }
+        }
     #endregion
 
     #region Dispatch 发布事件侦听

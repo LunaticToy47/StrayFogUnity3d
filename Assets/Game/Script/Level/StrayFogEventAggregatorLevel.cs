@@ -28,26 +28,29 @@ public class StrayFogEventAggregatorLevel : AbsLevel
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-                foreach (enUGUIEvent evt in mEnUGUIEventMaping)
+                for (int i = 0; i < 10; i++)
                 {
-                    StrayFogGamePools.eventAggregatorManager
-                    .AddListener(evt,
-                        (args) =>
-                        {
-                            Debug.Log(this + "【enUGUIEvent】 " + args.JsonSerialize());
-                        }
-                    );
-                }
-                foreach (enGameEvent evt in mEnGameEventMaping)
-                {
-                    StrayFogGamePools.eventAggregatorManager
-                    .AddListener(evt,
-                        (args) =>
-                        {
-                            Debug.Log(this + "【enGameEvent】 " + args.JsonSerialize());
-                        }
-                    );
-                }
+                    foreach (enUGUIEvent evt in mEnUGUIEventMaping)
+                    {
+                        StrayFogGamePools.eventAggregatorManager
+                        .AddListener(evt,
+                            (args) =>
+                            {
+                                Debug.Log(this + "【enUGUIEvent】 " + args.JsonSerialize());
+                            }
+                        );
+                    }
+                    foreach (enGameEvent evt in mEnGameEventMaping)
+                    {
+                        StrayFogGamePools.eventAggregatorManager
+                        .AddListener(evt,
+                            (args) =>
+                            {
+                                Debug.Log(this + "【enGameEvent】 " + args.JsonSerialize());
+                            }
+                        );
+                    }
+                }                
                 mCanDispatch = true;
             });            
         });
