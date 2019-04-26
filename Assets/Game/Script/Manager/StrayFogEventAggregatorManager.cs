@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 /// <summary>
 /// 事件聚合句柄
 /// </summary>
@@ -11,6 +12,11 @@ public delegate void EventAggregatorHandler<T>(T _args) where T : AbsEventAggreg
 /// </summary>
 public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
 {
+    /// <summary>
+    /// 事件侦听映射
+    /// </summary>
+    static Dictionary<int, Dictionary<int, object>> mEventListenerMaping = new Dictionary<int, Dictionary<int, object>>();
+
     #region AddListener 添加事件侦听
     /// <summary>
     /// 添加事件侦听
@@ -21,7 +27,9 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
     public void AddListener<T>(Enum _eventType, EventAggregatorHandler<T> _event)
          where T : AbsEventAggregatorArgs
     {
-        
+        int tKey = typeof(T).GetHashCode();
+        int eKey = _eventType.GetHashCode();
+        UnityEngine.Debug.Log("AddListener eventType=>" + eKey);
     }
     #endregion
 
@@ -35,7 +43,8 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
     public void RemoveListener<T>(Enum _eventType, EventAggregatorHandler<T> _event)
         where T : AbsEventAggregatorArgs
     {
-
+        int tKey = typeof(T).GetHashCode();
+        int eKey = _eventType.GetHashCode();
     }
     #endregion
 
@@ -48,7 +57,9 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
     public void Dispatch<T>(T _args)
         where T : AbsEventAggregatorArgs
     {
-
+        int tKey = typeof(T).GetHashCode();
+        int eKey = _args.eventType.GetHashCode();
+        UnityEngine.Debug.Log("Dispatch eventType=>" + eKey);
     }
     #endregion
 }

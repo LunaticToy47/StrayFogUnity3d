@@ -52,7 +52,7 @@ public class StrayFogEventAggregatorLevel : AbsLevel
                 if (GUILayout.Button(string.Format("Dispatch【{0}】", evt)))
                 {
                     StrayFogGamePools.eventAggregatorManager
-                    .Dispatch(new UGUIEventAggregatorArgs(enUGUIEvent.ToggleScene, this, evt));
+                    .Dispatch(new UGUIEventAggregatorArgs(evt, this, evt));
                 }                
             }
         }        
