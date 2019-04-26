@@ -71,9 +71,23 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
         int eKey = _args.eventType.GetHashCode();
         if (mEventAggregatorHandlerMaping.ContainsKey(tKey) && mEventAggregatorHandlerMaping[tKey].ContainsKey(eKey))
         {
-            foreach (EventAggregatorHandler evt in mEventAggregatorHandlerMaping[tKey][eKey])
-            {                
-                evt.Invoke(_args);
+            List<int> remove = new List<int>();
+
+            for (int i = 0; i < mEventAggregatorHandlerMaping[tKey][eKey].Count; i++)
+            {
+                if (mEventAggregatorHandlerMaping[tKey][eKey][i].Target.Equals(null))
+                {
+                    remove.Add(i);
+                }
+                else
+                {
+                    mEventAggregatorHandlerMaping[tKey][eKey][i].Invoke(_args);
+                }
+            }
+
+            foreach (int index in remove)
+            {
+                mEventAggregatorHandlerMaping[tKey][eKey].RemoveAt(index);
             }
         }
     }
