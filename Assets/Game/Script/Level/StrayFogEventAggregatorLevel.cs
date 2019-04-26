@@ -36,7 +36,10 @@ public class StrayFogEventAggregatorLevel : AbsLevel
                         .AddListener(evt,
                             (args) =>
                             {
+                                StrayFogEventAggregatorLevel obj = null;
+                                obj.Awake();
                                 Debug.Log(this + "【enUGUIEvent】 " + args.JsonSerialize());
+                                //throw new UnityException(this + "【enUGUIEvent】 " + args.JsonSerialize());
                             }
                         );
                     }
@@ -47,6 +50,7 @@ public class StrayFogEventAggregatorLevel : AbsLevel
                             (args) =>
                             {
                                 Debug.Log(this + "【enGameEvent】 " + args.JsonSerialize());
+                                //throw new UnityException(this + "【enGameEvent】 " + args.JsonSerialize());
                             }
                         );
                     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
@@ -41,6 +42,7 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
         {
             mEventAggregatorHandlerMaping[tKey][eKey].Add(_event);
         }        
+        
 #if UNITY_EDITOR
         //UnityEngine.Debug.Log(string.Format("AddListener【Type:{0} Handler:{1}】", tKey, eKey));
 #endif
@@ -90,7 +92,8 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
                 }
                 else
                 {
-                    mEventAggregatorHandlerMaping[tKey][eKey][i].Invoke(_args);
+                    StartCoroutine(OnDispatchInvoke(mEventAggregatorHandlerMaping[tKey][eKey][i], _args));
+                    //mEventAggregatorHandlerMaping[tKey][eKey][i].Invoke(_args);
                 }
             }
 
@@ -99,6 +102,18 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
                 mEventAggregatorHandlerMaping[tKey][eKey].RemoveAt(index);
             }
         }
+    }
+
+    /// <summary>
+    /// 发布事件
+    /// </summary>
+    /// <param name="_handler">事件</param>
+    /// <param name="_args">参数</param>
+    /// <returns>异步</returns>
+    IEnumerator OnDispatchInvoke(EventAggregatorHandler _handler, AbsEventAggregatorArgs _args)
+    {
+        _handler.Invoke(_args);
+        yield return new WaitForEndOfFrame();        
     }
     #endregion
 
@@ -123,25 +138,24 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
         GUILayout.Space(10);
         mScrollViewPosition = GUILayout.BeginScrollView(mScrollViewPosition);
         GUILayout.BeginHorizontal();
-        foreach (enUGUIEvent evt in mEnUGUIEventMaping)
+        if (GUILayout.Button("Dispatch【UGUI】Events"))
         {
-            if (GUILayout.Button(string.Format("Dispatch【UGUI】【{0}】", evt)))
+            foreach (enUGUIEvent evt in mEnUGUIEventMaping)
             {
                 StrayFogGamePools.eventAggregatorManager
                 .Dispatch(new UGUIEventAggregatorArgs(evt, this, evt));
             }
         }
-        GUILayout.EndHorizontal();
-        GUILayout.BeginHorizontal();
-        foreach (enGameEvent evt in mEnGameEventMaping)
+        if (GUILayout.Button("Dispatch【Game】Events"))
         {
-            if (GUILayout.Button(string.Format("Dispatch【Game】【{0}】", evt)))
+            foreach (enGameEvent evt in mEnGameEventMaping)
             {
                 StrayFogGamePools.eventAggregatorManager
                 .Dispatch(new GameEventAggregatorArgs(evt, this, evt));
             }
         }
         GUILayout.EndHorizontal();
+
         GUILayout.EndScrollView();
     }
     #endregion
