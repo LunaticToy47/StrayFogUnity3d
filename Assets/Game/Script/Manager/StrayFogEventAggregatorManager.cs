@@ -11,22 +11,44 @@ public delegate void EventAggregatorHandler<T>(T _args) where T : AbsEventAggreg
 /// </summary>
 public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
 {
-
+    #region AddListener 添加事件侦听
+    /// <summary>
+    /// 添加事件侦听
+    /// </summary>
+    /// <typeparam name="T">事件参数类型</typeparam>
+    /// <param name="_eventType">事件枚举</param>
+    /// <param name="_event">事件</param>
     public void AddListener<T>(Enum _eventType, EventAggregatorHandler<T> _event)
          where T : AbsEventAggregatorArgs
     {
 
     }
+    #endregion
 
+    #region RemoveListener 移除事件侦听
+    /// <summary>
+    /// 移除事件侦听
+    /// </summary>
+    /// <typeparam name="T">事件参数类型</typeparam>
+    /// <param name="_eventType">事件枚举</param>
+    /// <param name="_event">事件</param>
     public void RemoveListener<T>(Enum _eventType, EventAggregatorHandler<T> _event)
         where T : AbsEventAggregatorArgs
     {
 
     }
+    #endregion
 
+    #region Dispatch 发布事件侦听
+    /// <summary>
+    /// 发布事件侦听
+    /// </summary>
+    /// <typeparam name="T">事件参数类型</typeparam>
+    /// <param name="_args">事件参数</param>
     public void Dispatch<T>(T _args)
         where T : AbsEventAggregatorArgs
     {
 
-    }    
+    }
+    #endregion
 }
