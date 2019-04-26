@@ -25,5 +25,6 @@ public class StrayFog_bx_map_pve_1_Level : AbsLevel
     private void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
     }
 }

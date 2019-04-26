@@ -31,7 +31,7 @@ public class StrayFogUIWindowLevel : AbsLevel
     void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
-
+        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
         foreach (enUIWindow w in msrBtnWindows)
         {
             if (GUILayout.Button(w.ToString()))

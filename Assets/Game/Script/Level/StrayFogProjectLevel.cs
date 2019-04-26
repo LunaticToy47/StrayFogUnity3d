@@ -98,5 +98,6 @@ public class StrayFogProjectLevel : AbsMonoBehaviour
     private void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
     }
 }

@@ -27,5 +27,6 @@ public class StrayFogXLSLevel : AbsLevel
     private void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
     }
 }

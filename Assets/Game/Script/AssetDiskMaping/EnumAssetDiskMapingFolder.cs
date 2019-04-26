@@ -7,6 +7,7 @@ public enum enAssetDiskMapingFolder
 	Assets_Game_AssetBundles_Materials = -976912153,
 	Assets_Game_AssetBundles_Prefabs_Character = -322493923,
 	Assets_Game_AssetBundles_Prefabs_Normal = 1017328225,
+	Assets_Game_AssetBundles_Prefabs_Skill_Hero_1002 = 15837866,
 	Assets_Game_AssetBundles_Scene = -1643264599,
 	Assets_Game_AssetBundles_Sprite_Diaphragm = 30704076,
 	Assets_Game_AssetBundles_Sprite_Loading = -1787621370,

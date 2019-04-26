@@ -27,10 +27,10 @@ public class StrayFogEventAggregatorLevel : AbsLevel
                 foreach (enUGUIEvent evt in mEventMaping)
                 {
                     StrayFogGamePools.eventAggregatorManager
-                    .AddListener<UGUIEventAggregatorArgs>(evt,
+                    .AddListener(evt,
                         (args) =>
                         {
-                            Debug.Log(args.JsonSerialize());
+                            Debug.Log(this + " " + args.JsonSerialize());
                         }
                     );
                 }
@@ -47,14 +47,7 @@ public class StrayFogEventAggregatorLevel : AbsLevel
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         if (mCanDispatch)
         {
-            foreach (enUGUIEvent evt in mEventMaping)
-            {
-                if (GUILayout.Button(string.Format("Dispatch【{0}】", evt)))
-                {
-                    StrayFogGamePools.eventAggregatorManager
-                    .Dispatch(new UGUIEventAggregatorArgs(evt, this, evt));
-                }                
-            }
+            StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
         }        
     }
 }

@@ -113,6 +113,7 @@ public class StrayFogXLuaLevel : AbsLevel
     void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
         if (GUILayout.Button(string.Format("{0}=>{1}", GetType().Name, xLuaFileId)))
         {
             InitXLua(xLuaFileId);

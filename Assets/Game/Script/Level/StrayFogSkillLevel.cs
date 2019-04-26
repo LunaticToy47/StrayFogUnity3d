@@ -131,6 +131,7 @@ public class StrayFogSkillLevel : AbsLevel
             }            
         }
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
     }
 
     private void Update()

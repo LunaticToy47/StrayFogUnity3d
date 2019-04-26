@@ -37,5 +37,6 @@ public class StrayFogRunningStartUpLevel : AbsMonoBehaviour
         GUILayout.Label(StrayFogGamePools.setting.JsonSerialize());
         GUILayout.Label(mError);
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
     }
 }

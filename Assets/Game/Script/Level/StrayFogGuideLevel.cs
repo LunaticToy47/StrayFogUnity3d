@@ -34,8 +34,8 @@ public class StrayFogGuideLevel : AbsLevel
         {
             StartCoroutine(OnOpenLobby());
         }
-        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();      
-        
+        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
         mScrollViewPosition = GUILayout.BeginScrollView(mScrollViewPosition);
         GUI.skin.label.fontSize = 40;
         GUI.color = Color.black;
