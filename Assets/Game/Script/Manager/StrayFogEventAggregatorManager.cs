@@ -21,7 +21,7 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
     public void AddListener<T>(Enum _eventType, EventAggregatorHandler<T> _event)
          where T : AbsEventAggregatorArgs
     {
-
+        
     }
     #endregion
 
