@@ -2,9 +2,7 @@
   "dependencies": {
     "com.unity.ads": "2.0.8",
     "com.unity.analytics": "2.0.16",
-    "com.unity.collections": "0.0.9-preview.10",
     "com.unity.entities": "0.0.12-preview.21",
-    "com.unity.jobs": "0.0.7-preview.5",
     "com.unity.package-manager-ui": "1.9.11",
     "com.unity.purchasing": "2.0.6",
     "com.unity.textmeshpro": "1.2.4",

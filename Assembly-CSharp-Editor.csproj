@@ -358,9 +358,6 @@
     <Reference Include="UnityEditor.Analytics">
       <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/Editor/UnityEditor.Analytics.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.6/UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Users/baozhenliang/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
