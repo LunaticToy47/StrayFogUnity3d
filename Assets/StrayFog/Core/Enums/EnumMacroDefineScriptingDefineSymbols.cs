@@ -53,7 +53,12 @@ public enum enSystemDefine
     /// 强制使用数据库
     /// </summary>
     [AliasTooltip("强制使用数据库")]
-    FORCEUSESQLITE
+    FORCEUSESQLITE,
+    /// <summary>
+    /// 使用Entity-Component-System
+    /// </summary>
+    [AliasTooltip("使用Entity-Component-System")]
+    USEENTITYCOMPONENTSYSTEM,
 }
 #endregion
 
