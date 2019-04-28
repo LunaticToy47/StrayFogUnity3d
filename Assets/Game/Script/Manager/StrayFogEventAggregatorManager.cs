@@ -111,7 +111,7 @@ public class StrayFogEventAggregatorManager : AbsSingleMonoBehaviour
     /// <param name="_args">参数</param>
     /// <returns>异步</returns>
     IEnumerator OnDispatchInvoke(EventAggregatorHandler _handler, AbsEventAggregatorArgs _args)
-    {
+    {        
         _handler.Invoke(_args);
         yield return new WaitForEndOfFrame();        
     }
