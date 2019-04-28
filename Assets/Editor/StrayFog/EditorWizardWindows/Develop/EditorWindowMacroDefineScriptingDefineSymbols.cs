@@ -74,8 +74,14 @@ public class EditorWindowMacroDefineScriptingDefineSymbols : AbsEditorWindow
             EditorGUILayout.LabelField(string.Format("【{0}】",define.Value.alias));
             foreach (KeyValuePair<string, AliasTooltipAttribute> attribute in mDefineAttributes[define.Key])
             {
+                EditorGUILayout.BeginHorizontal();
                 mDefineStates[define.Key][attribute.Key] = EditorGUILayout.ToggleLeft(
                     string.Format("{0}【{1}】", attribute.Key, attribute.Value.alias), mDefineStates[define.Key][attribute.Key]);
+                if (GUILayout.Button(string.Format("Copy 【{0}】Define", attribute.Value.alias)))
+                {
+                    EditorStrayFogApplication.CopyToClipboard(attribute.Key);
+                }
+                EditorGUILayout.EndHorizontal();
             }
             GUILayout.HorizontalSlider(0, 0, 0, GUILayout.Height(1));
             EditorGUILayout.Separator();
