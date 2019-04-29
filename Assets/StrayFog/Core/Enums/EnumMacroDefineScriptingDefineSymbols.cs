@@ -23,6 +23,11 @@ public enum enDeveloperDefine
     /// </summary>
     [AliasTooltip("Config日志")]
     CONFIGLOG,
+    /// <summary>
+    /// 使用Entity-Component-System
+    /// </summary>
+    [AliasTooltip("使用Entity-Component-System")]
+    USEENTITYCOMPONENTSYSTEM,
 }
 #endregion
 
@@ -53,12 +58,7 @@ public enum enSystemDefine
     /// 强制使用数据库
     /// </summary>
     [AliasTooltip("强制使用数据库")]
-    FORCEUSESQLITE,
-    /// <summary>
-    /// 使用Entity-Component-System
-    /// </summary>
-    [AliasTooltip("使用Entity-Component-System")]
-    USEENTITYCOMPONENTSYSTEM,
+    FORCEUSESQLITE,    
 }
 #endregion
 
