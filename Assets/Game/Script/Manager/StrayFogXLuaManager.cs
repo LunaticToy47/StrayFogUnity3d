@@ -151,10 +151,7 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
             mXLuaStructMaping.Add(_xLuaFileId, new XLuaStruct(funLuaTable, fun));
         }
 
-        if (_setTableCallback != null)
-        {
-            _setTableCallback(mXLuaStructMaping[_xLuaFileId].luaTable);
-        }
+        _setTableCallback?.Invoke(mXLuaStructMaping[_xLuaFileId].luaTable);
         mXLuaStructMaping[_xLuaFileId].luaFunction.Call();
 
         return mXLuaStructMaping[_xLuaFileId].luaTable;
