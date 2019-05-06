@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine;
 /// <summary>
 /// EntityComponentSystem关卡
 /// </summary>
