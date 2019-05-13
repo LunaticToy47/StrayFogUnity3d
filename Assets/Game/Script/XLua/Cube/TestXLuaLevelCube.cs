@@ -37,7 +37,7 @@ public class TestXLuaLevelCube : AbsMonoBehaviour
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(xLuaFileId, (table) =>
         {
             table.Set("self", this);
-            table.Set("axis",Vector3.right);
+            table.Set("axis",Vector3.right * Mathf.Sign(UnityEngine.Random.Range(-1, 1)));
             table.Set("speed", UnityEngine.Random.Range(-20, 20));
         });
 

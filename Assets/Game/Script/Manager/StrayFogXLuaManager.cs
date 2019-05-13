@@ -100,10 +100,6 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
 
     #region GetLuaTable 获得LuaTable
     /// <summary>
-    /// XLuaStruct结构映射
-    /// </summary>
-    Dictionary<int, LuaFunction> mXLuaFunctionMaping = new Dictionary<int, LuaFunction>();
-    /// <summary>
     /// 解析xLua
     /// </summary>
     /// <param name="_xLuaFileId">xLua文件ID</param>
@@ -118,7 +114,7 @@ public class StrayFogXLuaManager : AbsSingleMonoBehaviour
         meta.Dispose();
 
         string xLua = OnGetXLuaScript(_xLuaFileId);
-        LuaFunction luaFun = xLuaEnv.LoadString(xLua);
+        LuaFunction luaFun = xLuaEnv.LoadString(xLua); 
         luaFun.SetEnv(luaTable);
         _setTableCallback?.Invoke(luaTable);
         luaFun.Call();

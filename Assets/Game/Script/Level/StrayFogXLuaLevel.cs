@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using XLua;
 [AddComponentMenu("Game/ExampleLevel/StrayFogXLuaLevel")]
@@ -121,21 +122,36 @@ public class StrayFogXLuaLevel : AbsLevel
         }
     }
 
+   /// <summary>
+    /// Cube组
+    /// </summary>
+    List<GameObject> mlstCubes = new List<GameObject>();
+       
     /// <summary>
     /// 初始化一批Cube
     /// </summary>
     void InitBatchCube()
     {
+        if (mlstCubes.Count > 0)
+        {
+            foreach (GameObject g in mlstCubes)
+            {
+                Destroy(g);
+            }
+        }
+
         GameObject go = null;
 
         go = Instantiate(cube.gameObject);
         go.name = "Cube Left";
         go.AddComponent<TestXLuaLevelCube>();
         go.transform.position = Vector3.right * -1.8f + cube.position;
+        mlstCubes.Add(go);
 
         go = Instantiate(cube.gameObject);
         go.name = "Cube Right";
         go.AddComponent<TestXLuaLevelCube>();
-        go.transform.position = Vector3.right * 1.8f + cube.position;        
+        go.transform.position = Vector3.right * 1.8f + cube.position;
+        mlstCubes.Add(go);
     }
 }
