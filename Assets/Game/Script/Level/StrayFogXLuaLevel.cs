@@ -129,15 +129,13 @@ public class StrayFogXLuaLevel : AbsLevel
         GameObject go = null;
 
         go = Instantiate(cube.gameObject);
-        go.name = "Cube Right";
-        go.AddComponent<TestXLuaLevelCube>();
-        go.transform.position = Vector3.right * 1.8f + cube.position;
-
-        go = Instantiate(cube.gameObject);
         go.name = "Cube Left";
-        go.AddComponent<TestXLuaLevelCube>();        
+        go.AddComponent<TestXLuaLevelCube>();
         go.transform.position = Vector3.right * -1.8f + cube.position;
 
-        
+        go = Instantiate(cube.gameObject);
+        go.name = "Cube Right";
+        go.AddComponent<TestXLuaLevelCube>();
+        go.transform.position = Vector3.right * 1.8f + cube.position;        
     }
 }

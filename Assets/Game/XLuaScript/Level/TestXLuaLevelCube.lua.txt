@@ -1,6 +1,4 @@
-﻿local speed = 10;
-local axis = CS.UnityEngine.Vector3.up;
-function awake()
+﻿function awake()
 	print(self,"cube awake...");
 end
 
