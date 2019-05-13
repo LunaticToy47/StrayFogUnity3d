@@ -1,0 +1,19 @@
+﻿local speed = 10;
+local axis = CS.UnityEngine.Vector3.up;
+function awake()
+	print(self,"cube awake...");
+end
+
+function start()
+	print(self,"cube start...");
+end
+
+function update()
+	print(self,"cube update...");
+	local r = axis * CS.UnityEngine.Time.deltaTime * speed;
+	self.transform:Rotate(r);
+end
+
+function ondestroy()
+    print(self,"cube destroy");
+end

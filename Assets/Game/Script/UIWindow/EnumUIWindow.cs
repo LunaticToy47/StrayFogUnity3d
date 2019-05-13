@@ -3,9 +3,9 @@
 /// </summary>
 public enum enUIWindow
 {
-	LobbyWindow = -521227080,
-	PlayerListWindow = -895006523,
-	HeroListWindow = 1597455901,
-	MessageBoxWindow = -104138007,
-	GuideWindow = -1292752314,
+	LobbyWindow = -1979395819,
+	HeroListWindow = -1543033018,
+	PlayerListWindow = -2000797334,
+	MessageBoxWindow = 259464890,
+	GuideWindow = 600045345,
 }

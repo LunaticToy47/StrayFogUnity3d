@@ -15,7 +15,7 @@ public class EditorUtility_AssetBundleName : AbsSingle
     /// <summary>
     /// 非法的目录
     /// </summary>
-    const string mIllegalUnityDirectory = @"[^\w|/]";
+    const string mIllegalUnityDirectory = @"[^\w|/|\\]";
 
     #region IsIgnoreSetAssetBundleName 是否忽略设置AssetBundleName名称
     /// <summary>

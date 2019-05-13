@@ -2,13 +2,12 @@
 using System.Collections;
 using UnityEngine;
 using XLua;
-[AddComponentMenu("Game/ExampleLevel/StrayFogXLuaLevel")]
-public class StrayFogXLuaLevel : AbsLevel
+/// <summary>
+/// TestXLuaLevelCube
+/// </summary>
+[AddComponentMenu("Game/Test/xLua/TestXLuaLevelCube")]
+public class TestXLuaLevelCube : AbsMonoBehaviour
 {
-    /// <summary>
-    /// cube
-    /// </summary>
-    public Transform cube;
     /// <summary>
     /// LuaTable
     /// </summary>
@@ -28,29 +27,17 @@ public class StrayFogXLuaLevel : AbsLevel
     /// <summary>
     /// 是否触发Start
     /// </summary>
-    bool mTriggerStart=false;
+    bool mTriggerStart = false;
+
     /// <summary>
     /// Awake
     /// </summary>
     void Awake()
     {
-        StrayFogGamePools.gameManager.Initialization(() =>
+        mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(xLuaFileId, (table) =>
         {
-            StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
-            {
-            });            
-        });
-    }
-
-    /// <summary>
-    /// 初始化XLua
-    /// </summary>
-    /// <param name="_xLuaFileId">xLuaFileId</param>
-    void InitXLua(int _xLuaFileId)
-    {
-        mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(_xLuaFileId, (table) => {
             table.Set("self", this);
-            table.Set("cube", cube);
+            table.Set("speed", UnityEngine.Random.Range(10, 20));
         });
 
         Action luaAwake = mScriptEnv.Get<Action>("awake");
@@ -93,7 +80,7 @@ public class StrayFogXLuaLevel : AbsLevel
         if (mLuaUpdate != null)
         {
             mLuaUpdate();
-        }        
+        }
     }
 
     void OnDestroy()
@@ -105,39 +92,5 @@ public class StrayFogXLuaLevel : AbsLevel
         mLuaOnDestroy = null;
         mLuaUpdate = null;
         mLuaStart = null;
-    }
-
-    /// <summary>
-    /// OnGUI
-    /// </summary>
-    void OnGUI()
-    {
-        StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
-        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
-        if (GUILayout.Button(string.Format("{0}=>{1}", GetType().Name, xLuaFileId)))
-        {
-            InitXLua(xLuaFileId);
-            InitBatchCube();
-        }
-    }
-
-    /// <summary>
-    /// 初始化一批Cube
-    /// </summary>
-    void InitBatchCube()
-    {
-        GameObject go = null;
-
-        go = Instantiate(cube.gameObject);
-        go.name = "Cube Right";
-        go.AddComponent<TestXLuaLevelCube>();
-        go.transform.position = Vector3.right * 1.8f + cube.position;
-
-        go = Instantiate(cube.gameObject);
-        go.name = "Cube Left";
-        go.AddComponent<TestXLuaLevelCube>();        
-        go.transform.position = Vector3.right * -1.8f + cube.position;
-
-        
     }
 }

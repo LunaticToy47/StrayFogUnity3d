@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.Rendering;
 /// <summary>
 /// EntityComponentSystem关卡
 /// </summary>
@@ -40,8 +41,17 @@ public class StrayFogEntityComponentSystemLevel : AbsLevel
         //NativeArray<Entity> arrEntity = new NativeArray<Entity>(64, Allocator.Persistent);
         //manager.Instantiate(playerEntity, arrEntity);
         //arrEntity.Dispose();
+        //EntityCommandBuffer       
+        
+        //JobComponentSystem
+
+        //IComponentData
+        //ISharedComponentData
+        //ISystemStateComponentData
+        //ISharedSystemStateComponentData
 
         Entity entity = manager.Instantiate(playerEntity);
+        manager.AddComponent(entity, ComponentType.Create<ECSComponent>());
     }
 
     /// <summary>
