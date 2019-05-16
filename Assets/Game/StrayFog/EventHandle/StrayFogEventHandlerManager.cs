@@ -128,7 +128,7 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
         {
             foreach (enExampleGameEvent evt in mEnGameEventMaping)
             {
-                StrayFogGamePools.eventAggregatorManager
+                StrayFogGamePools.eventHandlerManager
                 .Dispatch(new GameEventHandlerArgs(evt, this, evt));
             }
         }

@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// 全局游戏管理器
 /// </summary>
-public static class StrayFogGamePools
+public static partial class StrayFogGamePools
 {
     #region StrayFogAssetBundleManager
     /// <summary>
@@ -107,11 +107,11 @@ public static class StrayFogGamePools
     }
     #endregion
 
-    #region StrayFogEventAggregatorManager
+    #region StrayFogEventHandlerManager
     /// <summary>
-    /// StrayFogEventAggregatorManager
+    /// StrayFogEventHandlerManager
     /// </summary>
-    public static StrayFogEventHandlerManager eventAggregatorManager
+    public static StrayFogEventHandlerManager eventHandlerManager
     {
         get
         {

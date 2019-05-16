@@ -53,6 +53,6 @@ public class ExampleTerrainLevel : AbsLevel
     private void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
-        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
     }
 }

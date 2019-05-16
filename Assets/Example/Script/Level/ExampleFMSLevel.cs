@@ -132,7 +132,7 @@ public class ExampleFMSLevel : AbsLevel
             }            
         }
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
-        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
     }
 
     private void Update()

@@ -28,7 +28,7 @@ public class ExampleEventHandlerLevel : AbsLevel
                 {
                     foreach (enExampleGameEvent evt in mEnGameEventMaping)
                     {
-                        StrayFogGamePools.eventAggregatorManager
+                        StrayFogGamePools.eventHandlerManager
                         .AddListener((int)evt,
                             (args) =>
                             {
@@ -51,7 +51,7 @@ public class ExampleEventHandlerLevel : AbsLevel
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         if (mCanDispatch)
         {
-            StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
+            StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
         }        
     }
 }

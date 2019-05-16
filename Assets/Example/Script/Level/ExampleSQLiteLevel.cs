@@ -91,7 +91,7 @@ public class ExampleSQLiteLevel : AbsLevel
         #endregion
 
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
-        StrayFogGamePools.eventAggregatorManager.DrawLevelSelectButtonOnGUI();
+        StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
     }
 
     /// <summary>

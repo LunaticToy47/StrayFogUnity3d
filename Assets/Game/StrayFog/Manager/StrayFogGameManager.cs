@@ -4,7 +4,7 @@ using UnityEngine;
 /// 运行时管理器
 /// </summary>
 [AddComponentMenu("StrayFog/Game/Manager/StrayFogGameManager")]
-public class StrayFogGameManager : AbsSingleMonoBehaviour
+public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
 {
     #region Initialization 初始化
     /// <summary>
@@ -27,6 +27,8 @@ public class StrayFogGameManager : AbsSingleMonoBehaviour
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
             StrayFogGamePools.guideManager.TriggerCheck();
+
+            OnPartialInitialization();
         }
 
         if (_onCallback != null)

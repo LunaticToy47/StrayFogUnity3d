@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 /// 场景管理
 /// </summary>
 [AddComponentMenu("StrayFog/Game/Manager/StrayFogSceneManager")]
-public class StrayFogSceneManager : AbsSingleMonoBehaviour
+public sealed partial class StrayFogSceneManager : AbsSingleMonoBehaviour
 {
     /// <summary>
     /// 场景枚举
