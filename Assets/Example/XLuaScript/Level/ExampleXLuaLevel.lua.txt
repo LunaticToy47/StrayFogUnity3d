@@ -1,4 +1,4 @@
-﻿local selfTable = require 'StrayFogXLuaLevelFunction';
+﻿local selfTable = require 'ExampleXLuaLevelFunction';
 
 function awake()
 	print("self",self);
