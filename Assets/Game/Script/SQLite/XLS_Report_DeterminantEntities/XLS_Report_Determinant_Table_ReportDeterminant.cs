@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// ReportDeterminant实体
 /// </summary>
-[SQLiteTableMap(-1137888412,"Assets/Game/Editor/XLS_Report/ReportDeterminant.xlsx","ReportDeterminant", enSQLiteEntityClassify.Table,true, 1,2,3,4,"Assets/Game/Editor/XLS_Report/XLS_Report.db","c__1833182787",typeof(XLS_Report_Determinant_Table_ReportDeterminant),false,true)]
+[SQLiteTableMap(-1747853252,"Assets/Game/Editor/XLS_Report/ReportDeterminant.xlsx","ReportDeterminant", enSQLiteEntityClassify.Table,true, 1,2,3,4,"Assets/Game/Editor/XLS_Report/XLS_Report.db","c_1478679219",typeof(XLS_Report_Determinant_Table_ReportDeterminant),false,true)]
 public partial class XLS_Report_Determinant_Table_ReportDeterminant: AbsStrayFogSQLiteEntity
 {
 	

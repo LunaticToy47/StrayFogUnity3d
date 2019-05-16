@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 引导触发
 /// </summary>
-[AddComponentMenu("Game/Guide/UIGuideTrigger")]
+[AddComponentMenu("StrayFog/Game/Guide/UIGuideTrigger")]
 public class UIGuideTrigger : EventTrigger
 {
     #region config

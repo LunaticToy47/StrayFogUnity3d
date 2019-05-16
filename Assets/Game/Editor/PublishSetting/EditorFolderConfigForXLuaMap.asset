@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paths:
   - Assets/Game/XLuaScript
+  - Assets/Example/XLuaScript
   invoke: 

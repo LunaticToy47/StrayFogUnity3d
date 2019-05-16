@@ -3,7 +3,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 引导触发
 /// </summary>
-[AddComponentMenu("Game/Guide/UIGuideValidate")]
+[AddComponentMenu("StrayFog/Game/Guide/UIGuideValidate")]
 public class UIGuideValidate : AbsMonoBehaviour
 {
     #region config

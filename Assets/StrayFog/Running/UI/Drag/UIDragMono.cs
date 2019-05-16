@@ -23,7 +23,7 @@ using UnityEngine.UI;
 /// <summary>
 /// UI拖拽组件
 /// </summary>
-[AddComponentMenu("Game/UI/Drag/UIDragMono")]
+[AddComponentMenu("StrayFog/Game/UI/Drag/UIDragMono")]
 [RequireComponent(typeof(MaskableGraphic))]
 public class UIDragMono : AbsMonoBehaviour, IEndDragHandler, IBeginDragHandler, IDragHandler
 {

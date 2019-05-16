@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// 依赖项
 /// 1.UIGraphicMaskShader.shader
 /// </summary>
-[AddComponentMenu("Game/UI/GraphicMask/Shader")]
+[AddComponentMenu("StrayFog/Game/UI/GraphicMask/Shader")]
 public class UIGraphicMaskShader : AbsUIGraphicMask
 {
     #region OnPopulateMesh

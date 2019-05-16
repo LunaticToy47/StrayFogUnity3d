@@ -111,11 +111,11 @@ public static class StrayFogGamePools
     /// <summary>
     /// StrayFogEventAggregatorManager
     /// </summary>
-    public static StrayFogEventAggregatorManager eventAggregatorManager
+    public static StrayFogEventHandlerManager eventAggregatorManager
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogEventAggregatorManager>();
+            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogEventHandlerManager>();
         }
     }
     #endregion    

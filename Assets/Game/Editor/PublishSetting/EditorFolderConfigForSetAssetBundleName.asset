@@ -14,4 +14,6 @@ MonoBehaviour:
   paths:
   - Assets/Game/AssetBundles
   - Assets/Game/XLuaScript
+  - Assets/Example/AssetBundles
+  - Assets/Example/XLuaScript
   invoke: 

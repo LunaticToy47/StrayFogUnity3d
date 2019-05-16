@@ -1,7 +1,9 @@
 ﻿using System;
+using UnityEngine;
 /// <summary>
 /// 运行时管理器
 /// </summary>
+[AddComponentMenu("StrayFog/Game/Manager/StrayFogGameManager")]
 public class StrayFogGameManager : AbsSingleMonoBehaviour
 {
     #region Initialization 初始化

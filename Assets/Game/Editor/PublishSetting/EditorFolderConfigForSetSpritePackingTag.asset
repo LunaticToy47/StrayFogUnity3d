@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paths:
   - Assets/Game/AssetBundles/SpriteAtlas
+  - Assets/Example/AssetBundles/SpriteAtlas
   invoke: 

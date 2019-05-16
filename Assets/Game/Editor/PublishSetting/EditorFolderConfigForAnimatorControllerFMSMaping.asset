@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paths:
   - Assets/Game/Resources/Animator
+  - Assets/Example/Resources/Animator
   invoke: 

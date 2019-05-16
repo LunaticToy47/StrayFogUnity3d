@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// 场景管理
 /// </summary>
+[AddComponentMenu("StrayFog/Game/Manager/StrayFogSceneManager")]
 public class StrayFogSceneManager : AbsSingleMonoBehaviour
 {
     /// <summary>
@@ -88,7 +89,7 @@ public class StrayFogSceneManager : AbsSingleMonoBehaviour
         {
             if (GUILayout.Button(f.ToString()))
             {
-                LoadScene(f, enAssetDiskMapingFolder.Assets_Game_AssetBundles_Scene);
+                LoadScene(f, enAssetDiskMapingFolder.Assets_Example_AssetBundles_Scene);
             }
         }
         GUILayout.EndHorizontal();

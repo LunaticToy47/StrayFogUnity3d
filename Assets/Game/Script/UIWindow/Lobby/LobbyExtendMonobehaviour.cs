@@ -2,7 +2,7 @@
 /// <summary>
 /// LobbyExtendMonobehaviour
 /// </summary>
-[AddComponentMenu("Game/UIWindow/LobbyExtendMonobehaviour")]
+[AddComponentMenu("StrayFog/Game/UIWindow/LobbyExtendMonobehaviour")]
 public class LobbyExtendMonobehaviour : AbsMonoBehaviour
 {
     /// <summary>

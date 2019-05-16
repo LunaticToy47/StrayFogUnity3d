@@ -2,7 +2,7 @@
 /// <summary>
 /// ShaderRippleWater
 /// </summary>
-[AddComponentMenu("Game/Shader/Water/RippleWater")]
+[AddComponentMenu("StrayFog/Game/Shader/Water/RippleWater")]
 [RequireComponent(typeof(Renderer))]
 public class ShaderRippleWater : AbsMonoBehaviour
 {

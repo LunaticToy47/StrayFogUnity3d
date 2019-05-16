@@ -4,7 +4,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 多边形雷达组件
 /// </summary>
-[AddComponentMenu("Game/UI/Radar/UIGeometryRadarMono")]
+[AddComponentMenu("StrayFog/Game/UI/Radar/UIGeometryRadarMono")]
 public class UIGeometryRadarMono : MaskableGraphic, ICanvasRaycastFilter
 {
     #region IsRaycastLocationValid 是否通过Raycast验证

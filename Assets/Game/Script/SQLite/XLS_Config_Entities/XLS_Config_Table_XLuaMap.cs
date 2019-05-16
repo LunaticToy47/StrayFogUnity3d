@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// XLuaMap实体
 /// </summary>
-[SQLiteTableMap(-455911087,"Assets/Game/Editor/XLS_Config/XLuaMap.xlsx","XLuaMap", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c__1581584321",typeof(XLS_Config_Table_XLuaMap),true,false)]
+[SQLiteTableMap(292118249,"Assets/Game/Editor/XLS_Config/XLuaMap.xlsx","XLuaMap", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_334573285",typeof(XLS_Config_Table_XLuaMap),true,false)]
 public partial class XLS_Config_Table_XLuaMap: AbsStrayFogSQLiteEntity
 {
 	

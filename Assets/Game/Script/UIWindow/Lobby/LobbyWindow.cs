@@ -3,7 +3,7 @@ using UnityEngine.UI;
 /// <summary>
 /// LobbyWindow
 /// </summary>
-[AddComponentMenu("Game/UIWindow/LobbyWindow")]
+[AddComponentMenu("StrayFog/Game/UIWindow/LobbyWindow")]
 public class LobbyWindow : AbsUIWindowView
 {
     /// <summary>

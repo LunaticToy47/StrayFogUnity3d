@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 引导注册组件
 /// </summary>
-[AddComponentMenu("Game/Guide/UIGuideRegister")]
+[AddComponentMenu("StrayFog/Game/Guide/UIGuideRegister")]
 public class UIGuideRegister : AbsMonoBehaviour
 {
     /// <summary>

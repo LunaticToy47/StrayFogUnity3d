@@ -5,7 +5,7 @@
 /// 1.GrassDestabilizeShader.shader
 /// </summary>
 /// </summary>
-[AddComponentMenu("Game/Shader/Grass/Destabilize")]
+[AddComponentMenu("StrayFog/Game/Shader/Grass/Destabilize")]
 public class GrassDestabilizeShaderMono : AbsMonoBehaviour
 {
 

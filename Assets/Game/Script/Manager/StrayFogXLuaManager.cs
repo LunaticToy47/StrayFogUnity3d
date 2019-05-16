@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using XLua;
+[AddComponentMenu("StrayFog/Game/Manager/StrayFogXLuaManager")]
 public class StrayFogXLuaManager : AbsSingleMonoBehaviour
 {
     #region lua引擎

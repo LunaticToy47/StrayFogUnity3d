@@ -3,7 +3,7 @@ using UnityEngine.UI;
 /// <summary>
 /// PlayerListWindow
 /// </summary>
-[AddComponentMenu("Game/UIWindow/PlayerListWindow")]
+[AddComponentMenu("StrayFog/Game/UIWindow/PlayerListWindow")]
 public class PlayerListWindow : AbsUIWindowView
 {
     /// <summary>

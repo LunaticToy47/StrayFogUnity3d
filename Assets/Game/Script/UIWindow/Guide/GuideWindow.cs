@@ -4,7 +4,7 @@ using UnityEngine.UI;
 /// <summary>
 /// GuideWindow
 /// </summary>
-[AddComponentMenu("Game/UIWindow/GuideWindow")]
+[AddComponentMenu("StrayFog/Game/UIWindow/GuideWindow")]
 public class GuideWindow : AbsUIWindowView
 {
     /// <summary>

@@ -22,6 +22,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 引导管理器
 /// </summary>
+[AddComponentMenu("StrayFog/Game/Manager/StrayFogGuideManager")]
 public class StrayFogGuideManager : AbsSingleMonoBehaviour
 {
     #region OnIsLevel 是否是指定关卡

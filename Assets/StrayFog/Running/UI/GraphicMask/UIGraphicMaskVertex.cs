@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// 依赖项
 /// 1.UIGraphicMaskVertex.shader
 /// </summary>
-[AddComponentMenu("Game/UI/GraphicMask/Vertex")]
+[AddComponentMenu("StrayFog/Game/UI/GraphicMask/Vertex")]
 public class UIGraphicMaskVertex : AbsUIGraphicMask
 {
     #region OnPopulateMesh

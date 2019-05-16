@@ -5,7 +5,7 @@ using XLua;
 /// <summary>
 /// HeroListWindow
 /// </summary>
-[AddComponentMenu("Game/UIWindow/HeroListWindow")]
+[AddComponentMenu("StrayFog/Game/UIWindow/HeroListWindow")]
 public class HeroListWindow : AbsUIWindowView
 {
     /// <summary>

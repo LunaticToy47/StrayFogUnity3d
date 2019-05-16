@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 注册组件
 /// </summary>
-[AddComponentMenu("Game/StrayFogRegisterMonoBehaviour")]
+[AddComponentMenu("StrayFog/Game/MonoBehaviour/StrayFogRegisterMonoBehaviour")]
 public class StrayFogRegisterMonoBehaviour : AbsMonoBehaviour
 {
     /// <summary>
