@@ -25,6 +25,16 @@ public sealed class EditorStrayFogSavedAssetConfig
     [AliasTooltip("Setting 【XlsSchema To Sqlite】")]
     public static EditorFolderConfigForSchemaToSqlite setFolderConfigForSchemaToSqlite = new EditorFolderConfigForSchemaToSqlite();
     /// <summary>
+    /// 设置UIWindowPrefab
+    /// </summary>
+    [AliasTooltip("Setting 【UIWindowPrefab】")]
+    public static EditorFolderConfigForUIWindowPrefab setFolderConfigForUIWindowPrefab = new EditorFolderConfigForUIWindowPrefab();
+    /// <summary>
+    /// 设置UIWindowScript
+    /// </summary>
+    [AliasTooltip("Setting 【UIWindowScript】")]
+    public static EditorFolderConfigForUIWindowScript setFolderConfigForUIWindowScript = new EditorFolderConfigForUIWindowScript();
+    /// <summary>
     /// 设置UIWindowConfig
     /// </summary>
     [AliasTooltip("Setting 【UIWindowConfig】")]

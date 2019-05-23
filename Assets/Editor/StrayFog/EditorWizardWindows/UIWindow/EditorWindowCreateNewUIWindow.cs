@@ -8,6 +8,54 @@ using UnityEngine;
 public class EditorWindowCreateNewUIWindow : AbsEditorWindow
 {
     /// <summary>
+    /// 窗口预置配置
+    /// </summary>
+    EditorFolderConfigForUIWindowPrefab mPrefabConfig;
+    /// <summary>
+    /// 窗口脚本配置
+    /// </summary>
+    EditorFolderConfigForUIWindowScript mScriptConfig;    
+    /// <summary>
+    /// OnFocus
+    /// </summary>
+    void OnFocus()
+    {
+        mPrefabConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab;
+        mScriptConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowScript;
+    }
+
+    /// <summary>
+    /// OnGUI
+    /// </summary>
+    void OnGUI()
+    {
+        DrawBrower();
+        DrawAssetNodes();
+    }
+
+    #region DrawBrower
+    /// <summary>
+    /// DrawBrower
+    /// </summary>
+    void DrawBrower()
+    {
+        mPrefabConfig.DrawGUI();
+        mScriptConfig.DrawGUI();
+    }
+    #endregion
+
+    #region DrawAssetNodes
+    /// <summary>
+    /// DrawAssetNodes
+    /// </summary>
+    private void DrawAssetNodes()
+    {
+        
+    }
+    #endregion
+
+    /*
+    /// <summary>
     /// UI窗口视图脚本目录
     /// </summary>
     static readonly string mUIWindowViewScriptFolder = EditorStrayFogGlobalVariable.uiWindowViewScriptFolder;
@@ -171,5 +219,6 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     }
     #endregion
     #endregion
+    */
 }
 #endif
