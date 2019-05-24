@@ -10,6 +10,7 @@ using UnityEngine;
 /// </summary>
 public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
 {
+    /*
     /// <summary>
     /// 滚动视图位置
     /// </summary>
@@ -330,5 +331,6 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
         EditorUtility.DisplayDialog("Builder Window Enum", "Builder Window Enum Success", "OK");
     }
     #endregion
+    */
 }
 #endif

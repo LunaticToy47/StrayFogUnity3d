@@ -19,6 +19,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildUIWindowSetting()
     {
+        /*
         List<EditorSelectionUIWindowSetting> mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
         float progress = 0;
         string scriptTemplete = EditorResxTemplete.UIWindowEnumMapingTemplete;
@@ -50,6 +51,7 @@ public sealed class EditorStrayFogExecute
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendLine(string.Format("ExecuteBuildUIWindowSetting 【{0}】Succeed!", cfg.fileName));
         Debug.Log(sbLog);
+        */
     }
     #endregion
 

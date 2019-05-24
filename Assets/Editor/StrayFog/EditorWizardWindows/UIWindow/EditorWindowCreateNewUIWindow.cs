@@ -19,11 +19,15 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     /// <summary>
     /// UI窗口视图脚本
     /// </summary>
-    static readonly EditorTextAssetConfig mUIWindowViewScript = EditorStrayFogGlobalVariable.uiWindowViewScript;
+    EditorTextAssetConfig mUIWindowViewScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
     /// <summary>
     /// UI窗口预置
     /// </summary>
-    static readonly EditorEngineAssetConfig mUIWindowPrefab = EditorStrayFogGlobalVariable.uiWindowPrefab;
+    EditorEngineAssetConfig mUIWindowPrefab = new EditorEngineAssetConfig("", "", enFileExt.Prefab, typeof(GameObject).FullName);
+    /// <summary>
+    /// 临时UI窗口视图脚本
+    /// </summary>
+    EditorTextAssetConfig mTempUIWindowViewScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
     /// <summary>
     /// 窗口名称
     /// </summary>
@@ -46,7 +50,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     void OnFocus()
     {
         mPrefabConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab;
-        mScriptConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowScript;      
+        mScriptConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowScript;
         mConfigIndexs.Clear();
         if (mPrefabConfig.paths != null && mPrefabConfig.paths.Length > 0)
         {
@@ -73,7 +77,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     void DrawBrower()
     {
         mPrefabConfig.DrawGUI();
-        mScriptConfig.DrawGUI();        
+        mScriptConfig.DrawGUI();
     }
     #endregion
 
@@ -91,15 +95,15 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
 
         if (mPrefabConfig.paths != null && mPrefabConfig.paths.Length > mSelectConfigIndex)
         {
-            mUIWindowPrefab.SetDirectory(Path.Combine(mPrefabConfig.paths[mSelectConfigIndex], mWindowName));
-            mUIWindowPrefab.SetName(mWindowName + "Window");
+            mUIWindowPrefab.SetDirectory(OnGetDirectory(mPrefabConfig.paths[mSelectConfigIndex], mWindowName));
+            mUIWindowPrefab.SetName(OnGetName(mWindowName));
             mValidateConfig = true;
         }
 
-        if (mScriptConfig.paths != null && mScriptConfig.paths.Length > mSelectConfigIndex)            
+        if (mScriptConfig.paths != null && mScriptConfig.paths.Length > mSelectConfigIndex)
         {
-            mUIWindowViewScript.SetDirectory(Path.Combine(mScriptConfig.paths[mSelectConfigIndex], mWindowName));
-            mUIWindowViewScript.SetName(mWindowName + "Window");
+            mUIWindowViewScript.SetDirectory(OnGetDirectory(mScriptConfig.paths[mSelectConfigIndex], mWindowName));
+            mUIWindowViewScript.SetName(OnGetName(mWindowName));
             mValidateConfig &= true;
         }
 
@@ -122,7 +126,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
             {
                 EditorStrayFogApplication.PingObject(mUIWindowPrefab.fileName);
             }
-            EditorGUILayout.EndHorizontal();            
+            EditorGUILayout.EndHorizontal();
             #endregion
 
             EditorGUILayout.Separator();
@@ -146,6 +150,26 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
             EditorGUILayout.HelpBox(string.Format("There is no script config for 【{0}】", mPrefabConfig.paths[mSelectConfigIndex]), MessageType.Info);
         }
     }
+
+    /// <summary>
+    /// 获取目录
+    /// </summary>
+    /// <param name="_path">路径</param>
+    /// <param name="_name">目录</param>
+    /// <returns>目录</returns>
+    string OnGetDirectory(string _path, string _name)
+    {
+        return Path.Combine(_path, _name);
+    }
+    /// <summary>
+    /// 获取名称
+    /// </summary>
+    /// <param name="_name">名称</param>
+    /// <returns>名称</returns>
+    string OnGetName(string _name)
+    {
+        return _name + "Window";
+    }
     #endregion
 
     #region CreateScript 创建脚本
@@ -157,17 +181,37 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     {
         if (!EditorStrayFogUtility.assetBundleName.IsIllegalFile(_viewScript.name))
         {
-            bool isCreate = true;
-            if (File.Exists(_viewScript.fileName))
+            bool hasScript = false;
+            if (mScriptConfig.paths != null && mScriptConfig.paths.Length > 0)
             {
-                isCreate = EditorUtility.DisplayDialog("Exists Script", "The script '" + _viewScript.fileName + "' already exists,are you sure want to cover it?", "Yes", "No");
+                for (int i = 0; i < mScriptConfig.paths.Length; i++)
+                {
+                    mTempUIWindowViewScript.SetDirectory(
+                        OnGetDirectory(mScriptConfig.paths[i], Path.GetFileName(_viewScript.directory)));
+                    mTempUIWindowViewScript.SetName(_viewScript.name);
+                    hasScript |= File.Exists(mTempUIWindowViewScript.fileName);
+                    if (hasScript)
+                    {
+                        break;
+                    }
+                }
             }
-            string windowTemplate = EditorResxTemplete.UIWindowViewTemplete;
-            windowTemplate = windowTemplate.Replace("#NAME#", _viewScript.name);
-            _viewScript.SetText(windowTemplate);
-            _viewScript.CreateAsset();
-            EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-            EditorUtility.DisplayDialog("Create New Window Script", "Create window scripts is complete.", "OK");
+
+            if (hasScript)
+            {
+                EditorUtility.DisplayDialog("Exists Script",
+                    "The script '" + _viewScript.fileName + "' already exists.", 
+                    "OK");
+            }
+            else
+            {
+                string windowTemplate = EditorResxTemplete.UIWindowViewTemplete;
+                windowTemplate = windowTemplate.Replace("#NAME#", _viewScript.name);
+                _viewScript.SetText(windowTemplate);
+                _viewScript.CreateAsset();
+                EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+                EditorUtility.DisplayDialog("Create New Window Script", "Create window scripts is complete.", "OK");
+            }
         }
         else
         {

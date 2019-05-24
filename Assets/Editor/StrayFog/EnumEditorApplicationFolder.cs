@@ -82,21 +82,6 @@ public enum enEditorApplicationFolder
     [EditorApplicationFolder("游戏运行时AssetDiskMaping脚本目录", "Assets/Game/Script/AssetDiskMaping", "游戏运行时AssetDiskMaping脚本目录")]
     Game_Script_AssetDiskMaping,
     #endregion
-
-    #region UIWindow
-    /// <summary>
-    /// 游戏UIWindow的AssetBundles目录
-    /// </summary>
-    [EditorApplicationFolder("游戏UIWindow的AssetBundles目录", "Assets/Game/AssetBundles/UIWindow", "游戏UIWindow的AssetBundles目录")]
-    Game_AssetBundles_UIWindow,
-
-    /// <summary>
-    /// 游戏运行时UIWindow脚本目录
-    /// </summary>
-    [EditorApplicationFolder("游戏运行时UIWindow脚本目录", "Assets/Game/Script/UIWindow", "游戏运行时UIWindow脚本目录")]
-    Game_Script_UIWindow,
-    #endregion
-
     #endregion
 
     #region Project目录
