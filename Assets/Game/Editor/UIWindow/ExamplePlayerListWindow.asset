@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19dc22159cd44654fa25ec4b45b6bdc9, type: 3}
-  m_Name: GuideWindow
+  m_Name: ExamplePlayerListWindow
   m_EditorClassIdentifier: 
   renderMode: 1
-  layer: 500
-  openMode: 0
+  layer: 200
+  openMode: 100
   closeMode: 0
-  isIgnoreOpenCloseMode: 1
-  isNotAutoRestoreSequenceWindow: 1
-  isDonotDestroyInstance: 1
-  isImmediateDisplay: 1
+  isIgnoreOpenCloseMode: 0
+  isAutoRestoreSequenceWindow: 1
+  isDonotDestroyInstance: 0
+  isImmediateDisplay: 0
   isManualCloseWhenGotoScene: 0
-  isGuideWindow: 1
+  isGuideWindow: 0

@@ -4,11 +4,7 @@
 public enum enAssetDiskMapingFile
 {
 	f_GuideMaskShader_mat = 1030043145,
-	f_GuideWindow_prefab = 138706997,
-	f_HeroListWindow_prefab = 1750531901,
-	f_LobbyWindow_prefab = 344749750,
-	f_MessageBoxWindow_prefab = 949097290,
-	f_PlayerListWindow_prefab = 1294323570,
+	f_xLuaScript_lua_txt = -1314513662,
 	f_FZY4JW_0_TTF = -671828977,
 	f_pf_hero_1002_prefab = -1822338762,
 	f_SpriteA_prefab = 2069627225,
@@ -168,8 +164,13 @@ public enum enAssetDiskMapingFile
 	f_Skill100405_png = 233779722,
 	f_Skill100406_png = 575019724,
 	f_Terrain_prefab = -1924748440,
+	f_ExampleGuideWindow_prefab = 437101228,
+	f_ExampleHeroListWindow_prefab = 1925488967,
+	f_ExampleLobbyWindow_prefab = 553737605,
+	f_ExampleMessageBoxWindow_prefab = -593267104,
+	f_ExamplePlayerListWindow_prefab = 1130140136,
 	f_ExampleTestXLuaLevelCube_lua_txt = -1382448832,
 	f_ExampleXLuaLevel_lua_txt = 139913362,
 	f_ExampleXLuaLevelFunction_lua_txt = -901086922,
-	f_HeroListWindow_lua_txt = -1038403056,	
+	f_ExampleHeroListWindow_lua_txt = 2125618822,	
 }

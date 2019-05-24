@@ -19,39 +19,58 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildUIWindowSetting()
     {
-        /*
         List<EditorSelectionUIWindowSetting> mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
         float progress = 0;
         string scriptTemplete = EditorResxTemplete.UIWindowEnumMapingTemplete;
         string result = scriptTemplete;
         string replaceTemplete = string.Empty;
         string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#Windows#", out replaceTemplete);
-        StringBuilder sbTemplete = new StringBuilder();
         StringBuilder sbLog = new StringBuilder();
+        Dictionary<int, StringBuilder> dicSbTemplete = new Dictionary<int, StringBuilder>();
+        int key = 0;
         if (mWindows != null && mWindows.Count > 0)
         {            
             foreach (EditorSelectionUIWindowSetting w in mWindows)
             {
-                sbTemplete.AppendLine(
-                    formatTemplete
+                key = Path.GetDirectoryName(w.directory).TransPathSeparatorCharToUnityChar().UniqueHashCode();
+                if (!dicSbTemplete.ContainsKey(key))
+                {
+                    dicSbTemplete.Add(key, new StringBuilder());
+                }
+                dicSbTemplete[key].AppendLine(
+                    formatTemplete                    
                     .Replace("#Name#", w.nameWithoutExtension)
-                    .Replace("#Id#", w.winId.ToString()));                
+                    .Replace("#Id#", w.winId.ToString()));
                 progress++;
                 EditorUtility.DisplayProgressBar("Builder Window Enum", w.path, progress / mWindows.Count);
             }
-            EditorStrayFogXLS.InsertUIWindowSetting(mWindows,(n,p)=> {
+            EditorStrayFogXLS.InsertUIWindowSetting(mWindows, (n, p) =>
+            {
                 EditorUtility.DisplayProgressBar("Insert Window Setting To Xls", n, p);
             });
         }
-        result = result.Replace(replaceTemplete, sbTemplete.ToString());
-        result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
-        EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow", enEditorApplicationFolder.Game_Script_UIWindow.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, result);
-        cfg.CreateAsset();
+
+        if (EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths != null && EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths.Length > 0)
+        {
+            for (int i = 0; i < EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths.Length; i++)
+            {
+                key = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].UniqueHashCode();
+                if (dicSbTemplete.ContainsKey(key))
+                {
+                    result = scriptTemplete
+                        .Replace(replaceTemplete, dicSbTemplete[key].ToString())
+                        .Replace("#Fixed#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key.ToString()));
+                    result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
+                    EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow",
+                        EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowScript.paths[i], enFileExt.CS, result);
+                    cfg.CreateAsset();
+                    sbLog.AppendLine(string.Format("ExecuteBuildUIWindowSetting 【{0}】Succeed!", cfg.fileName));
+                }                
+            }
+        }
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
-        sbLog.AppendLine(string.Format("ExecuteBuildUIWindowSetting 【{0}】Succeed!", cfg.fileName));
         Debug.Log(sbLog);
-        */
     }
     #endregion
 

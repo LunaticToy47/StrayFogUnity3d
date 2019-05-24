@@ -19,13 +19,13 @@ public class ExampleLobbyWindow : AbsUIWindowView
             txt.text = scale.ToString();
             btnRadarBg.transform.localScale = scale;
 
-            if (StrayFogGamePools.uiWindowManager.IsOpenedWindow(enUIWindow.MessageBoxWindow))
+            if (StrayFogGamePools.uiWindowManager.IsOpenedWindow(enUIWindow1389368399.ExampleMessageBoxWindow))
             {
-                StrayFogGamePools.uiWindowManager.CloseWindow(enUIWindow.MessageBoxWindow);
+                StrayFogGamePools.uiWindowManager.CloseWindow(enUIWindow1389368399.ExampleMessageBoxWindow);
             }
             else
             {
-                StrayFogGamePools.uiWindowManager.OpenWindow(enUIWindow.MessageBoxWindow);
+                StrayFogGamePools.uiWindowManager.OpenWindow(enUIWindow1389368399.ExampleMessageBoxWindow);
             }            
         });
         transform.Find("btnRadar").gameObject.AddComponent<UIDragMono>();        

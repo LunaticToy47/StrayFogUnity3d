@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// UI窗口枚举
 /// </summary>
-public enum enUIWindow
+public enum enUIWindow#Fixed#
 {
 #Windows#
 	#Name# = #Id#,

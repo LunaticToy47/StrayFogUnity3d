@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19dc22159cd44654fa25ec4b45b6bdc9, type: 3}
-  m_Name: PlayerListWindow
+  m_Name: ExampleMessageBoxWindow
   m_EditorClassIdentifier: 
   renderMode: 1
-  layer: 200
-  openMode: 100
+  layer: 300
+  openMode: 0
   closeMode: 0
   isIgnoreOpenCloseMode: 0
-  isAutoRestoreSequenceWindow: 1
+  isAutoRestoreSequenceWindow: 0
   isDonotDestroyInstance: 0
   isImmediateDisplay: 0
   isManualCloseWhenGotoScene: 0

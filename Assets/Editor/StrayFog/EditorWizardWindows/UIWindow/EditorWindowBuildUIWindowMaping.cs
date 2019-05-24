@@ -10,7 +10,6 @@ using UnityEngine;
 /// </summary>
 public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
 {
-    /*
     /// <summary>
     /// 滚动视图位置
     /// </summary>
@@ -230,25 +229,25 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
                     #region Delete 按钮
                     if (GUILayout.Button("Delete"))
                     {
-                        EditorStrayFogGlobalVariable.uiWindowPrefab.SetDirectory(Path.Combine(EditorStrayFogGlobalVariable.uiWindowPrefabFolder, mWindows[i].nameWithoutExtension));
-                        EditorStrayFogGlobalVariable.uiWindowViewScript.SetDirectory(Path.Combine(EditorStrayFogGlobalVariable.uiWindowViewScriptFolder, mWindows[i].nameWithoutExtension));
+                        //EditorStrayFogGlobalVariable.uiWindowPrefab.SetDirectory(Path.Combine(EditorStrayFogGlobalVariable.uiWindowPrefabFolder, mWindows[i].nameWithoutExtension));
+                        //EditorStrayFogGlobalVariable.uiWindowViewScript.SetDirectory(Path.Combine(EditorStrayFogGlobalVariable.uiWindowViewScriptFolder, mWindows[i].nameWithoutExtension));
 
-                        mSbInfo.Length = 0;
-                        mSbInfo.AppendLine("Do you want to delete window ?");
-                        mSbInfo.AppendLine(string.Format("Window =>{0}", mWindows[i].path));
-                        mSbInfo.AppendLine("It will delete follow asset:");
-                        mSbInfo.AppendLine(string.Format("1. Del Prefab Folder => {0}", EditorStrayFogGlobalVariable.uiWindowPrefab.directory));
-                        mSbInfo.AppendLine(string.Format("2. Del Script Folder => {0}", EditorStrayFogGlobalVariable.uiWindowViewScript.directory));
-                        mSbInfo.AppendLine(string.Format("3. Del SQLite UIWindowSetting Where id={0}", mWindows[i].winId));
+                        //mSbInfo.Length = 0;
+                        //mSbInfo.AppendLine("Do you want to delete window ?");
+                        //mSbInfo.AppendLine(string.Format("Window =>{0}", mWindows[i].path));
+                        //mSbInfo.AppendLine("It will delete follow asset:");
+                        //mSbInfo.AppendLine(string.Format("1. Del Prefab Folder => {0}", EditorStrayFogGlobalVariable.uiWindowPrefab.directory));
+                        //mSbInfo.AppendLine(string.Format("2. Del Script Folder => {0}", EditorStrayFogGlobalVariable.uiWindowViewScript.directory));
+                        //mSbInfo.AppendLine(string.Format("3. Del SQLite UIWindowSetting Where id={0}", mWindows[i].winId));
 
-                        if (EditorUtility.DisplayDialog("Delete", mSbInfo.ToString(), "Yes", "No"))
-                        {
-                            mRemoveWindows.Add(i);
-                            EditorStrayFogUtility.cmd.DeleteFolder(Path.GetFullPath(EditorStrayFogGlobalVariable.uiWindowPrefab.directory));
-                            EditorStrayFogUtility.cmd.DeleteFolder(Path.GetFullPath(EditorStrayFogGlobalVariable.uiWindowViewScript.directory));
-                            EditorStrayFogXLS.DeleteUIWindowSetting(mWindows[i].winId);
-                            break;
-                        }
+                        //if (EditorUtility.DisplayDialog("Delete", mSbInfo.ToString(), "Yes", "No"))
+                        //{
+                        //    mRemoveWindows.Add(i);
+                        //    EditorStrayFogUtility.cmd.DeleteFolder(Path.GetFullPath(EditorStrayFogGlobalVariable.uiWindowPrefab.directory));
+                        //    EditorStrayFogUtility.cmd.DeleteFolder(Path.GetFullPath(EditorStrayFogGlobalVariable.uiWindowViewScript.directory));
+                        //    EditorStrayFogXLS.DeleteUIWindowSetting(mWindows[i].winId);
+                        //    break;
+                        //}
                     }
                     #endregion
                     EditorGUILayout.EndHorizontal();
@@ -331,6 +330,5 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
         EditorUtility.DisplayDialog("Builder Window Enum", "Builder Window Enum Success", "OK");
     }
     #endregion
-    */
 }
 #endif

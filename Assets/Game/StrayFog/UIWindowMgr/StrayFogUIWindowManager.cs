@@ -35,10 +35,6 @@ public partial class StrayFogUIWindowManager : AbsSingleMonoBehaviour
 {
     #region OnAfterConstructor
     /// <summary>
-    /// 窗口枚举类型
-    /// </summary>
-    readonly Type mWindowEnumType = typeof(enUIWindow);
-    /// <summary>
     /// OnAfterConstructor
     /// </summary>
     protected override void OnAfterConstructor()

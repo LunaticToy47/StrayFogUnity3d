@@ -4,11 +4,7 @@
 public enum enAssetDiskMapingFolder
 {
 	Assets_Game_AssetBundles_Materials = 2130076485,
-	Assets_Game_AssetBundles_UIWindow_Guide = 1096960845,
-	Assets_Game_AssetBundles_UIWindow_HeroList = -1254891170,
-	Assets_Game_AssetBundles_UIWindow_Lobby = -466514230,
-	Assets_Game_AssetBundles_UIWindow_MessageBox = 1748860649,
-	Assets_Game_AssetBundles_UIWindow_PlayerList = -1646712389,
+	Assets_Game_XLuaScript = -764457537,
 	Assets_Example_AssetBundles_Fonts = 703074975,
 	Assets_Example_AssetBundles_Prefabs_Character = -2004506147,
 	Assets_Example_AssetBundles_Prefabs_Normal = 1536776472,
@@ -29,6 +25,11 @@ public enum enAssetDiskMapingFolder
 	Assets_Example_AssetBundles_SpriteAtlas_Shop = 779000644,
 	Assets_Example_AssetBundles_SpriteAtlas_Skill = 1205799434,
 	Assets_Example_AssetBundles_Terrain = 1993197872,
+	Assets_Example_AssetBundles_UIWindow_ExampleGuide = 1553275941,
+	Assets_Example_AssetBundles_UIWindow_ExampleHeroList = 417181438,
+	Assets_Example_AssetBundles_UIWindow_ExampleLobby = -1422368536,
+	Assets_Example_AssetBundles_UIWindow_ExampleMessageBox = -41951286,
+	Assets_Example_AssetBundles_UIWindow_ExamplePlayerList = 498502262,
 	Assets_Example_XLuaScript_Level = 2118059982,
-	Assets_Example_XLuaScript_UIWindow_HeroListWindow = 1723212885,	
+	Assets_Example_XLuaScript_UIWindow_ExampleHeroListWindow = -1278219496,	
 }
