@@ -1,5 +1,6 @@
 /// <summary>
 /// UI窗口枚举
+/// 【Assets/Example/AssetBundles/UIWindow】
 /// </summary>
 public enum enUIWindow1389368399
 {
