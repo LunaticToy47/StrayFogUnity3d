@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -14,14 +15,46 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     /// <summary>
     /// 窗口脚本配置
     /// </summary>
-    EditorFolderConfigForUIWindowScript mScriptConfig;    
+    EditorFolderConfigForUIWindowScript mScriptConfig;
+    /// <summary>
+    /// UI窗口视图脚本
+    /// </summary>
+    static readonly EditorTextAssetConfig mUIWindowViewScript = EditorStrayFogGlobalVariable.uiWindowViewScript;
+    /// <summary>
+    /// UI窗口预置
+    /// </summary>
+    static readonly EditorEngineAssetConfig mUIWindowPrefab = EditorStrayFogGlobalVariable.uiWindowPrefab;
+    /// <summary>
+    /// 窗口名称
+    /// </summary>
+    string mWindowName = string.Empty;
+    /// <summary>
+    /// 配置选择索引
+    /// </summary>
+    int mSelectConfigIndex = 0;
+    /// <summary>
+    /// 配置索引组
+    /// </summary>
+    List<string> mConfigIndexs = new List<string>();
+    /// <summary>
+    /// 有效配置
+    /// </summary>
+    bool mValidateConfig = false;
     /// <summary>
     /// OnFocus
     /// </summary>
     void OnFocus()
     {
         mPrefabConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab;
-        mScriptConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowScript;
+        mScriptConfig = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowScript;      
+        mConfigIndexs.Clear();
+        if (mPrefabConfig.paths != null && mPrefabConfig.paths.Length > 0)
+        {
+            for (int i = 0; i < mPrefabConfig.paths.Length; i++)
+            {
+                mConfigIndexs.Add(mPrefabConfig.paths[i].TransPathSeparatorCharToPopupChar());
+            }
+        }
     }
 
     /// <summary>
@@ -40,7 +73,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     void DrawBrower()
     {
         mPrefabConfig.DrawGUI();
-        mScriptConfig.DrawGUI();
+        mScriptConfig.DrawGUI();        
     }
     #endregion
 
@@ -50,113 +83,70 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     /// </summary>
     private void DrawAssetNodes()
     {
-        
-    }
-    #endregion
-
-    /*
-    /// <summary>
-    /// UI窗口视图脚本目录
-    /// </summary>
-    static readonly string mUIWindowViewScriptFolder = EditorStrayFogGlobalVariable.uiWindowViewScriptFolder;
-    /// <summary>
-    /// UI窗口视图脚本
-    /// </summary>
-    static readonly EditorTextAssetConfig mUIWindowViewScript = EditorStrayFogGlobalVariable.uiWindowViewScript;
-    /// <summary>
-    /// UI窗口预置目录
-    /// </summary>
-    static readonly string mUIWindowPrefabFolder = EditorStrayFogGlobalVariable.uiWindowPrefabFolder;
-    /// <summary>
-    /// UI窗口预置
-    /// </summary>
-    static readonly EditorEngineAssetConfig mUIWindowPrefab = EditorStrayFogGlobalVariable.uiWindowPrefab;
-    /// <summary>
-    /// 窗口名称
-    /// </summary>
-    string mWindowName = string.Empty;
-    /// <summary>
-    /// OnGUI
-    /// </summary>
-    void OnGUI()
-    {
-        DrawBrower();
-        DrawAssetNodes();
-    }
-
-    #region DrawBrower
-    /// <summary>
-    /// DrawBrower
-    /// </summary>
-    void DrawBrower()
-    {
-        #region 浏览资源映射文件
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("1." + mUIWindowViewScriptFolder);
-        if (GUILayout.Button("Brower"))
-        {
-            EditorUtility.RevealInFinder(mUIWindowViewScriptFolder);
-        }
-        EditorGUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("2." + mUIWindowPrefabFolder);
-        if (GUILayout.Button("Brower"))
-        {
-            EditorStrayFogApplication.PingObject(mUIWindowPrefabFolder);
-        }
-        EditorGUILayout.EndHorizontal();
-        #endregion
-        EditorGUILayout.Separator();
-    }
-    #endregion
-
-    #region DrawAssetNodes 绘制节点
-    /// <summary>
-    /// 绘制节点
-    /// </summary>
-    void DrawAssetNodes()
-    {
+        mSelectConfigIndex = EditorGUILayout.Popup("Select Config", mSelectConfigIndex, mConfigIndexs.ToArray());
         mWindowName = EditorGUILayout.TextField("Window Name", mWindowName);
 
-        mUIWindowViewScript.SetDirectory(Path.Combine(mUIWindowViewScriptFolder, mWindowName));
-        mUIWindowViewScript.SetName(mWindowName + "Window");
-
-        mUIWindowPrefab.SetDirectory(Path.Combine(mUIWindowPrefabFolder, mWindowName));
-        mUIWindowPrefab.SetName(mWindowName + "Window");
-
         EditorGUILayout.Separator();
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField(string.Format("1. {0}", mUIWindowViewScript.fileName));
-        if (GUILayout.Button("Brower"))
-        {
-            EditorUtility.RevealInFinder(mUIWindowViewScript.fileName);
-        }
-        EditorGUILayout.EndHorizontal();
+        mValidateConfig = false;
 
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField(string.Format("2. {0}", mUIWindowPrefab.fileName));
-        if (GUILayout.Button("Brower"))
+        if (mPrefabConfig.paths != null && mPrefabConfig.paths.Length > mSelectConfigIndex)
         {
-            EditorStrayFogApplication.PingObject(mUIWindowPrefab.fileName);
+            mUIWindowPrefab.SetDirectory(Path.Combine(mPrefabConfig.paths[mSelectConfigIndex], mWindowName));
+            mUIWindowPrefab.SetName(mWindowName + "Window");
+            mValidateConfig = true;
         }
-        EditorGUILayout.EndHorizontal();
-        EditorGUILayout.Separator();
-        if (!string.IsNullOrEmpty(mWindowName))
+
+        if (mScriptConfig.paths != null && mScriptConfig.paths.Length > mSelectConfigIndex)            
         {
-            if (GUILayout.Button("Create Script"))
+            mUIWindowViewScript.SetDirectory(Path.Combine(mScriptConfig.paths[mSelectConfigIndex], mWindowName));
+            mUIWindowViewScript.SetName(mWindowName + "Window");
+            mValidateConfig &= true;
+        }
+
+        if (mValidateConfig)
+        {
+            #region 浏览按钮
+            EditorGUILayout.Separator();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(string.Format("1. {0}", mUIWindowViewScript.fileName));
+            if (GUILayout.Button("Brower"))
             {
-                CreateScript(mUIWindowViewScript);
+                EditorStrayFogApplication.PingObject(mUIWindowViewScript.fileName);
             }
-            else if (File.Exists(mUIWindowViewScript.fileName) && GUILayout.Button("Create Prefab"))
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Separator();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(string.Format("2. {0}", mUIWindowPrefab.fileName));
+            if (GUILayout.Button("Brower"))
             {
-                if (!string.IsNullOrEmpty(mWindowName))
+                EditorStrayFogApplication.PingObject(mUIWindowPrefab.fileName);
+            }
+            EditorGUILayout.EndHorizontal();            
+            #endregion
+
+            EditorGUILayout.Separator();
+            if (!string.IsNullOrEmpty(mWindowName))
+            {
+                if (GUILayout.Button("Create Script"))
                 {
-                    CreatePrefab(mUIWindowPrefab);
+                    CreateScript(mUIWindowViewScript);
+                }
+                else if (File.Exists(mUIWindowViewScript.fileName) && GUILayout.Button("Create Prefab"))
+                {
+                    if (!string.IsNullOrEmpty(mWindowName))
+                    {
+                        CreatePrefab(mUIWindowPrefab);
+                    }
                 }
             }
         }
+        else
+        {
+            EditorGUILayout.HelpBox(string.Format("There is no script config for 【{0}】", mPrefabConfig.paths[mSelectConfigIndex]), MessageType.Info);
+        }
     }
+    #endregion
 
     #region CreateScript 创建脚本
     /// <summary>
@@ -218,7 +208,5 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
         }
     }
     #endregion
-    #endregion
-    */
 }
 #endif

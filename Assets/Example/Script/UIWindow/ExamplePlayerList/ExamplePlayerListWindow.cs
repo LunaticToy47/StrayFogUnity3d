@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
-/// PlayerListWindow
+/// ExamplePlayerListWindow
 /// </summary>
-[AddComponentMenu("StrayFog/Game/UIWindow/PlayerListWindow")]
-public class PlayerListWindow : AbsUIWindowView
+[AddComponentMenu("StrayFog/Example/UIWindow/ExamplePlayerListWindow")]
+public class ExamplePlayerListWindow : AbsUIWindowView
 {
     /// <summary>
     /// Awake

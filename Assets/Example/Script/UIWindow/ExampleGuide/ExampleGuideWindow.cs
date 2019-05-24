@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
-/// GuideWindow
+/// ExampleGuideWindow
 /// </summary>
-[AddComponentMenu("StrayFog/Game/UIWindow/GuideWindow")]
-public class GuideWindow : AbsUIWindowView
+[AddComponentMenu("StrayFog/Example/UIWindow/ExampleGuideWindow")]
+public class ExampleGuideWindow : AbsUIWindowView
 {
     /// <summary>
     /// UIм╪пнузуж

@@ -11,5 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d04edc57850fb4fba3bc8677423993, type: 3}
   m_Name: EditorFolderConfigForUIWindowScript
   m_EditorClassIdentifier: 
-  paths: []
+  paths:
+  - Assets/Example/Script/UIWindow
+  - Assets/Game/Script/UIWindow
   invoke: 

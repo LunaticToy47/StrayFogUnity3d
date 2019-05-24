@@ -13,6 +13,10 @@ public static class StringExtendEngine
     /// </summary>
     static Dictionary<int, string> mDicTransPathSeparatorCharToUnityChar = new Dictionary<int, string>();
     /// <summary>
+    /// 转换路径分隔符为Popup格式缓存
+    /// </summary>
+    static Dictionary<int, string> mDicTransPathSeparatorCharToPopupChar = new Dictionary<int, string>();
+    /// <summary>
     /// 转换路径分隔符为Unity格式
     /// "\"转换成"/"
     /// </summary>
@@ -28,6 +32,22 @@ public static class StringExtendEngine
         return mDicTransPathSeparatorCharToUnityChar[key];
     }
 
+
+    /// <summary>
+    /// 转换路径分隔符为Popup格式
+    /// "/"转换成"\"
+    /// </summary>
+    /// <param name="_path">路径</param>
+    /// <returns>转换后路径</returns>
+    public static string TransPathSeparatorCharToPopupChar(this string _path)
+    {        
+        int key = _path.UniqueHashCode();
+        if (!mDicTransPathSeparatorCharToPopupChar.ContainsKey(key))
+        {
+            mDicTransPathSeparatorCharToPopupChar.Add(key, _path.Replace("/", @"\"));
+        }
+        return mDicTransPathSeparatorCharToPopupChar[key];
+    }
     /// <summary>
     /// 组合路径
     /// </summary>

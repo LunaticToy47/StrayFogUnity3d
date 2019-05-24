@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using XLua;
 /// <summary>
-/// HeroListWindow
+/// ExampleHeroListWindow
 /// </summary>
-[AddComponentMenu("StrayFog/Game/UIWindow/HeroListWindow")]
-public class HeroListWindow : AbsUIWindowView
+[AddComponentMenu("StrayFog/Example/UIWindow/ExampleHeroListWindow")]
+public class ExampleHeroListWindow : AbsUIWindowView
 {
     /// <summary>
     /// LuaTable
