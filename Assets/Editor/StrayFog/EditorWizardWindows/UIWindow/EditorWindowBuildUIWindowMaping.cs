@@ -345,6 +345,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     void BuilderWindowEnum()
     {
         EditorStrayFogExecute.ExecuteBuildUIWindowSetting();
+        EditorStrayFogExecute.ExecuteBuildAllAssetDiskMaping();
         EditorUtility.DisplayDialog("Builder Window Enum", "Builder Window Enum Success", "OK");
     }
     #endregion

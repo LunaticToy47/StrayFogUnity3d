@@ -25,7 +25,7 @@ static class EditorAssetBundleNameMenuItem
     #endregion
 
     #region SetAssetBundleName
-    const string mcSetAssetBundleName = "SetAssetBundleName";
+    const string mcSetAssetBundleName = "Set AssetBundleName";
     /// <summary>
     /// 设置AssetBundleName
     /// </summary>

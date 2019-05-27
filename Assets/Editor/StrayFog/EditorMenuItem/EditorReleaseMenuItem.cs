@@ -40,7 +40,7 @@ static class EditorReleaseMenuItem
     #endregion
 
     #region Build Bat To Package
-    const string mcBuildBatToPackage = "BuildBat To Package";
+    const string mcBuildBatToPackage = "Build Bat To Package";
     /// <summary>
     /// 资源包删除未使用资源批处理
     /// </summary>
