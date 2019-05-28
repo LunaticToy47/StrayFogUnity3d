@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: GuideMaskShader
-  m_Shader: {fileID: 4800000, guid: 5715266e507cba2448a3d4ec2dbbf513, type: 3}
+  m_Shader: {fileID: 4800000, guid: c173a1a49dfb423488edecb84f0af4cf, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
