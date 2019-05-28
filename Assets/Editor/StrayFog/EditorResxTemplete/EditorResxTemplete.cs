@@ -119,39 +119,6 @@ public class EditorResxTemplete
     }
 
     /// <summary>
-    /// GrassDestabilizeShader
-    /// </summary>
-    public static byte[] GrassDestabilizeShader
-    {
-        get
-        {
-            return GetFileBytes("UIShader/Grass/GrassDestabilizeShader" + enFileExt.Shader.GetAttribute<FileExtAttribute>().ext);
-        }
-    }
-
-    /// <summary>
-    /// GreyShader
-    /// </summary>
-    public static byte[] GreyShader
-    {
-        get
-        {
-            return GetFileBytes("UIShader/Grey/GreyShader" + enFileExt.Shader.GetAttribute<FileExtAttribute>().ext);
-        }
-    }
-
-    /// <summary>
-    /// RippleWaterShader
-    /// </summary>
-    public static byte[] RippleWaterShader
-    {
-        get
-        {
-            return GetFileBytes("UIShader/Water/RippleWaterShader" + enFileExt.Shader.GetAttribute<FileExtAttribute>().ext);
-        }
-    }
-
-    /// <summary>
     /// SQLiteCreateDeterminantViewTemplete
     /// </summary>
     public static string SQLiteCreateDeterminantViewTemplete
@@ -181,28 +148,6 @@ public class EditorResxTemplete
         get
         {
             return GetFileString("SQLite/SQLiteEntityScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
-        }
-    }
-
-    /// <summary>
-    /// UIGraphicMaskFragmentShader
-    /// </summary>
-    public static byte[] UIGraphicMaskFragmentShader
-    {
-        get
-        {
-            return GetFileBytes("UIShader/GraphicMask/UIGraphicMaskFragmentShader" + enFileExt.Shader.GetAttribute<FileExtAttribute>().ext);
-        }
-    }
-
-    /// <summary>
-    /// UIGraphicMaskVertexShader
-    /// </summary>
-    public static byte[] UIGraphicMaskVertexShader
-    {
-        get
-        {
-            return GetFileBytes("UIShader/GraphicMask/UIGraphicMaskVertexShader" + enFileExt.Shader.GetAttribute<FileExtAttribute>().ext);
         }
     }
 

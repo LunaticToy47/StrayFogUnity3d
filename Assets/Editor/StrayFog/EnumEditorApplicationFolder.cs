@@ -16,6 +16,11 @@ public enum enEditorApplicationFolder
     /// </summary>
     [EditorApplicationFolder("EditorResxTemplete目录", "Assets/Editor/StrayFog/EditorResxTemplete", "EditorResxTemplete目录")]
     Editor_ResxTemplete,
+    /// <summary>
+    /// EditorResxTemplete_Shader目录
+    /// </summary>
+    [EditorApplicationFolder("EditorResxTemplete_Shader目录", "Assets/Editor/StrayFog/EditorResxTemplete/Shader", "EditorResxTemplete目录")]
+    Editor_ResxTemplete_Shader,
     #endregion
 
     #region Game目录

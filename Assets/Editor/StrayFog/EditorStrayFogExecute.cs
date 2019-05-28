@@ -143,24 +143,26 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteBuildDefaultShader()
     {
         EditorBinaryAssetConfig txtCfg = new EditorBinaryAssetConfig("", enEditorApplicationFolder.Project_Shader.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Shader, null);
-        PropertyInfo[] pis = typeof(EditorResxTemplete).GetProperties();
+        FileExtAttribute attShader = enFileExt.Shader.GetAttribute<FileExtAttribute>();
+        string directory = enEditorApplicationFolder.Editor_ResxTemplete_Shader.GetAttribute<EditorApplicationFolderAttribute>().path;
+        string[] shaders = Directory.GetFileSystemEntries(directory,"*"+ attShader.ext, SearchOption.AllDirectories);
         StringBuilder sbLog = new StringBuilder();
-        if (pis != null && pis.Length > 0)
+        if (shaders != null && shaders.Length > 0)
         {
-            float progress = 0;
-            foreach (PropertyInfo p in pis)
+            string dest = string.Empty;
+            string src = string.Empty;
+            string dir = string.Empty;
+            for (int i = 0; i < shaders.Length; i++)
             {
-                progress++;
-                if (p.PropertyType.IsArray &&
-                    p.PropertyType.HasElementType &&
-                    p.PropertyType.GetElementType().Equals(typeof(byte)) &&
-                    p.Name.Contains("Shader"))
+                src = shaders[i];
+                dest = src.Replace(directory, txtCfg.directory).TransPathSeparatorCharToUnityChar();
+                dir = Path.GetDirectoryName(dest);
+                if (!Directory.Exists(dir))
                 {
-                    txtCfg.SetName(p.Name);
-                    txtCfg.SetBinary((byte[])p.GetValue(null, null));
-                    txtCfg.CreateAsset();
+                    Directory.CreateDirectory(dir);
                 }
-                EditorUtility.DisplayProgressBar("Build Shader", p.Name, progress / pis.Length);
+                File.Copy(src, dest, true);
+                EditorUtility.DisplayProgressBar("Build Shader", dest, (i+1) / (float)shaders.Length);
             }
         }
         EditorUtility.ClearProgressBar();
