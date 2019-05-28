@@ -182,6 +182,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
         if (!EditorStrayFogUtility.assetBundleName.IsIllegalFile(_viewScript.name))
         {
             bool hasScript = false;
+            string hasScriptPath = string.Empty;
             if (mScriptConfig.paths != null && mScriptConfig.paths.Length > 0)
             {
                 for (int i = 0; i < mScriptConfig.paths.Length; i++)
@@ -190,6 +191,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
                         OnGetDirectory(mScriptConfig.paths[i], Path.GetFileName(_viewScript.directory)));
                     mTempUIWindowViewScript.SetName(_viewScript.name);
                     hasScript |= File.Exists(mTempUIWindowViewScript.fileName);
+                    hasScriptPath = mTempUIWindowViewScript.fileName;
                     if (hasScript)
                     {
                         break;
@@ -200,7 +202,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
             if (hasScript)
             {
                 EditorUtility.DisplayDialog("Exists Script",
-                    "The script '" + _viewScript.fileName + "' already exists.", 
+                    "The script 【" + _viewScript.name + "】 already exists in 【"+ hasScriptPath + "】.", 
                     "OK");
             }
             else
