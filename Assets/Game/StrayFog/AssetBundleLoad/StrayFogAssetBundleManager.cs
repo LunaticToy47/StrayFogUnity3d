@@ -284,7 +284,7 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         }
         else
         {
-            _onErrorCallback(adm, string.Format("Can't find maping 【file:{0}】【folder:{1}】", _fileId, _folderId));
+            _onErrorCallback(adm, string.Format("Can't find maping 【file:{0}】【folder:{1}】, try to excute 'StrayFog->AssetDiskMaping->Build All Asset Disk Maping' menu.", _fileId, _folderId));
         }
     }
     #endregion
