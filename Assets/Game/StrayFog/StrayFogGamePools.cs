@@ -68,6 +68,19 @@ public static partial class StrayFogGamePools
     }
     #endregion
 
+    #region StrayFogSkillManager
+    /// <summary>
+    /// StrayFogSkillManager
+    /// </summary>
+    public static StrayFogSkillManager skillManager
+    {
+        get
+        {
+            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogSkillManager>();
+        }
+    }
+    #endregion
+
     #region StrayFogUIWindowManager
     /// <summary>
     /// StrayFogUIWindowManager

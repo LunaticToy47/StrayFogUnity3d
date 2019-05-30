@@ -5,8 +5,11 @@ using UnityEngine;
 /// </summary>
 public class ExampleECSSystem : ComponentSystem
 {
+
     protected override void OnUpdate()
     {
+#if UNITY_EDITOR
         Debug.Log("ECSSystem");
+#endif
     }
 }

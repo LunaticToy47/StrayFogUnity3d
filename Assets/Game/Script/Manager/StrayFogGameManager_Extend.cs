@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// 运行时管理器
+/// 运行时管理器扩展
 /// </summary>
 public partial class StrayFogGameManager
 {
