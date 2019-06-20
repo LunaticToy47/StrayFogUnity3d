@@ -44,11 +44,15 @@ public class ExampleXLuaLevel : AbsLevel
     }
 
     /// <summary>
-    /// 初始化XLua
+    /// 使用require方式调用
     /// </summary>
     /// <param name="_xLuaFileId">xLuaFileId</param>
-    void InitXLua(int _xLuaFileId)
+    void OnXLuaUseRequire(int _xLuaFileId)
     {
+        /*
+         * 调用【Assets\Example\XLuaScript\Level\ExampleXLuaLevel.lua.txt】
+         * 并使用require方式调用【Assets\Example\XLuaScript\Level\ExampleXLuaLevelFunction.lua.txt】
+         */
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(_xLuaFileId, (table) => {
             table.Set("self", this);
             table.Set("cube", cube);
@@ -117,8 +121,8 @@ public class ExampleXLuaLevel : AbsLevel
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
         if (GUILayout.Button(string.Format("{0}=>{1}", GetType().Name, xLuaFileId)))
         {
-            InitXLua(xLuaFileId);
-            InitBatchCube();
+            OnXLuaUseRequire(xLuaFileId);
+            OnAddComponentUseXLua();
         }
     }
 
@@ -128,9 +132,9 @@ public class ExampleXLuaLevel : AbsLevel
     List<GameObject> mlstCubes = new List<GameObject>();
        
     /// <summary>
-    /// 初始化一批Cube
+    /// 添加组件并使用XLua
     /// </summary>
-    void InitBatchCube()
+    void OnAddComponentUseXLua()
     {
         if (mlstCubes.Count > 0)
         {
