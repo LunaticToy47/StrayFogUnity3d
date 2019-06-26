@@ -23,7 +23,7 @@ public class ExampleUIWindowLevel : AbsLevel
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-                
+
             });
         });
     }
@@ -39,5 +39,23 @@ public class ExampleUIWindowLevel : AbsLevel
                 StrayFogGamePools.uiWindowManager.OpenWindow(w);
             }
         }
+    }
+
+    /// <summary>
+    /// 测试窗口
+    /// </summary>
+    static readonly Enum[] mTempWins = new Enum[2]
+    {
+        enUIWindow1389368399.ExampleLobbyWindow,
+        enUIWindow1389368399.ExampleHeroListWindow
+    };
+
+    /// <summary>
+    /// Update
+    /// </summary>
+    void Update()
+    {
+        bool single = StrayFogGamePools.uiWindowManager.IsOpenedWindow(enUIWindow1389368399.ExampleHeroListWindow);
+        bool multiple = StrayFogGamePools.uiWindowManager.IsOpenedWindow(mTempWins);
     }
 }

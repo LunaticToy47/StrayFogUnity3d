@@ -44,35 +44,41 @@ public partial class StrayFogUIWindowManager
 
     #region OnGetWindowSetting 获得窗口设定
     /// <summary>
+    /// UI窗口枚举映射
+    /// </summary>
+    Dictionary<int, int> mWindowEnumMaping = new Dictionary<int, int>();
+    /// <summary>
     /// 获得窗口设定
     /// </summary>
     /// <param name="_wins">窗口组</param>
     /// <returns>窗口设定</returns>
     int[] OnGetWindowSetting(params Enum[] _wins)
     {
-        List<int> ids = new List<int>();
+        int[] ids = null;
         if (_wins != null && _wins.Length > 0)
         {
+            ids = new int[_wins.Length];
+            int hashCode = 0;
             int id = 0;
+            int paramHashCode = _wins.GetHashCode();
             Type type = null;
-            foreach (Enum w in _wins)
+            for (int i = 0; i < _wins.Length; i++)
             {
-                type = w.GetType();
-                if (Enum.IsDefined(type, w.ToString()))
+                type = _wins[i].GetType();
+                hashCode = _wins[i].GetHashCode();
+                if (mWindowEnumMaping.ContainsKey(hashCode))
                 {
-                    id = (int)Enum.Parse(type, w.ToString());
-                    if (!ids.Contains(id))
-                    {
-                        ids.Add(id);
-                    }
+                    id = mWindowEnumMaping[hashCode];
                 }
                 else
                 {
-                    Debug.LogErrorFormat("There is undefined【{0}】", w);
+                    id = (int)Enum.ToObject(type, _wins[i]);
+                    mWindowEnumMaping.Add(hashCode, id);
                 }
+                ids[i] = id;
             }
         }
-        return ids.ToArray();
+        return ids;
     }
 
     /// <summary>
@@ -94,10 +100,10 @@ public partial class StrayFogUIWindowManager
     /// <returns>窗口设定</returns>
     int[] OnGetWindowSetting(int[] _folderIds, int[] _fileIds)
     {
-        List<int> ids = new List<int>();
+        int[] ids = null;
         if (_folderIds != null && _fileIds != null && _folderIds.Length == _fileIds.Length)
         {
-            int id = 0;
+            ids = new int[_folderIds.Length];
             for (int i = 0; i < _folderIds.Length; i++)
             {
                 if (!mFolderIdFileIdForWinIdMaping.ContainsKey(_folderIds[i]))
@@ -110,11 +116,7 @@ public partial class StrayFogUIWindowManager
                 }
                 else
                 {
-                    id = mFolderIdFileIdForWinIdMaping[_folderIds[i]][_fileIds[i]];
-                    if (!ids.Contains(id))
-                    {
-                        ids.Add(id);
-                    }
+                    ids[i] = mFolderIdFileIdForWinIdMaping[_folderIds[i]][_fileIds[i]];
                 }
             }
         }
@@ -122,7 +124,7 @@ public partial class StrayFogUIWindowManager
         {
             Debug.LogError("FolderId length is not equals FileIds length.");
         }
-        return ids.ToArray();
+        return ids;
     }
 
     /// <summary>
@@ -135,17 +137,17 @@ public partial class StrayFogUIWindowManager
         List<XLS_Config_Table_UIWindowSetting> result = new List<XLS_Config_Table_UIWindowSetting>();
         if (_winIds != null && _winIds.Length > 0)
         {
-            foreach (int id in _winIds)
+            for (int i = 0; i < _winIds.Length; i++)
             {
-                if (mWindowSettingMaping.ContainsKey(id))
+                if (mWindowSettingMaping.ContainsKey(_winIds[i]))
                 {
-                    result.Add(mWindowSettingMaping[id]);
+                    result.Add(mWindowSettingMaping[_winIds[i]]);
                 }
                 else
                 {
-                    Debug.LogErrorFormat("Can't found WindowId【{0}】", id);
+                    Debug.LogErrorFormat("Can't found WindowId【{0}】", _winIds[i]);
                 }
-            }
+            }            
         }
         return result.ToArray();
     }
