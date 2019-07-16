@@ -1,4 +1,5 @@
-﻿using Unity.Burst;
+﻿/*
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
@@ -26,3 +27,4 @@ public class ExampleRotationSpeedSystem : JobComponentSystem
     //    return job.Schedule(this, inputDeps);
     //}
 }
+*/

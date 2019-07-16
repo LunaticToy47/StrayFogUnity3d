@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿/*
+using Unity.Entities;
 using UnityEngine;
 /// <summary>
 /// ExampleECSSystem【ScriptBehaviourManager】
@@ -13,3 +14,4 @@ public class ExampleECSSystem : ComponentSystem
 #endif
     }
 }
+*/

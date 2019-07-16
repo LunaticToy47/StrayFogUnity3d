@@ -1,9 +1,9 @@
 ﻿using Unity.Collections;
-using Unity.Entities;
-using Unity.Mathematics;
-using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.Rendering;
+//using Unity.Entities;
+//using Unity.Mathematics;
+//using Unity.Transforms;
 /// <summary>
 /// EntityComponentSystem关卡
 /// </summary>
@@ -35,8 +35,8 @@ public class ExampleEntityComponentSystemLevel : AbsLevel
     /// </summary>
     void CreatingEntity()
     {
-        EntityManager manager = World.Active.CreateManager<EntityManager>();
-        EntityArchetype archetype = manager.CreateArchetype();
+        //EntityManager manager = World.Active.CreateManager<EntityManager>();
+        //EntityArchetype archetype = manager.CreateArchetype();
 
         //NativeArray<Entity> arrEntity = new NativeArray<Entity>(64, Allocator.Persistent);
         //manager.Instantiate(playerEntity, arrEntity);
@@ -50,8 +50,8 @@ public class ExampleEntityComponentSystemLevel : AbsLevel
         //ISystemStateComponentData
         //ISharedSystemStateComponentData
 
-        Entity entity = manager.Instantiate(playerEntity);
-        manager.AddComponent(entity, ComponentType.Create<ExampleECSComponent>());
+        //Entity entity = manager.Instantiate(playerEntity);
+        //manager.AddComponent(entity, ComponentType.Create<ExampleECSComponent>());
     }
 
     /// <summary>

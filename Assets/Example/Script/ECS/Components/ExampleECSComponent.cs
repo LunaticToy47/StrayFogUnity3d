@@ -1,9 +1,11 @@
-﻿using Unity.Entities;
+﻿/*
+using Unity.Entities;
 /// <summary>
 /// ExampleECSComponent【IComponentData】
 /// </summary>
 public struct ExampleECSComponent : IComponentData {
 }
+*/
 
 /*
 [System.Serializable]

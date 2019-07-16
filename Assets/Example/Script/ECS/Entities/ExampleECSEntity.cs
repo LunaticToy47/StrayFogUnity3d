@@ -1,4 +1,4 @@
-﻿using Unity.Entities;
+﻿/*
 using Unity.Entities;
 /// <summary>
 /// ECSEntity
@@ -7,3 +7,4 @@ public struct ExampleECSEntity
 {
 
 }
+*/
