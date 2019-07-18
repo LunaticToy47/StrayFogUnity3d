@@ -6,7 +6,7 @@ using UnityEngine;
 /// 游戏事件句柄
 /// </summary>
 /// <param name="_args">参数对象</param>
-public delegate void GameEventHandler(AbsEventHandlerArgs _args);
+public delegate void EventAggregatorHandler(EventHandlerArgs _args);
 
 /// <summary>
 /// 事件聚合管理器
@@ -14,32 +14,35 @@ public delegate void GameEventHandler(AbsEventHandlerArgs _args);
 [AddComponentMenu("StrayFog/Game/Manager/StrayFogEventHandlerManager")]
 public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
 {
-    #region mGameEventHandlerMaping 游戏事件句柄映射
+    #region mEventAggregatorHandlerMaping 事件聚合处理映射
     /// <summary>
-    /// 游戏事件句柄映射
+    /// 事件聚合处理映射
     /// </summary>
-    static Dictionary<int, List<GameEventHandler>> mGameEventHandlerMaping = new Dictionary<int, List<GameEventHandler>>();
+    static Dictionary<int, List<EventAggregatorHandler>> mEventAggregatorHandlerMaping = new Dictionary<int, List<EventAggregatorHandler>>();
     #endregion
 
     #region AddListener 添加事件侦听
     /// <summary>
     /// 添加事件侦听
     /// </summary>
-    /// <param name="_eventId">事件ID</param>
-    /// <param name="_eventHandler">事件句柄</param>
-    public void AddListener(int _eventId, GameEventHandler _eventHandler)
+    /// <param name="_eventId">事件枚举</param>
+    /// <param name="_event">事件</param>
+    public void AddListener(int _eventId, EventAggregatorHandler _event)
     {
-        if (!mGameEventHandlerMaping.ContainsKey(_eventId))
+        if (!mEventAggregatorHandlerMaping.ContainsKey(_eventId))
         {
-            mGameEventHandlerMaping.Add(_eventId, new List<GameEventHandler>());
+            mEventAggregatorHandlerMaping.Add(_eventId, new List<EventAggregatorHandler>());
         }
-        if (!mGameEventHandlerMaping[_eventId].Contains(_eventHandler))
+        if (_event.Target == null || _event.Target.Equals(null))
         {
-            mGameEventHandlerMaping[_eventId].Add(_eventHandler);
-        }
 #if UNITY_EDITOR
-        //UnityEngine.Debug.Log(string.Format("AddListener【Type:{0} Handler:{1}】", _eventId, _eventHandler));
+            Debug.LogError(string.Format("注册消息【{0}】失败=>Delegate.Target is null.", _eventId));
 #endif
+        }
+        else if (!mEventAggregatorHandlerMaping[_eventId].Contains(_event))
+        {
+            mEventAggregatorHandlerMaping[_eventId].Add(_event);
+        }
     }
     #endregion
 
@@ -47,71 +50,73 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 移除事件侦听
     /// </summary>
-    /// <param name="_eventId">事件ID</param>
-    /// <param name="_eventHandler">事件句柄</param>
-    public void RemoveListener(int _eventId, GameEventHandler _eventHandler)
+    /// <param name="_eventId">事件枚举</param>
+    /// <param name="_event">事件</param>
+    public void RemoveListener(int _eventId, EventAggregatorHandler _event)
     {
-        if (mGameEventHandlerMaping.ContainsKey(_eventId) 
-            && mGameEventHandlerMaping[_eventId].Contains(_eventHandler)
-            )
+        if (mEventAggregatorHandlerMaping.ContainsKey(_eventId)
+            && mEventAggregatorHandlerMaping[_eventId].Contains(_event))
         {
-            mGameEventHandlerMaping[_eventId].Remove(_eventHandler);
+            mEventAggregatorHandlerMaping[_eventId].Remove(_event);
         }
-#if UNITY_EDITOR
-            //UnityEngine.Debug.Log(string.Format("RemoveListener【Type:{0} Handler:{1}】", tKey, eKey));
-#endif
-        }
+    }
+    #endregion
+
+    #region ClearInvalidListener 清除无效的事件侦听
+    /// <summary>
+    /// 
+    /// </summary>
+    public void ClearInvalidListener()
+    {
+
+    }
     #endregion
 
     #region Dispatch 发布事件侦听
     /// <summary>
     /// 发布事件侦听
     /// </summary>
-    /// <param name="_eventArgs">事件参数</param>
-    public void Dispatch(AbsEventHandlerArgs _eventArgs)
+    /// <param name="_args">事件参数</param>
+    public void Dispatch(EventHandlerArgs _args)
     {
-        if (mGameEventHandlerMaping.ContainsKey(_eventArgs.eventId))
-        {
-            List<int> remove = new List<int>();
+        int tKey = _args.eventId;
 
-            for (int i = 0; i < mGameEventHandlerMaping[_eventArgs.eventId].Count; i++)
+        if (mEventAggregatorHandlerMaping.ContainsKey(tKey))
+        {
+            List<EventAggregatorHandler> remove = new List<EventAggregatorHandler>();
+            for (int i = 0; i < mEventAggregatorHandlerMaping[tKey].Count; i++)
             {
-                if (mGameEventHandlerMaping[_eventArgs.eventId][i].Target.Equals(null))
+                if (mEventAggregatorHandlerMaping[tKey][i].Target == null || mEventAggregatorHandlerMaping[tKey][i].Target.Equals(null))
                 {
-                    remove.Add(i);
+                    remove.Add(mEventAggregatorHandlerMaping[tKey][i]);
+#if UNITY_EDITOR
+                    Debug.LogError(string.Format("发布消息【{0}】失败=>Delegate.Target is null.", tKey));
+#endif
                 }
                 else
                 {
-                    StartCoroutine(OnDispatchInvoke(mGameEventHandlerMaping[_eventArgs.eventId][i], _eventArgs));
-                    //mEventAggregatorHandlerMaping[tKey][eKey][i].Invoke(_args);
+                    try
+                    {
+                        mEventAggregatorHandlerMaping[tKey][i].Invoke(_args);
+                    }
+                    catch (Exception ep)
+                    {
+#if UNITY_EDITOR
+                        Debug.LogError(string.Format("发布消息【{0}】失败=>{1}", tKey, ep.Message));
+#endif
+                    }
                 }
             }
 
-            foreach (int index in remove)
+            foreach (EventAggregatorHandler item in remove)
             {
-                mGameEventHandlerMaping[_eventArgs.eventId].RemoveAt(index);
+                mEventAggregatorHandlerMaping[tKey].Remove(item);
             }
         }
     }
-
-    /// <summary>
-    /// 发布事件
-    /// </summary>
-    /// <param name="_handler">事件</param>
-    /// <param name="_args">参数</param>
-    /// <returns>异步</returns>
-    IEnumerator OnDispatchInvoke(GameEventHandler _handler, AbsEventHandlerArgs _args)
-    {        
-        _handler.Invoke(_args);
-        yield return new WaitForEndOfFrame();        
-    }
     #endregion
 
-    #region DrawLevelSelectButtonOnGUI 绘制关卡选择按钮
-    /// <summary>
-    /// 游戏事件映射
-    /// </summary>
-    static List<enExampleGameEvent> mEnGameEventMaping = typeof(enExampleGameEvent).ToEnums<enExampleGameEvent>();
+    #region DrawLevelSelectButtonOnGUI 绘制关卡选择按钮    
     /// <summary>
     /// 滚动视图位置
     /// </summary>
@@ -126,14 +131,14 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Dispatch【Game】Events"))
         {
-            foreach (enExampleGameEvent evt in mEnGameEventMaping)
+            foreach (int eventId in mEventAggregatorHandlerMaping.Keys)
             {
-                StrayFogGamePools.eventHandlerManager
-                .Dispatch(new GameEventHandlerArgs(evt, this, evt));
+                EventHandlerArgs arg = new EventHandlerArgs(eventId);
+                arg.SetValue(this);
+                StrayFogGamePools.eventHandlerManager.Dispatch(arg);
             }
         }
         GUILayout.EndHorizontal();
-
         GUILayout.EndScrollView();
     }
     #endregion
