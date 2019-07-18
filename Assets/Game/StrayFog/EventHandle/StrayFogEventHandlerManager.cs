@@ -135,7 +135,7 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
             {
                 EventHandlerArgs arg = new EventHandlerArgs(eventId);
                 arg.SetValue(this);
-                StrayFogGamePools.eventHandlerManager.Dispatch(arg);
+                Dispatch(arg);
             }
         }
         GUILayout.EndHorizontal();
