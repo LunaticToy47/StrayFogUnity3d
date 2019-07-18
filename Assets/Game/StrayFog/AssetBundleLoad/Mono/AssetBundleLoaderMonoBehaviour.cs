@@ -150,11 +150,21 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         else
         {
             #region 外部资源加载
-            if (mLoaderState == enLoaderState.Wait)
+            if (File.Exists(assetPath))
             {
-                OnBeginLoadingDependencies();
+                if (mLoaderState == enLoaderState.Wait)
+                {
+                    OnBeginLoadingDependencies();
+                }
+                mQueueLoad.Enqueue(_parameter);
             }
-            mQueueLoad.Enqueue(_parameter);
+            else
+            {
+                if (_parameter.errorCallback != null)
+                {
+                    _parameter.errorCallback.Invoke(_parameter.assetDiskMaping, string.Format("The path asset was not found.【{0}】 【1】", _parameter.assetDiskMaping.inAssetPath, assetPath));
+                }
+            }
             #endregion
         }
     }

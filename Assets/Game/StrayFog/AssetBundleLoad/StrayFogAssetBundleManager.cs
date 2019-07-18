@@ -166,7 +166,7 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
                 AssetBundleLoaderMonoBehaviour loader = OnCreateLoaderMonoBehaviour(d);
                 if (!ids.Contains(loader.assetId))
                 {
-                    loader.BeginLoad(new AssetBundleLoaderParameter(null, null, null, null, null));
+                    loader.BeginLoad(new AssetBundleLoaderParameter(null, null, null, (cfg, error) => { Debug.LogError(error); }, null));
                     ids.Add(loader.assetId);
                 }
             }
