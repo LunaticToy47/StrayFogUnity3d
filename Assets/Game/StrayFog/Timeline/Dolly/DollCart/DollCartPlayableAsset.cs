@@ -1,7 +1,5 @@
-﻿/*
-using Cinemachine;
+﻿using Cinemachine;
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -21,7 +19,7 @@ namespace StrayFog.Timeline.DollCart
         /// <summary>
         /// 轨道起始百分比
         /// </summary>
-        [Range(0,100)]
+        [Range(0, 100)]
         public byte dollyStartPercent = 0;
         /// <summary>
         /// 轨道结束百分比
@@ -53,7 +51,7 @@ namespace StrayFog.Timeline.DollCart
                 behaviour.dollyCart = dollyCart.Resolve(graph.GetResolver());
                 behaviour.director = director;
                 behaviour.timeline = timeline;
-                behaviour.playable = this;
+                behaviour.playableAsset = this;
                 behaviour.dollyStartPercent = dollyStartPercent;
                 behaviour.dollyEndPercent = dollyEndPercent;
             }
@@ -61,4 +59,3 @@ namespace StrayFog.Timeline.DollCart
         }
     }
 }
-*/

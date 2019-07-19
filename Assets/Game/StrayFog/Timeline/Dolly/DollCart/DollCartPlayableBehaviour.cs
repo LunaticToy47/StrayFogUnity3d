@@ -1,6 +1,4 @@
-﻿/*
-using Cinemachine;
-using System.Collections;
+﻿using Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -12,10 +10,6 @@ namespace StrayFog.Timeline.DollCart
     /// </summary>
     public class DollCartPlayableBehaviour : PlayableBehaviour
     {
-        /// <summary>
-        /// 轨道
-        /// </summary>
-        public CinemachineDollyCart dollyCart { get; set; }
         /// <summary>
         /// PlayableDirector
         /// </summary>
@@ -31,7 +25,12 @@ namespace StrayFog.Timeline.DollCart
         /// <summary>
         /// DollCartPlayableAsset
         /// </summary>
-        public DollCartPlayableAsset playable { get; set; }
+        public DollCartPlayableAsset playableAsset { get; set; }
+
+        /// <summary>
+        /// 轨道
+        /// </summary>
+        public CinemachineDollyCart dollyCart { get; set; }
         /// <summary>
         /// 轨道起始百分比
         /// </summary>
@@ -43,11 +42,11 @@ namespace StrayFog.Timeline.DollCart
         /// <summary>
         /// TimelineClip
         /// </summary>
-        TimelineClip mTemilineClip = null;
+        TimelineClip mTimelineClip = null;
         public override void OnGraphStart(Playable playable)
         {
             dollyCart.m_Position = dollyCart.m_Speed = 0;
-            OnFindTimelineClip();
+            mTimelineClip = trackAsset.FindTimelineClip(playableAsset);
             base.OnGraphStart(playable);
         }
 
@@ -57,29 +56,11 @@ namespace StrayFog.Timeline.DollCart
             base.OnGraphStop(playable);
         }
 
-        /// <summary>
-        /// 查询行为所属的Clip
-        /// </summary>
-        void OnFindTimelineClip()
-        {
-            IEnumerator outClips = trackAsset.GetClips().GetEnumerator();
-            while (outClips.MoveNext())
-            {
-                TimelineClip clip = (TimelineClip)outClips.Current;
-                DollCartPlayableAsset doll = (DollCartPlayableAsset)clip.asset;
-                if (doll == playable)
-                {
-                    mTemilineClip = clip;
-                    break;
-                }
-            }
-        }
-
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             base.ProcessFrame(playable, info, playerData);
-            double tempTime = director.time - mTemilineClip.start;
-            double tempDeltaTime = tempTime / mTemilineClip.duration;
+            double tempTime = director.time - mTimelineClip.start;
+            double tempDeltaTime = tempTime / mTimelineClip.duration;
             float lerpTime = Mathf.Clamp01((float)tempDeltaTime);
             float sp = dollyCart.m_Path.PathLength * dollyStartPercent * 0.01f;
             float ep = dollyCart.m_Path.PathLength * dollyEndPercent * 0.01f;
@@ -88,4 +69,3 @@ namespace StrayFog.Timeline.DollCart
         }
     }
 }
-*/
