@@ -33,9 +33,13 @@ namespace StrayFog.Timeline.DollCart
         /// </summary>
         public DollCartPlayableAsset playable { get; set; }
         /// <summary>
-        /// PathLengthPercent(0-100%)
+        /// 轨道起始百分比
         /// </summary>
-        public byte dollyPathLengthPercent { get; set; }
+        public byte dollyStartPercent { get; set; }
+        /// <summary>
+        /// 轨道结束百分比
+        /// </summary>
+        public byte dollyEndPercent { get; set; }
         /// <summary>
         /// TimelineClip
         /// </summary>
@@ -77,7 +81,9 @@ namespace StrayFog.Timeline.DollCart
             double tempTime = director.time - mTemilineClip.start;
             double tempDeltaTime = tempTime / mTemilineClip.duration;
             float lerpTime = Mathf.Clamp01((float)tempDeltaTime);
-            double pos = Mathf.Lerp(0, dollyCart.m_Path.PathLength, lerpTime * dollyPathLengthPercent * 0.01f);
+            float sp = dollyCart.m_Path.PathLength * dollyStartPercent * 0.01f;
+            float ep = dollyCart.m_Path.PathLength * dollyEndPercent * 0.01f;
+            double pos = Mathf.Lerp(sp, ep, lerpTime);
             dollyCart.SendMessage("SetCartPosition", pos);
         }
     }
