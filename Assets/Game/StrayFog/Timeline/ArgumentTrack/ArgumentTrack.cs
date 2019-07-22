@@ -13,7 +13,8 @@ namespace StrayFog.Timeline
         public sealed override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
             ScriptPlayable<ArgumentPlayableBehaviour> playable = (ScriptPlayable<ArgumentPlayableBehaviour>)OnCreateArgumentPlayable(graph, go, inputCount);
-            playable.GetBehaviour().trackAsset = this;
+            ArgumentPlayableBehaviour behaviour = playable.GetBehaviour();
+            behaviour.trackAsset = this;
             return base.CreateTrackMixer(graph, go, inputCount);
         }
 

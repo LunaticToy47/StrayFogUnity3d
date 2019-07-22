@@ -1,6 +1,6 @@
-﻿using UnityEngine.Playables;
+﻿using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 namespace StrayFog.Timeline
 {
     /// <summary>
@@ -20,6 +20,10 @@ namespace StrayFog.Timeline
         /// ArgumentTrackAsset
         /// </summary>
         public ArgumentTrackAsset trackAsset { get; set; }
+        /// <summary>
+        /// GenericBindingObject
+        /// </summary>
+        public Object genericBindingObject { get; set; }
         /// <summary>
         /// AbsArgumentPlayableAsset
         /// </summary>

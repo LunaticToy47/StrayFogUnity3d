@@ -33,6 +33,7 @@ namespace StrayFog.Timeline
                 behaviour.timeline = timeline;
                 behaviour.trackAsset = templete.GetBehaviour().trackAsset;
                 behaviour.playableAsset = this;
+                behaviour.genericBindingObject = behaviour.director.GetGenericBinding(behaviour.trackAsset);
                 behaviour.timelineClip = behaviour.trackAsset.FindTimelineClip(this);
                 OnAfterCreateArgumentPlayable(graph, owner, playable);
             }
