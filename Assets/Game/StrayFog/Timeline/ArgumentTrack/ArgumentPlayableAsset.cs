@@ -34,6 +34,7 @@ namespace StrayFog.Timeline
                 behaviour.trackAsset = templete.GetBehaviour().trackAsset;
                 behaviour.playableAsset = this;
                 behaviour.timelineClip = behaviour.trackAsset.FindTimelineClip(this);
+                OnAfterCreateArgumentPlayable(graph, owner, playable);
             }
             return playable;
         }
@@ -46,6 +47,11 @@ namespace StrayFog.Timeline
         protected virtual Playable OnCreateArgumentPlayable(PlayableGraph graph, GameObject owner)
         {
             return ScriptPlayable<ArgumentPlayableBehaviour>.Create(graph);
+        }
+
+        protected virtual void OnAfterCreateArgumentPlayable(PlayableGraph graph, GameObject owner, Playable playable)
+        {
+            
         }
     }
 }
