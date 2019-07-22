@@ -9,13 +9,11 @@ namespace StrayFog.Timeline.DollCart
     /// </summary>
     [TrackColor(0.8f, 0.8f, 0.8f)]
     [TrackClipType(typeof(DollCartPlayableAsset))]
-    public class DollCartTrackAsset : TrackAsset
+    public class DollCartTrackAsset : ArgumentTrackAsset
     {
-        public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
+        protected override Playable OnCreateArgumentPlayable(PlayableGraph graph, GameObject go, int inputCount)
         {
-            ScriptPlayable<DollCartPlayableBehaviour> playable = ScriptPlayable<DollCartPlayableBehaviour>.Create(graph, inputCount);
-            playable.GetBehaviour().trackAsset = this;
-            return base.CreateTrackMixer(graph, go, inputCount);
+            return ScriptPlayable<DollCartPlayableBehaviour>.Create(graph, inputCount);
         }
     }
 }
