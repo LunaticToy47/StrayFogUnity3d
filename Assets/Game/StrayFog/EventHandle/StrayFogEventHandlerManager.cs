@@ -1,24 +1,34 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 游戏事件句柄
+/// 事件句柄
 /// </summary>
-/// <param name="_args">参数对象</param>
-public delegate void EventAggregatorHandler(EventHandlerArgs _args);
-
+/// <param name="_args">参数</param>
+public delegate void StrayFogEventHandler(StrayFogEventHandlerArgs _args);
+/// <summary>
+/// 事件回调句柄
+/// </summary>
+/// <param name="_callbackArgs">回调参数</param>
+public delegate void StrayFogCallbackHandler(StrayFogCallbackHandlerArgs _callbackArgs);
 /// <summary>
 /// 事件聚合管理器
 /// </summary>
 [AddComponentMenu("StrayFog/Game/Manager/StrayFogEventHandlerManager")]
 public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
 {
-    #region mEventAggregatorHandlerMaping 事件聚合处理映射
+    #region mEventHandlerMaping 事件处理映射
     /// <summary>
-    /// 事件聚合处理映射
+    /// 事件处理映射
     /// </summary>
-    static Dictionary<int, List<EventAggregatorHandler>> mEventAggregatorHandlerMaping = new Dictionary<int, List<EventAggregatorHandler>>();
+    static Dictionary<int, List<StrayFogEventHandler>> mEventHandlerMaping = new Dictionary<int, List<StrayFogEventHandler>>();
+    #endregion
+
+    #region mCallbackHandlerMaping 回调事件处理映射
+    /// <summary>
+    /// 回调事件处理映射
+    /// </summary>
+    static Dictionary<int, List<StrayFogCallbackHandler>> mCallbackHandlerMaping = new Dictionary<int, List<StrayFogCallbackHandler>>();
     #endregion
 
     #region AddListener 添加事件侦听
@@ -27,21 +37,44 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
     /// </summary>
     /// <param name="_eventId">事件枚举</param>
     /// <param name="_event">事件</param>
-    public void AddListener(int _eventId, EventAggregatorHandler _event)
+    public void AddListener(int _eventId, StrayFogEventHandler _event)
     {
-        if (!mEventAggregatorHandlerMaping.ContainsKey(_eventId))
+        if (!mEventHandlerMaping.ContainsKey(_eventId))
         {
-            mEventAggregatorHandlerMaping.Add(_eventId, new List<EventAggregatorHandler>());
+            mEventHandlerMaping.Add(_eventId, new List<StrayFogEventHandler>());
         }
-        if (_event.Target == null || _event.Target.Equals(null))
+        if (OnIsFailureHandler(_event))
         {
 #if UNITY_EDITOR
             Debug.LogError(string.Format("注册消息【{0}】失败=>Delegate.Target is null.", _eventId));
 #endif
         }
-        else if (!mEventAggregatorHandlerMaping[_eventId].Contains(_event))
+        else if (!mEventHandlerMaping[_eventId].Contains(_event))
         {
-            mEventAggregatorHandlerMaping[_eventId].Add(_event);
+            mEventHandlerMaping[_eventId].Add(_event);
+        }
+    }
+
+    /// <summary>
+    /// 添加事件侦听
+    /// </summary>
+    /// <param name="_eventId">事件枚举</param>
+    /// <param name="_callback">事件回调</param>
+    public void AddCallbackListener(int _eventId, StrayFogCallbackHandler _callback)
+    {
+        if (!mCallbackHandlerMaping.ContainsKey(_eventId))
+        {
+            mCallbackHandlerMaping.Add(_eventId, new List<StrayFogCallbackHandler>());
+        }
+        if (OnIsFailureHandler(_callback))
+        {
+#if UNITY_EDITOR
+            Debug.LogError(string.Format("注册消息【{0}】失败=>Delegate.Target is null.", _eventId));
+#endif
+        }
+        else if (!mCallbackHandlerMaping[_eventId].Contains(_callback))
+        {
+            mCallbackHandlerMaping[_eventId].Add(_callback);
         }
     }
     #endregion
@@ -50,25 +83,101 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 移除事件侦听
     /// </summary>
-    /// <param name="_eventId">事件枚举</param>
+    /// <param name="_eventId">事件ID</param>
     /// <param name="_event">事件</param>
-    public void RemoveListener(int _eventId, EventAggregatorHandler _event)
+    public void RemoveListener(int _eventId, StrayFogEventHandler _event)
     {
-        if (mEventAggregatorHandlerMaping.ContainsKey(_eventId)
-            && mEventAggregatorHandlerMaping[_eventId].Contains(_event))
+        if (mEventHandlerMaping.ContainsKey(_eventId)
+            && mEventHandlerMaping[_eventId].Contains(_event))
         {
-            mEventAggregatorHandlerMaping[_eventId].Remove(_event);
+            mEventHandlerMaping[_eventId].Remove(_event);
         }
+    }
+    /// <summary>
+    /// 移除事件侦听
+    /// </summary>
+    /// <param name="_eventId">事件ID</param>
+    /// <param name="_callback">回调事件</param>
+    public void RemoveCallbackListener(int _eventId, StrayFogCallbackHandler _callback)
+    {
+        if (mCallbackHandlerMaping.ContainsKey(_eventId)
+            && mCallbackHandlerMaping[_eventId].Contains(_callback))
+        {
+            mCallbackHandlerMaping[_eventId].Remove(_callback);
+        }
+    }
+    /// <summary>
+    /// 移除事件侦听
+    /// </summary>
+    /// <param name="_eventId">事件ID</param>
+    public void RemoveListener(int _eventId)
+    {
+        if (mEventHandlerMaping.ContainsKey(_eventId))
+        {
+            mEventHandlerMaping[_eventId].Clear();
+        }
+        mEventHandlerMaping.Remove(_eventId);
+        if (mCallbackHandlerMaping.ContainsKey(_eventId))
+        {
+            mCallbackHandlerMaping[_eventId].Clear();
+        }
+        mCallbackHandlerMaping.Remove(_eventId);
     }
     #endregion
 
     #region ClearInvalidListener 清除无效的事件侦听
     /// <summary>
-    /// 
+    /// 清除无效的事件侦听
     /// </summary>
     public void ClearInvalidListener()
     {
+        foreach (KeyValuePair<int, List<StrayFogEventHandler>> key in mEventHandlerMaping)
+        {
+            List<StrayFogEventHandler> remove = new List<StrayFogEventHandler>();
+            for (int i = 0; i < key.Value.Count; i++)
+            {
+                if (OnIsFailureHandler(key.Value[i]))
+                {
+                    remove.Add(key.Value[i]);
+#if UNITY_EDITOR
+                    Debug.LogError(string.Format("清除无效的事件侦听【{0}】【{1}】=>Delegate.Target is null.", key.Key, key.Value[i]));
+#endif
+                }
+            }
+            foreach (StrayFogEventHandler item in remove)
+            {
+                key.Value.Remove(item);
+            }
+        }
 
+        foreach (KeyValuePair<int, List<StrayFogCallbackHandler>> key in mCallbackHandlerMaping)
+        {
+            List<StrayFogCallbackHandler> remove = new List<StrayFogCallbackHandler>();
+            for (int i = 0; i < key.Value.Count; i++)
+            {
+                if (OnIsFailureHandler(key.Value[i]))
+                {
+                    remove.Add(key.Value[i]);
+#if UNITY_EDITOR
+                    Debug.LogError(string.Format("清除无效的回调事件侦听【{0}】【{1}】=>Delegate.Target is null.", key.Key, key.Value[i]));
+#endif
+                }
+            }
+            foreach (StrayFogCallbackHandler item in remove)
+            {
+                key.Value.Remove(item);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 是否是无效的事件
+    /// </summary>
+    /// <param name="_handler">事件</param>
+    /// <returns>true:无效,false:有效</returns>
+    bool OnIsFailureHandler(Delegate _handler)
+    {
+        return _handler == null || _handler.Target == null || _handler.Target.Equals(null);
     }
     #endregion
 
@@ -77,27 +186,46 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
     /// 发布事件侦听
     /// </summary>
     /// <param name="_args">事件参数</param>
-    public void Dispatch(EventHandlerArgs _args)
+    public void Dispatch(StrayFogEventHandlerArgs _args)
+    {
+        Dispatch(_args, null);
+    }
+
+    /// <summary>
+    /// 发布事件侦听
+    /// </summary>
+    /// <param name="_args">事件参数</param>
+    /// <param name="_callback">回调</param>
+    public void Dispatch(StrayFogEventHandlerArgs _args, StrayFogCallbackHandler _callback)
+    {        
+        OnProcessEventHandler(_args);
+        OnProcessCallbackHandler(_args,_callback);        
+    }
+
+    /// <summary>
+    /// 处理EventHandler事件
+    /// </summary>
+    /// <param name="_args">参数</param>
+    void OnProcessEventHandler(StrayFogEventHandlerArgs _args)
     {
         int tKey = _args.eventId;
-
-        if (mEventAggregatorHandlerMaping.ContainsKey(tKey))
+        if (mEventHandlerMaping.ContainsKey(tKey))
         {
-            List<EventAggregatorHandler> remove = new List<EventAggregatorHandler>();
-            for (int i = 0; i < mEventAggregatorHandlerMaping[tKey].Count; i++)
+            List<StrayFogEventHandler> remove = new List<StrayFogEventHandler>();
+            for (int i = 0; i < mEventHandlerMaping[tKey].Count; i++)
             {
-                if (mEventAggregatorHandlerMaping[tKey][i].Target == null || mEventAggregatorHandlerMaping[tKey][i].Target.Equals(null))
+                if (OnIsFailureHandler(mEventHandlerMaping[tKey][i]))
                 {
-                    remove.Add(mEventAggregatorHandlerMaping[tKey][i]);
+                    remove.Add(mEventHandlerMaping[tKey][i]);
 #if UNITY_EDITOR
-                    Debug.LogError(string.Format("发布消息【{0}】失败=>Delegate.Target is null.", tKey));
+                    Debug.LogError(string.Format("发布EventHandler消息【{0}】失败=>Delegate.Target is null.", tKey));
 #endif
                 }
                 else
                 {
                     try
                     {
-                        mEventAggregatorHandlerMaping[tKey][i].Invoke(_args);
+                        mEventHandlerMaping[tKey][i].Invoke(_args);
                     }
                     catch (Exception ep)
                     {
@@ -108,9 +236,53 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
                 }
             }
 
-            foreach (EventAggregatorHandler item in remove)
+            foreach (StrayFogEventHandler item in remove)
             {
-                mEventAggregatorHandlerMaping[tKey].Remove(item);
+                mEventHandlerMaping[tKey].Remove(item);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 处理CallbackHandler事件
+    /// </summary>
+    /// <param name="_args">事件参数</param>
+    /// <param name="_callback">回调</param>
+    void OnProcessCallbackHandler(StrayFogEventHandlerArgs _args, StrayFogCallbackHandler _callback)
+    {
+        int tKey = _args.eventId;
+        if (mCallbackHandlerMaping.ContainsKey(tKey))
+        {
+            List<StrayFogCallbackHandler> remove = new List<StrayFogCallbackHandler>();
+            for (int i = 0; i < mCallbackHandlerMaping[tKey].Count; i++)
+            {
+                if (OnIsFailureHandler(mCallbackHandlerMaping[tKey][i]))
+                {
+                    remove.Add(mCallbackHandlerMaping[tKey][i]);
+#if UNITY_EDITOR
+                    Debug.LogError(string.Format("发布CallbackHandler消息【{0}】失败=>Delegate.Target is null.", tKey));
+#endif
+                }
+                else
+                {
+                    try
+                    {
+                        StrayFogCallbackHandlerArgs callbackArgs = new StrayFogCallbackHandlerArgs(_args);
+                        mCallbackHandlerMaping[tKey][i].Invoke(callbackArgs);
+                        _callback?.Invoke(callbackArgs);
+                    }
+                    catch (Exception ep)
+                    {
+#if UNITY_EDITOR
+                        Debug.LogError(string.Format("发布消息【{0}】失败=>{1}", tKey, ep.Message));
+#endif
+                    }
+                }
+            }
+
+            foreach (StrayFogCallbackHandler item in remove)
+            {
+                mCallbackHandlerMaping[tKey].Remove(item);
             }
         }
     }
@@ -131,11 +303,11 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Dispatch【Game】Events"))
         {
-            foreach (int eventId in mEventAggregatorHandlerMaping.Keys)
+            foreach (int eventId in mEventHandlerMaping.Keys)
             {
-                EventHandlerArgs arg = new EventHandlerArgs(eventId);
+                StrayFogEventHandlerArgs arg = new StrayFogEventHandlerArgs(eventId);
                 arg.SetValue(this);
-                Dispatch(arg);
+                Dispatch(arg, (callback) => { Debug.Log("Get CallbackHandler Value=>" + callback); });
             }
         }
         GUILayout.EndHorizontal();

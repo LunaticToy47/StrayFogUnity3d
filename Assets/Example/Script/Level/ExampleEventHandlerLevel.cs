@@ -36,6 +36,14 @@ public class ExampleEventHandlerLevel : AbsLevel
                                 throw new UnityException(this + "【enGameEvent】 " + args.JsonSerialize());
                             }
                         );
+                        StrayFogGamePools.eventHandlerManager
+                        .AddCallbackListener((int)evt,
+                            (args) =>
+                            {
+                                args.SetValue(this);
+                                Debug.Log("Set CallbackHandler Value=>" + this);
+                            }
+                        );
                     }
                 }                
                 mCanDispatch = true;

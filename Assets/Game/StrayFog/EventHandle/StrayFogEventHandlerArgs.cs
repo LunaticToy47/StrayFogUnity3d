@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 /// <summary>
-/// 事件聚合参数
+/// 事件句柄参数
 /// </summary>
-public class EventHandlerArgs
-{
+public class StrayFogEventHandlerArgs
+{    
     /// <summary>
     /// 事件类型
     /// </summary>
@@ -14,7 +15,7 @@ public class EventHandlerArgs
     /// 事件聚合参数
     /// </summary>
     /// <param name="_eventId">事件ID</param>
-    public EventHandlerArgs(int _eventId)
+    public StrayFogEventHandlerArgs(int _eventId)
     {
         eventId = _eventId;
     }
@@ -83,6 +84,25 @@ public class EventHandlerArgs
             result = (T)mArgValueMaping[tkey][_index];
         }
         return result;
+    }
+    #endregion
+
+    #region ToString
+    /// <summary>
+    /// ToString
+    /// </summary>
+    /// <returns>String</returns>
+    public override string ToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (Dictionary<int, object> key in mArgValueMaping.Values)
+        {
+            foreach (KeyValuePair<int, object> val in key)
+            {
+                sb.AppendLine(string.Format("Index【{0}】,Value【{1}】", val.Key, val.Value));
+            }
+        }
+        return sb.ToString();
     }
     #endregion
 }
