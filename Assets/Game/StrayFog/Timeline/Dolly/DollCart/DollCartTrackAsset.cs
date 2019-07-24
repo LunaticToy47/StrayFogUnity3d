@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace StrayFog.Timeline.DollCart
+namespace StrayFog.Timeline.Dolly
 {
     /// <summary>
     /// DollCart跟踪
