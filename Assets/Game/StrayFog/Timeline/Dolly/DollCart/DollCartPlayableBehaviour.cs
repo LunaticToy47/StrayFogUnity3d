@@ -58,7 +58,7 @@ namespace StrayFog.Timeline.Dolly
         /// <param name="info">FrameData</param>
         void OnSetCartPosition(Playable playable, FrameData info)
         {
-            if (director != null)
+            if (director != null && dollyCart != null)
             {
                 double tempTime = director.time - timelineClip.start;
                 double tempDeltaTime = tempTime / timelineClip.duration;
