@@ -5,7 +5,6 @@ using UnityEngine;
 /// <summary>
 /// 资源加载组件
 /// </summary>
-[AddComponentMenu("StrayFog/Game/AssetBundle/AssetBundleLoaderMonoBehaviour")]
 public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
 {
     #region enLoaderState 加载状态
@@ -150,21 +149,11 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         else
         {
             #region 外部资源加载
-            if (File.Exists(assetPath))
+            if (mLoaderState == enLoaderState.Wait)
             {
-                if (mLoaderState == enLoaderState.Wait)
-                {
-                    OnBeginLoadingDependencies();
-                }
-                mQueueLoad.Enqueue(_parameter);
+                OnBeginLoadingDependencies();
             }
-            else
-            {
-                if (_parameter.errorCallback != null)
-                {
-                    _parameter.errorCallback.Invoke(_parameter.assetDiskMaping, string.Format("The path asset was not found.【{0}】 【1】", _parameter.assetDiskMaping.inAssetPath, assetPath));
-                }
-            }
+            mQueueLoad.Enqueue(_parameter);
             #endregion
         }
     }
@@ -198,6 +187,12 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         int key = _assetDiskMaping.inAssetPath.GetHashCode();
         if (_assetDiskMaping.extEnumValue != (int)enFileExt.Scene)
         {
+            if (mCacheMemoryMaping.ContainsKey(key) && mCacheMemoryMaping[key] == null)
+            {
+                mCacheMemoryMaping.Remove(key);
+                mCacheAssetRequestMaping.Remove(key);
+            }
+
             if (!mCacheMemoryMaping.ContainsKey(key))
             {
                 if (StrayFogGamePools.setting.isInternal)
@@ -258,7 +253,7 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         foreach (object key in mCacheAssetRequestCallback[callbackKey])
         {
             object[] p = (object[])key;
-            OnInstantiateCallback(req.asset,(XLS_Config_View_AssetDiskMaping)p[0],(object[])p[1],(System.Action<Object, object[]>)p[2]);
+            OnInstantiateCallback(mCacheMemoryMaping[callbackKey], (XLS_Config_View_AssetDiskMaping)p[0],(object[])p[1],(System.Action<Object, object[]>)p[2]);
         }
     }
 
@@ -314,6 +309,7 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         {
             go.SetActive(isActive);
         }
+        yield return new WaitForEndOfFrame();
         _callback(_asset, _params);
     }
     #endregion
@@ -393,12 +389,10 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         }
     }
     #endregion
-
-    #region LateUpdate
     /// <summary>
-    /// LateUpdate
+    /// Update
     /// </summary>
-    void LateUpdate()
+    void Update()
     {
         switch (mLoaderState)
         {
@@ -413,5 +407,4 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
                 break;
         }
     }
-    #endregion
 }
