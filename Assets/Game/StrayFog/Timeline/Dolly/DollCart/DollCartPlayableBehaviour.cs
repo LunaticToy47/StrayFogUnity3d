@@ -33,14 +33,36 @@ namespace StrayFog.Timeline.Dolly
             base.OnGraphStop(playable);
         }
 
+        public override void OnBehaviourPlay(Playable playable, FrameData info)
+        {
+            base.OnBehaviourPlay(playable, info);
+            OnSetCartPosition(playable, info);
+        }
+
+        public override void OnBehaviourPause(Playable playable, FrameData info)
+        {
+            base.OnBehaviourPause(playable, info);
+            OnSetCartPosition(playable, info);
+        }
+
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             base.ProcessFrame(playable, info, playerData);
+            OnSetCartPosition(playable, info);
+        }
+
+        /// <summary>
+        /// SetCartPosition
+        /// </summary>
+        /// <param name="playable">Playable</param>
+        /// <param name="info">FrameData</param>
+        void OnSetCartPosition(Playable playable, FrameData info)
+        {
             double tempTime = director.time - timelineClip.start;
             double tempDeltaTime = tempTime / timelineClip.duration;
             float lerpTime = Mathf.Clamp01((float)tempDeltaTime);
-            float sp = dollyCart.m_Path.PathLength * dollyStartPercent * 0.01f;
-            float ep = dollyCart.m_Path.PathLength * dollyEndPercent * 0.01f;
+            float sp = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * dollyStartPercent * 0.01f;
+            float ep = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * dollyEndPercent * 0.01f;
             double pos = Mathf.Lerp(sp, ep, lerpTime);
             dollyCart.SendMessage("SetCartPosition", pos);
         }
