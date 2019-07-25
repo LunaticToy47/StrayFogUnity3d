@@ -58,13 +58,16 @@ namespace StrayFog.Timeline.Dolly
         /// <param name="info">FrameData</param>
         void OnSetCartPosition(Playable playable, FrameData info)
         {
-            double tempTime = director.time - timelineClip.start;
-            double tempDeltaTime = tempTime / timelineClip.duration;
-            float lerpTime = Mathf.Clamp01((float)tempDeltaTime);
-            float sp = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * dollyStartPercent * 0.01f;
-            float ep = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * dollyEndPercent * 0.01f;
-            double pos = Mathf.Lerp(sp, ep, lerpTime);
-            dollyCart.SendMessage("SetCartPosition", pos);
+            if (director != null)
+            {
+                double tempTime = director.time - timelineClip.start;
+                double tempDeltaTime = tempTime / timelineClip.duration;
+                float lerpTime = Mathf.Clamp01((float)tempDeltaTime);
+                float sp = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * dollyStartPercent * 0.01f;
+                float ep = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * dollyEndPercent * 0.01f;
+                double pos = Mathf.Lerp(sp, ep, lerpTime);
+                dollyCart.SendMessage("SetCartPosition", pos);
+            }            
         }
     }
 }
