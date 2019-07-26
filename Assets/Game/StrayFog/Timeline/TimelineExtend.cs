@@ -11,6 +11,19 @@ namespace StrayFog.Timeline
     public static class TimelineExtend
     {
         /// <summary>
+        /// 获得指定时间在TimelineClip中的0-1范围
+        /// </summary>
+        /// <param name="_timelineClip">TimelineClip</param>
+        /// <param name="_time">时间</param>
+        /// <returns>指定时间在TimelineClip中的0-1范围</returns>
+        public static float GetTimeClamp01(this TimelineClip _timelineClip, double _time)
+        {
+            double tempTime = _time - _timelineClip.start;
+            double tempDeltaTime = tempTime / _timelineClip.duration;
+            return Mathf.Clamp01((float)tempDeltaTime);
+        }
+
+        /// <summary>
         /// 查找指定PlayableAsset的TimelineClip
         /// </summary>
         /// <param name="_trackAsset">TrackAsset</param>

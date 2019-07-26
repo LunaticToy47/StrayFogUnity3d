@@ -59,9 +59,7 @@ namespace StrayFog.Timeline.Dolly
         {
             if (director != null && dollyCart != null)
             {
-                double tempTime = director.time - timelineClip.start;
-                double tempDeltaTime = tempTime / timelineClip.duration;
-                float lerpTime = Mathf.Clamp01((float)tempDeltaTime);
+                float lerpTime = timelineClip.GetTimeClamp01(director.time);
                 float sp = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * mDollCartPlayableAsset.dollyStartPercent;
                 float ep = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * mDollCartPlayableAsset.dollyEndPercent;
                 double pos = Mathf.Lerp(sp, ep, lerpTime);
