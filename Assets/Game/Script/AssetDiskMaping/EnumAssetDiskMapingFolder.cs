@@ -4,6 +4,8 @@
 public enum enAssetDiskMapingFolder
 {
 	Assets_Game_AssetBundles_Materials = 2130076485,
+	Assets_Game_AssetBundles_SpriteAtlas = 1148303718,
+	Assets_Game_AssetBundles_UIWindow = 798963579,
 	Assets_Game_XLuaScript = -764457537,
 	Assets_Example_AssetBundles_Fonts = 703074975,
 	Assets_Example_AssetBundles_Prefabs_Character = -2004506147,
@@ -25,6 +27,7 @@ public enum enAssetDiskMapingFolder
 	Assets_Example_AssetBundles_SpriteAtlas_Shop = 779000644,
 	Assets_Example_AssetBundles_SpriteAtlas_Skill = 1205799434,
 	Assets_Example_AssetBundles_Terrain = 1993197872,
+	Assets_Example_AssetBundles_Timeline = 1753185237,
 	Assets_Example_AssetBundles_UIWindow_ExampleGuide = 1553275941,
 	Assets_Example_AssetBundles_UIWindow_ExampleHeroList = 417181438,
 	Assets_Example_AssetBundles_UIWindow_ExampleLobby = -1422368536,

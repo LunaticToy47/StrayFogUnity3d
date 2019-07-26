@@ -4,6 +4,8 @@
 public enum enAssetDiskMapingFile
 {
 	f_GuideMaskShader_mat = 1030043145,
+	f_SpriteAtlas_txt = -1047153048,
+	f_UIWindowPrefab_txt = 357213519,
 	f_xLuaScript_lua_txt = -1314513662,
 	f_FZY4JW_0_TTF = -671828977,
 	f_pf_hero_1002_prefab = -1822338762,
@@ -20,6 +22,7 @@ public enum enAssetDiskMapingFile
 	f_fx_hero_1002_skill_02_b_prefab = 2125675024,
 	f_fx_hero_1002_skill_03_prefab = -1961533316,
 	f_Examplebx_map_pve_1_unity = -1860432654,
+	f_ExampleCinemachine_unity = -935725446,
 	f_ExampleEntityComponentSystem_unity = 1652309691,
 	f_ExampleEventHandler_unity = 1305370276,
 	f_ExampleFMS_unity = 1784042025,
@@ -164,6 +167,8 @@ public enum enAssetDiskMapingFile
 	f_Skill100405_png = 233779722,
 	f_Skill100406_png = 575019724,
 	f_Terrain_prefab = -1924748440,
+	f_ExampleCinemachine_DollyCartTimeline_playable = 1203732579,
+	f_ExampleCinemachine_DollyCartTimeline_prefab = -693953037,
 	f_ExampleGuideWindow_prefab = 437101228,
 	f_ExampleHeroListWindow_prefab = 1925488967,
 	f_ExampleLobbyWindow_prefab = 553737605,
