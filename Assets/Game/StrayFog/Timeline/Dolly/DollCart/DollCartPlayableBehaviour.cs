@@ -12,18 +12,17 @@ namespace StrayFog.Timeline.Dolly
         /// <summary>
         /// 轨道
         /// </summary>
-        public CinemachineDollyCart dollyCart { get; set; }        
+        public CinemachineDollyCart dollyCart { get; set; }
+
         /// <summary>
-        /// 轨道起始百分比
+        /// DollCartPlayableAsset
         /// </summary>
-        public byte dollyStartPercent { get; set; }
-        /// <summary>
-        /// 轨道结束百分比
-        /// </summary>
-        public byte dollyEndPercent { get; set; }
+        DollCartPlayableAsset mDollCartPlayableAsset;
+
         public override void OnGraphStart(Playable playable)
         {
             dollyCart.m_Position = dollyCart.m_Speed = 0;
+            mDollCartPlayableAsset = (DollCartPlayableAsset)playableAsset;
             base.OnGraphStart(playable);
         }
 
@@ -63,11 +62,11 @@ namespace StrayFog.Timeline.Dolly
                 double tempTime = director.time - timelineClip.start;
                 double tempDeltaTime = tempTime / timelineClip.duration;
                 float lerpTime = Mathf.Clamp01((float)tempDeltaTime);
-                float sp = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * dollyStartPercent * 0.01f;
-                float ep = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * dollyEndPercent * 0.01f;
+                float sp = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * mDollCartPlayableAsset.dollyStartPercent;
+                float ep = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * mDollCartPlayableAsset.dollyEndPercent;
                 double pos = Mathf.Lerp(sp, ep, lerpTime);
                 dollyCart.SendMessage("SetCartPosition", pos);
-            }            
+            }
         }
     }
 }
