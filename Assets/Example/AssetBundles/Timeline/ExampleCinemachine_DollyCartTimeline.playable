@@ -116,8 +116,8 @@ MonoBehaviour:
     exposedName: 2609dbe7b82a1b24a9a461ee00d13cc8
     defaultValue: {fileID: 0}
   dollCartMaxPathCount: 5
-  dollyStartPercent: 0.15135919
-  dollyEndPercent: 1
+  dollyStartPercent: 20.46862
+  dollyEndPercent: 135.2321
   dollyStartPos: 1
   dollyEndPos: 5
 --- !u!114 &114598159026167514
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Name: Time Scale Track Asset
   m_EditorClassIdentifier: 
   m_Locked: 0
-  m_Muted: 0
+  m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_AnimClip: {fileID: 0}
   m_Parent: {fileID: 11400000}
