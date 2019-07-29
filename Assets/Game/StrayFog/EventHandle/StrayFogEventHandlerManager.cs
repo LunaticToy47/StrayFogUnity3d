@@ -15,7 +15,7 @@ public delegate void StrayFogCallbackHandler(StrayFogCallbackHandlerArgs _callba
 /// 事件聚合管理器
 /// </summary>
 [AddComponentMenu("StrayFog/Game/Manager/StrayFogEventHandlerManager")]
-public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
+public sealed class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
 {
     #region mEventHandlerMaping 事件处理映射
     /// <summary>
@@ -43,7 +43,7 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
         {
             mEventHandlerMaping.Add(_eventId, new List<StrayFogEventHandler>());
         }
-        if (OnIsFailureHandler(_event))
+        if (!_event.IsValid())
         {
 #if UNITY_EDITOR
             Debug.LogError(string.Format("注册消息【{0}】失败=>Delegate.Target is null.", _eventId));
@@ -66,7 +66,7 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
         {
             mCallbackHandlerMaping.Add(_eventId, new List<StrayFogCallbackHandler>());
         }
-        if (OnIsFailureHandler(_callback))
+        if (!_callback.IsValid())
         {
 #if UNITY_EDITOR
             Debug.LogError(string.Format("注册消息【{0}】失败=>Delegate.Target is null.", _eventId));
@@ -136,7 +136,7 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
             List<StrayFogEventHandler> remove = new List<StrayFogEventHandler>();
             for (int i = 0; i < key.Value.Count; i++)
             {
-                if (OnIsFailureHandler(key.Value[i]))
+                if (!key.Value[i].IsValid())
                 {
                     remove.Add(key.Value[i]);
 #if UNITY_EDITOR
@@ -155,7 +155,7 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
             List<StrayFogCallbackHandler> remove = new List<StrayFogCallbackHandler>();
             for (int i = 0; i < key.Value.Count; i++)
             {
-                if (OnIsFailureHandler(key.Value[i]))
+                if (!key.Value[i].IsValid())
                 {
                     remove.Add(key.Value[i]);
 #if UNITY_EDITOR
@@ -168,16 +168,6 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
                 key.Value.Remove(item);
             }
         }
-    }
-
-    /// <summary>
-    /// 是否是无效的事件
-    /// </summary>
-    /// <param name="_handler">事件</param>
-    /// <returns>true:无效,false:有效</returns>
-    bool OnIsFailureHandler(Delegate _handler)
-    {
-        return _handler == null || _handler.Target == null || _handler.Target.Equals(null);
     }
     #endregion
 
@@ -214,7 +204,7 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
             List<StrayFogEventHandler> remove = new List<StrayFogEventHandler>();
             for (int i = 0; i < mEventHandlerMaping[tKey].Count; i++)
             {
-                if (OnIsFailureHandler(mEventHandlerMaping[tKey][i]))
+                if (!mEventHandlerMaping[tKey][i].IsValid())
                 {
                     remove.Add(mEventHandlerMaping[tKey][i]);
 #if UNITY_EDITOR
@@ -256,7 +246,7 @@ public class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
             List<StrayFogCallbackHandler> remove = new List<StrayFogCallbackHandler>();
             for (int i = 0; i < mCallbackHandlerMaping[tKey].Count; i++)
             {
-                if (OnIsFailureHandler(mCallbackHandlerMaping[tKey][i]))
+                if (!mCallbackHandlerMaping[tKey][i].IsValid())
                 {
                     remove.Add(mCallbackHandlerMaping[tKey][i]);
 #if UNITY_EDITOR

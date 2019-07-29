@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 /// <summary>
 /// 验证扩展
 /// </summary>
@@ -31,6 +32,18 @@ public static class ValidateExtend
     public static bool IsLegalUnityAssetBundleName(this string _input)
     {
         return sRegLegalUnityAssetBundleName.IsMatch(_input);
+    }
+    #endregion
+
+    #region 是否有效的代理
+    /// <summary>
+    /// 是否有效的代理
+    /// </summary>
+    /// <param name="_handler">事件</param>
+    /// <returns>true:有效,false:无效</returns>
+    public static bool IsValid(this Delegate _handler)
+    {
+        return !(_handler == null || _handler.Target == null || _handler.Target.Equals(null));
     }
     #endregion
 }

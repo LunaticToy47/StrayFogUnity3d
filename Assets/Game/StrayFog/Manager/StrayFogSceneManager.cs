@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,7 +6,7 @@ using UnityEngine.SceneManagement;
 /// 场景管理
 /// </summary>
 [AddComponentMenu("StrayFog/Game/Manager/StrayFogSceneManager")]
-public sealed partial class StrayFogSceneManager : AbsSingleMonoBehaviour
+public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
 {
     /// <summary>
     /// 场景枚举
@@ -30,6 +29,7 @@ public sealed partial class StrayFogSceneManager : AbsSingleMonoBehaviour
     /// </summary>
     protected override void OnAfterConstructor()
     {
+        mSceneEnums.Clear();
         foreach (KeyValuePair<string, enAssetDiskMapingFile> key in m_enAssetDiskMapingFile_Maping)
         {
             if (key.Key.EndsWith(mSceneFileExtAttribute.noDotExt))

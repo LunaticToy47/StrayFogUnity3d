@@ -21,7 +21,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         {
             m_isInitialized = true;
             runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
-            
+            Application.quitting += Application_quitting;
             StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
@@ -87,12 +87,19 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
 
     #region OnApplicationQuit
     /// <summary>
-    /// OnApplicationQuit
+    /// Application_quitting
     /// </summary>
-    void OnApplicationQuit()
+    void Application_quitting()
     {
         StrayFogSQLiteEntityHelper.CloseSQLite();
         StrayFogSQLiteEntityHelper.SaveExcelPackage();
     }
+    /// <summary>
+    /// OnApplicationQuit
+    /// </summary>
+    void OnApplicationQuit()
+    {
+        Application_quitting();
+    }    
     #endregion
 }
