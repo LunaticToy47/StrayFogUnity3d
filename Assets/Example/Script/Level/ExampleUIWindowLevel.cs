@@ -13,7 +13,23 @@ public class ExampleUIWindowLevel : AbsLevel
     /// <summary>
     /// 按钮可操作窗口
     /// </summary>
-    static readonly Enum[] msrBtnWindows = new Enum[2] { enUIWindow1389368399.ExamplePlayerListWindow, enUIWindow1389368399.ExampleHeroListWindow };
+    static readonly Enum[] msrBtnWindows = new Enum[3] {
+        enUIWindow1389368399.ExamplePlayerListWindow,
+        enUIWindow1389368399.ExampleHeroListWindow,
+        enUIWindow1389368399.ExampleMessageBoxWindow,
+    };
+    /// <summary>
+    /// 是否自动开启关闭窗口时间
+    /// </summary>
+    static readonly float mAutoOpenCloseWindowSeconds = 10;
+    /// <summary>
+    /// 自动开启关闭窗口时间
+    /// </summary>
+    float mTempAutoOpenCloseWindowSeconds = 0;
+    /// <summary>
+    /// 是否是自动打开窗口
+    /// </summary>
+    bool mTempIsAutoOpenWindow = false;
     /// <summary>
     /// Awake
     /// </summary>
@@ -36,6 +52,14 @@ public class ExampleUIWindowLevel : AbsLevel
         {
             StrayFogGamePools.uiWindowManager.OpenWindow(msrBtnWindows);
         }
+        if (GUILayout.Button("Close All Window"))
+        {
+            StrayFogGamePools.uiWindowManager.CloseWindow(msrBtnWindows);
+        }
+        if (GUILayout.Button(string.Format("Start Auto OpenClose Window {0} seconds", mAutoOpenCloseWindowSeconds)))
+        {
+            mTempAutoOpenCloseWindowSeconds = mAutoOpenCloseWindowSeconds;
+        }
         foreach (enUIWindow1389368399 w in msrBtnWindows)
         {
             if (GUILayout.Button(w.ToString()))
@@ -50,7 +74,20 @@ public class ExampleUIWindowLevel : AbsLevel
     /// </summary>
     void Update()
     {
-        bool single = StrayFogGamePools.uiWindowManager.IsOpenedWindow(enUIWindow1389368399.ExampleHeroListWindow);
+        bool single = StrayFogGamePools.uiWindowManager.IsOpenedWindow(msrBtnWindows[0]);
         bool multiple = StrayFogGamePools.uiWindowManager.IsOpenedWindow(msrBtnWindows);
+        if (mTempAutoOpenCloseWindowSeconds > 0)
+        {
+            mTempAutoOpenCloseWindowSeconds -= deltaTime;
+            if (mTempIsAutoOpenWindow)
+            {
+                StrayFogGamePools.uiWindowManager.OpenWindow(msrBtnWindows);
+            }
+            else
+            {
+                StrayFogGamePools.uiWindowManager.CloseWindow(msrBtnWindows);
+            }
+            mTempIsAutoOpenWindow = !mTempIsAutoOpenWindow;
+        }
     }
 }

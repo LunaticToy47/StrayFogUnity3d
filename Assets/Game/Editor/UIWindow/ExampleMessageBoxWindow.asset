@@ -15,7 +15,7 @@ MonoBehaviour:
   layer: 300
   openMode: 0
   closeMode: 0
-  isIgnoreOpenCloseMode: 0
+  isIgnoreOpenCloseMode: 1
   isAutoRestoreSequenceWindow: 0
   isDonotDestroyInstance: 0
   isImmediateDisplay: 0
