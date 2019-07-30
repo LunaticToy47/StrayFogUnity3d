@@ -1937,3 +1937,4 @@ Assembly-CSharp.csproj
 /Library
 .vs
 /obj
+/Assembly-CSharp-Editor.csproj
