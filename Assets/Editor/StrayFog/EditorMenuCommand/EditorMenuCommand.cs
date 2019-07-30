@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using UnityEditor;
 /// <summary>
 /// EditorMenuCommand
@@ -12,3 +13,4 @@ public class EditorMenuCommand
         EditorUtility.DisplayDialog("Auto GUID", "New GUID CopyToClipboard.", "OK");
     }
 }
+#endif
