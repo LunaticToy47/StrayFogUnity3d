@@ -291,36 +291,39 @@ public partial class StrayFogUIWindowManager
 
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
-            mWindowHolderMaping[cfg.id].SetTargetActive(false);
-            if (!closeWinIds.Contains(cfg.id))
+            if (mWindowHolderMaping.ContainsKey(cfg.id))
             {
-                closeWinIds.Add(cfg.id);
+                mWindowHolderMaping[cfg.id].SetTargetActive(false);
+                if (!closeWinIds.Contains(cfg.id))
+                {
+                    closeWinIds.Add(cfg.id);
+                }
+                #region 统计需要隐藏的各层级的最大SiblingIndex
+                switch (cfg.winCloseMode)
+                {
+                    case enUIWindowCloseMode.WhenCloseHiddenSameLayerAndMoreThanSiblingIndex:
+                        if (!sameLayerLessThenSiblingIndex.ContainsKey(cfg.layer))
+                        {
+                            sameLayerLessThenSiblingIndex.Add(cfg.layer, mWindowHolderMaping[cfg.id].windowSiblingIndex);
+                        }
+                        else
+                        {
+                            sameLayerLessThenSiblingIndex[cfg.layer] = Mathf.Max(sameLayerLessThenSiblingIndex[cfg.layer], mWindowHolderMaping[cfg.id].windowSiblingIndex);
+                        }
+                        break;
+                    case enUIWindowCloseMode.WhenCloseHiddenMoreThanSiblingIndex:
+                        if (!lessThenSiblingIndex.Contains(mWindowHolderMaping[cfg.id].windowSiblingIndex))
+                        {
+                            lessThenSiblingIndex.Add(mWindowHolderMaping[cfg.id].windowSiblingIndex);
+                        }
+                        else
+                        {
+                            lessThenSiblingIndex[0] = Mathf.Max(lessThenSiblingIndex[0], mWindowHolderMaping[cfg.id].windowSiblingIndex);
+                        }
+                        break;
+                }
+                #endregion
             }
-            #region 统计需要隐藏的各层级的最大SiblingIndex
-            switch (cfg.winCloseMode)
-            {
-                case enUIWindowCloseMode.WhenCloseHiddenSameLayerAndMoreThanSiblingIndex:
-                    if (!sameLayerLessThenSiblingIndex.ContainsKey(cfg.layer))
-                    {
-                        sameLayerLessThenSiblingIndex.Add(cfg.layer, mWindowHolderMaping[cfg.id].windowSiblingIndex);
-                    }
-                    else
-                    {
-                        sameLayerLessThenSiblingIndex[cfg.layer] = Mathf.Max(sameLayerLessThenSiblingIndex[cfg.layer], mWindowHolderMaping[cfg.id].windowSiblingIndex);
-                    }
-                    break;
-                case enUIWindowCloseMode.WhenCloseHiddenMoreThanSiblingIndex:
-                    if (!lessThenSiblingIndex.Contains(mWindowHolderMaping[cfg.id].windowSiblingIndex))
-                    {
-                        lessThenSiblingIndex.Add(mWindowHolderMaping[cfg.id].windowSiblingIndex);
-                    }
-                    else
-                    {
-                        lessThenSiblingIndex[0] = Mathf.Max(lessThenSiblingIndex[0], mWindowHolderMaping[cfg.id].windowSiblingIndex);
-                    }
-                    break;
-            }
-            #endregion
         }
 
         #region 设置要隐藏的窗口ID
@@ -346,7 +349,10 @@ public partial class StrayFogUIWindowManager
         List<int> autoOpenWindows = OnGetWindowSerialize().GetAutoRestoreSequence(closeWinIds);
         foreach (int id in autoOpenWindows)
         {
-            mWindowHolderMaping[id].SetTargetActive(true);
+            if (mWindowHolderMaping.ContainsKey(id))
+            {
+                mWindowHolderMaping[id].SetTargetActive(true);
+            }
         }
 
         foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
