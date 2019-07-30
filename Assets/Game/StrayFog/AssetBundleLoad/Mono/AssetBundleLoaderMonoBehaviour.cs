@@ -339,10 +339,14 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
     void OnIsDependenciesLoaded()
     {
         bool isDone = true;
-        foreach (int id in mDependencyIds)
+        if (mDependencyIds != null && mDependencyIds.Length > 0)
         {
-            isDone &= OnGetLoaderMonoBehaviour(id).isDone;
+            foreach (int id in mDependencyIds)
+            {
+                isDone &= OnGetLoaderMonoBehaviour(id).isDone;
+            }
         }
+        
         if (isDone)
         {
             if (mAssetBundle == null)
@@ -389,6 +393,8 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
         }
     }
     #endregion
+
+    #region Update
     /// <summary>
     /// Update
     /// </summary>
@@ -407,4 +413,29 @@ public class AssetBundleLoaderMonoBehaviour : AbsMonoBehaviour
                 break;
         }
     }
+    #endregion
+
+    #region OnDispose
+    /// <summary>
+    /// OnDispose
+    /// </summary>
+    protected override void OnDispose()
+    {
+        mQueueLoad.Clear();
+        if (mAssetBundle != null)
+        {
+            mAssetBundle.Unload(false);
+        }
+        if (mAssetBundleCreateRequest != null)
+        {
+            mAssetBundleCreateRequest = null;
+        }
+        mCacheMemoryMaping.Clear();
+        mCacheAssetRequestMaping.Clear();
+        mCacheAssetRequestCallback.Clear();
+        mDependencyIds = null;
+        mLoaderState = enLoaderState.Wait;
+        base.OnDispose();
+    }
+    #endregion
 }

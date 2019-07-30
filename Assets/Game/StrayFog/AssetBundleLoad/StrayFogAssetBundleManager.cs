@@ -325,4 +325,23 @@ public sealed class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         return GetAssetPath(Convert.ToInt32(_file), Convert.ToInt32(_folder), out _path);
     }
     #endregion
+
+    #region OnDispose
+    /// <summary>
+    /// OnDispose
+    /// </summary>
+    protected override void OnDispose()
+    {
+        if (mLoaderMaping != null && mLoaderMaping.Count > 0)
+        {
+            foreach (AssetBundleLoaderMonoBehaviour loader in mLoaderMaping.Values)
+            {
+                loader.Dispose();
+            }
+        }
+        AssetBundle.UnloadAllAssetBundles(false);
+        Resources.UnloadUnusedAssets();
+        base.OnDispose();
+    }
+    #endregion
 }
