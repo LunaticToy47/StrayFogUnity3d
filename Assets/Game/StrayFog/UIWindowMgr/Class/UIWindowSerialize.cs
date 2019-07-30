@@ -235,7 +235,7 @@ public class UIWindowSerialize : AbsMonoBehaviour
             if (
                 holder.winCfg.isAutoRestoreSequenceWindow 
                 && !closeWinIds.Contains(holder.winCfg.id)
-                && holder.window.isActiveAndEnabled
+                && holder.WindowIsActiveAndEnabled()
                 )
             {
                 closeWinIds.Add(holder.winCfg.id);

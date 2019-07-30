@@ -17,42 +17,54 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     void OnLoadWindowInMemory(XLS_Config_Table_UIWindowSetting[] _winCfgs, bool _isInstance, UIWindowSettingEventHandler _callback, params object[] _parameters)
     {
-        int index = 0;
         Dictionary<int, AssetBundleResult> resultMaping = new Dictionary<int, AssetBundleResult>();
-        int count = _winCfgs.Length;
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             StrayFogGamePools.assetBundleManager.LoadAssetInMemory(cfg.fileId, cfg.folderId,
             (result) =>
             {
-                index++;
                 bool isInstance = (bool)result.extraParameter[0];
-                if (isInstance)
+                XLS_Config_Table_UIWindowSetting winCfg = (XLS_Config_Table_UIWindowSetting)result.extraParameter[1];
+                Dictionary<int, AssetBundleResult> winMemory = (Dictionary<int, AssetBundleResult>)result.extraParameter[2];
+                XLS_Config_Table_UIWindowSetting[] cfgs = (XLS_Config_Table_UIWindowSetting[])result.extraParameter[3];
+                #region 添加内存映射
+                if (!winMemory.ContainsKey(winCfg.id))
                 {
-                    XLS_Config_Table_UIWindowSetting winCfg = (XLS_Config_Table_UIWindowSetting)result.extraParameter[1];
-                    Dictionary<int, AssetBundleResult> winMemory = (Dictionary<int, AssetBundleResult>)result.extraParameter[2];
-                    if (!winMemory.ContainsKey(winCfg.id))
+                    winMemory.Add(winCfg.id, result);
+                }
+                else
+                {
+                    winMemory[winCfg.id] = result;
+                }
+                #endregion
+
+                bool isAllLoad = true;
+                #region 是否所有配置窗口已加载到内存
+                if (cfgs != null && cfgs.Length > 0)
+                {
+                    foreach (XLS_Config_Table_UIWindowSetting c in cfgs)
                     {
-                        winMemory.Add(winCfg.id, result);
+                        isAllLoad &= winMemory.ContainsKey(c.id);
                     }
-                    else
+                }
+                #endregion
+
+                if (isAllLoad)
+                {
+                    #region 内存加载完成回调
+                    if (isInstance)
                     {
-                        winMemory[winCfg.id] = result;
-                    }
-                    if (index >= count)
-                    {
-                        XLS_Config_Table_UIWindowSetting[] cfgs = (XLS_Config_Table_UIWindowSetting[])result.extraParameter[3];
                         UIWindowSettingEventHandler callback = (UIWindowSettingEventHandler)result.extraParameter[4];
                         object[] extralParameter = (object[])result.extraParameter[5];
                         callback(cfgs, winMemory, extralParameter);
                     }
-                }
-                else if (index >= count)
-                {
-                    XLS_Config_Table_UIWindowSetting[] cfgs = (XLS_Config_Table_UIWindowSetting[])result.extraParameter[3];
-                    UIWindowSettingEventHandler callback = (UIWindowSettingEventHandler)result.extraParameter[4];
-                    object[] extralParameter = (object[])result.extraParameter[5];
-                    callback(cfgs, extralParameter);
+                    else
+                    {
+                        UIWindowSettingEventHandler callback = (UIWindowSettingEventHandler)result.extraParameter[4];
+                        object[] extralParameter = (object[])result.extraParameter[5];
+                        callback(cfgs, extralParameter);
+                    }
+                    #endregion
                 }
             }, _isInstance, cfg, resultMaping, _winCfgs, _callback, _parameters);
         }

@@ -72,6 +72,15 @@ public class UIWindowHolder : AbsMonoBehaviour
     }
 
     /// <summary>
+    /// 窗口是否是激活状态
+    /// </summary>
+    /// <returns>true:是,false:否</returns>
+    public bool WindowIsActiveAndEnabled()
+    {
+        return window != null && window.isActiveAndEnabled;
+    }
+
+    /// <summary>
     /// 是否有指定窗口实例
     /// </summary>
     /// <typeparam name="W">窗口类型</typeparam>
@@ -121,6 +130,27 @@ public class UIWindowHolder : AbsMonoBehaviour
     public void SetTargetActive(bool _isActive)
     {
         mTargetActive = _isActive;
+    }
+    #endregion
+
+    #region ToggleScene 场景切换
+    /// <summary>
+    /// 场景切换
+    /// </summary>
+    public void ToggleScene()
+    {
+        if (winCfg.isDonotDestroyInstance)
+        {
+            if (!winCfg.isManualCloseWhenGotoScene)
+            {
+                SetTargetActive(false);
+                ToggleActive();
+            }
+        }
+        else
+        {
+            Recycle();
+        }
     }
     #endregion
 

@@ -15,14 +15,7 @@ public partial class StrayFogUIWindowManager
         //将当前所有可以关闭的窗口都关闭
         foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
         {
-            if (!holder.winCfg.isManualCloseWhenGotoScene)
-            {
-                holder.SetTargetActive(false);
-                holder.ToggleActive();
-#if DEBUGLOG
-                UnityEngine.Debug.Log(holder.winCfg.name);
-#endif
-            }
+            holder.ToggleScene();
         }
     }
     #endregion
