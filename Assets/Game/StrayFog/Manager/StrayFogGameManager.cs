@@ -94,6 +94,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         StrayFogGamePools.assetBundleManager.Dispose();
         StrayFogSQLiteEntityHelper.CloseSQLite();
         StrayFogSQLiteEntityHelper.SaveExcelPackage();
+        AssetBundle.UnloadAllAssetBundles(true);
     }
     /// <summary>
     /// OnApplicationQuit
