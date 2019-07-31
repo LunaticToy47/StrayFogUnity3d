@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// 运行时管理器
 /// </summary>
@@ -21,7 +23,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         {
             m_isInitialized = true;
             runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
-            Application.quitting += Application_quitting;
+            Application.wantsToQuit += OnApplication_wantsToQuit; ;
             StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
@@ -87,21 +89,59 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
 
     #region OnApplicationQuit
     /// <summary>
+    /// 退出应用异步
+    /// </summary>
+    AsyncOperation mQuitAppAsyncOperation = null;
+
+    /// <summary>
+    /// Application_wantsToQuit
+    /// </summary>
+    /// <returns>true:quit,false:cancel quit</returns>
+    bool OnApplication_wantsToQuit()
+    {
+        if (mQuitAppAsyncOperation == null)
+        {
+            OnApplication_quitting();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }    
+    /// <summary>
     /// Application_quitting
     /// </summary>
-    void Application_quitting()
+    void OnApplication_quitting()
     {
+        Time.timeScale = 0;
         StrayFogGamePools.assetBundleManager.Dispose();
         StrayFogSQLiteEntityHelper.CloseSQLite();
         StrayFogSQLiteEntityHelper.SaveExcelPackage();
-        AssetBundle.UnloadAllAssetBundles(true);
+        AssetBundle.UnloadAllAssetBundles(true);        
+        GameObject[] gos = SceneManager.GetActiveScene().GetRootGameObjects();
+        if (gos != null && gos.Length > 0)
+        {
+            foreach (GameObject g in gos)
+            {
+                if (g != null)
+                {
+                    Destroy(g);
+                }
+            }
+        }
+        mQuitAppAsyncOperation = Resources.UnloadUnusedAssets();
+        Time.timeScale = 1;
+        StartCoroutine(OnWaitQuitApp());
     }
     /// <summary>
-    /// OnApplicationQuit
+    /// 等待退出应用
     /// </summary>
-    void OnApplicationQuit()
+    /// <returns>异步</returns>
+    IEnumerator OnWaitQuitApp()
     {
-        Application_quitting();
-    }    
+        yield return mQuitAppAsyncOperation;
+        Application.Quit();
+    }
     #endregion
 }
