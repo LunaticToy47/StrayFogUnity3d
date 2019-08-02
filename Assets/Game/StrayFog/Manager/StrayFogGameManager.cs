@@ -23,14 +23,16 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         {
             m_isInitialized = true;
             runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
-            Application.wantsToQuit += OnApplication_wantsToQuit; ;
             StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
             StrayFogGamePools.guideManager.TriggerCheck();
-
             OnPartialInitialization();
+            Application.wantsToQuit += OnApplication_wantsToQuit;
+#if UNITY_EDITOR || DEBUGLOG
+            Application.logMessageReceivedThreaded += Application_logMessageReceivedThreaded;
+#endif
         }
 
         if (_onCallback != null)
@@ -108,7 +110,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         {
             return true;
         }
-    }    
+    }
     /// <summary>
     /// Application_quitting
     /// </summary>
@@ -118,7 +120,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         StrayFogGamePools.assetBundleManager.Dispose();
         StrayFogSQLiteEntityHelper.CloseSQLite();
         StrayFogSQLiteEntityHelper.SaveExcelPackage();
-        AssetBundle.UnloadAllAssetBundles(true);        
+        AssetBundle.UnloadAllAssetBundles(true);
         GameObject[] gos = SceneManager.GetActiveScene().GetRootGameObjects();
         if (gos != null && gos.Length > 0)
         {
@@ -144,4 +146,11 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         Application.Quit();
     }
     #endregion
+
+#if UNITY_EDITOR || DEBUGLOG
+    void Application_logMessageReceivedThreaded(string condition, string stackTrace, LogType type)
+    {
+        
+    }
+#endif
 }
