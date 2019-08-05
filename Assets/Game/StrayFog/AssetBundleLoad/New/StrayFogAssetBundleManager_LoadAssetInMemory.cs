@@ -2,7 +2,7 @@
 /// <summary>
 /// 资源管理器【加载资源到内存】
 /// </summary>
-public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehaviour
+public sealed partial class StrayFogNewAssetBundleManager
 {
     #region 加载资源到内存 OnLoadAssetInMemory
     /// <summary>

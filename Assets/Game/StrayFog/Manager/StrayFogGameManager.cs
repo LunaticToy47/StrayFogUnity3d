@@ -30,6 +30,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
             StrayFogGamePools.guideManager.TriggerCheck();
             OnPartialInitialization();
             Application.wantsToQuit += OnApplication_wantsToQuit;
+            Application.lowMemory += Application_lowMemory;
 #if UNITY_EDITOR || DEBUGLOG
             Application.logMessageReceivedThreaded += Application_logMessageReceivedThreaded;
 #endif
@@ -144,6 +145,13 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
     {
         yield return mQuitAppAsyncOperation;
         Application.Quit();
+    }
+    #endregion
+
+    #region Application_lowMemory
+    void Application_lowMemory()
+    {
+        StrayFogGamePools.newAssetBundleManager.LowMemoryFreeAsset();
     }
     #endregion
 

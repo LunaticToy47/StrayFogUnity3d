@@ -600,7 +600,7 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 1
   scriptingDefineSymbols:
-    1: HOTFIX_ENABLE;FORCEEXTERNALLOADASSET
+    1: HOTFIX_ENABLE
     7: 
     21: UNITY_XBOXONE_DEVELOPMENT_BUILD;FORCEEXTERNALLOADASSET
   platformArchitecture: {}

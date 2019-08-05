@@ -47,6 +47,10 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
     /// </summary>
     Dictionary<int, Dictionary<int, XLS_Config_View_AssetDiskMaping>> mXLS_Config_View_AssetDiskMaping = new Dictionary<int, Dictionary<int, XLS_Config_View_AssetDiskMaping>>();
     /// <summary>
+    /// XLS到Manifest数据映射
+    /// </summary>
+    Dictionary<int, Dictionary<int, int>> mXLSToManifestMaping = new Dictionary<int, Dictionary<int, int>>();
+    /// <summary>
     /// AssetBundleManifestParameter映射
     /// </summary>
     Dictionary<int, AssetBundleParameter> mAssetBundleManifestParameterMaping = new Dictionary<int, AssetBundleParameter>();
@@ -104,6 +108,14 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
                 {
                     mXLS_Config_View_AssetDiskMaping[v.folderId].Add(v.fileId, v);
                 }
+                if (!mXLSToManifestMaping.ContainsKey(v.folderId))
+                {
+                    mXLSToManifestMaping.Add(v.folderId, new Dictionary<int, int>());
+                }
+                if (!mXLSToManifestMaping[v.folderId].ContainsKey(v.fileId))
+                {
+                    mXLSToManifestMaping[v.folderId].Add(v.fileId, 0);
+                }
                 if (StrayFogGamePools.setting.isInternal)
                 {
                     tempAbp = new AssetBundleParameter(v.inAssetPath);
@@ -116,6 +128,17 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
                 {
                     mAssetBundleManifestParameterMaping.Add(tempAbp.assetId, tempAbp);
                 }
+#if UNITY_EDITOR
+                if (mXLSToManifestMaping[v.folderId][v.fileId] != 0 && mXLSToManifestMaping[v.folderId][v.fileId] != tempAbp.assetId)
+                {
+                    Debug.LogErrorFormat("Asset 【{0}】【{1}_{2}】has the two assetId 【{3}_{4}】【{5}_{6}】",
+                        v.inAssetPath,v.folderId,v.fileId,
+                        mAssetBundleManifestParameterMaping[mXLSToManifestMaping[v.folderId][v.fileId]].assetId, mAssetBundleManifestParameterMaping[mXLSToManifestMaping[v.folderId][v.fileId]].assetPath,
+                        tempAbp.assetId, tempAbp.assetPath
+                        );
+                }
+#endif
+                mXLSToManifestMaping[v.folderId][v.fileId] = tempAbp.assetId;
             }
         }
 #if UNITY_EDITOR
