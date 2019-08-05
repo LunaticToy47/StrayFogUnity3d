@@ -1,8 +1,8 @@
 ﻿using System.IO;
 /// <summary>
-/// 资源包参数
+/// 资源加载路径参数
 /// </summary>
-public class AssetBundleParameter : IAssetBundleParameter
+public class AssetBundleLoadPathParameter : IAssetBundleLoadPathParameter
 {
     /// <summary>
     /// 资源ID
@@ -18,7 +18,7 @@ public class AssetBundleParameter : IAssetBundleParameter
     /// 构造函数
     /// </summary>
     /// <param name="_assetBundleName">资源包名称</param>
-    public AssetBundleParameter(string _assetBundleName)
+    public AssetBundleLoadPathParameter(string _assetBundleName)
     {
         assetId = _assetBundleName.UniqueHashCode();
         assetPath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();

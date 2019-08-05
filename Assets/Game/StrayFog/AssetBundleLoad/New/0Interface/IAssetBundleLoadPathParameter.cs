@@ -1,7 +1,7 @@
 ﻿/// <summary>
-/// 资源AssetBundle参数接口
+/// AssetBundle资源加载路径参数接口
 /// </summary>
-public interface IAssetBundleParameter
+public interface IAssetBundleLoadPathParameter
 {
     /// <summary>
     /// 资源ID

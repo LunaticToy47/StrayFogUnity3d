@@ -51,9 +51,9 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
     /// </summary>
     Dictionary<int, Dictionary<int, int>> mXLSToManifestMaping = new Dictionary<int, Dictionary<int, int>>();
     /// <summary>
-    /// AssetBundleManifestParameter映射
+    /// AssetBundlePathParameter映射
     /// </summary>
-    Dictionary<int, AssetBundleParameter> mAssetBundleManifestParameterMaping = new Dictionary<int, AssetBundleParameter>();
+    Dictionary<int, IAssetBundleLoadPathParameter> mAssetBundlePathParameterMaping = new Dictionary<int, IAssetBundleLoadPathParameter>();
 
 
     /// <summary>
@@ -62,7 +62,7 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
     void OnCollectAssetDiskMaping()
     {
 #if UNITY_EDITOR
-        string editorABPN = typeof(AssetBundleParameter).Name;
+        string editorABPN = typeof(AssetBundleLoadPathParameter).Name;
         string editorManifestN = typeof(AssetBundleManifest).Name;
         string editorXLSN = typeof(XLS_Config_View_AssetDiskMaping).Name;
         System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
@@ -75,25 +75,25 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
             {
                 foreach (string n in names)
                 {
-                    AssetBundleParameter abmp = new AssetBundleParameter(n);
-                    if (!mAssetBundleManifestParameterMaping.ContainsKey(abmp.assetId))
+                    AssetBundleLoadPathParameter abmp = new AssetBundleLoadPathParameter(n);
+                    if (!mAssetBundlePathParameterMaping.ContainsKey(abmp.assetId))
                     {
-                        mAssetBundleManifestParameterMaping.Add(abmp.assetId, abmp);
+                        mAssetBundlePathParameterMaping.Add(abmp.assetId, abmp);
                     }
                 }
             }
 #if UNITY_EDITOR
             watch.Stop();
-            Debug.LogFormat("Collection {0} from 【Manifest =>{1}】,Time:{2}", editorABPN, mAssetBundleManifestParameterMaping.Count, watch.Elapsed);
+            Debug.LogFormat("Collection {0} from 【Manifest =>{1}】,Time:{2}", editorABPN, mAssetBundlePathParameterMaping.Count, watch.Elapsed);
             watch.Reset();
 #endif
         }
 
 #if UNITY_EDITOR
-        int beforeCollectXlsConfigABMPC = mAssetBundleManifestParameterMaping.Count;
+        int beforeCollectXlsConfigABMPC = mAssetBundlePathParameterMaping.Count;
         watch.Start();
 #endif
-        AssetBundleParameter tempAbp = null;
+        AssetBundleLoadPathParameter tempAbp = null;
         mXLS_Config_View_AssetDiskMaping.Clear();
         List<XLS_Config_View_AssetDiskMaping> mapings = StrayFogSQLiteEntityHelper.Select<XLS_Config_View_AssetDiskMaping>();
         if (mapings.Count > 0)
@@ -118,22 +118,22 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
                 }
                 if (StrayFogGamePools.setting.isInternal)
                 {
-                    tempAbp = new AssetBundleParameter(v.inAssetPath);
+                    tempAbp = new AssetBundleLoadPathParameter(v.inAssetPath);
                 }
                 else
                 {
-                    tempAbp = new AssetBundleParameter(v.outAssetPath);
+                    tempAbp = new AssetBundleLoadPathParameter(v.outAssetPath);
                 }
-                if (!mAssetBundleManifestParameterMaping.ContainsKey(tempAbp.assetId))
+                if (!mAssetBundlePathParameterMaping.ContainsKey(tempAbp.assetId))
                 {
-                    mAssetBundleManifestParameterMaping.Add(tempAbp.assetId, tempAbp);
+                    mAssetBundlePathParameterMaping.Add(tempAbp.assetId, tempAbp);
                 }
 #if UNITY_EDITOR
                 if (mXLSToManifestMaping[v.folderId][v.fileId] != 0 && mXLSToManifestMaping[v.folderId][v.fileId] != tempAbp.assetId)
                 {
                     Debug.LogErrorFormat("Asset 【{0}】【{1}_{2}】has the two assetId 【{3}_{4}】【{5}_{6}】",
                         v.inAssetPath,v.folderId,v.fileId,
-                        mAssetBundleManifestParameterMaping[mXLSToManifestMaping[v.folderId][v.fileId]].assetId, mAssetBundleManifestParameterMaping[mXLSToManifestMaping[v.folderId][v.fileId]].assetPath,
+                        mAssetBundlePathParameterMaping[mXLSToManifestMaping[v.folderId][v.fileId]].assetId, mAssetBundlePathParameterMaping[mXLSToManifestMaping[v.folderId][v.fileId]].assetPath,
                         tempAbp.assetId, tempAbp.assetPath
                         );
                 }
@@ -146,9 +146,48 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
         Debug.LogFormat("Collection {0} from 【{1}=> {2}】,Time: {3}",
             editorABPN, editorXLSN, mapings.Count, watch.Elapsed);
         Debug.LogFormat("Collection {0} between {1} and {2} different【{3}】,Time:{4}",
-            editorABPN, editorManifestN, editorXLSN, mAssetBundleManifestParameterMaping.Count - beforeCollectXlsConfigABMPC, watch.Elapsed);
+            editorABPN, editorManifestN, editorXLSN, mAssetBundlePathParameterMaping.Count - beforeCollectXlsConfigABMPC, watch.Elapsed);
         watch.Reset();
 #endif
+    }
+    #endregion
+
+    #region OnGetAssetDiskMaping 获得资源磁盘映射
+    /// <summary>
+    /// 获得资源磁盘映射
+    /// </summary>
+    /// <param name="_folderId">文件夹Id</param>
+    /// <param name="_fileId">文件Id</param>
+    /// <returns>资源磁盘映射</returns>
+    XLS_Config_View_AssetDiskMaping OnGetAssetDiskMaping(int _folderId, int _fileId)
+    {
+        XLS_Config_View_AssetDiskMaping config = default(XLS_Config_View_AssetDiskMaping);
+        if (mXLS_Config_View_AssetDiskMaping.ContainsKey(_folderId)
+            && mXLS_Config_View_AssetDiskMaping[_folderId].ContainsKey(_fileId))
+        {
+            config = mXLS_Config_View_AssetDiskMaping[_folderId][_fileId];
+        }
+        return config;
+    }
+    #endregion
+
+    #region OnGetAssetBundlePath 获得资源路径
+    /// <summary>
+    /// 获得资源路径
+    /// </summary>
+    /// <param name="_folderId">文件夹Id</param>
+    /// <param name="_fileId">文件Id</param>
+    /// <returns>资源磁盘映射</returns>
+    IAssetBundleLoadPathParameter OnGetAssetBundlePath(int _folderId, int _fileId)
+    {
+        IAssetBundleLoadPathParameter path = default(IAssetBundleLoadPathParameter);
+        if (mXLSToManifestMaping.ContainsKey(_folderId)
+            && mXLSToManifestMaping[_folderId].ContainsKey(_fileId)
+            && mAssetBundlePathParameterMaping.ContainsKey(mXLSToManifestMaping[_folderId][_fileId]))
+        {
+            path = mAssetBundlePathParameterMaping[mXLSToManifestMaping[_folderId][_fileId]];
+        }
+        return path;
     }
     #endregion
 }
