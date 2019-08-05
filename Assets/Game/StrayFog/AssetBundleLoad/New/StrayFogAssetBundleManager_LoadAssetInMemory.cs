@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 /// <summary>
 /// 资源管理器【加载资源到内存】
@@ -51,6 +52,7 @@ public partial class StrayFogNewAssetBundleManager
             IAssetBundleOutputParameter output = new AssetBundleOutputParameter(_onResultCallback, _onProgressCallback);            
             AssetBundleMemoryMonoBehaviour mono = OnCreateMemoryMono(path);
             mono.AddRequest(input,output);
+            mono.BeginLoad();
         }
         else
         {
@@ -68,15 +70,16 @@ public partial class StrayFogNewAssetBundleManager
         if (!mMemoryMonoMaping.ContainsKey(_file.assetId))
         {
 #if UNITY_EDITOR
-            GameObject go = new GameObject(_file.assetPath);
+            GameObject go = new GameObject(_file.assetBundleName);
 #else
             GameObject go = new GameObject(_file.assetId);
 #endif
+            go.hideFlags = hideFlags;
+            go.transform.SetParent(transform);
             AssetBundleMemoryMonoBehaviour mono = go.AddComponent<AssetBundleMemoryMonoBehaviour>();
-            mono.OnGetAssetBundleMemoryMonoBehaviour += Mono_OnGetAssetBundleMemoryMonoBehaviour;
             mono.OnRequestLoadDependencies += Mono_OnRequestLoadDependencies;
             mMemoryMonoMaping.Add(_file.assetId, mono);
-            mono.BeginLoad(_file);
+            mono.SetParameter(_file);
         }
         return mMemoryMonoMaping[_file.assetId];
     }
@@ -91,7 +94,7 @@ public partial class StrayFogNewAssetBundleManager
         AssetBundleMemoryMonoBehaviour[] result = null;
         if (!_arg.isInternal)
         {
-            string[] deps = mAssetBundleManifest.GetDirectDependencies(_arg.assetPath);
+            string[] deps = mAssetBundleManifest.GetDirectDependencies(_arg.assetBundleName);
             if (deps != null && deps.Length > 0)
             {
                 result = new AssetBundleMemoryMonoBehaviour[deps.Length];
@@ -99,20 +102,11 @@ public partial class StrayFogNewAssetBundleManager
                 {
                     AssetBundleFileParameter file = OnGetAssetBundleFile(deps[i].UniqueHashCode());
                     result[i] = OnCreateMemoryMono(file);
+                    result[i].BeginLoad();
                 }
             }
         }
         return result;
-    }
-
-    /// <summary>
-    /// 获得指定的资源内存加载组件
-    /// </summary>
-    /// <param name="_assetId">资源Id</param>
-    /// <returns>资源内存加载组件</returns>
-    AssetBundleMemoryMonoBehaviour Mono_OnGetAssetBundleMemoryMonoBehaviour(int _assetId)
-    {
-        return mMemoryMonoMaping.ContainsKey(_assetId) ? mMemoryMonoMaping[_assetId] : default(AssetBundleMemoryMonoBehaviour);
     }
     #endregion
 }

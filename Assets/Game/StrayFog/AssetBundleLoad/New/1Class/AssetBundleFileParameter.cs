@@ -8,12 +8,14 @@ public class AssetBundleFileParameter
     /// 资源ID
     /// </summary>
     public int assetId { get; private set; }
-
+    /// <summary>
+    /// 资源AssetBundle名称
+    /// </summary>
+    public string assetBundleName { get; private set; }
     /// <summary>
     /// 资源路径
     /// </summary>
-    public string assetPath { get; private set; }
-
+    public string assetPath { get; private set; }    
     /// <summary>
     /// 是否是内部资源
     /// </summary>
@@ -25,6 +27,7 @@ public class AssetBundleFileParameter
     public AssetBundleFileParameter(string _assetBundleName)
     {
         assetId = _assetBundleName.UniqueHashCode();
+        assetBundleName = _assetBundleName;
         assetPath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
         isInternal = StrayFogGamePools.setting.isInternal;
     }
