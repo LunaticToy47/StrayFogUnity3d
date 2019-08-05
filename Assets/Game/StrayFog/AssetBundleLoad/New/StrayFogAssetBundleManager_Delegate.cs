@@ -14,5 +14,5 @@ public delegate void AssetBundleProgressEventHandler(float _progress, IAssetBund
 /// </summary>
 public partial class StrayFogNewAssetBundleManager
 {
-
+    
 }

@@ -1,8 +1,8 @@
 ﻿using System.IO;
 /// <summary>
-/// 资源加载路径参数
+/// 资源文件参数
 /// </summary>
-public class AssetBundleLoadPathParameter : IAssetBundleLoadPathParameter
+public class AssetBundleFileParameter
 {
     /// <summary>
     /// 资源ID
@@ -15,12 +15,17 @@ public class AssetBundleLoadPathParameter : IAssetBundleLoadPathParameter
     public string assetPath { get; private set; }
 
     /// <summary>
+    /// 是否是内部资源
+    /// </summary>
+    public bool isInternal { get; private set; }
+    /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="_assetBundleName">资源包名称</param>
-    public AssetBundleLoadPathParameter(string _assetBundleName)
+    public AssetBundleFileParameter(string _assetBundleName)
     {
         assetId = _assetBundleName.UniqueHashCode();
         assetPath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
+        isInternal = StrayFogGamePools.setting.isInternal;
     }
 }

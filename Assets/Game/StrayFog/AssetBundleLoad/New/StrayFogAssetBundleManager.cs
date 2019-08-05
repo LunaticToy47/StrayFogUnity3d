@@ -53,7 +53,7 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
     /// <summary>
     /// AssetBundlePathParameter映射
     /// </summary>
-    Dictionary<int, IAssetBundleLoadPathParameter> mAssetBundlePathParameterMaping = new Dictionary<int, IAssetBundleLoadPathParameter>();
+    Dictionary<int, AssetBundleFileParameter> mAssetBundlePathParameterMaping = new Dictionary<int, AssetBundleFileParameter>();
 
 
     /// <summary>
@@ -62,7 +62,7 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
     void OnCollectAssetDiskMaping()
     {
 #if UNITY_EDITOR
-        string editorABPN = typeof(AssetBundleLoadPathParameter).Name;
+        string editorABPN = typeof(AssetBundleFileParameter).Name;
         string editorManifestN = typeof(AssetBundleManifest).Name;
         string editorXLSN = typeof(XLS_Config_View_AssetDiskMaping).Name;
         System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
@@ -75,7 +75,7 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
             {
                 foreach (string n in names)
                 {
-                    AssetBundleLoadPathParameter abmp = new AssetBundleLoadPathParameter(n);
+                    AssetBundleFileParameter abmp = new AssetBundleFileParameter(n);
                     if (!mAssetBundlePathParameterMaping.ContainsKey(abmp.assetId))
                     {
                         mAssetBundlePathParameterMaping.Add(abmp.assetId, abmp);
@@ -93,7 +93,7 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
         int beforeCollectXlsConfigABMPC = mAssetBundlePathParameterMaping.Count;
         watch.Start();
 #endif
-        AssetBundleLoadPathParameter tempAbp = null;
+        AssetBundleFileParameter tempAbp = null;
         mXLS_Config_View_AssetDiskMaping.Clear();
         List<XLS_Config_View_AssetDiskMaping> mapings = StrayFogSQLiteEntityHelper.Select<XLS_Config_View_AssetDiskMaping>();
         if (mapings.Count > 0)
@@ -118,11 +118,11 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
                 }
                 if (StrayFogGamePools.setting.isInternal)
                 {
-                    tempAbp = new AssetBundleLoadPathParameter(v.inAssetPath);
+                    tempAbp = new AssetBundleFileParameter(v.inAssetPath);
                 }
                 else
                 {
-                    tempAbp = new AssetBundleLoadPathParameter(v.outAssetPath);
+                    tempAbp = new AssetBundleFileParameter(v.outAssetPath);
                 }
                 if (!mAssetBundlePathParameterMaping.ContainsKey(tempAbp.assetId))
                 {
@@ -171,21 +171,38 @@ public sealed partial class StrayFogNewAssetBundleManager : AbsSingleMonoBehavio
     }
     #endregion
 
-    #region OnGetAssetBundlePath 获得资源路径
+    #region OnGetAssetBundleFile 获得资源文件
     /// <summary>
-    /// 获得资源路径
+    /// 获得资源文件
     /// </summary>
     /// <param name="_folderId">文件夹Id</param>
     /// <param name="_fileId">文件Id</param>
-    /// <returns>资源磁盘映射</returns>
-    IAssetBundleLoadPathParameter OnGetAssetBundlePath(int _folderId, int _fileId)
+    /// <returns>资源路径</returns>
+    AssetBundleFileParameter OnGetAssetBundleFile(int _folderId, int _fileId)
     {
-        IAssetBundleLoadPathParameter path = default(IAssetBundleLoadPathParameter);
+        AssetBundleFileParameter path = default(AssetBundleFileParameter);
         if (mXLSToManifestMaping.ContainsKey(_folderId)
             && mXLSToManifestMaping[_folderId].ContainsKey(_fileId)
             && mAssetBundlePathParameterMaping.ContainsKey(mXLSToManifestMaping[_folderId][_fileId]))
         {
             path = mAssetBundlePathParameterMaping[mXLSToManifestMaping[_folderId][_fileId]];
+        }
+        return path;
+    }
+    #endregion
+
+    #region OnGetAssetBundleFile 获得资源文件
+    /// <summary>
+    /// 获得资源文件
+    /// </summary>
+    /// <param name="_assetId">资源Id</param>
+    /// <returns>资源路径</returns>
+    AssetBundleFileParameter OnGetAssetBundleFile(int _assetId)
+    {
+        AssetBundleFileParameter path = default(AssetBundleFileParameter);
+        if (mAssetBundlePathParameterMaping.ContainsKey(_assetId))
+        {
+            path = mAssetBundlePathParameterMaping[_assetId];
         }
         return path;
     }

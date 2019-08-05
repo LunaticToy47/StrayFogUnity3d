@@ -10,9 +10,14 @@ public class AssetBundleInputParameter : IAssetBundleInputParameter
     /// <param name="_extraParameter">额外参数</param>
     public AssetBundleInputParameter(XLS_Config_View_AssetDiskMaping _config, object[] _extraParameter)
     {
+        uniqueId = _config.inAssetPath.UniqueHashCode();
         config = _config;
         extraParameter = _extraParameter;
     }
+    /// <summary>
+    /// 唯一Id
+    /// </summary>
+    public int uniqueId { get; private set; }
     /// <summary>
     /// 磁盘配置
     /// </summary>
