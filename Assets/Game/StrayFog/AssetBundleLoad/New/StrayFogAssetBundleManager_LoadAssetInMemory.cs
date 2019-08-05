@@ -14,14 +14,19 @@ public sealed partial class StrayFogNewAssetBundleManager
     /// <param name="_onProgressCallback">进度回调</param>
     /// <param name="_onErrorCallback">错误回调</param>
     /// <param name="_extraParameter">额外参数</param>
-    public void OnLoadAssetInMemory(int _fileId, int _folderId, params object[] _extraParameter)
+    public void LoadAssetInMemory(int _fileId, int _folderId,
+        AssetBundleResultEventHandler _onResultCallback,
+        AssetBundleProgressEventHandler _onProgressCallback,
+        AssetBundleErrorEventHandler _onErrorCallback,
+        params object[] _extraParameter)
     {
         XLS_Config_View_AssetDiskMaping config = OnGetAssetDiskMaping(_folderId, _fileId);
-        IAssetBundleInputParameter input = new AssetBundleInputParameter(config, _extraParameter);
         IAssetBundleLoadPathParameter path = OnGetAssetBundlePath(_folderId, _fileId);
-        AssetBundleLoadMemoryParameter abop = new AssetBundleLoadMemoryParameter(input, path);
-        if (abop.isValid)
+        IAssetBundleInputParameter input = new AssetBundleInputParameter(config, _extraParameter);
+        bool isValid = config != null && path != null;
+        if (isValid)
         {
+            AssetBundleLoadMemoryParameter abop = new AssetBundleLoadMemoryParameter(input, path, _onResultCallback, _onProgressCallback, _onErrorCallback);
 
         }
         else
@@ -36,7 +41,10 @@ public sealed partial class StrayFogNewAssetBundleManager
             {
                 error = string.Format("Can't find IAssetBundlePathParameter for 【folderId:{0}】【fileId:{1}】", _folderId, _fileId);
             }
+#if UNITY_EDITOR
             Debug.LogError(error);
+#endif
+            _onErrorCallback?.Invoke(error, input);
             #endregion
         }
     }

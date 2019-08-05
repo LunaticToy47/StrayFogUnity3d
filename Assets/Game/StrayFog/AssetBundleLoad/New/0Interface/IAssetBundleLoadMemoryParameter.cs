@@ -4,10 +4,6 @@
 public interface IAssetBundleLoadMemoryParameter
 {
     /// <summary>
-    /// 是否是有效参数
-    /// </summary>
-    bool isValid { get; }
-    /// <summary>
     /// 资源包路径参数
     /// </summary>
     IAssetBundleLoadPathParameter path { get; }
@@ -15,4 +11,16 @@ public interface IAssetBundleLoadMemoryParameter
     /// 输入参数
     /// </summary>
     IAssetBundleInputParameter inputParameter { get; }
+    /// <summary>
+    /// 结果回调
+    /// </summary>
+    AssetBundleResultEventHandler resultCallback { get; }
+    /// <summary>
+    /// 进度回调
+    /// </summary>
+    AssetBundleProgressEventHandler progressCallback { get; }
+    /// <summary>
+    /// 错误回调
+    /// </summary>
+    AssetBundleErrorEventHandler errorCallback { get; }
 }
