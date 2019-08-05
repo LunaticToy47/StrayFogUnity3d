@@ -43,7 +43,7 @@ public class ExampleUIWindowLevel : AbsLevel
                 StrayFogGamePools.newAssetBundleManager.LoadAssetInMemory(
                     (int)enAssetDiskMapingFile.f_ExampleLobbyWindow_prefab,
                     (int)enAssetDiskMapingFolder.Assets_Example_AssetBundles_UIWindow_ExampleLobby,
-                    (result) => { }, (p, arg) => { }, (err, arg) => { },Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
+                    (result) => { }, (p, arg) => { }, Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
                     );
             });
         });

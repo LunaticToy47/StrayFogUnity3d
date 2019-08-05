@@ -19,8 +19,4 @@ public interface IAssetBundleLoadMemoryParameter
     /// 进度回调
     /// </summary>
     AssetBundleProgressEventHandler progressCallback { get; }
-    /// <summary>
-    /// 错误回调
-    /// </summary>
-    AssetBundleErrorEventHandler errorCallback { get; }
 }

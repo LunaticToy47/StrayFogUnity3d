@@ -10,19 +10,18 @@ public class AssetBundleLoadMemoryParameter: IAssetBundleLoadMemoryParameter
     /// <param name="_path">资源路径</param>
     /// <param name="_resultCallback">结果回调</param>
     /// <param name="_progressCallback">进度回调</param>
-    /// <param name="_errorCallback">错误回调</param>
-    public AssetBundleLoadMemoryParameter(IAssetBundleInputParameter _inputParameter,
+    public AssetBundleLoadMemoryParameter(
+        IAssetBundleInputParameter _inputParameter,
         IAssetBundleLoadPathParameter _path, 
         AssetBundleResultEventHandler _resultCallback,
-        AssetBundleProgressEventHandler _progressCallback,
-        AssetBundleErrorEventHandler _errorCallback
+        AssetBundleProgressEventHandler _progressCallback
         )
     {
         path = _path;
         inputParameter = _inputParameter;
         resultCallback = _resultCallback;
         progressCallback = _progressCallback;
-        errorCallback = _errorCallback;
+        errorCallback = _errorCallback;        
     }
     /// <summary>
     /// 资源包路径参数
@@ -40,8 +39,4 @@ public class AssetBundleLoadMemoryParameter: IAssetBundleLoadMemoryParameter
     /// 进度回调
     /// </summary>
     public AssetBundleProgressEventHandler progressCallback { get; private set; }
-    /// <summary>
-    /// 错误回调
-    /// </summary>
-    public AssetBundleErrorEventHandler errorCallback { get; private set; }
 }
