@@ -40,15 +40,6 @@ public class ExampleUIWindowLevel : AbsLevel
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
                 Time.timeScale = 0;
-                StrayFogGamePools.newAssetBundleManager.LoadAssetInMemory(
-                    (int)enAssetDiskMapingFile.f_ExampleLobbyWindow_prefab,
-                    (int)enAssetDiskMapingFolder.Assets_Example_AssetBundles_UIWindow_ExampleLobby,
-                    (result) => {
-                        UnityEngine.Debug.Log("result=>" + result);
-                    }, (p, arg) => {
-                        UnityEngine.Debug.Log(p);
-                    }, Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
-                    );
             });
         });
     }

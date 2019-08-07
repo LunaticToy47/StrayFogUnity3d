@@ -34,16 +34,15 @@ public class ExampleTerrainLevel : AbsLevel
         StrayFogGamePools.assetBundleManager.LoadAssetInMemory(
             enAssetDiskMapingFile.f_Terrain_prefab,
             enAssetDiskMapingFolder.Assets_Example_AssetBundles_Terrain,
-            (result) =>
+            (output) =>
             {
-                result.Instantiate<GameObject>((rst, args) =>
+                output.Instantiate<GameObject>((result) =>
                 {
-                    GameObject terrain = rst;
-                    Stopwatch w = (Stopwatch)args[0];
+                    GameObject terrain = (GameObject)result.asset;
+                    Stopwatch w = (Stopwatch)result.input.extraParameter[0];
                     w.Stop();
                     UnityEngine.Debug.Log(w.Elapsed + "=>" + terrain.gameObject);
-                }, result.extraParameter);
-
+                });
             }, watch);
     }
 

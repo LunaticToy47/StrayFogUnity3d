@@ -151,7 +151,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
     #region Application_lowMemory
     void Application_lowMemory()
     {
-        StrayFogGamePools.newAssetBundleManager.LowMemoryFreeAsset();
+        StrayFogGamePools.assetBundleManager.LowMemoryFreeAsset();
     }
     #endregion
 

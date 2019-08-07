@@ -17,24 +17,24 @@ public partial class StrayFogUIWindowManager
     /// <param name="_parameters">参数组</param>
     void OnLoadWindowInMemory(XLS_Config_Table_UIWindowSetting[] _winCfgs, bool _isInstance, UIWindowSettingEventHandler _callback, params object[] _parameters)
     {
-        Dictionary<int, AssetBundleResult> resultMaping = new Dictionary<int, AssetBundleResult>();
+        Dictionary<int, IAssetBundleOutput> outputMaping = new Dictionary<int, IAssetBundleOutput>();
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             StrayFogGamePools.assetBundleManager.LoadAssetInMemory(cfg.fileId, cfg.folderId,
-            (result) =>
+            (output) =>
             {
-                bool isInstance = (bool)result.extraParameter[0];
-                XLS_Config_Table_UIWindowSetting winCfg = (XLS_Config_Table_UIWindowSetting)result.extraParameter[1];
-                Dictionary<int, AssetBundleResult> winMemory = (Dictionary<int, AssetBundleResult>)result.extraParameter[2];
-                XLS_Config_Table_UIWindowSetting[] cfgs = (XLS_Config_Table_UIWindowSetting[])result.extraParameter[3];
+                bool isInstance = (bool)output.input.extraParameter[0];
+                XLS_Config_Table_UIWindowSetting winCfg = (XLS_Config_Table_UIWindowSetting)output.input.extraParameter[1];
+                Dictionary<int, IAssetBundleOutput> winMemory = (Dictionary<int, IAssetBundleOutput>)output.input.extraParameter[2];
+                XLS_Config_Table_UIWindowSetting[] cfgs = (XLS_Config_Table_UIWindowSetting[])output.input.extraParameter[3];
                 #region 添加内存映射
                 if (!winMemory.ContainsKey(winCfg.id))
                 {
-                    winMemory.Add(winCfg.id, result);
+                    winMemory.Add(winCfg.id, output);
                 }
                 else
                 {
-                    winMemory[winCfg.id] = result;
+                    winMemory[winCfg.id] = output;
                 }
                 #endregion
 
@@ -54,19 +54,19 @@ public partial class StrayFogUIWindowManager
                     #region 内存加载完成回调
                     if (isInstance)
                     {
-                        UIWindowSettingEventHandler callback = (UIWindowSettingEventHandler)result.extraParameter[4];
-                        object[] extralParameter = (object[])result.extraParameter[5];
+                        UIWindowSettingEventHandler callback = (UIWindowSettingEventHandler)output.input.extraParameter[4];
+                        object[] extralParameter = (object[])output.input.extraParameter[5];
                         callback(cfgs, winMemory, extralParameter);
                     }
                     else
                     {
-                        UIWindowSettingEventHandler callback = (UIWindowSettingEventHandler)result.extraParameter[4];
-                        object[] extralParameter = (object[])result.extraParameter[5];
+                        UIWindowSettingEventHandler callback = (UIWindowSettingEventHandler)output.input.extraParameter[4];
+                        object[] extralParameter = (object[])output.input.extraParameter[5];
                         callback(cfgs, extralParameter);
                     }
                     #endregion
                 }
-            }, _isInstance, cfg, resultMaping, _winCfgs, _callback, _parameters);
+            }, _isInstance, cfg, outputMaping, _winCfgs, _callback, _parameters);
         }
     }
     #endregion
@@ -122,7 +122,7 @@ public partial class StrayFogUIWindowManager
         }
         OnLoadWindowInMemory(_winCfgs, true, (cfgs, args) =>
         {
-            Dictionary<int, AssetBundleResult> memoryAssetResult = (Dictionary<int, AssetBundleResult>)args[0];
+            Dictionary<int, IAssetBundleOutput> memoryAssetResult = (Dictionary<int, IAssetBundleOutput>)args[0];
             object[] memoryArgs = (object[])args[1];
             UIWindowEntityEventHandler<W> call = (UIWindowEntityEventHandler<W>)memoryArgs[0];
             object[] extArgs = (object[])memoryArgs[1];
@@ -169,7 +169,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_memoryAssetResult">内存结果</param>
     /// <param name="_callback">回调</param>
     /// <param name="_parameters">参数</param>
-    void OnInstanceWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, Dictionary<int, AssetBundleResult> _memoryAssetResult, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
+    void OnInstanceWindow<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, Dictionary<int, IAssetBundleOutput> _memoryAssetResult, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
         OnCheckInstance<W>(_winCfgs, _callback, _parameters);
@@ -179,10 +179,10 @@ public partial class StrayFogUIWindowManager
             if (!mWindowHolderMaping[cfg.id].isMarkLoadedWindowInstace)
             {
                 mWindowHolderMaping[cfg.id].MarkLoadedWindowInstace();
-                _memoryAssetResult[cfg.id].Instantiate<GameObject>(false, (win, args) =>
+                _memoryAssetResult[cfg.id].Instantiate<GameObject>(false, (result) =>
                 {
-                    XLS_Config_Table_UIWindowSetting winCfg = (XLS_Config_Table_UIWindowSetting)args[0];
-                    GameObject prefab = win;
+                    XLS_Config_Table_UIWindowSetting winCfg = (XLS_Config_Table_UIWindowSetting)result.extraParemeter[0];
+                    GameObject prefab = (GameObject)result.asset;
                     if (prefab != null)
                     {
                         prefab.name = winCfg.name + "[" + winCfg.id + "]";

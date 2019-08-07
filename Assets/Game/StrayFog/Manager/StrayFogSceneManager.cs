@@ -65,7 +65,7 @@ public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
         StrayFogGamePools.assetBundleManager.LoadAssetInMemory(_file, _folder,
                 (result) =>
                 {
-                    mSceneAsync = SceneManager.LoadSceneAsync(result.assetName);
+                    mSceneAsync = SceneManager.LoadSceneAsync(result.input.assetName);
                     mSceneAsync.allowSceneActivation = false;
                     StartCoroutine(OnActiveScene());
                 });

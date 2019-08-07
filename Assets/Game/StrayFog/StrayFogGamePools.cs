@@ -16,19 +16,6 @@ public static partial class StrayFogGamePools
     }
     #endregion
 
-    #region StrayFogNewAssetBundleManager
-    /// <summary>
-    /// StrayFogNewAssetBundleManager
-    /// </summary>
-    public static StrayFogNewAssetBundleManager newAssetBundleManager
-    {
-        get
-        {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogNewAssetBundleManager>();
-        }
-    }
-    #endregion
-
     #region StrayFogGuideManager
     /// <summary>
     /// StrayFogGuideManager

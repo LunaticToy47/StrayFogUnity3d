@@ -61,11 +61,12 @@ public class ExampleFMSLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
         StrayFogGamePools.assetBundleManager.LoadAssetInMemory(enAssetDiskMapingFile.f_pf_hero_1002_prefab, enAssetDiskMapingFolder.Assets_Example_AssetBundles_Prefabs_Character,
-            (result) =>
+            (output) =>
             {
-                result.Instantiate<GameObject>((rst,args)=> {
-                    GameObject hero = rst;
-                    Stopwatch w = (Stopwatch)args[0];
+                output.Instantiate<GameObject>((result) =>
+                {
+                    GameObject hero = (GameObject)result.asset;
+                    Stopwatch w = (Stopwatch)result.input.extraParameter[0];
                     w.Stop();
                     UnityEngine.Debug.Log(w.Elapsed + "=>" + hero.gameObject);
 
@@ -78,8 +79,7 @@ public class ExampleFMSLevel : AbsLevel
                     mFMSMachine.SetAnimator(animator);
                     mFMSMachine.transform.position = Vector3.back * 7;
                     mFMSMachine.transform.eulerAngles = Vector3.up * 180;
-                }, result.extraParameter);
-                
+                });
             }, watch);
     }
 

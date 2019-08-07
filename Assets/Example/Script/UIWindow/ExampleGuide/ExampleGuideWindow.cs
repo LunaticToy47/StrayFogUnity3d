@@ -41,19 +41,19 @@ public class ExampleGuideWindow : AbsUIWindowView
         {
             StrayFogGamePools.assetBundleManager.LoadAssetInMemory(enAssetDiskMapingFile.f_GuideMaskShader_mat,
             enAssetDiskMapingFolder.Assets_Game_AssetBundles_Materials,
-            (result) =>
+            (output) =>
             {
-                result.Instantiate<Material>((rst, args) =>
+                output.Instantiate<Material>((result) =>
                 {
-                    mUIGraphicMask.material = rst;
+                    mUIGraphicMask.material = (Material)result.asset;
                     mIsSetMaterial = true;
-                    Action<UIGuideTrigger[]> call = (Action<UIGuideTrigger[]>)args[0];
-                    UIGuideTrigger[] ws = (UIGuideTrigger[])args[1];
+                    Action<UIGuideTrigger[]> call = (Action<UIGuideTrigger[]>)result.input.extraParameter[0];
+                    UIGuideTrigger[] ws = (UIGuideTrigger[])result.input.extraParameter[1];
                     if (call != null)
                     {
                         call.Invoke(ws);
                     }
-                }, result.extraParameter);
+                });
             }, _onCallback, _guideWidgets);
         }
         else
