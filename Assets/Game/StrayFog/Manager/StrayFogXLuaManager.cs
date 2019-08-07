@@ -65,36 +65,36 @@ public sealed partial class StrayFogXLuaManager : AbsSingleMonoBehaviour
     public string OnGetXLuaScript(int _xLuaFileId)
     {
         string xLuaScript = string.Empty;
-        //if (mXLuaConfigMaping.ContainsKey(_xLuaFileId))
-        //{
-        //    string path = string.Empty;
-        //    XLS_Config_View_AssetDiskMaping adm = StrayFogGamePools.assetBundleManager.GetAssetPath(mXLuaConfigMaping[_xLuaFileId].xLuaFileId, mXLuaConfigMaping[_xLuaFileId].xLuaFolderId, out path);
-        //    if (adm != null)
-        //    {
-        //        if (!mXLuaScriptMaping.ContainsKey(_xLuaFileId))
-        //        {
-        //            TextAsset ta = null;
-        //            if (StrayFogGamePools.setting.isInternal)
-        //            {
-        //                ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(adm.inAssetPath, typeof(TextAsset));
-        //                xLuaScript = ta.text;
-        //            }
-        //            else
-        //            {
-        //                AssetBundle ab = AssetBundle.LoadFromFile(path);
-        //                ta = ab.LoadAsset<TextAsset>(adm.fileName);
-        //                xLuaScript = ta.text;
-        //                ab.Unload(false);
-        //                ab = null;
-        //            }
-        //            mXLuaScriptMaping.Add(_xLuaFileId, xLuaScript);
-        //        }
-        //        else
-        //        {
-        //            xLuaScript = mXLuaScriptMaping[_xLuaFileId];
-        //        }
-        //    }
-        //}
+        if (mXLuaConfigMaping.ContainsKey(_xLuaFileId))
+        {
+            IAssetBundleFileParameter file = StrayFogGamePools.assetBundleManager.GetAssetBundleFile(mXLuaConfigMaping[_xLuaFileId].xLuaFileId, mXLuaConfigMaping[_xLuaFileId].xLuaFolderId);
+            XLS_Config_View_AssetDiskMaping config = StrayFogGamePools.assetBundleManager.GetAssetDiskMaping(mXLuaConfigMaping[_xLuaFileId].xLuaFileId, mXLuaConfigMaping[_xLuaFileId].xLuaFolderId);
+            if (file != null)
+            {
+                if (!mXLuaScriptMaping.ContainsKey(_xLuaFileId))
+                {
+                    TextAsset ta = null;
+                    if (StrayFogGamePools.setting.isInternal)
+                    {
+                        ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(file.assetBundlePath, typeof(TextAsset));
+                        xLuaScript = ta.text;
+                    }
+                    else
+                    {
+                        AssetBundle ab = AssetBundle.LoadFromFile(file.assetBundlePath);
+                        ta = ab.LoadAsset<TextAsset>(config.fileName);
+                        xLuaScript = ta.text;
+                        ab.Unload(false);
+                        ab = null;
+                    }
+                    mXLuaScriptMaping.Add(_xLuaFileId, xLuaScript);
+                }
+                else
+                {
+                    xLuaScript = mXLuaScriptMaping[_xLuaFileId];
+                }
+            }
+        }
         return xLuaScript;
      }
     #endregion

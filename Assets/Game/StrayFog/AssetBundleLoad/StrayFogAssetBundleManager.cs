@@ -152,25 +152,6 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
     }
     #endregion
 
-    #region OnGetAssetDiskMaping 获得资源磁盘映射
-    /// <summary>
-    /// 获得资源磁盘映射
-    /// </summary>
-    /// <param name="_folderId">文件夹Id</param>
-    /// <param name="_fileId">文件Id</param>
-    /// <returns>资源磁盘映射</returns>
-    XLS_Config_View_AssetDiskMaping OnGetAssetDiskMaping(int _folderId, int _fileId)
-    {
-        XLS_Config_View_AssetDiskMaping config = default(XLS_Config_View_AssetDiskMaping);
-        if (mXLS_Config_View_AssetDiskMaping.ContainsKey(_folderId)
-            && mXLS_Config_View_AssetDiskMaping[_folderId].ContainsKey(_fileId))
-        {
-            config = mXLS_Config_View_AssetDiskMaping[_folderId][_fileId];
-        }
-        return config;
-    }
-    #endregion
-
     #region OnGetAssetBundleFile 获得资源文件
     /// <summary>
     /// 获得资源文件
@@ -186,7 +167,7 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         }
         return path;
     }
-    #endregion
+    #endregion    
 
     #region GetAssetBundleFile 获得资源文件
     /// <summary>
@@ -206,5 +187,24 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         }
         return path;
     }
-    #endregion    
+    #endregion
+
+    #region GetAssetDiskMaping 获得资源磁盘映射
+    /// <summary>
+    /// 获得资源磁盘映射
+    /// </summary>
+    /// <param name="_fileId">文件Id</param>
+    /// <param name="_folderId">文件夹Id</param>
+    /// <returns>资源磁盘映射</returns>
+    public XLS_Config_View_AssetDiskMaping GetAssetDiskMaping(int _fileId, int _folderId)
+    {
+        XLS_Config_View_AssetDiskMaping config = default(XLS_Config_View_AssetDiskMaping);
+        if (mXLS_Config_View_AssetDiskMaping.ContainsKey(_folderId)
+            && mXLS_Config_View_AssetDiskMaping[_folderId].ContainsKey(_fileId))
+        {
+            config = mXLS_Config_View_AssetDiskMaping[_folderId][_fileId];
+        }
+        return config;
+    }
+    #endregion
 }

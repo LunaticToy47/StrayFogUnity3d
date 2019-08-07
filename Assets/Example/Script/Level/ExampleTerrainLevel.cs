@@ -28,6 +28,7 @@ public class ExampleTerrainLevel : AbsLevel
     /// <returns>异步</returns>
     IEnumerator LoadTerrain()
     {
+        Time.timeScale = 1;
         yield return new WaitForSeconds(1);
         Stopwatch watch = new Stopwatch();
         watch.Start();

@@ -79,7 +79,7 @@ public partial class StrayFogAssetBundleManager
         AssetBundleOutputEventHandler _outputEvent, AssetBundleProgressEventHandler _progressEvent, 
         params object[] _extraParemeter)
     {
-        XLS_Config_View_AssetDiskMaping config = OnGetAssetDiskMaping(_folderId, _fileId);
+        XLS_Config_View_AssetDiskMaping config = GetAssetDiskMaping(_fileId, _folderId);
         if (config != null)
         {
             IAssetBundleFileParameter file = GetAssetBundleFile(_fileId, _folderId);

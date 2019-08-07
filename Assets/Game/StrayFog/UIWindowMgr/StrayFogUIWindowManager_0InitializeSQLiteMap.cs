@@ -44,10 +44,6 @@ public partial class StrayFogUIWindowManager
 
     #region OnGetWindowSetting 获得窗口设定
     /// <summary>
-    /// UI窗口枚举映射
-    /// </summary>
-    Dictionary<int, int> mWindowEnumMaping = new Dictionary<int, int>();
-    /// <summary>
     /// 获得窗口设定
     /// </summary>
     /// <param name="_wins">窗口组</param>
@@ -58,24 +54,9 @@ public partial class StrayFogUIWindowManager
         if (_wins != null && _wins.Length > 0)
         {
             ids = new int[_wins.Length];
-            int hashCode = 0;
-            int id = 0;
-            int paramHashCode = _wins.GetHashCode();
-            Type type = null;
             for (int i = 0; i < _wins.Length; i++)
-            {
-                type = _wins[i].GetType();
-                hashCode = _wins[i].GetHashCode();
-                if (mWindowEnumMaping.ContainsKey(hashCode))
-                {
-                    id = mWindowEnumMaping[hashCode];
-                }
-                else
-                {
-                    id = (int)Enum.ToObject(type, _wins[i]);
-                    mWindowEnumMaping.Add(hashCode, id);
-                }
-                ids[i] = id;
+            {                
+                ids[i] = Convert.ToInt32(_wins[i]);
             }
         }
         return ids;

@@ -38,7 +38,6 @@ public class AssetBundleFileParameter: IAssetBundleFileParameter
             assetBundleId = _assetBundleName.UniqueHashCode();
             assetBundleName = _assetBundleName;
             assetBundlePath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
-        }        
-        
+        }
     }
 }
