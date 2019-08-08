@@ -60,16 +60,25 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
                     OnInitialize();
                 }
                 OnBeforeDisplay();
-                rectTransform.gameObject.SetActive(_isActive);
+                OnToggleActive(_isActive);
                 OnAfterDisplay();
             }
             else
             {
                 OnBeforeHidden();
-                rectTransform.gameObject.SetActive(_isActive);
+                OnToggleActive(_isActive);
                 OnAfterHidden();
             }
         }
+    }
+
+    /// <summary>
+    /// 切换激活状态
+    /// </summary>
+    /// <param name="_isActive">是否激活</param>
+    void OnToggleActive(bool _isActive)
+    {
+        rectTransform.gameObject.SetActive(_isActive);    
     }
 
     #region protected virtual methods
@@ -106,10 +115,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// </summary>
     public void CloseWindow()
     {
-        if (OnCloseWindow != null)
-        {
-            OnCloseWindow(this);
-        }        
+        OnCloseWindow?.Invoke(this);
     }
     #endregion
 }

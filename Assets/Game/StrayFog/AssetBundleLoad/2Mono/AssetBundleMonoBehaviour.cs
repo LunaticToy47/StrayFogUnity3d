@@ -56,7 +56,16 @@ public class AssetBundleMonoBehaviour : AbsMonoBehaviour
     /// <param name="_request">请求</param>
     public void Request(IAssetBundleRequestInMemory _request)
     {        
-        mQueueRequest.Enqueue(_request);        
+        mQueueRequest.Enqueue(_request);
+        if (!mAssetBundleResultMonoBehaviour.ContainsKey(_request.input.uniqueId))
+        {
+            GameObject go = new GameObject(_request.input.config.fileName);
+            go.hideFlags = hideFlags;
+            go.transform.SetParent(transform);
+            AssetBundleOutputMonoBehaviour mono = go.AddComponent<AssetBundleOutputMonoBehaviour>();
+            mono.SetParameter(fileParameter, mAssetBundle);
+            mAssetBundleResultMonoBehaviour.Add(_request.input.uniqueId, mono);
+        }
     }
     #endregion
 
@@ -198,16 +207,7 @@ public class AssetBundleMonoBehaviour : AbsMonoBehaviour
                 mIsExecuteQueue = true;
                 while (mQueueRequest.Count > 0)
                 {
-                    IAssetBundleRequestInMemory req = mQueueRequest.Dequeue();
-                    if (!mAssetBundleResultMonoBehaviour.ContainsKey(req.input.uniqueId))
-                    {
-                        GameObject go = new GameObject(req.input.config.fileName);
-                        go.hideFlags = hideFlags;
-                        go.transform.SetParent(transform);
-                        AssetBundleOutputMonoBehaviour mono = go.AddComponent<AssetBundleOutputMonoBehaviour>();
-                        mono.SetParameter(fileParameter,mAssetBundle);
-                        mAssetBundleResultMonoBehaviour.Add(req.input.uniqueId, mono);
-                    }
+                    IAssetBundleRequestInMemory req = mQueueRequest.Dequeue();                    
                     AssetBundleOutput output = new AssetBundleOutput(req.input);
                     output.OnInstantiate += Output_OnInstantiate;
                     req.outputEvent?.Invoke(output);
