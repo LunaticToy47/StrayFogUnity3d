@@ -191,7 +191,7 @@ public class AssetBundleMonoBehaviour : AbsMonoBehaviour
     /// </summary>
     void OnExecuteQueueRequest()
     {
-        if (mAssetBundle != null && mLoadState == enLoadState.Ready)
+        if (mLoadState == enLoadState.Ready)
         {
             if (!mIsExecuteQueue)
             {

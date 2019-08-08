@@ -14,9 +14,9 @@ public class ExampleUIWindowLevel : AbsLevel
     /// 按钮可操作窗口
     /// </summary>
     static readonly Enum[] msrBtnWindows = new Enum[3] {
-        enUIWindow1389368399.ExamplePlayerListWindow,
-        enUIWindow1389368399.ExampleHeroListWindow,
-        enUIWindow1389368399.ExampleMessageBoxWindow,
+        enUIWindow1872644835.ExamplePlayerListWindow,
+        enUIWindow1872644835.ExampleHeroListWindow,
+        enUIWindow1872644835.ExampleMessageBoxWindow,
     };
     /// <summary>
     /// 是否自动开启关闭窗口时间
@@ -60,7 +60,7 @@ public class ExampleUIWindowLevel : AbsLevel
         {
             mTempAutoOpenCloseWindowSeconds = mAutoOpenCloseWindowSeconds;
         }
-        foreach (enUIWindow1389368399 w in msrBtnWindows)
+        foreach (Enum w in msrBtnWindows)
         {
             if (GUILayout.Button(w.ToString()))
             {

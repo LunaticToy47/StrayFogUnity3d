@@ -135,6 +135,7 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
 #if UNITY_EDITOR
                 UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath(mFileParameter.assetBundlePath, _type);
                 mAssetMaping.Add(key, obj);
+                OnCallQueue(key);
 #endif
             }
             else if (!mRequestKeyForTypeKeyMaping.ContainsKey(key))

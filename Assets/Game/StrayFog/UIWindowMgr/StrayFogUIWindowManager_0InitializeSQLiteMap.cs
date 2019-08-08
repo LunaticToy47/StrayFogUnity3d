@@ -44,6 +44,10 @@ public partial class StrayFogUIWindowManager
 
     #region OnGetWindowSetting 获得窗口设定
     /// <summary>
+    /// 枚举键值映射
+    /// </summary>
+    Dictionary<int, int> mEnumKeyValueMaping = new Dictionary<int, int>();
+    /// <summary>
     /// 获得窗口设定
     /// </summary>
     /// <param name="_wins">窗口组</param>
@@ -51,12 +55,18 @@ public partial class StrayFogUIWindowManager
     int[] OnGetWindowSetting(params Enum[] _wins)
     {
         int[] ids = null;
+        int key = 0;
         if (_wins != null && _wins.Length > 0)
         {
-            ids = new int[_wins.Length];
+            ids = new int[_wins.Length];            
             for (int i = 0; i < _wins.Length; i++)
-            {                
-                ids[i] = Convert.ToInt32(_wins[i]);
+            {
+                key = _wins[i].GetHashCode();
+                if (!mEnumKeyValueMaping.ContainsKey(key))
+                {
+                    mEnumKeyValueMaping.Add(key, Convert.ToInt32(_wins[i]));
+                }
+                ids[i] = mEnumKeyValueMaping[key];
             }
         }
         return ids;
@@ -115,14 +125,15 @@ public partial class StrayFogUIWindowManager
     /// <returns>窗口设定</returns>
     XLS_Config_Table_UIWindowSetting[] OnGetWindowSetting(params int[] _winIds)
     {
-        List<XLS_Config_Table_UIWindowSetting> result = new List<XLS_Config_Table_UIWindowSetting>();
+        XLS_Config_Table_UIWindowSetting[] result = null;
         if (_winIds != null && _winIds.Length > 0)
         {
+            result = new XLS_Config_Table_UIWindowSetting[_winIds.Length];
             for (int i = 0; i < _winIds.Length; i++)
             {
                 if (mWindowSettingMaping.ContainsKey(_winIds[i]))
                 {
-                    result.Add(mWindowSettingMaping[_winIds[i]]);
+                    result[i] = mWindowSettingMaping[_winIds[i]];
                 }
                 else
                 {
@@ -130,7 +141,11 @@ public partial class StrayFogUIWindowManager
                 }
             }            
         }
-        return result.ToArray();
+        if (result == null)
+        {
+            result = new XLS_Config_Table_UIWindowSetting[0];
+        }
+        return result;
     }
     #endregion
 }

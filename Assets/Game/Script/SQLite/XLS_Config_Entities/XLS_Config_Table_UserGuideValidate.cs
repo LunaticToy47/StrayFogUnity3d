@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// UserGuideValidate实体
 /// </summary>
-[SQLiteTableMap(2125879491,"Assets/Game/Editor/XLS_Config/UserGuideValidate.xlsx","UserGuideValidate", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_334573285",typeof(XLS_Config_Table_UserGuideValidate),true,false)]
+[SQLiteTableMap(249757027,"Assets/Game/Editor/XLS_Config/UserGuideValidate.xlsx","UserGuideValidate", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_902350952",typeof(XLS_Config_Table_UserGuideValidate),true,false)]
 public partial class XLS_Config_Table_UserGuideValidate: AbsStrayFogSQLiteEntity
 {
 	

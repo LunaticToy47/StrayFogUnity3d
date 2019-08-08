@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// UserGuideTrigger实体
 /// </summary>
-[SQLiteTableMap(1760652832,"Assets/Game/Editor/XLS_Config/UserGuideTrigger.xlsx","UserGuideTrigger", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_334573285",typeof(XLS_Config_Table_UserGuideTrigger),true,false)]
+[SQLiteTableMap(403575553,"Assets/Game/Editor/XLS_Config/UserGuideTrigger.xlsx","UserGuideTrigger", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_902350952",typeof(XLS_Config_Table_UserGuideTrigger),true,false)]
 public partial class XLS_Config_Table_UserGuideTrigger: AbsStrayFogSQLiteEntity
 {
 	

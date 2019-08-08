@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using System;
+/// <summary>
 /// 唯一扩展
 /// </summary>
 public static class UniqueExtend
@@ -15,7 +16,8 @@ public static class UniqueExtend
     /// <returns>HashCode</returns>
     public static int UniqueHashCode(this string _str)
     {
-        return _str.MD5().GetHashCode();
+        //return _str.MD5().GetHashCode();
+        return (_str + _str.GetHashCode()).GetHashCode();
     }
     #endregion
 }

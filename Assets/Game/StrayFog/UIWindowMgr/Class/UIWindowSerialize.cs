@@ -42,19 +42,15 @@ public class UIWindowSerialize : AbsMonoBehaviour
         /// <returns>true:是,false:否</returns>
         public bool IsSameOpenWindow(List<int> _openWindows)
         {
-            List<int> ops = new List<int>();
-            List<int> cos = new List<int>();
-            foreach (int v in _openWindows)
+            bool isSame = _openWindows.Count == openWindows.Count;
+            if (isSame)
             {
-                ops.Add(v);
+                for (int i = 0; i < _openWindows.Count; i++)
+                {
+                    isSame &= _openWindows[i] == openWindows[i];
+                }
             }
-            foreach (int v in openWindows)
-            {
-                cos.Add(v);
-            }
-            _openWindows.Sort();
-            openWindows.Sort();
-            return ops.JsonSerialize().UniqueHashCode() == cos.JsonSerialize().UniqueHashCode();
+            return isSame;
         }
 
         /// <summary>
