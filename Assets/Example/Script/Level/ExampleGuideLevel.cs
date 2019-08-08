@@ -60,7 +60,7 @@ public class ExampleGuideLevel : AbsLevel
     IEnumerator OnOpenLobby()
     {        
         yield return new WaitForEndOfFrame();
-        UnityEngine.Debug.Log("Open=>" + enUIWindow1872644835.ExampleLobbyWindow);
+        UnityEngine.Debug.Log("Open=>" + enUIWindow.ExampleLobbyWindow);
         Stopwatch watch = new Stopwatch();
         watch.Start();
         int count = UnityEngine.Random.Range(1, 20);
@@ -78,11 +78,11 @@ public class ExampleGuideLevel : AbsLevel
     /// <param name="_isEnd">是否是最后一个</param>
     void OnOpenWindows(Stopwatch _watch,int _count,bool _isEnd)
     {
-        Enum[] winSrc = new Enum[2] { enUIWindow1872644835.ExampleLobbyWindow, enUIWindow1872644835.ExampleHeroListWindow };
+        int[] winSrc = new int[2] { enUIWindow.ExampleLobbyWindow, enUIWindow.ExampleHeroListWindow };
 
         int randomStart = _count % winSrc.Length;
         int randomEnd = winSrc.Length - 1;
-        Enum temp = winSrc[randomStart];
+        int temp = winSrc[randomStart];
         winSrc[randomStart] = winSrc[randomEnd];
         winSrc[randomEnd] = temp;
         if (_isEnd)

@@ -132,15 +132,18 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
             EditorGUILayout.Separator();
             if (!string.IsNullOrEmpty(mWindowName))
             {
-                if (GUILayout.Button("Create Script"))
+                if (!OnSameScript(mUIWindowViewScript, mWindowName))
                 {
-                    CreateScript(mUIWindowViewScript);
-                }
-                else if (File.Exists(mUIWindowViewScript.fileName) && GUILayout.Button("Create Prefab"))
-                {
-                    if (!string.IsNullOrEmpty(mWindowName))
+                    if (GUILayout.Button("Create Script"))
                     {
-                        CreatePrefab(mUIWindowPrefab);
+                        OnCreateScript(mUIWindowViewScript);
+                    }
+                    else if (File.Exists(mUIWindowViewScript.fileName) && GUILayout.Button("Create Prefab"))
+                    {
+                        if (!string.IsNullOrEmpty(mWindowName))
+                        {
+                            OnCreatePrefab(mUIWindowPrefab);
+                        }
                     }
                 }
             }
@@ -172,12 +175,45 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     }
     #endregion
 
-    #region CreateScript 创建脚本
+    #region 是否有相同的脚本
+    /// <summary>
+    /// 是否有相同的脚本
+    /// </summary>
+    /// <param name="_script">脚本</param>
+    /// <param name="_winName">窗口名称</param>
+    /// <returns>true:是,false:否</returns>
+    bool OnSameScript(EditorTextAssetConfig _script,string _winName)
+    {
+        bool hasSame = false;
+        if (mScriptConfig.paths != null && mScriptConfig.paths.Length > 0)
+        {
+            string directory = string.Empty;
+            string name = string.Empty;
+            string path = string.Empty;
+            foreach (string p in mScriptConfig.paths)
+            {
+                name = OnGetName(_winName);
+                directory = OnGetDirectory(p, _winName).TransPathSeparatorCharToUnityChar();
+                path = Path.Combine(directory, name + _script.extAttribute.ext).TransPathSeparatorCharToUnityChar();
+                if (!_script.directory.Equals(directory) && File.Exists(path))
+                {
+                    hasSame = true;
+                    EditorGUILayout.HelpBox("The same script in =>" + path, MessageType.Error);
+                    EditorStrayFogApplication.PingObject(path);
+                    break;
+                }
+            }
+        }
+        return hasSame;
+    }
+    #endregion
+
+    #region OnCreateScript 创建脚本
     /// <summary>
     /// 创建脚本
     /// </summary>
     /// <param name="_viewScript">视图脚本</param>
-    void CreateScript(EditorTextAssetConfig _viewScript)
+    void OnCreateScript(EditorTextAssetConfig _viewScript)
     {
         if (!EditorStrayFogUtility.assetBundleName.IsIllegalFile(_viewScript.name))
         {
@@ -222,12 +258,12 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
     }
     #endregion
 
-    #region CreatePrefab 创建预置
+    #region OnCreatePrefab 创建预置
     /// <summary>
     /// 创建预置
     /// </summary>
     /// <param name="_prefab">prefab配置</param>
-    void CreatePrefab(EditorEngineAssetConfig _prefab)
+    void OnCreatePrefab(EditorEngineAssetConfig _prefab)
     {
         if (!EditorStrayFogUtility.assetBundleName.IsIllegalFile(_prefab.name))
         {

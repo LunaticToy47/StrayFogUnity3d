@@ -2,9 +2,10 @@
 /// UI窗口枚举
 /// 【#Directory#】
 /// </summary>
-public enum enUIWindow#Fixed#
+public  static partial class enUIWindow
 {
 #Windows#
-	#Name# = #Id#,
+	[AliasTooltip("#Name#")]
+	public const int #Name# = #Id#;
 #Windows#
 }

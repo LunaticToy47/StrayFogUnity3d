@@ -59,8 +59,8 @@ public sealed class EditorStrayFogExecute
                 {
                     result = scriptTemplete
                         .Replace(replaceTemplete, dicSbTemplete[key].ToString())
-                        .Replace("#Directory#", EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].TransPathSeparatorCharToUnityChar())
-                        .Replace("#Fixed#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key.ToString()));
+                        .Replace("#Directory#", EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].TransPathSeparatorCharToUnityChar());
+                    
                     result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
                     EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow",
                         EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowScript.paths[i], enFileExt.CS, result);

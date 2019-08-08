@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEngine;
 /// <summary>
 /// 唯一扩展
 /// </summary>
@@ -16,8 +16,9 @@ public static class UniqueExtend
     /// <returns>HashCode</returns>
     public static int UniqueHashCode(this string _str)
     {
-        //return _str.MD5().GetHashCode();
-        return (_str + _str.GetHashCode()).GetHashCode();
+        //int h = _str.MD5().GetHashCode();
+        //return (string.Format("{0}{1}",_str, _str.GetHashCode())).GetHashCode();
+        return _str.GetHashCode();
     }
     #endregion
 }

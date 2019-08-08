@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 /// <summary>
@@ -11,12 +13,16 @@ using UnityEngine.SceneManagement;
 public class ExampleUIWindowLevel : AbsLevel
 {
     /// <summary>
+    /// UIWindow字段信息与说明属性映射
+    /// </summary>
+    static Dictionary<FieldInfo, AliasTooltipAttribute> mUIWindowFieldAttrMaping = typeof(enUIWindow).GetFieldInfoAttribute<AliasTooltipAttribute>();
+    /// <summary>
     /// 按钮可操作窗口
     /// </summary>
-    static readonly Enum[] msrBtnWindows = new Enum[3] {
-        enUIWindow1872644835.ExamplePlayerListWindow,
-        enUIWindow1872644835.ExampleHeroListWindow,
-        enUIWindow1872644835.ExampleMessageBoxWindow,
+    static readonly int[] msrBtnWindows = new int[3] {
+        enUIWindow.ExamplePlayerListWindow,
+        enUIWindow.ExampleHeroListWindow,
+        enUIWindow.ExampleMessageBoxWindow,
     };
     /// <summary>
     /// 是否自动开启关闭窗口时间
@@ -31,10 +37,19 @@ public class ExampleUIWindowLevel : AbsLevel
     /// </summary>
     bool mTempIsAutoOpenWindow = false;
     /// <summary>
+    /// UIWindow别名属性
+    /// </summary>
+    Dictionary<int, AliasTooltipAttribute> mUIWindowAliasMaping = new Dictionary<int, AliasTooltipAttribute>();
+    /// <summary>
     /// Awake
     /// </summary>
     void Awake()
     {
+        foreach (KeyValuePair<FieldInfo, AliasTooltipAttribute> key in mUIWindowFieldAttrMaping)
+        {
+            int value = (int)key.Key.GetValue(null);
+            mUIWindowAliasMaping.Add(value, key.Value);
+        }
         StrayFogGamePools.gameManager.Initialization(() =>
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
@@ -60,9 +75,9 @@ public class ExampleUIWindowLevel : AbsLevel
         {
             mTempAutoOpenCloseWindowSeconds = mAutoOpenCloseWindowSeconds;
         }
-        foreach (Enum w in msrBtnWindows)
+        foreach (int w in msrBtnWindows)
         {
-            if (GUILayout.Button(w.ToString()))
+            if (GUILayout.Button(mUIWindowAliasMaping[w].alias))
             {
                 StrayFogGamePools.uiWindowManager.OpenWindow(w);
             }
