@@ -42,7 +42,7 @@ public class FMSMachine : AbsMonoBehaviour
     /// <returns>true:是,false:否</returns>
     public bool IsMachine(int _machineNameHash)
     {
-        return FMSMachineMaping.IsMachine(mAnimator, _machineNameHash);
+        return mAnimator != null ? FMSMachineMaping.IsMachine(mAnimator, _machineNameHash) : false;
     }
     #endregion
 
@@ -63,7 +63,7 @@ public class FMSMachine : AbsMonoBehaviour
     /// <returns>true:是,false:否</returns>
     public bool IsState(int _stateNameHash)
     {
-        return FMSMachineMaping.IsState(mAnimator, _stateNameHash);
+        return mAnimator != null ? FMSMachineMaping.IsState(mAnimator, _stateNameHash) : false;
     }
     #endregion
 
@@ -124,7 +124,10 @@ public class FMSMachine : AbsMonoBehaviour
     /// <param name="_normalizedTransitionDuration">归一化转换时间值</param>
     public void CrossFade(int _stateNameHash, float _normalizedTransitionDuration)
     {
-        mAnimator.CrossFade(_stateNameHash, Mathf.Clamp01(_normalizedTransitionDuration));
+        if (mAnimator != null)
+        {
+            mAnimator.CrossFade(_stateNameHash, Mathf.Clamp01(_normalizedTransitionDuration));
+        }        
     }
     #endregion
 
@@ -136,7 +139,10 @@ public class FMSMachine : AbsMonoBehaviour
     /// <param name="_value">值</param>
     public void SetInteger(enFMSParameter _parameter, int _value)
     {
-        mAnimator.SetInteger((int)_parameter, _value);
+        if (mAnimator != null)
+        {
+            mAnimator.SetInteger((int)_parameter, _value);
+        }        
     }
     #endregion
 
@@ -148,7 +154,7 @@ public class FMSMachine : AbsMonoBehaviour
     /// <returns>Value</returns>
     public int GetInteger(enFMSParameter _parameter)
     {
-        return mAnimator.GetInteger((int)_parameter);
+        return mAnimator != null ? mAnimator.GetInteger((int)_parameter) : 0;
     }
     #endregion
 
@@ -160,7 +166,10 @@ public class FMSMachine : AbsMonoBehaviour
     /// <param name="_value">值</param>
     public void SetFloat(enFMSParameter _parameter, float _value)
     {
-        mAnimator.SetFloat((int)_parameter, _value);
+        if (mAnimator != null)
+        {
+            mAnimator.SetFloat((int)_parameter, _value);
+        }        
     }
     #endregion
 
@@ -172,7 +181,7 @@ public class FMSMachine : AbsMonoBehaviour
     /// <returns>Value</returns>
     public float GetFloat(enFMSParameter _parameter)
     {
-        return mAnimator.GetFloat((int)_parameter);
+        return mAnimator != null ? mAnimator.GetFloat((int)_parameter) : 0;
     }
     #endregion
 
@@ -184,7 +193,10 @@ public class FMSMachine : AbsMonoBehaviour
     /// <param name="_value">值</param>
     public void SetBool(enFMSParameter _parameter, bool _value)
     {
-        mAnimator.SetBool((int)_parameter, _value);
+        if (mAnimator != null)
+        {
+            mAnimator.SetBool((int)_parameter, _value);
+        }        
     }
     #endregion
 
@@ -196,7 +208,7 @@ public class FMSMachine : AbsMonoBehaviour
     /// <returns>Value</returns>
     public bool GetBool(enFMSParameter _parameter)
     {
-        return mAnimator.GetBool((int)_parameter);
+        return mAnimator != null ? mAnimator.GetBool((int)_parameter) : false;
     }
     #endregion
 
@@ -208,14 +220,17 @@ public class FMSMachine : AbsMonoBehaviour
     /// <param name="_value">值</param>
     public void SetTrigger(enFMSParameter _parameter, bool _value)
     {
-        if (_value)
+        if (mAnimator != null)
         {
-            mAnimator.SetTrigger((int)_parameter);
-        }
-        else
-        {
-            mAnimator.ResetTrigger((int)_parameter);
-        }
+            if (_value)
+            {
+                mAnimator.SetTrigger((int)_parameter);
+            }
+            else
+            {
+                mAnimator.ResetTrigger((int)_parameter);
+            }
+        }        
     }
     #endregion
 }
