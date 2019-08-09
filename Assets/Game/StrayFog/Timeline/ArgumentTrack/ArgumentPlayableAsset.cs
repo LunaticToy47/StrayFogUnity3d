@@ -11,6 +11,19 @@ namespace StrayFog.Timeline
     [Serializable]
     public class ArgumentPlayableAsset : PlayableAsset
     {
+        /// <summary>
+        /// PlayableDirector
+        /// </summary>
+        protected PlayableDirector director;
+        /// <summary>
+        /// TimelineAsset
+        /// </summary>
+        protected TimelineAsset timeline;
+        /// <summary>
+        /// TrackAsset
+        /// </summary>
+        protected ArgumentTrackAsset track;
+
         public sealed override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             ScriptPlayable<ArgumentPlayableBehaviour> playable = ScriptPlayable<ArgumentPlayableBehaviour>.Null;
@@ -27,11 +40,12 @@ namespace StrayFog.Timeline
             {
                 playable = (ScriptPlayable<ArgumentPlayableBehaviour>)OnCreateArgumentPlayable(graph,owner);
                 ArgumentPlayableBehaviour behaviour = playable.GetBehaviour();
-                PlayableDirector director = owner.GetComponent<PlayableDirector>();
-                TimelineAsset timeline = (TimelineAsset)director.playableAsset;
+                director = owner.GetComponent<PlayableDirector>();
+                timeline = (TimelineAsset)director.playableAsset;
+                track = templete.GetBehaviour().trackAsset;
                 behaviour.director = director;
                 behaviour.timeline = timeline;
-                behaviour.trackAsset = templete.GetBehaviour().trackAsset;
+                behaviour.trackAsset = track;
                 behaviour.playableAsset = this;
                 behaviour.genericBindingObject = behaviour.director.GetGenericBinding(behaviour.trackAsset);
                 behaviour.timelineClip = behaviour.trackAsset.FindTimelineClip(this);
