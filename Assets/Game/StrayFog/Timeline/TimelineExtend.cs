@@ -55,6 +55,37 @@ namespace StrayFog.Timeline
         }
 
         /// <summary>
+        /// 查找指定名称的TimelineClip
+        /// </summary>
+        /// <param name="_trackAsset">TrackAsset</param>
+        /// <param name="_timelineClipDisplayName">TimelineClip名称</param>
+        /// <returns>TimelineClip</returns>
+        public static TimelineClip FindTimelineClip(this TrackAsset _trackAsset, string _timelineClipDisplayName)
+        {
+            TimelineClip timelineClip = null;
+            if (_trackAsset != null)
+            {
+                IEnumerator outClips = _trackAsset.GetClips().GetEnumerator();
+                while (outClips.MoveNext())
+                {
+                    TimelineClip tc = (TimelineClip)outClips.Current;
+                    if (tc.displayName.Equals(_timelineClipDisplayName))
+                    {
+                        timelineClip = tc;
+                        break;
+                    }
+                }
+            }
+#if UNITY_EDITOR
+            if (timelineClip == null)
+            {
+                Debug.LogErrorFormat("Can't find TimelineClip  for【{0}】.", _timelineClipDisplayName);
+            }
+#endif
+            return timelineClip;
+        }
+
+        /// <summary>
         /// 查找指定名称的TrackAsset
         /// </summary>
         /// <param name="_timeline">时间线</param>
@@ -86,34 +117,34 @@ namespace StrayFog.Timeline
         }
 
         /// <summary>
-        /// 查找指定名称的TimelineClip
+        /// 查找指定名称的TrackAsset
         /// </summary>
         /// <param name="_trackAsset">TrackAsset</param>
-        /// <param name="_timelineClipDisplayName">TimelineClip名称</param>
-        /// <returns>TimelineClip</returns>
-        public static TimelineClip FindTimelineClip(this TrackAsset _trackAsset, string _timelineClipDisplayName)
+        /// <param name="_trackAssetName">TrackAsset名称</param>
+        /// <returns>TrackAsset</returns>
+        public static TrackAsset FindChildTrackAsset(this TrackAsset _trackAsset, string _trackAssetName)
         {
-            TimelineClip timelineClip = null;
+            TrackAsset trackAsset = null;
             if (_trackAsset != null)
             {
-                IEnumerator outClips = _trackAsset.GetClips().GetEnumerator();
-                while (outClips.MoveNext())
+                IEnumerator childTracks = _trackAsset.GetChildTracks().GetEnumerator();
+                while (childTracks.MoveNext())
                 {
-                    TimelineClip tc = (TimelineClip)outClips.Current;
-                    if (tc.displayName.Equals(_timelineClipDisplayName))
+                    TrackAsset ta = (TrackAsset)childTracks.Current;
+                    if (ta.name.Equals(_trackAssetName))
                     {
-                        timelineClip = tc;
+                        trackAsset = ta;
                         break;
                     }
                 }
             }
 #if UNITY_EDITOR
-            if (timelineClip == null)
+            if (trackAsset == null)
             {
-                Debug.LogErrorFormat("Can't find TimelineClip  for【{0}】.", _timelineClipDisplayName);
+                Debug.LogErrorFormat("Can't find ChildTrackAsset for【{0}】.", _trackAssetName);
             }
 #endif
-            return timelineClip;
+            return trackAsset;
         }
     }
 }
