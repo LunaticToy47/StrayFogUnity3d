@@ -14,19 +14,19 @@ namespace StrayFog.Timeline
         /// <summary>
         /// PlayableDirector
         /// </summary>
-        protected PlayableDirector director;
+        public PlayableDirector director { get; set; }
         /// <summary>
         /// TimelineAsset
         /// </summary>
-        protected TimelineAsset timeline;
+        public TimelineAsset timeline { get; set; }
         /// <summary>
         /// TrackAsset
         /// </summary>
-        protected ArgumentTrackAsset track;
+        public ArgumentTrackAsset track { get; set; }
         /// <summary>
         /// TimelineClip
         /// </summary>
-        protected TimelineClip timelineClip;
+        public TimelineClip timelineClip { get; set; }
 
         public sealed override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
