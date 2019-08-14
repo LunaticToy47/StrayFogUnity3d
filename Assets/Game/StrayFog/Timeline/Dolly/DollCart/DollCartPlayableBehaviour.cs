@@ -57,9 +57,9 @@ namespace StrayFog.Timeline.Dolly
         /// <param name="info">FrameData</param>
         void OnSetCartPosition(Playable playable, FrameData info)
         {
-            if (director != null && dollyCart != null)
+            if (playableAsset.director != null && dollyCart != null)
             {
-                float lerpTime = timelineClip.GetTimeClamp01(director.time);
+                float lerpTime = playableAsset.timelineClip.GetTimeClamp01(playableAsset.director.time);
                 float sp = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * mDollCartPlayableAsset.dollyStartPercent;
                 float ep = dollyCart.m_Path.MaxUnit(dollyCart.m_PositionUnits) * mDollCartPlayableAsset.dollyEndPercent;
                 double pos = Mathf.Lerp(sp, ep, lerpTime);

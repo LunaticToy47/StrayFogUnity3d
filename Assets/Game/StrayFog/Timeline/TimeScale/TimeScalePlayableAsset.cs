@@ -5,23 +5,23 @@ using UnityEngine.Playables;
 namespace StrayFog.Timeline
 {
     /// <summary>
+    /// TimeScale参数
+    /// </summary>
+    [Serializable]
+    public struct TimeScaleArgument
+    {
+        /// <summary>
+        /// 时间缩放曲线
+        /// </summary>
+        [Tooltip("时间缩放曲线")]
+        public AnimationCurve timeScaleCurve;
+    }
+    /// <summary>
     /// TimeScalePlayableAsset
     /// </summary>
     [Serializable]
     public class TimeScalePlayableAsset : ArgumentPlayableAsset
     {
-        /// <summary>
-        /// TimeScale参数
-        /// </summary>
-        [Serializable]
-        public struct TimeScaleArgument
-        {
-            /// <summary>
-            /// 时间缩放曲线
-            /// </summary>
-            [Tooltip("时间缩放曲线")]
-            public AnimationCurve timeScaleCurve;
-        }
         /// <summary>
         /// TimeScale参数
         /// </summary>

@@ -8,7 +8,7 @@ namespace StrayFog.Timeline
     /// ArgumentTrackAsset
     /// </summary>
     [TrackColor(1, 1, 1), TrackClipType(typeof(ArgumentPlayableAsset), false)]
-    public class ArgumentTrackAsset : TrackAsset
+    public class ArgumentTrackAsset : PlayableTrack
     {
         public sealed override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {

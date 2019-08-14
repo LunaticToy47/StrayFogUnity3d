@@ -14,19 +14,23 @@ namespace StrayFog.Timeline
         /// <summary>
         /// PlayableDirector
         /// </summary>
-        public PlayableDirector director { get; set; }
+        public PlayableDirector director { get;private set; }
         /// <summary>
         /// TimelineAsset
         /// </summary>
-        public TimelineAsset timeline { get; set; }
+        public TimelineAsset timeline { get; private set; }
         /// <summary>
         /// TrackAsset
         /// </summary>
-        public ArgumentTrackAsset track { get; set; }
+        public ArgumentTrackAsset trackAsset { get; private set; }
+        /// <summary>
+        /// GenericBindingObject
+        /// </summary>
+        public UnityEngine.Object genericBindingObject { get; private set; }
         /// <summary>
         /// TimelineClip
         /// </summary>
-        public TimelineClip timelineClip { get; set; }
+        public TimelineClip timelineClip { get; private set; }        
 
         public sealed override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
@@ -46,14 +50,10 @@ namespace StrayFog.Timeline
                 ArgumentPlayableBehaviour behaviour = playable.GetBehaviour();
                 director = owner.GetComponent<PlayableDirector>();
                 timeline = (TimelineAsset)director.playableAsset;
-                track = templete.GetBehaviour().trackAsset;
-                timelineClip = track.FindTimelineClip(this);
-                behaviour.director = director;
-                behaviour.timeline = timeline;
-                behaviour.trackAsset = track;
+                trackAsset = templete.GetBehaviour().trackAsset;
+                timelineClip = trackAsset.FindTimelineClip(this);
+                genericBindingObject = director.GetGenericBinding(trackAsset);
                 behaviour.playableAsset = this;
-                behaviour.genericBindingObject = behaviour.director.GetGenericBinding(behaviour.trackAsset);
-                behaviour.timelineClip = timelineClip;
                 OnAfterCreateArgumentPlayable(graph, owner, playable);
             }
             return playable;

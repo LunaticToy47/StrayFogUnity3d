@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace StrayFog.Timeline
@@ -12,11 +13,27 @@ namespace StrayFog.Timeline
         /// TimeScalePlayableAsset
         /// </summary>
         TimeScalePlayableAsset mTimeScalePlayableAsset;
-
+        /// <summary>
+        /// 是否禁止修改TimeScale
+        /// </summary>
+        bool mIsForbidModifyTimeScale = false;
         public override void OnGraphStart(Playable playable)
         {
             mTimeScalePlayableAsset = (TimeScalePlayableAsset)playableAsset;
+            if (Application.isPlaying)
+            {
+                StrayFogGamePools.eventHandlerManager.AddListener((int)enStrayFogEvent.IsForbidModifyTimeScale, OnIsForbidModifyTimeScale);
+            }
             base.OnGraphStart(playable);
+        }
+
+        /// <summary>
+        /// 是否禁止修改TimeScale
+        /// </summary>
+        /// <param name="_args">参数</param>
+        void OnIsForbidModifyTimeScale(StrayFogEventHandlerArgs _args)
+        {
+            mIsForbidModifyTimeScale = _args.GetValue<bool>();
         }
 
         public override void OnGraphStop(Playable playable)
@@ -46,8 +63,11 @@ namespace StrayFog.Timeline
         /// <param name="playerData">playerData</param>
         void OnSetTimeScale(Playable playable, FrameData info, object playerData)
         {
-            float lerpTime = timelineClip.GetTimeClamp01(director.time);
-            Time.timeScale = mTimeScalePlayableAsset.timeScaleArgument.timeScaleCurve.Evaluate(lerpTime);
+            if (!mIsForbidModifyTimeScale)
+            {
+                float lerpTime = playableAsset.timelineClip.GetTimeClamp01(playableAsset.director.time);
+                Time.timeScale = mTimeScalePlayableAsset.timeScaleArgument.timeScaleCurve.Evaluate(lerpTime);
+            }            
         }
 
         /// <summary>
