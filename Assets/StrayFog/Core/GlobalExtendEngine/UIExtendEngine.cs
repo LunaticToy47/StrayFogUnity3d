@@ -89,6 +89,19 @@ public static class UIExtendEngine
     }
     #endregion
 
+    #region UI在屏幕的坐标位置
+    /// <summary>
+    /// UI在屏幕的坐标
+    /// </summary>
+    /// <param name="_graphic">Graphic</param>
+    /// <returns>坐标</returns>
+    public static Vector3 WorldToScreenPoint(this Graphic _graphic)
+    {
+        return _graphic.canvas.worldCamera != null ?
+            _graphic.canvas.worldCamera.WorldToScreenPoint(_graphic.rectTransform.position) : Vector3.zero;
+    }
+    #endregion
+
     #region Graphic在VertexHelper的本地四角坐标
     /// <summary>
     /// Graphic在VertexHelper的本地四角坐标
