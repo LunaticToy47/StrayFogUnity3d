@@ -102,6 +102,33 @@ public static class UIExtendEngine
     }
     #endregion
 
+    #region UI在画布的Normalized值
+    /// <summary>
+    /// UI在画布的Normalized值
+    /// </summary>
+    /// <param name="_graphic">Graphic</param>
+    /// <returns>Normalized值</returns>
+    public static Vector2 PointToNormalized(this Graphic _graphic)
+    {
+        RectTransform rect = (RectTransform)_graphic.canvas.transform;
+        return Rect.PointToNormalized(rect.rect, _graphic.rectTransform.anchoredPosition);
+    }
+    #endregion
+
+    #region Normalized值在指定UI的画布的坐标
+    /// <summary>
+    /// Normalized值在指定UI的画布的坐标
+    /// </summary>
+    /// <param name="_graphic">Graphic</param>
+    /// <param name="_normalizedRectCoordinates">Normalized坐标</param>
+    /// <returns>Normalized值</returns>
+    public static Vector2 NormalizedToPoint(this Graphic _graphic, Vector2 _normalizedRectCoordinates)
+    {
+        RectTransform rect = (RectTransform)_graphic.canvas.transform;
+        return Rect.NormalizedToPoint(rect.rect, _normalizedRectCoordinates);
+    }
+    #endregion
+
     #region Graphic在VertexHelper的本地四角坐标
     /// <summary>
     /// Graphic在VertexHelper的本地四角坐标
