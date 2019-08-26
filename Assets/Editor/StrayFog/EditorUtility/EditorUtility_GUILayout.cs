@@ -135,6 +135,16 @@ public class EditorUtility_GUILayout : AbsSingle
     /// </summary>
     static Dictionary<int, GUIContent[]> mEnumPopupAliasMaping = new Dictionary<int, GUIContent[]>();
     /// <summary>
+    /// Key:枚举类型HashCode
+    /// Value:枚举别名组
+    /// </summary>
+    static Dictionary<int, string[]> mEnumPopupMaskAliasMaping = new Dictionary<int, string[]>();
+    /// <summary>
+    /// Key:枚举类型HashCode
+    /// Value:是否是Flags
+    /// </summary>
+    static Dictionary<int, bool> mEnumIsFlagsMaping = new Dictionary<int, bool>();
+    /// <summary>
     /// 解析枚举
     /// </summary>
     /// <param name="_enumType">枚举类别</param>
@@ -148,6 +158,9 @@ public class EditorUtility_GUILayout : AbsSingle
             Dictionary<int, string> vta = _enumType.ValueToAttributeSpecifyValue<AliasTooltipAttribute, string>((a) => { if (a != null) { return a.alias; } else { return string.Empty; } });
             List<int> values = new List<int>(vtn.Keys);
             List<GUIContent> aliass = new List<GUIContent>();
+            List<string> masks = new List<string>();
+            FlagsAttribute flags = _enumType.GetFirstAttribute<FlagsAttribute>();
+
             foreach (int v in values)
             {
                 if (string.IsNullOrEmpty(vta[v]))
@@ -158,9 +171,19 @@ public class EditorUtility_GUILayout : AbsSingle
                 {
                     aliass.Add(new GUIContent(vta[v]));
                 }
+                if (string.IsNullOrEmpty(vta[v]))
+                {
+                    masks.Add(vtn[v]);
+                }
+                else
+                {
+                    masks.Add(vta[v]);
+                }                
             }
             mEnumPopupValueMaping.Add(hashCode, values.ToArray());
             mEnumPopupAliasMaping.Add(hashCode, aliass.ToArray());
+            mEnumPopupMaskAliasMaping.Add(hashCode, masks.ToArray());
+            mEnumIsFlagsMaping.Add(hashCode, flags != null);
         }
         return hashCode;
     }
@@ -174,7 +197,14 @@ public class EditorUtility_GUILayout : AbsSingle
     public void EnumPopup(Type _enumType, Rect _position, SerializedProperty _property, GUIContent _label)
     {
         int hashCode = OnResolveEnum(_enumType);
-        EditorGUI.IntPopup(_position, _property, mEnumPopupAliasMaping[hashCode], mEnumPopupValueMaping[hashCode], _label);
+        if (mEnumIsFlagsMaping[hashCode])
+        {
+            _property.intValue = EditorGUI.MaskField(_position, _label, _property.intValue, mEnumPopupMaskAliasMaping[hashCode]);
+        }        
+        else
+        {
+            EditorGUI.IntPopup(_position, _property, mEnumPopupAliasMaping[hashCode], mEnumPopupValueMaping[hashCode], _label);
+        }        
     }
 
     /// <summary>
@@ -206,16 +236,32 @@ public class EditorUtility_GUILayout : AbsSingle
     {
         Type t = _enum.GetType();
         int hashCode = OnResolveEnum(_enum.GetType());
-        int selectedValue = (int)Convert.ToInt32(Enum.Parse(t, _enum.ToString()));
-        if (_label != null)
+        int selectedValue = Convert.ToInt32(_enum);
+        Enum result = _enum;
+        if (mEnumIsFlagsMaping[hashCode])
         {
-            selectedValue = EditorGUILayout.IntPopup(_label, selectedValue, mEnumPopupAliasMaping[hashCode], mEnumPopupValueMaping[hashCode], _options);
+            if (_label != null)
+            {
+                selectedValue = EditorGUILayout.MaskField(_label, selectedValue, mEnumPopupMaskAliasMaping[hashCode]);
+            }
+            else
+            {
+                selectedValue = EditorGUILayout.MaskField(selectedValue, mEnumPopupMaskAliasMaping[hashCode]);
+            }
         }
         else
-        {
-            selectedValue = EditorGUILayout.IntPopup(selectedValue, mEnumPopupAliasMaping[hashCode], mEnumPopupValueMaping[hashCode], _options);
+        {            
+            if (_label != null)
+            {
+                selectedValue = EditorGUILayout.IntPopup(_label, selectedValue, mEnumPopupAliasMaping[hashCode], mEnumPopupValueMaping[hashCode], _options);
+            }
+            else
+            {
+                selectedValue = EditorGUILayout.IntPopup(selectedValue, mEnumPopupAliasMaping[hashCode], mEnumPopupValueMaping[hashCode], _options);
+            }
+            result = (Enum)Enum.Parse(t, selectedValue.ToString());
         }
-        return (Enum)Enum.Parse(t, selectedValue.ToString());
+        return result;
     }
     #endregion
 
