@@ -155,7 +155,7 @@ public partial class StrayFogUIWindowManager
     /// <param name="_camera">世界空间摄像机</param>
     void OnSetWorldSpaceCamera(Camera _camera)
     {
-        if (mWorldSpaceCanvas != null && mWorldSpaceCanvas.canvas.worldCamera == null)
+        if (mWorldSpaceCanvas != null)
         {
             if (_camera == null)
             {
