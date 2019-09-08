@@ -15,7 +15,7 @@ public static class UIExtendEngine
     /// <param name="_canvas">画布</param>
     public static void FixedPositionInCanvas(this RectTransform _source, RectTransform _canvas)
     {
-        Rect mRect = new Rect(Vector2.zero, _canvas.sizeDelta);
+        Rect mRect = new Rect(0, 0, _canvas.rect.width, _canvas.rect.height);
         _source.FixedPositionInCanvas(_canvas, mRect);
     }
 
@@ -30,8 +30,8 @@ public static class UIExtendEngine
         Bounds bounds = RectTransformUtility.CalculateRelativeRectTransformBounds(_canvas, _source);
         Vector2 delta = Vector2.zero;
         Vector3 tempCenter = bounds.center;
-        tempCenter.x += _canvas.sizeDelta.x * 0.5f;
-        tempCenter.y += _canvas.sizeDelta.y * 0.5f;
+        tempCenter.x += _canvas.rect.width * 0.5f;
+        tempCenter.y += _canvas.rect.height * 0.5f;
         bounds.center = tempCenter;
         if (bounds.center.x - bounds.extents.x < _rect.x)//target超出area的左边框
         {
