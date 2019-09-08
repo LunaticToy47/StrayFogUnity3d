@@ -48,8 +48,18 @@ namespace StrayFog.Timeline.Dolly
                 dollCartMaxPathCount = dc.m_Path.MaxUnit(CinemachinePathBase.PositionUnits.PathUnits);
                 dollyStartPos = Mathf.Clamp(dollyStartPos, 0, dollCartMaxPathCount);
                 dollyEndPos = Mathf.Clamp(dollyEndPos, 0, dollCartMaxPathCount);
-                dollyStartPercent = dc.m_Path.FromPathNativeUnits(dollyStartPos, dc.m_PositionUnits) / dc.m_Path.MaxUnit(dc.m_PositionUnits);
-                dollyEndPercent = dc.m_Path.FromPathNativeUnits(dollyEndPos, dc.m_PositionUnits) / dc.m_Path.MaxUnit(dc.m_PositionUnits);
+                switch (dc.m_PositionUnits)
+                {
+                    case CinemachinePathBase.PositionUnits.Distance:
+                        dollyStartPercent = dc.m_Path.GetPathDistanceFromPosition(dollyStartPos) / dc.m_Path.MaxUnit(dc.m_PositionUnits);
+                        dollyEndPercent = dc.m_Path.GetPathDistanceFromPosition(dollyEndPos) / dc.m_Path.MaxUnit(dc.m_PositionUnits);
+                        break;
+                    case CinemachinePathBase.PositionUnits.PathUnits:
+                        dollyStartPercent = dollyStartPos / dc.m_Path.MaxUnit(dc.m_PositionUnits);
+                        dollyEndPercent = dollyEndPos / dc.m_Path.MaxUnit(dc.m_PositionUnits);
+                        break;
+                }
+                
                 if (dollyEndPercent == 0)
                 {
                     dollyEndPercent = 1;
