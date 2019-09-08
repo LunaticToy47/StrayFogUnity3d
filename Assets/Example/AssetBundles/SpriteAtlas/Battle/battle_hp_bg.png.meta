@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: 76577964d20c258459af4be2bf9b08eb
 TextureImporter:
-  fileIDToRecycleName: {}
+  internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -98,10 +98,12 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: f2676ef61cdb67d469609a5c253bb49e
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: ASSETS\EXAMPLE\ASSETBUNDLES\SPRITEATLAS\BATTLE
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

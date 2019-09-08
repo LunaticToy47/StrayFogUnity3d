@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: 7c06315023a828c45af012e2866b92ab
 TextureImporter:
-  fileIDToRecycleName: {}
+  internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -98,10 +98,12 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 24a612d24d0d7224ba2b6421b5341fac
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: ASSETS\EXAMPLE\ASSETBUNDLES\SPRITEATLAS\HEROSHOW
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

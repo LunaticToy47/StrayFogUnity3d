@@ -1,8 +1,3 @@
-{
-    "name": "StrayFogCore",
-    "references": [],
-    "optionalUnityReferences": [],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false
+﻿{
+	"name": "StrayFogCore"
 }

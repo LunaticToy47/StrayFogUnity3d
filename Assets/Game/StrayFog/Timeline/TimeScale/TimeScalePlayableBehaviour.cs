@@ -67,7 +67,7 @@ namespace StrayFog.Timeline
             {
                 float lerpTime = playableAsset.timelineClip.GetTimeClamp01(playableAsset.director.time);
                 Time.timeScale = mTimeScalePlayableAsset.timeScaleArgument.timeScaleCurve.Evaluate(lerpTime);
-            }            
+            }
         }
 
         /// <summary>

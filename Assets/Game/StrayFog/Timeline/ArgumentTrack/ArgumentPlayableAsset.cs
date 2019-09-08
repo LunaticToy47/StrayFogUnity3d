@@ -14,7 +14,7 @@ namespace StrayFog.Timeline
         /// <summary>
         /// PlayableDirector
         /// </summary>
-        public PlayableDirector director { get;private set; }
+        public PlayableDirector director { get; private set; }
         /// <summary>
         /// TimelineAsset
         /// </summary>
@@ -30,7 +30,7 @@ namespace StrayFog.Timeline
         /// <summary>
         /// TimelineClip
         /// </summary>
-        public TimelineClip timelineClip { get; private set; }        
+        public TimelineClip timelineClip { get; private set; }
 
         public sealed override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
@@ -46,7 +46,7 @@ namespace StrayFog.Timeline
             OnBeforeCreateArgumentPlayable(graph, owner);
             if (!templete.Equals(playable))
             {
-                playable = (ScriptPlayable<ArgumentPlayableBehaviour>)OnCreateArgumentPlayable(graph,owner);
+                playable = (ScriptPlayable<ArgumentPlayableBehaviour>)OnCreateArgumentPlayable(graph, owner);
                 ArgumentPlayableBehaviour behaviour = playable.GetBehaviour();
                 director = owner.GetComponent<PlayableDirector>();
                 timeline = (TimelineAsset)director.playableAsset;
@@ -71,7 +71,7 @@ namespace StrayFog.Timeline
 
         protected virtual void OnAfterCreateArgumentPlayable(PlayableGraph graph, GameObject owner, Playable playable)
         {
-            
+
         }
     }
 }

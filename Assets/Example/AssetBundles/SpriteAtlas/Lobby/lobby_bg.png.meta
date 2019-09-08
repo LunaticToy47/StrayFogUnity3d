@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: 5536cde9e2e7d1741834363b477cfaa4
 TextureImporter:
-  fileIDToRecycleName: {}
+  internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -98,10 +98,12 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 012bcd6ae120308439036a9f398f8ee4
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: ASSETS\EXAMPLE\ASSETBUNDLES\SPRITEATLAS\LOBBY
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

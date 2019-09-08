@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: 5db762afe4e6b524e8f88af817d71386
 TextureImporter:
-  fileIDToRecycleName: {}
+  internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -98,10 +98,12 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 909c50aa9a2a95048927801c73b0af77
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: ASSETS\EXAMPLE\ASSETBUNDLES\SPRITEATLAS\CASTINGAPERTURE
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -18,7 +18,7 @@ namespace StrayFog.Timeline
             return base.CreateTrackMixer(graph, go, inputCount);
         }
 
-        protected virtual Playable OnCreateArgumentPlayable (PlayableGraph graph, GameObject go, int inputCount)
+        protected virtual Playable OnCreateArgumentPlayable(PlayableGraph graph, GameObject go, int inputCount)
         {
             return ScriptPlayable<ArgumentPlayableBehaviour>.Create(graph, inputCount);
         }

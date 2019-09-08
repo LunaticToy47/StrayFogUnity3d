@@ -58,7 +58,7 @@ namespace StrayFog.Timeline.Dolly
             if (dollyStartPos > dollyEndPos)
             {
                 dollyEndPos = dollyStartPos;
-            }            
+            }
             base.OnBeforeCreateArgumentPlayable(graph, owner);
         }
 

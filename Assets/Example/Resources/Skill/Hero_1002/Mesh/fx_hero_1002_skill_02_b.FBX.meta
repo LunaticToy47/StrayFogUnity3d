@@ -1,34 +1,86 @@
 fileFormatVersion: 2
 guid: 48a4245db28b1bb4a9e4d8b72524cc98
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: body008
-    100002: body010
-    100004: body04
-    100006: Helix001
-    100008: Helix004
-    100010: Line002
-    100012: //RootNode
-    400000: body008
-    400002: body010
-    400004: body04
-    400006: Helix001
-    400008: Helix004
-    400010: Line002
-    400012: //RootNode
-    2300000: body008
-    2300002: body010
-    2300004: body04
-    3300000: body008
-    3300002: body010
-    3300004: body04
-    4300000: body04
-    4300002: body008
-    4300004: body010
-    7400000: Take 001
-    9500000: //RootNode
-    11100000: //RootNode
+  serializedVersion: 25
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: body008
+  - first:
+      1: 100002
+    second: body010
+  - first:
+      1: 100004
+    second: body04
+  - first:
+      1: 100006
+    second: Helix001
+  - first:
+      1: 100008
+    second: Helix004
+  - first:
+      1: 100010
+    second: Line002
+  - first:
+      1: 100012
+    second: //RootNode
+  - first:
+      4: 400000
+    second: body008
+  - first:
+      4: 400002
+    second: body010
+  - first:
+      4: 400004
+    second: body04
+  - first:
+      4: 400006
+    second: Helix001
+  - first:
+      4: 400008
+    second: Helix004
+  - first:
+      4: 400010
+    second: Line002
+  - first:
+      4: 400012
+    second: //RootNode
+  - first:
+      23: 2300000
+    second: body008
+  - first:
+      23: 2300002
+    second: body010
+  - first:
+      23: 2300004
+    second: body04
+  - first:
+      33: 3300000
+    second: body008
+  - first:
+      33: 3300002
+    second: body010
+  - first:
+      33: 3300004
+    second: body04
+  - first:
+      43: 4300000
+    second: body04
+  - first:
+      43: 4300002
+    second: body008
+  - first:
+      43: 4300004
+    second: body010
+  - first:
+      74: 7400000
+    second: Take 001
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      111: 11100000
+    second: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 0
@@ -56,13 +108,43 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 7400000
+      firstFrame: 0
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
@@ -70,27 +152,32 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: 1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -100,8 +187,8 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
@@ -110,5 +197,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: o_1490317624
+  assetBundleName: o__1020849986
   assetBundleVariant: 

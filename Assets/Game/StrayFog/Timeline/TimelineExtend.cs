@@ -44,7 +44,7 @@ namespace StrayFog.Timeline
                         break;
                     }
                 }
-            }            
+            }
 #if UNITY_EDITOR
             if (mTimelineClip == null)
             {
