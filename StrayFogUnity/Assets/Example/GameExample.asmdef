@@ -1,0 +1,20 @@
+{
+    "name": "GameExample",
+    "references": [
+        "GUID:9fc5e238b553dbb4b8ef07e7d9a16da4",
+        "GUID:2e06eb56b218eed44820e65da2403e40",
+        "GUID:6a01d9c0f398f3346aac519711540a8a",
+        "GUID:f06555f75b070af458a003d92f9efb00",
+        "GUID:b6f650e8f6760614da62c8caae4ac64f",
+        "GUID:9bc7fdcc3b628574182dcca5b37cfad4"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

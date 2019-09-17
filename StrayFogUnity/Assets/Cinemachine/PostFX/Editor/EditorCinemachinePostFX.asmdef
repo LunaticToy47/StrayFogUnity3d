@@ -1,0 +1,18 @@
+{
+    "name": "EditorCinemachinePostFX",
+    "references": [
+        "GUID:b6f650e8f6760614da62c8caae4ac64f",
+        "GUID:6f628abdf48f844488bdb61fc6cf1ccf"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

@@ -50,7 +50,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 引导窗口
     /// </summary>
-    ExampleGuideWindow mGuideWindow;
+    AbsUIGuideWindowView mGuideWindow;
     /// <summary>
     /// 触发配置映射
     /// </summary>
@@ -80,7 +80,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
                     ids.Add(w.id);
                 }
             }
-            StrayFogGamePools.uiWindowManager.OpenWindow<ExampleGuideWindow>(ids.ToArray(), (sets, pars) =>
+            StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(ids.ToArray(), (sets, pars) =>
             {
                 mGuideWindow = sets[0];
                 mGuideWindow.CloseWindow();

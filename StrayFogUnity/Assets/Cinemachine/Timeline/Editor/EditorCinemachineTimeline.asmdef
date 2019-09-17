@@ -1,0 +1,19 @@
+{
+    "name": "EditorCinemachineTimeline",
+    "references": [
+        "GUID:b6f650e8f6760614da62c8caae4ac64f",
+        "GUID:6f628abdf48f844488bdb61fc6cf1ccf",
+        "GUID:2e55b64c47e34654c82c1656a44eaf1a"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

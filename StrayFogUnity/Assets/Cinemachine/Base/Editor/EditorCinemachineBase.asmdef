@@ -1,0 +1,17 @@
+{
+    "name": "EditorCinemachineBase",
+    "references": [
+        "GUID:b6f650e8f6760614da62c8caae4ac64f"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

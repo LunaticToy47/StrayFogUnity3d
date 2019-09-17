@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// ExampleGuideWindow
 /// </summary>
 [AddComponentMenu("StrayFog/Example/UIWindow/ExampleGuideWindow")]
-public class ExampleGuideWindow : AbsUIWindowView
+public class ExampleGuideWindow : AbsUIGuideWindowView
 {
     /// <summary>
     /// UI图形遮罩
@@ -69,7 +69,7 @@ public class ExampleGuideWindow : AbsUIWindowView
     /// 切换背景显示
     /// </summary>
     /// <param name="_isDisplay">是否显示背景</param>
-    public void ToggleBackgroundDisplay(bool _isDisplay)
+    public override void ToggleBackgroundDisplay(bool _isDisplay)
     {
         mUIGraphicMask.color = _isDisplay ? mDefaultColor : Color.clear;
     }
@@ -78,7 +78,7 @@ public class ExampleGuideWindow : AbsUIWindowView
     /// 添加引导项
     /// </summary>
     /// <param name="_guideWidgets">引导控件组</param>
-    public void AddTrigger(params UIGuideTrigger[] _guideWidgets)
+    public override void AddTrigger(params UIGuideTrigger[] _guideWidgets)
     {
         LoadMaterial((args) =>
         {
@@ -97,7 +97,7 @@ public class ExampleGuideWindow : AbsUIWindowView
     /// 移除引导项
     /// </summary>
     /// <param name="_guideWidget">引导控件组</param>
-    public void RemoveTrigger(params UIGuideTrigger[] _guideWidgets)
+    public override void RemoveTrigger(params UIGuideTrigger[] _guideWidgets)
     {
         if (_guideWidgets != null && _guideWidgets.Length > 0)
         {
@@ -112,7 +112,7 @@ public class ExampleGuideWindow : AbsUIWindowView
     /// <summary>
     /// 清除引导项
     /// </summary>
-    public void ClearTrigger()
+    public override void ClearTrigger()
     {
         if (mUIGraphicMask != null)
         {
