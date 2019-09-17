@@ -10,6 +10,13 @@ public delegate void UIWindowOnOffEventHandle(AbsUIWindowView _window);
 /// </summary>
 public abstract class AbsUIWindowView : AbsMonoBehaviour
 {
+    #region Awake
+    /// <summary>
+    /// Awake
+    /// </summary>
+    protected virtual void Awake() { }
+    #endregion
+
     #region config 窗口配置
     /// <summary>
     /// 窗口配置
