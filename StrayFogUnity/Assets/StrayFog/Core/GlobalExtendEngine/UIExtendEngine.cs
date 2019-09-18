@@ -312,4 +312,27 @@ public static class UIExtendEngine
         return _b.GetPixelAdjustedRect().Contains(_point);
     }
     #endregion
+
+    #region ForceRebuildLayoutImmediate 立即强制刷新Layout布局
+    /// <summary>
+    /// 立即强制刷新Layout布局 
+    /// </summary>
+    /// <param name="_rectTransform">RectTransform</param>
+    public static void ForceRebuildLayoutImmediate(this RectTransform _rectTransform)
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+    }
+    #endregion
+
+    #region MarkLayoutForRebuild 在当前帧末尾刷新Layout布局
+    /// <summary>
+    /// 在当前帧末尾刷新Layout布局 
+    /// </summary>
+    /// <param name="_rectTransform">RectTransform</param>
+    public static void MarkLayoutForRebuild(this RectTransform _rectTransform)
+    {
+        LayoutRebuilder.MarkLayoutForRebuild(_rectTransform);
+    }
+    #endregion
+    
 }
