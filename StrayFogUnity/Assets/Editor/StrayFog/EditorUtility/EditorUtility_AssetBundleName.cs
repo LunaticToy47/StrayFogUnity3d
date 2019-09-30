@@ -121,6 +121,21 @@ public class EditorUtility_AssetBundleName : AbsSingle
     }
     #endregion
 
+    #region IsAsmdef 是否是Asmdef文件
+    /// <summary>
+    /// 是否是Asmdef文件
+    /// </summary>
+    /// <typeparam name="T">节点类型</typeparam>
+    /// <param name="_node">节点</param>
+    /// <returns>True:是,False:否</returns>
+    public bool IsAsmdef<T>(T _node)
+        where T : EditorSelectionAsset
+    {
+        return _node.isFile && !IsBelongEditorDirectory(_node.directory) && _node.ext == enFileExt.Asmdef.GetAttribute<FileExtAttribute>().ext;
+    }
+    #endregion
+    
+
     #region IsAllowSetBundleName 是否允许设定AssetBundleName
     /// <summary>
     /// 节点是否允许设定AssetBundleName

@@ -77,6 +77,10 @@ enum enEditorMenuItemPriority
     /// </summary>
     Dll,
     /// <summary>
+    /// EditorAsmdefMenuItem
+    /// </summary>
+    Asmdef,    
+    /// <summary>
     /// EditorReleaseMenuItem
     /// </summary>
     Release,

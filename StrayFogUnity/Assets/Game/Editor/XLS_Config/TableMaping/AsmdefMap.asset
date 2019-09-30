@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c155114dd274da4881773358ac43f3f, type: 3}
-  m_Name: GameLanguage
+  m_Name: AsmdefMap
   m_EditorClassIdentifier: 
-  tableName: GameLanguage
-  tableSchemaAssetPath: Assets/Game/Editor/XLS_Config/TableMaping/GameLanguage.asset
-  fileName: Assets/Game/Editor/XLS_Config/GameLanguage.xlsx
+  tableName: AsmdefMap
+  tableSchemaAssetPath: Assets/Game/Editor/XLS_Config/TableMaping/AsmdefMap.asset
+  fileName: Assets/Game/Editor/XLS_Config/AsmdefMap.xlsx
   dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
   classify: 0
-  isDeterminant: 1
+  isDeterminant: 0
   canModifyData: 0
   columns:
-  - xlsColumnIndex: 4
-    columnName: GuideTip
-    sqliteColumnName: name
-    sqliteColumnValue: value
-    desc: "\u5F15\u5BFC\u63D0\u793A"
-    isPK: 0
+  - xlsColumnIndex: 1
+    columnName: id
+    sqliteColumnName: id
+    sqliteColumnValue: 
+    desc: "\u8DEF\u5F84ID"
+    isPK: 1
     isNull: 0
-    dataType: 14
+    dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 5
-    columnName: LobbyTip
-    sqliteColumnName: name
-    sqliteColumnValue: value
-    desc: "\u5927\u5385\u63D0\u793A"
+  - xlsColumnIndex: 2
+    columnName: asmdefAssetbundleName
+    sqliteColumnName: asmdefAssetbundleName
+    sqliteColumnValue: 
+    desc: "Asmdef\u6587\u4EF6\u540D\u79F0"
     isPK: 0
     isNull: 0
     dataType: 14

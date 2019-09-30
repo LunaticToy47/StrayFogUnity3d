@@ -186,7 +186,17 @@ public partial class StrayFogUIWindowManager
                     if (prefab != null)
                     {
                         prefab.name = winCfg.name + "[" + winCfg.id + "]";
-                        Type type = Assembly.GetCallingAssembly().GetType(winCfg.name);
+                        Type type = null;
+
+                        //StrayFogAssembly.GetType();
+                        if (winCfg.isGuideWindow)
+                        {
+                            type = Assembly.LoadFile(@"E:\StrayFogUnity3d\StrayFogUnity\Library\ScriptAssemblies\GameExample.dll").GetType(winCfg.name);
+                        }
+                        else
+                        {
+                            type = Assembly.GetCallingAssembly().GetType(winCfg.name);
+                        }
                         W window = default(W);
                         if (type == null)
                         {

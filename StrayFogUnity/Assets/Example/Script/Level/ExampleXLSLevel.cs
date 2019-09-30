@@ -15,8 +15,11 @@ public class ExampleXLSLevel : AbsLevel
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-                List<XLS_Config_Table_TableColumnMaping> tables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_TableColumnMaping>();
-                Debug.Log(tables);
+                System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+                watch.Start();
+                List<XLS_Config_Table_AssetDiskMapingFile> tables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_AssetDiskMapingFile>();
+                watch.Stop();
+                Debug.Log(tables +" "+ tables.Count +  " " + watch.Elapsed);
             });            
         });
     }

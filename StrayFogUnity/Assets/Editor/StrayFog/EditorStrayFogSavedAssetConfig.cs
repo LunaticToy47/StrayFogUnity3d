@@ -55,6 +55,11 @@ public sealed class EditorStrayFogSavedAssetConfig
     [AliasTooltip("Setting 【XLuaMapXlsConfig】")]
     public static EditorXlsFileConfigForXLuaMap setXlsFileConfigForXLuaMap = new EditorXlsFileConfigForXLuaMap();
     /// <summary>
+    /// 设置AsmdefMapXlsConfig
+    /// </summary>
+    [AliasTooltip("Setting 【AsmdefMapXlsConfig】")]
+    public static EditorXlsFileConfigForAsmdefMap setXlsFileConfigForAsmdefMap = new EditorXlsFileConfigForAsmdefMap();
+    /// <summary>
     /// 设置XLuaMapFolder
     /// </summary>
     [AliasTooltip("Setting 【XLuaMapFolder】")]

@@ -69,6 +69,21 @@ static class EditorReleaseMenuItem
     }
     #endregion
 
+    #region Build Asmdef To Package
+    const string mcBuildAsmdefToPackage = "Build Asmdef To Package";
+    /// <summary>
+    /// 生成Asmdef到资源包
+    /// </summary>
+    [MenuItem(mcMenu + mcBuildAsmdefToPackage, false, mcPriority + 3)]
+    [MenuItem(mcAssetMenu + mcBuildAsmdefToPackage, false, mcPriority + 3)]
+    [MenuItem(mcHierarchy + mcBuildAsmdefToPackage, false, mcPriority + 3)]
+    static void EditorDevelopMenuItem_BuildAsmdefToPackage()
+    {
+        EditorStrayFogExecute.ExecuteBuildAsmdefToPackage();
+        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAsmdefToPackage);
+    }
+    #endregion
+
     #region Build All Xls Data
     const string mcBuildAllXlsData = "Build All Xls Data";
     /// <summary>

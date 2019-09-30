@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 /// <summary>
 /// 执行工具
@@ -1182,6 +1183,80 @@ public sealed class EditorStrayFogExecute
 
     #endregion
 
+    #region Asmdef菜单
+    #region ExecuteLookPackageAsmdef 查看要打包的Asmdef
+    /// <summary>
+    /// 查看要打包的Asmdef
+    /// </summary>
+    /// <returns>执行节点</returns>
+    public static List<EditorSelectionAsmdefMapSetting> ExecuteLookPackageAsmdef()
+    {
+        List<EditorSelectionAsmdefMapSetting> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsmdefMapSetting>(
+            new string[1] { Path.GetFileName(Application.dataPath) }, "", false,
+            (n) => { return EditorStrayFogUtility.assetBundleName.IsAsmdef(n); });
+        StringBuilder sbLog = new StringBuilder();
+        sbLog.AppendLine("Package Asmdef");
+        float progress = 0;
+        foreach (EditorSelectionAssetBundleNameAsset n in nodes)
+        {
+            progress++;
+            sbLog.AppendLine(n.path);
+            EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodes.Count);
+        }
+        EditorUtility.ClearProgressBar();
+        sbLog.AppendLine("ExecuteLookPackageAsmdef Succeed!");
+        Debug.Log(sbLog.ToString());
+        return nodes;
+    }
+    #endregion
+
+    #region ExecuteAsmdefToXLS 生成Asmdef到XLS表
+    /// <summary>
+    /// 生成Asmdef到XLS表
+    /// </summary>
+    public static void ExecuteAsmdefToXLS()
+    {
+        StringBuilder sbLog = new StringBuilder();
+        EditorStrayFogXLS.InsertAsmdefMap((m, p) =>
+        {
+            EditorUtility.DisplayProgressBar("Insert AsmdefMap", m, p);
+        });
+        EditorUtility.ClearProgressBar();
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        sbLog.AppendLine("ExportAsmdefMapToXLS Succeed!");
+        Debug.Log(sbLog.ToString());
+    }
+    #endregion
+
+    #region ExecuteBuildAsmdefToPackage 生成Asmdef到包
+    /// <summary>
+    /// 生成Asmdef到包
+    /// </summary>
+    public static void ExecuteBuildAsmdefToPackage()
+    {
+        float progress = 0;
+        StringBuilder sbLog = new StringBuilder();
+        List<EditorSelectionAsmdefMapSetting> nodes = ExecuteLookPackageAsmdef();
+        foreach (EditorSelectionAsmdefMapSetting n in nodes)
+        {
+            progress++;            
+            if (!string.IsNullOrEmpty(n.GetAssetBundleName()))
+            {
+                //File.Copy(n.path, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, n.GetAssetBundleName()));
+            }
+            else
+            {
+                Debug.LogErrorFormat("Asmdef 【{0}】's AssetBundleName is empty.", n.path);
+            }
+            EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodes.Count);
+        }
+        EditorUtility.ClearProgressBar();
+        sbLog.AppendLine("ExecuteBuildAsmdefToPackage Succeed!");
+        Debug.Log(sbLog.ToString());
+    }
+    #endregion
+    #endregion
+
     #region Release菜单
 
     #region ExecuteBuildPackage 发布包
@@ -1221,6 +1296,8 @@ public sealed class EditorStrayFogExecute
         ExecuteBuildAllXlsData();       
 
         ExecuteBuildDllToPackage();
+        ExecuteBuildAsmdefToPackage();
+
         ExecuteCopySQLiteDbToPackage();
         ExecuteBuildBatToPackage();
 
@@ -1332,6 +1409,7 @@ public sealed class EditorStrayFogExecute
         ExecuteBuildAllAssetDiskMaping();
         ExecuteBuildUIWindowSetting();
         ExportXLuaMapToXLS();
+        ExecuteAsmdefToXLS();
         ExecuteExportXlsDataToSqlite();
     }
     #endregion
