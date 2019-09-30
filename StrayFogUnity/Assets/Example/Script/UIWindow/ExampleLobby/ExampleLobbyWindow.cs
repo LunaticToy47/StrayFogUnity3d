@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class ExampleLobbyWindow : AbsUIWindowView
 {
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
         Text txt = transform.Find("btnRadarBg/Text").GetComponent<Text>();
         Button btnRadarBg = transform.Find("btnRadarBg").GetComponent<Button>();

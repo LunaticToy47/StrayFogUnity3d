@@ -89,6 +89,11 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
         {
             folderOutSide = Path.GetDirectoryName(fileOutSide);
         }
+        OnResolve();
     }
+    /// <summary>
+    /// 解析
+    /// </summary>
+    protected virtual void OnResolve() { }
 }
 #endif

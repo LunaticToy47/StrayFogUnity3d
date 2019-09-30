@@ -20,6 +20,10 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
     /// </summary>
     readonly static string msrXLuaTxtExt = enFileExt.XLuaTxt.GetAttribute<FileExtAttribute>().ext;
     /// <summary>
+    /// Asmdef后缀
+    /// </summary>
+    readonly static string msrAsmdefExt = enFileExt.Asmdef.GetAttribute<FileExtAttribute>().ext;
+    /// <summary>
     /// 名称前缀
     /// </summary>
     static readonly Dictionary<string, string> msrNamePrefix = new Dictionary<string, string>()
@@ -28,6 +32,7 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
             {enFileExt.Asset.GetAttribute<FileExtAttribute>().ext,"a_" },
             {msrXLuaTxtExt,"x_" },
             {msrDllExt,"d_" },
+            {msrAsmdefExt,"m_" }
         };
     /// <summary>
     /// 构造函数

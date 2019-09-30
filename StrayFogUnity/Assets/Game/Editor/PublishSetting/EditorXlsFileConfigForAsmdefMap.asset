@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495861d1a23b38b478b6d8c296dae3b5, type: 3}
   m_Name: EditorXlsFileConfigForAsmdefMap
   m_EditorClassIdentifier: 
-  paths: []
+  paths:
+  - Assets/Game/Editor/XLS_Config/AsmdefMap.xlsx
   invoke: 

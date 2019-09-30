@@ -33,7 +33,16 @@ MonoBehaviour:
     columnName: asmdefAssetbundleName
     sqliteColumnName: asmdefAssetbundleName
     sqliteColumnValue: 
-    desc: "Asmdef\u6587\u4EF6\u540D\u79F0"
+    desc: "Asmdef\u8D44\u6E90\u6587\u4EF6\u540D\u79F0"
+    isPK: 0
+    isNull: 0
+    dataType: 14
+    arrayDimension: 0
+  - xlsColumnIndex: 3
+    columnName: asmdefName
+    sqliteColumnName: asmdefName
+    sqliteColumnValue: 
+    desc: "Asmdef\u540D\u79F0"
     isPK: 0
     isNull: 0
     dataType: 14

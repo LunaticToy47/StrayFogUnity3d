@@ -1,14 +1,15 @@
 fileFormatVersion: 2
 guid: 73fd4424b49e97f46a1fd870d55bd2ca
-timeCreated: 1528703399
-licenseType: Pro
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
   iconMap: {}
   executionOrder: {}
+  defineConstraints: []
   isPreloaded: 0
   isOverridable: 0
+  isExplicitlyReferenced: 0
+  validateReferences: 1
   platformData:
   - first:
       Any: 
@@ -22,5 +23,5 @@ PluginImporter:
       settings:
         DefaultValueInitialized: true
   userData: 
-  assetBundleName: 
+  assetBundleName: d__335935548
   assetBundleVariant: 

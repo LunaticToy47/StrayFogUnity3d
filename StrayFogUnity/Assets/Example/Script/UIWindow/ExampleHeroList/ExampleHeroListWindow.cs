@@ -13,9 +13,9 @@ public class ExampleHeroListWindow : AbsUIWindowView
     /// </summary>
     LuaTable mScriptEnv;
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    private void Awake()
+    protected override void OnAwake()
     {
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(xLuaFileId, (table) =>
         {

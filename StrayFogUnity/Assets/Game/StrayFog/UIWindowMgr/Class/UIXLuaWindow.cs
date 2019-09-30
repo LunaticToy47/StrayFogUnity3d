@@ -5,4 +5,11 @@
 [AddComponentMenu("StrayFog/Game/UIWindow/UIXLuaWindow")]
 public class UIXLuaWindow : AbsUIWindowView
 {
+    /// <summary>
+    /// OnAwake
+    /// </summary>
+    protected override void OnAwake()
+    {
+        
+    }
 }

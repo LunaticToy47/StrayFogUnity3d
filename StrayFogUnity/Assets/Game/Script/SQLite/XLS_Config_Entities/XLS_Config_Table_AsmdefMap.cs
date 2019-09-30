@@ -18,10 +18,16 @@ public partial class XLS_Config_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 	public int id { get; private set; }	
 		
 	/// <summary>
-	/// Asmdef文件名称
+	/// Asmdef资源文件名称
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,2,"asmdefAssetbundleName","","@asmdefAssetbundleName2",false)]	
 	public string asmdefAssetbundleName { get; private set; }	
+		
+	/// <summary>
+	/// Asmdef名称
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,3,"asmdefName","","@asmdefName3",false)]	
+	public string asmdefName { get; private set; }	
 	
 	#endregion
 

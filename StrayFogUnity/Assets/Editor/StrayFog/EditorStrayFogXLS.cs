@@ -1274,44 +1274,44 @@ public sealed class EditorStrayFogXLS
     public static void InsertAsmdefMap(Action<string, float> _progressCallback)
     {
         List<EditorSelectionAsmdefMapSetting> xAsmdefScripts = EditorStrayFogExecute.ExecuteLookPackageAsmdef();
-        EditorXlsFileConfigForAsmdefMap wfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForAsmdefMap;        
-        //if (wfg.paths.Length > 0)
-        //{
-        //    foreach (string file in wfg.paths)
-        //    {
-        //        OnClearXlsData(file);
-        //        using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
-        //        {
-        //            ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
-        //            int rowIndex = 0;
-        //            for (int i = 0; i < xLuaScripts.Count; i++)
-        //            {
-        //                if (xLuaScripts[i].isXLua)
-        //                {
-        //                    xLuaScripts[i].Resolve();
-        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xLuaScripts[i].xLuaId;
-        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = xLuaScripts[i].fileId;
-        //                    sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = xLuaScripts[i].folderId;
-        //                }
-        //                else
-        //                {
-        //                    rowIndex++;
-        //                }
-        //                if (_progressCallback != null)
-        //                {
-        //                    _progressCallback(xLuaScripts[i].xLuaName, (i + 1) / (float)xLuaScripts.Count);
-        //                }
-        //            }
-        //            pck.Save();
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    string error = "XLuaMap.xlsx file is not set,please set one.";
-        //    EditorUtility.DisplayDialog("Error", error, "Yes", "No");
-        //    throw new UnityException(error);
-        //}
+        EditorXlsFileConfigForAsmdefMap wfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForAsmdefMap;
+        if (wfg.paths.Length > 0)
+        {
+            foreach (string file in wfg.paths)
+            {
+                OnClearXlsData(file);
+                using (ExcelPackage pck = new ExcelPackage(new FileInfo(file)))
+                {
+                    ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
+                    int rowIndex = 0;
+                    for (int i = 0; i < xAsmdefScripts.Count; i++)
+                    {
+                        xAsmdefScripts[i].Resolve();
+                        if (xAsmdefScripts[i].isAsmdef)
+                        {                            
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xAsmdefScripts[i].asmdefId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = xAsmdefScripts[i].asmdefAssetbundleName;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = xAsmdefScripts[i].asmdefName;
+                        }
+                        else
+                        {
+                            rowIndex++;
+                        }
+                        if (_progressCallback != null)
+                        {
+                            _progressCallback(xAsmdefScripts[i].asmdefName, (i + 1) / (float)xAsmdefScripts.Count);
+                        }
+                    }
+                    pck.Save();
+                }
+            }
+        }
+        else
+        {
+            string error = "AsmdefMap.xlsx file is not set,please set one.";
+            EditorUtility.DisplayDialog("Error", error, "Yes", "No");
+            throw new UnityException(error);
+        }
     }
     #endregion
     #endregion
