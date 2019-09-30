@@ -9,7 +9,7 @@ public class ExampleLobbyWindow : AbsUIWindowView
     /// <summary>
     /// OnAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void Awake()
     {
         Text txt = transform.Find("btnRadarBg/Text").GetComponent<Text>();
         Button btnRadarBg = transform.Find("btnRadarBg").GetComponent<Button>();
@@ -28,6 +28,6 @@ public class ExampleLobbyWindow : AbsUIWindowView
                 StrayFogGamePools.uiWindowManager.OpenWindow(enUIWindow.ExampleMessageBoxWindow);
             }            
         });
-        transform.Find("btnRadar").gameObject.AddComponent<UIDragMono>();        
+        transform.Find("btnRadar").gameObject.AddComponent<UIDragMono>();
     }
 }

@@ -8,13 +8,6 @@ using UnityEngine.UI;
 public class ExampleGuideWindow : AbsUIGuideWindowView
 {
     /// <summary>
-    /// OnAwake
-    /// </summary>
-    protected override void OnAwake()
-    {
-
-    }
-    /// <summary>
     /// ²ÄÖÊÎÄ¼ş
     /// </summary>
     protected override enAssetDiskMapingFile materialFile { get { return enAssetDiskMapingFile.f_GuideMaskShader_mat; } }
