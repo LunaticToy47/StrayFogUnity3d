@@ -10,6 +10,13 @@ using UnityEngine;
 /// </summary>
 public sealed class EditorStrayFogAssembly
 {
+    #region ScriptAssemblies目录路径
+    /// <summary>
+    /// ScriptAssemblies目录路径
+    /// </summary>
+    public const string scriptAssembliesPath = "Library/ScriptAssemblies";
+    #endregion
+
     #region IsExistsTypeInApplication 当前应用程序域是否有指定类型
     /// <summary>
     /// 当前应用程序域是否有指定类型
@@ -43,7 +50,7 @@ public sealed class EditorStrayFogAssembly
     public static List<Assembly> GetApplicationAssembly()
     {
         List<Assembly> assemblies = new List<Assembly>();
-        string[] files = Directory.GetFiles("Library/ScriptAssemblies", "*" + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext);
+        string[] files = Directory.GetFiles(scriptAssembliesPath, "*" + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext);
         if (files != null && files.Length > 0)
         {
             string name = string.Empty;
@@ -79,7 +86,7 @@ public sealed class EditorStrayFogAssembly
     public static List<Assembly> GetEditorApplicationAssembly()
     {
         List<Assembly> assemblies = new List<Assembly>();
-        string[] files = Directory.GetFiles("Library/ScriptAssemblies", "*" + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext);
+        string[] files = Directory.GetFiles(scriptAssembliesPath, "*" + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext);
         if (files != null && files.Length > 0)
         {
             string name = string.Empty;
