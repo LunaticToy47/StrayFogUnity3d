@@ -19,10 +19,13 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
     /// </summary>
     protected override void OnResolve()
     {
-        SaveAssetBundleName(null);
         isAsmdef = name.EndsWith(enFileExt.Asmdef.GetAttribute<FileExtAttribute>().ext);
+        SaveAssetBundleName(null);        
         asmdefName = Path.GetFileNameWithoutExtension(name);
+        asmdefDll = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefName + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
         asmdefId = asmdefName.UniqueHashCode();
+        asmdefAssetbundleName = GetAssetBundleName();
+        ClearAssetBundleName();
     }
 
     /// <summary>
@@ -36,10 +39,14 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
     /// <summary>
     /// Asmdef资源文件名称
     /// </summary>
-    public string asmdefAssetbundleName { get { return GetAssetBundleName(); } }
+    public string asmdefAssetbundleName { get; private set; }
     /// <summary>
     /// Asmdef文件名称
     /// </summary>
-    public string asmdefName { get; private set; }   
+    public string asmdefName { get; private set; }
+    /// <summary>
+    /// Asmdef映射dll文件
+    /// </summary>
+    public string asmdefDll { get; private set; }
 }
 #endif

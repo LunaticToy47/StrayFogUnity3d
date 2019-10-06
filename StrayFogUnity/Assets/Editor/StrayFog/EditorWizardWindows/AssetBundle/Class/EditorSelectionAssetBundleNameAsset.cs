@@ -24,12 +24,16 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
     /// </summary>
     readonly static string msrAsmdefExt = enFileExt.Asmdef.GetAttribute<FileExtAttribute>().ext;
     /// <summary>
+    /// Asset前缀
+    /// </summary>
+    readonly static string msrAssetExt = enFileExt.Asset.GetAttribute<FileExtAttribute>().ext;
+    /// <summary>
     /// 名称前缀
     /// </summary>
     static readonly Dictionary<string, string> msrNamePrefix = new Dictionary<string, string>()
         {
             {msrSceneExt,"s_" },
-            {enFileExt.Asset.GetAttribute<FileExtAttribute>().ext,"a_" },
+            {msrAssetExt,"a_" },
             {msrXLuaTxtExt,"x_" },
             {msrDllExt,"d_" },
             {msrAsmdefExt,"m_" }

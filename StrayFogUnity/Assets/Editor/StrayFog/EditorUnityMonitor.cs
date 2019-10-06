@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -15,3 +16,4 @@ public static class EditorUnityMonitor
         Debug.Log("EditorUnityMonitor");
     }
 }
+#endif

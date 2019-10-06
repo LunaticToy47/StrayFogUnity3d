@@ -1239,15 +1239,18 @@ public sealed class EditorStrayFogExecute
         List<EditorSelectionAsmdefMapSetting> nodes = ExecuteLookPackageAsmdef();
         foreach (EditorSelectionAsmdefMapSetting n in nodes)
         {
-            progress++;            
-            if (!string.IsNullOrEmpty(n.GetAssetBundleName()))
+            progress++;
+            n.Resolve();
+            if (File.Exists(n.asmdefDll))
             {
-                //File.Copy(n.path, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, n.GetAssetBundleName()));
+                File.Copy(n.asmdefDll, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot,
+                    n.asmdefAssetbundleName));
             }
             else
             {
-                Debug.LogErrorFormat("Asmdef 【{0}】's AssetBundleName is empty.", n.path);
+                Debug.LogErrorFormat("Can't find Asmdef maping dll【{0}】", n.asmdefDll);
             }
+      
             EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodes.Count);
         }
         EditorUtility.ClearProgressBar();

@@ -1,6 +1,7 @@
 ﻿/*
  * https://docs.unity3d.com/ScriptReference/AssetModificationProcessor.html
  */
+ #if UNITY_EDITOR
 using UnityEditor;
 /// <summary>
 /// Unity编辑器资源修改监听
@@ -60,3 +61,4 @@ public sealed class EditorUnityAssetModificationProcessor : UnityEditor.AssetMod
         return AssetDeleteResult.DidNotDelete;
     }
 }
+#endif
