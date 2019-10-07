@@ -17,18 +17,12 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
     /// </summary>
     IAssetBundleFileParameter mFileParameter;
     /// <summary>
-    /// AssetBundle
-    /// </summary>
-    AssetBundle mAssetBundle = null;
-    /// <summary>
     /// 设置参数
     /// </summary>
     /// <param name="_fileParameter">文件参数</param>
-    /// <param name="_assetBundle">AssetBundle</param>
-    public void SetParameter(IAssetBundleFileParameter _fileParameter ,AssetBundle _assetBundle)
+    public void SetParameter(IAssetBundleFileParameter _fileParameter)
     {
         mFileParameter = _fileParameter;
-        mAssetBundle = _assetBundle;
     }
 
     /// <summary>
@@ -40,7 +34,6 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
         mQueueResultCallback.Clear();
         mAssetMaping.Clear();        
         mRequestKeyForTypeKeyMaping.Clear();
-        mAssetBundle = null;
         mHasRequest.Clear();
         base.OnDispose();
     }
@@ -111,7 +104,9 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
     /// <param name="_callback">回调</param>
     /// <param name="_extraParameter">额外参数</param>
     /// <param name="_type">资源类型</param>
-    public void RequestInstantiate(bool _defaultSelfActive, IAssetBundleInput _input, AssetBundleInstantiateEventHandler _callback,object[] _extraParameter,Type _type)
+    /// <param name="_assetBundle">资源包</param>
+    public void RequestInstantiate(bool _defaultSelfActive, IAssetBundleInput _input, 
+        AssetBundleInstantiateEventHandler _callback,object[] _extraParameter,Type _type, AssetBundle _assetBundle)
     {
         int key = _type.GetHashCode();
         if (!mQueueResultCallback.ContainsKey(key))
@@ -140,7 +135,7 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
             }
             else if (!mRequestKeyForTypeKeyMaping.ContainsKey(key))
             {
-                AssetBundleRequest request = mAssetBundle.LoadAssetAsync(_input.config.fileName, _type);
+                AssetBundleRequest request = _assetBundle.LoadAssetAsync(_input.config.fileName, _type);
                 request.allowSceneActivation = false;
                 request.completed += Request_completed;
                 int reqKey = request.GetHashCode();

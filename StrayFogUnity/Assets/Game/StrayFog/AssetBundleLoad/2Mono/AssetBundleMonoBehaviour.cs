@@ -63,7 +63,7 @@ public class AssetBundleMonoBehaviour : AbsMonoBehaviour
             go.hideFlags = hideFlags;
             go.transform.SetParent(transform);
             AssetBundleOutputMonoBehaviour mono = go.AddComponent<AssetBundleOutputMonoBehaviour>();
-            mono.SetParameter(fileParameter, mAssetBundle);
+            mono.SetParameter(fileParameter);
             mAssetBundleResultMonoBehaviour.Add(_request.input.uniqueId, mono);
         }
     }
@@ -229,7 +229,7 @@ public class AssetBundleMonoBehaviour : AbsMonoBehaviour
     {
         if (mAssetBundleResultMonoBehaviour.ContainsKey(_input.uniqueId))
         {
-            mAssetBundleResultMonoBehaviour[_input.uniqueId].RequestInstantiate(_defaultSelfActive,_input, _callback,_extraParameter, _type);
+            mAssetBundleResultMonoBehaviour[_input.uniqueId].RequestInstantiate(_defaultSelfActive,_input, _callback,_extraParameter, _type, mAssetBundle);
         }
     }
     #endregion

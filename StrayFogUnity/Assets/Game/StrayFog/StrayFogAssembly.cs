@@ -36,7 +36,7 @@ public sealed class StrayFogAssembly
                 }                
                 if (File.Exists(path))
                 {
-                    tmpAssembly = Assembly.LoadFrom(path);                    
+                    tmpAssembly = Assembly.Load(File.ReadAllBytes(path));
                     dynamicAssemblies.Add(tmpAssembly);
                 }
             }
