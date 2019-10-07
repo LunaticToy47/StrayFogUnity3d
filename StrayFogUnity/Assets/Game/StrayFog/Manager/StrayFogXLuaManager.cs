@@ -67,32 +67,14 @@ public sealed partial class StrayFogXLuaManager : AbsSingleMonoBehaviour
         string xLuaScript = string.Empty;
         if (mXLuaConfigMaping.ContainsKey(_xLuaFileId))
         {
-            IAssetBundleFileParameter file = StrayFogGamePools.assetBundleManager.GetAssetBundleFile(mXLuaConfigMaping[_xLuaFileId].xLuaFileId, mXLuaConfigMaping[_xLuaFileId].xLuaFolderId);
-            XLS_Config_View_AssetDiskMaping config = StrayFogGamePools.assetBundleManager.GetAssetDiskMaping(mXLuaConfigMaping[_xLuaFileId].xLuaFileId, mXLuaConfigMaping[_xLuaFileId].xLuaFolderId);
-            if (file != null)
+            if (!mXLuaScriptMaping.ContainsKey(_xLuaFileId))
             {
-                if (!mXLuaScriptMaping.ContainsKey(_xLuaFileId))
-                {
-                    TextAsset ta = null;
-                    if (StrayFogGamePools.setting.isInternal)
-                    {
-                        ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(file.assetBundlePath, typeof(TextAsset));
-                        xLuaScript = ta.text;
-                    }
-                    else
-                    {
-                        AssetBundle ab = AssetBundle.LoadFromFile(file.assetBundlePath);
-                        ta = ab.LoadAsset<TextAsset>(config.fileName);
-                        xLuaScript = ta.text;
-                        ab.Unload(false);
-                        ab = null;
-                    }
-                    mXLuaScriptMaping.Add(_xLuaFileId, xLuaScript);
-                }
-                else
-                {
-                    xLuaScript = mXLuaScriptMaping[_xLuaFileId];
-                }
+                xLuaScript = StrayFogGamePools.assetBundleManager.GetTextAssetDirect(mXLuaConfigMaping[_xLuaFileId].xLuaFileId, mXLuaConfigMaping[_xLuaFileId].xLuaFolderId);
+                mXLuaScriptMaping.Add(_xLuaFileId, xLuaScript);
+            }
+            else
+            {
+                xLuaScript = mXLuaScriptMaping[_xLuaFileId];
             }
         }
         return xLuaScript;
@@ -129,7 +111,10 @@ public sealed partial class StrayFogXLuaManager : AbsSingleMonoBehaviour
     /// </summary>
     void Update()
     {
-        xLuaEnv.Tick();
+        if (xLuaEnv != null)
+        {
+            xLuaEnv.Tick();
+        }        
     }
     #endregion
 }

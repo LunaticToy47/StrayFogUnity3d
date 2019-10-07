@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Example/AssetBundles/Scene/ExampleGuide.unity
+    guid: 796c98b5fc440404daaa7ae90da49d01
+  - enabled: 1
     path: Assets/Example/AssetBundles/Scene/ExampleUIWindow.unity
     guid: 313ec0484f648c94fa4a9445b01957ea
   - enabled: 1
@@ -20,9 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Example/AssetBundles/Scene/ExampleFMS.unity
     guid: 8821f5098afc11f41868dc13b0956a1d
-  - enabled: 1
-    path: Assets/Example/AssetBundles/Scene/ExampleGuide.unity
-    guid: 796c98b5fc440404daaa7ae90da49d01
   - enabled: 1
     path: Assets/Example/AssetBundles/Scene/ExampleProject.unity
     guid: 30d0b95c19a393241ab9a6c647ee86bd

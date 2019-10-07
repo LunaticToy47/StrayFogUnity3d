@@ -1292,6 +1292,7 @@ public sealed class EditorStrayFogXLS
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xAsmdefScripts[i].asmdefId;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = xAsmdefScripts[i].asmdefAssetbundleName;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = xAsmdefScripts[i].asmdefName;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 4].Value = xAsmdefScripts[i].asmdefDll;
                         }
                         else
                         {

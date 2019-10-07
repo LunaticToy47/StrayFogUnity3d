@@ -1244,7 +1244,7 @@ public sealed class EditorStrayFogExecute
             if (File.Exists(n.asmdefDll))
             {
                 File.Copy(n.asmdefDll, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot,
-                    n.asmdefAssetbundleName));
+                    n.asmdefAssetbundleName), true);
             }
             else
             {

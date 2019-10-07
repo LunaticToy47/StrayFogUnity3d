@@ -1,5 +1,4 @@
-﻿using Mono.Data.Sqlite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -8,40 +7,77 @@ using System.Reflection;
 /// </summary>
 public sealed class StrayFogAssembly
 {
-    #region LoadDynamicAssembly 加载所有dll动态库
     /// <summary>
     /// 动态程序集组
     /// </summary>
-    static List<Assembly> mDynamicAssemblyArray = null;
+    public static List<Assembly> dynamicAssemblies { get; private set; }
+
+    #region LoadDynamicAssembly 加载所有dll动态库
     /// <summary>
     /// 加载所有dll动态库
     /// </summary>
     public static void LoadDynamicAssembly()
     {
-        if (mDynamicAssemblyArray == null)
+        if (dynamicAssemblies == null)
         {
-            mDynamicAssemblyArray = new List<Assembly>();
-            //SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
-            //string path = string.Empty;
-            //while (reader.Read())
-            //{
-            //    if (StrayFogGamePools.setting.isInternal)
-            //    {
-            //        path = reader.GetString(0).Replace(@"\", "/");
-            //    }
-            //    else
-            //    {
-            //        path = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, reader.GetString(1)).Replace(@"\", "/");
-            //    }
-            //    if (File.Exists(path))
-            //    {
-            //        mDynamicAssemblyArray.Add(Assembly.LoadFile(path));
-            //    }
-            //}
-            //reader.Close();
-            //reader = null;
+            dynamicAssemblies = new List<Assembly>();
+            List<XLS_Config_Table_AsmdefMap> maps = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_AsmdefMap>();
+            string path = string.Empty;
+            Assembly tmpAssembly = null;
+            foreach (XLS_Config_Table_AsmdefMap m in maps)
+            {
+                if (StrayFogGamePools.setting.isInternal)
+                {
+                    path = m.asmdefDLLPath;
+                }
+                else
+                {
+                    path = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, m.asmdefAssetbundleName);
+                }                
+                if (File.Exists(path))
+                {
+                    tmpAssembly = Assembly.LoadFrom(path);                    
+                    dynamicAssemblies.Add(tmpAssembly);
+                }
+            }
+            tmpAssembly = Assembly.GetCallingAssembly();
+            if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
+            {
+                dynamicAssemblies.Add(tmpAssembly);
+            }
+            tmpAssembly = Assembly.GetEntryAssembly();
+            if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
+            {
+                dynamicAssemblies.Add(tmpAssembly);
+            }
+            tmpAssembly = Assembly.GetExecutingAssembly();
+            if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
+            {
+                dynamicAssemblies.Add(tmpAssembly);
+            }
         }
     }
+    #region Old Dll
+    //SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
+    //string path = string.Empty;
+    //while (reader.Read())
+    //{
+    //    if (StrayFogGamePools.setting.isInternal)
+    //    {
+    //        path = reader.GetString(0).Replace(@"\", "/");
+    //    }
+    //    else
+    //    {
+    //        path = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, reader.GetString(1)).Replace(@"\", "/");
+    //    }
+    //    if (File.Exists(path))
+    //    {
+    //        mDynamicAssemblyArray.Add(Assembly.LoadFile(path));
+    //    }
+    //}
+    //reader.Close();
+    //reader = null;
+    #endregion
     #endregion
 
     #region GetType Type映射
@@ -60,9 +96,9 @@ public sealed class StrayFogAssembly
         if (!mTypeMaping.ContainsKey(key))
         {
             Type type = null;
-            if (mDynamicAssemblyArray != null && mDynamicAssemblyArray.Count > 0)
+            if (dynamicAssemblies != null && dynamicAssemblies.Count > 0)
             {
-                foreach (Assembly m in mDynamicAssemblyArray)
+                foreach (Assembly m in dynamicAssemblies)
                 {
                     type = m.GetType(_typeName);
                     if (type == null)
@@ -97,17 +133,20 @@ public sealed class StrayFogAssembly
         if (!mExportedTypesMaping.ContainsKey(key))
         {
             mExportedTypesMaping.Add(key, new List<Type>());
-            Type[] types = null;
-            foreach (Assembly m in mDynamicAssemblyArray)
+            if (dynamicAssemblies != null)
             {
-                types = m.GetExportedTypes();
-                if (types != null && types.Length > 0)
+                Type[] types = null;
+                foreach (Assembly m in dynamicAssemblies)
                 {
-                    foreach (Type t in types)
+                    types = m.GetExportedTypes();
+                    if (types != null && types.Length > 0)
                     {
-                        if (t.IsTypeOrSubTypeOf(_parentType))
+                        foreach (Type t in types)
                         {
-                            mExportedTypesMaping[key].Add(t);
+                            if (t.IsTypeOrSubTypeOf(_parentType))
+                            {
+                                mExportedTypesMaping[key].Add(t);
+                            }
                         }
                     }
                 }

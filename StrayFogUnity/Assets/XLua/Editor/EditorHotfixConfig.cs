@@ -132,14 +132,28 @@ public static class EditorHotfixConfig
     //--------------end 纯lua编程配置参考----------------------------
 
     /***************热补丁可以参考这份自动化配置***************/
+    static readonly Assembly[] allHotfixAssemblys = new Assembly[]
+    {
+            //Assembly.Load("Assembly-CSharp"),
+            Assembly.Load("GameExample"),
+            Assembly.Load("GameHotfix"),
+            Assembly.Load("StrayFogCore"),
+            Assembly.Load("StrayFogRunning"),
+    };
+
     [Hotfix]
     static IEnumerable<Type> HotfixInject
     {
         get
         {
-            return (from type in Assembly.Load("Assembly-CSharp").GetExportedTypes()
-                    where type.Namespace == null || !type.Namespace.StartsWith("XLua")
-                    select type);
+            List<Type> types = new List<Type>();
+            foreach (Assembly m in allHotfixAssemblys)
+            {
+                types.AddRange((from type in m.GetExportedTypes()
+                                where type.Namespace == null || !type.Namespace.StartsWith("XLua")
+                                select type));
+            }
+            return types;
         }
     }
     //--------------begin 热补丁自动化配置-------------------------
@@ -171,12 +185,8 @@ public static class EditorHotfixConfig
         get
         {
             BindingFlags flag = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
-            List<Type> allTypes = new List<Type>();
-            var allAssemblys = new Assembly[]
-            {
-                Assembly.Load("Assembly-CSharp")
-            };
-            foreach (var t in (from assembly in allAssemblys from type in assembly.GetTypes() select type))
+            List<Type> allTypes = new List<Type>();            
+            foreach (var t in (from assembly in allHotfixAssemblys from type in assembly.GetTypes() select type))
             {
                 var p = t;
                 while (p != null)

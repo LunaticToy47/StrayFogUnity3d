@@ -207,4 +207,37 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         return config;
     }
     #endregion
+
+    #region GetAssetDirect 直接获得指定资源
+    /// <summary>
+    /// 直接获得指定资源
+    /// </summary>
+    /// <param name="_fileId">文件Id</param>
+    /// <param name="_folderId">文件夹Id</param>
+    /// <returns>资源</returns>
+    public string GetTextAssetDirect(int _fileId, int _folderId)
+    {
+        string result = string.Empty;
+        IAssetBundleFileParameter file = StrayFogGamePools.assetBundleManager.GetAssetBundleFile(_fileId, _folderId);
+        XLS_Config_View_AssetDiskMaping config = StrayFogGamePools.assetBundleManager.GetAssetDiskMaping(_fileId, _folderId);
+        if (file != null)
+        {
+            TextAsset ta = null;
+            if (StrayFogGamePools.setting.isInternal)
+            {
+                ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(file.assetBundlePath, typeof(TextAsset));
+                result = ta.text;
+            }
+            else
+            {
+                AssetBundle ab = AssetBundle.LoadFromFile(file.assetBundlePath);
+                ta = ab.LoadAsset<TextAsset>(config.fileName);
+                result = ta.text;
+                ab.Unload(false);
+                ab = null;
+            }
+        }
+        return result;
+    }
+    #endregion
 }

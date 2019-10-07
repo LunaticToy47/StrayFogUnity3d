@@ -11,24 +11,31 @@ public sealed class StrayFogRegisterMonoBehaviour : AbsMonoBehaviour
     /// </summary>
     [AliasTooltip("组件脚本名称", "默认值=gameObject.name")]
     public string monoBehaviourScriptName;
+    
     /// <summary>
     /// Awake
     /// </summary>
     void Awake()
     {
-        string scriptName = monoBehaviourScriptName;
-        if (string.IsNullOrEmpty(scriptName))
+        StrayFogGamePools.gameManager.Initialization(() =>
         {
-            scriptName = gameObject.name;
-        }
-        Type type = StrayFogAssembly.GetType(scriptName);
-        if (type != null)
-        {
-            gameObject.AddComponent(type);
-        }
-        else
-        {
-            Debug.LogErrorFormat("Can't found type 【{0}】", scriptName);
-        }
+            StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
+            {
+                string scriptName = monoBehaviourScriptName;
+                if (string.IsNullOrEmpty(scriptName))
+                {
+                    scriptName = gameObject.name;
+                }
+                Type type = StrayFogAssembly.GetType(scriptName);
+                if (type != null)
+                {
+                    gameObject.AddComponent(type);
+                }
+                else
+                {
+                    Debug.LogErrorFormat("Can't found type 【{0}】", scriptName);
+                }
+            });
+        });
     }
 }

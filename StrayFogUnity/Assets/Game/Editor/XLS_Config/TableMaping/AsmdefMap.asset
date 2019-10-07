@@ -47,3 +47,12 @@ MonoBehaviour:
     isNull: 0
     dataType: 14
     arrayDimension: 0
+  - xlsColumnIndex: 4
+    columnName: asmdefDLLPath
+    sqliteColumnName: asmdefDLLPath
+    sqliteColumnValue: 
+    desc: "AsmdefDLL\u8DEF\u5F84"
+    isPK: 0
+    isNull: 0
+    dataType: 14
+    arrayDimension: 0

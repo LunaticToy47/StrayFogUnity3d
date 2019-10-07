@@ -28,6 +28,12 @@ public partial class XLS_Config_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,3,"asmdefName","","@asmdefName3",false)]	
 	public string asmdefName { get; private set; }	
+		
+	/// <summary>
+	/// AsmdefDLL路径
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"asmdefDLLPath","","@asmdefDLLPath4",false)]	
+	public string asmdefDLLPath { get; private set; }	
 	
 	#endregion
 
