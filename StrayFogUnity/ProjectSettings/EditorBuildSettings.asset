@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Example/AssetBundles/Scene/ExampleXLua.unity
+    guid: 3c27efb278533514eb79cbf8a6092149
+  - enabled: 1
     path: Assets/Example/AssetBundles/Scene/ExampleGuide.unity
     guid: 796c98b5fc440404daaa7ae90da49d01
   - enabled: 1
@@ -38,9 +41,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Example/AssetBundles/Scene/ExampleXLS.unity
     guid: c2ccf67d4105cda42a68b08bff6c9105
-  - enabled: 1
-    path: Assets/Example/AssetBundles/Scene/ExampleXLua.unity
-    guid: 3c27efb278533514eb79cbf8a6092149
   - enabled: 1
     path: Assets/Example/AssetBundles/Scene/Examplebx_map_pve_1.unity
     guid: e1cd40bb81d9de944a4f0dbf27c3e554

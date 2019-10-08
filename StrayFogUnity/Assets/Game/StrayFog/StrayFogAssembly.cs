@@ -55,6 +55,8 @@ public sealed class StrayFogAssembly
             {
                 dynamicAssemblies.Add(tmpAssembly);
             }
+
+            string name = AppDomain.CurrentDomain.FriendlyName;
         }
     }
     #region Old Dll
