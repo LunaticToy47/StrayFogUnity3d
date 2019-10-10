@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine;
 /// <summary>
 /// Query查询菜单 
 /// </summary>
@@ -35,6 +36,20 @@ static class EditorQueryMenuItem
     static void EditorDevelopMenuItem_LookAssetBundleRoot()
     {
         EditorUtility.RevealInFinder(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
+    }
+    #endregion
+
+    #region Look AssetType
+    const string mcLookAssetType = "Look AssetType";
+    /// <summary>
+    /// 查看资源类型
+    /// </summary>
+    [MenuItem(mcMenu + mcLookAssetType, false, mcPriority + 1)]
+    [MenuItem(mcAssetMenu + mcLookAssetType, false, mcPriority + 1)]
+    [MenuItem(mcHierarchy + mcLookAssetType, false, mcPriority + 1)]
+    static void EditorDevelopMenuItem_LookAssetType()
+    {         
+        Debug.Log(Selection.activeObject.GetType());        
     }
     #endregion
 }

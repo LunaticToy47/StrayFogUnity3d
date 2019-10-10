@@ -40,7 +40,7 @@ public class ExampleGuideLevel : AbsLevel
         GUI.skin.label.fontSize = 40;
         GUI.color = Color.black;
         GUILayout.Label(StrayFogGamePools.setting.ToData());
-        GUILayout.Label("Dynamic=>CD:" + StrayFogAssembly.dynamicAssemblies.Count + " T:" + Time.time);
+        GUILayout.Label("Dynamic=>C:" + StrayFogAssembly.dynamicAssemblies.Count + " T:" + Time.time);
         string path = StrayFogGamePools.setting.assetBundleRoot + "/ab_xboxone";
         if (!Directory.Exists(StrayFogGamePools.setting.assetBundleRoot))
         {
@@ -48,7 +48,7 @@ public class ExampleGuideLevel : AbsLevel
         }
         GUILayout.Label(path);
         GUILayout.Label(File.Exists(path).ToString());
-        File.WriteAllText(path+".txt", "11111");
+        File.WriteAllText(path+".txt", GetType().Module.ToString());
         GUILayout.Label(File.Exists(path).ToString());
         GUILayout.EndScrollView();
     }

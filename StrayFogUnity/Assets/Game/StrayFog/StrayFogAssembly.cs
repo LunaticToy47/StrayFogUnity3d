@@ -36,7 +36,7 @@ public sealed class StrayFogAssembly
                 }                
                 if (File.Exists(path))
                 {
-                    tmpAssembly = Assembly.Load(File.ReadAllBytes(path));
+                    tmpAssembly = Assembly.LoadFrom(path);
                     dynamicAssemblies.Add(tmpAssembly);
                 }
             }
@@ -55,31 +55,8 @@ public sealed class StrayFogAssembly
             {
                 dynamicAssemblies.Add(tmpAssembly);
             }
-
-            string name = AppDomain.CurrentDomain.FriendlyName;
         }
     }
-    #region Old Dll
-    //SqliteDataReader reader = StrayFogSQLiteHelper.sqlHelper.ExecuteQuery("SELECT * FROM View_DynamicDll");
-    //string path = string.Empty;
-    //while (reader.Read())
-    //{
-    //    if (StrayFogGamePools.setting.isInternal)
-    //    {
-    //        path = reader.GetString(0).Replace(@"\", "/");
-    //    }
-    //    else
-    //    {
-    //        path = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, reader.GetString(1)).Replace(@"\", "/");
-    //    }
-    //    if (File.Exists(path))
-    //    {
-    //        mDynamicAssemblyArray.Add(Assembly.LoadFile(path));
-    //    }
-    //}
-    //reader.Close();
-    //reader = null;
-    #endregion
     #endregion
 
     #region GetType Type映射
