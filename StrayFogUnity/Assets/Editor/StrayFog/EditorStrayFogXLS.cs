@@ -1273,7 +1273,7 @@ public sealed class EditorStrayFogXLS
     /// <param name="_progressCallback">进度回调</param>
     public static void InsertAsmdefMap(Action<string, float> _progressCallback)
     {
-        List<EditorSelectionAsmdefMapSetting> xAsmdefScripts = EditorStrayFogExecute.ExecuteLookPackageAsmdef();
+        List<EditorSelectionAsmdefMapSetting> asmdefScripts = EditorStrayFogExecute.ExecuteLookPackageAsmdef();
         EditorXlsFileConfigForAsmdefMap wfg = EditorStrayFogSavedAssetConfig.setXlsFileConfigForAsmdefMap;
         if (wfg.paths.Length > 0)
         {
@@ -1284,15 +1284,17 @@ public sealed class EditorStrayFogXLS
                 {
                     ExcelWorksheet sheet = pck.Workbook.Worksheets[1];
                     int rowIndex = 0;
-                    for (int i = 0; i < xAsmdefScripts.Count; i++)
+                    for (int i = 0; i < asmdefScripts.Count; i++)
                     {
-                        xAsmdefScripts[i].Resolve();
-                        if (xAsmdefScripts[i].isAsmdef)
+                        asmdefScripts[i].Resolve();
+                        if (asmdefScripts[i].isAsmdef)
                         {                            
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = xAsmdefScripts[i].asmdefId;
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = xAsmdefScripts[i].asmdefAssetbundleName;
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = xAsmdefScripts[i].asmdefName;
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 4].Value = xAsmdefScripts[i].asmdefDll;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = asmdefScripts[i].asmdefId;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = asmdefScripts[i].asmdefDllName;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = asmdefScripts[i].asmdefDllPath;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 4].Value = asmdefScripts[i].asmdefDllAssetbundleName;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 5].Value = asmdefScripts[i].asmdefPdbPath;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 6].Value = asmdefScripts[i].asmdefPdbAssetbundleName;
                         }
                         else
                         {
@@ -1300,7 +1302,7 @@ public sealed class EditorStrayFogXLS
                         }
                         if (_progressCallback != null)
                         {
-                            _progressCallback(xAsmdefScripts[i].asmdefName, (i + 1) / (float)xAsmdefScripts.Count);
+                            _progressCallback(asmdefScripts[i].asmdefDllName, (i + 1) / (float)asmdefScripts.Count);
                         }
                     }
                     pck.Save();

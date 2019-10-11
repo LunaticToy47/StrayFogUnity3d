@@ -21,10 +21,14 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
     {
         isAsmdef = name.EndsWith(enFileExt.Asmdef.GetAttribute<FileExtAttribute>().ext);
         SaveAssetBundleName(null);        
-        asmdefName = Path.GetFileNameWithoutExtension(name);
-        asmdefDll = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefName + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
-        asmdefId = asmdefName.UniqueHashCode();
-        asmdefAssetbundleName = GetAssetBundleName();
+        asmdefDllName = Path.GetFileNameWithoutExtension(name);
+        asmdefId = asmdefDllName.UniqueHashCode();
+
+        asmdefDllPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();        
+        asmdefDllAssetbundleName = GetAssetBundleName();
+
+        asmdefPdbPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + enFileExt.Dll_PDB.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
+        asmdefPdbAssetbundleName = GetAssetBundleName()+"_p";
         ClearAssetBundleName();
     }
 
@@ -37,16 +41,24 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
     /// </summary>
     public int asmdefId { get; private set; }
     /// <summary>
-    /// Asmdef资源文件名称
-    /// </summary>
-    public string asmdefAssetbundleName { get; private set; }
-    /// <summary>
     /// Asmdef文件名称
     /// </summary>
-    public string asmdefName { get; private set; }
+    public string asmdefDllName { get; private set; }
     /// <summary>
     /// Asmdef映射dll文件
     /// </summary>
-    public string asmdefDll { get; private set; }
+    public string asmdefDllPath { get; private set; }
+    /// <summary>
+    /// Asmdef资源Dll名称
+    /// </summary>
+    public string asmdefDllAssetbundleName { get; private set; }
+    /// <summary>
+    /// Asmdef映射Pdb文件
+    /// </summary>
+    public string asmdefPdbPath { get; private set; }
+    /// <summary>
+    /// Asmdef资源Pdb名称
+    /// </summary>
+    public string asmdefPdbAssetbundleName { get; private set; }
 }
 #endif

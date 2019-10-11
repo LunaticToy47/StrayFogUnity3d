@@ -18,22 +18,34 @@ public partial class XLS_Config_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 	public int id { get; private set; }	
 		
 	/// <summary>
-	/// Asmdef资源文件名称
-	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,2,"asmdefAssetbundleName","","@asmdefAssetbundleName2",false)]	
-	public string asmdefAssetbundleName { get; private set; }	
-		
-	/// <summary>
 	/// Asmdef名称
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,3,"asmdefName","","@asmdefName3",false)]	
-	public string asmdefName { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,2,"asmdefDllName","","@asmdefDllName2",false)]	
+	public string asmdefDllName { get; private set; }	
 		
 	/// <summary>
 	/// AsmdefDLL路径
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"asmdefDLLPath","","@asmdefDLLPath4",false)]	
-	public string asmdefDLLPath { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,3,"asmdefDllPath","","@asmdefDllPath3",false)]	
+	public string asmdefDllPath { get; private set; }	
+		
+	/// <summary>
+	/// Asmdef资源文件名称
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"asmdefDllAssetbundleName","","@asmdefDllAssetbundleName4",false)]	
+	public string asmdefDllAssetbundleName { get; private set; }	
+		
+	/// <summary>
+	/// AsmdefDLL路径
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"asmdefPdbPath","","@asmdefPdbPath5",false)]	
+	public string asmdefPdbPath { get; private set; }	
+		
+	/// <summary>
+	/// Asmdef资源文件名称
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,6,"asmdefPdbAssetbundleName","","@asmdefPdbAssetbundleName6",false)]	
+	public string asmdefPdbAssetbundleName { get; private set; }	
 	
 	#endregion
 

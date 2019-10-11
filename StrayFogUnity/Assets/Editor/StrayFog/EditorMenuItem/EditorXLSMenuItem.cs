@@ -24,18 +24,18 @@ static class EditorXLSMenuItem
     const int mcPriority = 100 * (int)enEditorMenuItemPriority.XLS;
     #endregion
 
-    #region Build Xls Schema To Sqlite
-    const string mcBuildXlsSchemaToSqlite = "Build Xls Schema To Sqlite";
+    #region Build Xls Schema To Sqlite Script
+    const string mcBuildXlsSchemaToSqliteAndScript = "Build Xls Schema To Sqlite And Script";
     /// <summary>
-    /// Export Xls Schema To Sqlite
+    /// Export Xls Schema To Sqlite And Script
     /// </summary>
-    [MenuItem(mcMenu + mcBuildXlsSchemaToSqlite, false, mcPriority + 1)]
-    [MenuItem(mcAssetMenu + mcBuildXlsSchemaToSqlite, false, mcPriority + 1)]
-    [MenuItem(mcHierarchy + mcBuildXlsSchemaToSqlite, false, mcPriority + 1)]
-    static void EditorXLSMenuItem_BuildXlsSchemaToSqliteWindow()
+    [MenuItem(mcMenu + mcBuildXlsSchemaToSqliteAndScript, false, mcPriority + 1)]
+    [MenuItem(mcAssetMenu + mcBuildXlsSchemaToSqliteAndScript, false, mcPriority + 1)]
+    [MenuItem(mcHierarchy + mcBuildXlsSchemaToSqliteAndScript, false, mcPriority + 1)]
+    static void EditorXLSMenuItem_BuildXlsSchemaToSqliteAndScriptWindow()
     {
-        EditorBuildXlsSchemaToSqliteWindow win =
-               EditorWindow.GetWindow<EditorBuildXlsSchemaToSqliteWindow>(mcBuildXlsSchemaToSqlite);
+        EditorBuildXlsSchemaToSqliteAndScriptWindow win =
+               EditorWindow.GetWindow<EditorBuildXlsSchemaToSqliteAndScriptWindow>(mcBuildXlsSchemaToSqliteAndScript);
         win.Show();
     }
     #endregion      

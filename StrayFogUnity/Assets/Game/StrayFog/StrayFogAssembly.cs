@@ -22,21 +22,24 @@ public sealed class StrayFogAssembly
         {
             dynamicAssemblies = new List<Assembly>();
             List<XLS_Config_Table_AsmdefMap> maps = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_AsmdefMap>();
-            string path = string.Empty;
+            string dllPath = string.Empty;
+            string pdbPath = string.Empty;
             Assembly tmpAssembly = null;
             foreach (XLS_Config_Table_AsmdefMap m in maps)
             {
                 if (StrayFogGamePools.setting.isInternal)
                 {
-                    path = m.asmdefDLLPath;
+                    dllPath = m.asmdefDllPath;
+                    pdbPath = m.asmdefPdbPath;
                 }
                 else
                 {
-                    path = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, m.asmdefAssetbundleName);
-                }                
-                if (File.Exists(path))
+                    dllPath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, m.asmdefDllAssetbundleName);
+                    pdbPath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, m.asmdefPdbAssetbundleName);
+                }
+                if (File.Exists(dllPath) && File.Exists(pdbPath))
                 {
-                    tmpAssembly = Assembly.LoadFrom(path);
+                    tmpAssembly = Assembly.Load(File.ReadAllBytes(dllPath),File.ReadAllBytes(pdbPath));
                     dynamicAssemblies.Add(tmpAssembly);
                 }
             }

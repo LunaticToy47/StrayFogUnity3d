@@ -4,9 +4,9 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
-/// 导出XLS表架构到Sqlite数据库
+/// 导出XLS表架构到Sqlite数据库和生成脚本
 /// </summary>
-public class EditorBuildXlsSchemaToSqliteWindow : AbsEditorWindow
+public class EditorBuildXlsSchemaToSqliteAndScriptWindow : AbsEditorWindow
 {
     /// <summary>
     /// 配置

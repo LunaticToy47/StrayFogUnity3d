@@ -30,28 +30,46 @@ MonoBehaviour:
     dataType: 6
     arrayDimension: 0
   - xlsColumnIndex: 2
-    columnName: asmdefAssetbundleName
-    sqliteColumnName: asmdefAssetbundleName
-    sqliteColumnValue: 
-    desc: "Asmdef\u8D44\u6E90\u6587\u4EF6\u540D\u79F0"
-    isPK: 0
-    isNull: 0
-    dataType: 14
-    arrayDimension: 0
-  - xlsColumnIndex: 3
-    columnName: asmdefName
-    sqliteColumnName: asmdefName
+    columnName: asmdefDllName
+    sqliteColumnName: asmdefDllName
     sqliteColumnValue: 
     desc: "Asmdef\u540D\u79F0"
     isPK: 0
     isNull: 0
     dataType: 14
     arrayDimension: 0
-  - xlsColumnIndex: 4
-    columnName: asmdefDLLPath
-    sqliteColumnName: asmdefDLLPath
+  - xlsColumnIndex: 3
+    columnName: asmdefDllPath
+    sqliteColumnName: asmdefDllPath
     sqliteColumnValue: 
     desc: "AsmdefDLL\u8DEF\u5F84"
+    isPK: 0
+    isNull: 0
+    dataType: 14
+    arrayDimension: 0
+  - xlsColumnIndex: 4
+    columnName: asmdefDllAssetbundleName
+    sqliteColumnName: asmdefDllAssetbundleName
+    sqliteColumnValue: 
+    desc: "Asmdef\u8D44\u6E90\u6587\u4EF6\u540D\u79F0"
+    isPK: 0
+    isNull: 0
+    dataType: 14
+    arrayDimension: 0
+  - xlsColumnIndex: 5
+    columnName: asmdefPdbPath
+    sqliteColumnName: asmdefPdbPath
+    sqliteColumnValue: 
+    desc: "AsmdefDLL\u8DEF\u5F84"
+    isPK: 0
+    isNull: 0
+    dataType: 14
+    arrayDimension: 0
+  - xlsColumnIndex: 6
+    columnName: asmdefPdbAssetbundleName
+    sqliteColumnName: asmdefPdbAssetbundleName
+    sqliteColumnValue: 
+    desc: "Asmdef\u8D44\u6E90\u6587\u4EF6\u540D\u79F0"
     isPK: 0
     isNull: 0
     dataType: 14

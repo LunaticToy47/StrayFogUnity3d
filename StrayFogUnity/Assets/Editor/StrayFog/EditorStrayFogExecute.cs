@@ -1241,16 +1241,25 @@ public sealed class EditorStrayFogExecute
         {
             progress++;
             n.Resolve();
-            if (File.Exists(n.asmdefDll))
+            if (File.Exists(n.asmdefDllPath))
             {
-                File.Copy(n.asmdefDll, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot,
-                    n.asmdefAssetbundleName), true);
+                File.Copy(n.asmdefDllPath, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot,
+                    n.asmdefDllAssetbundleName), true);
             }
             else
             {
-                Debug.LogErrorFormat("Can't find Asmdef maping dll【{0}】", n.asmdefDll);
+                Debug.LogErrorFormat("Can't find Asmdef maping dll【{0}】", n.asmdefDllPath);
             }
-      
+            if (File.Exists(n.asmdefPdbPath))
+            {
+                File.Copy(n.asmdefPdbPath, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot,
+                    n.asmdefPdbAssetbundleName), true);
+            }
+            else
+            {
+                Debug.LogErrorFormat("Can't find Asmdef maping dll【{0}】", n.asmdefDllPath);
+            }
+
             EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodes.Count);
         }
         EditorUtility.ClearProgressBar();

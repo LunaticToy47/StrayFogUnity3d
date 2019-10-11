@@ -48,8 +48,15 @@ static class EditorQueryMenuItem
     [MenuItem(mcAssetMenu + mcLookAssetType, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcLookAssetType, false, mcPriority + 1)]
     static void EditorDevelopMenuItem_LookAssetType()
-    {         
-        Debug.Log(Selection.activeObject.GetType());        
+    {
+        if (Selection.activeObject != null)
+        {
+            Debug.Log(Selection.activeObject.GetType());
+        }
+        else
+        {
+            EditorUtility.DisplayDialog("LookAssetType", "Can't selected any object.", "OK");
+        }
     }
     #endregion
 }
