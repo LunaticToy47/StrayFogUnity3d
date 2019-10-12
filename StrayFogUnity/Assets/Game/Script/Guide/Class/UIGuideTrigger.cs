@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-    /// <summary>
-    /// 引导触发事件
-    /// </summary>
-    /// <param name="_guideTrigger">引导触发器</param>
-    /// <param name="_eventTriggerType">事件类别</param>
-    /// <param name="_eventData">事件数据</param>
-    public delegate void GuideTriggerEventHandler(UIGuideTrigger _guideTrigger, EventTriggerType _eventTriggerType, BaseEventData _eventData);
+/// <summary>
+/// 引导触发事件
+/// </summary>
+/// <param name="_guideTrigger">引导触发器</param>
+/// <param name="_eventTriggerType">事件类别</param>
+/// <param name="_eventData">事件数据</param>
+public delegate void GuideTriggerEventHandler(UIGuideTrigger _guideTrigger, EventTriggerType _eventTriggerType, BaseEventData _eventData);
 /// <summary>
 /// 引导触发
 /// </summary>

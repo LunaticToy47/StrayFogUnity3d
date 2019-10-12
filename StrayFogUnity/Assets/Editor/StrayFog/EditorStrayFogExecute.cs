@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using Microsoft.CSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1181,6 +1182,19 @@ public sealed class EditorStrayFogExecute
     }
     #endregion
 
+    #region ExecuteBuildDynamicDll 生成动态Dll
+    /// <summary>
+    /// 生成动态Dll
+    /// </summary>
+    public static void ExecuteBuildDynamicDll()
+    {
+        EditorCsFileConfigForDynamicCreateDll files = EditorStrayFogSavedAssetConfig.setCsFileConfigForDynamicCreateDll;
+        EditorDllSaveFolderConfigForDynamicCreateDll folders = EditorStrayFogSavedAssetConfig.setDllSaveFolderConfigForDynamicCreateDll;
+
+        CSharpCodeProvider cscp = new CSharpCodeProvider();
+
+    }
+    #endregion
     #endregion
 
     #region Asmdef菜单

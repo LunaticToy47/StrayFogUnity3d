@@ -38,5 +38,21 @@ static class EditorDllMenuItem
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcLookPackageDll);
     }
     #endregion
+
+    #region Dynamic Create Dll
+    const string mcDynamicCreateDll = "Dynamic Create Dll";
+    /// <summary>
+    /// 动态生成Dll
+    /// </summary>
+    [MenuItem(mcMenu + mcDynamicCreateDll, false, mcPriority + 2)]
+    [MenuItem(mcAssetMenu + mcDynamicCreateDll, false, mcPriority + 2)]
+    [MenuItem(mcHierarchy + mcDynamicCreateDll, false, mcPriority + 2)]
+    static void EditorDevelopMenuItem_DynamicCreateDllWindow()
+    {
+        EditorWindowDynamicCreateDll win =
+        EditorWindow.GetWindow<EditorWindowDynamicCreateDll>(mcDynamicCreateDll);
+        win.Show();
+    }
+    #endregion
 }
 #endif

@@ -64,5 +64,18 @@ public sealed class EditorStrayFogSavedAssetConfig
     /// </summary>
     [AliasTooltip("Setting 【XLuaMapFolder】")]
     public static EditorFolderConfigForXLuaMap setFolderConfigForXLuaMap = new EditorFolderConfigForXLuaMap();
+
+    /// <summary>
+    /// 设置CsFileConfigForDynamicCreateDll
+    /// </summary>
+    [AliasTooltip("Setting 【CsFileConfigForDynamicCreateDll】")]
+    public static EditorCsFileConfigForDynamicCreateDll setCsFileConfigForDynamicCreateDll = new EditorCsFileConfigForDynamicCreateDll();
+
+    /// <summary>
+    /// 设置DllSaveFolderConfigForDynamicCreateDll
+    /// </summary>
+    [AliasTooltip("Setting 【DllSaveFolderConfigForDynamicCreateDll】")]
+    public static EditorDllSaveFolderConfigForDynamicCreateDll setDllSaveFolderConfigForDynamicCreateDll = new EditorDllSaveFolderConfigForDynamicCreateDll();
+    
 }
 #endif
