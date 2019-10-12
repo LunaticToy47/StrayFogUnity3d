@@ -1,12 +1,12 @@
 ﻿#if UNITY_EDITOR
 using Microsoft.CSharp;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 /// <summary>
 /// 执行工具
@@ -1190,8 +1190,8 @@ public sealed class EditorStrayFogExecute
     {
         EditorCsFileConfigForDynamicCreateDll files = EditorStrayFogSavedAssetConfig.setCsFileConfigForDynamicCreateDll;
         EditorDllSaveFolderConfigForDynamicCreateDll folders = EditorStrayFogSavedAssetConfig.setDllSaveFolderConfigForDynamicCreateDll;
-
-        CSharpCodeProvider cscp = new CSharpCodeProvider();
+        
+        CodeDomProvider.CreateProvider(enEditorCodeProviderLanguage.CSharp.ToString());
 
     }
     #endregion
