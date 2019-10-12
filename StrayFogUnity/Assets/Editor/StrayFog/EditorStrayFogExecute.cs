@@ -1190,9 +1190,17 @@ public sealed class EditorStrayFogExecute
     {
         EditorCsFileConfigForDynamicCreateDll files = EditorStrayFogSavedAssetConfig.setCsFileConfigForDynamicCreateDll;
         EditorDllSaveFolderConfigForDynamicCreateDll folders = EditorStrayFogSavedAssetConfig.setDllSaveFolderConfigForDynamicCreateDll;
-        
-        CodeDomProvider.CreateProvider(enEditorCodeProviderLanguage.CSharp.ToString());
+        enEditorCodeProviderLanguage language = enEditorCodeProviderLanguage.CSharp;
 
+        CodeDomProvider provider = CodeDomProvider.CreateProvider(language.ToString());
+        if (provider != null)
+        {
+            
+        }
+        else
+        {
+            Debug.LogFormat("Can't not CreateProvider 【{0}】", language.ToString());
+        }
     }
     #endregion
     #endregion
