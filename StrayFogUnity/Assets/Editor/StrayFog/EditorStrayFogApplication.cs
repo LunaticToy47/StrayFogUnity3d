@@ -238,6 +238,18 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 
+    #region IsSubToAssets Path是否从属于Assets路径
+    /// <summary>
+    /// Path是否从属于Assets路径
+    /// </summary>
+    /// <param name="_path">路径</param>
+    /// <returns>True:是,False:否</returns>
+    public static bool IsSubToAssets(string _path)
+    {
+        return IsSubTo(_path, assetsPath);
+    }
+    #endregion
+
     #region IsSubTo Path是否从属于Root路径
     /// <summary>
     /// Path是否从属于Root路径

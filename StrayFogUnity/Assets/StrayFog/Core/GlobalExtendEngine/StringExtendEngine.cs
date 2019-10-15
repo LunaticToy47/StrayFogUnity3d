@@ -34,12 +34,12 @@ public static class StringExtendEngine
 
 
     /// <summary>
-    /// 转换路径分隔符为Popup格式
+    /// 转换路径分隔符为Window格式
     /// "/"转换成"\"
     /// </summary>
     /// <param name="_path">路径</param>
     /// <returns>转换后路径</returns>
-    public static string TransPathSeparatorCharToPopupChar(this string _path)
+    public static string TransPathSeparatorCharToWindowChar(this string _path)
     {        
         int key = _path.UniqueHashCode();
         if (!mDicTransPathSeparatorCharToPopupChar.ContainsKey(key))

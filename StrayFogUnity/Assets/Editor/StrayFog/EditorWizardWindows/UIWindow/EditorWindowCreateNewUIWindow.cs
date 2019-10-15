@@ -56,7 +56,7 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
         {
             for (int i = 0; i < mPrefabConfig.paths.Length; i++)
             {
-                mConfigIndexs.Add(mPrefabConfig.paths[i].TransPathSeparatorCharToPopupChar());
+                mConfigIndexs.Add(mPrefabConfig.paths[i].TransPathSeparatorCharToWindowChar());
             }
         }
     }
@@ -275,9 +275,11 @@ public class EditorWindowCreateNewUIWindow : AbsEditorWindow
             if (isCreate)
             {
                 _prefab.CreateAsset();
-                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(_prefab.fileName);
+                GameObject prefab = PrefabUtility.LoadPrefabContents(_prefab.fileName);
                 prefab.layer = LayerMask.NameToLayer("UI");
                 prefab.AddComponent<RectTransform>();
+                PrefabUtility.SaveAsPrefabAsset(prefab, _prefab.fileName);
+                
                 AssetDatabase.SaveAssets();
                 EditorStrayFogApplication.PingObject(prefab);
                 EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();

@@ -56,8 +56,11 @@ public class EditorWindowDynamicCreateDll : AbsEditorWindow
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Build Dynamic Dll"))
         {
-            EditorStrayFogExecute.ExecuteBuildDynamicDll();
-            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed("Build Dynamic Dll");
+            if (EditorStrayFogExecute.ExecuteBuildDynamicDll())
+            {
+                EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed("Build Dynamic Dll");
+            }            
+            EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         }
         EditorGUILayout.EndHorizontal();
     }

@@ -56,9 +56,8 @@ public void SetType(string _typeFullName)
         {
             case enFileExt.Prefab:
                 #region Prefab
-                UnityEngine.Object emptyPrefab = PrefabUtility.CreateEmptyPrefab(fileName);
                 GameObject winPrefab = new GameObject(name);
-                emptyPrefab = PrefabUtility.ReplacePrefab(winPrefab, emptyPrefab, ReplacePrefabOptions.ConnectToPrefab);
+                GameObject emptyPrefab = PrefabUtility.SaveAsPrefabAsset(winPrefab,fileName);
                 UnityEngine.Object.DestroyImmediate(winPrefab);
                 #endregion
                 break;

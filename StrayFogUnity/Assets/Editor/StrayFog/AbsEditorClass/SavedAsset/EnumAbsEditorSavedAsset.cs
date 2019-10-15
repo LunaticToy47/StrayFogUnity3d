@@ -15,4 +15,21 @@ public enum enEditorSavedAssetClassify
     [AliasTooltip("文件")]
     File,
 }
+
+/// <summary>
+/// 可保存资源模式
+/// </summary>
+public enum enEditorSavedAssetPattern
+{
+    /// <summary>
+    /// 只保存Assets内
+    /// </summary>
+    [AliasTooltip("只保存Assets内")]
+    OnlyInAssets,
+    /// <summary>
+    /// 只保存Assets外
+    /// </summary>
+    [AliasTooltip("只保存Assets外")]
+    OnlyOutAssets,
+}
 #endif

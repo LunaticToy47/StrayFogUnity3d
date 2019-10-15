@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EditorDllSaveFolderConfigForDynamicCreateDll
   m_EditorClassIdentifier: 
   paths:
-  - Assets/Game/Editor/CSFileForDynamicDll
+  - E:/StrayFogUnity3d/StrayFogUnity/CSFileForDynamicDll
   invoke: 

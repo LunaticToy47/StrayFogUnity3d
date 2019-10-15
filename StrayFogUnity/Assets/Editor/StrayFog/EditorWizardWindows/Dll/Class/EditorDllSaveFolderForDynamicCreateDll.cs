@@ -17,6 +17,11 @@ public class EditorDllSaveFolderForDynamicCreateDll : AbsEditorSavedAsset
     }
 
     /// <summary>
+    /// 可保存资源模式
+    /// </summary>
+    public override enEditorSavedAssetPattern pattern => enEditorSavedAssetPattern.OnlyOutAssets;
+
+    /// <summary>
     /// 绘制GUI描述
     /// </summary>
     protected override string drawGUIDesc

@@ -1,5 +1,4 @@
 ﻿#if UNITY_EDITOR
-using Microsoft.CSharp;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -1184,23 +1183,90 @@ public sealed class EditorStrayFogExecute
 
     #region ExecuteBuildDynamicDll 生成动态Dll
     /// <summary>
+    /// 动态Dll名称
+    /// </summary>
+    const string mDynamicDllName = "StrayFogDynamic";
+    /// <summary>
+    /// 获得动态Dll文件名称
+    /// </summary>
+    /// <returns>Dll文件名称</returns>
+    static string OnGetDynamicDllFileName()
+    {
+        return mDynamicDllName + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext;
+    }
+    /// <summary>
     /// 生成动态Dll
     /// </summary>
-    public static void ExecuteBuildDynamicDll()
+    /// <returns>是否成功</returns>
+    public static bool ExecuteBuildDynamicDll()
     {
-        EditorCsFileConfigForDynamicCreateDll files = EditorStrayFogSavedAssetConfig.setCsFileConfigForDynamicCreateDll;
-        EditorDllSaveFolderConfigForDynamicCreateDll folders = EditorStrayFogSavedAssetConfig.setDllSaveFolderConfigForDynamicCreateDll;
+        bool isSuccess = false;
+        
+        EditorCsFileConfigForDynamicCreateDll file = EditorStrayFogSavedAssetConfig.setCsFileConfigForDynamicCreateDll;
+        EditorDllSaveFolderConfigForDynamicCreateDll folder = EditorStrayFogSavedAssetConfig.setDllSaveFolderConfigForDynamicCreateDll;
         enEditorCodeProviderLanguage language = enEditorCodeProviderLanguage.CSharp;
 
         CodeDomProvider provider = CodeDomProvider.CreateProvider(language.ToString());
         if (provider != null)
         {
+            isSuccess = true;
+            StringBuilder sbLog = new StringBuilder();
+            CompilerParameters compilerParams = new CompilerParameters();
+            compilerParams.GenerateExecutable = false;
+            compilerParams.GenerateInMemory = false;            
+
+            List<string> srcFiles = new List<string>();
+            List<MonoScript> srcMonoScripts = new List<MonoScript>();
+            foreach (string f in file.paths)
+            {
+                srcFiles.Add(f.TransPathSeparatorCharToWindowChar());
+                srcMonoScripts.Add((MonoScript)AssetDatabase.LoadMainAssetAtPath(f));
+            }
+
+            foreach (MonoScript m in srcMonoScripts)
+            {
+                AssemblyName[] ans = m.GetClass().Assembly.GetReferencedAssemblies();
+                if (ans != null)
+                {
+                    foreach (AssemblyName n in ans)
+                    {
+                        string location = Assembly.Load(n.Name).Location;
+                        if (!compilerParams.ReferencedAssemblies.Contains(location))
+                        {
+                            compilerParams.ReferencedAssemblies.Add(location);
+                        }                        
+                    }
+                }                
+            }
+
+            float progress = 0;
+            string log = string.Empty;
             
+            for (int i = 0; i < folder.paths.Length; i++)
+            {
+                compilerParams.OutputAssembly = Path.GetFullPath(Path.Combine(folder.paths[i], OnGetDynamicDllFileName()).TransPathSeparatorCharToWindowChar());                
+                CompilerResults result = provider.CompileAssemblyFromFile(compilerParams, srcFiles.ToArray());
+                isSuccess &= !result.Errors.HasErrors;
+                if (result.Errors.HasErrors)
+                {
+                    for (int e = 0; e < result.Errors.Count; e++)
+                    {
+                        Debug.LogError(result.Errors[e].JsonSerialize());
+                    }
+                }
+                progress = (i + 1) / (float)folder.paths.Length;
+                log = string.Format("Builder Dll to =>{0}", compilerParams.OutputAssembly);
+                sbLog.AppendLine(log);
+                EditorUtility.DisplayProgressBar("Build Dynamic Dll", log, progress);
+            }
+            EditorUtility.ClearProgressBar();
+            Debug.Log(sbLog.ToString());
         }
         else
         {
             Debug.LogFormat("Can't not CreateProvider 【{0}】", language.ToString());
         }
+        return isSuccess;
     }
     #endregion
     #endregion

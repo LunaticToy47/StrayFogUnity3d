@@ -12,6 +12,10 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
     /// 可保存资源分类
     /// </summary>
     public abstract enEditorSavedAssetClassify classify { get; }
+    /// <summary>
+    /// 可保存资源模式
+    /// </summary>
+    public virtual enEditorSavedAssetPattern pattern { get { return enEditorSavedAssetPattern.OnlyInAssets; } }
 
     /// <summary>
     /// 绘制GUI描述
@@ -104,10 +108,29 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
                     path = EditorUtility.OpenFolderPanel("Add " + classify.ToString(), EditorStrayFogApplication.assetsPath, "");
                     break;
             }
-            
-            if (EditorStrayFogApplication.IsSubToProject(path))
+            bool isLegalPath = false;
+            string errTip = string.Empty;
+
+            #region 判定路径是否合法
+            switch (pattern)
             {
-                path = EditorStrayFogApplication.GetRelativeToProject(path);
+                case enEditorSavedAssetPattern.OnlyInAssets:
+                    isLegalPath = EditorStrayFogApplication.IsSubToAssets(path);
+                    if (isLegalPath)
+                    {
+                        path = EditorStrayFogApplication.GetRelativeToProject(path);
+                    }
+                    errTip = "in";
+                    break;
+                case enEditorSavedAssetPattern.OnlyOutAssets:
+                    isLegalPath = !EditorStrayFogApplication.IsSubToAssets(path);
+                    errTip = "out";
+                    break;
+            }
+            #endregion
+
+            if (isLegalPath)
+            {
                 if (string.IsNullOrEmpty(error))
                 {
                     if (!mTempPaths.Contains(path))
@@ -123,7 +146,7 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
             }
             else
             {
-                EditorUtility.DisplayDialog(classify.ToString(), classify.ToString() + " must be in 【" + EditorStrayFogApplication.assetsPath + "】", "OK");
+                EditorUtility.DisplayDialog(classify.ToString(), classify.ToString() + " must be "+ errTip + " 【" + EditorStrayFogApplication.assetsPath + "】", "OK");
             }
         }
         #endregion
