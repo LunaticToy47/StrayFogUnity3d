@@ -13,11 +13,17 @@ public class EditorXlsTableColumnSchema
     [ReadOnly]
     public string columnName;
     /// <summary>
-    /// XLS表列索引
+    /// 列描述
     /// </summary>
-    [AliasTooltip("XLS表列索引")]
+    [AliasTooltip("列描述")]
     [ReadOnly]
-    public int xlsColumnIndex;    
+    public string desc;
+    /// <summary>
+    /// XLS表列值索引
+    /// </summary>
+    [AliasTooltip("XLS表列值索引")]
+    [ReadOnly]
+    public int xlsColumnValueIndex;    
     /// <summary>
     /// 是否是主键
     /// </summary>
@@ -39,13 +45,7 @@ public class EditorXlsTableColumnSchema
     /// </summary>
     [AliasTooltip("SQLite列值")]
     [ReadOnly]
-    public string sqliteColumnValue;
-    /// <summary>
-    /// 列描述
-    /// </summary>
-    [AliasTooltip("列描述")]
-    [ReadOnly]
-    public string desc;        
+    public string sqliteColumnValue;       
     /// <summary>
     /// 列类型
     /// </summary>
@@ -68,6 +68,6 @@ public class EditorXlsTableColumnSchema
     /// <summary>
     /// 数据为参数名称
     /// </summary>
-    public string sqliteParameterName { get { return string.Format("@{0}{1}", columnName, xlsColumnIndex); } }
+    public string sqliteParameterName { get { return string.Format("@{0}{1}", columnName, xlsColumnValueIndex); } }
     #endregion
 }

@@ -21,32 +21,32 @@ MonoBehaviour:
   canModifyData: 0
   columns:
   - columnName: folderId
-    xlsColumnIndex: 1
+    desc: "\u6587\u4EF6\u5939Id"
+    xlsColumnValueIndex: 1
     isPK: 1
     isNull: 0
     sqliteColumnName: folderId
     sqliteColumnValue: 
-    desc: "\u6587\u4EF6\u5939Id"
     dataType: 6
     arrayDimension: 0
     isIngore: 0
   - columnName: inSide
-    xlsColumnIndex: 2
+    desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
+    xlsColumnValueIndex: 2
     isPK: 0
     isNull: 0
     sqliteColumnName: inSide
     sqliteColumnValue: 
-    desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
     dataType: 14
     arrayDimension: 0
     isIngore: 0
   - columnName: outSide
-    xlsColumnIndex: 3
+    desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
+    xlsColumnValueIndex: 3
     isPK: 0
     isNull: 0
     sqliteColumnName: outSide
     sqliteColumnValue: 
-    desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
     dataType: 14
     arrayDimension: 0
     isIngore: 0

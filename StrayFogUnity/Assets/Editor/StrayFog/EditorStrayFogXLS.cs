@@ -294,7 +294,7 @@ public sealed class EditorStrayFogXLS
                         {
                             tempColumn = new EditorXlsTableColumnSchema();
                         }
-                        tempColumn.xlsColumnIndex = i;
+                        tempColumn.xlsColumnValueIndex = i;
                         tempColumn.columnName = sheet.GetValue<string>(msrColumnNameRowIndex, i).ToString();
                         tempColumn.sqliteColumnName = tempColumn.columnName;
                         tempColumn.desc = sheet.GetValue<string>(msrColumnDescriptionRowIndex, i).ToString();
@@ -764,7 +764,7 @@ public sealed class EditorStrayFogXLS
                     .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                     .Replace("#DataType#", c.dataType.ToString())
                     .Replace("#ArrayDimension#", c.arrayDimension.ToString())
-                    .Replace("#XlsColumnIndex#", c.xlsColumnIndex.ToString())
+                    .Replace("#XlsColumnValueIndex#", c.xlsColumnValueIndex.ToString())
                     .Replace("#SqliteColumnName#", c.sqliteColumnName)
                     .Replace("#SqliteColumnValue#", c.sqliteColumnValue)
                     .Replace("#SqliteParameterName#", c.sqliteParameterName)
@@ -902,7 +902,7 @@ public sealed class EditorStrayFogXLS
                         for (int i = msrColumnDataRowStartIndex; i <= sheet.Dimension.Rows; i++)
                         {
                             tempColumn = new EditorXlsTableColumnSchema();
-                            tempColumn.xlsColumnIndex = i;
+                            tempColumn.xlsColumnValueIndex = i;
                             tempColumn.columnName = sheet.GetValue<string>(i, msrDeterminantColumnNameColumnIndex).ToString();
                             tempColumn.sqliteColumnName = sheet.GetValue<string>(msrColumnNameRowIndex, msrDeterminantColumnNameColumnIndex).ToString();
                             tempColumn.sqliteColumnValue = sheet.GetValue<string>(msrColumnNameRowIndex, msrDeterminantColumnDataColumnIndex).ToString();

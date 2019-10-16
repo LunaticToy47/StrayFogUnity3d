@@ -21,32 +21,32 @@ MonoBehaviour:
   canModifyData: 0
   columns:
   - columnName: id
-    xlsColumnIndex: 1
+    desc: "\u8DEF\u5F84ID"
+    xlsColumnValueIndex: 1
     isPK: 1
     isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 
-    desc: "\u8DEF\u5F84ID"
     dataType: 6
     arrayDimension: 0
     isIngore: 0
   - columnName: xLuaFileId
-    xlsColumnIndex: 2
+    desc: "xLua\u6587\u4EF6id"
+    xlsColumnValueIndex: 2
     isPK: 0
     isNull: 0
     sqliteColumnName: xLuaFileId
     sqliteColumnValue: 
-    desc: "xLua\u6587\u4EF6id"
     dataType: 6
     arrayDimension: 0
     isIngore: 0
   - columnName: xLuaFolderId
-    xlsColumnIndex: 3
+    desc: "xLua\u6587\u4EF6\u5939id"
+    xlsColumnValueIndex: 3
     isPK: 0
     isNull: 0
     sqliteColumnName: xLuaFolderId
     sqliteColumnValue: 
-    desc: "xLua\u6587\u4EF6\u5939id"
     dataType: 6
     arrayDimension: 0
     isIngore: 0

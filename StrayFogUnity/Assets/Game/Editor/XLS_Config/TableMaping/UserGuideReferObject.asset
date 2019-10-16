@@ -21,72 +21,72 @@ MonoBehaviour:
   canModifyData: 0
   columns:
   - columnName: id
-    xlsColumnIndex: 1
+    desc: "\u53C2\u8003\u5BF9\u8C61Id"
+    xlsColumnValueIndex: 1
     isPK: 0
     isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 
-    desc: "\u53C2\u8003\u5BF9\u8C61Id"
     dataType: 6
     arrayDimension: 0
     isIngore: 0
   - columnName: refer2DType
-    xlsColumnIndex: 2
+    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30112D\u53C2\u8003\u7C7B\u578B\n0\uFF1A\u65E0\u53C2\u8003\u5BF9\u8C61\n1\uFF1AUI\u7A97\u53E3\n2\uFF1AUI\u7A97\u53E3\u63A7\u4EF6\n3\uFF1AUI\u7A97\u53E3\u52A8\u6001\u751F\u6210\u63A7\u4EF6\n\n"
+    xlsColumnValueIndex: 2
     isPK: 0
     isNull: 0
     sqliteColumnName: refer2DType
     sqliteColumnValue: 
-    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30112D\u53C2\u8003\u7C7B\u578B\n0\uFF1A\u65E0\u53C2\u8003\u5BF9\u8C61\n1\uFF1AUI\u7A97\u53E3\n2\uFF1AUI\u7A97\u53E3\u63A7\u4EF6\n3\uFF1AUI\u7A97\u53E3\u52A8\u6001\u751F\u6210\u63A7\u4EF6\n\n"
     dataType: 6
     arrayDimension: 0
     isIngore: 0
   - columnName: refer2DValue
-    xlsColumnIndex: 3
+    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30112D\u53C2\u8003\u503C\n0\uFF1A\u4E0D\u586B\n1\uFF1A\u3010\u7A97\u53E3\u540D\u79F0|\u906E\u7F69\u63A7\u4EF6\u540D\u79F0\u3011\n2\uFF1A\u3010\u7A97\u53E3\u540D\u79F0|\u63A7\u4EF6\u540D\u79F0|\u76F8\u5BF9\u4E8E\u63A7\u4EF6\u5B50\u8282\u70B9Graphic\u906E\u7F69\u540D\u79F0\u3011\n3\uFF1A\u3010\u7A97\u53E3\u540D\u79F0|\u52A8\u6001\u63A7\u4EF6\u7236\u8282\u70B9\u540D\u79F0|\u52A8\u6001\u63A7\u4EF6\u6A21\u677F\u540D\u79F0|\u76F8\u5BF9\u4E8E\u52A8\u6001\u63A7\u4EF6\u6A21\u677F\u5B50\u8282\u70B9Graphic\u906E\u7F69\u540D\u79F0\u3011\n"
+    xlsColumnValueIndex: 3
     isPK: 0
     isNull: 0
     sqliteColumnName: refer2DValue
     sqliteColumnValue: 
-    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30112D\u53C2\u8003\u503C\n0\uFF1A\u4E0D\u586B\n1\uFF1A\u3010\u7A97\u53E3\u540D\u79F0|\u906E\u7F69\u63A7\u4EF6\u540D\u79F0\u3011\n2\uFF1A\u3010\u7A97\u53E3\u540D\u79F0|\u63A7\u4EF6\u540D\u79F0|\u76F8\u5BF9\u4E8E\u63A7\u4EF6\u5B50\u8282\u70B9Graphic\u906E\u7F69\u540D\u79F0\u3011\n3\uFF1A\u3010\u7A97\u53E3\u540D\u79F0|\u52A8\u6001\u63A7\u4EF6\u7236\u8282\u70B9\u540D\u79F0|\u52A8\u6001\u63A7\u4EF6\u6A21\u677F\u540D\u79F0|\u76F8\u5BF9\u4E8E\u52A8\u6001\u63A7\u4EF6\u6A21\u677F\u5B50\u8282\u70B9Graphic\u906E\u7F69\u540D\u79F0\u3011\n"
     dataType: 14
     arrayDimension: 0
     isIngore: 0
   - columnName: refer2DSearchCondition
-    xlsColumnIndex: 4
+    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30112D\u52A8\u6001\u7EC4\u4EF6\u641C\u7D22\u6761\u4EF6\n0\uFF1A\u7D22\u5F15\n1\uFF1A\u7269\u54C1\n2\uFF1A\u88C5\u5907"
+    xlsColumnValueIndex: 4
     isPK: 0
     isNull: 0
     sqliteColumnName: refer2DSearchCondition
     sqliteColumnValue: 
-    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30112D\u52A8\u6001\u7EC4\u4EF6\u641C\u7D22\u6761\u4EF6\n0\uFF1A\u7D22\u5F15\n1\uFF1A\u7269\u54C1\n2\uFF1A\u88C5\u5907"
     dataType: 6
     arrayDimension: 0
     isIngore: 0
   - columnName: refer2DSearchConditionValue
-    xlsColumnIndex: 5
+    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30112D\u52A8\u6001\u7EC4\u4EF6\u641C\u7D22\u503C\n0\uFF1A\u7D22\u5F15\u503C\n1\uFF1A\u7269\u54C1\u914D\u7F6EID\n2\uFF1A\u88C5\u5907\u914D\u7F6EID"
+    xlsColumnValueIndex: 5
     isPK: 0
     isNull: 0
     sqliteColumnName: refer2DSearchConditionValue
     sqliteColumnValue: 
-    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30112D\u52A8\u6001\u7EC4\u4EF6\u641C\u7D22\u503C\n0\uFF1A\u7D22\u5F15\u503C\n1\uFF1A\u7269\u54C1\u914D\u7F6EID\n2\uFF1A\u88C5\u5907\u914D\u7F6EID"
     dataType: 14
     arrayDimension: 0
     isIngore: 0
   - columnName: refer3DType
-    xlsColumnIndex: 6
+    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30113D\u53C2\u8003\u7C7B\u578B\n0\uFF1A\u65E0\u53C2\u8003\u5BF9\u8C61\n1\uFF1APlayer\u73A9\u5BB6\n2\uFF1ANPC\n3\uFF1AMonster\n4\uFF1ABoss\n5\uFF1AItem\u7269\u54C1\n6\uFF1A\u5750\u6807\n\n"
+    xlsColumnValueIndex: 6
     isPK: 0
     isNull: 0
     sqliteColumnName: refer3DType
     sqliteColumnValue: 
-    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u30113D\u53C2\u8003\u7C7B\u578B\n0\uFF1A\u65E0\u53C2\u8003\u5BF9\u8C61\n1\uFF1APlayer\u73A9\u5BB6\n2\uFF1ANPC\n3\uFF1AMonster\n4\uFF1ABoss\n5\uFF1AItem\u7269\u54C1\n6\uFF1A\u5750\u6807\n\n"
     dataType: 6
     arrayDimension: 0
     isIngore: 0
   - columnName: refer3DValue
-    xlsColumnIndex: 7
+    desc: "\u3010\u9A8C\u8BC1\u6761\u4EF6\u30113D\u53C2\u8003\u503C\n0\uFF1A\u4E0D\u586B\n1\uFF1A\u6682\u65F6\u4E0D\u586B\n2\uFF1ANPC\u914D\u7F6EId\n3\uFF1AMonster\u914D\u7F6EId\n4\uFF1ABoss\u914D\u7F6EId\n5\uFF1AItem\u7269\u54C1\u914D\u7F6EId\n6\uFF1A\u5750\u6807(x,y,z)"
+    xlsColumnValueIndex: 7
     isPK: 0
     isNull: 0
     sqliteColumnName: refer3DValue
     sqliteColumnValue: 
-    desc: "\u3010\u9A8C\u8BC1\u6761\u4EF6\u30113D\u53C2\u8003\u503C\n0\uFF1A\u4E0D\u586B\n1\uFF1A\u6682\u65F6\u4E0D\u586B\n2\uFF1ANPC\u914D\u7F6EId\n3\uFF1AMonster\u914D\u7F6EId\n4\uFF1ABoss\u914D\u7F6EId\n5\uFF1AItem\u7269\u54C1\u914D\u7F6EId\n6\uFF1A\u5750\u6807(x,y,z)"
     dataType: 14
     arrayDimension: 0
     isIngore: 0

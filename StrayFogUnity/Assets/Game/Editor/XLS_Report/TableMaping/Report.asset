@@ -21,22 +21,22 @@ MonoBehaviour:
   canModifyData: 1
   columns:
   - columnName: idCol
-    xlsColumnIndex: 1
+    desc: "id\u4E3B\u952E"
+    xlsColumnValueIndex: 1
     isPK: 1
     isNull: 0
     sqliteColumnName: idCol
     sqliteColumnValue: 
-    desc: "id\u4E3B\u952E"
     dataType: 6
     arrayDimension: 0
     isIngore: 0
   - columnName: stringCol
-    xlsColumnIndex: 2
+    desc: "\u5B57\u7B26\u4E32"
+    xlsColumnValueIndex: 2
     isPK: 0
     isNull: 0
     sqliteColumnName: stringCol
     sqliteColumnValue: 
-    desc: "\u5B57\u7B26\u4E32"
     dataType: 14
     arrayDimension: 0
     isIngore: 0

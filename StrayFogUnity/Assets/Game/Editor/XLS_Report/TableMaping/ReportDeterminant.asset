@@ -21,22 +21,22 @@ MonoBehaviour:
   canModifyData: 1
   columns:
   - columnName: ReportTip
-    xlsColumnIndex: 4
+    desc: "\u62A5\u8868\u63D0\u793A"
+    xlsColumnValueIndex: 4
     isPK: 0
     isNull: 0
     sqliteColumnName: name
     sqliteColumnValue: value
-    desc: "\u62A5\u8868\u63D0\u793A"
     dataType: 14
     arrayDimension: 0
     isIngore: 0
   - columnName: DeterminantTip
-    xlsColumnIndex: 5
+    desc: "\u884C\u5217\u5F0F\u63D0\u793A"
+    xlsColumnValueIndex: 5
     isPK: 0
     isNull: 0
     sqliteColumnName: name
     sqliteColumnValue: value
-    desc: "\u884C\u5217\u5F0F\u63D0\u793A"
     dataType: 14
     arrayDimension: 0
     isIngore: 0
