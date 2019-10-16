@@ -20,21 +20,23 @@ MonoBehaviour:
   isDeterminant: 0
   canModifyData: 1
   columns:
-  - xlsColumnIndex: 1
-    columnName: idCol
+  - columnName: idCol
+    xlsColumnIndex: 1
+    isPK: 1
+    isNull: 0
     sqliteColumnName: idCol
     sqliteColumnValue: 
     desc: "id\u4E3B\u952E"
-    isPK: 1
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 2
-    columnName: stringCol
+    isIngore: 0
+  - columnName: stringCol
+    xlsColumnIndex: 2
+    isPK: 0
+    isNull: 0
     sqliteColumnName: stringCol
     sqliteColumnValue: 
     desc: "\u5B57\u7B26\u4E32"
-    isPK: 0
-    isNull: 0
     dataType: 14
     arrayDimension: 0
+    isIngore: 0

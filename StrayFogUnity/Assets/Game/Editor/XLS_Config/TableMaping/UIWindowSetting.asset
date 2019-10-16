@@ -20,129 +20,143 @@ MonoBehaviour:
   isDeterminant: 0
   canModifyData: 0
   columns:
-  - xlsColumnIndex: 1
-    columnName: id
+  - columnName: id
+    xlsColumnIndex: 1
+    isPK: 1
+    isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 
     desc: "\u7A97\u53E3id"
-    isPK: 1
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 2
-    columnName: name
+    isIngore: 0
+  - columnName: name
+    xlsColumnIndex: 2
+    isPK: 0
+    isNull: 0
     sqliteColumnName: name
     sqliteColumnValue: 
     desc: "\u7A97\u53E3\u540D\u79F0"
-    isPK: 0
-    isNull: 0
     dataType: 14
     arrayDimension: 0
-  - xlsColumnIndex: 3
-    columnName: fileId
+    isIngore: 0
+  - columnName: fileId
+    xlsColumnIndex: 3
+    isPK: 0
+    isNull: 0
     sqliteColumnName: fileId
     sqliteColumnValue: 
     desc: "\u6587\u4EF6id"
-    isPK: 0
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 4
-    columnName: folderId
+    isIngore: 0
+  - columnName: folderId
+    xlsColumnIndex: 4
+    isPK: 0
+    isNull: 0
     sqliteColumnName: folderId
     sqliteColumnValue: 
     desc: "\u6587\u4EF6\u5939id"
-    isPK: 0
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 5
-    columnName: renderMode
+    isIngore: 0
+  - columnName: renderMode
+    xlsColumnIndex: 5
+    isPK: 0
+    isNull: 0
     sqliteColumnName: renderMode
     sqliteColumnValue: 
     desc: "\u753B\u5E03\u7ED8\u5236\u6A21\u5F0F"
-    isPK: 0
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 6
-    columnName: layer
+    isIngore: 0
+  - columnName: layer
+    xlsColumnIndex: 6
+    isPK: 0
+    isNull: 0
     sqliteColumnName: layer
     sqliteColumnValue: 
     desc: "\u7A97\u53E3Layer"
-    isPK: 0
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 7
-    columnName: openMode
+    isIngore: 0
+  - columnName: openMode
+    xlsColumnIndex: 7
+    isPK: 0
+    isNull: 0
     sqliteColumnName: openMode
     sqliteColumnValue: 
     desc: "\u7A97\u53E3\u6253\u5F00\u6A21\u5F0F"
-    isPK: 0
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 8
-    columnName: closeMode
+    isIngore: 0
+  - columnName: closeMode
+    xlsColumnIndex: 8
+    isPK: 0
+    isNull: 0
     sqliteColumnName: closeMode
     sqliteColumnValue: 
     desc: "\u7A97\u53E3\u5173\u95ED\u6A21\u5F0F"
-    isPK: 0
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 9
-    columnName: isIgnoreOpenCloseMode
+    isIngore: 0
+  - columnName: isIgnoreOpenCloseMode
+    xlsColumnIndex: 9
+    isPK: 0
+    isNull: 0
     sqliteColumnName: isIgnoreOpenCloseMode
     sqliteColumnValue: 
     desc: "\u662F\u5426\u5FFD\u7565\u6253\u5F00\u5173\u95ED\u6A21\u5F0F"
-    isPK: 0
-    isNull: 0
     dataType: 0
     arrayDimension: 0
-  - xlsColumnIndex: 10
-    columnName: isAutoRestoreSequenceWindow
+    isIngore: 0
+  - columnName: isAutoRestoreSequenceWindow
+    xlsColumnIndex: 10
+    isPK: 0
+    isNull: 0
     sqliteColumnName: isAutoRestoreSequenceWindow
     sqliteColumnValue: 
     desc: "\u662F\u5426\u662F\u81EA\u52A8\u6062\u590D\u5E8F\u5217\u7A97\u53E3"
-    isPK: 0
-    isNull: 0
     dataType: 0
     arrayDimension: 0
-  - xlsColumnIndex: 11
-    columnName: isDonotDestroyInstance
+    isIngore: 0
+  - columnName: isDonotDestroyInstance
+    xlsColumnIndex: 11
+    isPK: 0
+    isNull: 0
     sqliteColumnName: isDonotDestroyInstance
     sqliteColumnValue: 
     desc: "\u662F\u5426\u662F\u4E0D\u53EF\u9500\u6BC1\u5B9E\u4F8B"
-    isPK: 0
-    isNull: 0
     dataType: 0
     arrayDimension: 0
-  - xlsColumnIndex: 12
-    columnName: isImmediateDisplay
+    isIngore: 0
+  - columnName: isImmediateDisplay
+    xlsColumnIndex: 12
+    isPK: 0
+    isNull: 0
     sqliteColumnName: isImmediateDisplay
     sqliteColumnValue: 
     desc: "\u662F\u5426\u7ACB\u5373\u663E\u793A"
-    isPK: 0
-    isNull: 0
     dataType: 0
     arrayDimension: 0
-  - xlsColumnIndex: 13
-    columnName: isManualCloseWhenGotoScene
+    isIngore: 0
+  - columnName: isManualCloseWhenGotoScene
+    xlsColumnIndex: 13
+    isPK: 0
+    isNull: 0
     sqliteColumnName: isManualCloseWhenGotoScene
     sqliteColumnValue: 
     desc: "\u8DF3\u8F6C\u573A\u666F\u65F6\u662F\u5426\u624B\u52A8\u5173\u95ED"
-    isPK: 0
-    isNull: 0
     dataType: 0
     arrayDimension: 0
-  - xlsColumnIndex: 14
-    columnName: isGuideWindow
+    isIngore: 0
+  - columnName: isGuideWindow
+    xlsColumnIndex: 14
+    isPK: 0
+    isNull: 0
     sqliteColumnName: isGuideWindow
     sqliteColumnValue: 
     desc: "\u662F\u5426\u662F\u5F15\u5BFC\u7A97\u53E3"
-    isPK: 0
-    isNull: 0
     dataType: 0
     arrayDimension: 0
+    isIngore: 0

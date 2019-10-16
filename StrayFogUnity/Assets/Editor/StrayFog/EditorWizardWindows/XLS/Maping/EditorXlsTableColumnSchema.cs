@@ -7,37 +7,17 @@ using UnityEngine;
 public class EditorXlsTableColumnSchema
 {
     /// <summary>
-    /// XLS表列索引
-    /// </summary>
-    [AliasTooltip("XLS表列索引")]
-    [ReadOnly]
-    public int xlsColumnIndex;
-    /// <summary>
     /// 列名称
     /// </summary>
     [AliasTooltip("列名称")]
     [ReadOnly]
     public string columnName;
     /// <summary>
-    /// SQLite列名称
+    /// XLS表列索引
     /// </summary>
-    [AliasTooltip("SQLite列名称")]
+    [AliasTooltip("XLS表列索引")]
     [ReadOnly]
-    [HideInInspector]
-    public string sqliteColumnName;
-    /// <summary>
-    /// SQLite列值
-    /// </summary>
-    [AliasTooltip("SQLite列值")]
-    [ReadOnly]
-    [HideInInspector]
-    public string sqliteColumnValue;
-    /// <summary>
-    /// 列描述
-    /// </summary>
-    [AliasTooltip("列描述")]
-    [ReadOnly]
-    public string desc;
+    public int xlsColumnIndex;    
     /// <summary>
     /// 是否是主键
     /// </summary>
@@ -49,6 +29,24 @@ public class EditorXlsTableColumnSchema
     [AliasTooltip("是否允许为空")]
     public bool isNull;
     /// <summary>
+    /// SQLite列名称
+    /// </summary>
+    [AliasTooltip("SQLite列名称")]
+    [ReadOnly]
+    public string sqliteColumnName;
+    /// <summary>
+    /// SQLite列值
+    /// </summary>
+    [AliasTooltip("SQLite列值")]
+    [ReadOnly]
+    public string sqliteColumnValue;
+    /// <summary>
+    /// 列描述
+    /// </summary>
+    [AliasTooltip("列描述")]
+    [ReadOnly]
+    public string desc;        
+    /// <summary>
     /// 列类型
     /// </summary>
     [AliasTooltip("列类型")]
@@ -59,7 +57,12 @@ public class EditorXlsTableColumnSchema
     /// </summary>
     [AliasTooltip("数组维度")]
     [ReadOnly]
-    public enSQLiteDataTypeArrayDimension arrayDimension;    
+    public enSQLiteDataTypeArrayDimension arrayDimension;
+    /// <summary>
+    /// 是否忽略此列
+    /// </summary>
+    [AliasTooltip("是否忽略此列")]
+    public bool isIngore;
 
     #region sqliteParameterName 数据为参数名称
     /// <summary>

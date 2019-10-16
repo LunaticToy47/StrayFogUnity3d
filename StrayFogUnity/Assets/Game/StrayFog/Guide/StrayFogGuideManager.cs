@@ -54,11 +54,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 触发配置映射
     /// </summary>
-    Dictionary<int, XLS_Config_Table_UserGuideTrigger> mTriggerConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideTrigger>();
-    /// <summary>
-    /// 验证配置映射
-    /// </summary>
-    Dictionary<int, XLS_Config_Table_UserGuideValidate> mValidateConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideValidate>();
+    Dictionary<int, XLS_Config_Table_UserGuideConfig> mGuideConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideConfig>();
     /// <summary>
     /// 等待触发引导
     /// </summary>
@@ -89,30 +85,18 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
         #endregion
 
         #region 初始化引导数据
-        List<XLS_Config_Table_UserGuideTrigger> triggers = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideTrigger>();
+        List<XLS_Config_Table_UserGuideConfig> triggers = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideConfig>();
         if (triggers != null && triggers.Count > 0)
         {
-            foreach (XLS_Config_Table_UserGuideTrigger t in triggers)
+            foreach (XLS_Config_Table_UserGuideConfig t in triggers)
             {
-                if (!mTriggerConfigMaping.ContainsKey(t.id))
+                if (!mGuideConfigMaping.ContainsKey(t.id))
                 {
-                    mTriggerConfigMaping.Add(t.id, t);
+                    mGuideConfigMaping.Add(t.id, t);
                 }
                 if (!mWaitTriggerGuides.Contains(t.id))
                 {
                     mWaitTriggerGuides.Add(t.id);
-                }
-            }
-        }
-
-        List<XLS_Config_Table_UserGuideValidate> validates = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideValidate>();
-        if (validates != null && validates.Count > 0)
-        {
-            foreach (XLS_Config_Table_UserGuideValidate t in validates)
-            {
-                if (!mValidateConfigMaping.ContainsKey(t.id))
-                {
-                    mValidateConfigMaping.Add(t.id, t);
                 }
             }
         }
@@ -172,7 +156,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 当前运行的引导
     /// </summary>
-    XLS_Config_Table_UserGuideTrigger mRunningUserGuideTrigger = null;
+    XLS_Config_Table_UserGuideConfig mRunningUserGuideTrigger = null;
     /// <summary>
     /// 是否需要触发检测
     /// </summary>

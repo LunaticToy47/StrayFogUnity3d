@@ -633,10 +633,10 @@ public sealed class EditorStrayFogXLS
         List<string> tempSameColumnNames = new List<string>();
         foreach (EditorXlsTableSchema t in _tables)
         {
-            progress++;
-            OnResolveTableSchema(t);
+            progress++;            
             if (t.isDeterminant)
             {
+                OnResolveDeterminantTableSchema(t);
                 tempSameColumnNames.Clear();
                 foreach (EditorXlsTableColumnSchema c in t.columns)
                 {
@@ -881,10 +881,10 @@ public sealed class EditorStrayFogXLS
     }
 
     /// <summary>
-    /// 解析表
+    /// 解析行列式表架构
     /// </summary>
     /// <param name="_table">表</param>
-    static EditorXlsTableSchema OnResolveTableSchema(EditorXlsTableSchema _table)
+    static EditorXlsTableSchema OnResolveDeterminantTableSchema(EditorXlsTableSchema _table)
     {
         if (_table.isDeterminant)
         {

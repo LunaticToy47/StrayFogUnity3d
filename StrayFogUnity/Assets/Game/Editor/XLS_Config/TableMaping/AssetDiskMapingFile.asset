@@ -20,57 +20,63 @@ MonoBehaviour:
   isDeterminant: 0
   canModifyData: 0
   columns:
-  - xlsColumnIndex: 1
-    columnName: fileId
+  - columnName: fileId
+    xlsColumnIndex: 1
+    isPK: 1
+    isNull: 0
     sqliteColumnName: fileId
     sqliteColumnValue: 
     desc: "\u6587\u4EF6id"
-    isPK: 1
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 2
-    columnName: folderId
+    isIngore: 0
+  - columnName: folderId
+    xlsColumnIndex: 2
+    isPK: 1
+    isNull: 0
     sqliteColumnName: folderId
     sqliteColumnValue: 
     desc: "\u6587\u4EF6\u5939id"
-    isPK: 1
-    isNull: 0
     dataType: 6
     arrayDimension: 0
-  - xlsColumnIndex: 3
-    columnName: inSide
+    isIngore: 0
+  - columnName: inSide
+    xlsColumnIndex: 3
+    isPK: 0
+    isNull: 0
     sqliteColumnName: inSide
     sqliteColumnValue: 
     desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
-    isPK: 0
-    isNull: 0
     dataType: 14
     arrayDimension: 0
-  - xlsColumnIndex: 4
-    columnName: ext
+    isIngore: 0
+  - columnName: ext
+    xlsColumnIndex: 4
+    isPK: 0
+    isNull: 0
     sqliteColumnName: ext
     sqliteColumnValue: 
     desc: "\u6269\u5C55\u540D"
-    isPK: 0
-    isNull: 0
     dataType: 14
     arrayDimension: 0
-  - xlsColumnIndex: 5
-    columnName: outSide
+    isIngore: 0
+  - columnName: outSide
+    xlsColumnIndex: 5
+    isPK: 0
+    isNull: 0
     sqliteColumnName: outSide
     sqliteColumnValue: 
     desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
-    isPK: 0
-    isNull: 0
     dataType: 14
     arrayDimension: 0
-  - xlsColumnIndex: 6
-    columnName: extEnumValue
+    isIngore: 0
+  - columnName: extEnumValue
+    xlsColumnIndex: 6
+    isPK: 0
+    isNull: 0
     sqliteColumnName: extEnumValue
     sqliteColumnValue: 
     desc: "\u6269\u5C55\u540D\u679A\u4E3E\u503C"
-    isPK: 0
-    isNull: 0
     dataType: 6
     arrayDimension: 0
+    isIngore: 0
