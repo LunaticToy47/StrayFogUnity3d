@@ -177,28 +177,6 @@ public sealed class EditorStrayFogExecute
 
     #region Guide菜单
 
-    #region ExecuteFindUIGuideRegisterMaskGraphic 查的引导注册器的MaskGraphic
-    /// <summary>
-    /// 查的引导注册器的MaskGraphic
-    /// </summary>
-    public static void ExecuteFindUIGuideRegisterMaskGraphic()
-    {
-        if (Selection.activeGameObject != null)
-        {
-            UIGuideRegister register = Selection.activeGameObject.GetComponent<UIGuideRegister>();
-            Transform root = register.transform;
-            if (register.graphicsNodeIndexs != null && register.graphicsNodeIndexs.Length > 0)
-            {
-                foreach (int i in register.graphicsNodeIndexs)
-                {
-                    root = root.GetChild(i);
-                }
-            }
-            EditorStrayFogApplication.PingObject(root);
-        }
-    }
-    #endregion
-
     #endregion
 
     #region Animator菜单

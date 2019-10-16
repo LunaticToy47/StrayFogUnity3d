@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monoScript: {fileID: 11500000, guid: fc0f2d4a84b8f3348acccf23196a6364, type: 3}
-  monoBehaviourScriptName: 
+  monoBehaviourScriptName: ExampleGuideLevel
 --- !u!1 &645655515
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,6 +359,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExampleLobbyWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 1440152659323784, guid: f7d01bd4913b9ed4bb3c1011fab951f5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224969571189749600, guid: f7d01bd4913b9ed4bb3c1011fab951f5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -464,5 +468,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114246190122248652, guid: f7d01bd4913b9ed4bb3c1011fab951f5, type: 3}
+    - {fileID: 114538975761711172, guid: f7d01bd4913b9ed4bb3c1011fab951f5, type: 3}
+    - {fileID: 114799648221282046, guid: f7d01bd4913b9ed4bb3c1011fab951f5, type: 3}
+    - {fileID: 114530442848892364, guid: f7d01bd4913b9ed4bb3c1011fab951f5, type: 3}
+    - {fileID: 114998980671205140, guid: f7d01bd4913b9ed4bb3c1011fab951f5, type: 3}
+    - {fileID: 114257110767116592, guid: f7d01bd4913b9ed4bb3c1011fab951f5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f7d01bd4913b9ed4bb3c1011fab951f5, type: 3}

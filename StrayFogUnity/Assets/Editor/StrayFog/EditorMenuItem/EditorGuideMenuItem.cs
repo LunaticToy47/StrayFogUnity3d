@@ -24,34 +24,19 @@ static class EditorGuideMenuItem
     const int mcPriority = 100 * (int)enEditorMenuItemPriority.Guide;
     #endregion
 
-    #region mcSetUIGuideRegister_GraphicNodeIndexs
-    const string mcSetUIGuideRegister_GraphicNodeIndexs = "Set UIGuideRegister.GraphicNodeIndexs";
+    #region mcGuideManager
+    const string mcGuideManager = "Guide Manager";
     /// <summary>
-    /// 设置UIGuideRegister的GraphicNodeIndexs参数值
+    /// 引导管理窗口
     /// </summary>
-    [MenuItem(mcMenu + mcSetUIGuideRegister_GraphicNodeIndexs, false, mcPriority + 1)]
-    [MenuItem(mcAssetMenu + mcSetUIGuideRegister_GraphicNodeIndexs, false, mcPriority + 1)]
-    [MenuItem(mcHierarchy + mcSetUIGuideRegister_GraphicNodeIndexs, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_FindUIGuideRegister_GraphicNodeIndexsWindow()
+    [MenuItem(mcMenu + mcGuideManager, false, mcPriority + 1)]
+    [MenuItem(mcAssetMenu + mcGuideManager, false, mcPriority + 1)]
+    [MenuItem(mcHierarchy + mcGuideManager, false, mcPriority + 1)]
+    static void EditorGuideMenuItem_EditorWindowGuideManagerWindow()
     {
-        EditorWindowSetUIGuideRegister_GraphicNodeIndexs win =
-        EditorWindow.GetWindow<EditorWindowSetUIGuideRegister_GraphicNodeIndexs>(mcSetUIGuideRegister_GraphicNodeIndexs);
+        EditorWindowGuideManagerWindow win =
+        EditorWindow.GetWindow<EditorWindowGuideManagerWindow>(mcGuideManager);
         win.Show();
-    }
-    #endregion
-
-    #region mcFindUIGuideRegister_GraphicNodeIndexs_Graphic
-    const string mcFindUIGuideRegister_GraphicNodeIndexs_Graphic = "Find UIGuideRegister.GraphicNodeIndexs Graphic";
-    /// <summary>
-    /// 查找引导注册器指定的Graphic
-    /// </summary>
-    [MenuItem(mcMenu + mcFindUIGuideRegister_GraphicNodeIndexs_Graphic, false, mcPriority + 1)]
-    [MenuItem(mcAssetMenu + mcFindUIGuideRegister_GraphicNodeIndexs_Graphic, false, mcPriority + 1)]
-    [MenuItem(mcHierarchy + mcFindUIGuideRegister_GraphicNodeIndexs_Graphic, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_FindUIGuideRegister_GraphicNodeIndexs_Graphic()
-    {
-        EditorStrayFogExecute.ExecuteFindUIGuideRegisterMaskGraphic();
-        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcFindUIGuideRegister_GraphicNodeIndexs_Graphic);
     }
     #endregion
 }

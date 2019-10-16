@@ -24,11 +24,9 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
             m_isInitialized = true;
             runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
             StrayFogAssembly.LoadDynamicAssembly();
-            StrayFogGamePools.runningApplication.OnRegisterGuide += Current_OnRegisterGuide;
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
-            StrayFogGamePools.guideManager.TriggerCheck();
             OnPartialInitialization();
             Application.wantsToQuit += OnApplication_wantsToQuit;
             Application.lowMemory += Application_lowMemory;
@@ -70,15 +68,6 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
     bool Current_OnIsLevel(int _levelId)
     {
         return true;
-    }
-
-    /// <summary>
-    /// 注册引导
-    /// </summary>
-    /// <param name="_guide">引导</param>
-    void Current_OnRegisterGuide(UIGuideRegister _guide)
-    {
-        StrayFogGamePools.guideManager.RegisterGuide(_guide);
     }
 
     /// <summary>

@@ -5,13 +5,6 @@ using UnityEngine;
 using UnityEditor;
 #endif
 /// <summary>
-/// 注册引导事件句柄
-/// </summary>
-/// <param name="_guide">引导</param>
-public delegate void RegisterGuideEventHandle(UIGuideRegister _guide);
-
-
-/// <summary>
 /// 引擎应用程序
 /// </summary>
 public class StrayFogRunningApplication : AbsSingleScriptableObject
@@ -30,24 +23,6 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
 #else
         return null;
 #endif
-    }
-    #endregion    
-
-    #region RegisterGuide 注册引导
-    /// <summary>
-    /// 注册引导事件
-    /// </summary>
-    public event RegisterGuideEventHandle OnRegisterGuide;
-    /// <summary>
-    /// 注册引导
-    /// </summary>
-    /// <param name="_guide">引导</param>
-    public void RegisterGuide(UIGuideRegister _guide)
-    {
-        if (OnRegisterGuide != null)
-        {
-            OnRegisterGuide(_guide);
-        }
     }
     #endregion
 
