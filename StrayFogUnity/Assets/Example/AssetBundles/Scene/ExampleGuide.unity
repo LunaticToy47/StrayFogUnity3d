@@ -608,11 +608,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8635312747619812459, guid: 5693ce96246c7f44994ab587c067ebb8,
-        type: 3}
-      propertyPath: m_Name
-      value: ImgDescBg
-      objectReference: {fileID: 0}
     - target: {fileID: 2783153272204592893, guid: 5693ce96246c7f44994ab587c067ebb8,
         type: 3}
       propertyPath: m_AnchoredPosition.x

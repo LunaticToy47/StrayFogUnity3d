@@ -31,50 +31,109 @@ public class UIGuidePrompt : AbsUIBehaviour
         mImgFramePrompt = gameObject.GetComponent<Image>();
         mImgArrow = transform.GetChild(0).GetComponent<Image>();
         mImgDescBg = transform.GetChild(1).GetComponent<Image>();
-        mTxtGuideContent = mImgDescBg.transform.GetChild(0).GetComponent<Text>();        
+        mTxtGuideContent = mImgDescBg.transform.GetChild(0).GetComponent<Text>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        if (Input.GetKeyUp(KeyCode.A))
         {
-            SetArrowEdge(RectTransform.Edge.Left);
+            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.MiddleLeft, mImgFramePrompt.rectTransform.rect);
+            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.MiddleLeft, Vector2.right * 300, mImgFramePrompt.rectTransform.rect);
         }
-        else if (Input.GetKeyUp(KeyCode.RightArrow))
+        else if (Input.GetKeyUp(KeyCode.D))
         {
-            SetArrowEdge(RectTransform.Edge.Right);
+            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.MiddleRight, mImgFramePrompt.rectTransform.rect);
+            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.MiddleRight, Vector2.up * 100, mImgFramePrompt.rectTransform.rect);
         }
-        else if (Input.GetKeyUp(KeyCode.UpArrow))
+        else if (Input.GetKeyUp(KeyCode.W))
         {
-            SetArrowEdge(RectTransform.Edge.Top);
+            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.UpperCenter, mImgFramePrompt.rectTransform.rect);
+            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.UpperCenter, Vector2.right * 300, mImgFramePrompt.rectTransform.rect);
         }
-        else if (Input.GetKeyUp(KeyCode.DownArrow))
+        else if (Input.GetKeyUp(KeyCode.S))
         {
-            SetArrowEdge(RectTransform.Edge.Bottom);
+            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.LowerCenter, mImgFramePrompt.rectTransform.rect);
+            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.LowerCenter, Vector2.up * 100, mImgFramePrompt.rectTransform.rect);
         }
     }
 
     /// <summary>
     /// 设置箭头显示位置
     /// </summary>
-    /// <param name="_edge">位置</param>
-    void SetArrowEdge(RectTransform.Edge _edge)
+    /// <param name="_rectTransform">RectTransform</param>
+    /// <param name="_anchor">锚点</param>
+    /// <param name="_parentRect">父矩形</param>
+    void SetArrowEdge(RectTransform _rectTransform, TextAnchor _anchor,Rect _parentRect)
     {
-        switch (_edge)
+        switch (_anchor)
         {
-            case RectTransform.Edge.Left:
-                mImgArrow.rectTransform.SetInsetAndSizeFromParentEdge(_edge, 0, mImgArrow.rectTransform.rect.width);                
+            case TextAnchor.MiddleLeft:
+                _rectTransform.localEulerAngles = Vector3.zero;
+                _rectTransform.pivot = new Vector2(1f, 0.5f);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, _rectTransform.rect.width);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, _rectTransform.rect.height);
+                _rectTransform.anchoredPosition = Vector2.down * _parentRect.height * 0.5f;
                 break;
-            case RectTransform.Edge.Right:
-                //mImgArrow.rectTransform.SetInsetAndSizeFromParentEdge(_edge, -mImgArrow.rectTransform.rect.width, mImgArrow.rectTransform.rect.width);
+            case TextAnchor.MiddleRight:
+                _rectTransform.localEulerAngles = Vector3.forward * 180f;
+                _rectTransform.pivot = new Vector2(1f, 0.5f);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, _rectTransform.rect.width);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, _rectTransform.rect.height);
+                _rectTransform.anchoredPosition = Vector2.up * _parentRect.height * 0.5f;
                 break;
-            case RectTransform.Edge.Top:
-                //mImgArrow.rectTransform.SetInsetAndSizeFromParentEdge(_edge, -mImgArrow.rectTransform.rect.width, mImgArrow.rectTransform.rect.width);
+            case TextAnchor.UpperCenter:
+                _rectTransform.localEulerAngles = Vector3.forward * -90f;
+                _rectTransform.pivot = new Vector2(1f, 0.5f);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, _rectTransform.rect.width);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, _rectTransform.rect.height);
+                _rectTransform.anchoredPosition = Vector2.right * _parentRect.width * 0.5f;
                 break;
-            case RectTransform.Edge.Bottom:
-                //mImgArrow.rectTransform.SetInsetAndSizeFromParentEdge(_edge, -mImgArrow.rectTransform.rect.width, mImgArrow.rectTransform.rect.width);
+            case TextAnchor.LowerCenter:
+                _rectTransform.localEulerAngles = Vector3.forward * 90f;
+                _rectTransform.pivot = new Vector2(1f, 0.5f);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, _rectTransform.rect.width);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, _rectTransform.rect.height);
+                _rectTransform.anchoredPosition = Vector2.left * _parentRect.width * 0.5f;
                 break;
-        }        
-        //mImgDescBg.rectTransform.SetInsetAndSizeFromParentEdge(_edge, -mImgArrow.rectTransform.rect.width, mImgDescBg.rectTransform.rect.width);
+        }
+    }
+
+    /// <summary>
+    /// 设置描述显示位置
+    /// </summary>
+    /// <param name="_rectTransform">RectTransform</param>
+    /// <param name="_anchor">锚点</param>
+    /// <param name="_offset">偏移</param>
+    /// <param name="_parentRect">父节点矩形</param>
+    void SetDescEdge(RectTransform _rectTransform, TextAnchor _anchor, Vector2 _offset , Rect _parentRect)
+    {       
+        switch (_anchor)
+        {
+            case TextAnchor.MiddleLeft:
+                _rectTransform.pivot = new Vector2(1f, 0.5f);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, _rectTransform.rect.width);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, _rectTransform.rect.height);
+                _rectTransform.anchoredPosition = Vector2.up * _parentRect.height * 0.5f;
+                break;
+            case TextAnchor.MiddleRight:
+                _rectTransform.pivot = new Vector2(0, 0.5f);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, _rectTransform.rect.width);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, _rectTransform.rect.height);
+                _rectTransform.anchoredPosition = Vector2.up * _parentRect.height;
+                break;
+            case TextAnchor.UpperCenter:
+                _rectTransform.pivot = new Vector2(1f, 0.5f);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, _rectTransform.rect.width);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, _rectTransform.rect.height);
+                _rectTransform.anchoredPosition = Vector2.right * _parentRect.width;
+                break;
+            case TextAnchor.LowerCenter:
+                _rectTransform.pivot = new Vector2(0f, 0.5f);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, _rectTransform.rect.width);
+                _rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, _rectTransform.rect.height);
+                _rectTransform.anchoredPosition = Vector2.left * _parentRect.width;
+                break;
+        }
     }
 }
