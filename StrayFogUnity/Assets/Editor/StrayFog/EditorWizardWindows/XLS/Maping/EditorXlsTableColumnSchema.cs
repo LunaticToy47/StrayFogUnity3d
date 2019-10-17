@@ -64,6 +64,11 @@ public class EditorXlsTableColumnSchema
     [AliasTooltip("是否忽略此列")]
     public bool isIngore;
 
+    /// <summary>
+    /// SQLite数据库不为空架构
+    /// </summary>
+    public string sqliteSchemaNotNull { get { return isNull | isIngore ? "" : "NOT NULL"; } }
+
     #region sqliteParameterName 数据为参数名称
     /// <summary>
     /// 数据为参数名称

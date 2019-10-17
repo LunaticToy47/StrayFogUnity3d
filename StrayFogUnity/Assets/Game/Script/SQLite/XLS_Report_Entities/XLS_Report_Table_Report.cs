@@ -32,13 +32,13 @@ public partial class XLS_Report_Table_Report: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// id主键
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"idCol","","@idCol1",true)]	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"idCol","","@idCol1",true,false)]	
 	public int idCol { get; private set; }	
 		
 	/// <summary>
 	/// 字符串
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,2,"stringCol","","@stringCol2",false)]	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,2,"stringCol","","@stringCol2",false,false)]	
 	public string stringCol { get; private set; }	
 	
 	#endregion

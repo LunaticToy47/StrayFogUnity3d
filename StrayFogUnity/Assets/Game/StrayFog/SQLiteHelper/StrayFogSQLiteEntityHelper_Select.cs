@@ -70,11 +70,14 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                 for (int col = 1; col <= sheet.Dimension.Columns; col++)
                                 {
                                     tempName = sheet.GetValue<string>(_tableAttribute.xlsColumnNameIndex, col).Trim();
-                                    tempValue = sheet.GetValue(row, col);
-                                    tempIsAllValueNull &= (tempValue == null);
                                     tempPropertyKey = tempName.UniqueHashCode();
-                                    tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_tableAttribute.id][tempPropertyKey], msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].dataType, msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].arrayDimension);
-                                    msEntityPropertyInfoMaping[_tableAttribute.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);
+                                    if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].isIngore)
+                                    {
+                                        tempValue = sheet.GetValue(row, col);
+                                        tempIsAllValueNull &= (tempValue == null);                                        
+                                        tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_tableAttribute.id][tempPropertyKey], msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].dataType, msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].arrayDimension);
+                                        msEntityPropertyInfoMaping[_tableAttribute.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);
+                                    }                                    
                                 }
                                 if (tempIsAllValueNull)
                                 {//如果所有列为空，则认为是数据结束
@@ -143,9 +146,12 @@ public sealed partial class StrayFogSQLiteEntityHelper
                 {
                     tempPropertyName = reader.GetName(i);
                     tempPropertyKey = tempPropertyName.UniqueHashCode();
-                    tempValue = reader.GetValue(i);
-                    tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_tableAttribute.id][tempPropertyKey], msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].dataType, msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].arrayDimension);
-                    msEntityPropertyInfoMaping[_tableAttribute.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);
+                    if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].isIngore)
+                    {                             
+                        tempValue = reader.GetValue(i);
+                        tempValue = StrayFogSQLiteDataTypeHelper.GetXlsCSTypeColumnValue(tempValue, msEntityPropertyInfoMaping[_tableAttribute.id][tempPropertyKey], msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].dataType, msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].arrayDimension);
+                        msEntityPropertyInfoMaping[_tableAttribute.id][tempPropertyKey].SetValue(tempEntity, tempValue, null);
+                    }                    
                 }
                 tempEntity.Resolve();
                 result.Add(tempEntity);

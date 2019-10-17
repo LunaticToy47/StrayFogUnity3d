@@ -34,8 +34,8 @@ public class CodeAttribute : AliasTooltipAttribute
         : base(_alias)
     {
         csTypeName = _csTypeName;
-        sqliteTypeName = _sqliteTypeName;        
-}
+        sqliteTypeName = _sqliteTypeName;
+    }
 
     /// <summary>
     /// CS类型名称

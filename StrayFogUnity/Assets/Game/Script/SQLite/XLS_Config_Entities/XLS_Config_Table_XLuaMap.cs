@@ -14,19 +14,19 @@ public partial class XLS_Config_Table_XLuaMap: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// 路径ID
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"id","","@id1",true)]	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"id","","@id1",true,false)]	
 	public int id { get; private set; }	
 		
 	/// <summary>
 	/// xLua文件id
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,2,"xLuaFileId","","@xLuaFileId2",false)]	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,2,"xLuaFileId","","@xLuaFileId2",false,false)]	
 	public int xLuaFileId { get; private set; }	
 		
 	/// <summary>
 	/// xLua文件夹id
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,3,"xLuaFolderId","","@xLuaFolderId3",false)]	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,3,"xLuaFolderId","","@xLuaFolderId3",false,false)]	
 	public int xLuaFolderId { get; private set; }	
 	
 	#endregion

@@ -15,9 +15,10 @@ public class SQLiteFieldTypeAttribute : AliasTooltipAttribute
     /// <param name="_sqliteColumnValue">数据库列值</param>
     /// <param name="_sqliteParameterName">数据库参数名称</param>
     /// <param name="_isPK">是否是主键</param>
+    /// <param name="_isIngore">是否忽略此字段</param>
     public SQLiteFieldTypeAttribute(enSQLiteDataType _dataType,
         enSQLiteDataTypeArrayDimension _arrayDimension,
-        int _xlsColumnValueIndex, string _sqliteColumnName, string _sqliteColumnValue,string _sqliteParameterName, bool _isPK)
+        int _xlsColumnValueIndex, string _sqliteColumnName, string _sqliteColumnValue,string _sqliteParameterName, bool _isPK, bool _isIngore)
         : base(_dataType.ToString() + "_" + _arrayDimension.ToString())
     {
         dataType = _dataType;
@@ -27,6 +28,7 @@ public class SQLiteFieldTypeAttribute : AliasTooltipAttribute
         sqliteColumnValue = _sqliteColumnValue;
         sqliteParameterName = _sqliteParameterName;
         isPK = _isPK;
+        isIngore = _isIngore;
     }
 
     /// <summary>
@@ -57,4 +59,8 @@ public class SQLiteFieldTypeAttribute : AliasTooltipAttribute
     /// 是否是主键
     /// </summary>
     public bool isPK { get; private set; }
+    /// <summary>
+    /// 是否忽略此字段
+    /// </summary>
+    public bool isIngore { get; private set; }
 }

@@ -14,13 +14,13 @@ public partial class XLS_Report_Determinant_Table_ReportDeterminant: AbsStrayFog
 	/// <summary>
 	/// 报表提示
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"name","value","@ReportTip4",false)]	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"name","value","@ReportTip4",false,false)]	
 	public string ReportTip { get; private set; }	
 		
 	/// <summary>
 	/// 行列式提示
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"name","value","@DeterminantTip5",false)]	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"name","value","@DeterminantTip5",false,false)]	
 	public string DeterminantTip { get; private set; }	
 	
 	#endregion

@@ -1458,8 +1458,11 @@ public sealed class EditorStrayFogExecute
         List<int> dbKeys = new List<int>();
         if (tables != null && tables.Count > 0)
         {
+            float progress = 0;
             foreach (EditorXlsTableSchema t in tables)
             {
+                progress++;
+                EditorUtility.DisplayProgressBar("Copy SQLiteDb To Package", t.dbPath, progress);
                 if (!dbKeys.Contains(t.dbKey))
                 {
                     dbKeys.Add(t.dbKey);
@@ -1468,11 +1471,12 @@ public sealed class EditorStrayFogExecute
                     if (!Directory.Exists(dir))
                     {
                         Directory.CreateDirectory(dir);
-                    }
-                    File.Copy(t.dbPath, db);
+                    }                    
+                    File.Copy(t.dbPath, db,true);
                 }
             }
-        }        
+        }
+        EditorUtility.ClearProgressBar();
         sbLog.AppendLine("ExecuteBuildSQLiteDbToPackage Succeed!");
         Debug.Log(sbLog.ToString());
     }

@@ -29,7 +29,7 @@ public sealed class EditorStrayFogXLS
     /// 表数据行起始索引
     /// </summary>
     static readonly int msrColumnDataRowStartIndex = 4;
-    
+
     /// <summary>
     /// 行列式表列名称列索引
     /// </summary>
@@ -69,7 +69,7 @@ public sealed class EditorStrayFogXLS
     /// <summary>
     /// 列分隔符
     /// </summary>
-    static readonly string msrColumnSeparate =",";
+    static readonly string msrColumnSeparate = ",";
     /// <summary>
     /// UNION符号
     /// </summary>
@@ -159,7 +159,7 @@ public sealed class EditorStrayFogXLS
                 sheet.DeleteRow(msrColumnDataRowStartIndex, sheet.Dimension.Rows);
                 pck.Save();
             }
-        }        
+        }
     }
     #endregion
 
@@ -204,6 +204,16 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     /// <returns>XLS表结构框架</returns>
     public static List<EditorXlsTableSchema> ReadXlsSchema()
+    {
+        return ReadXlsSchema((p, t) => { });
+    }
+
+    /// <summary>
+    /// 读取XLS表结构框架
+    /// </summary>
+    /// <param name="_onProgress">进度</param>
+    /// <returns>XLS表结构框架</returns>
+    public static List<EditorXlsTableSchema> ReadXlsSchema(Action<float, EditorXlsTableSchema> _onProgress)
     {
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
@@ -440,7 +450,7 @@ public sealed class EditorStrayFogXLS
                 {
                     columnCodes.Add(
                        columnTemplete
-                       .Replace("#NotNull#", c.isNull ? "" : "NOT NULL")
+                       .Replace("#NotNull#", c.sqliteSchemaNotNull)
                        .Replace("#Name#", c.columnName)
                        .Replace("#DataType#", StrayFogSQLiteDataTypeHelper.GetSQLiteDataTypeName(c.dataType, c.arrayDimension))
                     );
@@ -479,7 +489,7 @@ public sealed class EditorStrayFogXLS
             #endregion
 
             EditorUtility.DisplayProgressBar("Build Table SQL",
-                    string.Format("【{0}】=>{1}",table.tableName,table.dbConnectionString), progress / _tables.Count);
+                    string.Format("【{0}】=>{1}", table.tableName, table.dbConnectionString), progress / _tables.Count);
         }
 
         #region 创建View_DeterminantVT语句
@@ -500,7 +510,7 @@ public sealed class EditorStrayFogXLS
                 sqliteView_DeterminantVTTemplete
                 .Replace(view_DeterminantReplaceTemplete, sbView_DeterminantReplace.ToString())
                 );
-            EditorUtility.DisplayProgressBar("Create View_Determinant SQL",dicDbHelper[key].sqlite.connectionString, progress / _tables.Count);
+            EditorUtility.DisplayProgressBar("Create View_Determinant SQL", dicDbHelper[key].sqlite.connectionString, progress / _tables.Count);
         }
         #endregion
 
@@ -517,7 +527,7 @@ public sealed class EditorStrayFogXLS
                 {
                     progress++;
                     dicExcuteSql[key.Key].Add(File.ReadAllText(n.path));
-                    EditorUtility.DisplayProgressBar("Build View SQL", string.Format("【{0}】=>{1}",n.path, dicDbHelper[key.Key].sqlite.connectionString), progress / sqlAssets.Count);
+                    EditorUtility.DisplayProgressBar("Build View SQL", string.Format("【{0}】=>{1}", n.path, dicDbHelper[key.Key].sqlite.connectionString), progress / sqlAssets.Count);
                 }
             }
         }
@@ -591,7 +601,7 @@ public sealed class EditorStrayFogXLS
                 progress++;
                 tempTable = new EditorXlsTableSchema();
                 tempTable.tableName = tn;
-                tempTable.dbPath =db.Value.dbPath;
+                tempTable.dbPath = db.Value.dbPath;
                 tempTable.classify = enSQLiteEntityClassify.View;
                 tempColumns = new List<EditorXlsTableColumnSchema>();
                 reader = db.Value.sqlite.ReadPragmaTableInfo(tn);
@@ -633,7 +643,7 @@ public sealed class EditorStrayFogXLS
         List<string> tempSameColumnNames = new List<string>();
         foreach (EditorXlsTableSchema t in _tables)
         {
-            progress++;            
+            progress++;
             if (t.isDeterminant)
             {
                 OnResolveDeterminantTableSchema(t);
@@ -648,9 +658,9 @@ public sealed class EditorStrayFogXLS
                     {
                         EditorUtility.ClearProgressBar();
                         throw new UnityException(string.Format("The Determinant Table has same value【{0}】 in column index 【{1}】in 【{2}】",
-                                c.columnName, msrDeterminantColumnNameColumnIndex,t.fileName));
+                                c.columnName, msrDeterminantColumnNameColumnIndex, t.fileName));
                     }
-                }                
+                }
             }
             EditorUtility.DisplayProgressBar("Resolve Table",
                    string.Format("【{0}】Is Determinant【{1}】=>{2}", t.tableName, t.isDeterminant, t.dbConnectionString), progress / _tables.Count);
@@ -744,7 +754,7 @@ public sealed class EditorStrayFogXLS
                 xlsColumnNameIndex = msrColumnNameRowIndex;
                 xlsColumnDataIndex = msrColumnDataRowStartIndex;
                 xlsColumnTypeIndex = msrColumnTypeRowIndex;
-            }         
+            }
             sbPropertyReplace.Length = 0;
             sbSetPropertyReplace.Length = 0;
             sbTableConstructorReplace.Length = 0;
@@ -769,6 +779,7 @@ public sealed class EditorStrayFogXLS
                     .Replace("#SqliteColumnValue#", c.sqliteColumnValue)
                     .Replace("#SqliteParameterName#", c.sqliteParameterName)
                     .Replace("#IsPK#", c.isPK.ToString().ToLower())
+                    .Replace("#IsIngore#", c.isIngore.ToString().ToLower())
                     );
                 hasPK |= c.isPK;
                 if (t.isDeterminant)
@@ -846,7 +857,7 @@ public sealed class EditorStrayFogXLS
 
                 .Replace("#ClassName#", t.className)
                 .Replace("#EntityName#", t.tableName)
-                
+
                 .Replace("#classHashCode#", t.className.UniqueHashCode().ToString())
                 .Replace("#xlsFilePath#", t.fileName)
                 .Replace("#sqliteTableName#", t.tableName)
@@ -967,6 +978,7 @@ public sealed class EditorStrayFogXLS
         Dictionary<int, Dictionary<string, Dictionary<string, List<SqliteParameter>>>> tempInsertTable = new Dictionary<int, Dictionary<string, Dictionary<string, List<SqliteParameter>>>>();
         StringBuilder tempInsertSql = new StringBuilder();
         List<string> tempSPName = new List<string>();
+        List<string> tempColName = new List<string>();
         List<string> tempValueSql = new List<string>();
         List<SqliteParameter> tempSPS = new List<SqliteParameter>();
         Dictionary<int, TableSQLiteHelper> dicDbHelper = new Dictionary<int, TableSQLiteHelper>();
@@ -1003,18 +1015,21 @@ public sealed class EditorStrayFogXLS
                         _progressCallback(string.Format("Read Table【{0}】", tables[i].tableName), string.Format("Row 【 {0}】 Data", row), (row - msrColumnDataRowStartIndex + 1) / (float)tables.Count);
 
                         tempSPName = new List<string>();
+                        tempColName = new List<string>();
                         tempSPS = new List<SqliteParameter>();
                         tempValueSql = new List<string>();
                         tempInsertSql.Length = 0;
-                        tempInsertSql.AppendFormat("INSERT INTO {0} VALUES", tables[i].tableName);
-
                         for (int col = 1; col <= sheet.Dimension.Columns; col++)
                         {
-                            tempName = sheet.GetValue<string>(msrColumnNameRowIndex, col).Trim();
-                            tempValue = sheet.GetValue<string>(row, col);
-                            tempIsAllValueNull &= (tempValue == null);
-                            tempSPName.Add("@" + tempName + row + col);
-                            tempSPS.Add(new SqliteParameter("@" + tempName + row + col, tempValue));
+                            if (!tables[i].columns[col - 1].isIngore)
+                            {
+                                tempName = sheet.GetValue<string>(msrColumnNameRowIndex, col).Trim();
+                                tempValue = sheet.GetValue<string>(row, col);
+                                tempIsAllValueNull &= (tempValue == null);
+                                tempSPName.Add("@" + tempName + row + col);
+                                tempSPS.Add(new SqliteParameter("@" + tempName + row + col, tempValue));
+                                tempColName.Add(tempName);
+                            }
                             _progressCallback(string.Format("Read 【{0}】 Column Data", tables[i].tableName), string.Format("Row【{0}】Col【{1}->{2}】", row, col, tempName), col / (float)sheet.Dimension.Columns);
                         }
                         if (tempIsAllValueNull)
@@ -1023,6 +1038,7 @@ public sealed class EditorStrayFogXLS
                         }
                         else
                         {
+                            tempInsertSql.AppendFormat("INSERT INTO {0} ({1}) VALUES", tables[i].tableName, string.Join(",", tempColName.ToArray()));
                             tempValueSql.Add(string.Format("({0})", string.Join(",", tempSPName.ToArray())));
                             tempInsertSql.Append(string.Join(",", tempValueSql.ToArray()));
                             tempInsertTable[tables[i].dbKey][tables[i].tableName].Add(tempInsertSql.ToString(), tempSPS);
@@ -1038,7 +1054,7 @@ public sealed class EditorStrayFogXLS
             progress++;
             foreach (KeyValuePair<string, Dictionary<string, List<SqliteParameter>>> key in db.Value)
             {
-                _progressCallback(string.Format("Update SQLite 【{0}】", dicDbHelper[db.Key].dbPath), string.Format("Insert Table【{0}】Data Count 【{1}】",  key.Key, key.Value.Count - 1), progress / tempInsertTable.Count);
+                _progressCallback(string.Format("Update SQLite 【{0}】", dicDbHelper[db.Key].dbPath), string.Format("Insert Table【{0}】Data Count 【{1}】", key.Key, key.Value.Count - 1), progress / tempInsertTable.Count);
                 dicDbHelper[db.Key].sqlite.ExecuteTransaction(key.Value);
             }
         }
@@ -1161,7 +1177,7 @@ public sealed class EditorStrayFogXLS
             {
                 OnDeleteXlsData(file, (sheet, row) => { return sheet.GetValue<int>(row, 1) == _winId; });
             }
-        }       
+        }
     }
     #endregion
 
@@ -1288,7 +1304,7 @@ public sealed class EditorStrayFogXLS
                     {
                         asmdefScripts[i].Resolve();
                         if (asmdefScripts[i].isAsmdef)
-                        {                            
+                        {
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = asmdefScripts[i].asmdefId;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = asmdefScripts[i].asmdefDllName;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = asmdefScripts[i].asmdefDllPath;
