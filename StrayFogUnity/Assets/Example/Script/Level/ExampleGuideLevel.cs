@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 /// <summary>
 /// 引导关卡
@@ -19,6 +19,18 @@ public class ExampleGuideLevel : AbsLevel
     /// </summary>
     void Awake()
     {
+        GameObject[] gos = SceneManager.GetActiveScene().GetRootGameObjects();
+        if (gos != null && gos.Length > 0)
+        {
+            foreach (GameObject g in gos)
+            {
+                if (g.GetComponent<UIBehaviour>() != null)
+                {
+                    Destroy(g.gameObject);
+                }
+            }
+        }
+
         StrayFogGamePools.gameManager.Initialization(() =>
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>

@@ -39,7 +39,7 @@ public sealed class StrayFogAssembly
                 }
                 if (File.Exists(dllPath) && File.Exists(pdbPath))
                 {
-                    tmpAssembly = Assembly.Load(File.ReadAllBytes(dllPath),File.ReadAllBytes(pdbPath));
+                    tmpAssembly = Assembly.Load(File.ReadAllBytes(dllPath), File.ReadAllBytes(pdbPath));
                     dynamicAssemblies.Add(tmpAssembly);
                 }
             }
@@ -67,6 +67,15 @@ public sealed class StrayFogAssembly
     /// Type映射
     /// </summary>
     static Dictionary<int, Type> mTypeMaping = new Dictionary<int, Type>();
+    /// <summary>
+    /// 获得指定名称的Type
+    /// </summary>    
+    /// <returns>Type</returns>
+    public static Type GetType<T>()
+    {
+        return GetType(typeof(T).FullName);
+    }
+
     /// <summary>
     /// 获得指定名称的Type
     /// </summary>
