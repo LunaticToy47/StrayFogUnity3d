@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// 调整字间距
 /// </summary>
 [AddComponentMenu("StrayFog/Game/UI/Effects/TextSpacing")]
-public class TextSpacing : BaseMeshEffect
+public class UITextSpacing : BaseMeshEffect
 {
     /// <summary>
     /// 字间距

@@ -16,5 +16,17 @@ public class ExampleGuideWindow : AbsUIGuideWindowView
     /// 材质文件夹
     /// </summary>
     protected override enAssetDiskMapingFolder materialFolder { get { return enAssetDiskMapingFolder.Assets_Game_AssetBundles_Materials; } }
-    
+
+    /// <summary>
+    /// 引导提示UI
+    /// </summary>
+    UIGuidePrompt mUIGuidePrompt;
+    /// <summary>
+    /// OnAfterAwake
+    /// </summary>
+    protected override void OnAfterAwake()
+    {
+        mUIGuidePrompt = transform.Find("ImgFramePrompt").gameObject.AddComponent<UIGuidePrompt>();
+        base.OnAfterAwake();
+    }
 }

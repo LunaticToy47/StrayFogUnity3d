@@ -20,43 +20,23 @@ MonoBehaviour:
   isDeterminant: 1
   canModifyData: 0
   columns:
-  - columnName: name
-    desc: "\u540D\u79F0"
-    xlsColumnValueIndex: 1
-    isPK: 0
-    isNull: 0
-    sqliteColumnName: name
-    sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
-    isIngore: 0
-  - columnName: value
-    desc: "\u503C"
-    xlsColumnValueIndex: 2
-    isPK: 0
-    isNull: 0
-    sqliteColumnName: value
-    sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
-    isIngore: 0
-  - columnName: valueType
-    desc: "\u503C\u7C7B\u578B"
-    xlsColumnValueIndex: 3
-    isPK: 0
-    isNull: 0
-    sqliteColumnName: valueType
-    sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
-    isIngore: 0
-  - columnName: desc
-    desc: "\u8BF4\u660E"
+  - columnName: GuideTip
+    desc: "\u5F15\u5BFC\u63D0\u793A"
     xlsColumnValueIndex: 4
     isPK: 0
     isNull: 0
-    sqliteColumnName: desc
-    sqliteColumnValue: 
+    sqliteColumnName: name
+    sqliteColumnValue: value
+    dataType: 14
+    arrayDimension: 0
+    isIngore: 0
+  - columnName: LobbyTip
+    desc: "\u5927\u5385\u63D0\u793A"
+    xlsColumnValueIndex: 5
+    isPK: 0
+    isNull: 0
+    sqliteColumnName: name
+    sqliteColumnValue: value
     dataType: 14
     arrayDimension: 0
     isIngore: 0

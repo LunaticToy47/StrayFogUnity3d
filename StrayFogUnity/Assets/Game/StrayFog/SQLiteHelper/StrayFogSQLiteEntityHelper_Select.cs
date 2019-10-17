@@ -3,6 +3,7 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 /// <summary>
 /// StrayFogSQLite表实体帮助类【Select】
 /// </summary>
@@ -71,6 +72,12 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                 {
                                     tempName = sheet.GetValue<string>(_tableAttribute.xlsColumnNameIndex, col).Trim();
                                     tempPropertyKey = tempName.UniqueHashCode();
+#if UNITY_EDITOR
+                                    if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id].ContainsKey(tempPropertyKey))
+                                    {
+                                        Debug.LogErrorFormat("Can't find column 【{0}】for table 【{1}】",tempName,_tableAttribute.sqliteTableName);
+                                    }
+#endif
                                     if (!msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id][tempPropertyKey].isIngore)
                                     {
                                         tempValue = sheet.GetValue(row, col);

@@ -148,7 +148,7 @@ public class StrayFogGuideManager : AbsSingleMonoBehaviour
     /// <param name="_register">引导注册器</param>
     public void RegisterGuide()
     {
-        
+        mGuideWindow.gameObject.SetActive(true);
     }
     #endregion
 

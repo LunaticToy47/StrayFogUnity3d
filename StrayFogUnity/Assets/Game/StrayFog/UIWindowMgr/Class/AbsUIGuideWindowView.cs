@@ -36,6 +36,7 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
         mUIGraphicMask = gameObject.AddComponent<UIGraphicMaskShader>();
         mUIGraphicMask.color = mDefaultColor;
         LoadMaterial((args) => { });
+        OnAfterAwake();
     }    
 
     /// <summary>

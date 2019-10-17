@@ -1,0 +1,2088 @@
+fileFormatVersion: 2
+guid: 21eba28b21a6e914e85f8955ff3eaf09
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5631875199017381273
+    second: control_Btn_dw1
+  - first:
+      213: -6481945234974347413
+    second: control_bg_btn
+  - first:
+      213: 5178206127830413163
+    second: control_bq_btn
+  - first:
+      213: -93199178559271455
+    second: control_btn1
+  - first:
+      213: 2577319569874155579
+    second: control_btn1_1
+  - first:
+      213: 1395918108431088692
+    second: control_cw_btn
+  - first:
+      213: -3017345293389978891
+    second: control_cw_heamal
+  - first:
+      213: 6863846160666941728
+    second: control_cwd
+  - first:
+      213: -8031904197610322732
+    second: control_dc
+  - first:
+      213: -5307725233932018121
+    second: control_dc_1
+  - first:
+      213: 9155984752837316071
+    second: control_di1
+  - first:
+      213: 1191879148349333242
+    second: control_di2
+  - first:
+      213: 5782001785858236875
+    second: control_dj
+  - first:
+      213: -5807243931320941187
+    second: control_dt
+  - first:
+      213: -4174390534002408382
+    second: control_dtjt
+  - first:
+      213: -8890282826100488465
+    second: control_dw_btn1_1
+  - first:
+      213: 5223754254116913192
+    second: control_gj_btn
+  - first:
+      213: 4450680258084046343
+    second: control_jt_btn
+  - first:
+      213: 5004122161193455035
+    second: control_jy
+  - first:
+      213: -4905853247624759886
+    second: control_jy1_1
+  - first:
+      213: -796632217493722343
+    second: control_l
+  - first:
+      213: -1989745865333561920
+    second: control_n
+  - first:
+      213: -5502734199604989420
+    second: control_qh_btn
+  - first:
+      213: 8470111418246984176
+    second: control_rw_btn
+  - first:
+      213: -8853152346586125780
+    second: control_rw_btn1
+  - first:
+      213: -424181330627693610
+    second: control_rw_btn1_1
+  - first:
+      213: 8388552851210175461
+    second: control_rwdt_btn1
+  - first:
+      213: -6458607984643886192
+    second: control_rwk_btn
+  - first:
+      213: 4230726396648195039
+    second: control_sj_btn
+  - first:
+      213: -74382107381657316
+    second: control_tj_btn
+  - first:
+      213: 7825427452774349626
+    second: control_waif_0
+  - first:
+      213: 3689036721218265599
+    second: control_waif_1
+  - first:
+      213: 3181295513897984135
+    second: control_waif_2
+  - first:
+      213: 6752015888237876788
+    second: control_waif_3
+  - first:
+      213: -4583475980748665503
+    second: control_xj_btn
+  - first:
+      213: 7342434728392638166
+    second: control_yy_btn
+  - first:
+      213: -8470177526496612727
+    second: control_zj_btn
+  - first:
+      213: -3340771451980672235
+    second: control_zy_btn
+  - first:
+      213: -8787570113233527872
+    second: control_icon_beibao
+  - first:
+      213: 4358301226634969643
+    second: control_icon_fuli
+  - first:
+      213: -8920877076154426091
+    second: control_icon_habi
+  - first:
+      213: -1198813016041765817
+    second: control_icon_huodong
+  - first:
+      213: 2640802278977148750
+    second: control_icon_juese
+  - first:
+      213: 3253890184402300492
+    second: control_icon_sc
+  - first:
+      213: 6333219183896467560
+    second: control_icon_tiejiang
+  - first:
+      213: 3503881679910177057
+    second: control_di1_1
+  - first:
+      213: 6513032513956752283
+    second: control_di1_2
+  - first:
+      213: -2720381443875390089
+    second: control_icon_shichang
+  - first:
+      213: 3471228330125681981
+    second: control_di3
+  - first:
+      213: -7526879090070683322
+    second: control_xuetiao1
+  - first:
+      213: 7768809607093751925
+    second: control_xuetiao2
+  - first:
+      213: 8139885292991999763
+    second: control_xuetiao3
+  - first:
+      213: -961147577924932627
+    second: control_dt_jia
+  - first:
+      213: -6462059531855230475
+    second: control_icon_GM
+  - first:
+      213: -425051439969598162
+    second: control_icon_jineng
+  - first:
+      213: -5603349228239653550
+    second: control_icon_babieta
+  - first:
+      213: -4159430395084674497
+    second: control_icon_dafuweng
+  - first:
+      213: -1490985267429192715
+    second: control_icon_jiayuan
+  - first:
+      213: -5912427357594375524
+    second: control_icon_juntuan
+  - first:
+      213: 753671345690870883
+    second: control_icon_linghun
+  - first:
+      213: 3009874036713839120
+    second: control_icon_maoxian
+  - first:
+      213: -257005992563434764
+    second: control_icon_mingsheng
+  - first:
+      213: -8552658344912705417
+    second: control_icon_shangcheng
+  - first:
+      213: -8846770745073649437
+    second: control_icon_shezhi
+  - first:
+      213: 5345399182851568443
+    second: control_icon_xinghe
+  - first:
+      213: -4879815688455070526
+    second: control_icon_zuoqi
+  - first:
+      213: -5080130299568757802
+    second: control_icon_wanju
+  - first:
+      213: 7554285008195104119
+    second: control_caiji_btn
+  - first:
+      213: 9180997068862817497
+    second: control_caiji_icon
+  - first:
+      213: 3225304802804733916
+    second: control_dt_1
+  - first:
+      213: -8314330029895004178
+    second: control_fangdajing
+  - first:
+      213: -58933859045419595
+    second: control_zhandouli_di1
+  - first:
+      213: -3716472861002469431
+    second: control_zhandouli_di2
+  - first:
+      213: 59309222105561608
+    second: control_zhandouli_jiantou1
+  - first:
+      213: -4315747123051586359
+    second: control_zhandouli_jiantou2
+  - first:
+      213: -7163358081487145245
+    second: control_cwd_1
+  - first:
+      213: 2191370444125238558
+    second: control_gj_btn_1
+  - first:
+      213: 8568950170459138169
+    second: control_zidong_xunlu
+  - first:
+      213: 655915111831003561
+    second: control_zidong_xunlu_1
+  - first:
+      213: 7660342708809323344
+    second: control_zidong_zhandou
+  - first:
+      213: -8523296309913188799
+    second: control_zidong_zhandou_1
+  - first:
+      213: -2357943161560286874
+    second: control_btn_zhankuang
+  - first:
+      213: -5846371963349062923
+    second: control_wancheng
+  - first:
+      213: -5368763778651782597
+    second: control_di4
+  - first:
+      213: -2619207071799496639
+    second: control_di5
+  - first:
+      213: -7097200041560764273
+    second: control_di6
+  - first:
+      213: 6652320264315699001
+    second: control_xuanze
+  - first:
+      213: 1833381302196073231
+    second: control_yindao_jiantou
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 47
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 47
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: control_Btn_dw1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 6
+        width: 80
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3df2e6e9632b6224e8a2303d4a8c4f18
+      internalID: 5631875199017381273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_bq_btn
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 44
+        width: 86
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 610b8723cd8c11b4f94579da29332c3d
+      internalID: 5178206127830413163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_btn1
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 262
+        width: 78
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 31, y: 0, z: 30, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a54aafad92bcd594fa9e3f6321dc3a22
+      internalID: -93199178559271455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_btn1_1
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 34
+        width: 78
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 28, y: 0, z: 31, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec100c1e574ad644cbb4ca66c7c8cca6
+      internalID: 2577319569874155579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_btn_zhankuang
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 2
+        width: 68
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b4f2c9b2734df0488d633e88cda8f62
+      internalID: -2357943161560286874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_caiji_btn
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 332
+        width: 98
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0626a5ff3de14f45be81def293a24c1
+      internalID: 7554285008195104119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_caiji_icon
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 166
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2ddc486dbccb1348a2b49e957650c1f
+      internalID: 9180997068862817497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_cw_heamal
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 4
+        width: 48
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed1c55b204112a545ba2c3eb923411e2
+      internalID: -3017345293389978891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_cwd
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 84
+        width: 58
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52c6231a47073624c895903f1cf69b5f
+      internalID: 6863846160666941728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_cwd_1
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 4
+        width: 58
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8474ec8c3ecd80489367044d2dc9bed
+      internalID: -7163358081487145245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_dc
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 394
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ce775e1ba1daee459158918cb20e224
+      internalID: -8031904197610322732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_dc_1
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 394
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dd3f6a745df17443a0202060fecb4a4
+      internalID: -5307725233932018121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_di1
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 232
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf05f996f462cef4aa74fe2c7b169858
+      internalID: 9155984752837316071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_di1_1
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 12
+        width: 46
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 17, y: 0, z: 19, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cfaa11edf887324ab6c9129f0ebfaf5
+      internalID: 3503881679910177057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_di1_2
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 232
+        width: 46
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 14, y: 0, z: 24, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fb40de5649305243ba29f0776db219c
+      internalID: 6513032513956752283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_di2
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 256
+        width: 84
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 51, y: 13, z: 23, w: 14}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 979bfb234571c5c4c8ae78e7aedb951e
+      internalID: 1191879148349333242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_di3
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 10
+        width: 34
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 0, z: 19, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22cee08fb1995444a9d5033947a568f9
+      internalID: 3471228330125681981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_di4
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 174
+        width: 136
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 55, y: 30, z: 55, w: 30}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7905f4fba660031449eeb5778add81d8
+      internalID: -5368763778651782597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_di5
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 234
+        width: 70
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 32, y: 32, z: 32, w: 32}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18756d94754dc9243859318b68fbb490
+      internalID: -2619207071799496639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_di6
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 392
+        width: 168
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 79, y: 0, z: 79, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ace85d5ad3490d4680b98c2e093fc4d
+      internalID: -7097200041560764273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_dj
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e41ee6f547272c4d8252035715756d2
+      internalID: 5782001785858236875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_dt
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 28
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 42, y: 5, z: 7, w: 38}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c875abb44293e8f4789b169464da57dd
+      internalID: -5807243931320941187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_dt_1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 34
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58cd92dfe926f164dbc0608cc969b4f2
+      internalID: 3225304802804733916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_dt_jia
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 304
+        width: 160
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ee6d1da3dfa97040849e83d0a92a391
+      internalID: -961147577924932627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_dtjt
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 254
+        width: 56
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d42d576c7cae996439e4d636c4c28905
+      internalID: -4174390534002408382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_dw_btn1_1
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 428
+        width: 80
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e3ee55614df3c246b85df36bd29eaf5
+      internalID: -8890282826100488465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_fangdajing
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 2
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86e0cc43f1840494b951a41af4059f00
+      internalID: -8314330029895004178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_gj_btn
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 38
+        width: 86
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a24497e790f3bcc4db3dacbee9e0d8e2
+      internalID: 5223754254116913192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_gj_btn_1
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 304
+        width: 86
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6edcbd4dcbfa5364790aa278a90d659d
+      internalID: 2191370444125238558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_GM
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 84
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 909c7ca6cfbe5c64082f7aba814ed853
+      internalID: -6462059531855230475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_babieta
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 4
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0833702ae51f9074487246aef2c0bc3e
+      internalID: -5603349228239653550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_beibao
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 304
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb1d1aa605a94924d9f5f8e3eaa5a377
+      internalID: -8787570113233527872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_dafuweng
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 84
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7b6152f0b9740347a6bd65f8b8a3233
+      internalID: -4159430395084674497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_fuli
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 4
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7b75ab6180f94d46bd4eab70666ee0c
+      internalID: 4358301226634969643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_habi
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 84
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 915aaa9283cd94c45b167f7e48c92276
+      internalID: -8920877076154426091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_huodong
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 84
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be7c5459a15f8364b9c027f9909a68e6
+      internalID: -1198813016041765817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_jiayuan
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 166
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 249e95d48ffa9bd47bbd992cea5e48dd
+      internalID: -1490985267429192715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_jineng
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 304
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f96dce4016b0b5439b41ceead502b4e
+      internalID: -425051439969598162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_juese
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 166
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424e86df4bf9afe49b42ed99c49b00dd
+      internalID: 2640802278977148750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_juntuan
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 76
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1399ea84ae4c45447acf1e2d985cb597
+      internalID: -5912427357594375524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_linghun
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 76
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2078a7355175d074eb96ac621ddbe5d8
+      internalID: 753671345690870883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_maoxian
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 84
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d97df95a440eeac4a9d97758cd378d65
+      internalID: 3009874036713839120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_mingsheng
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 304
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7e5b9645dad88542820ebde36c7a07c
+      internalID: -257005992563434764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_shangcheng
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 304
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e233e4950c4a8942aff75844eb5684a
+      internalID: -8552658344912705417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_shezhi
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 304
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1247fbdf6993a848a06dbfa63cd23a2
+      internalID: -8846770745073649437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_shichang
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 304
+        width: 68
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4874010af739f24091ffa980ccc7c25
+      internalID: -2720381443875390089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_tiejiang
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 304
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b8500486eca7054585fb0159a083db1
+      internalID: 6333219183896467560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_wanju
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 164
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02fa04793a370884dbacc762d35ada3b
+      internalID: -5080130299568757802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_xinghe
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 252
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab0227ee32d41b74d9b2f64c3fc998e8
+      internalID: 5345399182851568443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_icon_zuoqi
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 340
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d80ad3b0baaf1a84f9142f5dfc092a06
+      internalID: -4879815688455070526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_jt_btn
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 36
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a346f9f79cbfc849bf811a4445a5770
+      internalID: 4450680258084046343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_jy
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 472
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 4, z: 3, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d53b49490a4a41439c111c9fd2a05bb
+      internalID: 5004122161193455035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_jy1_1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 502
+        width: 668
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 0, z: 2, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4971653448a32624cae0108a3a88e047
+      internalID: -4905853247624759886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_qh_btn
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 244
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ab5e847cf36bf94bac760c39d907e8f
+      internalID: -5502734199604989420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_rw_btn1
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 456
+        width: 80
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fed5c9f8ab3a87842bd4dc2bff1eca5f
+      internalID: -8853152346586125780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_rw_btn1_1
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 484
+        width: 80
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1edf14ddec4a984897cc12781fd2118
+      internalID: -424181330627693610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_rwdt_btn1
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 484
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 5, y: 5, z: 6, w: 6}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58c7bd2b689b59b4891e42b5c18e433e
+      internalID: 8388552851210175461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_rwk_btn
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 254
+        width: 84
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 37, y: 20, z: 37, w: 7}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f613f38868f067043b7f42821f11846d
+      internalID: -6458607984643886192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_sj_btn
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 344
+        width: 86
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8233d06711631f245b92d100a36a85ca
+      internalID: 4230726396648195039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_waif_0
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 392
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faf23603ef344a9479e6f3b2d9ba575e
+      internalID: 7825427452774349626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_waif_1
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 392
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c86cbeeec4cccbe4aae22e7f5393b95f
+      internalID: 3689036721218265599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_waif_2
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 392
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a4857e62664eea48b746593436d6842
+      internalID: 3181295513897984135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_waif_3
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 392
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65ebe8a758c3df241af053f257ec6149
+      internalID: 6752015888237876788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_wancheng
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 4
+        width: 42
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2c39d5f218d90742ae6a2dd28f6c75c
+      internalID: -5846371963349062923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_xj_btn
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 264
+        width: 86
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 733df696a5ed5eb4b85f94057d9e6126
+      internalID: -4583475980748665503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_xuanze
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 78
+        width: 84
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 38, y: 38, z: 38, w: 38}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cf43649cef21344da03ca3ce838d105
+      internalID: 6652320264315699001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_xuetiao1
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 480
+        width: 190
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84b44c121243746478c48846b87e286f
+      internalID: -7526879090070683322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_xuetiao2
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 436
+        width: 178
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7db494e401dc9dc4d878be57f4ef5930
+      internalID: 7768809607093751925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_xuetiao3
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 458
+        width: 178
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c2badd2d07568d418fb8ccd80d00f15
+      internalID: 8139885292991999763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_yindao_jiantou
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 384
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e188bfbadd102548b442938708f4905
+      internalID: 1833381302196073231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_yy_btn
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 164
+        width: 26
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f621f63294a48fa49ac1f1a409f55d6d
+      internalID: 7342434728392638166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zhandouli_di1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 412
+        width: 452
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eae5b41c6decd51459fe4a121f5dea22
+      internalID: -58933859045419595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zhandouli_di2
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 2
+        width: 28
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 9, y: 12, z: 9, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2218611717ee81445975ffefa7b8023a
+      internalID: -3716472861002469431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zhandouli_jiantou1
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 2
+        width: 34
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e1be5d4251f7f14a948d059b3098381
+      internalID: 59309222105561608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zhandouli_jiantou2
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 270
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 877710e339df0bf4bb624720da999dd0
+      internalID: -4315747123051586359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zidong_xunlu
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 436
+        width: 266
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c9d88019a730574db287cc564fd226f
+      internalID: 8568950170459138169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zidong_xunlu_1
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 398
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65c40765b7e534349980a09aea4e791c
+      internalID: 655915111831003561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zidong_zhandou
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 474
+        width: 266
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bf40899fcd2c9244bf124bad7bec2a9
+      internalID: 7660342708809323344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zidong_zhandou_1
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 470
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fffc285ffbec044e9f45625c11a1e69
+      internalID: -8523296309913188799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zj_btn
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 166
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bb1a673c40a18e4dae1f9397f10a99c
+      internalID: -8470177526496612727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control_zy_btn
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 432
+        width: 34
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3a861e09ab5b7045931848c3edd6f6c
+      internalID: -3340771451980672235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 30320b8f4755c894e85d9f9b394b7a49
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: resourcesab/uidev/sprite/control/control.png
+  assetBundleVariant: 

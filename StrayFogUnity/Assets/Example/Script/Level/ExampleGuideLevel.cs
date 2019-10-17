@@ -100,6 +100,7 @@ public class ExampleGuideLevel : AbsLevel
                 Stopwatch w = (Stopwatch)args[0];
                 w.Stop();
                 UnityEngine.Debug.Log(w.Elapsed + "=>" + wins.JsonSerialize());
+                StrayFogGamePools.guideManager.RegisterGuide();
             }, _watch);
     }
 }

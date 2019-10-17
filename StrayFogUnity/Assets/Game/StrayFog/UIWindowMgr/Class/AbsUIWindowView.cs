@@ -15,7 +15,13 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// Awake
     /// </summary>
     protected virtual void Awake() {
+        OnAfterAwake();
     }
+
+    /// <summary>
+    /// Awake之后
+    /// </summary>
+    protected virtual void OnAfterAwake() { }
     #endregion
 
     #region config 窗口配置
