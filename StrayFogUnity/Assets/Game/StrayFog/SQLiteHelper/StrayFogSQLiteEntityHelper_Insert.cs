@@ -34,7 +34,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     else
                     {
                         #region 插入数据
-                        List<T> data = Select<T>();
+                        Dictionary<int, AbsStrayFogSQLiteEntity> data = OnSelect<T>(null);
                         StringBuilder sbLog = new StringBuilder();
                         _xlsRowIndex = -1;
                         if (_tableAttribute.hasPkColumn)
@@ -44,15 +44,16 @@ public sealed partial class StrayFogSQLiteEntityHelper
                             bool hasSamePKValue = data.Count > 0;
                             int sameRowIndex = 0;
                             #region 查询缓存数据中是否有相同主键数据
-                            for (int i = 0; i < data.Count; i++)
+                            foreach (KeyValuePair<int, AbsStrayFogSQLiteEntity> entity in data)
                             {
                                 hasSamePKValue = data.Count > 0;
-                                sameRowIndex = _tableAttribute.xlsDataStartRowIndex + i;
+                                _xlsRowIndex++;
+                                sameRowIndex = _tableAttribute.xlsDataStartRowIndex + _xlsRowIndex;
                                 foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
                                 {
                                     if (key.Value.isPK)
                                     {
-                                        cacheValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(data[i], null);
+                                        cacheValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(entity.Value, null);
                                         entityValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(_entity, null);
                                         hasSamePKValue &= cacheValue.Equals(entityValue);
                                         sbLog.AppendFormat("【{0}->{1}】", msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].Name, entityValue);
@@ -72,7 +73,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                             else
                             {
                                 _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
-                                data.Add(_entity);
+                                data.Add(_entity.pkSequenceId, _entity);
                                 OnRefreshCacheData(data, _tableAttribute, false);
                                 result = true;
                             }
@@ -80,7 +81,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         else
                         {
                             _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + data.Count;
-                            data.Add(_entity);
+                            data.Add(_entity.pkSequenceId, _entity);
                             OnRefreshCacheData(data, _tableAttribute, false);
                             result = true;
                         }

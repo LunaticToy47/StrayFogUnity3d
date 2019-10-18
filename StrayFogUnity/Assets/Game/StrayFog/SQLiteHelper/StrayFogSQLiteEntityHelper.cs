@@ -63,13 +63,24 @@ public sealed partial class StrayFogSQLiteEntityHelper
         }
         return mExcelPackageMaping[_tableAttribute.id];
     }
+    /// <summary>
+    /// 删除ExcelPackage
+    /// </summary>
+    /// <param name="_tableAttribute">表属性</param>    
+    static void OnRemoveExcelPackage(SQLiteTableMapAttribute _tableAttribute)
+    {
+        mExcelPackageMaping.Remove(_tableAttribute.id);
+    }
     #endregion
 
     #region mCacheEntityData 实体缓存数据
     /// <summary>
     /// 实体缓存数据
+    /// Key:表
+    /// Value:[Key:主键序列值,Value:数据实体]有主键
+    /// Value:[Key:行号,Value:数据实体]无主键
     /// </summary>
-    static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
+    static Dictionary<int, Dictionary<int, AbsStrayFogSQLiteEntity>> mCacheEntityData = new Dictionary<int, Dictionary<int, AbsStrayFogSQLiteEntity>>();
     #endregion
 
     #region OnRefreshCacheData 刷新内存数据
@@ -80,12 +91,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// <summary>
     /// 刷新内存数据
     /// </summary>
-    /// <typeparam name="T">类型</typeparam>
     /// <param name="_data">数据</param>
     /// <param name="_tableAttribute">表属性</param>
     /// <param name="_isReadFromDisk">是否是从磁盘读取数据</param>
-    static void OnRefreshCacheData<T>(List<T> _data, SQLiteTableMapAttribute _tableAttribute, 
-        bool _isReadFromDisk) where T : AbsStrayFogSQLiteEntity
+    static void OnRefreshCacheData(Dictionary<int, AbsStrayFogSQLiteEntity> _data, SQLiteTableMapAttribute _tableAttribute, 
+        bool _isReadFromDisk)
     {
         if (!mCacheEntityData.ContainsKey(_tableAttribute.id))
         {
@@ -108,9 +118,9 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
-    static List<T> OnGetCacheData<T>(SQLiteTableMapAttribute _tableAttribute) where T : AbsStrayFogSQLiteEntity
+    static Dictionary<int, AbsStrayFogSQLiteEntity> OnGetCacheData(SQLiteTableMapAttribute _tableAttribute)
     {
-        return mCacheEntityData.ContainsKey(_tableAttribute.id) ? (List<T>)mCacheEntityData[_tableAttribute.id] : new List<T>();
+        return mCacheEntityData.ContainsKey(_tableAttribute.id) ? mCacheEntityData[_tableAttribute.id] : new Dictionary<int, AbsStrayFogSQLiteEntity>();
     }
     #endregion
 

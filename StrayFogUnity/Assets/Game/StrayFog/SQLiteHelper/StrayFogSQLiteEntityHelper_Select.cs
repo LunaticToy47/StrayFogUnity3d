@@ -16,10 +16,10 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <returns>数据集</returns>
-    static List<T> OnReadFromXLS<T>(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, AbsStrayFogSQLiteEntity> OnReadFromXLS<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        List<T> result = new List<T>();
+        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
         if (File.Exists(_tableAttribute.xlsFilePath))
         {
             T tempEntity = default(T);
@@ -55,7 +55,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                 }
                             }
                             tempEntity.Resolve();
-                            result.Add(tempEntity);
+                            result.Add(tempEntity.pkSequenceId, tempEntity);
                         }
                         #endregion
                     }
@@ -93,7 +93,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                                 else
                                 {
                                     tempEntity.Resolve();
-                                    result.Add(tempEntity);
+                                    result.Add(tempEntity.pkSequenceId, tempEntity);
                                 }
                             }
                         }
@@ -117,10 +117,10 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <returns>数据集</returns>
-    static List<T> OnReadFromSQLite<T>(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, AbsStrayFogSQLiteEntity> OnReadFromSQLite<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        List<T> result = new List<T>();        
+        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();        
         SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _tableAttribute.sqliteTableName));
         T tempEntity = default(T);
         string tempPropertyName = string.Empty;
@@ -141,7 +141,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
             }
             #endregion
             tempEntity.Resolve();
-            result.Add(tempEntity);
+            result.Add(tempEntity.pkSequenceId, tempEntity);
         }
         else
         {
@@ -161,7 +161,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     }                    
                 }
                 tempEntity.Resolve();
-                result.Add(tempEntity);
+                result.Add(tempEntity.pkSequenceId, tempEntity);
             }
             reader.Close();
             reader = null;
@@ -178,10 +178,10 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <returns>数据集合</returns>
-    static List<T> OnReadAll<T>(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, AbsStrayFogSQLiteEntity> OnReadAll<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        List<T> result = new List<T>();
+        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
         if (StrayFogGamePools.setting.isUseSQLite)
         {
             result = OnReadFromSQLite<T>(_tableAttribute);
@@ -201,10 +201,10 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <returns>数据</returns>
-    static List<T> OnLoadViewFromXLS<T>(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, AbsStrayFogSQLiteEntity> OnLoadViewFromXLS<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        List<T> result = new List<T>();
+        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
         T tempEntity = default(T);
         if (_tableAttribute.sqliteTableType == enSQLiteEntityClassify.View)
         {
@@ -234,7 +234,8 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     msEntityPropertyInfoMaping[_tableAttribute.id][inAssetPath].SetValue(tempEntity, Path.Combine(dicFolder[t.folderId].inSide, t.inSide + t.ext).TransPathSeparatorCharToUnityChar(), null);
                     msEntityPropertyInfoMaping[_tableAttribute.id][outAssetPath].SetValue(tempEntity, t.outSide, null);
                     msEntityPropertyInfoMaping[_tableAttribute.id][extEnumValue].SetValue(tempEntity, t.extEnumValue, null);
-                    result.Add(tempEntity);
+                    tempEntity.Resolve();
+                    result.Add(tempEntity.pkSequenceId, tempEntity);
                 }
                 #endregion
             }
@@ -248,7 +249,8 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     {
                         tempEntity = OnCreateInstance<T>(_tableAttribute);
                         msEntityPropertyInfoMaping[_tableAttribute.id][vtNameKey].SetValue(tempEntity, key.sqliteTableName, null);
-                        result.Add(tempEntity);
+                        tempEntity.Resolve();
+                        result.Add(tempEntity.pkSequenceId, tempEntity);
                     }
                 }
                 #endregion
@@ -283,30 +285,48 @@ public sealed partial class StrayFogSQLiteEntityHelper
     public static List<T> Select<T>(Func<T, bool> _condition)
     where T : AbsStrayFogSQLiteEntity
     {
-        List<T> result = new List<T>();
+        Dictionary<int, AbsStrayFogSQLiteEntity>  result = OnSelect<T>(_condition);
+        T[] data = new T[result.Count];
+        result.Values.CopyTo(data, 0);
+        return new List<T>(data);
+    }
+
+    /// <summary>
+    /// 查询指定条件的数据集
+    /// </summary>
+    /// <typeparam name="T">实体类型</typeparam>
+    /// <param name="_condition">条件</param>
+    /// <returns>数据集</returns>
+    static Dictionary<int, AbsStrayFogSQLiteEntity> OnSelect<T>(Func<T, bool> _condition)
+    where T : AbsStrayFogSQLiteEntity
+    {
+        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
         SQLiteTableMapAttribute tableAttribute = GetTableAttribute<T>();
+        Dictionary<int, AbsStrayFogSQLiteEntity> srcResult = new Dictionary<int, AbsStrayFogSQLiteEntity>();
         if (mCacheIsReadFromDisk.Contains(tableAttribute.id))
         {
-            result = OnGetCacheData<T>(tableAttribute);
+            srcResult = OnGetCacheData(tableAttribute);
         }
         else
         {
-            result = OnReadAll<T>(tableAttribute);
-            OnRefreshCacheData(result, tableAttribute, true);
+            srcResult = OnReadAll<T>(tableAttribute);
+            OnRefreshCacheData(srcResult, tableAttribute, true);
             mCacheIsReadFromDisk.Add(tableAttribute.id);
         }
 
         if (_condition != null)
         {
-            List<T> temp = new List<T>();
-            foreach (T t in result)
+            foreach (T t in srcResult.Values)
             {
                 if (_condition(t))
                 {
-                    temp.Add(t);
+                    result.Add(t.pkSequenceId, t);
                 }
             }
-            result = temp;
+        }
+        else
+        {
+            result = srcResult;
         }
         return result;
     }

@@ -14,11 +14,11 @@ public sealed partial class StrayFogSQLiteEntityHelper
     /// 从缓存删除数据
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
-    /// <param name="_entity">实体</param>
+    /// <param name="_delEntity">要删除的实体</param>
     /// <param name="_tableAttribute">表属性</param>
     /// <param name="_xlsRowIndex">XLS表行索引</param>
     /// <returns>true:成功,false:失败</returns>
-    static bool OnDeleteToCacheEntityData<T>(T _entity, SQLiteTableMapAttribute _tableAttribute, out int _xlsRowIndex)
+    static bool OnDeleteToCacheEntityData<T>(T _delEntity, SQLiteTableMapAttribute _tableAttribute, out int _xlsRowIndex)
         where T : AbsStrayFogSQLiteEntity
     {
         bool result = false;
@@ -36,30 +36,31 @@ public sealed partial class StrayFogSQLiteEntityHelper
                         #region 删除数据                      
                         if (_tableAttribute.hasPkColumn)
                         {
-                            List<T> data = Select<T>();
+                            Dictionary<int, AbsStrayFogSQLiteEntity> data = OnSelect<T>(null);
                             StringBuilder sbLog = new StringBuilder();
                             _xlsRowIndex = -1;
                             object cacheValue = null;
                             object entityValue = null;
                             bool hasSamePKValue = data.Count > 0;
-
+                            int delKey = 0;
                             #region 查询缓存数据中是否有相同主键数据
-                            for (int i = 0; i < data.Count; i++)
+                            foreach (KeyValuePair<int, AbsStrayFogSQLiteEntity> entity in data)
                             {
                                 hasSamePKValue = data.Count > 0;
-                                _xlsRowIndex = i;
+                                _xlsRowIndex++;                                
                                 foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[_tableAttribute.id])
                                 {
                                     if (key.Value.isPK)
                                     {
-                                        cacheValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(data[i], null);
-                                        entityValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(_entity, null);
+                                        cacheValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(entity.Value, null);
+                                        entityValue = msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].GetValue(_delEntity, null);
                                         hasSamePKValue &= cacheValue.Equals(entityValue);
                                         sbLog.AppendFormat("【{0}->{1}】", msEntityPropertyInfoMaping[_tableAttribute.id][key.Key].Name, entityValue);
                                     }
                                 }
                                 if (hasSamePKValue)
                                 {
+                                    delKey = entity.Key;
                                     break;
                                 }
                             }
@@ -67,7 +68,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
 
                             if (hasSamePKValue)
                             {
-                                data.RemoveAt(_xlsRowIndex);
+                                data.Remove(delKey);
                                 _xlsRowIndex = _tableAttribute.xlsDataStartRowIndex + _xlsRowIndex;                                
                                 OnRefreshCacheData(data, _tableAttribute, false);
                                 result = true;
@@ -164,7 +165,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     }
                     else
                     {
-                        OnRefreshCacheData(new List<T>(), _tableAttribute, false);
+                        OnRefreshCacheData(new Dictionary<int, AbsStrayFogSQLiteEntity>(), _tableAttribute, false);
                         result = true;
                     }
                     break;

@@ -10,12 +10,10 @@ public partial class XLS_Config_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 	
 
 	
-	#region pkSequenceId 主键序列值
-    /// <summary>
-    /// 主键序列值
-    /// </summary>
-    public override int pkSequenceId { get { return (id.ToString()).UniqueHashCode(); } }
-    #endregion
+	protected override int OnResolvePkSequenceId()
+    {
+        return (id.ToString()).UniqueHashCode();
+    }
 	
 
 	#region Properties	
