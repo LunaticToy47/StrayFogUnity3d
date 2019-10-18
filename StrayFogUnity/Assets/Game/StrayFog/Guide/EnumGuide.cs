@@ -1,24 +1,8 @@
 ﻿/// <summary>
-/// 引导触发条件
-/// </summary>
-public enum enGuideTriggerCondition
-{
-    /// <summary>
-    /// 无条件触发
-    /// </summary>
-    [AliasTooltip("无条件触发")]
-    None,
-    /// <summary>
-    /// 指定窗口
-    /// </summary>
-    [AliasTooltip("指定窗口")]
-    SpecifyWindow,
-}
-
-/// <summary>
 /// 引导触发类别
+/// UserGuideConfig.guideType
 /// </summary>
-public enum enGuideTriggerType
+public enum enGuideType
 {
     /// <summary>
     /// 强引导【禁用玩家操作，等待引导触发】
@@ -33,41 +17,19 @@ public enum enGuideTriggerType
 }
 
 /// <summary>
-/// 引导显示类型
+/// 强引导窗口显示类型
+/// UserGuideConfig.strongGuidDisplayType
 /// </summary>
-public enum enGuideDisplayType
+public enum enStrongGuidDisplayType
 {
     /// <summary>
-    /// 默认显示
+    /// 全部显示
     /// </summary>
-    [AliasTooltip("默认显示")]
-    Default,
+    [AliasTooltip("全部显示")]
+    All,
     /// <summary>
-    /// 隐藏窗口
+    /// 隐藏引导窗口遮罩背景
     /// </summary>
-    [AliasTooltip("隐藏窗口")]
-    HideWindow,
-    /// <summary>
-    /// 隐藏背景
-    /// </summary>
-    [AliasTooltip("隐藏背景")]
-    HideBackground,
+    [AliasTooltip("隐藏引导窗口遮罩背景")]
+    HiddenMaskBg
 }
-
-/// <summary>
-/// 引导验证条件
-/// </summary>
-public enum enGuideValidateCondition
-{
-    /// <summary>
-    /// 无条件
-    /// </summary>
-    [AliasTooltip("无条件")]
-    None,
-    /// <summary>
-    /// 2D锚点位置
-    /// </summary>
-    [AliasTooltip("2D锚点位置")]
-    Anchor2DPosition,
-}
-

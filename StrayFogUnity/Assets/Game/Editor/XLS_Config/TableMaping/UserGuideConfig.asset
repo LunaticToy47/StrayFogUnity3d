@@ -91,14 +91,14 @@ MonoBehaviour:
     arrayDimension: 0
     isIngore: 0
   - columnName: arrowEdge
-    desc: "\u7BAD\u5934\u4F4D\u7F6E\n0\uFF1A\u7BAD\u5934\u5728\u6846\u5DE6\u4FA7\n1\uFF1A\u7BAD\u5934\u5728\u6846\u53F3\u4FA7\n2\uFF1A\u7BAD\u5934\u5728\u6846\u4E0A\u4FA7\n3\uFF1A\u7BAD\u5934\u5728\u6846\u4E0B\u4FA7"
+    desc: "\u7BAD\u5934\u4F4D\u7F6E[\u6570\u91CF\u4E0E\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\u76F8\u540C]\n0\uFF1A\u7BAD\u5934\u5728\u6846\u5DE6\u4FA7\n1\uFF1A\u7BAD\u5934\u5728\u6846\u53F3\u4FA7\n2\uFF1A\u7BAD\u5934\u5728\u6846\u4E0A\u4FA7\n3\uFF1A\u7BAD\u5934\u5728\u6846\u4E0B\u4FA7"
     xlsColumnValueIndex: 8
     isPK: 0
     isNull: 0
     sqliteColumnName: arrowEdge
     sqliteColumnValue: 
     dataType: 6
-    arrayDimension: 0
+    arrayDimension: 1
     isIngore: 0
   - columnName: triggerReferObjectId
     desc: "\u3010\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\u3011\u7EC4\nUserGuideReferObject.Id"

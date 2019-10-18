@@ -67,14 +67,14 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	public bool isIngoreServerBack { get; private set; }	
 		
 	/// <summary>
-	/// 箭头位置
+	/// 箭头位置[数量与触发参考对象相同]
 	///0：箭头在框左侧
 	///1：箭头在框右侧
 	///2：箭头在框上侧
 	///3：箭头在框下侧
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,8,"arrowEdge","","@arrowEdge8",false,false)]	
-	public int arrowEdge { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,8,"arrowEdge","","@arrowEdge8",false,false)]	
+	public int[] arrowEdge { get; private set; }	
 		
 	/// <summary>
 	/// 【触发参考对象】组

@@ -39,7 +39,9 @@ public sealed partial class StrayFogSQLiteEntityHelper
         result.Values.CopyTo(data, 0);
         return new List<T>(data);
     }
+    #endregion
 
+    #region OnSelect 查询指定条件的数据集
     /// <summary>
     /// 查询指定条件的数据集
     /// </summary>
