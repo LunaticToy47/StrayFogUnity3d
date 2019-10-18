@@ -124,6 +124,29 @@ public sealed partial class StrayFogSQLiteEntityHelper
     }
     #endregion
 
+    #region OnSelectAll 读取所有数据
+    /// <summary>
+    /// 读取所有数据
+    /// </summary>
+    /// <typeparam name="T">实体类型</typeparam>
+    /// <param name="_tableAttribute">表属性</param>
+    /// <returns>数据集合</returns>
+    static Dictionary<int, AbsStrayFogSQLiteEntity> OnReadAll<T>(SQLiteTableMapAttribute _tableAttribute)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        if (StrayFogGamePools.setting.isUseSQLite)
+        {
+            result = OnReadFromSQLite<T>(_tableAttribute);
+        }
+        else
+        {
+            result = OnReadFromXLS<T>(_tableAttribute);
+        }
+        return result;
+    }
+    #endregion
+
     #region GetTableAttribute 获得表属性
     /// <summary>
     /// 获得表属性
