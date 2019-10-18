@@ -9,6 +9,8 @@ public partial class XLS_Report_Determinant_Table_ReportDeterminant: AbsStrayFog
 {
 	
 
+	
+
 	#region Properties	
 		
 	/// <summary>

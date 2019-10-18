@@ -9,6 +9,8 @@ public partial class XLS_Report_View_DeterminantVT: AbsStrayFogSQLiteEntity
 {
 	
 
+	
+
 	#region Properties	
 		
 	/// <summary>

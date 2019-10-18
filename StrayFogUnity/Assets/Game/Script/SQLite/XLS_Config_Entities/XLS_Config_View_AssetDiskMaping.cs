@@ -9,6 +9,8 @@ public partial class XLS_Config_View_AssetDiskMaping: AbsStrayFogSQLiteEntity
 {
 	
 
+	
+
 	#region Properties	
 		
 	/// <summary>

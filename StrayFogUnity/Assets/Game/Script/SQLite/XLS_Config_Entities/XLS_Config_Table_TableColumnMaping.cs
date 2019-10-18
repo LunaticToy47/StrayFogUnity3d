@@ -9,6 +9,8 @@ public partial class XLS_Config_Table_TableColumnMaping: AbsStrayFogSQLiteEntity
 {
 	
 
+	
+
 	#region Properties	
 		
 	/// <summary>

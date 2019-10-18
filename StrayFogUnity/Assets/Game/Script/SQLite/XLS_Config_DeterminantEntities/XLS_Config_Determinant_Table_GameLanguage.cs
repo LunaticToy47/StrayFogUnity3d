@@ -9,6 +9,8 @@ public partial class XLS_Config_Determinant_Table_GameLanguage: AbsStrayFogSQLit
 {
 	
 
+	
+
 	#region Properties	
 		
 	/// <summary>

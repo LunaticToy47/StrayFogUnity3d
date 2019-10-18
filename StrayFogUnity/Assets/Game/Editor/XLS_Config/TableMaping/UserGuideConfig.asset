@@ -23,7 +23,7 @@ MonoBehaviour:
   - columnName: id
     desc: "\u6807\u8BC6id"
     xlsColumnValueIndex: 1
-    isPK: 0
+    isPK: 1
     isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 

@@ -27,6 +27,15 @@ public partial class #ClassName#: AbsStrayFogSQLiteEntity
     #endregion
 	#TableConstructor#
 
+	#PkSequenceIdBlock#
+	#region pkSequenceId 主键序列值
+    /// <summary>
+    /// 主键序列值
+    /// </summary>
+    public override int pkSequenceId { get { return (#PkSequenceIds##Name#.ToString()#PkSequenceIds#).UniqueHashCode(); } }
+    #endregion
+	#PkSequenceIdBlock#
+
 	#region Properties	
 	#Properties#	
 	/// <summary>

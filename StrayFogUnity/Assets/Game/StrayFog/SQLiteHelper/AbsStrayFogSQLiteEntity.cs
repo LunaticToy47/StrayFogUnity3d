@@ -4,6 +4,11 @@
 public abstract class AbsStrayFogSQLiteEntity
 {
     /// <summary>
+    /// 主键序列值
+    /// </summary>
+    public virtual int pkSequenceId { get { return 0; } }
+
+    /// <summary>
     /// 解析数据
     /// </summary>
     public void Resolve()

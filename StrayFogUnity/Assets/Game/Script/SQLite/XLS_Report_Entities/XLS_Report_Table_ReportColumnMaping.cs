@@ -9,6 +9,8 @@ public partial class XLS_Report_Table_ReportColumnMaping: AbsStrayFogSQLiteEntit
 {
 	
 
+	
+
 	#region Properties	
 		
 	/// <summary>

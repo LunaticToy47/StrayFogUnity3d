@@ -9,6 +9,15 @@ public partial class XLS_Config_Table_AssetDiskMapingFolder: AbsStrayFogSQLiteEn
 {
 	
 
+	
+	#region pkSequenceId 主键序列值
+    /// <summary>
+    /// 主键序列值
+    /// </summary>
+    public override int pkSequenceId { get { return (folderId.ToString()).UniqueHashCode(); } }
+    #endregion
+	
+
 	#region Properties	
 		
 	/// <summary>

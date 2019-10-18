@@ -699,6 +699,22 @@ public sealed class EditorStrayFogXLS
         tableConstructorTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, tableConstructorMark, out tableConstructorReplaceTemplete);
         #endregion
 
+        #region #PkSequenceIdBlock#
+        string pkSequenceIdBlockMark = "#PkSequenceIdBlock#";
+        string pkSequenceIdBlockReplaceTemplete = string.Empty;
+        string pkSequenceIdBlockTemplete = string.Empty;
+        StringBuilder sbPkSequenceIdBlockReplace = new StringBuilder();
+        pkSequenceIdBlockTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(entityScriptTemplete, pkSequenceIdBlockMark, out pkSequenceIdBlockReplaceTemplete);
+        #endregion
+
+        #region #pkSequenceId#
+        string pkSequenceIdMark = "#PkSequenceIds#";
+        string pkSequenceIdReplaceTemplete = string.Empty;
+        string pkSequenceIdTemplete = string.Empty;
+        StringBuilder sbPkSequenceIdReplace = new StringBuilder();
+        pkSequenceIdTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(pkSequenceIdBlockTemplete, pkSequenceIdMark, out pkSequenceIdReplaceTemplete);
+        #endregion
+
         #region #ConstructorParamSummary#
         string constructorParamSummaryMark = "#ConstructorParamSummary#";
         string constructorParamSummaryReplaceTemplete = string.Empty;
@@ -739,6 +755,7 @@ public sealed class EditorStrayFogXLS
         List<string> tempConstructorParamSummary = new List<string>();
         List<string> tempConstructorFormalParams = new List<string>();
         List<string> tempConstructorSetParams = new List<string>();
+        List<string> tempPkSequenceId = new List<string>();
         bool hasPK = false;
         foreach (EditorXlsTableSchema t in _tables)
         {
@@ -755,12 +772,15 @@ public sealed class EditorStrayFogXLS
                 xlsColumnDataIndex = msrColumnDataRowStartIndex;
                 xlsColumnTypeIndex = msrColumnTypeRowIndex;
             }
+            sbPkSequenceIdBlockReplace.Length = 0;
+            sbPkSequenceIdReplace.Length = 0;
             sbPropertyReplace.Length = 0;
             sbSetPropertyReplace.Length = 0;
             sbTableConstructorReplace.Length = 0;
             sbConstructorParamSummaryReplace.Length = 0;
             sbConstructorFormalParamsReplace.Length = 0;
             sbConstructorSetParamsReplace.Length = 0;
+            tempPkSequenceId.Clear();
             tempConstructorParamSummary.Clear();
             tempConstructorFormalParams.Clear();
             tempConstructorSetParams.Clear();
@@ -794,19 +814,24 @@ public sealed class EditorStrayFogXLS
                 {
                     if (c.isPK)
                     {
+                        tempPkSequenceId.Add(pkSequenceIdTemplete
+                            .Replace("#Name#", c.columnName));
+
                         tempConstructorParamSummary.Add(
                         constructorParamSummaryTemplete
                             .Replace("#Name#", c.columnName)
                         );
+
                         tempConstructorFormalParams.Add(
                         constructorFormalParamsTemplete
                             .Replace("#Name#", c.columnName)
                             .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                         );
+
                         tempConstructorSetParams.Add(
                         constructorSetParamsTemplete
                             .Replace("#Name#", c.columnName)
-                        );
+                        );                        
                     }
                     else
                     {
@@ -818,7 +843,10 @@ public sealed class EditorStrayFogXLS
                     }
                 }
             }
-
+            if (tempPkSequenceId.Count > 0)
+            {
+                sbPkSequenceIdReplace.Append(string.Join("+", tempPkSequenceId.ToArray()));
+            }
             if (tempConstructorParamSummary.Count > 0)
             {
                 sbConstructorParamSummaryReplace.Append(string.Join("", tempConstructorParamSummary.ToArray()));
@@ -840,6 +868,11 @@ public sealed class EditorStrayFogXLS
                     .Replace(constructorFormalParamsReplaceTemplete, sbConstructorFormalParamsReplace.ToString())
                     .Replace(constructorSetParamsReplaceTemplete, sbConstructorSetParamsReplace.ToString())
                     );
+
+                sbPkSequenceIdBlockReplace.Append(
+                    pkSequenceIdBlockTemplete
+                    .Replace(pkSequenceIdReplaceTemplete, sbPkSequenceIdReplace.ToString())
+                    );
             }
 
             if (!t.canModifyData)
@@ -852,6 +885,7 @@ public sealed class EditorStrayFogXLS
             cfgEntityScript.SetText(entityScriptTemplete
 
                 .Replace(tableConstructorReplaceTemplete, sbTableConstructorReplace.ToString())
+                .Replace(pkSequenceIdBlockReplaceTemplete, sbPkSequenceIdBlockReplace.ToString())
                 .Replace(propertyReplaceTemplete, sbPropertyReplace.ToString())
                 .Replace(setPropertyReplaceTemplete, sbSetPropertyReplace.ToString())
 

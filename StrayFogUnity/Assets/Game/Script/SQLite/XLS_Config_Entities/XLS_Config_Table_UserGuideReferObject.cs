@@ -4,9 +4,18 @@ using UnityEngine;
 /// <summary>
 /// UserGuideReferObject实体
 /// </summary>
-[SQLiteTableMap(-1509086768,"Assets/Game/Editor/XLS_Config/UserGuideReferObject.xlsx","UserGuideReferObject", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_853878160",typeof(XLS_Config_Table_UserGuideReferObject),false,false)]
+[SQLiteTableMap(-1509086768,"Assets/Game/Editor/XLS_Config/UserGuideReferObject.xlsx","UserGuideReferObject", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_853878160",typeof(XLS_Config_Table_UserGuideReferObject),true,false)]
 public partial class XLS_Config_Table_UserGuideReferObject: AbsStrayFogSQLiteEntity
 {
+	
+
+	
+	#region pkSequenceId 主键序列值
+    /// <summary>
+    /// 主键序列值
+    /// </summary>
+    public override int pkSequenceId { get { return (id.ToString()).UniqueHashCode(); } }
+    #endregion
 	
 
 	#region Properties	
@@ -14,7 +23,7 @@ public partial class XLS_Config_Table_UserGuideReferObject: AbsStrayFogSQLiteEnt
 	/// <summary>
 	/// 参考对象Id
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"id","","@id1",false,false)]	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"id","","@id1",true,false)]	
 	public int id { get; private set; }	
 		
 	/// <summary>

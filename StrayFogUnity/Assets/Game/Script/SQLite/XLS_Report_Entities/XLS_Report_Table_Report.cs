@@ -27,6 +27,15 @@ public partial class XLS_Report_Table_Report: AbsStrayFogSQLiteEntity
     #endregion
 	
 
+	
+	#region pkSequenceId 主键序列值
+    /// <summary>
+    /// 主键序列值
+    /// </summary>
+    public override int pkSequenceId { get { return (idCol.ToString()).UniqueHashCode(); } }
+    #endregion
+	
+
 	#region Properties	
 		
 	/// <summary>
