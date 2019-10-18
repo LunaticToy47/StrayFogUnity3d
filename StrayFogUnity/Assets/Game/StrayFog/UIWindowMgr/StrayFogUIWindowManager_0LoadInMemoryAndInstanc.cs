@@ -261,19 +261,25 @@ public partial class StrayFogUIWindowManager
     void OnCheckInstanceComplete<W>(XLS_Config_Table_UIWindowSetting[] _winCfgs, UIWindowEntityEventHandler<W> _callback, params object[] _parameters)
         where W : AbsUIWindowView
     {
-        List<W> windows = new List<W>();
+        List<int> winIds = new List<int>();
         foreach (XLS_Config_Table_UIWindowSetting cfg in _winCfgs)
         {
             mWindowHolderMaping[cfg.id].ToggleSiblingIndex();
-            windows.Add((W)mWindowHolderMaping[cfg.id].window);
+            if (!winIds.Contains(cfg.id))
+            {
+                winIds.Add(cfg.id);
+            }            
         }
 
-        foreach (UIWindowHolder holder in mWindowHolderMaping.Values)
+        W[] windows = new W[winIds.Count];
+        for (int i = 0; i < winIds.Count; i++)
         {
-            holder.ToggleActive();
+            mWindowHolderMaping[winIds[i]].ToggleActive();
+            windows[i] = (W)mWindowHolderMaping[winIds[i]].window;
         }
        
-        _callback(windows.ToArray(), _parameters);
+        _callback(windows, _parameters);
+        OnOpenWindowEventHandler?.Invoke(windows, _parameters);
     }
     #endregion
 
@@ -371,6 +377,14 @@ public partial class StrayFogUIWindowManager
         {
             holder.ToggleActive();
         }
+
+        W[] windows = new W[closeWinIds.Count];
+        for (int i = 0; i < closeWinIds.Count; i++)
+        {
+            windows[i] = (W)mWindowHolderMaping[closeWinIds[i]].window;
+        }
+        _callback?.Invoke(windows, _parameters);
+        OnCloseWindowEventHandler?.Invoke(windows, _parameters);
     }
     #endregion
 

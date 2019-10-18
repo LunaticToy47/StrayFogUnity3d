@@ -24,6 +24,9 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
             m_isInitialized = true;
             runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
             StrayFogAssembly.LoadDynamicAssembly();
+            StrayFogGamePools.uiWindowManager.OnOpenWindowEventHandler += UiWindowManager_OnOpenWindowEventHandler;
+            StrayFogGamePools.uiWindowManager.OnCloseWindowEventHandler += UiWindowManager_OnCloseWindowEventHandler;
+
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
             StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
             StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
@@ -47,6 +50,28 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
     /// 游戏运行时设定
     /// </summary>
     public XLS_Config_Determinant_Table_GameSetting runningSetting { get; private set; }
+    #endregion
+
+    #region UIWindow 相关
+    /// <summary>
+    /// 打开窗口
+    /// </summary>
+    /// <param name="_windows">窗口组</param>
+    /// <param name="_parameters">参数组</param>
+    void UiWindowManager_OnOpenWindowEventHandler(AbsUIWindowView[] _windows, params object[] _parameters)
+    {
+        StrayFogGamePools.guideManager.OpenWindowCheck(_windows, _parameters);
+    }
+
+    /// <summary>
+    /// 关闭窗口
+    /// </summary>
+    /// <param name="_windows">窗口组</param>
+    /// <param name="_parameters">参数组</param>
+    void UiWindowManager_OnCloseWindowEventHandler(AbsUIWindowView[] _windows, params object[] _parameters)
+    {
+
+    }
     #endregion
 
     #region Guide 引导相关

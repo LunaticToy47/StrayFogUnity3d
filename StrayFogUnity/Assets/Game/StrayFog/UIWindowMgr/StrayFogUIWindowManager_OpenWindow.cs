@@ -4,6 +4,11 @@
 /// </summary>
 public partial class StrayFogUIWindowManager
 {
+    /// <summary>
+    /// 打开窗口事件
+    /// </summary>
+    public event UIWindowEntityEventHandler<AbsUIWindowView> OnOpenWindowEventHandler;
+
     #region Enum
     /// <summary>
     /// 打开窗口

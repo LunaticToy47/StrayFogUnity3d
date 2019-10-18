@@ -35,7 +35,7 @@ public class ExampleGuideLevel : AbsLevel
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-
+                
             });
         });
     }
@@ -111,8 +111,7 @@ public class ExampleGuideLevel : AbsLevel
             {
                 Stopwatch w = (Stopwatch)args[0];
                 w.Stop();
-                UnityEngine.Debug.Log(w.Elapsed + "=>" + wins.JsonSerialize());
-                StrayFogGamePools.guideManager.RegisterGuide();
+                UnityEngine.Debug.Log(w.Elapsed + "=>" + wins.JsonSerialize());                
             }, _watch);
     }
 }

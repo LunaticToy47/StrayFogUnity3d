@@ -4,6 +4,11 @@
 /// </summary>
 public partial class StrayFogUIWindowManager
 {
+    /// <summary>
+    /// 关闭窗口事件
+    /// </summary>
+    public event UIWindowEntityEventHandler<AbsUIWindowView> OnCloseWindowEventHandler;
+
     #region Enum
     /// <summary>
     /// 关闭窗口
