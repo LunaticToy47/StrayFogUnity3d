@@ -3,15 +3,15 @@ using UnityEngine;
 /// <summary>
 /// Inspector属性显示
 /// </summary>
-[AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
-public class ReferPropertyDisplayInspectorAttribute : PropertyAttribute
+[AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = true)]
+public class ReferPropertyDisplayMultipleInspectorAttribute : PropertyAttribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="_referPropertyName">参照属性名称</param>
     /// <param name="_referPropertyValue">参照属性值</param>
-    public ReferPropertyDisplayInspectorAttribute(string _referPropertyName, params object[] _referPropertyValue)
+    public ReferPropertyDisplayMultipleInspectorAttribute(string _referPropertyName, params object[] _referPropertyValue)
     {
         referPropertyName = _referPropertyName;
         if (_referPropertyValue != null)
@@ -25,6 +25,7 @@ public class ReferPropertyDisplayInspectorAttribute : PropertyAttribute
         indentLevel = 1;
         displayType = enSerializedPropertyDisplayInspectorAttribute.GivenValue;
         operatorType = enSerializedPropertyOperatorInspectorAttribute.And;
+        referPropertyOperator = enSerializedPropertyOperatorInspectorAttribute.And;
     }
     /// <summary>
     /// 参照值
@@ -46,39 +47,9 @@ public class ReferPropertyDisplayInspectorAttribute : PropertyAttribute
     /// 运算符
     /// </summary>
     public enSerializedPropertyOperatorInspectorAttribute operatorType { get; set; }
-}
-
-/// <summary>
-/// Inspector显示属性枚举
-/// </summary>
-public enum enSerializedPropertyDisplayInspectorAttribute
-{
     /// <summary>
-    /// 指定值
+    /// 引用属性关系
     /// </summary>
-    GivenValue = 0,
-    /// <summary>
-    /// 非0正整数
-    /// </summary>
-    NonZeroPositive,
-    /// <summary>
-    /// 取反
-    /// </summary>
-    NOT
-}
-
-/// <summary>
-/// 运算符
-/// </summary>
-public enum enSerializedPropertyOperatorInspectorAttribute
-{
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    And,
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    Or,
+    public enSerializedPropertyOperatorInspectorAttribute referPropertyOperator { get; set; }
 }
 

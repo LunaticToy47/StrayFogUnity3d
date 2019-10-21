@@ -335,7 +335,15 @@ public static class UIExtendEngine
     }
     #endregion
 
-    #region 
-
+    #region GetTextAnchorPivot 获得指定TextAnchor锚点的Pivot
+    /// <summary>
+    /// 获得指定TextAnchor锚点的Pivot
+    /// </summary>
+    /// <param name="_anchor">锚点</param>
+    /// <returns>Pivot</returns>
+    public static Vector2 GetTextAnchorPivot(this TextAnchor _anchor)
+    {
+        return Text.GetTextAnchorPivot(_anchor);
+    }
     #endregion
 }

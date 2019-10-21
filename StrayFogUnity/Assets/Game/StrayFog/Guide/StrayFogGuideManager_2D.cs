@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using UnityEngine.UI;
+/// <summary>
 /// 引导管理器【2D引导】
 /// </summary>
 public partial class StrayFogGuideManager
@@ -19,7 +20,7 @@ public partial class StrayFogGuideManager
         {
             StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(mGuideWindowId, (wins, pars) =>
             {
-
+                
             });
         }
     }

@@ -9,7 +9,7 @@ public class ExamplePlayerListWindow : AbsUIWindowView
     /// <summary>
     /// Awake
     /// </summary>
-    protected override void Awake()
+    protected override void OnAwake()
     {
         Button btn = transform.Find(@"Table/c1_1").gameObject.GetComponent<Button>();
         btn.onClick.AddListener(() => {

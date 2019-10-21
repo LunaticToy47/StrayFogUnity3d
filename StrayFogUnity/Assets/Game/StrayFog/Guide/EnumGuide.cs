@@ -1,4 +1,28 @@
-﻿#region enUserGuideConfig_GuideType 引导触发类别
+﻿#region enGuideStatus 引导状态
+/// <summary>
+/// 引导状态
+/// </summary>
+public enum enGuideStatus
+{
+    /// <summary>
+    /// 等待触发
+    /// </summary>
+    [AliasTooltip("等待触发")]
+    WaitTrigger,
+    /// <summary>
+    /// 等待验证
+    /// </summary>
+    [AliasTooltip("等待验证")]
+    WaitValidate,
+    /// <summary>
+    /// 已完成
+    /// </summary>
+    [AliasTooltip("已完成")]
+    Finish,
+}
+#endregion
+
+#region enUserGuideConfig_GuideType 引导触发类别
 /// <summary>
 /// 引导触发类别
 /// UserGuideConfig.guideType

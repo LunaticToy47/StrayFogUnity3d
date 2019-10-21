@@ -30,7 +30,7 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     /// <summary>
     /// Awake
     /// </summary>
-    protected sealed override void Awake()
+    protected override void OnAwake()
     {
         mIsSetMaterial = false;
         mUIGraphicMask = gameObject.AddComponent<UIGraphicMaskShader>();

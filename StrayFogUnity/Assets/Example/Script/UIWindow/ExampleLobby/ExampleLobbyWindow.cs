@@ -9,7 +9,7 @@ public class ExampleLobbyWindow : AbsUIWindowView
     /// <summary>
     /// OnAwake
     /// </summary>
-    protected override void Awake()
+    protected override void OnAwake()
     {
         Text txt = transform.Find("btnRadarBg/Text").GetComponent<Text>();
         Button btnRadarBg = transform.Find("btnRadarBg").GetComponent<Button>();

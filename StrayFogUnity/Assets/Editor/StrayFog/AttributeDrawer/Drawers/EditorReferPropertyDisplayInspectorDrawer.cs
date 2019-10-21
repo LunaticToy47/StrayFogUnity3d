@@ -37,27 +37,75 @@ sealed class EditorReferPropertyDisplayInspectorDrawer : AbsEditorAttributeDrawe
         if (mReferPropertyDisplayInspectorMaping[_propertyKey] != null)
         {
             bool isShow = true;
+            switch (mReferPropertyDisplayInspectorMaping[_propertyKey].operatorType)
+            {
+                case enSerializedPropertyOperatorInspectorAttribute.And:
+                    isShow = true;
+                    break;
+                case enSerializedPropertyOperatorInspectorAttribute.Or:
+                    isShow = false;
+                    break;
+            }
             SerializedProperty referSp = EditorStrayFogUtility.guiLayout.FindPropertyRelative(_property, mReferPropertyDisplayInspectorMaping[_propertyKey].referPropertyName);
             if (referSp != null)
             {
-                foreach (object v in mReferPropertyDisplayInspectorMaping[_propertyKey].referPropertyValue)
+                if (mReferPropertyDisplayInspectorMaping[_propertyKey].referPropertyValue.Length > 0)
+                {
+                    foreach (object v in mReferPropertyDisplayInspectorMaping[_propertyKey].referPropertyValue)
+                    {
+                        switch (mReferPropertyDisplayInspectorMaping[_propertyKey].displayType)
+                        {
+                            case enSerializedPropertyDisplayInspectorAttribute.GivenValue:
+                                switch (mReferPropertyDisplayInspectorMaping[_propertyKey].operatorType)
+                                {
+                                    case enSerializedPropertyOperatorInspectorAttribute.And:
+                                        isShow &= EditorStrayFogUtility.guiLayout.EqualsSerializedPropertyValue(v, referSp);
+                                        break;
+                                    case enSerializedPropertyOperatorInspectorAttribute.Or:
+                                        isShow |= EditorStrayFogUtility.guiLayout.EqualsSerializedPropertyValue(v, referSp);
+                                        break;
+                                }
+                                break;
+                            case enSerializedPropertyDisplayInspectorAttribute.NOT:
+                                switch (mReferPropertyDisplayInspectorMaping[_propertyKey].operatorType)
+                                {
+                                    case enSerializedPropertyOperatorInspectorAttribute.And:
+                                        isShow &= !EditorStrayFogUtility.guiLayout.EqualsSerializedPropertyValue(v, referSp);
+                                        break;
+                                    case enSerializedPropertyOperatorInspectorAttribute.Or:
+                                        isShow |= !EditorStrayFogUtility.guiLayout.EqualsSerializedPropertyValue(v, referSp);
+                                        break;
+                                }
+                                break;
+                            case enSerializedPropertyDisplayInspectorAttribute.NonZeroPositive:
+                                switch (mReferPropertyDisplayInspectorMaping[_propertyKey].operatorType)
+                                {
+                                    case enSerializedPropertyOperatorInspectorAttribute.And:
+                                        isShow &= EditorStrayFogUtility.guiLayout.IsNonZeroPositive(referSp);
+                                        break;
+                                    case enSerializedPropertyOperatorInspectorAttribute.Or:
+                                        isShow |= EditorStrayFogUtility.guiLayout.IsNonZeroPositive(referSp);
+                                        break;                                    
+                                }
+                                break;
+                        }
+                    }
+                }
+                else
                 {
                     switch (mReferPropertyDisplayInspectorMaping[_propertyKey].displayType)
                     {
                         case enSerializedPropertyDisplayInspectorAttribute.GivenValue:
-                            isShow &= EditorStrayFogUtility.guiLayout.EqualsSerializedPropertyValue(v, referSp);
+                            isShow &= referSp.objectReferenceValue == null;
+                            break;
+                        case enSerializedPropertyDisplayInspectorAttribute.NonZeroPositive:
+                            isShow &= referSp.objectReferenceValue != null;
                             break;
                         case enSerializedPropertyDisplayInspectorAttribute.NOT:
-                            isShow &= !EditorStrayFogUtility.guiLayout.EqualsSerializedPropertyValue(v, referSp);
+                            isShow &= referSp.objectReferenceValue != null;
                             break;
                     }
-                }
-                switch (mReferPropertyDisplayInspectorMaping[_propertyKey].displayType)
-                {
-                    case enSerializedPropertyDisplayInspectorAttribute.NonZeroPositive:
-                        isShow &= EditorStrayFogUtility.guiLayout.IsNonZeroPositive(referSp);
-                        break;
-                }
+                }                
             }
             mIsDarwerMaping[_propertyKey] = isShow;
         }

@@ -65,7 +65,7 @@ public class UIGuidePrompt : AbsUIBehaviour
     /// <param name="_anchor">锚点</param>
     void SetArrowEdge(RectTransform _rectTransform, TextAnchor _anchor)
     {
-        _rectTransform.anchorMin = _rectTransform.anchorMax = Text.GetTextAnchorPivot(_anchor);        
+        _rectTransform.anchorMin = _rectTransform.anchorMax = _anchor.GetTextAnchorPivot();
         switch (_anchor)
         {
             case TextAnchor.MiddleLeft:                
