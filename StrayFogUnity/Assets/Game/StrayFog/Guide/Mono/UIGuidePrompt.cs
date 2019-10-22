@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// 引导提示【每个项目不同】
 /// </summary>
 [AddComponentMenu("StrayFog/Game/Guide/UIGuidePrompt")]
-public class UIGuidePrompt : AbsUIBehaviour
+public class UIGuidePrompt : AbsMonoBehaviour
 {
     /// <summary>
     /// 提示框

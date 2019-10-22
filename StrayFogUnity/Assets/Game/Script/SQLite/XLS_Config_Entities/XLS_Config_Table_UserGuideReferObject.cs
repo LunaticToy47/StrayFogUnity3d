@@ -25,7 +25,7 @@ public partial class XLS_Config_Table_UserGuideReferObject: AbsStrayFogSQLiteEnt
 	public int id { get; private set; }	
 		
 	/// <summary>
-	/// 【触发条件】2D参考类型
+	/// 2D参考类型
 	///0：无参考对象
 	///1：UI窗口
 	///2：UI窗口控件
@@ -35,7 +35,7 @@ public partial class XLS_Config_Table_UserGuideReferObject: AbsStrayFogSQLiteEnt
 	public int refer2DType { get; private set; }	
 		
 	/// <summary>
-	/// 【触发条件】2D参考值
+	/// 2D参考值
 	///0：不填
 	///1：【窗口名称|遮罩控件名称】
 	///2：【窗口名称|控件名称|相对于控件子节点Graphic遮罩名称】
@@ -45,25 +45,25 @@ public partial class XLS_Config_Table_UserGuideReferObject: AbsStrayFogSQLiteEnt
 	public string refer2DValue { get; private set; }	
 		
 	/// <summary>
-	/// 【触发条件】2D动态组件搜索条件
+	/// 2D动态组件搜索条件
 	///0：索引
 	///1：物品
 	///2：装备
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,4,"refer2DSearchCondition","","@refer2DSearchCondition4",false,false)]	
-	public int refer2DSearchCondition { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,4,"refer2DSearchDynamicConditionType","","@refer2DSearchDynamicConditionType4",false,false)]	
+	public int refer2DSearchDynamicConditionType { get; private set; }	
 		
 	/// <summary>
-	/// 【触发条件】2D动态组件搜索值
+	/// 2D动态组件搜索值
 	///0：索引值
 	///1：物品配置ID
 	///2：装备配置ID
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"refer2DSearchConditionValue","","@refer2DSearchConditionValue5",false,false)]	
-	public string refer2DSearchConditionValue { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"refer2DSearchDynamicConditionValue","","@refer2DSearchDynamicConditionValue5",false,false)]	
+	public string refer2DSearchDynamicConditionValue { get; private set; }	
 		
 	/// <summary>
-	/// 【触发条件】3D参考类型
+	/// 3D参考类型
 	///0：无参考对象
 	///1：Player玩家
 	///2：NPC
@@ -76,7 +76,7 @@ public partial class XLS_Config_Table_UserGuideReferObject: AbsStrayFogSQLiteEnt
 	public int refer3DType { get; private set; }	
 		
 	/// <summary>
-	/// 【验证条件】3D参考值
+	/// 3D参考值
 	///0：不填
 	///1：暂时不填
 	///2：NPC配置Id

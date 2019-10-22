@@ -85,7 +85,7 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 		
 	/// <summary>
 	/// 【触发条件】数据类型
-	///0：无额外条件
+	///0：无条件
 	///1：2D参考类型
 	///2：3D参考类型
 	///3：玩家等级

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 /// <summary>
 /// 窗口开关句柄
 /// </summary>
@@ -15,13 +17,19 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// Awake
     /// </summary>
     protected sealed override void Awake() {
+        OnBeforeAwake();
+        CollectCtrl<AbsUIBehaviour>();
         OnAwake();
         OnAfterAwake();
     }
     /// <summary>
+    /// OnBeforeAwake
+    /// </summary>
+    protected virtual void OnBeforeAwake() { }
+    /// <summary>
     /// OnAwake
     /// </summary>
-    protected virtual void OnAwake() { }
+    protected virtual void OnAwake() { }    
     /// <summary>
     /// OnAfterAwake
     /// </summary>

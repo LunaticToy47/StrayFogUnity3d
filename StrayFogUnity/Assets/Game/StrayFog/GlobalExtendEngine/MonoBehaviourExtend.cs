@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 /// <summary>
 /// MonoBehaviour扩展
 /// </summary>
@@ -23,8 +24,8 @@ public static class MonoBehaviourExtend
     /// <param name="_go">GameObject</param>
     /// <returns>组件</returns>
     public static T AddUIDynamicComponent<T>(this GameObject _go)
-        where T : AbsUIBehaviour
-    {
+        where T : UIBehaviour
+    {        
         return _go.AddComponent<T>();
     }
 }

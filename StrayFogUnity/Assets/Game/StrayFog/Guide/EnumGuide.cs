@@ -8,17 +8,17 @@ public enum enGuideStatus
     /// 等待触发
     /// </summary>
     [AliasTooltip("等待触发")]
-    WaitTrigger,
+    WaitTrigger = 0,
     /// <summary>
     /// 等待验证
     /// </summary>
     [AliasTooltip("等待验证")]
-    WaitValidate,
+    WaitValidate = 1,
     /// <summary>
     /// 已完成
     /// </summary>
     [AliasTooltip("已完成")]
-    Finish,
+    Finish = 2,
 }
 #endregion
 
@@ -33,12 +33,12 @@ public enum enUserGuideConfig_GuideType
     /// 强引导【禁用玩家操作，等待引导触发】
     /// </summary>
     [AliasTooltip("强引导【禁用玩家操作，等待引导触发】")]
-    Strong,
+    Strong = 0,
     /// <summary>
     /// 弱引导【玩家可操作，等待引导触发】
     /// </summary>
     [AliasTooltip("弱引导【玩家可操作，等待引导触发】")]
-    Weakness
+    Weakness = 1
 }
 #endregion
 
@@ -53,16 +53,16 @@ public enum enUserGuideConfig_StrongGuidDisplayType
     /// 全部显示
     /// </summary>
     [AliasTooltip("全部显示")]
-    All,
+    All = 0,
     /// <summary>
     /// 隐藏引导窗口遮罩背景
     /// </summary>
     [AliasTooltip("隐藏引导窗口遮罩背景")]
-    HiddenMaskBg
+    HiddenMaskBg = 1
 }
 #endregion
 
-#region UserGuideConfig_TriggerConditionType 【触发条件】数据类型
+#region enUserGuideConfig_TriggerConditionType 【触发条件】数据类型
 /// <summary>
 /// 【触发条件】数据类型
 /// UserGuideConfig.triggerConditionType
@@ -109,5 +109,113 @@ public enum enUserGuideConfig_TriggerConditionType
     /// </summary>
     [AliasTooltip("玩家状态")]
     PlayerStatus = 7,
+}
+#endregion\
+
+#region enUserGuideConfig_ValidateConditionType 验证条件类别
+/// <summary>
+/// 验证条件类别
+/// UserGuideConfig.validateConditionType
+/// </summary>
+public enum enUserGuideConfig_ValidateConditionType
+{
+    /// <summary>
+    /// 点击触发参考对象
+    /// </summary>
+    [AliasTooltip("点击触发参考对象")]
+    Click = 0,
+    /// <summary>
+    /// 拖拽触发参考对象到验证参考对象
+    /// </summary>
+    [AliasTooltip("拖拽触发参考对象到验证参考对象")]
+    Drag = 1,
+    /// <summary>
+    /// 触发参考对象移动到验证参考对象
+    /// </summary>
+    [AliasTooltip("触发参考对象移动到验证参考对象")]
+    MoveTo = 2,
+}
+#endregion
+
+#region enUserGuideReferObject_Refer2DType 2D参考类型
+/// <summary>
+/// 2D参考类型
+/// </summary>
+public enum enUserGuideReferObject_Refer2DType
+{
+    /// <summary>
+    /// 无参考对象
+    /// </summary>
+    None = 0,
+    /// <summary>
+    /// UI窗口
+    /// </summary>
+    UIWindow = 1,
+    /// <summary>
+    /// UI窗口控件
+    /// </summary>
+    UIWindowControl = 2,
+    /// <summary>
+    /// UI窗口动态生成控件
+    /// </summary>
+    UIWindowDynamicControl = 3,
+}
+#endregion
+
+#region enUserGuideReferObject_Refer2DSearchDynamicConditionType 2D动态组件搜索条件类别
+/// <summary>
+/// 2D动态组件搜索条件类别
+/// </summary>
+public enum enUserGuideReferObject_Refer2DSearchDynamicConditionType
+{
+    /// <summary>
+    /// 索引
+    /// </summary>
+    Index = 0,
+    /// <summary>
+    /// 物品
+    /// </summary>
+    Item = 1,
+    /// <summary>
+    /// 装备
+    /// </summary>
+    Equip = 2,
+}
+#endregion
+
+#region enUserGuideReferObject_Refer3DType 3D参考类型
+/// <summary>
+/// 3D参考类型
+/// </summary>
+public enum enUserGuideReferObject_Refer3DType
+{
+    /// <summary>
+    /// 无参考对象
+    /// </summary>
+    Index = 0,
+    /// <summary>
+    /// 玩家
+    /// </summary>
+    Player = 1,
+    /// <summary>
+    /// NPC
+    /// </summary>
+    NPC = 2,
+    /// <summary>
+    /// Monster
+    /// </summary>
+    Monster = 3,
+    /// <summary>
+    /// Boss
+    /// </summary>
+    Boss = 4,
+    /// <summary>
+    /// 物品
+    /// </summary>
+    Item = 5,
+    /// <summary>
+    /// 坐标
+    /// </summary>
+    Coordinate = 6
 }
 #endregion
