@@ -38,17 +38,11 @@ public abstract partial class AbsMonoBehaviour : IStatus
     /// <param name="_destStatus">目标状态</param>
     public void ToggleStatus(int _destStatus)
     {
-        if (OnBeforeToggleStatus != null)
-        {
-            OnBeforeToggleStatus(this, mCurrentStatus, _destStatus);
-        }
+        OnBeforeToggleStatus?.Invoke(this, mCurrentStatus, _destStatus);
         int from = mCurrentStatus;
         OnToggleStatus(_destStatus);
         mCurrentStatus = _destStatus;
-        if (OnAfterToggleStatus != null)
-        {
-            OnAfterToggleStatus(this, from, _destStatus);
-        }
+        OnAfterToggleStatus?.Invoke(this, from, _destStatus);
     }
 
     /// <summary>

@@ -9,13 +9,13 @@ public partial class StrayFogGuideManager
     /// </summary>
     int mGuideWindowId = 0;
     /// <summary>
-    /// 等待触发引导
-    /// </summary>
-    List<int> mWaitTriggerGuides = new List<int>();    
-    /// <summary>
     /// 引导配置映射
     /// </summary>
     Dictionary<int, XLS_Config_Table_UserGuideConfig> mGuideConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideConfig>();
+    /// <summary>
+    /// 引导参考对象映射
+    /// </summary>
+    Dictionary<int, XLS_Config_Table_UserGuideReferObject> mGuideReferObjectMaping = new Dictionary<int, XLS_Config_Table_UserGuideReferObject>();
 
     #region OnInitGuideWindowData 初始化引导窗口数据
     /// <summary>
@@ -45,21 +45,37 @@ public partial class StrayFogGuideManager
     /// </summary>
     void OnInitGuideConfigData()
     {        
-        List<XLS_Config_Table_UserGuideConfig> triggers = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideConfig>();
-        if (triggers != null && triggers.Count > 0)
+        List<XLS_Config_Table_UserGuideConfig> configs = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideConfig>();
+        if (configs != null && configs.Count > 0)
         {
-            foreach (XLS_Config_Table_UserGuideConfig t in triggers)
+            foreach (XLS_Config_Table_UserGuideConfig t in configs)
             {
                 if (!mGuideConfigMaping.ContainsKey(t.id))
                 {
                     mGuideConfigMaping.Add(t.id, t);
                 }
-                if (!mWaitTriggerGuides.Contains(t.id))
-                {
-                    mWaitTriggerGuides.Add(t.id);
-                }
             }
         }        
+    }
+    #endregion
+
+    #region OnInitGuideReferObjectData 初始化引导参考对象数据
+    /// <summary>
+    /// 初始化引导参考对象数据
+    /// </summary>
+    void OnInitGuideReferObjectData()
+    {
+        List<XLS_Config_Table_UserGuideReferObject> referObjects = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideReferObject>();
+        if (referObjects != null && referObjects.Count > 0)
+        {
+            foreach (XLS_Config_Table_UserGuideReferObject t in referObjects)
+            {
+                if (!mGuideReferObjectMaping.ContainsKey(t.id))
+                {
+                    mGuideReferObjectMaping.Add(t.id, t);
+                }
+            }
+        }
     }
     #endregion
 
@@ -67,14 +83,14 @@ public partial class StrayFogGuideManager
     /// <summary>
     /// 过滤引导
     /// </summary>
-    /// <param name="_excludeFilterIds">要排除的过滤id组</param>
-    public void FilterGuide(params int[] _excludeFilterIds)
+    /// <param name="_excludeFilterGuideIds">要排除过滤的引导GuideId组</param>
+    public void FilterGuide(params int[] _excludeFilterGuideIds)
     {
-        if (_excludeFilterIds != null && _excludeFilterIds.Length > 0)
+        if (_excludeFilterGuideIds != null && _excludeFilterGuideIds.Length > 0)
         {
-            foreach (int id in _excludeFilterIds)
+            foreach (int id in _excludeFilterGuideIds)
             {
-                mWaitTriggerGuides.Remove(id);
+                mGuideConfigMaping.Remove(id);
             }
         }
     }

@@ -1,24 +1,34 @@
 ﻿/// <summary>
 /// 引导命令接口
 /// </summary>
-public interface IGuideCommand
+public interface IGuideCommand : IRecycle
 {
     /// <summary>
-    /// 设置用户数据
+    /// 引导Id
     /// </summary>
-    /// <param name="_userData">用户数据</param>
-    void SetUserData(object _userData);
+    int GuideId { get; }
 
     /// <summary>
-    /// 获得用户数据
+    /// 设置引导Id
     /// </summary>
-    /// <returns>用户数据</returns>
-    object GetUserData();
+    /// <param name="_guideId">引导Id</param>
+    void SetGuideId(int _guideId);
 
     /// <summary>
     /// 获得当前引导状态
     /// </summary>
-    enGuideStatus GetGuideStatus();
+    enGuideStatus status { get; }
+
+    /// <summary>
+    /// 是否触发
+    /// </summary>
+    /// <returns>true:触发,false:不触发</returns>
+    bool isTrigger();
+
+    /// <summary>
+    /// 执行触发处理
+    /// </summary>
+    void ExcuteTrigger();
 
     /// <summary>
     /// 是否通过验证
@@ -27,7 +37,7 @@ public interface IGuideCommand
     bool isValidate();
 
     /// <summary>
-    /// 执行处理
+    /// 执行验证处理
     /// </summary>
-    void Excute();
+    void ExcuteValidate();
 }

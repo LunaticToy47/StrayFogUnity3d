@@ -51,17 +51,11 @@ public abstract partial class AbsMonoBehaviour : ITime
     /// <param name="_isIgnoreTimeScale">是否忽略时间缩放</param>
     public void ToggleTimeScale(bool _isIgnoreTimeScale)
     {
-        if (OnBeforeToggleTimeScale != null)
-        {
-            OnBeforeToggleTimeScale(this, mIsIgnoreTimeScale, _isIgnoreTimeScale);
-        }
+        OnBeforeToggleTimeScale?.Invoke(this, mIsIgnoreTimeScale, _isIgnoreTimeScale);
         bool from = mIsIgnoreTimeScale;
         mIsIgnoreTimeScale = _isIgnoreTimeScale;
         OnToggleTimeScale(this, mIsIgnoreTimeScale, _isIgnoreTimeScale);
-        if (OnAfterToggleTimeScale != null)
-        {
-            OnAfterToggleTimeScale(this, from, _isIgnoreTimeScale);
-        }
+        OnAfterToggleTimeScale?.Invoke(this, from, _isIgnoreTimeScale);
     }
     /// <summary>
     /// 切换时间缩放
@@ -76,15 +70,9 @@ public abstract partial class AbsMonoBehaviour : ITime
     /// <param name="_syncTime">同步时间</param>
     public void SyncTimeScale(ITime _syncTime)
     {
-        if (OnBeforeSyncTimeScale != null)
-        {
-            OnBeforeSyncTimeScale(_syncTime);
-        }
+        OnBeforeSyncTimeScale?.Invoke(_syncTime);
         OnSyncTimeScale(_syncTime);
-        if (OnAfterSyncTimeScale != null)
-        {
-            OnAfterSyncTimeScale(_syncTime);
-        }
+        OnAfterSyncTimeScale?.Invoke(_syncTime);
     }
 
     /// <summary>

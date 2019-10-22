@@ -22,6 +22,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
         OnAwake();
         OnAfterAwake();
     }
+
     /// <summary>
     /// OnBeforeAwake
     /// </summary>

@@ -31,18 +31,12 @@ public abstract partial class AbsMonoBehaviour : ISerializable
     /// <returns>序列化数据</returns>
     public byte[] ExportSerializable()
     {
-        if (OnBeforeExportSerializable != null)
-        {
-            OnBeforeExportSerializable(this, mrEmptySerializable);
-        }
+        OnBeforeExportSerializable?.Invoke(this, mrEmptySerializable);
         List<byte> sers = new List<byte>();
         sers.AddRange(mGlobalId.GetBytes());
         sers.AddRange(OnExportSerializable());
         byte[] result = sers.ToArray();
-        if (OnAfterExportSerializable != null)
-        {
-            OnAfterExportSerializable(this, result);
-        }
+        OnAfterExportSerializable?.Invoke(this, result);
         return result;
     }
 
@@ -60,16 +54,10 @@ public abstract partial class AbsMonoBehaviour : ISerializable
     /// <returns>结束索引</returns>
     public long ImportSerializable(byte[] _data, long _startIndex)
     {
-        if (OnBeforeImportSerializable != null)
-        {
-            OnBeforeImportSerializable(this, _data, _startIndex);
-        }
+        OnBeforeImportSerializable?.Invoke(this, _data, _startIndex);
         mGlobalId = _data.ToInt32(ref _startIndex);
         _startIndex = OnImportSerializable(_data, _startIndex);
-        if (OnAfterImportSerializable != null)
-        {
-            OnAfterImportSerializable(this, _data, _startIndex);
-        }
+        OnAfterImportSerializable?.Invoke(this, _data, _startIndex);
         return _startIndex;
     }
 

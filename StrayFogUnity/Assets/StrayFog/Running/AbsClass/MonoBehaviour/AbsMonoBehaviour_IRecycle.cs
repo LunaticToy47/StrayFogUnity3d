@@ -18,15 +18,9 @@ public abstract partial class AbsMonoBehaviour : IRecycle
     /// </summary>
     public void Recycle()
     {
-        if (OnBeforeRecycle != null)
-        {
-            OnBeforeRecycle(this);
-        }
+        OnBeforeRecycle?.Invoke(this);
         OnRecycle();
-        if (OnAfterRecycle != null)
-        {
-            OnAfterRecycle(this);
-        }
+        OnAfterRecycle?.Invoke(this);
     }
     /// <summary>
     /// 回收

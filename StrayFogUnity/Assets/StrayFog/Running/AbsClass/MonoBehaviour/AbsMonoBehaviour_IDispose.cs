@@ -17,15 +17,9 @@ public abstract partial class AbsMonoBehaviour : IDispose
     /// </summary>
     public void Dispose()
     {
-        if (OnBeforeDisposing != null)
-        {
-            OnBeforeDisposing(this);
-        }
+        OnBeforeDisposing?.Invoke(this);
         OnDispose();
-        if (OnAfterDisposing != null)
-        {
-            OnAfterDisposing(this);
-        }
+        OnAfterDisposing?.Invoke(this);
     }
 
     /// <summary>

@@ -26,15 +26,9 @@ public abstract partial class AbsMonoBehaviour : IClone
     /// <param name="_from">指定对象</param>
     public void CopyFrom(IClone _from)
     {
-        if (OnBeforeCopyFrom != null)
-        {
-            OnBeforeCopyFrom(this, _from);
-        }
+        OnBeforeCopyFrom?.Invoke(this, _from);
         OnCopyFrom(_from);
-        if (OnAfterCopyFrom != null)
-        {
-            OnAfterCopyFrom(this, _from);
-        }
+        OnAfterCopyFrom?.Invoke(this, _from);
     }
 
     /// <summary>
@@ -43,15 +37,9 @@ public abstract partial class AbsMonoBehaviour : IClone
     /// <returns>克隆后对象</returns>
     public object Clone()
     {
-        if (OnBeforeClone != null)
-        {
-            OnBeforeClone(this);
-        }
+        OnBeforeClone?.Invoke(this);
         object result = OnClone();
-        if (OnAfterClone != null)
-        {
-            OnAfterClone(this);
-        }
+        OnAfterClone?.Invoke(this);
         return result;
     }
 

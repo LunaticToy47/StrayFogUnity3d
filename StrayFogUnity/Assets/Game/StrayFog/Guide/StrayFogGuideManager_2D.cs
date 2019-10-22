@@ -1,14 +1,9 @@
-﻿using UnityEngine.UI;
-/// <summary>
+﻿/// <summary>
 /// 引导管理器【2D引导】
 /// </summary>
 public partial class StrayFogGuideManager
 {
     #region OnOpenWindowCheck 打开窗口检测
-    /// <summary>
-    /// 当前运行的引导
-    /// </summary>
-    XLS_Config_Table_UserGuideConfig mRunningUserGuideTrigger = null;
     /// <summary>
     /// 打开窗口检测
     /// </summary>
@@ -18,10 +13,23 @@ public partial class StrayFogGuideManager
     {
         if (StrayFogGamePools.gameManager.runningSetting.isRunGuide)
         {
-            StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(mGuideWindowId, (wins, pars) =>
+            if (_windows != null)
             {
+                foreach (AbsUIWindowView w in _windows)
+                {
+                    foreach (XLS_Config_Table_UserGuideConfig cfg in mGuideConfigMaping.Values)
+                    {
+                        switch (cfg.enTriggerConditionType)
+                        {
+                            //case  enUserGuideConfig_TriggerConditionType.None
+                        }
+                    }
+                }
+            }
+            //StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(mGuideWindowId, (wins, pars) =>
+            //{
                 
-            });
+            //});
         }
     }
     #endregion

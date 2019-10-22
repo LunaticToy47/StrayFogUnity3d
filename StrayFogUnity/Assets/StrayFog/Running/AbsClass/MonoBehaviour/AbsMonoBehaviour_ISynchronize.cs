@@ -33,17 +33,11 @@ public abstract partial class AbsMonoBehaviour : ISynchronize
     /// <returns>同步数据</returns>
     public byte[] ExportSynchronize()
     {
-        if (OnBeforeExportSynchronize != null)
-        {
-            OnBeforeExportSynchronize(this, mrEmptySynchronize);
-        }
+        OnBeforeExportSynchronize?.Invoke(this, mrEmptySynchronize);
         List<byte> sers = new List<byte>();
         sers.AddRange(OnExportSynchronize());
         byte[] result = sers.ToArray();
-        if (OnAfterExportSynchronize != null)
-        {
-            OnAfterExportSynchronize(this, result);
-        }
+        OnAfterExportSynchronize?.Invoke(this, result);
         return result;
     }
     /// <summary>
@@ -60,16 +54,10 @@ public abstract partial class AbsMonoBehaviour : ISynchronize
     /// <returns>结束索引</returns>
     public long ImportSynchronize(byte[] _data, long _startIndex)
     {
-        if (OnBeforeImportSynchronize != null)
-        {
-            OnBeforeImportSynchronize(this, _data, _startIndex);
-        }
+        OnBeforeImportSynchronize?.Invoke(this, _data, _startIndex);
         mGlobalId = _data.ToInt32(ref _startIndex);
         _startIndex = OnImportSynchronize(_data, _startIndex);
-        if (OnAfterImportSynchronize != null)
-        {
-            OnAfterImportSynchronize(this, _data, _startIndex);
-        }
+        OnAfterImportSynchronize?.Invoke(this, _data, _startIndex);
         return _startIndex;
     }
 

@@ -44,7 +44,7 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     /// </summary>
     /// <param name="_onCallback">回调</param>
     /// <param name="_guideWidgets">引导控件组</param>
-    void LoadMaterial(Action<UIGuideTrigger[]> _onCallback, params UIGuideTrigger[] _guideWidgets)
+    void LoadMaterial(Action<Graphic[]> _onCallback, params Graphic[] _guideWidgets)
     {
         if (!mIsSetMaterial)
         {
@@ -55,8 +55,8 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
                 {
                     mUIGraphicMask.material = (Material)result.asset;
                     mIsSetMaterial = true;
-                    Action<UIGuideTrigger[]> call = (Action<UIGuideTrigger[]>)result.input.extraParameter[0];
-                    UIGuideTrigger[] ws = (UIGuideTrigger[])result.input.extraParameter[1];
+                    Action<Graphic[]> call = (Action<Graphic[]>)result.input.extraParameter[0];
+                    Graphic[] ws = (Graphic[])result.input.extraParameter[1];
                     if (call != null)
                     {
                         call.Invoke(ws);
@@ -83,40 +83,25 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     }
 
     /// <summary>
-    /// 添加引导项
+    /// 添加Graphic遮罩
     /// </summary>
-    /// <param name="_guideWidgets">引导控件组</param>
-    public void AddTrigger(params UIGuideTrigger[] _guideWidgets)
+    /// <param name="_masks">遮罩Graphic组</param>
+    public void AddTrigger(params Graphic[] _masks)
     {
         LoadMaterial((args) =>
         {
-            if (args != null && args.Length > 0)
-            {
-                Graphic[] gs = new Graphic[args.Length];
-                for (int i = 0; i < args.Length; i++)
-                {
-                    gs[i] = args[i].maskGraphic;
-                }
-                mUIGraphicMask.AddGraphicMask(gs);
-            }
-        }, _guideWidgets);
+            mUIGraphicMask.AddGraphicMask(args);
+        }, _masks);
     }
     /// <summary>
-    /// 移除引导项
+    /// 移除Graphic遮罩
     /// </summary>
-    /// <param name="_guideWidget">引导控件组</param>
-    public void RemoveTrigger(params UIGuideTrigger[] _guideWidgets)
+    /// <param name="_masks">遮罩Graphic组</param>
+    public void RemoveTrigger(params Graphic[] _masks)
     {
-        if (_guideWidgets != null && _guideWidgets.Length > 0)
-        {
-            Graphic[] gs = new Graphic[_guideWidgets.Length];
-            for (int i = 0; i < _guideWidgets.Length; i++)
-            {
-                gs[i] = _guideWidgets[i].maskGraphic;
-            }
-            mUIGraphicMask.RemoveGraphicMask(gs);
-        }
+        mUIGraphicMask.RemoveGraphicMask(_masks);
     }
+
     /// <summary>
     /// 清除引导项
     /// </summary>

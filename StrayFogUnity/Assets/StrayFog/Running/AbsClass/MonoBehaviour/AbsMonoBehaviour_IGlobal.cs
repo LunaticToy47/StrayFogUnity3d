@@ -37,15 +37,9 @@ public abstract partial class AbsMonoBehaviour : IGlobal
     public void ModifyGlobalId(int _toId)
     {
         int fromId = mGlobalId;
-        if (OnBeforeModifyGlobalId != null)
-        {
-            OnBeforeModifyGlobalId(this, fromId, _toId);
-        }
+        OnBeforeModifyGlobalId?.Invoke(this, fromId, _toId);
         mGlobalId = _toId;
-        if (OnAfterModifyGlobalId != null)
-        {
-            OnAfterModifyGlobalId(this, fromId, _toId);
-        }
+        OnAfterModifyGlobalId?.Invoke(this, fromId, _toId);
     }
     #endregion
 }

@@ -28,8 +28,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
             StrayFogGamePools.uiWindowManager.OnCloseWindowEventHandler += UiWindowManager_OnCloseWindowEventHandler;
 
             StrayFogGamePools.guideManager.OnIsLevel += Current_OnIsLevel;
-            StrayFogGamePools.guideManager.OnWindowIsOpened += Current_OnWindowIsOpened;
-            StrayFogGamePools.guideManager.OnTriggerFinished += Current_OnTriggerFinished;
+            StrayFogGamePools.guideManager.OnValidateFinished += Current_OnValidateFinished;
             OnPartialInitialization();
             Application.wantsToQuit += OnApplication_wantsToQuit;
             Application.lowMemory += Application_lowMemory;
@@ -76,16 +75,6 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
 
     #region Guide 引导相关
     /// <summary>
-    /// 指定窗口是否打开
-    /// </summary>
-    /// <param name="_windowId">窗口id</param>
-    /// <returns>true:打开,false:未打开</returns>
-    bool Current_OnWindowIsOpened(int _windowId)
-    {
-        return StrayFogGamePools.uiWindowManager.IsOpenedWindow(_windowId);
-    }
-
-    /// <summary>
     /// 是否是指定关卡
     /// </summary>
     /// <param name="_levelId">关卡id</param>
@@ -96,10 +85,10 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
     }
 
     /// <summary>
-    /// 触发器完成
+    /// 验证完成
     /// </summary>
-    /// <param name="_trigger">触发器</param>
-    void Current_OnTriggerFinished(UIGuideTrigger _trigger)
+    /// <param name="_validate">验证器</param>
+    void Current_OnValidateFinished(UIGuideValidate _validate)
     {
 
     }
