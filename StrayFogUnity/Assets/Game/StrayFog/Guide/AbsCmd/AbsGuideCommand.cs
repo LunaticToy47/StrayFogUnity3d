@@ -2,7 +2,7 @@
 /// <summary>
 /// 引导命令抽象
 /// </summary>
-public abstract class AbsGuideCommand : AbsGuideCondition, IGuideCommand
+public abstract class AbsGuideCommand : IGuideCommand
 {
     #region guideId 引导Id
     /// <summary>
@@ -29,7 +29,51 @@ public abstract class AbsGuideCommand : AbsGuideCondition, IGuideCommand
     {
         guideId = _config.id;
         guideType = _config.guideType;
+        OnPushCommand(_config,_funcReferObject);
         OnResolveConfig(_config, _funcReferObject);
+    }
+
+    /// <summary>
+    /// 组装命令
+    /// </summary>
+    /// <param name="_config">配置</param>
+    /// <param name="_funcReferObject">获得参考对象回调</param>
+    void OnPushCommand(XLS_Config_Table_UserGuideConfig _config,
+        Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
+    {
+        //按XLS_Config_Table_UserGuideConfig.guideType引导类型生成的命令
+
+        //收集触发参考命令
+        foreach (int rid in _config.triggerReferObjectId)
+        {
+            XLS_Config_Table_UserGuideReferObject r = _funcReferObject(rid);
+            if (r != null)
+            {
+                UserGuideConfig_ReferObject_Command triggerReferObject = new UserGuideConfig_ReferObject_Command();
+                triggerReferObject.ResolveConfig(r);
+            }
+        }
+
+        //收集触发条件命令
+        foreach (int t in _config.triggerConditionType)
+        {
+            AbsGuideSubCommand_Condition cmd = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[t]();
+            cmd.ResolveConfig(_config);
+        }
+
+
+        //收集验证条件命令
+        //foreach (int rid in _config.validateReferObjectId)
+        //{
+        //    XLS_Config_Table_UserGuideReferObject r = _funcReferObject(rid);
+        //    if (r != null)
+        //    {
+        //        AbsGuideSubCommand_ReferObject refer = StrayFogGuideManager.Cmd_UserGuideReferObject_Refer2DTypeMaping[r.refer2DType]();
+        //        refer.ResolveConfig(r);
+        //    }
+        //}
+
+        //收集验证参考命令
     }
 
     /// <summary>
@@ -41,6 +85,23 @@ public abstract class AbsGuideCommand : AbsGuideCondition, IGuideCommand
         Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
     { }
     #endregion    
+
+    #region isMatchCondition 是否满足条件
+    /// <summary>
+    /// 是否满足条件
+    /// </summary>
+    /// <returns>true:满足条件,false:不满足条件</returns>
+    public bool isMatchCondition()
+    {
+        return OnIsMatchCondition();
+    }
+
+    /// <summary>
+    /// 是否满足条件
+    /// </summary>
+    /// <returns>true:满足条件,false:不满足条件</returns>
+    protected virtual bool OnIsMatchCondition() { return false; }
+    #endregion
 
     #region status 当前引导状态
     /// <summary>

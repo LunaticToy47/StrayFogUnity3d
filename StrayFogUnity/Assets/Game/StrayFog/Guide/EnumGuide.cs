@@ -197,7 +197,7 @@ public enum enUserGuideReferObject_Refer3DType
     /// <summary>
     /// 无参考对象
     /// </summary>
-    Index = 0,
+    None = 0,
     /// <summary>
     /// 玩家
     /// </summary>

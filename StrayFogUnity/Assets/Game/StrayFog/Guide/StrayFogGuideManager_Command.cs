@@ -13,6 +13,7 @@ public partial class StrayFogGuideManager
     Dictionary<int, Queue<IGuideCommand>> mCacheGuideTriggerCommandMaping = new Dictionary<int, Queue<IGuideCommand>>();
 
     #region OnCreateGuideCommand 创建引导命令
+
     /// <summary>
     /// 创建引导命令
     /// </summary>
@@ -31,17 +32,8 @@ public partial class StrayFogGuideManager
         }
         else
         {
-            switch (_config.enGuideType)
-            {
-                case enUserGuideConfig_GuideType.Strong:
-                    result = new UserGuideConfig_GuideType_Strong_Command();
-                    result.OnAfterRecycle += Result_OnAfterRecycle;
-                    break;
-                case enUserGuideConfig_GuideType.Weakness:
-                    result = new UserGuideConfig_GuideType_Weakness_Command();
-                    result.OnAfterRecycle += Result_OnAfterRecycle;
-                    break;
-            }            
+            result = Cmd_UserGuideConfig_GuideTypeMaping[_config.guideType]();
+            result.OnAfterRecycle += Result_OnAfterRecycle;        
         }
         result.ResolveConfig(_config, (id) => { return mGuideReferObjectMaping.ContainsKey(id) ? mGuideReferObjectMaping[id] : default; });
         return result;

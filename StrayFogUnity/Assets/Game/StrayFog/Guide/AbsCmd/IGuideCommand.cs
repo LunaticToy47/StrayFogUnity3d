@@ -2,7 +2,7 @@
 /// <summary>
 /// 引导命令接口
 /// </summary>
-public interface IGuideCommand : IRecycle
+public interface IGuideCommand : IGuideMatchCondition,IRecycle
 {
     /// <summary>
     /// 引导Id

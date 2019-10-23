@@ -1,7 +1,7 @@
 ﻿/// <summary>
-/// 引导条件接口
+/// 引导条件匹配接口
 /// </summary>
-public interface IGuideCondition
+public interface IGuideMatchCondition
 {
     /// <summary>
     /// 是否满足条件
