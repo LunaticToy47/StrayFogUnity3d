@@ -34,7 +34,7 @@ public partial class XLS_Config_Table_UserGuideReferObject: AbsStrayFogSQLiteEnt
 	public int refer2DType { get; private set; }	
 		
 	/// <summary>
-	/// 2D参考值
+	/// 2D参考值【Graphic遮罩名称不填则默认为控件本身】
 	///0：不填
 	///1：【窗口名称|控件名称|相对于控件子节点Graphic遮罩名称】
 	///2：【窗口名称|动态控件父节点名称|动态控件模板名称|相对于动态控件模板子节点Graphic遮罩名称】
