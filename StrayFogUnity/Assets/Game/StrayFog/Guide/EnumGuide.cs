@@ -42,6 +42,25 @@ public enum enUserGuideConfig_GuideType
 }
 #endregion
 
+#region enUserGuideConfig_ConditionMatchType 引导条件匹配类型
+/// <summary>
+/// 引导条件匹配类型
+/// </summary>
+public enum enUserGuideConfig_ConditionMatchType
+{
+    /// <summary>
+    /// 全匹配
+    /// </summary>
+    [AliasTooltip("全匹配")]
+    And,
+    /// <summary>
+    /// 任意匹配
+    /// </summary>
+    [AliasTooltip("任意匹配")]
+    Or,
+}
+#endregion
+
 #region enUserGuideConfig_StrongGuidDisplayType 强引导窗口显示类型
 /// <summary>
 /// 强引导窗口显示类型

@@ -84,6 +84,14 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	public int[] triggerReferObjectId { get; private set; }	
 		
 	/// <summary>
+	/// 【触发条件】匹配类型
+	///0：全匹配
+	///1：任意一条匹配
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,10,"triggerConditionMatchType","","@triggerConditionMatchType10",false,false)]	
+	public int triggerConditionMatchType { get; private set; }	
+		
+	/// <summary>
 	/// 【触发条件】数据类型
 	///0：触发参考对象
 	///1：玩家等级
@@ -92,7 +100,7 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	///4：任务
 	///5：玩家状态
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,10,"triggerConditionType","","@triggerConditionType10",false,false)]	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,11,"triggerConditionType","","@triggerConditionType11",false,false)]	
 	public int[] triggerConditionType { get; private set; }	
 		
 	/// <summary>
@@ -104,15 +112,8 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	///4：[0:任意任务,>0指定任务]
 	///5：[0:待机,1:攻击...]
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.OneDimensionArray,11,"triggerConditionValue","","@triggerConditionValue11",false,false)]	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.OneDimensionArray,12,"triggerConditionValue","","@triggerConditionValue12",false,false)]	
 	public string[] triggerConditionValue { get; private set; }	
-		
-	/// <summary>
-	/// 转到下一引导方式
-	///0：完成操作
-	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,12,"transNextGuidePattern","","@transNextGuidePattern12",false,false)]	
-	public int transNextGuidePattern { get; private set; }	
 		
 	/// <summary>
 	/// 【验证参考对象】组
@@ -122,22 +123,30 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	public int[] validateReferObjectId { get; private set; }	
 		
 	/// <summary>
-	/// 验证条件类别
+	/// 【验证条件】匹配类型
+	///0：全匹配
+	///1：任意一条匹配
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,14,"validateConditionMatchType","","@validateConditionMatchType14",false,false)]	
+	public int validateConditionMatchType { get; private set; }	
+		
+	/// <summary>
+	/// 【验证条件】类别
 	///0：Click 点击触发参考对象
 	///1：Drag 拖拽触发参考对象到验证参考对象
 	///2：MoveTo 触发参考对象移动到验证参考对象
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,14,"validateConditionType","","@validateConditionType14",false,false)]	
-	public int validateConditionType { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,15,"validateConditionType","","@validateConditionType15",false,false)]	
+	public int[] validateConditionType { get; private set; }	
 		
 	/// <summary>
-	/// 验证条件值
-	///0：[0:点击任意触发参考对象,0|1|2：按索引触发参考对象]
-	///1：[0:拖拽任意参考对象到任意验证对象,0-1|2-3指定索引的参考对象拖拽到指定验证对象]
+	/// 【验证条件】值
+	///0：[0:点击任意触发参考对象,0_1_2：按索引触发参考对象]
+	///1：[0:拖拽任意参考对象到任意验证对象,0_1|2_3指定索引的参考对象拖拽到指定验证对象]
 	///2：[0:任意]
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,15,"validateConditionValue","","@validateConditionValue15",false,false)]	
-	public string validateConditionValue { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.OneDimensionArray,16,"validateConditionValue","","@validateConditionValue16",false,false)]	
+	public string[] validateConditionValue { get; private set; }	
 	
 	#endregion
 

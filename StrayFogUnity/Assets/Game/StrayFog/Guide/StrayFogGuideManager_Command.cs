@@ -43,7 +43,7 @@ public partial class StrayFogGuideManager
                     break;
             }            
         }
-        result.ResolveConfig(_config, (id) => { return mGuideReferObjectMaping[id]; });
+        result.ResolveConfig(_config, (id) => { return mGuideReferObjectMaping.ContainsKey(id) ? mGuideReferObjectMaping[id] : default; });
         return result;
     }
 
