@@ -85,31 +85,27 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 		
 	/// <summary>
 	/// 【触发条件】数据类型
-	///0：无条件
-	///1：2D参考类型
-	///2：3D参考类型
-	///3：玩家等级
-	///4：物品
-	///5：装备
-	///6：任务
-	///7：玩家状态
+	///0：触发参考对象
+	///1：玩家等级
+	///2：物品
+	///3：装备
+	///4：任务
+	///5：玩家状态
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,10,"triggerConditionType","","@triggerConditionType10",false,false)]	
-	public int triggerConditionType { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,10,"triggerConditionType","","@triggerConditionType10",false,false)]	
+	public int[] triggerConditionType { get; private set; }	
 		
 	/// <summary>
-	/// 【触发条件】数据值
-	///0：不填
-	///1：[0:隐藏,1:显示]
-	///2：[0:隐藏,1:显示]
-	///3：等级值[M-N]
-	///4：物品配置Id|物品数量
-	///5：装备配置Id|装备数量
-	///6：[0:任意任务,>0指定任务]
-	///7：[0:待机,1:攻击...]
+	/// 【触发条件】数据值【组分隔符|】
+	///0：[0：隐藏,1：显示]
+	///1：等级值[M_N]
+	///2：物品配置Id_物品数量
+	///3：装备配置Id_装备数量
+	///4：[0:任意任务,>0指定任务]
+	///5：[0:待机,1:攻击...]
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,11,"triggerConditionValue","","@triggerConditionValue11",false,false)]	
-	public string triggerConditionValue { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.OneDimensionArray,11,"triggerConditionValue","","@triggerConditionValue11",false,false)]	
+	public string[] triggerConditionValue { get; private set; }	
 		
 	/// <summary>
 	/// 转到下一引导方式

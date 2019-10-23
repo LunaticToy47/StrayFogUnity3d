@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using System;
+/// <summary>
 /// XLS_Config_Table_UserGuideConfig 扩展
 /// </summary>
 public partial class XLS_Config_Table_UserGuideConfig
@@ -14,7 +15,7 @@ public partial class XLS_Config_Table_UserGuideConfig
     /// <summary>
     /// 触发条件类型
     /// </summary>
-    public enUserGuideConfig_TriggerConditionType enTriggerConditionType { get; private set; }
+    public enUserGuideConfig_TriggerConditionType[] enTriggerConditionType { get; private set; }
     /// <summary>
     /// 验证条件类型
     /// </summary>
@@ -27,7 +28,12 @@ public partial class XLS_Config_Table_UserGuideConfig
     {
         enGuideType = (enUserGuideConfig_GuideType)guideType;
         enStrongGuideDisplayType = (enUserGuideConfig_StrongGuidDisplayType)strongGuidDisplayType;
-        enTriggerConditionType = (enUserGuideConfig_TriggerConditionType) triggerConditionType;
+
+        enTriggerConditionType = new enUserGuideConfig_TriggerConditionType[triggerConditionType.Length];
+        for(int i=0;i< triggerConditionType.Length;i++)
+        {
+            enTriggerConditionType[i] = (enUserGuideConfig_TriggerConditionType)triggerConditionType[i];
+        }
         enValidateConditionType = (enUserGuideConfig_ValidateConditionType) validateConditionType;
         base.OnResolve();
     }

@@ -70,47 +70,37 @@ public enum enUserGuideConfig_StrongGuidDisplayType
 public enum enUserGuideConfig_TriggerConditionType
 {
     /// <summary>
-    /// 无条件
+    /// 触发参考对象
     /// </summary>
-    [AliasTooltip("无条件")]
-    None = 0,
-    /// <summary>
-    /// 2D参考类型
-    /// </summary>
-    [AliasTooltip("2D参考类型")]
-    Refer2D = 1,
-    /// <summary>
-    /// 3D参考类型
-    /// </summary>
-    [AliasTooltip("3D参考类型")]
-    Refer3D = 2,
+    [AliasTooltip("触发参考对象")]
+    ReferObject = 0,
     /// <summary>
     /// 玩家等级
     /// </summary>
     [AliasTooltip("玩家等级")]
-    PlayerLv = 3,
+    PlayerLv = 1,
     /// <summary>
     /// 物品
     /// </summary>
     [AliasTooltip("物品")]
-    Item = 4,
+    Item = 2,
     /// <summary>
     /// 装备
     /// </summary>
     [AliasTooltip("装备")]
-    Equip = 5,
+    Equip = 3,
     /// <summary>
     /// 任务
     /// </summary>
     [AliasTooltip("任务")]
-    Task = 6,
+    Task = 4,
     /// <summary>
     /// 玩家状态
     /// </summary>
     [AliasTooltip("玩家状态")]
-    PlayerStatus = 7,
+    PlayerStatus = 5,
 }
-#endregion\
+#endregion
 
 #region enUserGuideConfig_ValidateConditionType 验证条件类别
 /// <summary>
@@ -148,17 +138,13 @@ public enum enUserGuideReferObject_Refer2DType
     /// </summary>
     None = 0,
     /// <summary>
-    /// UI窗口
-    /// </summary>
-    UIWindow = 1,
-    /// <summary>
     /// UI窗口控件
     /// </summary>
-    UIWindowControl = 2,
+    UIWindowControl = 1,
     /// <summary>
     /// UI窗口动态生成控件
     /// </summary>
-    UIWindowDynamicControl = 3,
+    UIWindowDynamicControl = 2,
 }
 #endregion
 

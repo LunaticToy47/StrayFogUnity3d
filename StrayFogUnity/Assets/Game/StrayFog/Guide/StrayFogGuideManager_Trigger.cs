@@ -1,5 +1,7 @@
-﻿/// <summary>
-/// 引导管理器【2D引导】
+﻿using System;
+using System.Collections.Generic;
+/// <summary>
+/// 引导管理器【触发相关】
 /// </summary>
 public partial class StrayFogGuideManager
 {
@@ -15,15 +17,9 @@ public partial class StrayFogGuideManager
         {
             if (_windows != null)
             {
-                foreach (AbsUIWindowView w in _windows)
+                foreach (XLS_Config_Table_UserGuideConfig cfg in mWaitGuideConfigMaping.Values)
                 {
-                    foreach (XLS_Config_Table_UserGuideConfig cfg in mGuideConfigMaping.Values)
-                    {
-                        switch (cfg.enTriggerConditionType)
-                        {
-                            //case  enUserGuideConfig_TriggerConditionType.None
-                        }
-                    }
+                    IGuideCommand cmd = OnCreateGuideCommand(cfg);
                 }
             }
             //StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(mGuideWindowId, (wins, pars) =>

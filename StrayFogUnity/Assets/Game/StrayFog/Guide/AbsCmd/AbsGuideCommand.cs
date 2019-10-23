@@ -2,25 +2,45 @@
 /// <summary>
 /// 引导命令抽象
 /// </summary>
-public abstract class AbsGuideCommand : IGuideCommand
+public abstract class AbsGuideCommand : AbsGuideCondition, IGuideCommand
 {
-    #region GuideId 引导Id
+    #region guideId 引导Id
     /// <summary>
     /// 引导Id
     /// </summary>
-    public int GuideId { get; private set; }
+    public int guideId { get; private set; }
     #endregion
 
-    #region SetGuideId 设置引导Id
+    #region guideType 引导类型
     /// <summary>
-    /// 设置引导Id
+    /// 引导类型
     /// </summary>
-    /// <param name="_guideId">引导Id</param>
-    public void SetGuideId(int _guideId)
-    {
-        GuideId = _guideId;
-    }
+    public int guideType { get; private set; }
     #endregion
+
+    #region ResolveConfig 解析配置
+    /// <summary>
+    /// 解析配置
+    /// </summary>
+    /// <param name="_config">配置</param>
+    /// <param name="_funcReferObject">获得参考对象回调</param>
+    public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config,
+        Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
+    {
+        guideId = _config.id;
+        guideType = _config.guideType;
+        OnResolveConfig(_config, _funcReferObject);
+    }
+
+    /// <summary>
+    /// 解析配置
+    /// </summary>
+    /// <param name="_config">配置</param>
+    /// <param name="_funcReferObject">获得参考对象回调</param>
+    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideConfig _config,
+        Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
+    { }
+    #endregion    
 
     #region status 当前引导状态
     /// <summary>
@@ -29,65 +49,19 @@ public abstract class AbsGuideCommand : IGuideCommand
     public enGuideStatus status { get; private set; }
     #endregion
 
-    #region isTrigger 是否触发
-    /// <summary>
-    /// 是否触发
-    /// </summary>
-    /// <returns>true:触发,false:不触发</returns>
-    public bool isTrigger()
-    {
-        return OnIsTrigger();
-    }
-    /// <summary>
-    /// 是否触发
-    /// </summary>
-    /// <returns>true:触发,false:不触发</returns>
-    protected virtual bool OnIsTrigger() { return false; }
-    #endregion
-
-    #region ExcuteTrigger 执行触发处理
-    /// <summary>
-    /// 执行触发处理
-    /// </summary>
-    public void ExcuteTrigger()
-    {
-        OnExcuteTrigger();
-    }
-    /// <summary>
-    /// 执行触发处理
-    /// </summary>
-    protected virtual void OnExcuteTrigger() { }
-    #endregion
-
-    #region isValidate 是否通过验证
-    /// <summary>
-    /// 是否通过验证
-    /// </summary>
-    /// <returns>true:通过,false:不通过</returns>
-    public bool isValidate()
-    {
-        return OnIsValidate();
-    }
-    /// <summary>
-    /// 是否通过验证
-    /// </summary>
-    /// <returns>true:通过,false:不通过</returns>
-    protected virtual bool OnIsValidate() { return false; }
-    #endregion
-
     #region OnExcute 执行处理
     /// <summary>
-    /// 执行验证处理
+    /// 执行处理
     /// </summary>
-    public void ExcuteValidate()
+    public void Excute()
     {
-        OnExcuteValidate();
+        OnExcute();
     }
 
     /// <summary>
-    /// 执行验证处理
+    /// 执行处理
     /// </summary>
-    protected virtual void OnExcuteValidate() { }
+    protected virtual void OnExcute() { }
     #endregion
 
     #region Recycle 回收

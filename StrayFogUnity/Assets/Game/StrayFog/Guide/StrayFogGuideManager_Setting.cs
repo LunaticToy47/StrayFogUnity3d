@@ -9,9 +9,9 @@ public partial class StrayFogGuideManager
     /// </summary>
     int mGuideWindowId = 0;
     /// <summary>
-    /// 引导配置映射
+    /// 等待执行的引导配置
     /// </summary>
-    Dictionary<int, XLS_Config_Table_UserGuideConfig> mGuideConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideConfig>();
+    Dictionary<int, XLS_Config_Table_UserGuideConfig> mWaitGuideConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideConfig>();
     /// <summary>
     /// 引导参考对象映射
     /// </summary>
@@ -50,9 +50,9 @@ public partial class StrayFogGuideManager
         {
             foreach (XLS_Config_Table_UserGuideConfig t in configs)
             {
-                if (!mGuideConfigMaping.ContainsKey(t.id))
+                if (!mWaitGuideConfigMaping.ContainsKey(t.id))
                 {
-                    mGuideConfigMaping.Add(t.id, t);
+                    mWaitGuideConfigMaping.Add(t.id, t);
                 }
             }
         }        
@@ -90,7 +90,7 @@ public partial class StrayFogGuideManager
         {
             foreach (int id in _excludeFilterGuideIds)
             {
-                mGuideConfigMaping.Remove(id);
+                mWaitGuideConfigMaping.Remove(id);
             }
         }
     }

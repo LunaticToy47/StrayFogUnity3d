@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using System;
+/// <summary>
 /// 引导命令接口
 /// </summary>
 public interface IGuideCommand : IRecycle
@@ -6,13 +7,19 @@ public interface IGuideCommand : IRecycle
     /// <summary>
     /// 引导Id
     /// </summary>
-    int GuideId { get; }
+    int guideId { get; }
+    /// <summary>
+    /// 引导类型
+    /// </summary>
+    int guideType { get; }
 
     /// <summary>
-    /// 设置引导Id
+    /// 解析配置
     /// </summary>
-    /// <param name="_guideId">引导Id</param>
-    void SetGuideId(int _guideId);
+    /// <param name="_config">配置</param>
+    /// <param name="_funcReferObject">获得参考对象回调</param>
+    void ResolveConfig(XLS_Config_Table_UserGuideConfig _config,
+        Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject);
 
     /// <summary>
     /// 获得当前引导状态
@@ -20,24 +27,7 @@ public interface IGuideCommand : IRecycle
     enGuideStatus status { get; }
 
     /// <summary>
-    /// 是否触发
+    /// 执行处理
     /// </summary>
-    /// <returns>true:触发,false:不触发</returns>
-    bool isTrigger();
-
-    /// <summary>
-    /// 执行触发处理
-    /// </summary>
-    void ExcuteTrigger();
-
-    /// <summary>
-    /// 是否通过验证
-    /// </summary>
-    /// <returns>true:通过,false:不通过</returns>
-    bool isValidate();
-
-    /// <summary>
-    /// 执行验证处理
-    /// </summary>
-    void ExcuteValidate();
+    void Excute();
 }
