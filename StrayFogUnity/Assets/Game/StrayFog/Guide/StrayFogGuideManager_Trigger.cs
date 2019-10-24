@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-/// <summary>
+﻿/// <summary>
 /// 引导管理器【触发相关】
 /// </summary>
 public partial class StrayFogGuideManager
 {
+    /// <summary>
+    /// 当前触发的引导
+    /// </summary>
+    AbsGuideCommand mTriggerGuideCommand = null;
+
     #region OnOpenWindowCheck 打开窗口检测
     /// <summary>
     /// 打开窗口检测
@@ -17,15 +20,26 @@ public partial class StrayFogGuideManager
         {
             if (_windows != null)
             {
-                foreach (XLS_Config_Table_UserGuideConfig cfg in mWaitGuideConfigMaping.Values)
+                if (mTriggerGuideCommand == null)
                 {
-                    IGuideCommand cmd = OnCreateGuideCommand(cfg);
-                }
+                    foreach (AbsGuideCommand cmd in mWaitGuideCommandMaping.Values)
+                    {
+                        if (cmd.isMatchCondition(_windows))
+                        {
+                            mTriggerGuideCommand = cmd;
+                            break;
+                        }
+                    }
+                    if (mTriggerGuideCommand != null)
+                    {
+                        StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(mGuideWindowId, (wins, pars) =>
+                        {
+                            mTriggerGuideCommand.Excute(wins);
+                        });
+                    }
+                }                
             }
-            //StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(mGuideWindowId, (wins, pars) =>
-            //{
-                
-            //});
+            
         }
     }
     #endregion

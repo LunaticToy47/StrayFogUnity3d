@@ -1,23 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 /// <summary>
 /// 引导命令抽象
 /// </summary>
-public abstract class AbsGuideCommand : IGuideCommand
+public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
 {
-    #region guideId 引导Id
-    /// <summary>
-    /// 引导Id
-    /// </summary>
-    public int guideId { get; private set; }
-    #endregion
-
-    #region guideType 引导类型
-    /// <summary>
-    /// 引导类型
-    /// </summary>
-    public int guideType { get; private set; }
-    #endregion
-
     #region ResolveConfig 解析配置
     /// <summary>
     /// 解析配置
@@ -27,12 +14,19 @@ public abstract class AbsGuideCommand : IGuideCommand
     public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config,
         Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
     {
-        guideId = _config.id;
-        guideType = _config.guideType;
+        ResolveConfig(_config);
         OnPushCommand(_config,_funcReferObject);
         OnResolveConfig(_config, _funcReferObject);
     }
 
+    /// <summary>
+    /// 触发条件集合
+    /// </summary>
+    List<AbsGuideSubCommand_Condition> mTriggerConditionCollection = new List<AbsGuideSubCommand_Condition>();
+    /// <summary>
+    /// 验证条件集合
+    /// </summary>
+    List<AbsGuideSubCommand_Condition> mValidateConditionCollection = new List<AbsGuideSubCommand_Condition>();
     /// <summary>
     /// 组装命令
     /// </summary>
@@ -41,39 +35,61 @@ public abstract class AbsGuideCommand : IGuideCommand
     void OnPushCommand(XLS_Config_Table_UserGuideConfig _config,
         Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
     {
-        //按XLS_Config_Table_UserGuideConfig.guideType引导类型生成的命令
-
-        //收集触发参考命令
+        #region 收集触发命令
+        //触发参考命令
+        List<XLS_Config_Table_UserGuideReferObject> referCfgs = new List<XLS_Config_Table_UserGuideReferObject>();
         foreach (int rid in _config.triggerReferObjectId)
         {
             XLS_Config_Table_UserGuideReferObject r = _funcReferObject(rid);
             if (r != null)
             {
-                UserGuideConfig_ReferObject_Command triggerReferObject = new UserGuideConfig_ReferObject_Command();
-                triggerReferObject.ResolveConfig(r);
+                referCfgs.Add(r);
             }
         }
 
-        //收集触发条件命令
+        //触发条件命令
         foreach (int t in _config.triggerConditionType)
         {
-            AbsGuideSubCommand_Condition cmd = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[t]();
-            cmd.ResolveConfig(_config);
+            AbsGuideSubCommand_Condition tc = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[t]();
+            tc.ResolveConfig(_config);
+            if (t == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+            {
+                foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
+                {
+                    tc.ResolveConfig(r);
+                }                
+            }
+            mTriggerConditionCollection.Add(tc);
+        }
+        #endregion
+
+        #region 收集验证命令
+        //验证参考命令
+        referCfgs = new List<XLS_Config_Table_UserGuideReferObject>();
+        foreach (int rid in _config.validateReferObjectId)
+        {
+            XLS_Config_Table_UserGuideReferObject r = _funcReferObject(rid);
+            if (r != null)
+            {
+                referCfgs.Add(r);
+            }
         }
 
-
-        //收集验证条件命令
-        //foreach (int rid in _config.validateReferObjectId)
-        //{
-        //    XLS_Config_Table_UserGuideReferObject r = _funcReferObject(rid);
-        //    if (r != null)
-        //    {
-        //        AbsGuideSubCommand_ReferObject refer = StrayFogGuideManager.Cmd_UserGuideReferObject_Refer2DTypeMaping[r.refer2DType]();
-        //        refer.ResolveConfig(r);
-        //    }
-        //}
-
-        //收集验证参考命令
+        //验证条件命令
+        foreach (int t in _config.validateConditionType)
+        {
+            AbsGuideSubCommand_Condition vc = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[t]();
+            vc.ResolveConfig(_config);
+            if (t == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+            {
+                foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
+                {
+                    vc.ResolveConfig(r);
+                }
+            }
+            mValidateConditionCollection.Add(vc);
+        }
+        #endregion
     }
 
     /// <summary>
@@ -84,23 +100,6 @@ public abstract class AbsGuideCommand : IGuideCommand
     protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideConfig _config,
         Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
     { }
-    #endregion    
-
-    #region isMatchCondition 是否满足条件
-    /// <summary>
-    /// 是否满足条件
-    /// </summary>
-    /// <returns>true:满足条件,false:不满足条件</returns>
-    public bool isMatchCondition()
-    {
-        return OnIsMatchCondition();
-    }
-
-    /// <summary>
-    /// 是否满足条件
-    /// </summary>
-    /// <returns>true:满足条件,false:不满足条件</returns>
-    protected virtual bool OnIsMatchCondition() { return false; }
     #endregion
 
     #region status 当前引导状态
@@ -110,54 +109,117 @@ public abstract class AbsGuideCommand : IGuideCommand
     public enGuideStatus status { get; private set; }
     #endregion
 
-    #region OnExcute 执行处理
-    /// <summary>
-    /// 执行处理
-    /// </summary>
-    public void Excute()
+    #region OnRecycle 回收
+    protected override void OnRecycle()
     {
-        OnExcute();
+        status = enGuideStatus.WaitTrigger;
+        foreach (AbsGuideSubCommand_Condition cmd in mTriggerConditionCollection)
+        {
+            cmd.Recycle();
+        }
+        foreach (AbsGuideSubCommand_Condition cmd in mValidateConditionCollection)
+        {
+            cmd.Recycle();
+        }
+        mTriggerConditionCollection.Clear();
+        mValidateConditionCollection.Clear();
+        base.OnRecycle();
     }
-
-    /// <summary>
-    /// 执行处理
-    /// </summary>
-    protected virtual void OnExcute() { }
     #endregion
 
-    #region Recycle 回收
+    #region OnIsMatchCondition 是否匹配条件
     /// <summary>
-    /// 回收之前事件
+    /// 是否匹配条件
     /// </summary>
-    public event EventHandlerRecycle OnBeforeRecycle;
-    /// <summary>
-    /// 回收之后事件
-    /// </summary>
-    public event EventHandlerRecycle OnAfterRecycle;
-
-    /// <summary>
-    /// 回收
-    /// </summary>
-    public void Recycle()
+    /// <param name="_parameters">参数</param>
+    /// <returns>true:通过验证,false:不通过验证</returns>
+    protected override bool OnIsMatchCondition(params object[] _parameters)
     {
-        OnBeforeRecycle?.Invoke(this);
-        OnRecycle();
-        OnAfterRecycle?.Invoke(this);
+        bool result = false;
+        switch (status)
+        {
+            case enGuideStatus.WaitTrigger:
+                result = OnValidateCondition(mTriggerConditionCollection, guideConfig.enTriggerConditionMatchType,_parameters);
+                break;
+            case enGuideStatus.WaitValidate:
+                result = OnValidateCondition(mValidateConditionCollection, guideConfig.enValidateConditionMatchType, _parameters);
+                break;
+            case enGuideStatus.Finish:
+                result = true;
+                break;
+        }
+        return result;
     }
 
     /// <summary>
-    /// 回收
+    /// 验证条件
     /// </summary>
-    protected virtual void OnRecycle() { }
+    /// <param name="_conditions">条件集合</param>
+    /// <param name="_matchType">匹配类型</param>
+    /// <param name="_parameters">参数</param>
+    /// <returns>true:验证通过,false:验证不通过</returns>
+    bool OnValidateCondition(List<AbsGuideSubCommand_Condition> _conditions, 
+        enUserGuideConfig_ConditionMatchType _matchType, 
+        params object[] _parameters)
+    {
+        bool result = false;
+        switch (_matchType)
+        {
+            case enUserGuideConfig_ConditionMatchType.And:
+                result = true;
+                foreach (AbsGuideSubCommand_Condition tc in _conditions)
+                {
+                    result &= tc.isMatchCondition(_parameters);
+                }
+                break;
+            case enUserGuideConfig_ConditionMatchType.Or:
+                result = false;
+                foreach (AbsGuideSubCommand_Condition tc in _conditions)
+                {
+                    result |= tc.isMatchCondition(_parameters);
+                    if (result)
+                    {
+                        break;
+                    }
+                }
+                break;
+        }
+        return result;
+    }
+    #endregion
+
+    #region OnExcute 执行
+    /// <summary>
+    /// 执行
+    /// </summary>
+    /// <param name="_parameters">参数</param>
+    protected override void OnExcute(params object[] _parameters)
+    {
+        switch (status)
+        {
+            case enGuideStatus.WaitTrigger:
+                OnExcuteCmd(mTriggerConditionCollection, _parameters);
+                break;
+            case enGuideStatus.WaitValidate:
+                OnExcuteCmd(mValidateConditionCollection, _parameters);
+                break;
+            case enGuideStatus.Finish:
+                
+                break;
+        }
+    }
 
     /// <summary>
-    /// 延时回收
+    /// 执行满足条件的命令操作
     /// </summary>
-    /// <param name="_delay">延时时间</param>
-    [Obsolete("Use Recycle() instead. Delay is not use.")]
-    public void Recycle(float _delay)
+    /// <param name="_cmds">命令</param>
+    /// <param name="_parameters">参数</param>
+    void OnExcuteCmd(List<AbsGuideSubCommand_Condition> _cmds, object[] _parameters)
     {
-        Recycle();
+        foreach (AbsGuideSubCommand_Condition c in _cmds)
+        {
+            c.Excute(_parameters);
+        }
     }
     #endregion
 }

@@ -2,17 +2,8 @@
 /// <summary>
 /// 引导命令接口
 /// </summary>
-public interface IGuideCommand : IGuideMatchCondition,IRecycle
+public interface IGuideCommand
 {
-    /// <summary>
-    /// 引导Id
-    /// </summary>
-    int guideId { get; }
-    /// <summary>
-    /// 引导类型
-    /// </summary>
-    int guideType { get; }
-
     /// <summary>
     /// 解析配置
     /// </summary>
@@ -25,9 +16,4 @@ public interface IGuideCommand : IGuideMatchCondition,IRecycle
     /// 获得当前引导状态
     /// </summary>
     enGuideStatus status { get; }
-
-    /// <summary>
-    /// 执行处理
-    /// </summary>
-    void Excute();
 }

@@ -9,13 +9,17 @@ public partial class StrayFogGuideManager
     /// </summary>
     int mGuideWindowId = 0;
     /// <summary>
-    /// 等待执行的引导配置
+    ///引导配置映射
     /// </summary>
-    Dictionary<int, XLS_Config_Table_UserGuideConfig> mWaitGuideConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideConfig>();
+    Dictionary<int, XLS_Config_Table_UserGuideConfig> mGuideConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideConfig>();
     /// <summary>
     /// 引导参考对象映射
     /// </summary>
     Dictionary<int, XLS_Config_Table_UserGuideReferObject> mGuideReferObjectMaping = new Dictionary<int, XLS_Config_Table_UserGuideReferObject>();
+    /// <summary>
+    /// 等待引导命令映射
+    /// </summary>
+    Dictionary<int, AbsGuideCommand> mWaitGuideCommandMaping = new Dictionary<int, AbsGuideCommand>();
 
     #region OnInitGuideWindowData 初始化引导窗口数据
     /// <summary>
@@ -50,9 +54,9 @@ public partial class StrayFogGuideManager
         {
             foreach (XLS_Config_Table_UserGuideConfig t in configs)
             {
-                if (!mWaitGuideConfigMaping.ContainsKey(t.id))
+                if (!mGuideConfigMaping.ContainsKey(t.id))
                 {
-                    mWaitGuideConfigMaping.Add(t.id, t);
+                    mGuideConfigMaping.Add(t.id, t);
                 }
             }
         }        
@@ -79,6 +83,23 @@ public partial class StrayFogGuideManager
     }
     #endregion
 
+    #region OnInitGuideResolveCommand 初始化引导命令
+    /// <summary>
+    /// 初始化引导命令
+    /// </summary>
+    void OnInitGuideResolveCommand()
+    {
+        foreach (XLS_Config_Table_UserGuideConfig cfg in mGuideConfigMaping.Values)
+        {
+            AbsGuideCommand cmd = OnCreateGuideCommand(cfg);
+            if (!mWaitGuideCommandMaping.ContainsKey(cmd.guideConfig.id))
+            {
+                mWaitGuideCommandMaping.Add(cmd.guideConfig.id, cmd);
+            }
+        }
+    }
+    #endregion
+
     #region FilterGuide 过滤引导
     /// <summary>
     /// 过滤引导
@@ -90,7 +111,7 @@ public partial class StrayFogGuideManager
         {
             foreach (int id in _excludeFilterGuideIds)
             {
-                mWaitGuideConfigMaping.Remove(id);
+                mWaitGuideCommandMaping.Remove(id);
             }
         }
     }

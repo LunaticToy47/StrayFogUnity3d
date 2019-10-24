@@ -1,37 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 /// <summary>
 /// 引导解析匹配抽象
 /// </summary>
-public class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolveConfig
+public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolveConfig, IRecycle
 {
     /// <summary>
-    /// 引导解析匹配命令
+    /// 引导配置
     /// </summary>
-    List<AbsGuideResolveMatch> mGuideResolveMatchCmds = new List<AbsGuideResolveMatch>();
+    public XLS_Config_Table_UserGuideConfig guideConfig { get; private set; }
+
+    /// <summary>
+    /// 参考对象配置
+    /// </summary>
+    public XLS_Config_Table_UserGuideReferObject referObjectConfig { get; private set; }
 
     #region isMatchCondition 是否满足条件
     /// <summary>
     /// 是否满足条件
     /// </summary>
+    /// <param name="_parameters">参数</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    public bool isMatchCondition()
+    public bool isMatchCondition(params object[] _parameters)
     {
-        bool result = mGuideResolveMatchCmds == null || mGuideResolveMatchCmds.Count > 0;
-        if (mGuideResolveMatchCmds != null)
-        {
-            foreach (AbsGuideResolveMatch cmd in mGuideResolveMatchCmds)
-            {
-                result &= cmd.isMatchCondition();
-            }
-        }
-        return result & OnIsMatchCondition();
+        return OnIsMatchCondition(_parameters);
     }
 
     /// <summary>
     /// 是否满足条件
     /// </summary>
+    /// <param name="_parameters">参数</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected virtual bool OnIsMatchCondition() { return true; }
+    protected virtual bool OnIsMatchCondition(params object[] _parameters) { return true; }
+    #endregion
+
+    #region Excute 执行处理
+    /// <summary>
+    /// 执行处理
+    /// </summary>
+    /// <param name="_parameters">参数</param>
+    public void Excute(params object[] _parameters)
+    {
+        OnExcute(_parameters);
+    }
+
+    /// <summary>
+    /// 执行处理
+    /// </summary>
+    /// <param name="_parameters">参数</param>
+    protected virtual void OnExcute(params object[] _parameters) { }
     #endregion
 
     #region ResolveConfig 解析配置
@@ -41,19 +58,15 @@ public class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolveConfig
     /// <param name="_config">配置</param>
     public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config)
     {
-        List<AbsGuideResolveMatch> result = OnResolveConfig(_config);
-        if (result != null && result.Count > 0)
-        {
-            mGuideResolveMatchCmds.AddRange(result);
-        }
+        guideConfig = _config;
+        OnResolveConfig(_config);
     }
 
     /// <summary>
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>
-    /// <returns>命令组</returns>
-    protected virtual List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideConfig _config) { return new List<AbsGuideResolveMatch>(); }
+    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideConfig _config) { }
     #endregion
 
     #region ResolveConfig 解析配置
@@ -63,39 +76,74 @@ public class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolveConfig
     /// <param name="_config">配置</param>
     public void ResolveConfig(XLS_Config_Table_UserGuideReferObject _config)
     {
-        List<AbsGuideResolveMatch> result = OnResolveConfig(_config);
-        if (result != null && result.Count > 0)
-        {
-            mGuideResolveMatchCmds.AddRange(result);
-        }
+        referObjectConfig = _config;
+        OnResolveConfig(_config);
     }
 
     /// <summary>
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>
-    /// <returns>命令组</returns>
-    protected virtual List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config) { return new List<AbsGuideResolveMatch>(); }
+    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config) { }
     #endregion
 
-    #region Clear 清空已解析的数据
+    #region Recycle 回收
     /// <summary>
-    /// 清空已解析的数据
+    /// 回收之前事件
     /// </summary>
-    public void Clear()
+    public event EventHandlerRecycle OnBeforeRecycle;
+    /// <summary>
+    /// 回收之后事件
+    /// </summary>
+    public event EventHandlerRecycle OnAfterRecycle;
+
+    /// <summary>
+    /// 回收
+    /// </summary>
+    public void Recycle()
     {
-        if (mGuideResolveMatchCmds != null)
-        {
-            foreach (AbsGuideResolveMatch cmd in mGuideResolveMatchCmds)
-            {
-                cmd.Clear();
-            }
-        }
-        OnClear();
+        OnBeforeRecycle?.Invoke(this);
+        OnRecycle();
+        OnAfterRecycle?.Invoke(this);
     }
+
     /// <summary>
-    /// 清空已解析的数据
+    /// 回收
     /// </summary>
-    protected virtual void OnClear() { }
+    protected virtual void OnRecycle() { }
+
+    /// <summary>
+    /// 延时回收
+    /// </summary>
+    /// <param name="_delay">延时时间</param>
+    [Obsolete("Use Recycle() instead. Delay is not use.")]
+    public void Recycle(float _delay)
+    {
+        Recycle();
+    }
+    #endregion
+
+    #region OnSegmentationGroup 将源字符串按组分隔
+    /// <summary>
+    /// 将源字符串按组分隔
+    /// </summary>
+    /// <param name="_source">源字符</param>
+    /// <returns>组字符</returns>
+    protected string[] OnSegmentationGroup(string _source)
+    {
+        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(new string[1] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+    }
+    #endregion
+
+    #region OnSegmentationValue 将源字符串按值分隔
+    /// <summary>
+    /// 将源字符串按值分隔
+    /// </summary>
+    /// <param name="_source">源字符</param>
+    /// <returns>值字符</returns>
+    protected string[] OnSegmentationValue(string _source)
+    {
+        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(new string[1] { "_" }, StringSplitOptions.RemoveEmptyEntries);
+    }
     #endregion
 }

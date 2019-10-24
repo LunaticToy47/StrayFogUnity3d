@@ -22,7 +22,7 @@ public partial class XLS_Config_Table_UserGuideConfig
     protected override void OnResolve()
     {
         enStrongGuideDisplayType = (enUserGuideConfig_StrongGuidDisplayType)strongGuidDisplayType;
-        enTriggerConditionMatchType = (enUserGuideConfig_ConditionMatchType)triggerConditionMatchType;       
+        enTriggerConditionMatchType = (enUserGuideConfig_ConditionMatchType)triggerConditionMatchType;
         enValidateConditionMatchType = (enUserGuideConfig_ConditionMatchType)validateConditionMatchType;                
         base.OnResolve();
     }
