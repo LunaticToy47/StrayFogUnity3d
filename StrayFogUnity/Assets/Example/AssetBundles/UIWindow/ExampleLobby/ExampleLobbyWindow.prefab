@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 222667011175820224}
   - component: {fileID: 114541622340580350}
   - component: {fileID: 114885706927006040}
-  - component: {fileID: 114530442848892364}
   m_Layer: 5
   m_Name: btn4
   m_TagString: Untagged
@@ -121,23 +120,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114530442848892364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1131152712638702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f36f390af2602f44b4f468357e1f128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graphicsNodeIndexs: 
-  triggerId: 4
-  validateIsFinishEventTriggerType: 4
-  validateId: 0
-  isValidate: 0
 --- !u!1 &1241943898643976
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +132,6 @@ GameObject:
   - component: {fileID: 222579429535224452}
   - component: {fileID: 114938751836664012}
   - component: {fileID: 114883442560132756}
-  - component: {fileID: 114257110767116592}
   m_Layer: 5
   m_Name: btnRadarBg
   m_TagString: Untagged
@@ -260,23 +241,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114257110767116592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241943898643976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f36f390af2602f44b4f468357e1f128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graphicsNodeIndexs: 
-  triggerId: 0
-  validateIsFinishEventTriggerType: 4
-  validateId: 5
-  isValidate: 1
 --- !u!1 &1429756496421094
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +386,6 @@ GameObject:
   - component: {fileID: 222763926299541688}
   - component: {fileID: 114447473076777160}
   - component: {fileID: 114536363317321368}
-  - component: {fileID: 114998980671205140}
   m_Layer: 5
   m_Name: btnRadar
   m_TagString: Untagged
@@ -531,23 +494,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114998980671205140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1556861063919078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f36f390af2602f44b4f468357e1f128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graphicsNodeIndexs: 
-  triggerId: 5
-  validateIsFinishEventTriggerType: 14
-  validateId: 0
-  isValidate: 0
 --- !u!1 &1621493898876682
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +506,6 @@ GameObject:
   - component: {fileID: 222519171365922258}
   - component: {fileID: 114163927162652592}
   - component: {fileID: 114270395103646450}
-  - component: {fileID: 114538975761711172}
   m_Layer: 5
   m_Name: btn2
   m_TagString: Untagged
@@ -669,23 +614,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114538975761711172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621493898876682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f36f390af2602f44b4f468357e1f128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graphicsNodeIndexs: 
-  triggerId: 2
-  validateIsFinishEventTriggerType: 4
-  validateId: 0
-  isValidate: 0
 --- !u!1 &1699707415968020
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +626,6 @@ GameObject:
   - component: {fileID: 222002993441233318}
   - component: {fileID: 114482536456811894}
   - component: {fileID: 114297052050595770}
-  - component: {fileID: 114799648221282046}
   m_Layer: 5
   m_Name: btn3
   m_TagString: Untagged
@@ -807,23 +734,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114799648221282046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699707415968020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f36f390af2602f44b4f468357e1f128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graphicsNodeIndexs: 
-  triggerId: 3
-  validateIsFinishEventTriggerType: 4
-  validateId: 0
-  isValidate: 0
 --- !u!1 &1891701952857918
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,8 +745,7 @@ GameObject:
   - component: {fileID: 224122331439773836}
   - component: {fileID: 222013825989682536}
   - component: {fileID: 114732859388460494}
-  - component: {fileID: 114395569984800320}
-  - component: {fileID: 114246190122248652}
+  - component: {fileID: 1891701952857919}
   m_Layer: 5
   m_Name: btn1
   m_TagString: Untagged
@@ -900,7 +809,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &114395569984800320
+--- !u!114 &1891701952857919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -909,7 +818,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1891701952857918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e459ac7422da0e40a9cd1d29cbc3219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -936,7 +845,7 @@ MonoBehaviour:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Highlighted
+    m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 114732859388460494}
@@ -945,20 +854,3 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114246190122248652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891701952857918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f36f390af2602f44b4f468357e1f128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graphicsNodeIndexs: 
-  triggerId: 1
-  validateIsFinishEventTriggerType: 4
-  validateId: 0
-  isValidate: 0

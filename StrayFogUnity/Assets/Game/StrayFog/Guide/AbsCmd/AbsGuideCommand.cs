@@ -14,7 +14,7 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
     public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config,
         Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
     {
-        ResolveConfig(_config);
+        ResolveConfig(_config, -1, status);
         OnPushCommand(_config,_funcReferObject);
         OnResolveConfig(_config, _funcReferObject);
     }
@@ -48,16 +48,16 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
         }
 
         //触发条件命令
-        foreach (int t in _config.triggerConditionType)
+        for (int i = 0; i < _config.triggerConditionType.Length; i++)
         {
-            AbsGuideSubCommand_Condition tc = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[t]();
-            tc.ResolveConfig(_config);
-            if (t == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+            AbsGuideSubCommand_Condition tc = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_config.triggerConditionType[i]]();
+            tc.ResolveConfig(_config, i, status);
+            if (_config.triggerConditionType[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
             {
                 foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
                 {
-                    tc.ResolveConfig(r);
-                }                
+                    tc.ResolveConfig(r, i, status);
+                }
             }
             mTriggerConditionCollection.Add(tc);
         }
@@ -76,15 +76,15 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
         }
 
         //验证条件命令
-        foreach (int t in _config.validateConditionType)
+        for (int i = 0; i < _config.validateConditionType.Length; i++)
         {
-            AbsGuideSubCommand_Condition vc = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[t]();
-            vc.ResolveConfig(_config);
-            if (t == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+            AbsGuideSubCommand_Condition vc = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_config.validateConditionType[i]]();
+            vc.ResolveConfig(_config, i, status);
+            if (_config.validateConditionType[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
             {
                 foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
                 {
-                    vc.ResolveConfig(r);
+                    vc.ResolveConfig(r, i, status);
                 }
             }
             mValidateConditionCollection.Add(vc);

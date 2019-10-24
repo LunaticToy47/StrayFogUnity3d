@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 /// <summary>
 /// 抽象MonoBehaviour
 /// </summary>
@@ -9,57 +10,89 @@ public abstract partial class AbsMonoBehaviour : ICollect
     /// <summary>
     /// 收集组件映射
     /// </summary>
-    Dictionary<int, MonoBehaviour> mCollectMonoBehaviourMaping = new Dictionary<int, MonoBehaviour>();
+    Dictionary<int, Dictionary<int, UIBehaviour>> mCollectMonoBehaviourMaping = new Dictionary<int, Dictionary<int, UIBehaviour>>();
     /// <summary>
     /// 收集组件
     /// </summary>
     /// <typeparam name="T">组件类型</typeparam>
-    public void CollectCtrl<T>() where T : MonoBehaviour
+    public void CollectCtrl<T>() where T : UIBehaviour
     {
-        int key = 0;
-        T[] ctls = gameObject.GetComponentsInChildren<T>(true);
-        if (ctls != null)
+        OnCollectCtrl(gameObject.GetComponentsInChildren<T>(true));
+        OnCollectCtrl(gameObject.GetComponents<T>());       
+    }
+
+    /// <summary>
+    /// 搜索指定类型控件
+    /// </summary>
+    /// <typeparam name="T">控件类型</typeparam>
+    /// <param name="_ctls">控件组件</param>
+    void OnCollectCtrl<T>(T[] _ctls) where T : UIBehaviour
+    {
+        int nameKey = 0;
+        int typeKey = 0;
+        foreach (T c in _ctls)
         {
-            foreach (T c in ctls)
+            nameKey = c.name.GetHashCode();
+            typeKey = c.GetType().GetHashCode();
+            if (!mCollectMonoBehaviourMaping.ContainsKey(nameKey))
             {
-                key = c.name.GetHashCode();
-                if (!mCollectMonoBehaviourMaping.ContainsKey(key))
-                {
-                    mCollectMonoBehaviourMaping.Add(key, c);
-                }
-                else
-                {
-                    throw new UnityException(string.Format("The window 【{0}】has the same control for name 【{1}】", name, c.name));
-                }
+                mCollectMonoBehaviourMaping.Add(nameKey, new Dictionary<int, UIBehaviour>());
             }
-        }
-        T self = gameObject.GetComponent<T>();
-        if (self != null)
-        {
-            key = self.name.GetHashCode();
-            if (!mCollectMonoBehaviourMaping.ContainsKey(key))
+            if (!mCollectMonoBehaviourMaping[nameKey].ContainsKey(typeKey))
             {
-                mCollectMonoBehaviourMaping.Add(key, self);
+                mCollectMonoBehaviourMaping[nameKey].Add(typeKey, c);
             }
             else
             {
-                throw new UnityException(string.Format("The window 【{0}】has the same control for name 【{1}】", name, self.name));
+                throw new UnityException(string.Format("{0} has the same control for {1}_{2}", this, c.name, c.GetType()));
             }
         }
     }
     #endregion
 
-    #region FindCtrlByName 根据名称查询组件
+    #region FindCtrlByName 查询指定名称组件
     /// <summary>
-    /// 根据名称查询组件
+    /// 查询指定名称组件
     /// </summary>
     /// <typeparam name="T">组件类型</typeparam>
     /// <param name="_name">组件名称</param>
     /// <returns>组件</returns>
-    public T FindCtrlByName<T>(string _name) where T : MonoBehaviour
+    public T FindCtrlByName<T>(string _name) where T : UIBehaviour
     {
-        int key = _name.GetHashCode();
-        return mCollectMonoBehaviourMaping.ContainsKey(key) ? (T)mCollectMonoBehaviourMaping[key] : default;
+        int nameKey = _name.GetHashCode();
+        int typeKey = typeof(T).GetHashCode();
+        T result = default;
+        if (mCollectMonoBehaviourMaping.ContainsKey(nameKey) && mCollectMonoBehaviourMaping[nameKey].ContainsKey(typeKey))
+        {
+            result = (T)mCollectMonoBehaviourMaping[nameKey][typeKey];
+        }
+        return result;
+    }
+    #endregion
+
+    #region FindCtrlByNameIsSelfOrParent 查询指定名称组件【组件类型是指定类型或父类型】
+    /// <summary>
+    /// 查询指定名称组件【组件类型是指定类型或父类型】
+    /// </summary>
+    /// <typeparam name="T">组件类型</typeparam>
+    /// <param name="_name">组件名称</param>
+    /// <returns>组件</returns>
+    public T FindCtrlByNameIsSelfOrParent<T>(string _name) where T : UIBehaviour
+    {
+        int nameKey = _name.GetHashCode();
+        T result = default;
+        if (mCollectMonoBehaviourMaping.ContainsKey(nameKey))
+        {
+            foreach (UIBehaviour b in mCollectMonoBehaviourMaping[nameKey].Values)
+            {
+                if (b is T)
+                {
+                    result = (T)b;
+                    break;
+                }
+            }
+        }
+        return result;
     }
     #endregion
 }

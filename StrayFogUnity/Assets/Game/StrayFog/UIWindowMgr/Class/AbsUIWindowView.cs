@@ -18,7 +18,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// </summary>
     protected sealed override void Awake() {
         OnBeforeAwake();
-        CollectCtrl<AbsUIBehaviour>();
+        CollectCtrl<UIBehaviour>();
         OnAwake();
         OnAfterAwake();
     }

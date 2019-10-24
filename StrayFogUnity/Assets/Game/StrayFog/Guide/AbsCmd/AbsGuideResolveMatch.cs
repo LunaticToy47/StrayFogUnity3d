@@ -56,17 +56,21 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>
-    public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config)
+    /// <param name="_index">数据索引</param>
+    /// <param name="_status">引导状态</param>
+    public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _index, enGuideStatus _status)
     {
         guideConfig = _config;
-        OnResolveConfig(_config);
+        OnResolveConfig(_config, _index, _status);
     }
 
     /// <summary>
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>
-    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideConfig _config) { }
+    /// <param name="_index">数据索引</param>
+    /// <param name="_status">引导状态</param>
+    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _index, enGuideStatus _status) { }
     #endregion
 
     #region ResolveConfig 解析配置
@@ -74,17 +78,21 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>
-    public void ResolveConfig(XLS_Config_Table_UserGuideReferObject _config)
+    /// <param name="_index">数据索引</param>
+    /// <param name="_status">引导状态</param>
+    public void ResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _index, enGuideStatus _status)
     {
         referObjectConfig = _config;
-        OnResolveConfig(_config);
+        OnResolveConfig(_config, _index, _status);
     }
 
     /// <summary>
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>
-    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config) { }
+    /// <param name="_index">数据索引</param>
+    /// <param name="_status">引导状态</param>
+    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _index, enGuideStatus _status) { }
     #endregion
 
     #region Recycle 回收

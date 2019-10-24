@@ -120,6 +120,14 @@ public class FMSMachine : AbsMonoBehaviour
     /// <summary>
     /// 淡入淡出
     /// </summary>
+    /// <param name="_stateName">状态名称</param>
+    public void CrossFade(string _stateName)
+    {        
+        CrossFade(Animator.StringToHash(_stateName), 0);
+    }
+    /// <summary>
+    /// 淡入淡出
+    /// </summary>
     /// <param name="_stateNameHash">状态NameHash值</param>
     /// <param name="_normalizedTransitionDuration">归一化转换时间值</param>
     public void CrossFade(int _stateNameHash, float _normalizedTransitionDuration)
