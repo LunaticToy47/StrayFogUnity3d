@@ -182,6 +182,13 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     {
         OnBeforeRecycle?.Invoke(this);
         OnRecycle();
+        foreach (List<AbsGuideResolveMatch> matchs in mGuideResolveMatchMaping.Values)
+        {
+            foreach (AbsGuideResolveMatch m in matchs)
+            {
+                m.Recycle();
+            }
+        }
         OnAfterRecycle?.Invoke(this);
     }
 
