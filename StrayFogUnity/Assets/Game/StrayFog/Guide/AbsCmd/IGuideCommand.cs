@@ -13,7 +13,15 @@ public interface IGuideCommand
         Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject);
 
     /// <summary>
-    /// 获得当前引导状态
+    /// 是否满足条件
     /// </summary>
-    enGuideStatus status { get; }
+    /// <param name="_status">当前引导状态</param>
+    /// <returns>true:满足,false:不满足</returns>
+    bool isMatchCmd(params object[] _parameters);
+
+    /// <summary>
+    /// 执行处理
+    /// </summary>
+    /// <param name="_parameters">参数</param>
+    void ExcuteCmd(params object[] _parameters);
 }

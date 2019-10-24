@@ -24,7 +24,7 @@ public partial class StrayFogGuideManager
                 {
                     foreach (AbsGuideCommand cmd in mWaitGuideCommandMaping.Values)
                     {
-                        if (cmd.isMatchCondition(_windows))
+                        if (cmd.isMatchCmd(_windows))
                         {
                             mTriggerGuideCommand = cmd;
                             break;
@@ -34,12 +34,12 @@ public partial class StrayFogGuideManager
                     {
                         StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(mGuideWindowId, (wins, pars) =>
                         {
-                            mTriggerGuideCommand.Excute(wins);
+                            mTriggerGuideCommand.ExcuteCmd(wins);
                         });
                     }
-                }                
+                }
             }
-            
+
         }
     }
     #endregion

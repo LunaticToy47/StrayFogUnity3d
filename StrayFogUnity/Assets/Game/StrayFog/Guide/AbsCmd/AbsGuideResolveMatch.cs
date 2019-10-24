@@ -14,41 +14,90 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// 参考对象配置
     /// </summary>
     public XLS_Config_Table_UserGuideReferObject referObjectConfig { get; private set; }
+    
+    /// <summary>
+    /// 解析匹配集
+    /// </summary>
+    Dictionary<int, List<AbsGuideResolveMatch>> mGuideResolveMatchMaping = new Dictionary<int, List<AbsGuideResolveMatch>>();
+
+    #region OnAddGuideResolveMatch 添加引导解析匹配
+    /// <summary>
+    /// 添加引导解析匹配
+    /// </summary>
+    /// <param name="_matchs">匹配组</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <returns>匹配组</returns>
+    List<AbsGuideResolveMatch> OnAddGuideResolveMatch(List<AbsGuideResolveMatch> _matchs, enGuideStatus _resolveStatus)
+    {
+        if (_matchs != null && _matchs.Count > 0)
+        {
+            int key = (int)_resolveStatus;
+            if (!mGuideResolveMatchMaping.ContainsKey(key))
+            {
+                mGuideResolveMatchMaping.Add(key, new List<AbsGuideResolveMatch>());
+            }
+            mGuideResolveMatchMaping[key].AddRange(_matchs);
+        }
+        return _matchs;
+    }
+    #endregion
 
     #region isMatchCondition 是否满足条件
     /// <summary>
     /// 是否满足条件
     /// </summary>
     /// <param name="_parameters">参数</param>
+    /// <param name="_status">当前引导状态</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    public bool isMatchCondition(params object[] _parameters)
+    public bool isMatchCondition(enGuideStatus _status, params object[] _parameters)
     {
-        return OnIsMatchCondition(_parameters);
+        int key = (int)_status;
+        bool result = mGuideResolveMatchMaping.ContainsKey(key) ? mGuideResolveMatchMaping[key].Count > 0 : false;
+        if (result)
+        {
+            foreach (AbsGuideResolveMatch m in mGuideResolveMatchMaping[key])
+            {
+                result &= m.isMatchCondition(_status, _parameters);
+            }
+        }
+        return OnIsMatchCondition(_status, _parameters);
     }
 
     /// <summary>
     /// 是否满足条件
     /// </summary>
     /// <param name="_parameters">参数</param>
+    /// <param name="_status">当前引导状态</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected virtual bool OnIsMatchCondition(params object[] _parameters) { return true; }
+    protected virtual bool OnIsMatchCondition(enGuideStatus _status, params object[] _parameters) { return true; }
     #endregion
 
     #region Excute 执行处理
     /// <summary>
     /// 执行处理
     /// </summary>
+    /// <param name="_status">当前引导状态</param>
     /// <param name="_parameters">参数</param>
-    public void Excute(params object[] _parameters)
+    public void Excute(enGuideStatus _status, params object[] _parameters)
     {
-        OnExcute(_parameters);
+        OnExcute(_status, _parameters);
+        int key = (int)_status;
+        bool result = mGuideResolveMatchMaping.ContainsKey(key) ? mGuideResolveMatchMaping[key].Count > 0 : false;
+        if (result)
+        {
+            foreach (AbsGuideResolveMatch m in mGuideResolveMatchMaping[key])
+            {
+                m.Excute(_status, _parameters);
+            }
+        }
     }
 
     /// <summary>
     /// 执行处理
     /// </summary>
+    /// <param name="_status">当前引导状态</param>
     /// <param name="_parameters">参数</param>
-    protected virtual void OnExcute(params object[] _parameters) { }
+    protected virtual void OnExcute(enGuideStatus _status, params object[] _parameters) { }
     #endregion
 
     #region ResolveConfig 解析配置
@@ -57,11 +106,19 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// </summary>
     /// <param name="_config">配置</param>
     /// <param name="_index">数据索引</param>
+    /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
-    public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _index, enGuideStatus _status)
+    public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _index, enGuideStatus _resolveStatus, enGuideStatus _status)
     {
         guideConfig = _config;
-        OnResolveConfig(_config, _index, _status);
+        List<AbsGuideResolveMatch> result = OnAddGuideResolveMatch(OnResolveConfig(_config, _index, _resolveStatus, _status),_resolveStatus);
+        if (result != null)
+        {
+            foreach (AbsGuideResolveMatch m in result)
+            {
+                m.ResolveConfig(_config, _index, _resolveStatus, _status);
+            }
+        }
     }
 
     /// <summary>
@@ -69,8 +126,10 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// </summary>
     /// <param name="_config">配置</param>
     /// <param name="_index">数据索引</param>
+    /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
-    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _index, enGuideStatus _status) { }
+    /// <returns>命令集</returns>
+    protected virtual List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _index, enGuideStatus _resolveStatus, enGuideStatus _status) { return null; }
     #endregion
 
     #region ResolveConfig 解析配置
@@ -79,11 +138,21 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// </summary>
     /// <param name="_config">配置</param>
     /// <param name="_index">数据索引</param>
+    /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
-    public void ResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _index, enGuideStatus _status)
+    /// <returns>命令集</returns>
+    public void ResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _index, enGuideStatus _resolveStatus, enGuideStatus _status)
     {
         referObjectConfig = _config;
-        OnResolveConfig(_config, _index, _status);
+        List<AbsGuideResolveMatch> result = OnAddGuideResolveMatch(OnResolveConfig(_config, _index, _resolveStatus, _status), _resolveStatus);
+        if (result != null)
+        {
+            foreach (AbsGuideResolveMatch m in result)
+            {
+                m.ResolveConfig(guideConfig, _index, _resolveStatus, _status);
+                m.ResolveConfig(_config, _index, _resolveStatus, _status);
+            }
+        }
     }
 
     /// <summary>
@@ -91,8 +160,9 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// </summary>
     /// <param name="_config">配置</param>
     /// <param name="_index">数据索引</param>
+    /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
-    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _index, enGuideStatus _status) { }
+    protected virtual List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _index, enGuideStatus _resolveStatus, enGuideStatus _status) { return null; }
     #endregion
 
     #region Recycle 回收

@@ -3,8 +3,13 @@ using System.Collections.Generic;
 /// <summary>
 /// 引导命令抽象
 /// </summary>
-public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
+public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
 {
+    /// <summary>
+    /// 当前引导状态
+    /// </summary>
+    enGuideStatus mGuideStatus = enGuideStatus.WaitTrigger;
+
     #region ResolveConfig 解析配置
     /// <summary>
     /// 解析配置
@@ -14,8 +19,8 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
     public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config,
         Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
     {
-        ResolveConfig(_config, -1, status);
-        OnPushCommand(_config,_funcReferObject);
+        ResolveConfig(_config, -1, enGuideStatus.WaitTrigger, mGuideStatus);
+        OnPushCommand(_config, _funcReferObject);
         OnResolveConfig(_config, _funcReferObject);
     }
 
@@ -51,12 +56,12 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
         for (int i = 0; i < _config.triggerConditionType.Length; i++)
         {
             AbsGuideSubCommand_Condition tc = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_config.triggerConditionType[i]]();
-            tc.ResolveConfig(_config, i, status);
+            tc.ResolveConfig(_config, i, enGuideStatus.WaitTrigger, mGuideStatus);
             if (_config.triggerConditionType[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
             {
                 foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
                 {
-                    tc.ResolveConfig(r, i, status);
+                    tc.ResolveConfig(r, i, enGuideStatus.WaitTrigger, mGuideStatus);
                 }
             }
             mTriggerConditionCollection.Add(tc);
@@ -79,12 +84,12 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
         for (int i = 0; i < _config.validateConditionType.Length; i++)
         {
             AbsGuideSubCommand_Condition vc = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_config.validateConditionType[i]]();
-            vc.ResolveConfig(_config, i, status);
+            vc.ResolveConfig(_config, i, enGuideStatus.WaitValidate, mGuideStatus);
             if (_config.validateConditionType[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
             {
                 foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
                 {
-                    vc.ResolveConfig(r, i, status);
+                    vc.ResolveConfig(r, i, enGuideStatus.WaitValidate, mGuideStatus);
                 }
             }
             mValidateConditionCollection.Add(vc);
@@ -102,17 +107,13 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
     { }
     #endregion
 
-    #region status 当前引导状态
-    /// <summary>
-    /// 当前引导状态
-    /// </summary>
-    public enGuideStatus status { get; private set; }
-    #endregion
-
     #region OnRecycle 回收
+    /// <summary>
+    /// 回收
+    /// </summary>
     protected override void OnRecycle()
     {
-        status = enGuideStatus.WaitTrigger;
+        mGuideStatus = enGuideStatus.WaitTrigger;
         foreach (AbsGuideSubCommand_Condition cmd in mTriggerConditionCollection)
         {
             cmd.Recycle();
@@ -127,22 +128,34 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
     }
     #endregion
 
+    #region isMatchCmd 是否满足条件
+    /// <summary>
+    /// 是否满足条件
+    /// </summary>
+    /// <returns>true:满足,false:不满足</returns>
+    public bool isMatchCmd(params object[] _parameters)
+    {
+        return isMatchCondition(mGuideStatus, _parameters);
+    }
+    #endregion
+
     #region OnIsMatchCondition 是否匹配条件
     /// <summary>
     /// 是否匹配条件
     /// </summary>
+    /// <param name="_status">当前引导状态</param>
     /// <param name="_parameters">参数</param>
     /// <returns>true:通过验证,false:不通过验证</returns>
-    protected override bool OnIsMatchCondition(params object[] _parameters)
+    protected override bool OnIsMatchCondition(enGuideStatus _status, params object[] _parameters)
     {
         bool result = false;
-        switch (status)
+        switch (_status)
         {
             case enGuideStatus.WaitTrigger:
-                result = OnValidateCondition(mTriggerConditionCollection, guideConfig.enTriggerConditionMatchType,_parameters);
+                result = OnValidateCondition(mTriggerConditionCollection, guideConfig.enTriggerConditionMatchType, _status, _parameters);
                 break;
             case enGuideStatus.WaitValidate:
-                result = OnValidateCondition(mValidateConditionCollection, guideConfig.enValidateConditionMatchType, _parameters);
+                result = OnValidateCondition(mValidateConditionCollection, guideConfig.enValidateConditionMatchType, _status, _parameters);
                 break;
             case enGuideStatus.Finish:
                 result = true;
@@ -156,10 +169,11 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
     /// </summary>
     /// <param name="_conditions">条件集合</param>
     /// <param name="_matchType">匹配类型</param>
+    /// <param name="_status">当前引导状态</param>
     /// <param name="_parameters">参数</param>
     /// <returns>true:验证通过,false:验证不通过</returns>
-    bool OnValidateCondition(List<AbsGuideSubCommand_Condition> _conditions, 
-        enUserGuideConfig_ConditionMatchType _matchType, 
+    bool OnValidateCondition(List<AbsGuideSubCommand_Condition> _conditions,
+        enUserGuideConfig_ConditionMatchType _matchType, enGuideStatus _status,
         params object[] _parameters)
     {
         bool result = false;
@@ -169,14 +183,14 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
                 result = true;
                 foreach (AbsGuideSubCommand_Condition tc in _conditions)
                 {
-                    result &= tc.isMatchCondition(_parameters);
+                    result &= tc.isMatchCondition(_status, _parameters);
                 }
                 break;
             case enUserGuideConfig_ConditionMatchType.Or:
                 result = false;
                 foreach (AbsGuideSubCommand_Condition tc in _conditions)
                 {
-                    result |= tc.isMatchCondition(_parameters);
+                    result |= tc.isMatchCondition(_status, _parameters);
                     if (result)
                     {
                         break;
@@ -188,23 +202,35 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
     }
     #endregion
 
+    #region ExcuteCmd 执行处理
+    /// <summary>
+    /// 执行处理
+    /// </summary>
+    /// <param name="_parameters">参数</param>
+    public void ExcuteCmd(params object[] _parameters)
+    {
+        Excute(mGuideStatus, _parameters);
+    }
+    #endregion
+
     #region OnExcute 执行
     /// <summary>
     /// 执行
     /// </summary>
+    /// <param name="_status">当前引导状态</param>
     /// <param name="_parameters">参数</param>
-    protected override void OnExcute(params object[] _parameters)
+    protected override void OnExcute(enGuideStatus _status, params object[] _parameters)
     {
-        switch (status)
+        switch (_status)
         {
             case enGuideStatus.WaitTrigger:
-                OnExcuteCmd(mTriggerConditionCollection, _parameters);
+                OnExcuteCmd(mTriggerConditionCollection, _status, _parameters);
                 break;
             case enGuideStatus.WaitValidate:
-                OnExcuteCmd(mValidateConditionCollection, _parameters);
+                OnExcuteCmd(mValidateConditionCollection, _status, _parameters);
                 break;
             case enGuideStatus.Finish:
-                
+
                 break;
         }
     }
@@ -213,12 +239,13 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch,IGuideCommand
     /// 执行满足条件的命令操作
     /// </summary>
     /// <param name="_cmds">命令</param>
+    /// <param name="_status">当前引导状态</param>
     /// <param name="_parameters">参数</param>
-    void OnExcuteCmd(List<AbsGuideSubCommand_Condition> _cmds, object[] _parameters)
+    void OnExcuteCmd(List<AbsGuideSubCommand_Condition> _cmds, enGuideStatus _status, object[] _parameters)
     {
         foreach (AbsGuideSubCommand_Condition c in _cmds)
         {
-            c.Excute(_parameters);
+            c.Excute(_status, _parameters);
         }
     }
     #endregion
