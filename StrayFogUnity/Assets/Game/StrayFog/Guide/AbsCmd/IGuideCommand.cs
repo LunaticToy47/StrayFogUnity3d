@@ -6,5 +6,5 @@ public interface IGuideCommand
     /// <summary>
     /// 当前引导状态
     /// </summary>
-    enGuideStatus status { get; }    
+    enGuideStatus status { get; }
 }
