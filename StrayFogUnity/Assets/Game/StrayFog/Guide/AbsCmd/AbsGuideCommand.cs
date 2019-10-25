@@ -29,7 +29,9 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
         ResolveConfig(_config, -1, enGuideStatus.WaitValidate, enGuideStatus.WaitTrigger);
         ResolveReferObject();
     }
+    #endregion
 
+    #region OnResolveConfig 解析配置
     /// <summary>
     /// 解析配置
     /// </summary>
@@ -107,17 +109,6 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     }
     #endregion
 
-    #region OnRecycle 回收
-    /// <summary>
-    /// 回收
-    /// </summary>
-    protected override void OnRecycle()
-    {
-        status = enGuideStatus.WaitTrigger;
-        base.OnRecycle();
-    }
-    #endregion
-
     #region OnIsMatchCondition 是否匹配条件
     /// <summary>
     /// 是否匹配条件
@@ -172,6 +163,17 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                 status = enGuideStatus.Finish;
                 break;
         }
+    }
+    #endregion
+
+    #region OnRecycle 回收
+    /// <summary>
+    /// 回收
+    /// </summary>
+    protected override void OnRecycle()
+    {
+        status = enGuideStatus.WaitTrigger;
+        base.OnRecycle();
     }
     #endregion
 }
