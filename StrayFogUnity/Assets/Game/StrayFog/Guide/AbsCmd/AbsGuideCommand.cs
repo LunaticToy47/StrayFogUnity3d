@@ -50,7 +50,7 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                 #region 收集触发命令
                 //触发参考命令
                 List<XLS_Config_Table_UserGuideReferObject> referCfgs = new List<XLS_Config_Table_UserGuideReferObject>();
-                foreach (int rid in _config.triggerReferObjectId)
+                foreach (int rid in _config.triggerReferObjectIds)
                 {
                     XLS_Config_Table_UserGuideReferObject r = mFuncReferObject(rid);
                     if (r != null)
@@ -60,11 +60,11 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                 }
 
                 //触发条件命令
-                for (int i = 0; i < _config.triggerConditionType.Length; i++)
+                for (int i = 0; i < _config.triggerConditionTypes.Length; i++)
                 {
-                    AbsGuideSubCommand_Condition tc = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_config.triggerConditionType[i]]();
+                    AbsGuideSubCommand_Condition tc = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_config.triggerConditionTypes[i]]();
                     tc.ResolveConfig(_config, i, enGuideStatus.WaitTrigger, _status);
-                    if (_config.triggerConditionType[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+                    if (_config.triggerConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
                     {
                         foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
                         {
@@ -79,7 +79,7 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                 #region 收集验证命令
                 //验证参考命令
                 referCfgs = new List<XLS_Config_Table_UserGuideReferObject>();
-                foreach (int rid in _config.validateReferObjectId)
+                foreach (int rid in _config.validateReferObjectIds)
                 {
                     XLS_Config_Table_UserGuideReferObject r = mFuncReferObject(rid);
                     if (r != null)
@@ -89,11 +89,11 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                 }
 
                 //验证条件命令
-                for (int i = 0; i < _config.validateConditionType.Length; i++)
+                for (int i = 0; i < _config.validateConditionTypes.Length; i++)
                 {
-                    AbsGuideSubCommand_Condition vc = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_config.validateConditionType[i]]();
+                    AbsGuideSubCommand_Condition vc = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_config.validateConditionTypes[i]]();
                     vc.ResolveConfig(_config, i, enGuideStatus.WaitValidate, _status);
-                    if (_config.validateConditionType[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+                    if (_config.validateConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
                     {
                         foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
                         {

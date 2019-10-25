@@ -53,7 +53,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
         switch (_status)
         {
             case enGuideStatus.WaitTrigger:
-                mGraphicMaskActiveSelf = Convert.ToBoolean(byte.Parse(guideConfig.triggerConditionValue[_index]));
+                mGraphicMaskActiveSelf = Convert.ToBoolean(byte.Parse(guideConfig.triggerConditionValues[_index]));
                 break;
         }
         return null;

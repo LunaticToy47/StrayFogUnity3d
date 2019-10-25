@@ -67,21 +67,17 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	public bool isIngoreServerBack { get; private set; }	
 		
 	/// <summary>
-	/// 箭头位置[数量与触发参考对象相同]
-	///0：箭头在框左侧
-	///1：箭头在框右侧
-	///2：箭头在框上侧
-	///3：箭头在框下侧
+	/// 【引导样式】组[索引与触发参考对象组索引相同]
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,8,"arrowEdge","","@arrowEdge8",false,false)]	
-	public int[] arrowEdge { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,8,"styleIds","","@styleIds8",false,false)]	
+	public int[] styleIds { get; private set; }	
 		
 	/// <summary>
 	/// 【触发参考对象】组
 	///UserGuideReferObject.Id
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,9,"triggerReferObjectId","","@triggerReferObjectId9",false,false)]	
-	public int[] triggerReferObjectId { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,9,"triggerReferObjectIds","","@triggerReferObjectIds9",false,false)]	
+	public int[] triggerReferObjectIds { get; private set; }	
 		
 	/// <summary>
 	/// 【触发条件】匹配类型
@@ -100,8 +96,8 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	///4：任务
 	///5：玩家状态
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,11,"triggerConditionType","","@triggerConditionType11",false,false)]	
-	public int[] triggerConditionType { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,11,"triggerConditionTypes","","@triggerConditionTypes11",false,false)]	
+	public int[] triggerConditionTypes { get; private set; }	
 		
 	/// <summary>
 	/// 【触发条件】数据值【组分隔符|】
@@ -112,15 +108,15 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	///4：[0:任意任务,>0指定任务]
 	///5：[0:待机,1:攻击...]
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.OneDimensionArray,12,"triggerConditionValue","","@triggerConditionValue12",false,false)]	
-	public string[] triggerConditionValue { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.OneDimensionArray,12,"triggerConditionValues","","@triggerConditionValues12",false,false)]	
+	public string[] triggerConditionValues { get; private set; }	
 		
 	/// <summary>
 	/// 【验证参考对象】组
 	///UserGuideReferObject.Id
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,13,"validateReferObjectId","","@validateReferObjectId13",false,false)]	
-	public int[] validateReferObjectId { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,13,"validateReferObjectIds","","@validateReferObjectIds13",false,false)]	
+	public int[] validateReferObjectIds { get; private set; }	
 		
 	/// <summary>
 	/// 【验证条件】匹配类型
@@ -136,8 +132,8 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	///1：Drag 拖拽触发参考对象到验证参考对象
 	///2：MoveTo 触发参考对象移动到验证参考对象
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,15,"validateConditionType","","@validateConditionType15",false,false)]	
-	public int[] validateConditionType { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,15,"validateConditionTypes","","@validateConditionTypes15",false,false)]	
+	public int[] validateConditionTypes { get; private set; }	
 		
 	/// <summary>
 	/// 【验证条件】值
@@ -145,8 +141,8 @@ public partial class XLS_Config_Table_UserGuideConfig: AbsStrayFogSQLiteEntity
 	///1：[0:拖拽任意参考对象到任意验证对象,0_1|2_3指定索引的参考对象拖拽到指定验证对象]
 	///2：[0:任意]
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.OneDimensionArray,16,"validateConditionValue","","@validateConditionValue16",false,false)]	
-	public string[] validateConditionValue { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.OneDimensionArray,16,"validateConditionValues","","@validateConditionValues16",false,false)]	
+	public string[] validateConditionValues { get; private set; }	
 	
 	#endregion
 
