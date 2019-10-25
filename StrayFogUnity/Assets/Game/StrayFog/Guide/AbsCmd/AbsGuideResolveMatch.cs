@@ -65,7 +65,7 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
         {
             foreach (AbsGuideResolveMatch m in mGuideResolveMatchMaping[key])
             {
-                conditions.Add(m.isMatchCondition(_sender, _sponsor, _parameters));
+                conditions.Add(m.isMatchCondition(_sender, this, _parameters));
             }
         }
         return OnIsMatchCondition(_sender, conditions, _sponsor, _parameters);
@@ -97,7 +97,7 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
         {
             foreach (AbsGuideResolveMatch m in mGuideResolveMatchMaping[key])
             {
-                m.Excute(_sender, _sponsor, _parameters);
+                m.Excute(_sender, this, _parameters);
             }
         }
         OnExcute(_sender, _sponsor, _parameters);
