@@ -135,15 +135,10 @@ public enum enUserGuideConfig_ValidateConditionType
     [AliasTooltip("点击触发参考对象")]
     Click = 0,
     /// <summary>
-    /// 拖拽触发参考对象到验证参考对象
-    /// </summary>
-    [AliasTooltip("拖拽触发参考对象到验证参考对象")]
-    Drag = 1,
-    /// <summary>
     /// 触发参考对象移动到验证参考对象
     /// </summary>
     [AliasTooltip("触发参考对象移动到验证参考对象")]
-    MoveTo = 2,
+    MoveTo = 1,
 }
 #endregion
 

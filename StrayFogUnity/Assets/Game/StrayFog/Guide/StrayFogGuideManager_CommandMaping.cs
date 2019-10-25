@@ -77,7 +77,6 @@ public partial class StrayFogGuideManager
     public readonly static Dictionary<int, Func<AbsGuideSubCommand_Condition>> Cmd_UserGuideConfig_ValidateConditionTypeMaping = new Dictionary<int, Func<AbsGuideSubCommand_Condition>>()
     {
         { (int)enUserGuideConfig_ValidateConditionType.Click,()=>{ return new UserGuideConfig_ValidateCondition_ClickReferObject(); } },
-        { (int)enUserGuideConfig_ValidateConditionType.Drag,()=>{ return new UserGuideConfig_ValidateCondition_DragReferObject(); } },
         { (int)enUserGuideConfig_ValidateConditionType.MoveTo,()=>{ return new UserGuideConfig_ValidateCondition_MoveToReferObject(); } },
     };
 }
