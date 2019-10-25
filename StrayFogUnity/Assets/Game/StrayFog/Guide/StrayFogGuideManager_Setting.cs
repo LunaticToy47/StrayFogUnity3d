@@ -7,7 +7,8 @@ public partial class StrayFogGuideManager
     /// <summary>
     /// 引导窗口Id
     /// </summary>
-    int mGuideWindowId = 0;
+    public int guideWindowId { get; private set; }
+
     /// <summary>
     ///引导配置映射
     ///Key:guideId
@@ -44,7 +45,7 @@ public partial class StrayFogGuideManager
                     ids.Add(w.id);
                 }
             }
-            mGuideWindowId = ids[0];
+            guideWindowId = ids[0];
         }        
     }
     #endregion

@@ -53,59 +53,63 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// <summary>
     /// 是否满足条件
     /// </summary>
+    /// <param name="_sender">引导命令</param>
+    /// <param name="_sponsor">条件匹配发起者</param>
     /// <param name="_parameters">参数</param>
-    /// <param name="_status">当前引导状态</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    public bool isMatchCondition(enGuideStatus _status, params object[] _parameters)
+    public bool isMatchCondition(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters)
     {
-        int key = (int)_status;
+        int key = (int)_sender.status;
         List<bool> conditions = new List<bool>();
         if (mGuideResolveMatchMaping != null && mGuideResolveMatchMaping.ContainsKey(key))
         {
             foreach (AbsGuideResolveMatch m in mGuideResolveMatchMaping[key])
             {
-                conditions.Add(m.isMatchCondition(_status, _parameters));
+                conditions.Add(m.isMatchCondition(_sender, _sponsor, _parameters));
             }
         }
-        return OnIsMatchCondition(_status, conditions, _parameters);
+        return OnIsMatchCondition(_sender, conditions, _sponsor, _parameters);
     }
 
     /// <summary>
     /// 是否满足条件
     /// </summary>
-    /// <param name="_status">当前引导状态</param>
+    /// <param name="_sender">引导命令</param>
     /// <param name="_conditionResults">条件结果</param>
+    /// <param name="_sponsor">条件匹配发起者</param>
     /// <param name="_parameters">参数</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected virtual bool OnIsMatchCondition(enGuideStatus _status, List<bool> _conditionResults, params object[] _parameters) { return true; }
+    protected virtual bool OnIsMatchCondition(IGuideCommand _sender, List<bool> _conditionResults, IGuideMatchCondition _sponsor, params object[] _parameters) { return true; }
     #endregion
 
     #region Excute 执行处理
     /// <summary>
     /// 执行处理
     /// </summary>
-    /// <param name="_status">当前引导状态</param>
+    /// <param name="_sender">引导命令</param>
+    /// <param name="_sponsor">执行发起者</param>
     /// <param name="_parameters">参数</param>
-    public void Excute(enGuideStatus _status, params object[] _parameters)
-    {
-        OnExcute(_status, _parameters);
-        int key = (int)_status;
+    public void Excute(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters)
+    {        
+        int key = (int)_sender.status;
         bool result = mGuideResolveMatchMaping.ContainsKey(key) ? mGuideResolveMatchMaping[key].Count > 0 : false;
         if (result)
         {
             foreach (AbsGuideResolveMatch m in mGuideResolveMatchMaping[key])
             {
-                m.Excute(_status, _parameters);
+                m.Excute(_sender, _sponsor, _parameters);
             }
         }
+        OnExcute(_sender, _sponsor, _parameters);
     }
 
     /// <summary>
     /// 执行处理
     /// </summary>
-    /// <param name="_status">当前引导状态</param>
+    /// <param name="_sender">引导命令</param>
+    /// <param name="_sponsor">执行发起者</param>
     /// <param name="_parameters">参数</param>
-    protected virtual void OnExcute(enGuideStatus _status, params object[] _parameters) { }
+    protected virtual void OnExcute(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters) { }
     #endregion
 
     #region ResolveConfig 解析配置

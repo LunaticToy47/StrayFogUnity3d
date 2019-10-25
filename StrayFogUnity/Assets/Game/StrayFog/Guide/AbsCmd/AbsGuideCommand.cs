@@ -113,11 +113,12 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     /// <summary>
     /// 是否匹配条件
     /// </summary>
-    /// <param name="_status">当前引导状态</param>
+    /// <param name="_sender">引导命令</param>
     /// <param name="_conditionResults">条件结果</param>
+    /// <param name="_sponsor">条件匹配发起者</param>
     /// <param name="_parameters">参数</param>
     /// <returns>true:通过验证,false:不通过验证</returns>
-    protected override bool OnIsMatchCondition(enGuideStatus _status, List<bool> _conditionResults, params object[] _parameters)
+    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<bool> _conditionResults, IGuideMatchCondition _sponsor, params object[] _parameters)
     {
         bool result = false;
         switch (guideConfig.enTriggerConditionMatchType)
@@ -149,12 +150,13 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     /// <summary>
     /// 执行处理
     /// </summary>
-    /// <param name="_status">当前引导状态</param>
+    /// <param name="_sender">引导命令</param>
+    /// <param name="_sponsor">执行发起者</param>
     /// <param name="_parameters">参数</param>
-    protected override void OnExcute(enGuideStatus _status, params object[] _parameters)
+    protected override void OnExcute(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters)
     {
-        base.OnExcute(_status, _parameters);
-        switch (_status)
+        base.OnExcute(_sender, _sponsor, _parameters);
+        switch (_sender.status)
         {
             case enGuideStatus.WaitTrigger:
                 status = enGuideStatus.WaitValidate;
