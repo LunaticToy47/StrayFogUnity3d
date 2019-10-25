@@ -10,14 +10,20 @@ public partial class StrayFogGuideManager
     int mGuideWindowId = 0;
     /// <summary>
     ///引导配置映射
+    ///Key:guideId
+    ///Value:XLS_Config_Table_UserGuideConfig
     /// </summary>
     Dictionary<int, XLS_Config_Table_UserGuideConfig> mGuideConfigMaping = new Dictionary<int, XLS_Config_Table_UserGuideConfig>();
     /// <summary>
     /// 引导参考对象映射
+    ///Key:guideId
+    ///Value:XLS_Config_Table_UserGuideReferObject
     /// </summary>
     Dictionary<int, XLS_Config_Table_UserGuideReferObject> mGuideReferObjectMaping = new Dictionary<int, XLS_Config_Table_UserGuideReferObject>();
     /// <summary>
     /// 等待引导命令映射
+    ///Key:guideId
+    ///Value:AbsGuideCommand
     /// </summary>
     Dictionary<int, AbsGuideCommand> mWaitGuideCommandMaping = new Dictionary<int, AbsGuideCommand>();
 

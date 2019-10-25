@@ -4,6 +4,11 @@
 public interface IGuideResolveConfig
 {
     /// <summary>
+    /// 参考对象类型
+    /// </summary>
+    enUserGuideReferObject_ReferType referType { get; }
+
+    /// <summary>
     /// 引导配置
     /// </summary>
     XLS_Config_Table_UserGuideConfig guideConfig { get; }
@@ -30,4 +35,9 @@ public interface IGuideResolveConfig
     /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
     void ResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _index, enGuideStatus _resolveStatus, enGuideStatus _status);
+
+    /// <summary>
+    /// 解析参考对象
+    /// </summary>
+    enUserGuideReferObject_ReferType ResolveReferObject();
 }

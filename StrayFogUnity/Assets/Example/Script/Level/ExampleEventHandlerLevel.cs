@@ -17,7 +17,7 @@ public class ExampleEventHandlerLevel : AbsLevel
     /// <summary>
     /// Awake
     /// </summary>
-    void Awake()
+    protected override void Awake()
     {
         mCanDispatch = false;
         StrayFogGamePools.gameManager.Initialization(() =>
@@ -32,16 +32,16 @@ public class ExampleEventHandlerLevel : AbsLevel
                         .AddListener((int)evt,
                             (args) =>
                             {
-                                //Debug.Log(this + "【enGameEvent】 " + args.JsonSerialize());
-                                throw new UnityException(this + "【enGameEvent】 " + args.JsonSerialize());
+                                Debug.Log(this + "AddListener => " + args.ToString() + " " + this);
+                                //throw new UnityException(this + "AddListener => " + args.ToString());
                             }
                         );
                         StrayFogGamePools.eventHandlerManager
                         .AddCallbackListener((int)evt,
                             (args) =>
                             {
-                                args.SetValue(this);
-                                Debug.Log("Set CallbackHandler Value=>" + this);
+                                Debug.Log("AddCallbackListener =>" + args.ToString() + " " + this);
+                                args.SetValue("Before CallbackHandler");       
                             }
                         );
                     }

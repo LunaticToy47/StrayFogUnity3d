@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 /// <summary>
-/// 事件句柄参数
+/// 事件句柄参数抽象
 /// </summary>
-public class StrayFogEventHandlerArgs
-{    
-    /// <summary>
-    /// 事件类型
-    /// </summary>
-    public int eventId { get; private set; }
-
+public abstract class AbsStrayFogEventHandlerArgs : IStrayFogEventHandlerArgs
+{
     /// <summary>
     /// 事件聚合参数
     /// </summary>
     /// <param name="_eventId">事件ID</param>
-    public StrayFogEventHandlerArgs(int _eventId)
+    public AbsStrayFogEventHandlerArgs(int _eventId)
     {
         eventId = _eventId;
     }
@@ -24,7 +19,14 @@ public class StrayFogEventHandlerArgs
     /// 参数值映射
     /// </summary>
     Dictionary<int, Dictionary<int, object>> mArgValueMaping = new Dictionary<int, Dictionary<int, object>>();
-    
+
+    #region eventId 事件Id
+    /// <summary>
+    /// 事件类型
+    /// </summary>
+    public int eventId { get; private set; }
+    #endregion
+
     #region SetValue
     /// <summary>
     /// 设置值
@@ -95,6 +97,7 @@ public class StrayFogEventHandlerArgs
     public override string ToString()
     {
         StringBuilder sb = new StringBuilder();
+        sb.AppendLine("EventId=>"+ eventId);
         foreach (Dictionary<int, object> key in mArgValueMaping.Values)
         {
             foreach (KeyValuePair<int, object> val in key)

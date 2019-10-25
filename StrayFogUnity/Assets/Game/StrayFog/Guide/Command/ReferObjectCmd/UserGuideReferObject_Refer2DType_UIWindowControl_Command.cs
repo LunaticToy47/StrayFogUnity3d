@@ -60,15 +60,25 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     }
 
     /// <summary>
+    /// 解析参考对象
+    /// </summary>
+    /// <returns>参考对象</returns>
+    protected override enUserGuideReferObject_ReferType OnResolveReferObject()
+    {
+        return enUserGuideReferObject_ReferType.Refer2D;
+    }
+
+    /// <summary>
     /// 是否满足条件
     /// </summary>
     /// <param name="_parameters">参数</param>
+    /// <param name="_conditionResults">条件结果</param>
     /// <param name="_status">当前引导状态</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected override bool OnIsMatchCondition(enGuideStatus _status, params object[] _parameters)
+    protected override bool OnIsMatchCondition(enGuideStatus _status, List<bool> _conditionResults, params object[] _parameters)
     {
-        bool result = base.OnIsMatchCondition(_status, _parameters);
-        if (_parameters != null)
+        bool result = base.OnIsMatchCondition(_status, _conditionResults, _parameters);
+        if (_parameters != null && mGraphicMask == null)
         {
             foreach (object p in _parameters)
             {

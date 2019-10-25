@@ -441,7 +441,7 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     /// </summary>
     private void LateUpdate()
     {
-        if (OnIsChangeGraphicMaskVariable(graphicMasks))
+        if (graphicMasks != null && OnIsChangeGraphicMaskVariable(graphicMasks))
         {
             OnDirtyAction();
         }

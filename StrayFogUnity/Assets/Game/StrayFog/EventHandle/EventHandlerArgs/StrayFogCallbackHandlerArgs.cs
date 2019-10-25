@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-/// <summary>
+﻿/// <summary>
 /// 事件回调句柄参数
 /// </summary>
-public class StrayFogCallbackHandlerArgs : StrayFogEventHandlerArgs
+public class StrayFogCallbackHandlerArgs : AbsStrayFogEventHandlerArgs
 {    
     /// <summary>
     /// 发送参数
@@ -18,5 +16,14 @@ public class StrayFogCallbackHandlerArgs : StrayFogEventHandlerArgs
         :base(_senderArgs.eventId)
     {
         senderArgs = _senderArgs;
+    }
+
+    /// <summary>
+    /// ToString
+    /// </summary>
+    /// <returns>ToString</returns>
+    public override string ToString()
+    {
+        return base.ToString() + senderArgs.ToString();
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region enGuideStatus 引导状态
+using System;
 /// <summary>
 /// 引导状态
 /// </summary>
@@ -143,6 +144,28 @@ public enum enUserGuideConfig_ValidateConditionType
     /// </summary>
     [AliasTooltip("触发参考对象移动到验证参考对象")]
     MoveTo = 2,
+}
+#endregion
+
+#region enUserGuideReferObject_ReferType 参考对象类型
+/// <summary>
+/// 参考对象类型
+/// </summary>
+[Flags]
+public enum enUserGuideReferObject_ReferType
+{
+    /// <summary>
+    /// 无参考对象
+    /// </summary>
+    None = 1 << 0,
+    /// <summary>
+    /// 2D参考
+    /// </summary>
+    Refer2D = 1 << 1,
+    /// <summary>
+    /// 3D参考
+    /// </summary>
+    Refer3D = 1 << 2,
 }
 #endregion
 

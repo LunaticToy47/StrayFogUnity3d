@@ -175,30 +175,29 @@ public sealed class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 发布事件侦听
     /// </summary>
-    /// <param name="_args">事件参数</param>
-    public void Dispatch(StrayFogEventHandlerArgs _args)
+    /// <param name="_senderArgs">发送者事件参数</param>
+    public void Dispatch(StrayFogEventHandlerArgs _senderArgs)
     {
-        Dispatch(_args, null);
+        OnProcessEventHandler(_senderArgs);
     }
 
     /// <summary>
     /// 发布事件侦听
     /// </summary>
-    /// <param name="_args">事件参数</param>
+    /// <param name="_senderArgs">发送者事件参数</param>
     /// <param name="_callback">回调</param>
-    public void Dispatch(StrayFogEventHandlerArgs _args, StrayFogCallbackHandler _callback)
-    {        
-        OnProcessEventHandler(_args);
-        OnProcessCallbackHandler(_args,_callback);        
+    public void Dispatch(StrayFogEventHandlerArgs _senderArgs, StrayFogCallbackHandler _callback)
+    {   
+        OnProcessCallbackHandler(_senderArgs,_callback);        
     }
 
     /// <summary>
     /// 处理EventHandler事件
     /// </summary>
-    /// <param name="_args">参数</param>
-    void OnProcessEventHandler(StrayFogEventHandlerArgs _args)
+    /// <param name="_senderArgs">参数</param>
+    void OnProcessEventHandler(StrayFogEventHandlerArgs _senderArgs)
     {
-        int tKey = _args.eventId;
+        int tKey = _senderArgs.eventId;
         if (mEventHandlerMaping.ContainsKey(tKey))
         {
             List<StrayFogEventHandler> remove = new List<StrayFogEventHandler>();
@@ -215,7 +214,7 @@ public sealed class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
                 {
                     try
                     {
-                        mEventHandlerMaping[tKey][i].Invoke(_args);
+                        mEventHandlerMaping[tKey][i].Invoke(_senderArgs);
                     }
                     catch (Exception ep)
                     {
@@ -236,11 +235,11 @@ public sealed class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 处理CallbackHandler事件
     /// </summary>
-    /// <param name="_args">事件参数</param>
+    /// <param name="_senderArgs">事件参数</param>
     /// <param name="_callback">回调</param>
-    void OnProcessCallbackHandler(StrayFogEventHandlerArgs _args, StrayFogCallbackHandler _callback)
+    void OnProcessCallbackHandler(StrayFogEventHandlerArgs _senderArgs, StrayFogCallbackHandler _callback)
     {
-        int tKey = _args.eventId;
+        int tKey = _senderArgs.eventId;
         if (mCallbackHandlerMaping.ContainsKey(tKey))
         {
             List<StrayFogCallbackHandler> remove = new List<StrayFogCallbackHandler>();
@@ -257,7 +256,7 @@ public sealed class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
                 {
                     try
                     {
-                        StrayFogCallbackHandlerArgs callbackArgs = new StrayFogCallbackHandlerArgs(_args);
+                        StrayFogCallbackHandlerArgs callbackArgs = new StrayFogCallbackHandlerArgs(_senderArgs);
                         mCallbackHandlerMaping[tKey][i].Invoke(callbackArgs);
                         _callback?.Invoke(callbackArgs);
                     }
@@ -297,7 +296,10 @@ public sealed class StrayFogEventHandlerManager : AbsSingleMonoBehaviour
             {
                 StrayFogEventHandlerArgs arg = new StrayFogEventHandlerArgs(eventId);
                 arg.SetValue(this);
-                Dispatch(arg, (callback) => { Debug.Log("Get CallbackHandler Value=>" + callback); });
+                Dispatch(arg);
+                Dispatch(arg, (callback) => {
+                    Debug.Log("After CallbackHandler =>" + callback.ToString());
+                });
             }
         }
         GUILayout.EndHorizontal();

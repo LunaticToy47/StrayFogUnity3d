@@ -6,6 +6,11 @@ using System.Collections.Generic;
 public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolveConfig, IRecycle
 {
     /// <summary>
+    /// 参考对象类型
+    /// </summary>
+    public enUserGuideReferObject_ReferType referType { get; private set; }
+
+    /// <summary>
     /// 引导配置
     /// </summary>
     public XLS_Config_Table_UserGuideConfig guideConfig { get; private set; }
@@ -14,9 +19,11 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// 参考对象配置
     /// </summary>
     public XLS_Config_Table_UserGuideReferObject referObjectConfig { get; private set; }
-    
+
     /// <summary>
     /// 解析匹配集
+    /// Key:enGuideStatus
+    /// Value: List<AbsGuideResolveMatch>
     /// </summary>
     Dictionary<int, List<AbsGuideResolveMatch>> mGuideResolveMatchMaping = new Dictionary<int, List<AbsGuideResolveMatch>>();
 
@@ -52,24 +59,25 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     public bool isMatchCondition(enGuideStatus _status, params object[] _parameters)
     {
         int key = (int)_status;
-        bool result = mGuideResolveMatchMaping.ContainsKey(key) ? mGuideResolveMatchMaping[key].Count > 0 : false;
-        if (result)
+        List<bool> conditions = new List<bool>();
+        if (mGuideResolveMatchMaping != null && mGuideResolveMatchMaping.ContainsKey(key))
         {
             foreach (AbsGuideResolveMatch m in mGuideResolveMatchMaping[key])
             {
-                result &= m.isMatchCondition(_status, _parameters);
+                conditions.Add(m.isMatchCondition(_status, _parameters));
             }
         }
-        return OnIsMatchCondition(_status, _parameters);
+        return OnIsMatchCondition(_status, conditions, _parameters);
     }
 
     /// <summary>
     /// 是否满足条件
     /// </summary>
-    /// <param name="_parameters">参数</param>
     /// <param name="_status">当前引导状态</param>
+    /// <param name="_conditionResults">条件结果</param>
+    /// <param name="_parameters">参数</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected virtual bool OnIsMatchCondition(enGuideStatus _status, params object[] _parameters) { return true; }
+    protected virtual bool OnIsMatchCondition(enGuideStatus _status, List<bool> _conditionResults, params object[] _parameters) { return true; }
     #endregion
 
     #region Excute 执行处理
@@ -163,6 +171,32 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
     protected virtual List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _index, enGuideStatus _resolveStatus, enGuideStatus _status) { return null; }
+    #endregion
+
+    #region ResolveReferObject 解析参考对象
+    /// <summary>
+    /// 解析参考对象
+    /// </summary>
+    public enUserGuideReferObject_ReferType ResolveReferObject()
+    {
+        referType |= OnResolveReferObject();
+        if (mGuideResolveMatchMaping != null && mGuideResolveMatchMaping.Count > 0)
+        {
+            foreach (List<AbsGuideResolveMatch> values in mGuideResolveMatchMaping.Values)
+            {
+                foreach (AbsGuideResolveMatch key in values)
+                {
+                    referType |= key.ResolveReferObject();
+                }                
+            }
+        }
+        return referType;
+    }
+
+    /// <summary>
+    /// 解析参考对象
+    /// </summary>
+    protected virtual enUserGuideReferObject_ReferType OnResolveReferObject() { return enUserGuideReferObject_ReferType.None; }
     #endregion
 
     #region Recycle 回收
