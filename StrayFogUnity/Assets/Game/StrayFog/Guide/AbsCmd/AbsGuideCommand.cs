@@ -153,4 +153,25 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
         return result;
     }
     #endregion
+
+    #region OnExcute 执行处理
+    /// <summary>
+    /// 执行处理
+    /// </summary>
+    /// <param name="_status">当前引导状态</param>
+    /// <param name="_parameters">参数</param>
+    protected override void OnExcute(enGuideStatus _status, params object[] _parameters)
+    {
+        base.OnExcute(_status, _parameters);
+        switch (_status)
+        {
+            case enGuideStatus.WaitTrigger:
+                status = enGuideStatus.WaitValidate;
+                break;
+            case enGuideStatus.WaitValidate:
+                status = enGuideStatus.Finish;
+                break;
+        }
+    }
+    #endregion
 }

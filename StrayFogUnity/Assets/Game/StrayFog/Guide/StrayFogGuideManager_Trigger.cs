@@ -36,6 +36,7 @@ public partial class StrayFogGuideManager
                         StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(mGuideWindowId, (wins, pars) =>
                         {
                             mTriggerGuideCommand.Excute(mTriggerGuideCommand.status, wins);
+                            UnityEngine.Debug.Log("GuideStatus=>" + mTriggerGuideCommand.status);
                         });
                     }
                 }                
