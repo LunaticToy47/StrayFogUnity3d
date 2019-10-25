@@ -27,16 +27,25 @@ public class UIGuideValidate : EventTrigger
     /// 引导Id
     /// </summary>
     public int guideId { get; private set; }
-    #endregion     
+    #endregion
+
+    #region eventTriggerType 触发验证的事件
+    /// <summary>
+    /// 触发验证的事件
+    /// </summary>
+    public EventTriggerType eventTriggerType { get; private set; }
+    #endregion
 
     #region SetData  设置数据
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="_guideId">引导Id</param>
-    public void SetData(int _guideId)
+    /// <param name="_eventTriggerType">触发验证的事件</param>
+    public void SetData(int _guideId, EventTriggerType _eventTriggerType)
     {
         guideId = _guideId;
+        eventTriggerType = _eventTriggerType;
     }
     #endregion
 

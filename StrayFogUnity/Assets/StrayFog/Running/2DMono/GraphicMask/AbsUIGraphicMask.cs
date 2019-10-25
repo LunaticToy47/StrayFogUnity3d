@@ -151,11 +151,11 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     bool OnIsPointInAnyMask(Vector2 _screenPoint, Camera _eventCamera)
     {
         bool isPointInAnyMask = false;
-        if (mGraphicMasks != null && mGraphicMasks.Count > 0)
+        if (graphicMasks != null && graphicMasks.Count > 0)
         {
-            foreach (Graphic g in mGraphicMasks)
+            foreach (AbsUIGuideGraphic g in graphicMasks)
             {
-                if (RectTransformUtility.RectangleContainsScreenPoint(g.rectTransform, _screenPoint, _eventCamera))
+                if (RectTransformUtility.RectangleContainsScreenPoint(g.graphic.rectTransform, _screenPoint, _eventCamera))
                 {
                     isPointInAnyMask = true;
                     break;
@@ -170,29 +170,29 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     /// <summary>
     /// 当前GraphicMask组
     /// </summary>
-    protected List<Graphic> graphicMasks { get { return mGraphicMasks; } }
+    protected List<AbsUIGuideGraphic> graphicMasks { get; private set; }
     #endregion
 
     #region AddGraphicMask 添加遮罩Graphic
     /// <summary>
-    /// Graphic组
-    /// </summary>
-    List<Graphic> mGraphicMasks = new List<Graphic>();
-    /// <summary>
     /// 添加Graphic遮罩
     /// </summary>
     /// <param name="_masks">遮罩组</param>
-    public void AddGraphicMask(params Graphic[] _masks)
+    public void AddGraphicMask(params AbsUIGuideGraphic[] _masks)
     {
+        if (graphicMasks == null)
+        {
+            graphicMasks = new List<AbsUIGuideGraphic>();
+        }
         if (_masks != null && _masks.Length > 0)
         {
             bool isChange = false;
-            foreach (Graphic g in _masks)
+            foreach (AbsUIGuideGraphic g in _masks)
             {
-                if (!mGraphicMasks.Contains(g))
+                if (!graphicMasks.Contains(g))
                 {
                     isChange |= true;
-                    mGraphicMasks.Add(g);
+                    graphicMasks.Add(g);
                     OnRegisterDirty(g);
                 }
             }
@@ -209,15 +209,15 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     /// 移除Graphic遮罩
     /// </summary>
     /// <param name="_mask">遮罩组</param>
-    public void RemoveGraphicMask(params Graphic[] _masks)
+    public void RemoveGraphicMask(params AbsUIGuideGraphic[] _masks)
     {
         if (_masks != null && _masks.Length > 0)
         {
             bool isChange = false;
-            foreach (Graphic g in _masks)
+            foreach (AbsUIGuideGraphic g in _masks)
             {
-                isChange = mGraphicMasks.Contains(g);
-                mGraphicMasks.Remove(g);
+                isChange = graphicMasks.Contains(g);
+                graphicMasks.Remove(g);
                 OnUnRegisterDirty(g);
             }
             if (isChange)
@@ -234,13 +234,13 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     /// </summary>
     public void ClearGraphicMask()
     {
-        if (mGraphicMasks != null && mGraphicMasks.Count > 0)
+        if (graphicMasks != null && graphicMasks.Count > 0)
         {
-            foreach (Graphic g in mGraphicMasks)
+            foreach (AbsUIGuideGraphic g in graphicMasks)
             {
                 OnUnRegisterDirty(g);
             }
-            mGraphicMasks.Clear();
+            graphicMasks.Clear();
             OnDirtyAction();
         }
     }
@@ -251,11 +251,11 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     /// 注册Dirty事件
     /// </summary>
     /// <param name="_graphic">绘制</param>
-    void OnRegisterDirty(Graphic _graphic)
+    void OnRegisterDirty(AbsUIGuideGraphic _graphic)
     {
-        _graphic.RegisterDirtyLayoutCallback(OnDirtyAction);
-        _graphic.RegisterDirtyMaterialCallback(OnDirtyAction);
-        _graphic.RegisterDirtyVerticesCallback(OnDirtyAction);
+        _graphic.graphic.RegisterDirtyLayoutCallback(OnDirtyAction);
+        _graphic.graphic.RegisterDirtyMaterialCallback(OnDirtyAction);
+        _graphic.graphic.RegisterDirtyVerticesCallback(OnDirtyAction);
     }
     #endregion
 
@@ -264,11 +264,11 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     /// 注销Dirty事件
     /// </summary>
     /// <param name="_graphic">绘制</param>
-    void OnUnRegisterDirty(Graphic _graphic)
+    void OnUnRegisterDirty(AbsUIGuideGraphic _graphic)
     {
-        _graphic.UnregisterDirtyLayoutCallback(OnDirtyAction);
-        _graphic.UnregisterDirtyMaterialCallback(OnDirtyAction);
-        _graphic.UnregisterDirtyVerticesCallback(OnDirtyAction);
+        _graphic.graphic.UnregisterDirtyLayoutCallback(OnDirtyAction);
+        _graphic.graphic.UnregisterDirtyMaterialCallback(OnDirtyAction);
+        _graphic.graphic.UnregisterDirtyVerticesCallback(OnDirtyAction);
     }
     #endregion
 
@@ -292,16 +292,16 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     /// </summary>
     /// <param name="_masks">绘制遮罩</param>
     /// <returns>True:有变更,False:无变更</returns>
-    bool OnIsChangeGraphicMaskVariable(List<Graphic> _masks)
+    bool OnIsChangeGraphicMaskVariable(List<AbsUIGuideGraphic> _masks)
     {
         bool isAnyMaskChange = mLastDrawGraphicMaskMaping.Count != _masks.Count;
         int gid = 0;
         if (!isAnyMaskChange)
         {
             //如果个数相同，则看是不是与最后保存的是同样的Graphic
-            foreach (Graphic g in _masks)
+            foreach (AbsUIGuideGraphic g in _masks)
             {
-                gid = g.gameObject.GetInstanceID();
+                gid = g.graphic.gameObject.GetInstanceID();
                 isAnyMaskChange |= !mLastDrawGraphicMaskMaping.ContainsKey(gid);
                 if (isAnyMaskChange)
                 {
@@ -313,9 +313,9 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
         if (!isAnyMaskChange)
         {
             //如果与保存的是同样的Graphic,则看每个Graphic的参数是否有不同
-            foreach (Graphic g in _masks)
+            foreach (AbsUIGuideGraphic g in _masks)
             {
-                isAnyMaskChange |= mLastDrawGraphicMaskMaping[g.gameObject.GetInstanceID()].isDifferent(g);
+                isAnyMaskChange |= mLastDrawGraphicMaskMaping[g.graphic.gameObject.GetInstanceID()].isDifferent(g.graphic);
                 if (isAnyMaskChange)
                 {
                     break;
@@ -325,9 +325,9 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
         else
         {
             mLastDrawGraphicMaskMaping.Clear();
-            foreach (Graphic g in _masks)
+            foreach (AbsUIGuideGraphic g in _masks)
             {
-                mLastDrawGraphicMaskMaping.Add(g.gameObject.GetInstanceID(), new GraphicVariable(g));
+                mLastDrawGraphicMaskMaping.Add(g.graphic.gameObject.GetInstanceID(), new GraphicVariable(g.graphic));
             }
         }
         return isAnyMaskChange;
@@ -441,7 +441,7 @@ public abstract partial class AbsUIGraphicMask : MaskableGraphic, ICanvasRaycast
     /// </summary>
     private void LateUpdate()
     {
-        if (OnIsChangeGraphicMaskVariable(mGraphicMasks))
+        if (OnIsChangeGraphicMaskVariable(graphicMasks))
         {
             OnDirtyAction();
         }

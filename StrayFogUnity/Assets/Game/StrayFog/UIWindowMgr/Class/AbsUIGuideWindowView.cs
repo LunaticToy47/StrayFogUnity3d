@@ -44,7 +44,7 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     /// </summary>
     /// <param name="_onCallback">回调</param>
     /// <param name="_guideWidgets">引导控件组</param>
-    void LoadMaterial(Action<Graphic[]> _onCallback, params Graphic[] _guideWidgets)
+    void LoadMaterial(Action<AbsUIGuideGraphic[]> _onCallback, params AbsUIGuideGraphic[] _guideWidgets)
     {
         if (!mIsSetMaterial)
         {
@@ -55,8 +55,8 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
                 {
                     mUIGraphicMask.material = (Material)result.asset;
                     mIsSetMaterial = true;
-                    Action<Graphic[]> call = (Action<Graphic[]>)result.input.extraParameter[0];
-                    Graphic[] ws = (Graphic[])result.input.extraParameter[1];
+                    Action<AbsUIGuideGraphic[]> call = (Action<AbsUIGuideGraphic[]>)result.input.extraParameter[0];
+                    AbsUIGuideGraphic[] ws = (AbsUIGuideGraphic[])result.input.extraParameter[1];
                     if (call != null)
                     {
                         call.Invoke(ws);
@@ -86,7 +86,7 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     /// 添加Graphic遮罩
     /// </summary>
     /// <param name="_masks">遮罩Graphic组</param>
-    public void AddTrigger(params Graphic[] _masks)
+    public void AddTrigger(params AbsUIGuideGraphic[] _masks)
     {
         LoadMaterial((args) =>
         {
@@ -97,7 +97,7 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     /// 移除Graphic遮罩
     /// </summary>
     /// <param name="_masks">遮罩Graphic组</param>
-    public void RemoveTrigger(params Graphic[] _masks)
+    public void RemoveTrigger(params AbsUIGuideGraphic[] _masks)
     {
         mUIGraphicMask.RemoveGraphicMask(_masks);
     }

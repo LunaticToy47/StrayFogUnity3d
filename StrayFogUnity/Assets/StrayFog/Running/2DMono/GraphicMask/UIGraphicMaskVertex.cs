@@ -44,7 +44,7 @@ public class UIGraphicMaskVertex : AbsUIGraphicMask
     /// </summary>
     /// <param name="_vh">顶点Helper</param>
     /// <param name="_masks">绘制组</param>
-    protected virtual void OnFillScene(VertexHelper _vh, List<Graphic> _masks)
+    protected virtual void OnFillScene(VertexHelper _vh, List<AbsUIGuideGraphic> _masks)
     {
         _vh.Clear();
         List<UIVertex> vertexs = new List<UIVertex>();
@@ -65,16 +65,16 @@ public class UIGraphicMaskVertex : AbsUIGraphicMask
     /// </summary>
     /// <param name="_vh">顶点Helper</param>
     /// <param name="_masks">绘制组</param>
-    protected virtual void OnFillMask(VertexHelper _vh, List<Graphic> _masks)
+    protected virtual void OnFillMask(VertexHelper _vh, List<AbsUIGuideGraphic> _masks)
     {
         _vh.Clear();
         List<UIVertex> vertexs = new List<UIVertex>();
         Vector3[] fourCorners = null;
         GraphicRect2D sceneRect = new GraphicRect2D(-1, this);
         Vector4 uv = (sprite != null) ? UnityEngine.Sprites.DataUtility.GetOuterUV(sprite) : Vector4.zero;
-        foreach (Graphic g in _masks)
+        foreach (AbsUIGuideGraphic g in _masks)
         {
-            g.GraphicLocalCornersForVertexHelper(out fourCorners);
+            g.graphic.GraphicLocalCornersForVertexHelper(out fourCorners);
             vertexs = new List<UIVertex>();
             switch (graphicSpriteFillClassify)
             {
@@ -117,7 +117,7 @@ public class UIGraphicMaskVertex : AbsUIGraphicMask
     /// </summary>
     /// <param name="_vh">顶点Helper</param>
     /// <param name="_masks">绘制组</param>
-    protected virtual void OnFillExceptMask(VertexHelper _vh, List<Graphic> _masks)
+    protected virtual void OnFillExceptMask(VertexHelper _vh, List<AbsUIGuideGraphic> _masks)
     {
         #region 屏幕矩形
         GraphicRect2D sceneRect = new GraphicRect2D(-1, this);
@@ -128,7 +128,7 @@ public class UIGraphicMaskVertex : AbsUIGraphicMask
         GraphicRect2D rect;
         for (int i = 0; i < _masks.Count; i++)
         {
-            rect = new GraphicRect2D(i, _masks[i]);
+            rect = new GraphicRect2D(i, _masks[i].graphic);
             maskRect.Add(rect);
         }
 

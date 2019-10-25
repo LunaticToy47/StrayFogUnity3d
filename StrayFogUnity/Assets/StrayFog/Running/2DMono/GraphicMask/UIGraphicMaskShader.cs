@@ -51,7 +51,7 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
     /// </summary>
     /// <param name="_sceneRect">屏幕矩形</param>
     /// <param name="_masks">绘制组</param>
-    protected virtual void OnFillScene(Rect _sceneRect, List<Graphic> _masks)
+    protected virtual void OnFillScene(Rect _sceneRect, List<AbsUIGuideGraphic> _masks)
     {
         OnFillExceptMask(_sceneRect, _masks);
     }
@@ -70,7 +70,7 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
     /// </summary>
     /// <param name="_sceneRect">屏幕矩形</param>
     /// <param name="_masks">绘制组</param>
-    protected virtual void OnFillMask(Rect _sceneRect, List<Graphic> _masks)
+    protected virtual void OnFillMask(Rect _sceneRect, List<AbsUIGuideGraphic> _masks)
     {
         OnFillExceptMask(_sceneRect, _masks);
     }
@@ -82,7 +82,7 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
     /// </summary>
     /// <param name="_sceneRect">屏幕矩形</param>
     /// <param name="_masks">绘制组</param>
-    protected virtual void OnFillExceptMask(Rect _sceneRect, List<Graphic> _masks)
+    protected virtual void OnFillExceptMask(Rect _sceneRect, List<AbsUIGuideGraphic> _masks)
     {
         Sprite sprite = null;
         Image image = null;
@@ -106,7 +106,7 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
             spriteUVClip = uvDefault;
             spriteBorder = Vector4.zero;
             isGraphicSliced = false;
-            maskRect = _masks[i].GraphicLocalRectForVertexHelper();
+            maskRect = _masks[i].graphic.GraphicLocalRectForVertexHelper();
             sceneGraphicWh.z = maskRect.size.x;
             sceneGraphicWh.w = maskRect.size.y;
             rectMin = Rect.PointToNormalized(_sceneRect, maskRect.min);
@@ -125,17 +125,17 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
                 }
             }
 
-            if (_masks[i] is Image)
+            if (_masks[i].graphic is Image)
             {
-                image = (Image)_masks[i];
+                image = (Image)_masks[i].graphic;
                 sprite = image.overrideSprite;
                 if (sprite != null)
                 {
                     spriteUV = UnityEngine.Sprites.DataUtility.GetOuterUV(sprite);
-                    graphicRectSlicedBorder.x = sprite.border.x / _masks[i].GetPixelAdjustedRect().width * 0.5f;
-                    graphicRectSlicedBorder.y = sprite.border.y / _masks[i].GetPixelAdjustedRect().height * 0.5f;
-                    graphicRectSlicedBorder.z = sprite.border.z / _masks[i].GetPixelAdjustedRect().width * 0.5f;
-                    graphicRectSlicedBorder.w = sprite.border.w / _masks[i].GetPixelAdjustedRect().height * 0.5f;
+                    graphicRectSlicedBorder.x = sprite.border.x / _masks[i].graphic.GetPixelAdjustedRect().width * 0.5f;
+                    graphicRectSlicedBorder.y = sprite.border.y / _masks[i].graphic.GetPixelAdjustedRect().height * 0.5f;
+                    graphicRectSlicedBorder.z = sprite.border.z / _masks[i].graphic.GetPixelAdjustedRect().width * 0.5f;
+                    graphicRectSlicedBorder.w = sprite.border.w / _masks[i].graphic.GetPixelAdjustedRect().height * 0.5f;
                     graphicRectSlicedBorder.z = 1 - graphicRectSlicedBorder.z;
                     graphicRectSlicedBorder.w = 1 - graphicRectSlicedBorder.w;
 
@@ -152,7 +152,7 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
                         break;
                 }
             }
-            material.SetTexture("_GraphicTex" + i, _masks[i].mainTexture);
+            material.SetTexture("_GraphicTex" + i, _masks[i].graphic.mainTexture);
             material.SetVector("_GraphicUvSlicedBorderRatio" + i, graphicUvSlicedBorderRatio);
             material.SetVector("_SceneGraphicWh" + i, sceneGraphicWh);
             material.SetVector("_GraphicUvMinMax" + i, spriteUV);
