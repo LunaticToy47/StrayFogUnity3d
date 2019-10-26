@@ -20,10 +20,6 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// </summary>
     public string graphicMask { get; private set; }
     /// <summary>
-    /// 索引
-    /// </summary>
-    public int index { get; private set; }
-    /// <summary>
     /// 遮罩控件
     /// </summary>
     AbsUIGuideGraphic mGraphicMask = null;
@@ -43,14 +39,13 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>    
-    /// <param name="_index">数据索引</param>
+    /// <param name="_referObjectIndex">参考对象索引</param>
     /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
     /// <returns>命令集</returns>
-    protected override List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config,int _index, enGuideStatus _resolveStatus, enGuideStatus _status)
+    protected override List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config,int _referObjectIndex, enGuideStatus _resolveStatus, enGuideStatus _status)
     {
-        base.OnResolveConfig(_config, _index, _resolveStatus, _status);
-        index = _index;
+        base.OnResolveConfig(_config, _referObjectIndex, _resolveStatus, _status);
         string[] values = OnSegmentationGroup(_config.refer2DValue);
         windowName = values[0];
         controlName = graphicMask = values[1];
@@ -61,7 +56,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
         switch (_status)
         {
             case enGuideStatus.WaitTrigger:
-                mGraphicMaskActiveSelf = Convert.ToBoolean(byte.Parse(guideConfig.triggerConditionValues[_index]));
+                mGraphicMaskActiveSelf = Convert.ToBoolean(byte.Parse(guideConfig.triggerConditionValues[conditionTndex]));
                 break;
         }
         return null;
@@ -98,9 +93,9 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
                     {
                         mGuideCommandSender = _sender;
                         UIBehaviour behaviour = w.FindCtrlByNameIsSelfOrParent<UIBehaviour>(controlName);
-                        mGraphicMask = new UIGuideGraphic((int)_sender.status, w.FindCtrlByNameIsSelfOrParent<Graphic>(graphicMask), index);
+                        mGraphicMask = new UIGuideGraphic((int)_sender.status, w.FindCtrlByNameIsSelfOrParent<Graphic>(graphicMask), referObjectIndex);
                         result = mGraphicMask.graphic != null && mGraphicMask.graphic.gameObject.activeSelf == mGraphicMaskActiveSelf;                        
-                        UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(behaviour, index);
+                        UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(behaviour, referObjectIndex);
                         validate.OnEventValidate += Validate_OnEventValidate;                        
                         break;
                     }

@@ -59,15 +59,22 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
     /// <param name="_parameters">参数组</param>
     void UiWindowManager_OnOpenWindowEventHandler(AbsUIWindowView[] _windows, params object[] _parameters)
     {
-        if (StrayFogGamePools.uiWindowManager.IsOpenedWindow(StrayFogGamePools.guideManager.guideWindowId))
+        bool isOpenGuideWindow = false;
+        foreach (AbsUIWindowView w in _windows)
         {
-            StrayFogGamePools.guideManager.OpenWindowCheckValidate(_windows, _parameters);
+            isOpenGuideWindow |= w.config.id == StrayFogGamePools.guideManager.guideWindowId;
         }
-        else
+        if (!isOpenGuideWindow)
         {
-            StrayFogGamePools.guideManager.OpenWindowCheckTrigger(_windows, _parameters);
+            if (StrayFogGamePools.uiWindowManager.IsOpenedWindow(StrayFogGamePools.guideManager.guideWindowId))
+            {
+                StrayFogGamePools.guideManager.OpenWindowCheckValidate(_windows, _parameters);
+            }
+            else
+            {
+                StrayFogGamePools.guideManager.OpenWindowCheckTrigger(_windows, _parameters);
+            }
         }
-        
     }
 
     /// <summary>

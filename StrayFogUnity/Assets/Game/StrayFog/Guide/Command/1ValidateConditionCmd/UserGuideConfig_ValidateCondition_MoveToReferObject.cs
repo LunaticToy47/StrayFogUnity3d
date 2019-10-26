@@ -6,6 +6,11 @@ public class UserGuideConfig_ValidateCondition_MoveToReferObject : AbsGuideSubCo
 {
     protected override bool OnIsMatchCondition(IGuideCommand _sender, List<bool> _conditionResults, IGuideMatchCondition _sponsor, params object[] _parameters)
     {
-        return base.OnIsMatchCondition(_sender, _conditionResults, _sponsor, _parameters);
+        bool result = false;
+        if (_parameters != null)
+        {
+
+        }
+        return result & base.OnIsMatchCondition(_sender, _conditionResults, _sponsor, _parameters);
     }
 }

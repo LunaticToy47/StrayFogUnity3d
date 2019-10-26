@@ -37,11 +37,11 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>
-    /// <param name="_index">数据索引</param>
+    /// <param name="_conditionTndex">条件索引</param>
     /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
     /// <returns>命令集</returns>
-    protected override List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _index, enGuideStatus _resolveStatus, enGuideStatus _status)
+    protected override List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _conditionTndex, enGuideStatus _resolveStatus, enGuideStatus _status)
     {
         status = _status;
         List<AbsGuideResolveMatch> conditions = new List<AbsGuideResolveMatch>();
@@ -67,9 +67,9 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                     tc.ResolveConfig(_config, i, enGuideStatus.WaitTrigger, _status);
                     if (_config.triggerConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
                     {
-                        foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
+                        for (int r = 0; r < referCfgs.Count; r++)
                         {
-                            tc.ResolveConfig(r, i, enGuideStatus.WaitTrigger, _status);
+                            tc.ResolveConfig(referCfgs[r], r, enGuideStatus.WaitTrigger, _status);
                         }
                     }
                     conditions.Add(tc);
@@ -96,9 +96,9 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                     vc.ResolveConfig(_config, i, enGuideStatus.WaitValidate, _status);
                     if (_config.validateConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
                     {
-                        foreach (XLS_Config_Table_UserGuideReferObject r in referCfgs)
+                        for (int r = 0; r < referCfgs.Count; r++)
                         {
-                            vc.ResolveConfig(r, i, enGuideStatus.WaitValidate, _status);
+                            vc.ResolveConfig(referCfgs[r], r, enGuideStatus.WaitValidate, _status);
                         }
                     }
                     conditions.Add(vc);

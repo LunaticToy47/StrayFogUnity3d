@@ -36,7 +36,6 @@ public partial class StrayFogGuideManager
                         StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(guideWindowId, (wins, pars) =>
                         {
                             mTriggerGuideCommand.Excute(wins);
-                            UnityEngine.Debug.Log("GuideStatus=>" + mTriggerGuideCommand.status);
                         });
                     }
                 }
@@ -57,9 +56,12 @@ public partial class StrayFogGuideManager
         {
             if (_windows != null && mTriggerGuideCommand != null)
             {
-                if (mTriggerGuideCommand.isMatchCondition(_parameters))
+                if (mTriggerGuideCommand.isMatchCondition(_windows))
                 {
-
+                    StrayFogGamePools.uiWindowManager.GetWindow<AbsUIGuideWindowView>(guideWindowId, (wins, pars) =>
+                    {
+                        mTriggerGuideCommand.Excute(wins);
+                    });
                 }
             }
         }
