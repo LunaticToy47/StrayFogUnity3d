@@ -32,6 +32,14 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// </summary>
     bool mGraphicMaskActiveSelf = false;
     /// <summary>
+    /// 引导命令发送者
+    /// </summary>
+    IGuideCommand mGuideCommandSender = null;
+    /// <summary>
+    /// 引导窗口
+    /// </summary>
+    AbsUIGuideWindowView mUIGuideWindow = null;
+    /// <summary>
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>    
@@ -88,11 +96,12 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
                     AbsUIWindowView w = (AbsUIWindowView)p;
                     if (w.config.name.Equals(windowName))
                     {
+                        mGuideCommandSender = _sender;
                         UIBehaviour behaviour = w.FindCtrlByNameIsSelfOrParent<UIBehaviour>(controlName);
                         mGraphicMask = new UIGuideGraphic((int)_sender.status, w.FindCtrlByNameIsSelfOrParent<Graphic>(graphicMask), index);
-                        result = mGraphicMask.graphic != null && mGraphicMask.graphic.gameObject.activeSelf == mGraphicMaskActiveSelf;
-                        UIGuideValidate validate = behaviour.gameObject.AddDynamicMonoBehaviour<UIGuideValidate>();
-                        validate.OnEventValidate += Validate_OnEventValidate;
+                        result = mGraphicMask.graphic != null && mGraphicMask.graphic.gameObject.activeSelf == mGraphicMaskActiveSelf;                        
+                        UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(behaviour, index);
+                        validate.OnEventValidate += Validate_OnEventValidate;                        
                         break;
                     }
                 }
@@ -105,12 +114,19 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// 引导验证事件
     /// </summary>
     /// <param name="_guideValidate">引导验证器</param>
-    /// <param name="_eventTriggerType">事件类别</param>
-    /// <param name="_eventData">事件数据</param>
     /// <returns>true:验证通过,false:验证不通过</returns>
-    bool Validate_OnEventValidate(UIGuideValidate _guideValidate, EventTriggerType _eventTriggerType, BaseEventData _eventData)
+    bool Validate_OnEventValidate(UIGuideValidate _guideValidate)
     {
-        return false;
+        bool result = false;
+        if (mGuideCommandSender != null)
+        {
+            result = mGuideCommandSender.isMatchCondition(_guideValidate);
+            if (result)
+            {
+                mGuideCommandSender.Excute(mUIGuideWindow);
+            }
+        }
+        return result;
     }
 
     /// <summary>
@@ -128,7 +144,9 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
             {
                 if (w is AbsUIGuideWindowView)
                 {
-                    ((AbsUIGuideWindowView)w).AddTrigger(mGraphicMask);
+                    mUIGuideWindow = (AbsUIGuideWindowView)w;
+                    mUIGuideWindow.AddTrigger(mGraphicMask);
+                    break;
                 }
             }
         }

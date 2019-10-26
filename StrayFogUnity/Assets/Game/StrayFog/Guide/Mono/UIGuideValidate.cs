@@ -4,10 +4,8 @@ using UnityEngine.EventSystems;
 /// 引导验证事件
 /// </summary>
 /// <param name="_guideValidate">引导验证器</param>
-/// <param name="_eventTriggerType">事件类别</param>
-/// <param name="_eventData">事件数据</param>
 /// <returns>true:验证通过,false:验证不通过</returns>
-public delegate bool GuideValidateEventHandler(UIGuideValidate _guideValidate, EventTriggerType _eventTriggerType, BaseEventData _eventData);
+public delegate bool GuideValidateEventHandler(UIGuideValidate _guideValidate);
 
 /// <summary>
 /// 引导验证
@@ -29,11 +27,22 @@ public class UIGuideValidate : EventTrigger
     public int guideId { get; private set; }
     #endregion
 
-    #region eventTriggerType 触发验证的事件
+    #region eventTriggerType 触发事件
     /// <summary>
-    /// 触发验证的事件
+    /// 触发事件
     /// </summary>
     public EventTriggerType eventTriggerType { get; private set; }
+    #endregion
+
+    #region eventTriggerData 事件触发数据
+    /// <summary>
+    /// 事件数据
+    /// </summary>
+    public BaseEventData eventTriggerData { get; private set; }
+    #endregion
+
+    #region index 索引
+    public int index { get; private set; }
     #endregion
 
     #region SetData  设置数据
@@ -42,10 +51,11 @@ public class UIGuideValidate : EventTrigger
     /// </summary>
     /// <param name="_guideId">引导Id</param>
     /// <param name="_eventTriggerType">触发验证的事件</param>
-    public void SetData(int _guideId, EventTriggerType _eventTriggerType)
+    public void SetData(int _guideId, EventTriggerType _eventTriggerType,int _index)
     {
         guideId = _guideId;
         eventTriggerType = _eventTriggerType;
+        index = _index;
     }
     #endregion
 
@@ -58,10 +68,11 @@ public class UIGuideValidate : EventTrigger
     /// <returns>true:触发,false:不触发</returns>
     bool OnIsTriggerValidate(EventTriggerType _eventTriggerType, BaseEventData _eventData)
     {
-        bool result = false;
-        if (OnEventValidate != null)
+        bool result = eventTriggerType == _eventTriggerType;
+        if (result && OnEventValidate != null)
         {
-            result = OnEventValidate.Invoke(this, _eventTriggerType, _eventData);
+            eventTriggerData = _eventData;
+            result &= OnEventValidate.Invoke(this);
         }
         return result;
     }

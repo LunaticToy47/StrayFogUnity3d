@@ -30,6 +30,18 @@ public static class MonoBehaviourExtend
     }
 
     /// <summary>
+    /// 添加动态EventTrigger组件
+    /// </summary>
+    /// <typeparam name="T">组件</typeparam>
+    /// <param name="_go">GameObject</param>
+    /// <returns>组件</returns>
+    public static T AddUIDynamicEventTrigger<T>(this GameObject _go)
+        where T : EventTrigger
+    {
+        return _go.AddComponent<T>();
+    }
+
+    /// <summary>
     /// 添加动态组件
     /// </summary>
     /// <typeparam name="T">组件</typeparam>

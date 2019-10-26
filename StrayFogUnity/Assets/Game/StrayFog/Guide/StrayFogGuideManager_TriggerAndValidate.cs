@@ -25,7 +25,7 @@ public partial class StrayFogGuideManager
                     foreach (AbsGuideCommand cmd in mWaitGuideCommandMaping.Values)
                     {
                         if ((cmd.referType & enUserGuideReferObject_ReferType.Refer2D) == enUserGuideReferObject_ReferType.Refer2D
-                            && cmd.isMatchCondition(cmd, cmd, _windows))
+                            && cmd.isMatchCondition(_windows))
                         {
                             mTriggerGuideCommand = cmd;
                             break;
@@ -35,7 +35,7 @@ public partial class StrayFogGuideManager
                     {
                         StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(guideWindowId, (wins, pars) =>
                         {
-                            mTriggerGuideCommand.Excute(mTriggerGuideCommand, mTriggerGuideCommand, wins);
+                            mTriggerGuideCommand.Excute(wins);
                             UnityEngine.Debug.Log("GuideStatus=>" + mTriggerGuideCommand.status);
                         });
                     }
@@ -57,7 +57,7 @@ public partial class StrayFogGuideManager
         {
             if (_windows != null && mTriggerGuideCommand != null)
             {
-                if (mTriggerGuideCommand.isMatchCondition(mTriggerGuideCommand, mTriggerGuideCommand, _parameters))
+                if (mTriggerGuideCommand.isMatchCondition(_parameters))
                 {
 
                 }

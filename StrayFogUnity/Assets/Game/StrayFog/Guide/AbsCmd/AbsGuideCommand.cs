@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 /// <summary>
 /// 引导命令抽象
 /// </summary>
@@ -121,7 +122,17 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     protected override bool OnIsMatchCondition(IGuideCommand _sender, List<bool> _conditionResults, IGuideMatchCondition _sponsor, params object[] _parameters)
     {
         bool result = false;
-        switch (guideConfig.enTriggerConditionMatchType)
+        enUserGuideConfig_ConditionMatchType matchType = enUserGuideConfig_ConditionMatchType.And;
+        switch (_sender.status)
+        {
+            case enGuideStatus.WaitTrigger:
+                matchType = guideConfig.enTriggerConditionMatchType;
+                break;
+            case enGuideStatus.WaitValidate:
+                matchType = guideConfig.enValidateConditionMatchType;
+                break;
+        }
+        switch (matchType)
         {
             case enUserGuideConfig_ConditionMatchType.And:
                 result = true;
@@ -176,6 +187,58 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     {
         status = enGuideStatus.WaitTrigger;
         base.OnRecycle();
+    }
+    #endregion
+
+    #region CreateValidateMono 创建验证控件
+    /// <summary>
+    /// 创建验证控件
+    /// </summary>
+    /// <typeparam name="R">控件类别</typeparam>
+    /// <param name="_monoBehaviour">要添加验证的控件</param>
+    /// <param name="_index">索引</param>
+    /// <returns>验证控件</returns>
+    public R CreateValidateMono<R>(MonoBehaviour _monoBehaviour, int _index) where R : UIGuideValidate
+    {
+        R result = _monoBehaviour.gameObject.GetComponent<R>();
+        if (result == null)
+        {
+            result = _monoBehaviour.gameObject.AddUIDynamicEventTrigger<R>();
+        }
+        enUserGuideConfig_ValidateConditionType condition = (enUserGuideConfig_ValidateConditionType)guideConfig.validateConditionTypes[_index];
+        switch (condition)
+        {
+            case enUserGuideConfig_ValidateConditionType.Click:
+                result.SetData(guideConfig.id, UnityEngine.EventSystems.EventTriggerType.PointerClick, _index);
+                break;
+            case enUserGuideConfig_ValidateConditionType.MoveTo:
+                result.SetData(guideConfig.id, UnityEngine.EventSystems.EventTriggerType.EndDrag, _index);
+                break;
+        }
+        return result;
+    }
+    #endregion
+
+    #region isMatchCondition 是否满足条件
+    /// <summary>
+    /// 是否满足条件
+    /// </summary>
+    /// <param name="_parameters">参数</param>
+    /// <returns>true:满足,false:不满足</returns>
+    public bool isMatchCondition(params object[] _parameters)
+    {
+        return base.isMatchCondition(this, this, _parameters);
+    }
+    #endregion
+
+    #region Excute 执行处理
+    /// <summary>
+    /// 执行处理
+    /// </summary>
+    /// <param name="_parameters">参数</param>
+    public void Excute(params object[] _parameters)
+    {
+        base.Excute(this, this, _parameters);
     }
     #endregion
 }

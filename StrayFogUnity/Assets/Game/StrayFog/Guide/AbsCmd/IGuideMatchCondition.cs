@@ -11,7 +11,7 @@ public interface IGuideMatchCondition
     /// <param name="_parameters">参数</param>
     /// <returns>true:满足,false:不满足</returns>
     bool isMatchCondition(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters);
-
+    
     /// <summary>
     /// 执行处理
     /// </summary>

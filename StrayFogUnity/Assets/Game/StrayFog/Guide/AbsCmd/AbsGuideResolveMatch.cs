@@ -47,7 +47,7 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
         }
         return _matchs;
     }
-    #endregion
+    #endregion    
 
     #region isMatchCondition 是否满足条件
     /// <summary>
