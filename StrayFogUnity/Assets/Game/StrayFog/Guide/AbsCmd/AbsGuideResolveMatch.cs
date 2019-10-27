@@ -56,9 +56,9 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// </summary>
     Dictionary<int, List<AbsGuideResolveMatch>> mGuideResolveMatchMaping = new Dictionary<int, List<AbsGuideResolveMatch>>();
 
-    #region OnAddGuideResolveCondition 添加引导解析条件
+    #region OnAddGuideResolveCondition 添加引导解析匹配命令
     /// <summary>
-    /// 添加引导解析匹配
+    /// 添加引导解析匹配命令
     /// </summary>
     /// <param name="_conditions">匹配组</param>
     /// <param name="_resolveStatus">解析状态</param>
