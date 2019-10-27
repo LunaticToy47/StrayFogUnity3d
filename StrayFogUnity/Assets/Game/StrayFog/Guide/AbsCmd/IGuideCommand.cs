@@ -9,6 +9,14 @@ public interface IGuideCommand
     /// </summary>
     enGuideStatus status { get; }
     /// <summary>
+    /// 逻辑运算
+    /// </summary>
+    /// <param name="_leftValue">左值</param>
+    /// <param name="_rightValue">右值</param>
+    /// <param name="_operator">运算符</param>
+    /// <returns>结果</returns>
+    bool LogicalOperator(bool _leftValue,bool _rightValue, enUserGuideConfig_ConditionOperator _operator);
+    /// <summary>
     /// 是否满足条件
     /// </summary>
     /// <param name="_parameters">参数</param>

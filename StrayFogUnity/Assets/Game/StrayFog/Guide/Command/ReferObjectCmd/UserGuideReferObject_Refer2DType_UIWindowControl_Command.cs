@@ -36,6 +36,10 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// </summary>
     AbsUIGuideWindowView mUIGuideWindow = null;
     /// <summary>
+    /// 控件
+    /// </summary>
+    UIBehaviour mControl = null;
+    /// <summary>
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>    
@@ -75,13 +79,13 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// 是否满足条件
     /// </summary>
     /// <param name="_parameters">参数</param>
-    /// <param name="_conditionResults">条件结果</param>
+    /// <param name="_conditions">匹配组</param>
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">条件匹配发起者</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<bool> _conditionResults, IGuideMatchCondition _sponsor, params object[] _parameters)
+    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatch> _conditions, IGuideMatchCondition _sponsor, params object[] _parameters)
     {
-        bool result = base.OnIsMatchCondition(_sender, _conditionResults, _sponsor, _parameters);
+        bool result = base.OnIsMatchCondition(_sender, _conditions, _sponsor, _parameters);
         if (_parameters != null && mGraphicMask == null)
         {
             foreach (object p in _parameters)
@@ -92,15 +96,21 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
                     if (w.config.name.Equals(windowName))
                     {
                         mGuideCommandSender = _sender;
-                        UIBehaviour behaviour = w.FindCtrlByNameIsSelfOrParent<UIBehaviour>(controlName);
+                        mControl = w.FindCtrlByNameIsSelfOrParent<UIBehaviour>(controlName);
                         mGraphicMask = new UIGuideGraphic((int)_sender.status, w.FindCtrlByNameIsSelfOrParent<Graphic>(graphicMask), referObjectIndex);
-                        result = mGraphicMask.graphic != null && mGraphicMask.graphic.gameObject.activeSelf == mGraphicMaskActiveSelf;                        
-                        UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(behaviour, referObjectIndex);
-                        validate.OnEventValidate += Validate_OnEventValidate;                        
                         break;
                     }
                 }
             }
+        }
+
+        result = mControl != null && mGraphicMask != null && mGraphicMask.graphic != null 
+            && mGraphicMask.graphic.gameObject.activeSelf == mGraphicMaskActiveSelf;
+
+        if (result)
+        {
+            UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(mControl, referObjectIndex);
+            validate.OnEventValidate += Validate_OnEventValidate;
         }
         return result;
     }
@@ -133,7 +143,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     protected override void OnExcute(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters)
     {
         base.OnExcute(_sender, _sponsor, _parameters);
-        if (_parameters != null)
+        if (isMatch && _parameters != null)
         {
             foreach (AbsUIWindowView w in _parameters)
             {

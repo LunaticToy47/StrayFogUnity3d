@@ -110,22 +110,22 @@ MonoBehaviour:
     dataType: 6
     arrayDimension: 1
     isIngore: 0
-  - columnName: triggerConditionMatchType
-    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u3011\u5339\u914D\u7C7B\u578B\n0\uFF1A\u5168\u5339\u914D\n1\uFF1A\u4EFB\u610F\u4E00\u6761\u5339\u914D"
+  - columnName: triggerConditionTypes
+    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u3011\u6570\u636E\u7C7B\u578B\n0\uFF1A\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\n1\uFF1A\u73A9\u5BB6\u7B49\u7EA7\n2\uFF1A\u7269\u54C1\n3\uFF1A\u88C5\u5907\n4\uFF1A\u4EFB\u52A1\n5\uFF1A\u73A9\u5BB6\u72B6\u6001"
     xlsColumnValueIndex: 10
     isPK: 0
     isNull: 0
-    sqliteColumnName: triggerConditionMatchType
+    sqliteColumnName: triggerConditionTypes
     sqliteColumnValue: 
     dataType: 6
-    arrayDimension: 0
+    arrayDimension: 1
     isIngore: 0
-  - columnName: triggerConditionTypes
-    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u3011\u6570\u636E\u7C7B\u578B\n0\uFF1A\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\n1\uFF1A\u73A9\u5BB6\u7B49\u7EA7\n2\uFF1A\u7269\u54C1\n3\uFF1A\u88C5\u5907\n4\uFF1A\u4EFB\u52A1\n5\uFF1A\u73A9\u5BB6\u72B6\u6001"
+  - columnName: triggerConditionOperators
+    desc: "\u3010\u89E6\u53D1\u6761\u4EF6\u3011\u6761\u4EF6\u8FD0\u7B97\u7B26\n0\uFF1A\u5FC5\u987B\u6EE1\u8DB3\u6761\u4EF6\u3010And\u4E0E\u8FD0\u7B97\u3011\n1\uFF1A\u53EF\u9009\u6EE1\u8DB3\u6761\u4EF6\u3010Or\u6216\u8FD0\u7B97\u3011"
     xlsColumnValueIndex: 11
     isPK: 0
     isNull: 0
-    sqliteColumnName: triggerConditionTypes
+    sqliteColumnName: triggerConditionOperators
     sqliteColumnValue: 
     dataType: 6
     arrayDimension: 1
@@ -150,19 +150,18 @@ MonoBehaviour:
     dataType: 6
     arrayDimension: 1
     isIngore: 0
-  - columnName: validateConditionMatchType
-    desc: "\u3010\u9A8C\u8BC1\u6761\u4EF6\u3011\u5339\u914D\u7C7B\u578B\n0\uFF1A\u5168\u5339\u914D\n1\uFF1A\u4EFB\u610F\u4E00\u6761\u5339\u914D"
+  - columnName: validateConditionOperators
+    desc: "\u3010\u9A8C\u8BC1\u6761\u4EF6\u3011\u6761\u4EF6\u8FD0\u7B97\u7B26\n0\uFF1A\u5FC5\u987B\u6EE1\u8DB3\u6761\u4EF6\u3010And\u4E0E\u8FD0\u7B97\u3011\n1\uFF1A\u53EF\u9009\u6EE1\u8DB3\u6761\u4EF6\u3010Or\u6216\u8FD0\u7B97\u3011"
     xlsColumnValueIndex: 14
     isPK: 0
     isNull: 0
-    sqliteColumnName: validateConditionMatchType
+    sqliteColumnName: validateConditionOperators
     sqliteColumnValue: 
     dataType: 6
-    arrayDimension: 0
+    arrayDimension: 1
     isIngore: 0
   - columnName: validateConditionTypes
-    desc: "\u3010\u9A8C\u8BC1\u6761\u4EF6\u3011\u7C7B\u522B\n0\uFF1AClick \u70B9\u51FB\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\n1\uFF1ADrag
-      \u62D6\u62FD\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\u5230\u9A8C\u8BC1\u53C2\u8003\u5BF9\u8C61\n2\uFF1AMoveTo
+    desc: "\u3010\u9A8C\u8BC1\u6761\u4EF6\u3011\u7C7B\u522B\n0\uFF1AClick \u70B9\u51FB\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\n1\uFF1AMoveTo
       \u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\u79FB\u52A8\u5230\u9A8C\u8BC1\u53C2\u8003\u5BF9\u8C61\n\n\n\n"
     xlsColumnValueIndex: 15
     isPK: 0
@@ -173,7 +172,7 @@ MonoBehaviour:
     arrayDimension: 1
     isIngore: 0
   - columnName: validateConditionValues
-    desc: "\u3010\u9A8C\u8BC1\u6761\u4EF6\u3011\u503C\n0\uFF1A[0:\u70B9\u51FB\u4EFB\u610F\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61,0_1_2\uFF1A\u6309\u7D22\u5F15\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61]\n1\uFF1A[0:\u62D6\u62FD\u4EFB\u610F\u53C2\u8003\u5BF9\u8C61\u5230\u4EFB\u610F\u9A8C\u8BC1\u5BF9\u8C61,0_1|2_3\u6307\u5B9A\u7D22\u5F15\u7684\u53C2\u8003\u5BF9\u8C61\u62D6\u62FD\u5230\u6307\u5B9A\u9A8C\u8BC1\u5BF9\u8C61]\n2\uFF1A[0:\u4EFB\u610F]\n\n\n"
+    desc: "\u3010\u9A8C\u8BC1\u6761\u4EF6\u3011\u503C\n0\uFF1A[0:\u70B9\u51FB\u4EFB\u610F\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61,0_1_2\uFF1A\u6309\u7D22\u5F15\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61]\n1\uFF1A[0:\u62D6\u62FD\u4EFB\u610F\u53C2\u8003\u5BF9\u8C61\u5230\u4EFB\u610F\u9A8C\u8BC1\u5BF9\u8C61,0_1|2_3\u6307\u5B9A\u7D22\u5F15\u7684\u53C2\u8003\u5BF9\u8C61\u62D6\u62FD\u5230\u6307\u5B9A\u9A8C\u8BC1\u5BF9\u8C61]\n\n\n\n"
     xlsColumnValueIndex: 16
     isPK: 0
     isNull: 0

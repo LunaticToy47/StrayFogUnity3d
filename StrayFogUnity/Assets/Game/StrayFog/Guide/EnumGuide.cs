@@ -43,21 +43,21 @@ public enum enUserGuideConfig_GuideType
 }
 #endregion
 
-#region enUserGuideConfig_ConditionMatchType 引导条件匹配类型
+#region enUserGuideConfig_ConditionOperator 引导条件运算符
 /// <summary>
-/// 引导条件匹配类型
+/// 引导条件运算符
 /// </summary>
-public enum enUserGuideConfig_ConditionMatchType
+public enum enUserGuideConfig_ConditionOperator
 {
     /// <summary>
-    /// 全匹配
+    /// 与运算
     /// </summary>
-    [AliasTooltip("全匹配")]
+    [AliasTooltip("与运算")]
     And,
     /// <summary>
-    /// 任意匹配
+    /// 或运算
     /// </summary>
-    [AliasTooltip("任意匹配")]
+    [AliasTooltip("或运算")]
     Or,
 }
 #endregion

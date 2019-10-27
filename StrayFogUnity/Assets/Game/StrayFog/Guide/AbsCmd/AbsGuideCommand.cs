@@ -65,12 +65,10 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                 {
                     AbsGuideSubCommand_Condition tc = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_config.triggerConditionTypes[i]]();
                     tc.ResolveConfig(_config, i, enGuideStatus.WaitTrigger, _status);
-                    if (_config.triggerConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+                    if (_config.triggerConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject
+                        && referCfgs.Count > i)
                     {
-                        for (int r = 0; r < referCfgs.Count; r++)
-                        {
-                            tc.ResolveConfig(referCfgs[r], r, enGuideStatus.WaitTrigger, _status);
-                        }
+                        tc.ResolveConfig(referCfgs[i], i, enGuideStatus.WaitTrigger, _status);
                     }
                     conditions.Add(tc);
                 }
@@ -88,18 +86,15 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
                         referCfgs.Add(r);
                     }
                 }
-
                 //验证条件命令
                 for (int i = 0; i < _config.validateConditionTypes.Length; i++)
                 {
                     AbsGuideSubCommand_Condition vc = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_config.validateConditionTypes[i]]();
                     vc.ResolveConfig(_config, i, enGuideStatus.WaitValidate, _status);
-                    if (_config.validateConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+                    if (_config.validateConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject
+                        && referCfgs.Count > i)
                     {
-                        for (int r = 0; r < referCfgs.Count; r++)
-                        {
-                            vc.ResolveConfig(referCfgs[r], r, enGuideStatus.WaitValidate, _status);
-                        }
+                        vc.ResolveConfig(referCfgs[i], i, enGuideStatus.WaitTrigger, _status);
                     }
                     conditions.Add(vc);
                 }
@@ -110,47 +105,24 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     }
     #endregion
 
-    #region OnIsMatchCondition 是否匹配条件
+    #region LogicalOperator 逻辑运算
     /// <summary>
-    /// 是否匹配条件
+    /// 逻辑运算
     /// </summary>
-    /// <param name="_sender">引导命令</param>
-    /// <param name="_conditionResults">条件结果</param>
-    /// <param name="_sponsor">条件匹配发起者</param>
-    /// <param name="_parameters">参数</param>
-    /// <returns>true:通过验证,false:不通过验证</returns>
-    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<bool> _conditionResults, IGuideMatchCondition _sponsor, params object[] _parameters)
+    /// <param name="_leftValue">左值</param>
+    /// <param name="_rightValue">右值</param>
+    /// <param name="_operator">运算符</param>
+    /// <returns>结果</returns>
+    public bool LogicalOperator(bool _leftValue, bool _rightValue, enUserGuideConfig_ConditionOperator _operator)
     {
-        bool result = false;
-        enUserGuideConfig_ConditionMatchType matchType = enUserGuideConfig_ConditionMatchType.And;
-        switch (_sender.status)
+        bool result = true;
+        switch (_operator)
         {
-            case enGuideStatus.WaitTrigger:
-                matchType = guideConfig.enTriggerConditionMatchType;
+            case enUserGuideConfig_ConditionOperator.And:
+                result &= (_leftValue & _rightValue);
                 break;
-            case enGuideStatus.WaitValidate:
-                matchType = guideConfig.enValidateConditionMatchType;
-                break;
-        }
-        switch (matchType)
-        {
-            case enUserGuideConfig_ConditionMatchType.And:
-                result = true;
-                foreach (bool rst in _conditionResults)
-                {
-                    result &= rst;
-                }
-                break;
-            case enUserGuideConfig_ConditionMatchType.Or:
-                result = false;
-                foreach (bool rst in _conditionResults)
-                {
-                    result |= rst;
-                    if (result)
-                    {
-                        break;
-                    }
-                }
+            case enUserGuideConfig_ConditionOperator.Or:
+                result &= (_leftValue | _rightValue);
                 break;
         }
         return result;

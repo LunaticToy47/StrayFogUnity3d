@@ -4,9 +4,9 @@
 /// </summary>
 public class UserGuideConfig_ValidateCondition_ClickReferObject : AbsGuideSubCommand_Condition
 {
-    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<bool> _conditionResults, IGuideMatchCondition _sponsor, params object[] _parameters)
+    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatch> _conditions, IGuideMatchCondition _sponsor, params object[] _parameters)
     {
-        bool result = false;
+        bool result = base.OnIsMatchCondition(_sender, _conditions, _sponsor, _parameters);
         if (_parameters != null)
         {
             UIGuideValidate uiGv = null;
@@ -19,6 +19,6 @@ public class UserGuideConfig_ValidateCondition_ClickReferObject : AbsGuideSubCom
                 }
             }
         }
-        return result & base.OnIsMatchCondition(_sender, _conditionResults, _sponsor, _parameters);
+        return result;
     }
 }

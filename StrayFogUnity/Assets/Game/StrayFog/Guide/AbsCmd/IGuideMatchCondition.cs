@@ -4,6 +4,16 @@
 public interface IGuideMatchCondition
 {
     /// <summary>
+    /// 是否匹配条件
+    /// </summary>
+    bool isMatch { get; }
+
+    /// <summary>
+    /// 条件运算符
+    /// </summary>
+    enUserGuideConfig_ConditionOperator conditionOperator { get; }
+
+    /// <summary>
     /// 是否满足条件
     /// </summary>
     /// <param name="_sender">引导命令</param>

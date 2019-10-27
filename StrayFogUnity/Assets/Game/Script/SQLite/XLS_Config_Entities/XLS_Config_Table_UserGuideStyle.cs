@@ -39,6 +39,12 @@ public partial class XLS_Config_Table_UserGuideStyle: AbsStrayFogSQLiteEntity
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,3,"arrowEdge","","@arrowEdge3",false,false)]	
 	public int[] arrowEdge { get; private set; }	
+		
+	/// <summary>
+	/// 引导文本描述
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"content","","@content4",false,false)]	
+	public string content { get; private set; }	
 	
 	#endregion
 

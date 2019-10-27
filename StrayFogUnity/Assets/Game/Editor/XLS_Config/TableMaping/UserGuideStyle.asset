@@ -50,3 +50,13 @@ MonoBehaviour:
     dataType: 6
     arrayDimension: 1
     isIngore: 0
+  - columnName: content
+    desc: "\u5F15\u5BFC\u6587\u672C\u63CF\u8FF0"
+    xlsColumnValueIndex: 4
+    isPK: 0
+    isNull: 0
+    sqliteColumnName: content
+    sqliteColumnValue: 
+    dataType: 14
+    arrayDimension: 0
+    isIngore: 0

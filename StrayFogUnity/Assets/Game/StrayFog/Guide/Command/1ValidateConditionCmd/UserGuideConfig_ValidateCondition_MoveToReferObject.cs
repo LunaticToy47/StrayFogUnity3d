@@ -4,13 +4,4 @@
 /// </summary>
 public class UserGuideConfig_ValidateCondition_MoveToReferObject : AbsGuideSubCommand_Condition
 {
-    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<bool> _conditionResults, IGuideMatchCondition _sponsor, params object[] _parameters)
-    {
-        bool result = false;
-        if (_parameters != null)
-        {
-
-        }
-        return result & base.OnIsMatchCondition(_sender, _conditionResults, _sponsor, _parameters);
-    }
 }
