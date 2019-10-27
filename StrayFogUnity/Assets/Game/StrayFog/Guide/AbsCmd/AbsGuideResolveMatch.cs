@@ -50,7 +50,7 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     public XLS_Config_Table_UserGuideStyle styleConfig { get; private set; }
 
     /// <summary>
-    /// 解析匹配集
+    /// 解析匹配命令集
     /// Key:enGuideStatus
     /// Value: List<AbsGuideResolveMatch>
     /// </summary>
