@@ -76,20 +76,17 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
         }
         return _conditions;
     }
-    #endregion    
+    #endregion
 
-    #region ResolveConfig 解析配置XLS_Config_Table_UserGuideConfig
+    #region OnResolveOperator 解析操作符
     /// <summary>
-    /// 解析配置
+    /// 解析操作符
     /// </summary>
     /// <param name="_config">配置</param>
     /// <param name="_configIndex">条件索引</param>
     /// <param name="_resolveStatus">解析状态</param>
-    /// <param name="_status">引导状态</param>
-    public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _conditionTndex, enGuideStatus _resolveStatus, enGuideStatus _status)
+    void OnResolveOperator(XLS_Config_Table_UserGuideConfig _config, int _conditionTndex, enGuideStatus _resolveStatus)
     {
-        guideConfig = _config;
-        conditionTndex = _conditionTndex;
         conditionOperator = enUserGuideConfig_ConditionOperator.And;
         if (_conditionTndex > 0)
         {
@@ -103,6 +100,22 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
                     break;
             }
         }
+    }
+    #endregion
+
+    #region ResolveConfig 解析配置XLS_Config_Table_UserGuideConfig
+    /// <summary>
+    /// 解析配置
+    /// </summary>
+    /// <param name="_config">配置</param>
+    /// <param name="_configIndex">条件索引</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">引导状态</param>
+    public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _conditionTndex, enGuideStatus _resolveStatus, enGuideStatus _status)
+    {
+        guideConfig = _config;
+        conditionTndex = _conditionTndex;
+        OnResolveOperator(_config, _conditionTndex, _resolveStatus);
         List<AbsGuideResolveMatch> conditions = OnAddGuideResolveCondition(OnResolveConfig(_config, _conditionTndex, _resolveStatus, _status), _resolveStatus);
         if (conditions != null && _conditionTndex >= 0)
         {
