@@ -3,7 +3,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 引导解析匹配抽象
 /// </summary>
-public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolveConfig, IRecycle
+public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolveConfig, IGuideExcute, IRecycle
 {
     /// <summary>
     /// 条件索引
@@ -13,6 +13,11 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// 参考对象索引
     /// </summary>
     public int referObjectIndex { get; private set; }
+
+    /// <summary>
+    /// 样式索引
+    /// </summary>
+    public int styleIndex { get; private set; }
 
     /// <summary>
     /// 是否匹配条件
@@ -38,6 +43,11 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     /// 参考对象配置
     /// </summary>
     public XLS_Config_Table_UserGuideReferObject referObjectConfig { get; private set; }
+
+    /// <summary>
+    /// 样式配置
+    /// </summary>
+    public XLS_Config_Table_UserGuideStyle styleConfig { get; private set; }
 
     /// <summary>
     /// 解析匹配集
@@ -68,7 +78,7 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     }
     #endregion    
 
-    #region ResolveConfig 解析配置
+    #region ResolveConfig 解析配置XLS_Config_Table_UserGuideConfig
     /// <summary>
     /// 解析配置
     /// </summary>
@@ -114,7 +124,7 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     protected virtual List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _conditionTndex, enGuideStatus _resolveStatus, enGuideStatus _status) { return null; }
     #endregion
 
-    #region ResolveConfig 解析配置
+    #region ResolveConfig 解析配置XLS_Config_Table_UserGuideReferObject
     /// <summary>
     /// 解析配置
     /// </summary>
@@ -148,6 +158,38 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
     protected virtual List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config, int _referObjectIndex, enGuideStatus _resolveStatus, enGuideStatus _status) { return null; }
     #endregion
 
+    #region ResolveConfig 解析配置XLS_Config_Table_UserGuideStyle
+    /// <summary>
+    /// 解析配置
+    /// </summary>
+    /// <param name="_config">配置</param>
+    /// <param name="_styleIndex">样式索引</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">引导状态</param>
+    public void ResolveConfig(XLS_Config_Table_UserGuideStyle _config, int _styleIndex, enGuideStatus _resolveStatus, enGuideStatus _status)
+    {
+        styleConfig = _config;
+        styleIndex = _styleIndex;
+        int key = (int)_resolveStatus;
+        if (mGuideResolveMatchMaping != null && mGuideResolveMatchMaping.ContainsKey(key))
+        {
+            foreach (AbsGuideResolveMatch m in mGuideResolveMatchMaping[key])
+            {
+                m.ResolveConfig(_config, _styleIndex, _resolveStatus, _status);
+            }
+        }
+        OnResolveConfig(_config, _styleIndex, _resolveStatus, _status);
+    }
+    /// <summary>
+    /// 解析配置
+    /// </summary>
+    /// <param name="_config">配置</param>
+    /// <param name="_styleIndex">样式索引</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">引导状态</param>
+    protected virtual void OnResolveConfig(XLS_Config_Table_UserGuideStyle _config, int _styleIndex, enGuideStatus _resolveStatus, enGuideStatus _status) { }
+    #endregion
+
     #region ResolveReferObject 解析参考对象
     /// <summary>
     /// 解析参考对象
@@ -162,7 +204,7 @@ public abstract class AbsGuideResolveMatch : IGuideMatchCondition, IGuideResolve
                 foreach (AbsGuideResolveMatch key in values)
                 {
                     referType |= key.ResolveReferObject();
-                }                
+                }
             }
         }
         return referType;

@@ -16,16 +16,23 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     /// </summary>
     Func<int, XLS_Config_Table_UserGuideReferObject> mFuncReferObject;
 
+    /// <summary>
+    /// 样式回调
+    /// </summary>
+    Func<int, XLS_Config_Table_UserGuideStyle> mFuncStyle;
+
     #region ResolveConfig 解析配置
     /// <summary>
     /// 解析配置
     /// </summary>
     /// <param name="_config">配置</param>
     /// <param name="_funcReferObject">获得参考对象回调</param>
+    /// <param name="_funcStyle">获得样式回调</param>
     public void ResolveConfig(XLS_Config_Table_UserGuideConfig _config,
-        Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject)
+        Func<int, XLS_Config_Table_UserGuideReferObject> _funcReferObject,Func<int,XLS_Config_Table_UserGuideStyle> _funcStyle)
     {
         mFuncReferObject = _funcReferObject;
+        mFuncStyle = _funcStyle;
         ResolveConfig(_config, -1, enGuideStatus.WaitTrigger, enGuideStatus.WaitTrigger);
         ResolveConfig(_config, -1, enGuideStatus.WaitValidate, enGuideStatus.WaitTrigger);
         ResolveReferObject();
@@ -45,58 +52,48 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     {
         status = _status;
         List<AbsGuideResolveMatch> conditions = new List<AbsGuideResolveMatch>();
+        AbsGuideSubCommand_Condition tempCondition = null;
+        XLS_Config_Table_UserGuideReferObject tempRefer = null;
+
         switch (_resolveStatus)
         {
             case enGuideStatus.WaitTrigger:
                 #region 收集触发命令
-                //触发参考命令
-                List<XLS_Config_Table_UserGuideReferObject> referCfgs = new List<XLS_Config_Table_UserGuideReferObject>();
-                foreach (int rid in _config.triggerReferObjectIds)
-                {
-                    XLS_Config_Table_UserGuideReferObject r = mFuncReferObject(rid);
-                    if (r != null)
-                    {
-                        referCfgs.Add(r);
-                    }
-                }
-
                 //触发条件命令
                 for (int i = 0; i < _config.triggerConditionTypes.Length; i++)
                 {
-                    AbsGuideSubCommand_Condition tc = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_config.triggerConditionTypes[i]]();
-                    tc.ResolveConfig(_config, i, enGuideStatus.WaitTrigger, _status);
-                    if (_config.triggerConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject
-                        && referCfgs.Count > i)
+                    tempCondition = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_config.triggerConditionTypes[i]]();
+                    tempCondition.ResolveConfig(_config, i, _resolveStatus, _status);
+                    if (_config.triggerConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
                     {
-                        tc.ResolveConfig(referCfgs[i], i, enGuideStatus.WaitTrigger, _status);
+                        tempRefer = mFuncReferObject(_config.triggerReferObjectIds[i]);
+                        if (tempRefer != null)
+                        {
+                            tempCondition.ResolveConfig(tempRefer, i, _resolveStatus, _status);
+                        }                        
                     }
-                    conditions.Add(tc);
+                    tempCondition.ResolveConfig(mFuncStyle(_config.styleIds[i]), i, _resolveStatus, _status);
+                    conditions.Add(tempCondition);
                 }
                 #endregion
                 break;
             case enGuideStatus.WaitValidate:
                 #region 收集验证命令
-                //验证参考命令
-                referCfgs = new List<XLS_Config_Table_UserGuideReferObject>();
-                foreach (int rid in _config.validateReferObjectIds)
-                {
-                    XLS_Config_Table_UserGuideReferObject r = mFuncReferObject(rid);
-                    if (r != null)
-                    {
-                        referCfgs.Add(r);
-                    }
-                }
                 //验证条件命令
                 for (int i = 0; i < _config.validateConditionTypes.Length; i++)
                 {
-                    AbsGuideSubCommand_Condition vc = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_config.validateConditionTypes[i]]();
-                    vc.ResolveConfig(_config, i, enGuideStatus.WaitValidate, _status);
-                    if (_config.validateConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject
-                        && referCfgs.Count > i)
+                    tempCondition = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_config.validateConditionTypes[i]]();
+                    tempCondition.ResolveConfig(_config, i, _resolveStatus, _status);
+                    if (_config.validateConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
                     {
-                        vc.ResolveConfig(referCfgs[i], i, enGuideStatus.WaitTrigger, _status);
+                        tempRefer = mFuncReferObject(_config.validateReferObjectIds[i]);
+                        if (tempRefer != null)
+                        {
+                            tempCondition.ResolveConfig(tempRefer, i, _resolveStatus, _status);
+                        }
                     }
-                    conditions.Add(vc);
+                    tempCondition.ResolveConfig(mFuncStyle(_config.styleIds[i]), i, _resolveStatus, _status);
+                    conditions.Add(tempCondition);
                 }
                 #endregion
                 break;

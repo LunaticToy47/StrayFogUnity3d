@@ -39,6 +39,7 @@ public partial class StrayFogGuideManager : AbsSingleMonoBehaviour
         OnInitGuideWindowData();
         OnInitGuideConfigData();
         OnInitGuideReferObjectData();
+        OnInitGuideStyleData();
         OnInitGuideResolveCommand();
     }
     #endregion

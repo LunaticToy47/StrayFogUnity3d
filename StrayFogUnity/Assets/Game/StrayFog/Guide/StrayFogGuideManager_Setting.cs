@@ -22,6 +22,12 @@ public partial class StrayFogGuideManager
     /// </summary>
     Dictionary<int, XLS_Config_Table_UserGuideReferObject> mGuideReferObjectMaping = new Dictionary<int, XLS_Config_Table_UserGuideReferObject>();
     /// <summary>
+    /// 引导样式映射
+    ///Key:guideId
+    ///Value:XLS_Config_Table_UserGuideStyle
+    /// </summary>
+    Dictionary<int, XLS_Config_Table_UserGuideStyle> mGuideStyleMaping = new Dictionary<int, XLS_Config_Table_UserGuideStyle>();
+    /// <summary>
     /// 等待引导命令映射
     ///Key:guideId
     ///Value:AbsGuideCommand
@@ -89,6 +95,27 @@ public partial class StrayFogGuideManager
         }
     }
     #endregion
+
+    #region OnInitGuideStyleData 初始化引导样式数据
+    /// <summary>
+    /// 初始化引导样式数据
+    /// </summary>
+    void OnInitGuideStyleData()
+    {
+        List<XLS_Config_Table_UserGuideStyle> styles = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideStyle>();
+        if (styles != null && styles.Count > 0)
+        {
+            foreach (XLS_Config_Table_UserGuideStyle s in styles)
+            {
+                if (!mGuideStyleMaping.ContainsKey(s.id))
+                {
+                    mGuideStyleMaping.Add(s.id, s);
+                }
+            }
+        }
+    }
+    #endregion
+    
 
     #region OnInitGuideResolveCommand 初始化引导命令
     /// <summary>

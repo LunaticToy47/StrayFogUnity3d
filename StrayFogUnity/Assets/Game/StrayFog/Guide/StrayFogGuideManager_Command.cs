@@ -33,7 +33,10 @@ public partial class StrayFogGuideManager
             result = Cmd_UserGuideConfig_GuideTypeMaping[_config.guideType]();
             result.OnAfterRecycle += Result_OnAfterRecycle;
         }
-        result.ResolveConfig(_config, (id) => { return mGuideReferObjectMaping.ContainsKey(id) ? mGuideReferObjectMaping[id] : default; });
+        result.ResolveConfig(_config, 
+            (id) => { return mGuideReferObjectMaping.ContainsKey(id) ? mGuideReferObjectMaping[id] : default; },
+            (id) => { return mGuideStyleMaping.ContainsKey(id) ? mGuideStyleMaping[id] : default; }       
+            );
         return result;
     }
 
