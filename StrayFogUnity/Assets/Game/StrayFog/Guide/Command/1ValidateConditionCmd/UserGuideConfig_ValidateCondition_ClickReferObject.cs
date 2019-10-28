@@ -4,18 +4,31 @@
 /// </summary>
 public class UserGuideConfig_ValidateCondition_ClickReferObject : AbsGuideSubCommand_Condition
 {
-    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatch> _conditions, IGuideMatchCondition _sponsor, params object[] _parameters)
+    /// <summary>
+    /// 是否满足条件
+    /// </summary>
+    /// <param name="_sender">引导命令</param>
+    /// <param name="_conditions">条件组</param>
+    /// <param name="_sponsor">条件匹配发起者</param>
+    /// <param name="_parameters">参数</param>
+    /// <returns>true:满足条件,false:不满足条件</returns>
+    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatchCommand> _conditions, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
     {
-        bool result = base.OnIsMatchCondition(_sender, _conditions, _sponsor, _parameters);
-        if (_parameters != null)
+        //AbsUIGuideGraphic mask = _sender.guideWindow.GetUIGuideGraphic((int)enGuideStatus.WaitTrigger, conditionIndex);
+        bool result = _sender.guideWindow != null && base.OnIsMatchCondition(_sender, _conditions, _sponsor, _parameters);
+        if (result)
         {
-            UIGuideValidate uiGv = null;
-            foreach (object t in _parameters)
+            result = false;
+            if (_parameters != null)
             {
-                if (t is UIGuideValidate)
+                UIGuideValidate validate = null;
+                foreach (object v in _parameters)
                 {
-                    uiGv = (UIGuideValidate)t;
-
+                    if (v is UIGuideValidate)
+                    {
+                        validate = (UIGuideValidate)v;
+                        result = validate.guideId == guideConfig.id && validate.type == (int)enGuideStatus.WaitTrigger && validate.index == conditionIndex;
+                    }
                 }
             }
         }

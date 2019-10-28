@@ -34,7 +34,7 @@ public partial class StrayFogGuideManager
     /// Key:enUserGuideReferObject_Refer2DType
     /// Value:AbsGuideSubCommand_ReferObject
     /// </summary>
-    public readonly static Dictionary<int, Func<AbsGuideSubCommand_ReferObject>> Cmd_UserGuideReferObject_Refer2DTypeMaping = new Dictionary<int, Func<AbsGuideSubCommand_ReferObject>>()
+    public readonly static Dictionary<int, Func<AbsGuideSubCommand_Condition>> Cmd_UserGuideReferObject_Refer2DTypeMaping = new Dictionary<int, Func<AbsGuideSubCommand_Condition>>()
     {
         { (int)enUserGuideReferObject_Refer2DType.None,()=>{ return new UserGuideReferObject_None_Command(); } },
         { (int)enUserGuideReferObject_Refer2DType.UIWindowControl,()=>{ return new UserGuideReferObject_Refer2DType_UIWindowControl_Command(); } },
@@ -58,7 +58,7 @@ public partial class StrayFogGuideManager
     /// Key:enUserGuideReferObject_Refer2DType
     /// Value:AbsGuideSubCommand_ReferObject
     /// </summary>
-    public readonly static Dictionary<int, Func<AbsGuideSubCommand_ReferObject>> Cmd_UserGuideReferObject_Refer3DTypeMaping = new Dictionary<int, Func<AbsGuideSubCommand_ReferObject>>()
+    public readonly static Dictionary<int, Func<AbsGuideSubCommand_Condition>> Cmd_UserGuideReferObject_Refer3DTypeMaping = new Dictionary<int, Func<AbsGuideSubCommand_Condition>>()
     {
         { (int)enUserGuideReferObject_Refer3DType.None,()=>{ return new UserGuideReferObject_None_Command(); } },
         { (int)enUserGuideReferObject_Refer3DType.Boss,()=>{ return new UserGuideReferObject_Refer3DType_Boss_Command(); } },

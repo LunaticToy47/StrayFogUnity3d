@@ -1,4 +1,5 @@
-﻿using UnityEngine.UI;
+﻿using System;
+using UnityEngine.UI;
 /// <summary>
 /// UI引导Graphic抽象
 /// </summary>

@@ -1,13 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 /// <summary>
 /// 引导命令接口
 /// </summary>
 public interface IGuideCommand
-{
+{    
     /// <summary>
     /// 当前引导状态
     /// </summary>
     enGuideStatus status { get; }
+    /// <summary>
+    /// 命令关联的引导窗口
+    /// </summary>
+    AbsUIGuideWindowView guideWindow { get; set; }    
     /// <summary>
     /// 逻辑运算
     /// </summary>
@@ -32,7 +37,12 @@ public interface IGuideCommand
     /// </summary>
     /// <typeparam name="R">控件类别</typeparam>
     /// <param name="_monoBehaviour">要添加验证的控件</param>
+    /// <param name="_type">类型</param>
     /// <param name="_index">索引</param>
     /// <returns>验证控件</returns>
-    R CreateValidateMono<R>(MonoBehaviour _monoBehaviour,int _index) where R : UIGuideValidate;
+    R CreateValidateMono<R>(MonoBehaviour _monoBehaviour, int _type, int _index) where R : UIGuideValidate;
+    /// <summary>
+    /// 完成引导
+    /// </summary>
+    event Action<IGuideCommand> OnFinishGuide;
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 /// <summary>
 /// 引导管理器【设置数据】
 /// </summary>
@@ -114,8 +115,7 @@ public partial class StrayFogGuideManager
             }
         }
     }
-    #endregion
-    
+    #endregion    
 
     #region OnInitGuideResolveCommand 初始化引导命令
     /// <summary>

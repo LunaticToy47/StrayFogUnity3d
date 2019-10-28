@@ -32,12 +32,34 @@ public partial class StrayFogGuideManager
         {
             result = Cmd_UserGuideConfig_GuideTypeMaping[_config.guideType]();
             result.OnAfterRecycle += Result_OnAfterRecycle;
+            result.OnFinishGuide += Result_OnFinishGuide;
         }
         result.ResolveConfig(_config, 
             (id) => { return mGuideReferObjectMaping.ContainsKey(id) ? mGuideReferObjectMaping[id] : default; },
             (id) => { return mGuideStyleMaping.ContainsKey(id) ? mGuideStyleMaping[id] : default; }       
             );
         return result;
+    }
+
+    /// <summary>
+    /// 完成引导
+    /// </summary>
+    /// <param name="_cmd">指令</param>
+    void Result_OnFinishGuide(IGuideCommand _cmd)
+    {        
+        AbsGuideCommand cmd = (AbsGuideCommand)_cmd;
+        mWaitGuideCommandMaping.Remove(cmd.guideConfig.id);
+        mTriggerGuideCommand = null;
+        OnCheckGuideForWindow();
+        cmd.Recycle();
+        if (mTriggerGuideCommand != null)
+        {//如果有下一个引导，则对引导窗口的显示进行调整
+
+        }
+        else
+        {
+            _cmd.guideWindow.CloseWindow();
+        }
     }
 
     /// <summary>

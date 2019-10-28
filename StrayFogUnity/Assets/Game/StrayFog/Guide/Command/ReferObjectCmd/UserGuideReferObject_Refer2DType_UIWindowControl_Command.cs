@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 引导参考对象UI窗口控件
 /// </summary>
-public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuideSubCommand_ReferObject
+public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuideSubCommand_Condition
 {
     /// <summary>
     /// 窗口名称
@@ -32,25 +32,26 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// </summary>
     IGuideCommand mGuideCommandSender = null;
     /// <summary>
-    /// 引导窗口
-    /// </summary>
-    AbsUIGuideWindowView mUIGuideWindow = null;
-    /// <summary>
     /// 控件
     /// </summary>
     UIBehaviour mControl = null;
     /// <summary>
     /// 解析配置
     /// </summary>
-    /// <param name="_config">配置</param>    
-    /// <param name="_referObjectIndex">参考对象索引</param>
+    /// <param name="_guideConfig">引导配置</param>
+    /// <param name="_referObjectConfig">参考对象配置</param>
+    /// <param name="_styleConfig">样式配置</param>
+    /// <param name="_conditionIndex">条件索引</param>
     /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
-    /// <returns>命令集</returns>
-    protected override List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideReferObject _config,int _referObjectIndex, enGuideStatus _resolveStatus, enGuideStatus _status)
+    /// <returns>条件命令组</returns>
+    protected override List<AbsGuideSubCommand_Condition> OnResolveConfig(XLS_Config_Table_UserGuideConfig _guideConfig,
+        XLS_Config_Table_UserGuideReferObject _referObjectConfig,
+        XLS_Config_Table_UserGuideStyle _styleConfig,
+        int _conditionIndex, enGuideStatus _resolveStatus, enGuideStatus _status)
     {
-        base.OnResolveConfig(_config, _referObjectIndex, _resolveStatus, _status);
-        string[] values = OnSegmentationGroup(_config.refer2DValue);
+        base.OnResolveConfig(_guideConfig, _referObjectConfig, _styleConfig, _conditionIndex, _resolveStatus, _status);
+        string[] values = OnSegmentationGroup(_referObjectConfig.refer2DValue);
         windowName = values[0];
         controlName = graphicMask = values[1];
         if (values.Length >= 3)
@@ -60,7 +61,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
         switch (_status)
         {
             case enGuideStatus.WaitTrigger:
-                mGraphicMaskActiveSelf = Convert.ToBoolean(byte.Parse(guideConfig.triggerConditionValues[conditionTndex]));
+                mGraphicMaskActiveSelf = Convert.ToBoolean(byte.Parse(guideConfig.triggerConditionValues[conditionIndex]));
                 break;
         }
         return null;
@@ -83,7 +84,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">条件匹配发起者</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatch> _conditions, IGuideMatchCondition _sponsor, params object[] _parameters)
+    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatchCommand> _conditions, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
     {
         bool result = base.OnIsMatchCondition(_sender, _conditions, _sponsor, _parameters);
         if (_parameters != null && mGraphicMask == null)
@@ -109,7 +110,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
 
         if (result)
         {
-            UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(mControl, referObjectIndex);
+            UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(mControl, (int)_sender.status, referObjectIndex);
             validate.OnEventValidate += Validate_OnEventValidate;
         }
         return result;
@@ -128,7 +129,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
             result = mGuideCommandSender.isMatchCondition(_guideValidate);
             if (result)
             {
-                mGuideCommandSender.Excute(mUIGuideWindow);
+                mGuideCommandSender.Excute();
             }
         }
         return result;
@@ -140,21 +141,17 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">执行发起者</param>
     /// <param name="_parameters">参数</param>
-    protected override void OnExcute(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters)
-    {
-        base.OnExcute(_sender, _sponsor, _parameters);
-        if (isMatch && _parameters != null)
+    protected override void OnExcute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
+    {        
+        if (isMatch)
         {
-            foreach (AbsUIWindowView w in _parameters)
+            StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(StrayFogGamePools.guideManager.guideWindowId, (wins, pars) =>
             {
-                if (w is AbsUIGuideWindowView)
-                {
-                    mUIGuideWindow = (AbsUIGuideWindowView)w;
-                    mUIGuideWindow.AddTrigger(mGraphicMask);
-                    break;
-                }
-            }
+                _sender.guideWindow = wins[0];
+                _sender.guideWindow.AddTrigger(mGraphicMask);
+            });
         }
+        base.OnExcute(_sender, _sponsor, _parameters);
     }
 
     /// <summary>
@@ -162,7 +159,9 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// </summary>
     protected override void OnRecycle()
     {
+        mGuideCommandSender.guideWindow.RemoveTrigger(mGraphicMask);
         mGraphicMask = null;
+        mGuideCommandSender = null;
         base.OnRecycle();
     }
 }

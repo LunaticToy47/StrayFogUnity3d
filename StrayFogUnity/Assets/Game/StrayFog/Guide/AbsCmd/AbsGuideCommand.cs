@@ -4,12 +4,17 @@ using UnityEngine;
 /// <summary>
 /// 引导命令抽象
 /// </summary>
-public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
+public abstract class AbsGuideCommand : AbsGuideResolveMatchCommand, IGuideCommand
 {
     /// <summary>
     /// 当前引导状态
     /// </summary>
     public enGuideStatus status { get; private set; }
+
+    /// <summary>
+    /// 命令关联的引导窗口
+    /// </summary>
+    public AbsUIGuideWindowView guideWindow { get; set; }
 
     /// <summary>
     /// 参考对象回调
@@ -20,6 +25,11 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     /// 样式回调
     /// </summary>
     Func<int, XLS_Config_Table_UserGuideStyle> mFuncStyle;
+
+    /// <summary>
+    /// 完成引导
+    /// </summary>
+    public event Action<IGuideCommand> OnFinishGuide;
 
     #region ResolveConfig 解析配置
     /// <summary>
@@ -33,9 +43,9 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     {
         mFuncReferObject = _funcReferObject;
         mFuncStyle = _funcStyle;
-        ResolveConfig(_config, -1, enGuideStatus.WaitTrigger, enGuideStatus.WaitTrigger);
-        ResolveConfig(_config, -1, enGuideStatus.WaitValidate, enGuideStatus.WaitTrigger);
-        ResolveReferObject();
+        ResolveConfig(_config, null, null, -1, enGuideStatus.WaitTrigger, enGuideStatus.WaitTrigger);
+        ResolveConfig(_config, null, null, -1, enGuideStatus.WaitValidate, enGuideStatus.WaitTrigger);
+        ResolveReferObjectType();
     }
     #endregion
 
@@ -43,36 +53,40 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     /// <summary>
     /// 解析配置
     /// </summary>
-    /// <param name="_config">配置</param>
-    /// <param name="_conditionTndex">条件索引</param>
+    /// <param name="_guideConfig">引导配置</param>
+    /// <param name="_referObjectConfig">参考对象配置</param>
+    /// <param name="_styleConfig">样式配置</param>
+    /// <param name="_conditionIndex">条件索引</param>
     /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
-    /// <returns>命令集</returns>
-    protected override List<AbsGuideResolveMatch> OnResolveConfig(XLS_Config_Table_UserGuideConfig _config, int _conditionTndex, enGuideStatus _resolveStatus, enGuideStatus _status)
+    /// <returns>条件命令组</returns>
+    protected override List<AbsGuideSubCommand_Condition> OnResolveConfig(XLS_Config_Table_UserGuideConfig _guideConfig,
+        XLS_Config_Table_UserGuideReferObject _referObjectConfig,
+        XLS_Config_Table_UserGuideStyle _styleConfig,
+        int _conditionIndex, enGuideStatus _resolveStatus, enGuideStatus _status)
     {
         status = _status;
-        List<AbsGuideResolveMatch> conditions = new List<AbsGuideResolveMatch>();
+        List<AbsGuideSubCommand_Condition> conditions = new List<AbsGuideSubCommand_Condition>();
         AbsGuideSubCommand_Condition tempCondition = null;
         XLS_Config_Table_UserGuideReferObject tempRefer = null;
-
+        XLS_Config_Table_UserGuideStyle tempStyle = null;
         switch (_resolveStatus)
         {
             case enGuideStatus.WaitTrigger:
                 #region 收集触发命令
                 //触发条件命令
-                for (int i = 0; i < _config.triggerConditionTypes.Length; i++)
+                for (int i = 0; i < _guideConfig.triggerConditionTypes.Length; i++)
                 {
-                    tempCondition = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_config.triggerConditionTypes[i]]();
-                    tempCondition.ResolveConfig(_config, i, _resolveStatus, _status);
-                    if (_config.triggerConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+                    tempRefer = null;
+                    tempStyle = null;
+                    if (_guideConfig.triggerConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
                     {
-                        tempRefer = mFuncReferObject(_config.triggerReferObjectIds[i]);
-                        if (tempRefer != null)
-                        {
-                            tempCondition.ResolveConfig(tempRefer, i, _resolveStatus, _status);
-                        }                        
+                        tempRefer = mFuncReferObject(_guideConfig.triggerReferObjectIds[i]);
                     }
-                    tempCondition.ResolveConfig(mFuncStyle(_config.styleIds[i]), i, _resolveStatus, _status);
+                    tempStyle = mFuncStyle(_guideConfig.styleIds[i]);
+
+                    tempCondition = StrayFogGuideManager.Cmd_UserGuideConfig_TriggerConditionTypeMaping[_guideConfig.triggerConditionTypes[i]]();
+                    tempCondition.ResolveConfig(_guideConfig, tempRefer, tempStyle, i, _resolveStatus, _status);
                     conditions.Add(tempCondition);
                 }
                 #endregion
@@ -80,19 +94,17 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
             case enGuideStatus.WaitValidate:
                 #region 收集验证命令
                 //验证条件命令
-                for (int i = 0; i < _config.validateConditionTypes.Length; i++)
+                for (int i = 0; i < _guideConfig.validateConditionTypes.Length; i++)
                 {
-                    tempCondition = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_config.validateConditionTypes[i]]();
-                    tempCondition.ResolveConfig(_config, i, _resolveStatus, _status);
-                    if (_config.validateConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
+                    tempRefer = null;
+                    tempStyle = null;
+                    if (_guideConfig.validateConditionTypes[i] == (int)enUserGuideConfig_TriggerConditionType.ReferObject)
                     {
-                        tempRefer = mFuncReferObject(_config.validateReferObjectIds[i]);
-                        if (tempRefer != null)
-                        {
-                            tempCondition.ResolveConfig(tempRefer, i, _resolveStatus, _status);
-                        }
+                        tempRefer = mFuncReferObject(_guideConfig.validateReferObjectIds[i]);
                     }
-                    tempCondition.ResolveConfig(mFuncStyle(_config.styleIds[i]), i, _resolveStatus, _status);
+                    tempStyle = mFuncStyle(_guideConfig.styleIds[i]);
+                    tempCondition = StrayFogGuideManager.Cmd_UserGuideConfig_ValidateConditionTypeMaping[_guideConfig.validateConditionTypes[i]]();
+                    tempCondition.ResolveConfig(_guideConfig, tempRefer, tempStyle, i, _resolveStatus, _status);
                     conditions.Add(tempCondition);
                 }
                 #endregion
@@ -133,7 +145,7 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">执行发起者</param>
     /// <param name="_parameters">参数</param>
-    protected override void OnExcute(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters)
+    protected override void OnExcute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
     {
         base.OnExcute(_sender, _sponsor, _parameters);
         switch (_sender.status)
@@ -165,9 +177,10 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     /// </summary>
     /// <typeparam name="R">控件类别</typeparam>
     /// <param name="_monoBehaviour">要添加验证的控件</param>
+    /// <param name="_type">类型</param>
     /// <param name="_index">索引</param>
     /// <returns>验证控件</returns>
-    public R CreateValidateMono<R>(MonoBehaviour _monoBehaviour, int _index) where R : UIGuideValidate
+    public R CreateValidateMono<R>(MonoBehaviour _monoBehaviour, int _type, int _index) where R : UIGuideValidate
     {
         R result = _monoBehaviour.gameObject.GetComponent<R>();
         if (result == null)
@@ -178,10 +191,10 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
         switch (condition)
         {
             case enUserGuideConfig_ValidateConditionType.Click:
-                result.SetData(guideConfig.id, UnityEngine.EventSystems.EventTriggerType.PointerClick, _index);
+                result.SetData(guideConfig.id, _type, _index, UnityEngine.EventSystems.EventTriggerType.PointerClick);
                 break;
             case enUserGuideConfig_ValidateConditionType.MoveTo:
-                result.SetData(guideConfig.id, UnityEngine.EventSystems.EventTriggerType.EndDrag, _index);
+                result.SetData(guideConfig.id, _type, _index, UnityEngine.EventSystems.EventTriggerType.EndDrag);
                 break;
         }
         return result;
@@ -208,6 +221,10 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatch, IGuideCommand
     public void Excute(params object[] _parameters)
     {
         base.Excute(this, this, _parameters);
+        if (status == enGuideStatus.Finish)
+        {
+            OnFinishGuide?.Invoke(this);
+        }        
     }
     #endregion
 }

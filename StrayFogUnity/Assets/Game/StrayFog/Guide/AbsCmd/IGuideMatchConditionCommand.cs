@@ -1,7 +1,7 @@
 ﻿/// <summary>
-/// 引导条件匹配接口
+/// 引导条件匹配命令接口
 /// </summary>
-public interface IGuideMatchCondition
+public interface IGuideMatchConditionCommand
 {
     /// <summary>
     /// 是否匹配条件
@@ -20,5 +20,5 @@ public interface IGuideMatchCondition
     /// <param name="_sponsor">条件匹配发起者</param>
     /// <param name="_parameters">参数</param>
     /// <returns>true:满足,false:不满足</returns>
-    bool isMatchCondition(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters);    
+    bool isMatchCondition(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters);    
 }

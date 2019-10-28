@@ -1,7 +1,7 @@
 ﻿/// <summary>
-/// 引导执行接口
+/// 引导执行命令接口
 /// </summary>
-public interface IGuideExcute
+public interface IGuideExcuteCommand
 {
     /// <summary>
     /// 执行处理
@@ -9,5 +9,5 @@ public interface IGuideExcute
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">执行发起者</param>
     /// <param name="_parameters">参数</param>
-    void Excute(IGuideCommand _sender, IGuideMatchCondition _sponsor, params object[] _parameters);
+    void Excute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters);
 }

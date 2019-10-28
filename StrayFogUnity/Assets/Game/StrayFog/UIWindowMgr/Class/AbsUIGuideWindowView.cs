@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 /// <summary>
 /// 引导窗口视图
 /// </summary>
@@ -15,6 +15,11 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     /// </summary>
     protected abstract enAssetDiskMapingFolder materialFolder { get; }
     
+    /// <summary>
+    /// Graphic遮罩映射
+    /// </summary>
+    Dictionary<int, Dictionary<int, AbsUIGuideGraphic>> mUIGuideGraphicMaping = new Dictionary<int, Dictionary<int, AbsUIGuideGraphic>>();
+
     /// <summary>
     /// UI图形遮罩
     /// </summary>
@@ -90,16 +95,58 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     {
         LoadMaterial((args) =>
         {
+            if (_masks != null)
+            {
+                foreach (AbsUIGuideGraphic g in _masks)
+                {
+                    if (!mUIGuideGraphicMaping.ContainsKey(g.type))
+                    {
+                        mUIGuideGraphicMaping.Add(g.type, new Dictionary<int, AbsUIGuideGraphic>());
+                    }
+                    if (!mUIGuideGraphicMaping[g.type].ContainsKey(g.index))
+                    {
+                        mUIGuideGraphicMaping[g.type].Add(g.index, null);
+                    }
+                    mUIGuideGraphicMaping[g.type][g.index] = g;
+                }
+            }
             mUIGraphicMask.AddGraphicMask(args);
         }, _masks);
     }
+
     /// <summary>
     /// 移除Graphic遮罩
     /// </summary>
     /// <param name="_masks">遮罩Graphic组</param>
     public void RemoveTrigger(params AbsUIGuideGraphic[] _masks)
     {
+        if (_masks != null)
+        {
+            foreach (AbsUIGuideGraphic g in _masks)
+            {
+                if (mUIGuideGraphicMaping.ContainsKey(g.type) && mUIGuideGraphicMaping[g.type].ContainsKey(g.index))
+                {
+                    mUIGuideGraphicMaping[g.type].Remove(g.index);
+                }                
+            }
+        }        
         mUIGraphicMask.RemoveGraphicMask(_masks);
+    }
+
+    /// <summary>
+    /// 获得引导Graphic
+    /// </summary>
+    /// <param name="_type">类别</param>
+    /// <param name="_index">索引</param>
+    /// <returns>引导Graphic</returns>
+    public AbsUIGuideGraphic GetUIGuideGraphic(int _type,int _index)
+    {
+        AbsUIGuideGraphic result = default;
+        if (mUIGuideGraphicMaping.ContainsKey(_type) && mUIGuideGraphicMaping[_type].ContainsKey(_index))
+        {
+            result = mUIGuideGraphicMaping[_type][_index];
+        }
+        return result;
     }
 
     /// <summary>
@@ -107,6 +154,7 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     /// </summary>
     public void ClearTrigger()
     {
+        mUIGuideGraphicMaping.Clear();
         if (mUIGraphicMask != null)
         {
             mUIGraphicMask.ClearGraphicMask();

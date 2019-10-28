@@ -27,6 +27,20 @@ public class UIGuideValidate : EventTrigger
     public int guideId { get; private set; }
     #endregion
 
+    #region type 类型
+    /// <summary>
+    /// 类型
+    /// </summary>
+    public int type { get; private set; }
+    #endregion
+
+    #region index 索引
+    /// <summary>
+    /// 索引
+    /// </summary>
+    public int index { get; private set; }
+    #endregion
+
     #region eventTriggerType 触发事件
     /// <summary>
     /// 触发事件
@@ -41,21 +55,20 @@ public class UIGuideValidate : EventTrigger
     public BaseEventData eventTriggerData { get; private set; }
     #endregion
 
-    #region index 索引
-    public int index { get; private set; }
-    #endregion
-
     #region SetData  设置数据
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="_guideId">引导Id</param>
+    /// <param name="_type">类型</param>
+    /// <param name="_index">索引</param>
     /// <param name="_eventTriggerType">触发验证的事件</param>
-    public void SetData(int _guideId, EventTriggerType _eventTriggerType,int _index)
+    public void SetData(int _guideId, int _type, int _index, EventTriggerType _eventTriggerType)
     {
         guideId = _guideId;
-        eventTriggerType = _eventTriggerType;
+        type = _type;
         index = _index;
+        eventTriggerType = _eventTriggerType;        
     }
     #endregion
 
