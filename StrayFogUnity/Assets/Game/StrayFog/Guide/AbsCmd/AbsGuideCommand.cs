@@ -208,7 +208,7 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatchCommand, IGuideComma
     /// <param name="_parameters">参数</param>
     /// <returns>true:满足,false:不满足</returns>
     public bool isMatchCondition(params object[] _parameters)
-    {
+    {        
         return base.isMatchCondition(this, this, _parameters);
     }
     #endregion

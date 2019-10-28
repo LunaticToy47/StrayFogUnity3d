@@ -99,6 +99,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
                         mGuideCommandSender = _sender;
                         mControl = w.FindCtrlByNameIsSelfOrParent<UIBehaviour>(controlName);
                         mGraphicMask = new UIGuideGraphic((int)_sender.status, w.FindCtrlByNameIsSelfOrParent<Graphic>(graphicMask), referObjectIndex);
+                        mGraphicMask.SetStyleData(styleConfig);
                         break;
                     }
                 }
@@ -148,7 +149,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
             StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(StrayFogGamePools.guideManager.guideWindowId, (wins, pars) =>
             {
                 _sender.guideWindow = wins[0];
-                _sender.guideWindow.AddTrigger(mGraphicMask);
+                _sender.guideWindow.AddGraphicMask(mGraphicMask);
             });
         }
         base.OnExcute(_sender, _sponsor, _parameters);
@@ -159,7 +160,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// </summary>
     protected override void OnRecycle()
     {
-        mGuideCommandSender.guideWindow.RemoveTrigger(mGraphicMask);
+        mGuideCommandSender.guideWindow.RemoveGraphicMask(mGraphicMask);
         mGraphicMask = null;
         mGuideCommandSender = null;
         base.OnRecycle();

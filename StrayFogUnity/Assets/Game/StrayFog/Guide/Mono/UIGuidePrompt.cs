@@ -8,6 +8,10 @@ using UnityEngine.UI;
 public class UIGuidePrompt : AbsMonoBehaviour
 {
     /// <summary>
+    /// 引导遮罩
+    /// </summary>
+    public AbsUIGuideGraphic guideGraphic { get; private set; }
+    /// <summary>
     /// 提示框
     /// </summary>
     Image mImgFramePrompt;
@@ -34,28 +38,35 @@ public class UIGuidePrompt : AbsMonoBehaviour
         mTxtGuideContent = mImgDescBg.transform.GetChild(0).GetComponent<Text>();
     }
 
-    private void Update()
+    /// <summary>
+    /// 应用遮罩
+    /// </summary>
+    /// <param name="_graphic">遮罩</param>
+    public void ApplyGraphic(AbsUIGuideGraphic _graphic)
     {
-        if (Input.GetKeyUp(KeyCode.A))
+        if (_graphic != null)
         {
-            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.MiddleLeft);
-            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.MiddleLeft, 300);
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
+            guideGraphic = _graphic;
+            mImgFramePrompt.CopyRectTransformFrom(_graphic.graphic);
+            XLS_Config_Table_UserGuideStyle style = (XLS_Config_Table_UserGuideStyle)_graphic.styleData;
+            SetArrowEdge(mImgArrow.rectTransform, style.enArrowAnchor);
+            SetDescEdge(mImgDescBg.rectTransform, style.enArrowAnchor, 300);
+        }        
+    }
+
+    /// <summary>
+    /// 是否是指定的遮罩
+    /// </summary>
+    /// <param name="_graphicMask">遮罩</param>
+    /// <returns>true:是,false:否</returns>
+    public bool IsGraphic(AbsUIGuideGraphic _graphicMask)
+    {
+        bool result = false;
+        if (guideGraphic != null && _graphicMask != null)
         {
-            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.MiddleRight);
-            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.MiddleRight, 300);
+            result = guideGraphic.Equals(_graphicMask);
         }
-        else if (Input.GetKeyUp(KeyCode.W))
-        {
-            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.UpperCenter);
-            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.UpperCenter, 100);
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.LowerCenter);
-            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.LowerCenter, 100);
-        }
+        return result;
     }
 
     /// <summary>
@@ -131,4 +142,33 @@ public class UIGuidePrompt : AbsMonoBehaviour
         }
         _rectTransform.ForceRebuildLayoutImmediate();
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Update
+    /// </summary>
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.MiddleLeft);
+            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.MiddleLeft, 300);
+        }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.MiddleRight);
+            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.MiddleRight, 300);
+        }
+        else if (Input.GetKeyUp(KeyCode.W))
+        {
+            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.UpperCenter);
+            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.UpperCenter, 100);
+        }
+        else if (Input.GetKeyUp(KeyCode.S))
+        {
+            SetArrowEdge(mImgArrow.rectTransform, TextAnchor.LowerCenter);
+            SetDescEdge(mImgDescBg.rectTransform, TextAnchor.LowerCenter, 100);
+        }
+    }
+#endif
 }

@@ -160,7 +160,7 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     /// </summary>
     protected virtual void OnResolveCommand() { }
     #endregion
-
+    
     #region ResolveReferObject 解析参考对象
     /// <summary>
     /// 解析参考对象
@@ -207,7 +207,7 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
                 isMatch &= _sender.LogicalOperator(isMatch, m.isMatchCondition(_sender, this, _parameters), m.conditionOperator);
                 matchs.Add(m);
             }
-        }
+        }        
         isMatch &= OnIsMatchCondition(_sender, matchs, _sponsor, _parameters);
         return isMatch;
     }

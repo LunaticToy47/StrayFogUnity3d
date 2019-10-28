@@ -66,10 +66,7 @@ public static class UIExtendEngine
     /// <returns>UI坐标</returns>
     public static Vector2 WorldToLocalPointInRectangle(this Transform _worldGo, Camera _worldCamera, Canvas _uiCanvas, Camera _uiCamera)
     {
-        Vector2 mUIPoint = RectTransformUtility.WorldToScreenPoint(_worldCamera, _worldGo.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            (RectTransform)_uiCanvas.transform, mUIPoint, _uiCamera, out mUIPoint);
-        return mUIPoint;
+        return WorldToLocalPointInRectangle(_worldGo.position, _worldCamera, _uiCanvas, _uiCamera);
     }
 
     /// <summary>
@@ -86,6 +83,19 @@ public static class UIExtendEngine
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             (RectTransform)_uiCanvas.transform, mUIPoint, _uiCamera, out mUIPoint);
         return mUIPoint;
+    }
+
+    /// <summary>
+    /// 将指定Graphic定位到参考Graphic位置
+    /// </summary>
+    /// <param name="_self">指定Graphic</param>
+    /// <param name="_refer">参考Graphic</param>
+    public static void LocalPointToRefer(this Graphic _self, Graphic _refer)
+    {
+        Transform parent = _self.transform.parent;
+        _self.transform.SetParent(_refer.transform.parent, false);
+        _self.rectTransform.position = _refer.rectTransform.position;
+        _self.transform.SetParent(parent);
     }
     #endregion
 
@@ -344,6 +354,21 @@ public static class UIExtendEngine
     public static Vector2 GetTextAnchorPivot(this TextAnchor _anchor)
     {
         return Text.GetTextAnchorPivot(_anchor);
+    }
+    #endregion
+
+    #region CopyFrom 从指定的RectTransform复制值
+    /// <summary>
+    /// 从指定的RectTransform复制值
+    /// </summary>
+    /// <param name="_self">要复制值的RectTransform</param>
+    /// <param name="_from">复制源RectTransform</param>
+    public static void CopyRectTransformFrom(this Graphic _self, Graphic _from)
+    {
+        _self.rectTransform.sizeDelta = _from.rectTransform.sizeDelta;
+        _self.rectTransform.localEulerAngles = _from.rectTransform.localEulerAngles;
+        _self.rectTransform.localScale = _from.rectTransform.localScale;
+        _self.LocalPointToRefer(_from);
     }
     #endregion
 }

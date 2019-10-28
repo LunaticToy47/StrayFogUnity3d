@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 /// <summary>
 /// UI引导Graphic抽象
 /// </summary>
@@ -18,6 +17,10 @@ public abstract class AbsUIGuideGraphic
     /// </summary>
     public int index { get; private set; }
     /// <summary>
+    /// 样式数据
+    /// </summary>
+    public object styleData { get; private set; }
+    /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="_type">Graphic类型</param>
@@ -29,4 +32,19 @@ public abstract class AbsUIGuideGraphic
         graphic = _graphic;
         index = _index;
     }
+
+    /// <summary>
+    /// 设置样式数据
+    /// </summary>
+    /// <param name="_styleData">样式数据</param>
+    public void SetStyleData(object _styleData)
+    {
+        styleData = _styleData;
+        OnSetStyleData(_styleData);
+    }
+    /// <summary>
+    /// 设置样式数据
+    /// </summary>
+    /// <param name="_styleData">样式数据</param>
+    protected virtual void OnSetStyleData(object _styleData) { }
 }

@@ -6,7 +6,7 @@ public interface IGuideResolveConfigCommand
     /// <summary>
     /// 条件索引
     /// </summary>
-    int conditionIndex { get;}
+    int conditionIndex { get; }
     /// <summary>
     /// 参考对象索引
     /// </summary>
@@ -45,11 +45,11 @@ public interface IGuideResolveConfigCommand
     /// <param name="_conditionIndex">条件索引</param>
     /// <param name="_resolveStatus">解析状态</param>
     /// <param name="_status">引导状态</param>
-    void ResolveConfig(XLS_Config_Table_UserGuideConfig _guideConfig, 
-        XLS_Config_Table_UserGuideReferObject _referObjectConfig, 
+    void ResolveConfig(XLS_Config_Table_UserGuideConfig _guideConfig,
+        XLS_Config_Table_UserGuideReferObject _referObjectConfig,
         XLS_Config_Table_UserGuideStyle _styleConfig,
         int _conditionIndex, enGuideStatus _resolveStatus, enGuideStatus _status);
-       
+
     /// <summary>
     /// 解析参考对象类别
     /// </summary>

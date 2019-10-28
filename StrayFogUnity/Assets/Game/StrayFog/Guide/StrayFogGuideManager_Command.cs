@@ -51,12 +51,14 @@ public partial class StrayFogGuideManager
         mWaitGuideCommandMaping.Remove(cmd.guideConfig.id);
         mTriggerGuideCommand = null;
         OnCheckGuideForWindow();
-        cmd.Recycle();
-        if (mTriggerGuideCommand != null)
-        {//如果有下一个引导，则对引导窗口的显示进行调整
+
+        if (mWaitGuideCommandMaping.ContainsKey(cmd.guideConfig.nextId))
+        {
 
         }
-        else
+
+        cmd.Recycle();
+        if (mTriggerGuideCommand == null)
         {
             _cmd.guideWindow.CloseWindow();
         }

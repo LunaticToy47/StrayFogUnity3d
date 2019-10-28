@@ -31,14 +31,14 @@ public partial class XLS_Config_Table_UserGuideStyle: AbsStrayFogSQLiteEntity
 	public string desc { get; private set; }	
 		
 	/// <summary>
-	/// 箭头位置[索引与触发参考对象组索引相同]
-	///0：箭头在框左侧
-	///1：箭头在框右侧
-	///2：箭头在框上侧
-	///3：箭头在框下侧
+	/// 箭头锚点[索引与触发参考对象组索引相同]
+	///3：箭头在框左侧
+	///5：箭头在框右侧
+	///1：箭头在框上侧
+	///7：箭头在框下侧
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.OneDimensionArray,3,"arrowEdge","","@arrowEdge3",false,false)]	
-	public int[] arrowEdge { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,3,"arrowAnchor","","@arrowAnchor3",false,false)]	
+	public int arrowAnchor { get; private set; }	
 		
 	/// <summary>
 	/// 引导文本描述

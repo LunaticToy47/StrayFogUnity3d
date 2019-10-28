@@ -73,22 +73,46 @@ public partial class StrayFogGuideManager
                 {
                     foreach (AbsGuideCommand cmd in mWaitGuideCommandMaping.Values)
                     {
-                        if ((cmd.referType & enUserGuideReferObject_ReferType.Refer2D) == enUserGuideReferObject_ReferType.Refer2D
-                            && cmd.isMatchCondition(mCacheWindows.ToArray()))
-                        {
-                            mTriggerGuideCommand = cmd;
-                            mTriggerGuideCommand.Excute();
+                        if (OnIsMatchCondition(cmd, enUserGuideReferObject_ReferType.Refer2D))
+                        {                           
+                            if (cmd.isMatchCondition(mCacheWindows.ToArray()))
+                            {
+                                mTriggerGuideCommand = cmd;
+                                mTriggerGuideCommand.Excute();
+                            }                            
                             break;
                         }
                     }
                 }
-                else if ((mTriggerGuideCommand.referType & enUserGuideReferObject_ReferType.Refer2D) == enUserGuideReferObject_ReferType.Refer2D
-                            && mTriggerGuideCommand.isMatchCondition(mCacheWindows.ToArray()))
-                {
-                    mTriggerGuideCommand.Excute();
+                else if (OnIsMatchCondition(mTriggerGuideCommand, enUserGuideReferObject_ReferType.Refer2D))
+                {                    
+                    if (mTriggerGuideCommand.isMatchCondition(mCacheWindows.ToArray()))
+                    {
+                        mTriggerGuideCommand.Excute();
+                    }                    
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 是否满足条件
+    /// </summary>
+    /// <param name="_cmd">命令</param>
+    /// <param name="_referType">对象参考类型</param>
+    /// <returns>true:满足,false:不满足</returns>
+    bool OnIsMatchCondition(AbsGuideCommand _cmd, enUserGuideReferObject_ReferType _referType)
+    {
+        bool result = _cmd != null;
+        if (result)
+        {
+            result &= (_cmd.referType & _referType) == _referType;
+            if (_cmd.guideConfig.levelId > 0)
+            {
+                result &= OnIsLevel(_cmd.guideConfig.levelId);
+            }
+        }        
+        return result;
     }
     #endregion    
 }

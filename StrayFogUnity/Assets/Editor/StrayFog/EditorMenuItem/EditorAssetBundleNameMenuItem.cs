@@ -48,14 +48,36 @@ static class EditorAssetBundleNameMenuItem
     }
     #endregion
 
+    #region  Query AssetBundle AssetDiskMaping Data
+    const string mcQueryAssetBundleAssetDiskMapingData = "Query AssetBundle AssetDiskMaping Data";
+    /// <summary>
+    /// 查询指定资源文件的磁盘映射值
+    /// </summary>
+    [MenuItem(mcMenu + mcQueryAssetBundleAssetDiskMapingData, false, mcPriority + 2)]
+    [MenuItem(mcAssetMenu + mcQueryAssetBundleAssetDiskMapingData, false, mcPriority + 2)]
+    [MenuItem(mcHierarchy + mcQueryAssetBundleAssetDiskMapingData, false, mcPriority + 2)]
+    public static void EditorDevelopMenuItem_QueryAssetBundleAssetDiskMapingDataWindow()
+    {
+        if (Selection.activeObject != null)
+        {
+            EditorSelectionAssetDiskMaping asset = new EditorSelectionAssetDiskMaping(AssetDatabase.GetAssetPath(Selection.activeObject));
+            asset.Resolve();
+            string log = string.Format("{0}=>fileId:{1} folderId:{2}", Selection.activeObject, asset.fileId, asset.folderId);
+            EditorStrayFogApplication.CopyToClipboard(log);
+            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcQueryAssetBundleAssetDiskMapingData);
+            UnityEngine.Debug.Log(log);
+        }
+    }
+    #endregion
+
     #region Clear All AssetBundleName
     const string mcClearAllAssetBundleName = "Clear All AssetBundleName";
     /// <summary>
     /// 清除所有AssetBundleName
     /// </summary>
-    [MenuItem(mcMenu + mcClearAllAssetBundleName, false, mcPriority + 2)]
-    [MenuItem(mcAssetMenu + mcClearAllAssetBundleName, false, mcPriority + 2)]
-    [MenuItem(mcHierarchy + mcClearAllAssetBundleName, false, mcPriority + 2)]
+    [MenuItem(mcMenu + mcClearAllAssetBundleName, false, mcPriority + 3)]
+    [MenuItem(mcAssetMenu + mcClearAllAssetBundleName, false, mcPriority + 3)]
+    [MenuItem(mcHierarchy + mcClearAllAssetBundleName, false, mcPriority + 3)]
     public static void EditorDevelopMenuItem_ClearAllAssetBundleNameWindow()
     {
         if (EditorStrayFogApplication.IsExecuteMethodInCmd() || EditorUtility.DisplayDialog(mcClearAllAssetBundleName, "Are you sure 【"+ mcClearAllAssetBundleName + "】?", "Yes", "No"))
