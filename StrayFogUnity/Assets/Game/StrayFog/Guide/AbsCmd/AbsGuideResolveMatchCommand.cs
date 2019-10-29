@@ -296,28 +296,4 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
         Recycle();
     }
     #endregion
-
-    #region OnSegmentationGroup 将源字符串按组分隔
-    /// <summary>
-    /// 将源字符串按组分隔
-    /// </summary>
-    /// <param name="_source">源字符</param>
-    /// <returns>组字符</returns>
-    protected string[] OnSegmentationGroup(string _source)
-    {
-        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(new string[1] { "|" }, StringSplitOptions.RemoveEmptyEntries);
-    }
-    #endregion
-
-    #region OnSegmentationValue 将源字符串按值分隔
-    /// <summary>
-    /// 将源字符串按值分隔
-    /// </summary>
-    /// <param name="_source">源字符</param>
-    /// <returns>值字符</returns>
-    protected string[] OnSegmentationValue(string _source)
-    {
-        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(new string[1] { "_" }, StringSplitOptions.RemoveEmptyEntries);
-    }
-    #endregion
 }

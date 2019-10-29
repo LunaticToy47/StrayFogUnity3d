@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -170,4 +172,45 @@ public static class StringExtend
         return _srcString.Replace("\t", "").Replace(" ", "").Replace(" ", "").Replace("\n", "").Replace("\r", "");
     }
     #endregion
+
+    #region Split 将源字符串按组分隔
+    /// <summary>
+    /// 分隔符映射
+    /// </summary>
+    static Dictionary<int, string[]> mSplitSymbolMaping = typeof(enSplitSymbol).ValueToAttributeSpecifyValue<AliasTooltipAttribute,string[]>((attr)=> {
+        return new string[1] { attr.alias };
+    });
+
+    /// <summary>
+    /// 将源字符串按组分隔
+    /// </summary>
+    /// <param name="_source">源字符</param>
+    /// <returns>组字符</returns>
+    public static string[] Split(this string _source, enSplitSymbol _symbol)
+    {
+        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(mSplitSymbolMaping[(int)_symbol], StringSplitOptions.RemoveEmptyEntries);
+    }
+    #endregion
+}
+
+/// <summary>
+/// 分隔符
+/// </summary>
+public enum enSplitSymbol
+{
+    /// <summary>
+    /// 逗号
+    /// </summary>
+    [AliasTooltip(",")]
+    Comma,
+    /// <summary>
+    /// 下划线
+    /// </summary>
+    [AliasTooltip("_")]
+    Underline,
+    /// <summary>
+    /// | 线
+    /// </summary>
+    [AliasTooltip("|")]
+    VerticalBar
 }

@@ -51,7 +51,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
         int _conditionIndex, enGuideStatus _resolveStatus, enGuideStatus _status)
     {
         base.OnResolveConfig(_guideConfig, _referObjectConfig, _styleConfig, _conditionIndex, _resolveStatus, _status);
-        string[] values = OnSegmentationGroup(_referObjectConfig.refer2DValue);
+        string[] values = _referObjectConfig.refer2DValue.Split(enSplitSymbol.VerticalBar);
         windowName = values[0];
         controlName = graphicMask = values[1];
         if (values.Length >= 3)
