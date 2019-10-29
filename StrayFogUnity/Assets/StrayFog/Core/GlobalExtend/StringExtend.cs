@@ -173,7 +173,7 @@ public static class StringExtend
     }
     #endregion
 
-    #region Split 将源字符串按组分隔
+    #region SegmentationGroup 将源字符串按组分隔
     /// <summary>
     /// 分隔符映射
     /// </summary>
@@ -185,30 +185,38 @@ public static class StringExtend
     /// 将源字符串按组分隔
     /// </summary>
     /// <param name="_source">源字符</param>
+    /// <returns>组字符</returns>
+    public static string[] Split(this string _source, enSplitSymbol _symbol)
+    {
+        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(mSplitSymbolMaping[(int)_symbol], StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    /// <summary>
+    /// 将源字符串按组分隔
+    /// </summary>
+    /// <param name="_source">源字符</param>
     /// <param name="_symbol">分割符</param>
     /// <returns>组字符</returns>
     public static T[] Split<T>(this string _source, enSplitSymbol _symbol)
     {
         Type t = typeof(T);
         T v = default;
-        bool isMatch = t.IsValueType || (v is string);
-        if (isMatch)
+        if (t.IsValueType)
         {
-            throw new InvalidCastException("T must be ValueType or String");
+            throw new InvalidCastException("T must be ValueType");
         }
+        string[] values = _source.Split(_symbol);
         Func<string, T> fun = (arg) => { return (T)Convert.ChangeType(arg, t); };
         if (v is bool)
         {
             fun = (arg) => { return (T)Convert.ChangeType(Convert.ToByte(arg), t); };
         }
         T[] result = new T[0];
-        string[] values = string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(mSplitSymbolMaping[(int)_symbol], StringSplitOptions.RemoveEmptyEntries);
         if (values != null)
         {
             result = new T[values.Length];
             for (int i = 0; i < values.Length; i++)
             {
-
                 result[i] = fun(values[i]);
             }
         }
