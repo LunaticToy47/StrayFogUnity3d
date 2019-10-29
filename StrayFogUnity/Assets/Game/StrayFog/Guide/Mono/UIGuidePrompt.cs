@@ -49,8 +49,9 @@ public class UIGuidePrompt : AbsMonoBehaviour
             guideGraphic = _graphic;
             mImgFramePrompt.CopyRectTransformFrom(_graphic.graphic);
             XLS_Config_Table_UserGuideStyle style = (XLS_Config_Table_UserGuideStyle)_graphic.styleData;
+            mTxtGuideContent.text = style.content;
             SetArrowEdge(mImgArrow.rectTransform, style.enArrowAnchor);
-            SetDescEdge(mImgDescBg.rectTransform, style.enArrowAnchor, 300);
+            SetDescEdge(mImgDescBg.rectTransform, style.enArrowAnchor, style.contentWidth);
         }        
     }
 

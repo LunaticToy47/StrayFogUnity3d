@@ -60,3 +60,13 @@ MonoBehaviour:
     dataType: 14
     arrayDimension: 0
     isIngore: 0
+  - columnName: contentWidth
+    desc: "\u5F15\u5BFC\u6587\u672C\u5BBD\u5EA6"
+    xlsColumnValueIndex: 5
+    isPK: 0
+    isNull: 0
+    sqliteColumnName: contentWidth
+    sqliteColumnValue: 
+    dataType: 6
+    arrayDimension: 0
+    isIngore: 0

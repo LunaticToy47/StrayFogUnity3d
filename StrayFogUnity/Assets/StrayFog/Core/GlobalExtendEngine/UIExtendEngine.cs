@@ -90,12 +90,17 @@ public static class UIExtendEngine
     /// </summary>
     /// <param name="_self">指定Graphic</param>
     /// <param name="_refer">参考Graphic</param>
-    public static void LocalPointToRefer(this Graphic _self, Graphic _refer)
+    /// <returns>UI坐标</returns>
+    public static Vector2 LocalPointToRefer(this Graphic _self, Graphic _refer)
     {
-        Transform parent = _self.transform.parent;
-        _self.transform.SetParent(_refer.transform.parent, false);
-        _self.rectTransform.position = _refer.rectTransform.position;
-        _self.transform.SetParent(parent);
+        Vector2 mUIPoint = RectTransformUtility.WorldToScreenPoint(_refer.canvas.worldCamera, _refer.transform.position);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _self.transform.parent as RectTransform, mUIPoint, _self.canvas.worldCamera, out mUIPoint);
+        Vector2 pivot = _self.rectTransform.pivot - _refer.rectTransform.pivot;
+        mUIPoint.x += pivot.x * _self.rectTransform.rect.width * _self.rectTransform.localScale.x;
+        mUIPoint.y += pivot.y * _self.rectTransform.rect.height * _self.rectTransform.localScale.y;        
+        return mUIPoint;
+        
     }
     #endregion
 
@@ -367,8 +372,8 @@ public static class UIExtendEngine
     {
         _self.rectTransform.sizeDelta = _from.rectTransform.sizeDelta;
         _self.rectTransform.localEulerAngles = _from.rectTransform.localEulerAngles;
-        _self.rectTransform.localScale = _from.rectTransform.localScale;
-        _self.LocalPointToRefer(_from);
+        _self.rectTransform.localScale = _from.rectTransform.localScale;        
+        _self.rectTransform.anchoredPosition = _self.LocalPointToRefer(_from);
     }
     #endregion
 }

@@ -98,8 +98,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
                     {
                         mGuideCommandSender = _sender;
                         mControl = w.FindCtrlByNameIsSelfOrParent<UIBehaviour>(controlName);
-                        mGraphicMask = new UIGuideGraphic((int)_sender.status, w.FindCtrlByNameIsSelfOrParent<Graphic>(graphicMask), referObjectIndex);
-                        mGraphicMask.SetStyleData(styleConfig);
+                        mGraphicMask = new UIGuideGraphic((int)_sender.status, w.FindCtrlByNameIsSelfOrParent<Graphic>(graphicMask), referObjectIndex);                        
                         break;
                     }
                 }
@@ -110,7 +109,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
             && mGraphicMask.graphic.gameObject.activeSelf == mGraphicMaskActiveSelf;
 
         if (result)
-        {
+        {            
             UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(mControl, (int)_sender.status, referObjectIndex);
             validate.OnEventValidate += Validate_OnEventValidate;
         }
@@ -146,6 +145,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     {        
         if (isMatch)
         {
+            mGraphicMask.SetStyleData(styleConfig);
             StrayFogGamePools.uiWindowManager.OpenWindow<AbsUIGuideWindowView>(StrayFogGamePools.guideManager.guideWindowId, (wins, pars) =>
             {
                 _sender.guideWindow = wins[0];

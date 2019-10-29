@@ -45,6 +45,12 @@ public partial class XLS_Config_Table_UserGuideStyle: AbsStrayFogSQLiteEntity
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,4,"content","","@content4",false,false)]	
 	public string content { get; private set; }	
+		
+	/// <summary>
+	/// 引导文本宽度
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,5,"contentWidth","","@contentWidth5",false,false)]	
+	public int contentWidth { get; private set; }	
 	
 	#endregion
 

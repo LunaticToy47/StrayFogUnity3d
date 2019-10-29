@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 114541622340580350}
   - component: {fileID: 114885706927006040}
   m_Layer: 5
-  m_Name: btn4
+  m_Name: btnGuideButtom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,11 +33,11 @@ RectTransform:
   m_Father: {fileID: 224969571189749600}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 60, y: 62}
-  m_Pivot: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &222667011175820224
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 114163927162652592}
   - component: {fileID: 114270395103646450}
   m_Layer: 5
-  m_Name: btn2
+  m_Name: btnGuideTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -527,11 +527,11 @@ RectTransform:
   m_Father: {fileID: 224969571189749600}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 100, y: 100}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 60, y: 62}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &222519171365922258
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -627,7 +627,7 @@ GameObject:
   - component: {fileID: 114482536456811894}
   - component: {fileID: 114297052050595770}
   m_Layer: 5
-  m_Name: btn3
+  m_Name: btnGuideLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -649,7 +649,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -100, y: 100}
   m_SizeDelta: {x: 60, y: 62}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &222002993441233318
@@ -747,7 +747,7 @@ GameObject:
   - component: {fileID: 114732859388460494}
   - component: {fileID: 1891701952857919}
   m_Layer: 5
-  m_Name: btn1
+  m_Name: btnGuideRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
