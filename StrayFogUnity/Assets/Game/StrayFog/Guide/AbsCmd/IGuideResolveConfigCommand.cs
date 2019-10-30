@@ -17,6 +17,11 @@ public interface IGuideResolveConfigCommand
     int styleIndex { get; }
 
     /// <summary>
+    /// 命令解析状态
+    /// </summary>
+    enGuideStatus resolveStatus { get; }
+
+    /// <summary>
     /// 参考对象类型
     /// </summary>
     enUserGuideReferObject_ReferType referType { get; }
@@ -34,7 +39,7 @@ public interface IGuideResolveConfigCommand
     /// <summary>
     /// 样式配置
     /// </summary>
-    XLS_Config_Table_UserGuideStyle styleConfig { get; }
+    XLS_Config_Table_UserGuideStyle styleConfig { get; }    
 
     /// <summary>
     /// 解析配置

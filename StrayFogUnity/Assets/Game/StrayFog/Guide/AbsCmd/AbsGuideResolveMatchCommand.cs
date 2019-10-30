@@ -40,6 +40,13 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     public enUserGuideConfig_ConditionOperator conditionOperator { get; private set; }
     #endregion
 
+    #region resolveStatus 命令解析状态
+    /// <summary>
+    /// 命令解析状态
+    /// </summary>
+    public enGuideStatus resolveStatus { get; private set; }
+    #endregion
+
     #region referType 参考对象类型
     /// <summary>
     /// 参考对象类型
@@ -78,6 +85,7 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     void OnResolveOperator(XLS_Config_Table_UserGuideConfig _config, int _conditionTndex, enGuideStatus _resolveStatus)
     {
         conditionOperator = enUserGuideConfig_ConditionOperator.And;
+        resolveStatus = _resolveStatus;
         if (_conditionTndex > 0)
         {
             switch (_resolveStatus)
@@ -209,6 +217,10 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
             }
         }        
         isMatch &= OnIsMatchCondition(_sender, matchs, _sponsor, _parameters);
+        if (_sender != _sponsor)
+        {
+            isMatch &= resolveStatus == _sender.status;
+        }        
         return isMatch;
     }
 

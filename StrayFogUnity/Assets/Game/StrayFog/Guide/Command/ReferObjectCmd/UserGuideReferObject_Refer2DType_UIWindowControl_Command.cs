@@ -99,18 +99,17 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
                         mGuideCommandSender = _sender;
                         mControl = w.FindCtrlByNameIsSelfOrParent<UIBehaviour>(controlName);
                         mGraphicMask = new UIGuideGraphic((int)_sender.status, w.FindCtrlByNameIsSelfOrParent<Graphic>(graphicMask), referObjectIndex);
-                        result = mGraphicMask.graphic.gameObject.activeInHierarchy == mGraphicMaskActiveSelf;
-                        if (result)
+                        if (mControl != null)
                         {
                             break;
-                        }                        
+                        }
                     }
                 }
             }
         }
 
-        result &= mControl != null && mGraphicMask != null && mGraphicMask.graphic != null;
-
+        result &= mControl != null && mGraphicMask != null && mGraphicMask.graphic != null
+            && mGraphicMask.graphic.gameObject.activeInHierarchy == mGraphicMaskActiveSelf;
         if (result)
         {            
             UIGuideValidate validate = _sender.CreateValidateMono<UIGuideValidate>(mControl, (int)_sender.status, referObjectIndex);
