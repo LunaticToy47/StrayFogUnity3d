@@ -79,8 +79,8 @@ public partial class StrayFogGuideManager
                             {
                                 mTriggerGuideCommand = cmd;
                                 mTriggerGuideCommand.Excute();
-                            }                            
-                            break;
+                                break;
+                            }
                         }
                     }
                 }

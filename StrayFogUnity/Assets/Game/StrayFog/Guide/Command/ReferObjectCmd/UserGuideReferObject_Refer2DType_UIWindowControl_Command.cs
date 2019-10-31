@@ -78,15 +78,19 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
 
     /// <summary>
     /// 是否满足条件
-    /// </summary>
-    /// <param name="_parameters">参数</param>
+    /// </summary>    
     /// <param name="_conditions">匹配组</param>
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">条件匹配发起者</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">当前状态</param>
+    /// <param name="_parameters">参数</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatchCommand> _conditions, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
+    protected override bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatchCommand> _conditions, 
+        IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status,
+        params object[] _parameters)
     {
-        bool result = base.OnIsMatchCondition(_sender, _conditions, _sponsor, _parameters);
+        bool result = base.OnIsMatchCondition(_sender, _conditions, _sponsor, _resolveStatus, _status, _parameters);
         if (_parameters != null && mGraphicMask == null)
         {
             foreach (object p in _parameters)
@@ -142,9 +146,11 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
     /// </summary>
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">执行发起者</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">当前状态</param>
     /// <param name="_parameters">参数</param>
-    protected override void OnExcute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
-    {        
+    protected override void OnExcute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status, params object[] _parameters)
+    {
         if (isMatch)
         {
             mGraphicMask.SetStyleData(styleConfig);
@@ -154,7 +160,7 @@ public class UserGuideReferObject_Refer2DType_UIWindowControl_Command : AbsGuide
                 _sender.guideWindow.AddGraphicMask(mGraphicMask);
             });
         }
-        base.OnExcute(_sender, _sponsor, _parameters);
+        base.OnExcute(_sender, _sponsor, _resolveStatus, _status, _parameters);
     }
 
     /// <summary>

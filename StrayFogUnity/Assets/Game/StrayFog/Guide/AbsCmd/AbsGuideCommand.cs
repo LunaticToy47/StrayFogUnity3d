@@ -144,11 +144,13 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatchCommand, IGuideComma
     /// </summary>
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">执行发起者</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">当前状态</param>
     /// <param name="_parameters">参数</param>
-    protected override void OnExcute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
+    protected override void OnExcute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status, params object[] _parameters)
     {
-        base.OnExcute(_sender, _sponsor, _parameters);
-        switch (_sender.status)
+        base.OnExcute(_sender, _sponsor, _resolveStatus, _status, _parameters);
+        switch (_resolveStatus)
         {
             case enGuideStatus.WaitTrigger:
                 status = enGuideStatus.WaitValidate;
@@ -157,7 +159,17 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatchCommand, IGuideComma
                 status = enGuideStatus.Finish;
                 break;
         }
+        if (status == enGuideStatus.Finish)
+        {
+            OnFinishGuide?.Invoke(this);
+        }
     }
+
+    /// <summary>
+    /// 执行后解析状态
+    /// </summary>
+    /// <returns>解析状态</returns>
+    protected override enGuideStatus OnAfterExcuteResolveStatus(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status, params object[] _parameters) { return status; }
     #endregion
 
     #region OnRecycle 回收
@@ -208,8 +220,8 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatchCommand, IGuideComma
     /// <param name="_parameters">参数</param>
     /// <returns>true:满足,false:不满足</returns>
     public bool isMatchCondition(params object[] _parameters)
-    {        
-        return base.isMatchCondition(this, this, _parameters);
+    {
+        return base.isMatchCondition(this, this, status, status, _parameters);
     }
     #endregion
 
@@ -220,11 +232,7 @@ public abstract class AbsGuideCommand : AbsGuideResolveMatchCommand, IGuideComma
     /// <param name="_parameters">参数</param>
     public void Excute(params object[] _parameters)
     {
-        base.Excute(this, this, _parameters);
-        if (status == enGuideStatus.Finish)
-        {
-            OnFinishGuide?.Invoke(this);
-        }        
+        base.Excute(this, this, status, status, _parameters);
     }
     #endregion
 }

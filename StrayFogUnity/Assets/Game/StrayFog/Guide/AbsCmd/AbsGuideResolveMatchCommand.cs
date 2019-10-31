@@ -85,7 +85,6 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     void OnResolveOperator(XLS_Config_Table_UserGuideConfig _config, int _conditionTndex, enGuideStatus _resolveStatus)
     {
         conditionOperator = enUserGuideConfig_ConditionOperator.And;
-        resolveStatus = _resolveStatus;
         if (_conditionTndex > 0)
         {
             switch (_resolveStatus)
@@ -127,6 +126,14 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
         referObjectConfig = _referObjectConfig;
         styleConfig = _styleConfig;
         conditionIndex = referObjectIndex = styleIndex = _conditionIndex;
+        if (_conditionIndex >= 0)
+        {
+            resolveStatus = _resolveStatus;
+        }
+        else
+        {
+            resolveStatus = _status;
+        }
         OnResolveOperator(_guideConfig, _conditionIndex, _resolveStatus);
         int statusKey = (int)_resolveStatus;
         if (!mGuideResolveMatchCommandMaping.ContainsKey(statusKey))
@@ -201,26 +208,26 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     /// </summary>
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">条件匹配发起者</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">当前状态</param>
     /// <param name="_parameters">参数</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    public bool isMatchCondition(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
+    public bool isMatchCondition(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status, params object[] _parameters)
     {
-        int key = (int)_sender.status;
+        int key = (int)_resolveStatus;
         isMatch = true;
         List<AbsGuideResolveMatchCommand> matchs = new List<AbsGuideResolveMatchCommand>();
         if (mGuideResolveMatchCommandMaping != null && mGuideResolveMatchCommandMaping.ContainsKey(key))
         {
             foreach (AbsGuideResolveMatchCommand m in mGuideResolveMatchCommandMaping[key])
             {
-                isMatch &= _sender.LogicalOperator(isMatch, m.isMatchCondition(_sender, this, _parameters), m.conditionOperator);
+                isMatch &= _sender.LogicalOperator(isMatch, m.isMatchCondition(_sender, this, _resolveStatus, _status, _parameters), m.conditionOperator);
                 matchs.Add(m);
             }
-        }        
-        isMatch &= OnIsMatchCondition(_sender, matchs, _sponsor, _parameters);
-        if (_sender != _sponsor)
-        {
-            isMatch &= resolveStatus == _sender.status;
-        }        
+        }
+        isMatch &= OnIsMatchCondition(_sender, matchs, _sponsor, _resolveStatus, _status, _parameters);
+        isMatch &= resolveStatus == _resolveStatus;
+        isMatch &= _sender.status == _status;
         return isMatch;
     }
 
@@ -230,9 +237,11 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     /// <param name="_sender">引导命令</param>
     /// <param name="_conditions">条件组</param>
     /// <param name="_sponsor">条件匹配发起者</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">当前状态</param>
     /// <param name="_parameters">参数</param>
     /// <returns>true:满足条件,false:不满足条件</returns>
-    protected virtual bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatchCommand> _conditions, IGuideMatchConditionCommand _sponsor, params object[] _parameters) { return true; }
+    protected virtual bool OnIsMatchCondition(IGuideCommand _sender, List<AbsGuideResolveMatchCommand> _conditions, IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status, params object[] _parameters) { return true; }
     #endregion
 
     #region Excute 执行处理
@@ -241,19 +250,22 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     /// </summary>
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">执行发起者</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">当前状态</param>
     /// <param name="_parameters">参数</param>
-    public void Excute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters)
+    public void Excute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status, params object[] _parameters)
     {
-        int key = (int)_sender.status;
+        int key = (int)(_sender == _sponsor ? _sender.status : resolveStatus);
         bool result = mGuideResolveMatchCommandMaping.ContainsKey(key) ? mGuideResolveMatchCommandMaping[key].Count > 0 : false;
         if (result)
         {
             foreach (AbsGuideResolveMatchCommand m in mGuideResolveMatchCommandMaping[key])
             {
-                m.Excute(_sender, this, _parameters);
+                m.Excute(_sender, this, _resolveStatus, _status, _parameters);
             }
         }
-        OnExcute(_sender, _sponsor, _parameters);
+        OnExcute(_sender, _sponsor, _resolveStatus, _status, _parameters);
+        resolveStatus = OnAfterExcuteResolveStatus(_sender, _sponsor, _resolveStatus, _status, _parameters);
     }
 
     /// <summary>
@@ -261,8 +273,16 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     /// </summary>
     /// <param name="_sender">引导命令</param>
     /// <param name="_sponsor">执行发起者</param>
+    /// <param name="_resolveStatus">解析状态</param>
+    /// <param name="_status">当前状态</param>
     /// <param name="_parameters">参数</param>
-    protected virtual void OnExcute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, params object[] _parameters) { }
+    protected virtual void OnExcute(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status, params object[] _parameters) { }
+
+    /// <summary>
+    /// 执行后解析状态
+    /// </summary>
+    /// <returns>解析状态</returns>
+    protected virtual enGuideStatus OnAfterExcuteResolveStatus(IGuideCommand _sender, IGuideMatchConditionCommand _sponsor, enGuideStatus _resolveStatus, enGuideStatus _status, params object[] _parameters) { return _resolveStatus; }
     #endregion
 
     #region Recycle 回收
