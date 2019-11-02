@@ -86,6 +86,7 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
     {
         Sprite sprite = null;
         Image image = null;
+        Vector4 spriteUVRatio = Vector4.zero;
         Vector4 spriteUV = Vector4.zero;
         Vector4 spriteUVClip = Vector4.zero;
         Vector4 spriteBorder = Vector4.zero;
@@ -132,6 +133,12 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
                 if (sprite != null)
                 {
                     spriteUV = UnityEngine.Sprites.DataUtility.GetOuterUV(sprite);
+                    Texture2D texSrc = sprite.texture;
+                    spriteUVRatio.x = sprite.rect.x / texSrc.width;
+                    spriteUVRatio.y = sprite.rect.y / texSrc.height;
+                    spriteUVRatio.z = sprite.rect.width / texSrc.width;
+                    spriteUVRatio.w = sprite.rect.height / texSrc.height;
+
                     graphicRectSlicedBorder.x = sprite.border.x / _masks[i].graphic.GetPixelAdjustedRect().width * 0.5f;
                     graphicRectSlicedBorder.y = sprite.border.y / _masks[i].graphic.GetPixelAdjustedRect().height * 0.5f;
                     graphicRectSlicedBorder.z = sprite.border.z / _masks[i].graphic.GetPixelAdjustedRect().width * 0.5f;
@@ -155,6 +162,7 @@ public class UIGraphicMaskShader : AbsUIGraphicMask
             material.SetTexture("_GraphicTex" + i, _masks[i].graphic.mainTexture);
             material.SetVector("_GraphicUvSlicedBorderRatio" + i, graphicUvSlicedBorderRatio);
             material.SetVector("_SceneGraphicWh" + i, sceneGraphicWh);
+            material.SetVector("_GraphicUvRatio" + i, spriteUVRatio);
             material.SetVector("_GraphicUvMinMax" + i, spriteUV);
             material.SetVector("_GraphicUvMinMaxClip" + i, spriteUVClip);
             material.SetVector("_GraphicUvMaskForScene" + i, rectUV);
