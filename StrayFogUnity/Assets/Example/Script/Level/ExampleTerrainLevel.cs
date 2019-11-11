@@ -11,13 +11,13 @@ public class ExampleTerrainLevel : AbsLevel
     /// <summary>
     /// Awake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-                StartCoroutine(LoadTerrain());
+                coroutine.StartCoroutine(LoadTerrain());
             });            
         });
     }

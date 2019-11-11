@@ -1,15 +1,4 @@
 ﻿using System;
-    /// <summary>
-    /// 事件处理_复制
-    /// </summary>
-    /// <param name="_self">自身</param>
-    /// <param name="_clone">克隆源</param>
-    public delegate void EventHandlerCopyFrom(IClone _self, IClone _from);
-    /// <summary>
-    /// 事件处理_克隆
-    /// </summary>
-    /// <param name="_clone">克隆源</param>
-    public delegate void EventHandlerClone(IClone _clone);
 /// <summary>
 /// 克隆接口
 /// </summary>
@@ -17,20 +6,26 @@ public interface IClone : ICloneable
 {
     /// <summary>
     /// 克隆之前事件
+    /// Arg1:自身
     /// </summary>
-    event EventHandlerClone OnBeforeClone;
+    event Action<IClone> OnBeforeClone;
     /// <summary>
-    /// 克隆之后事件
+    /// 克隆之后事件  
+    /// Arg1:自身
     /// </summary>
-    event EventHandlerClone OnAfterClone;
+    event Action<IClone> OnAfterClone;
     /// <summary>
     /// CopyFrom之前事件
+    /// Arg1:自身
+    /// Arg2:克隆源
     /// </summary>
-    event EventHandlerCopyFrom OnBeforeCopyFrom;
+    event Action<IClone, IClone> OnBeforeCopyFrom;
     /// <summary>
     /// CopyFrom之后事件
+    /// Arg1:自身
+    /// Arg2:克隆源
     /// </summary>
-    event EventHandlerCopyFrom OnAfterCopyFrom;
+    event Action<IClone, IClone> OnAfterCopyFrom;
     /// <summary>
     /// 复制指定对象
     /// </summary>

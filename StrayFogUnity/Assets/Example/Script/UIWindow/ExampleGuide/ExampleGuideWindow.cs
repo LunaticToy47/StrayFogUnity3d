@@ -35,11 +35,11 @@ public class ExampleGuideWindow : AbsUIGuideWindowView
     /// </summary>
     protected override void OnAfterAwake()
     {
-        GameObject go = transform.Find("ImgFramePrompt").gameObject;        
+        GameObject go = gameObject.transform.Find("ImgFramePrompt").gameObject;        
         mUIGuidePrompt = go.GetComponent<UIGuidePrompt>();
         if (mUIGuidePrompt == null)
         {
-            mUIGuidePrompt = go.AddComponent<UIGuidePrompt>();
+            mUIGuidePrompt = go.AddDynamicComponent<UIGuidePrompt>();
         }        
         mUIGuidePrompt.gameObject.SetActive(false);
         base.OnAfterAwake();
@@ -58,8 +58,9 @@ public class ExampleGuideWindow : AbsUIGuideWindowView
         }
         else
         {
-            prompt = Instantiate(mUIGuidePrompt);
-            prompt.transform.SetParent(mUIGuidePrompt.transform.parent, false);
+            GameObject go = GameObject.Instantiate(mUIGuidePrompt.gameObject);
+            go.AddDynamicComponent<UIGuidePrompt>();
+            prompt.gameObject.transform.SetParent(mUIGuidePrompt.gameObject.transform.parent, false);
         }
         prompt.gameObject.SetActive(true);
         prompt.ApplyGraphic(_graphicMask);

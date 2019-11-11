@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 /// <summary>
 /// 抽象MonoBehaviour【ISynchronize接口】
 /// </summary>
@@ -8,20 +9,20 @@ public abstract partial class AbsMonoBehaviour : ISynchronize
     /// <summary>
     /// 导出同步之前事件处理
     /// </summary>
-    public event EventHandlerExportSynchronize OnBeforeExportSynchronize;
+    public event Action<ISynchronize, byte[]> OnBeforeExportSynchronize;
     /// <summary>
     /// 导出同步之后事件处理
     /// </summary>
-    public event EventHandlerExportSynchronize OnAfterExportSynchronize;
+    public event Action<ISynchronize, byte[]> OnAfterExportSynchronize;
 
     /// <summary>
     /// 导入同步之前事件处理
     /// </summary>
-    public event EventHandlerImportSynchronize OnBeforeImportSynchronize;
+    public event Action<ISynchronize, byte[], long> OnBeforeImportSynchronize;
     /// <summary>
     /// 导入同步之后事件处理
     /// </summary>
-    public event EventHandlerImportSynchronize OnAfterImportSynchronize;
+    public event Action<ISynchronize, byte[], long> OnAfterImportSynchronize;
 
     /// <summary>
     /// 空同步数据

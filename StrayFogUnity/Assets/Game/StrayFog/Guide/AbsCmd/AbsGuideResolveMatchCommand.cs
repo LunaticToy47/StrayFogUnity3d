@@ -289,11 +289,11 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     /// <summary>
     /// 回收之前事件
     /// </summary>
-    public event EventHandlerRecycle OnBeforeRecycle;
+    public event Action<IRecycle> OnBeforeRecycle;
     /// <summary>
     /// 回收之后事件
     /// </summary>
-    public event EventHandlerRecycle OnAfterRecycle;
+    public event Action<IRecycle> OnAfterRecycle;
 
     /// <summary>
     /// 回收

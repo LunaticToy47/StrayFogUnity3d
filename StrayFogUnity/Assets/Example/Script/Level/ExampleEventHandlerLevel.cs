@@ -17,7 +17,7 @@ public class ExampleEventHandlerLevel : AbsLevel
     /// <summary>
     /// Awake
     /// </summary>
-    protected override void Awake()
+    protected override void OnAwake()
     {
         mCanDispatch = false;
         StrayFogGamePools.gameManager.Initialization(() =>

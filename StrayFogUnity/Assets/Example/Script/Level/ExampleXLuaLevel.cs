@@ -31,9 +31,9 @@ public class ExampleXLuaLevel : AbsLevel
     /// </summary>
     bool mTriggerStart=false;
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
@@ -62,15 +62,14 @@ public class ExampleXLuaLevel : AbsLevel
         mLuaStart = mScriptEnv.Get<Action>("start");
         mLuaUpdate = mScriptEnv.Get<Action>("update");
         mLuaOnDestroy = mScriptEnv.Get<Action>("ondestroy");
-        if (luaAwake != null)
-        {
-            luaAwake();
-        }
+        luaAwake?.Invoke();
         Start();
     }
 
-    // Use this for initialization
-    void Start()
+    /// <summary>
+    /// OnStart
+    /// </summary>
+    protected override  void OnStart()
     {
         if (!mTriggerStart && mLuaStart != null)
         {
@@ -79,6 +78,10 @@ public class ExampleXLuaLevel : AbsLevel
         }
     }
 
+    /// <summary>
+    /// OnLuaStart
+    /// </summary>
+    /// <returns>异步</returns>
     private IEnumerator OnLuaStart()
     {
         yield return new WaitForEndOfFrame();
@@ -88,25 +91,24 @@ public class ExampleXLuaLevel : AbsLevel
         }
         else
         {
-            StartCoroutine(OnLuaStart());
+            coroutine.StartCoroutine(OnLuaStart());
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// OnUpdate
+    /// </summary>
+    protected override void OnUpdate()
     {
-        if (mLuaUpdate != null)
-        {
-            mLuaUpdate();
-        }        
+        mLuaUpdate?.Invoke();
     }
 
-    void OnDestroy()
+    /// <summary>
+    /// OnDestroy
+    /// </summary>
+    protected override void OnDestroy()
     {
-        if (mLuaOnDestroy != null)
-        {
-            mLuaOnDestroy();
-        }
+        mLuaOnDestroy?.Invoke();
         mLuaOnDestroy = null;
         mLuaUpdate = null;
         mLuaStart = null;
@@ -115,7 +117,7 @@ public class ExampleXLuaLevel : AbsLevel
     /// <summary>
     /// OnGUI
     /// </summary>
-    void OnGUI()
+    protected override void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
@@ -140,21 +142,21 @@ public class ExampleXLuaLevel : AbsLevel
         {
             foreach (GameObject g in mlstCubes)
             {
-                Destroy(g);
+                GameObject.Destroy(g);
             }
         }
 
         GameObject go = null;
 
-        go = Instantiate(cube.gameObject);
+        go = GameObject.Instantiate(cube.gameObject);
         go.name = "Cube Left";
-        go.AddComponent<ExampleTestXLuaLevelCube>();
+        go.AddDynamicComponent<ExampleTestXLuaLevelCube>();
         go.transform.position = Vector3.right * -1.8f + cube.position;
         mlstCubes.Add(go);
 
-        go = Instantiate(cube.gameObject);
+        go = GameObject.Instantiate(cube.gameObject);
         go.name = "Cube Right";
-        go.AddComponent<ExampleTestXLuaLevelCube>();
+        go.AddDynamicComponent<ExampleTestXLuaLevelCube>();
         go.transform.position = Vector3.right * 1.8f + cube.position;
         mlstCubes.Add(go);
     }

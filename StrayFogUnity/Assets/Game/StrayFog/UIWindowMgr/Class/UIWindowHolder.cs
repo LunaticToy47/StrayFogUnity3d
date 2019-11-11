@@ -58,7 +58,7 @@ public class UIWindowHolder : AbsMonoBehaviour
     /// <summary>
     /// 窗口SiblingIndex
     /// </summary>
-    public int windowSiblingIndex { get { return transform.GetSiblingIndex(); } }
+    public int windowSiblingIndex { get { return gameObject.transform.GetSiblingIndex(); } }
     /// <summary>
     /// 设置窗口实例
     /// </summary>
@@ -77,7 +77,7 @@ public class UIWindowHolder : AbsMonoBehaviour
     /// <returns>true:是,false:否</returns>
     public bool WindowIsActiveAndEnabled()
     {
-        return window != null && window.isActiveAndEnabled;
+        return window != null && window.gameObject != null && window.gameObject.activeInHierarchy;
     }
 
     /// <summary>
@@ -163,7 +163,7 @@ public class UIWindowHolder : AbsMonoBehaviour
         isMarkLoadedWindowInstace = false;
         if (window != null)
         {
-            Destroy(window.gameObject);
+            GameObject.Destroy(window.gameObject);
         }
         window = null;
         mTargetActive = false;

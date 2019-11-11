@@ -33,7 +33,7 @@ public sealed class UISiblingIndexCanvas : AbsMonoBehaviour
             GameObject go = new GameObject(((enUIWindowLayer)_winCfg.layer).ToString());
             go.layer = gameObject.layer;
             RectTransform rt = go.AddComponent<RectTransform>();
-            rt.SetParent(transform, false);
+            rt.SetParent(gameObject.transform, false);
             rt.SetSiblingIndex(siblingIndex);
             rt.anchorMin = Vector2.zero;
             rt.anchorMax = Vector2.one;

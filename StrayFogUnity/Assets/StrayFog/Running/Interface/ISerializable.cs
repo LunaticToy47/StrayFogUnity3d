@@ -1,18 +1,4 @@
-﻿    /// <summary>
-    /// 导出序列化对象处理
-    /// </summary>
-    /// <param name="_serializable">序列化对象</param>
-    /// <param name="_export">导出数据</param>
-    public delegate void EventHandlerExportSerializable(ISerializable _serializable, byte[] _export);
-
-    /// <summary>
-    /// 导入序列化对象处理
-    /// </summary>
-    /// <param name="_serializable">序列化对象</param>
-    /// <param name="_data">序列化数据</param>
-    /// <param name="_startIndex">起始索引</param>
-    public delegate void EventHandlerImportSerializable(ISerializable _serializable, byte[] _data, long _startIndex);
-
+﻿using System;
 /// <summary>
 /// 序列化接口
 /// </summary>
@@ -20,21 +6,28 @@ public interface ISerializable
 {
     /// <summary>
     /// 导出序列化之前事件处理
+    /// Arg1:序列化对象
+    /// Arg2:导出数据
     /// </summary>
-    event EventHandlerExportSerializable OnBeforeExportSerializable;
+    event Action<ISerializable, byte[]> OnBeforeExportSerializable;
     /// <summary>
     /// 导出序列化之后事件处理
+    /// Arg1:序列化对象
+    /// Arg2:导出数据
     /// </summary>
-    event EventHandlerExportSerializable OnAfterExportSerializable;
+    event Action<ISerializable, byte[]> OnAfterExportSerializable;
 
     /// <summary>
     /// 导入序列化之前事件处理
+    /// Arg1:序列化对象
+    /// Arg2:序列化数据
+    /// Arg3:起始索引
     /// </summary>
-    event EventHandlerImportSerializable OnBeforeImportSerializable;
+    event Action<ISerializable, byte[], long> OnBeforeImportSerializable;
     /// <summary>
     /// 导入序列化之后事件处理
     /// </summary>
-    event EventHandlerImportSerializable OnAfterImportSerializable;
+    event Action<ISerializable, byte[], long> OnAfterImportSerializable;
 
     /// <summary>
     /// 导出序列化数据

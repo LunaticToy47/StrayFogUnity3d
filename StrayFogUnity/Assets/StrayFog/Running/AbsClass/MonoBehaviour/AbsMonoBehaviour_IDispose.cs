@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using System;
+/// <summary>
 /// 抽象MonoBehaviour【IDispose接口】
 /// </summary>
 public abstract partial class AbsMonoBehaviour : IDispose
@@ -7,11 +8,11 @@ public abstract partial class AbsMonoBehaviour : IDispose
     /// <summary>
     /// 销毁事件处理
     /// </summary>
-    public event EventHandlerDispose OnBeforeDisposing;
+    public event Action<IDispose> OnBeforeDisposing;
     /// <summary>
     /// 销毁之后事件处理
     /// </summary>
-    public event EventHandlerDispose OnAfterDisposing;
+    public event Action<IDispose> OnAfterDisposing;
     /// <summary>
     /// 销毁对象
     /// </summary>

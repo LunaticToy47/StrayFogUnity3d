@@ -53,17 +53,17 @@ public partial class StrayFogUIWindowManager
             {
                 go = new GameObject(typeof(UICanvas).Name + "_" + rm.ToString());
                 go.layer = uiLayer;
-                UICanvas cvs = go.AddComponent<UICanvas>();
+                UICanvas cvs = go.AddDynamicComponent<UICanvas>();
                 OnInitializeCanvas(cvs, rm);
                 mCanvasMaping.Add((int)rm, cvs);
-                DontDestroyOnLoad(go);
+                GameObject.DontDestroyOnLoad(go);
             }
             if (!mSiblingIndexCanvasMaping.ContainsKey((int)rm))
             {
                 go = new GameObject(go.name+ "_CacheSiblingIndex");
                 go.layer = uiLayer;
-                mSiblingIndexCanvasMaping.Add((int)rm, go.AddComponent<UISiblingIndexCanvas>());
-                DontDestroyOnLoad(go);
+                mSiblingIndexCanvasMaping.Add((int)rm, go.AddDynamicComponent<UISiblingIndexCanvas>());
+                GameObject.DontDestroyOnLoad(go);
             }
         }
 
@@ -80,7 +80,7 @@ public partial class StrayFogUIWindowManager
         {
             mStandaloneInputModule = mEventSystem.gameObject.AddComponent<StandaloneInputModule>();
         }
-        DontDestroyOnLoad(mEventSystem);
+        GameObject.DontDestroyOnLoad(mEventSystem);
     }
     #endregion
 
@@ -122,8 +122,8 @@ public partial class StrayFogUIWindowManager
                 mScreenSpaceCameraCanvas = _uCanvas;
                 _uCanvas.canvas.planeDistance = mFarClipPlane;
                 #region 创建摄像机
-                GameObject go = new GameObject(_uCanvas.name + "_uiCamera");
-                DontDestroyOnLoad(go);
+                GameObject go = new GameObject(_uCanvas.gameObject.name + "_uiCamera");
+                GameObject.DontDestroyOnLoad(go);
                 _uCanvas.canvas.worldCamera = go.AddComponent<Camera>();
                 _uCanvas.canvas.worldCamera.depth = byte.MaxValue;
                 _uCanvas.canvas.worldCamera.orthographic = false;

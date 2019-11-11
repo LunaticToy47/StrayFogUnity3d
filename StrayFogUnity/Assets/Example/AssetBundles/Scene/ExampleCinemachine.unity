@@ -161,11 +161,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4364043803514962, guid: c1689fdd98d176e4dae4521d4b6bbef5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.8672849
+      value: 0.8989865
       objectReference: {fileID: 0}
     - target: {fileID: 4364043803514962, guid: c1689fdd98d176e4dae4521d4b6bbef5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.49781224
+      value: 0.43797642
       objectReference: {fileID: 0}
     - target: {fileID: 4364043803514962, guid: c1689fdd98d176e4dae4521d4b6bbef5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -350,7 +350,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1992655662}
-  - component: {fileID: 1992655661}
   m_Layer: 0
   m_Name: StrayFogCinemachineLevel
   m_TagString: Untagged
@@ -358,18 +357,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1992655661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992655660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b01369f30dee2d348b5e013ee9838db5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1992655662
 Transform:
   m_ObjectHideFlags: 0

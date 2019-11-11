@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 using XLua;
 /// <summary>
 /// ExampleHeroListWindow
@@ -15,16 +14,12 @@ public class ExampleHeroListWindow : AbsUIWindowView
     /// <summary>
     /// Awake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnAfterAwake()
     {
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(xLuaFileId, (table) =>
         {
             table.Set("self", this);
         });
-        Action luaAwake = mScriptEnv.Get<Action>("Awake");
-        if (luaAwake != null)
-        {
-            luaAwake();
-        }
+        mScriptEnv.Get<Action>("Awake")?.Invoke();
     }
 }

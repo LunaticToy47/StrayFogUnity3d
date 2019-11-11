@@ -38,15 +38,15 @@ public class ExampleFMSLevel : AbsLevel
     /// </summary>
     bool mAutoSample = true;
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-                StartCoroutine(LoadCharacter());
+                coroutine.StartCoroutine(LoadCharacter());
             });            
         });
     }
@@ -74,11 +74,11 @@ public class ExampleFMSLevel : AbsLevel
                     mFMSMachine = hero.GetComponent<FMSMachine>();
                     if (mFMSMachine == null)
                     {
-                        mFMSMachine = hero.AddComponent<FMSMachine>();
+                        mFMSMachine = hero.AddDynamicComponent<FMSMachine>();
                     }
                     mFMSMachine.SetAnimator(animator);
-                    mFMSMachine.transform.position = Vector3.back * 7;
-                    mFMSMachine.transform.eulerAngles = Vector3.up * 180;
+                    mFMSMachine.gameObject.transform.position = Vector3.back * 7;
+                    mFMSMachine.gameObject.transform.eulerAngles = Vector3.up * 180;
                 });
             }, watch);
     }

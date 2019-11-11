@@ -30,9 +30,9 @@ public class ExampleTestXLuaLevelCube : AbsMonoBehaviour
     bool mTriggerStart = false;
 
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(xLuaFileId, (table) =>
         {
@@ -45,15 +45,14 @@ public class ExampleTestXLuaLevelCube : AbsMonoBehaviour
         mLuaStart = mScriptEnv.Get<Action>("start");
         mLuaUpdate = mScriptEnv.Get<Action>("update");
         mLuaOnDestroy = mScriptEnv.Get<Action>("ondestroy");
-        if (luaAwake != null)
-        {
-            luaAwake();
-        }
+        luaAwake?.Invoke();
         Start();
     }
 
-    // Use this for initialization
-    void Start()
+    /// <summary>
+    /// OnStart
+    /// </summary>
+    protected override void OnStart()
     {
         if (!mTriggerStart && mLuaStart != null)
         {
@@ -62,6 +61,10 @@ public class ExampleTestXLuaLevelCube : AbsMonoBehaviour
         }
     }
 
+    /// <summary>
+    /// OnLuaStart
+    /// </summary>
+    /// <returns>异步</returns>
     private IEnumerator OnLuaStart()
     {
         yield return new WaitForEndOfFrame();
@@ -71,12 +74,14 @@ public class ExampleTestXLuaLevelCube : AbsMonoBehaviour
         }
         else
         {
-            StartCoroutine(OnLuaStart());
+            coroutine.StartCoroutine(OnLuaStart());
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// OnUpdate
+    /// </summary>
+    protected override  void OnUpdate()
     {
         if (mLuaUpdate != null)
         {
@@ -84,12 +89,12 @@ public class ExampleTestXLuaLevelCube : AbsMonoBehaviour
         }
     }
 
-    void OnDestroy()
+    /// <summary>
+    /// OnDestroy
+    /// </summary>
+    protected override void OnDestroy()
     {
-        if (mLuaOnDestroy != null)
-        {
-            mLuaOnDestroy();
-        }
+        mLuaOnDestroy?.Invoke();
         mLuaOnDestroy = null;
         mLuaUpdate = null;
         mLuaStart = null;

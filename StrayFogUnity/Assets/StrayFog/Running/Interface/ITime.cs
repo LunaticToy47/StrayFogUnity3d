@@ -1,20 +1,4 @@
-﻿    /// <summary>
-    /// 定时器事件处理
-    /// </summary>
-    /// <param name="_time">时间</param>
-    public delegate void EventHandlerTimer(ITime _time);
-    /// <summary>
-    /// 时间缩放事件处理
-    /// </summary>
-    /// <param name="_time">时间</param>
-    /// <param name="_from">修改前时间缩放</param>
-    /// <param name="_to">修改后时间缩放</param>
-    public delegate void EventHandlerTimeScale(ITime _time, bool _from, bool _to);
-    /// <summary>
-    /// 同步时间缩放事件处理
-    /// </summary>
-    /// <param name="_time">时间</param>
-    public delegate void EventHandlerSyncTimeScale(ITime _time);
+﻿using System;
 /// <summary>
 /// 时间接口
 /// </summary>
@@ -38,20 +22,28 @@ public interface ITime
     float fixedTime { get; }
     /// <summary>
     /// 切换TimeScale之前
+    /// Arg1:时间
+    /// Arg2:修改前时间缩放
+    /// Arg3:修改后时间缩放
     /// </summary>
-    event EventHandlerTimeScale OnBeforeToggleTimeScale;
+    event Action<ITime, bool, bool> OnBeforeToggleTimeScale;
     /// <summary>
     /// 切换TimeScale之后
+    /// Arg1:时间
+    /// Arg2:修改前时间缩放
+    /// Arg3:修改后时间缩放
     /// </summary>
-    event EventHandlerTimeScale OnAfterToggleTimeScale;
+    event Action<ITime, bool, bool> OnAfterToggleTimeScale;
     /// <summary>
     /// 同步TimeScale之前
+    /// Arg1:时间
     /// </summary>
-    event EventHandlerSyncTimeScale OnBeforeSyncTimeScale;
+    event Action<ITime> OnBeforeSyncTimeScale;
     /// <summary>
     /// 同步TimeScale之后
+    /// Arg1:时间
     /// </summary>
-    event EventHandlerSyncTimeScale OnAfterSyncTimeScale;
+    event Action<ITime> OnAfterSyncTimeScale;
     /// <summary>
     /// 是否忽略时间缩放
     /// </summary>

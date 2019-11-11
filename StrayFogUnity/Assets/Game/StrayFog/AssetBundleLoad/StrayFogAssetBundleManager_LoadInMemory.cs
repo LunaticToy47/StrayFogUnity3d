@@ -130,9 +130,9 @@ public partial class StrayFogAssetBundleManager
         if (!mAssetBundleMonoBehaviourMaping.ContainsKey(_fileParameter.assetBundleId))
         {
             GameObject go = new GameObject(_fileParameter.assetBundleName);
-            go.hideFlags = hideFlags;
-            go.transform.SetParent(transform);
-            AssetBundleMonoBehaviour mono = go.AddComponent<AssetBundleMonoBehaviour>();
+            go.hideFlags = gameObject.hideFlags;
+            go.transform.SetParent(gameObject.transform);
+            AssetBundleMonoBehaviour mono = go.AddDynamicComponent<AssetBundleMonoBehaviour>();
             mono.OnRequestLoadDependencies += Mono_OnRequestLoadDependencies;
             mono.SetParameter(_fileParameter);
             mAssetBundleMonoBehaviourMaping.Add(_fileParameter.assetBundleId, mono);

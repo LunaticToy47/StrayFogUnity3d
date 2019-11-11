@@ -1,10 +1,4 @@
-﻿    /// <summary>
-    /// 修改GlobalId事件处理
-    /// </summary>
-    /// <param name="_self">修改对象</param>
-    /// <param name="_from">修改前id</param>
-    /// <param name="_to">修改后id</param>
-    public delegate void EventHandlerModifyGlobalId(IGlobal _self, int _from, int _to);
+﻿using System;
 /// <summary>
 /// 全局对象接口
 /// </summary>
@@ -12,12 +6,18 @@ public interface IGlobal
 {
     /// <summary>
     /// 修改GlobalId之前事件
+    /// Arg1:修改对象
+    /// Arg2:修改前id
+    /// Arg3:修改后id
     /// </summary>
-    event EventHandlerModifyGlobalId OnBeforeModifyGlobalId;
+    event Action<IGlobal, int, int> OnBeforeModifyGlobalId;
     /// <summary>
     /// 修改GlobalId之后事件
+    /// Arg1:修改对象
+    /// Arg2:修改前id
+    /// Arg3:修改后id
     /// </summary>
-    event EventHandlerModifyGlobalId OnAfterModifyGlobalId;
+    event Action<IGlobal, int, int> OnAfterModifyGlobalId;
 
     /// <summary>
     /// 全局Id

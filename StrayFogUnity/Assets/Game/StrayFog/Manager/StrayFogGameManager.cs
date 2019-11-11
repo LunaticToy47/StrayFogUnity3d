@@ -133,13 +133,13 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
             {
                 if (g != null)
                 {
-                    Destroy(g);
+                    GameObject.Destroy(g);
                 }
             }
         }
         mQuitAppAsyncOperation = Resources.UnloadUnusedAssets();
         Time.timeScale = 1;
-        StartCoroutine(OnWaitQuitApp());
+        coroutine.StartCoroutine(OnWaitQuitApp());
     }
     /// <summary>
     /// 等待退出应用

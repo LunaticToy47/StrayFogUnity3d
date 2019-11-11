@@ -12,31 +12,6 @@ public delegate void UIWindowOnOffEventHandle(AbsUIWindowView _window);
 /// </summary>
 public abstract class AbsUIWindowView : AbsMonoBehaviour
 {
-    #region Awake
-    /// <summary>
-    /// Awake
-    /// </summary>
-    protected sealed override void Awake() {
-        OnBeforeAwake();
-        CollectCtrl<UIBehaviour>();
-        OnAwake();
-        OnAfterAwake();
-    }
-
-    /// <summary>
-    /// OnBeforeAwake
-    /// </summary>
-    protected virtual void OnBeforeAwake() { }
-    /// <summary>
-    /// OnAwake
-    /// </summary>
-    protected virtual void OnAwake() { }    
-    /// <summary>
-    /// OnAfterAwake
-    /// </summary>
-    protected virtual void OnAfterAwake() { }
-    #endregion
-
     #region config 窗口配置
     /// <summary>
     /// 窗口配置

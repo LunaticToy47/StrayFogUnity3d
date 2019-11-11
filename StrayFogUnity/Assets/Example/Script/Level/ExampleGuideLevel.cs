@@ -26,7 +26,7 @@ public class ExampleGuideLevel : AbsLevel
             {
                 if (g.GetComponent<UIBehaviour>() != null)
                 {
-                    Destroy(g.gameObject);
+                    GameObject.Destroy(g.gameObject);
                 }
             }
         }
@@ -40,11 +40,11 @@ public class ExampleGuideLevel : AbsLevel
         });
     }
 
-    void OnGUI()
+    protected override void OnGUI()
     {
         if (GUILayout.Button("Start Guid"))
         {
-            StartCoroutine(OnOpenLobby());
+            coroutine.StartCoroutine(OnOpenLobby());
         }
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();

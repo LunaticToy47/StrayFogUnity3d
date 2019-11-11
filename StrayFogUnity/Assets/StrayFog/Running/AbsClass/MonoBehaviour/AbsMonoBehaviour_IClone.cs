@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using System;
+/// <summary>
 /// 抽象MonoBehaviour【IClone接口】
 /// </summary>
 public abstract partial class AbsMonoBehaviour : IClone
@@ -7,19 +8,19 @@ public abstract partial class AbsMonoBehaviour : IClone
     /// <summary>
     /// 克隆之前事件
     /// </summary>
-    public event EventHandlerClone OnBeforeClone;
+    public event Action<IClone> OnBeforeClone;
     /// <summary>
     /// 克隆之后事件
     /// </summary>
-    public event EventHandlerClone OnAfterClone;
+    public event Action<IClone> OnAfterClone;
     /// <summary>
     /// CopyFrom之前事件
     /// </summary>
-    public event EventHandlerCopyFrom OnBeforeCopyFrom;
+    public event Action<IClone, IClone> OnBeforeCopyFrom;
     /// <summary>
     /// CopyFrom之后事件
     /// </summary>
-    public event EventHandlerCopyFrom OnAfterCopyFrom;
+    public event Action<IClone, IClone> OnAfterCopyFrom;
     /// <summary>
     /// 复制指定对象
     /// </summary>
@@ -51,6 +52,6 @@ public abstract partial class AbsMonoBehaviour : IClone
     /// <summary>
     /// 克隆对象
     /// </summary>
-    protected virtual object OnClone() { return Instantiate<AbsMonoBehaviour>(this); }
+    protected virtual object OnClone() { return null; }
     #endregion
 }

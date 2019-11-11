@@ -179,7 +179,7 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
                 while (queue.Count > 0)
                 {
                     ResultCallback call = queue.Dequeue();
-                    StartCoroutine(OnResultCallback(_key, call));
+                    coroutine.StartCoroutine(OnResultCallback(_key, call));
                 }                
             }
             mExecuteQueueResultCallback[_key] = false;
@@ -214,7 +214,7 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
             if (asset != null)
             {
                 yield return new WaitForEndOfFrame();
-                result = Instantiate(asset);
+                result = GameObject.Instantiate(asset);
                 if (result is GameObject)
                 {
                     ((GameObject)result).SetActive(_call.defaultSelfActive);

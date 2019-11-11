@@ -97,18 +97,18 @@ public class ShaderRippleWater : AbsMonoBehaviour
     /// </summary>
     Material mMaterial;
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
-        mRenderer = GetComponent<Renderer>();
+        mRenderer = gameObject.GetComponent<Renderer>();
         mMaterial = mRenderer.material;
     }
 
     /// <summary>
-    /// Start
+    /// OnStart
     /// </summary>
-    void Start()
+    protected override void OnStart()
     {
         mMaterial.SetTexture("_MainTex", baseTexture);
         mMaterial.SetTextureScale("_MainTex", baseTiling);

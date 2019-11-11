@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using System;
+/// <summary>
 /// 抽象MonoBehaviour【IGlobal接口】
 /// </summary>
 public abstract partial class AbsMonoBehaviour : IGlobal
@@ -7,11 +8,11 @@ public abstract partial class AbsMonoBehaviour : IGlobal
     /// <summary>
     /// 修改GlobalId之前事件
     /// </summary>
-    public event EventHandlerModifyGlobalId OnBeforeModifyGlobalId;
+    public event Action<IGlobal, int, int> OnBeforeModifyGlobalId;
     /// <summary>
     /// 修改GlobalId之后事件
     /// </summary>
-    public event EventHandlerModifyGlobalId OnAfterModifyGlobalId;
+    public event Action<IGlobal, int, int> OnAfterModifyGlobalId;
     /// <summary>
     /// 全局唯一ID
     /// </summary>

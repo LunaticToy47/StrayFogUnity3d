@@ -67,7 +67,7 @@ public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
                 {
                     mSceneAsync = SceneManager.LoadSceneAsync(result.input.assetName);
                     mSceneAsync.allowSceneActivation = false;
-                    StartCoroutine(OnActiveScene());
+                    coroutine.StartCoroutine(OnActiveScene());
                 });
     }
 

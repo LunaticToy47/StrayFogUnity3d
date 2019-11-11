@@ -28,9 +28,9 @@ public class UIGuidePrompt : AbsMonoBehaviour
     /// </summary>
     Text mTxtGuideContent;
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    protected override void Awake()
+    protected override void OnAwake()
     {
         mImgFramePrompt = gameObject.GetComponent<Image>();
         mImgArrow = mImgFramePrompt.transform.GetChild(0).GetComponent<Image>();

@@ -36,14 +36,14 @@ public sealed class UICanvas : AbsMonoBehaviour
     public float worldToPixels { get; private set; }
 
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
-        canvas = GetComponent<Canvas>();
-        canvasScaler = GetComponent<CanvasScaler>();
-        graphicRaycaster = GetComponent<GraphicRaycaster>();
-        rectTransfrom = GetComponent<RectTransform>();
+        canvas = gameObject.GetComponent<Canvas>();
+        canvasScaler = gameObject.GetComponent<CanvasScaler>();
+        graphicRaycaster = gameObject.GetComponent<GraphicRaycaster>();
+        rectTransfrom = gameObject.GetComponent<RectTransform>();
     }
     /// <summary>
     /// SetDirty
@@ -97,7 +97,7 @@ public sealed class UICanvas : AbsMonoBehaviour
     /// <returns>单位距离的缩放值</returns>
     public Vector3 GetScalePerUnit()
     {
-        return transform.localScale / canvas.planeDistance;
+        return gameObject.transform.localScale / canvas.planeDistance;
     }
 
     /// <summary>

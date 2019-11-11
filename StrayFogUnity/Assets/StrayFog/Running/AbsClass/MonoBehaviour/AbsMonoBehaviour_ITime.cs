@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 /// <summary>
 /// 抽象MonoBehaviour【ITime接口】
 /// </summary>
@@ -24,19 +25,19 @@ public abstract partial class AbsMonoBehaviour : ITime
     /// <summary>
     /// 切换TimeScale之前
     /// </summary>
-    public event EventHandlerTimeScale OnBeforeToggleTimeScale;
+    public event Action<ITime, bool, bool> OnBeforeToggleTimeScale;
     /// <summary>
     /// 切换TimeScale之后
     /// </summary>
-    public event EventHandlerTimeScale OnAfterToggleTimeScale;
+    public event Action<ITime, bool, bool> OnAfterToggleTimeScale;
     /// <summary>
     /// 同步TimeScale之前
     /// </summary>
-    public event EventHandlerSyncTimeScale OnBeforeSyncTimeScale;
+    public event Action<ITime> OnBeforeSyncTimeScale;
     /// <summary>
     /// 同步TimeScale之后
     /// </summary>
-    public event EventHandlerSyncTimeScale OnAfterSyncTimeScale;
+    public event Action<ITime> OnAfterSyncTimeScale;
     /// <summary>
     /// 是否忽略时间缩放
     /// </summary>

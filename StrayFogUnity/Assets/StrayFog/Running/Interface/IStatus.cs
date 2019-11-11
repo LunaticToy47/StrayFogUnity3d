@@ -1,10 +1,4 @@
-﻿    /// <summary>
-    /// 运行状态切换事件处理
-    /// </summary>
-    /// <param name="_self">切换状态对象</param>
-    /// <param name="_from">切换前状态</param>
-    /// <param name="_to">目标状态</param>
-    public delegate void EventHandlerToggleStatus(IStatus _self, int _from, int _to);
+﻿using System;
 /// <summary>
 /// 状态接口
 /// </summary>
@@ -12,12 +6,18 @@ public interface IStatus
 {
     /// <summary>
     /// 切换状态之前事件
+    /// Arg1:切换状态对象
+    /// Arg2:切换前状态
+    /// Arg3:目标状态
     /// </summary>
-    event EventHandlerToggleStatus OnBeforeToggleStatus;
+    event Action<IStatus, int, int> OnBeforeToggleStatus;
     /// <summary>
     /// 切换状态之后事件
+    /// Arg1:切换状态对象
+    /// Arg2:切换前状态
+    /// Arg3:目标状态
     /// </summary>
-    event EventHandlerToggleStatus OnAfterToggleStatus;
+    event Action<IStatus, int, int> OnAfterToggleStatus;
     /// <summary>
     /// 当前状态
     /// </summary>
@@ -33,10 +33,4 @@ public interface IStatus
     /// </summary>
     /// <param name="_destStatus">目标状态</param>
     void ToggleStatus(int _destStatus);
-    /// <summary>
-    /// 延时指定时间后，切换到指定状态
-    /// </summary>
-    /// <param name="_destStatus">目标状态</param>
-    /// <param name="_delay">延时</param>
-    void ToggleStatus(int _destStatus, float _delay);
 }

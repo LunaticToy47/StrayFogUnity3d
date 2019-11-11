@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 /// <summary>
 /// MonoBehaviour扩展
@@ -12,9 +13,11 @@ public static class MonoBehaviourExtend
     /// <param name="_go">GameObject</param>
     /// <returns>组件</returns>
     public static T AddDynamicComponent<T>(this GameObject _go)
-        where T : AbsMonoBehaviour
+        where T : AbsMonoBehaviour, new()
     {
-        return _go.AddComponent<T>();
+        T result = new T();
+        result.BindGameObject(_go);
+        return result;
     }
 
     /// <summary>
@@ -22,11 +25,14 @@ public static class MonoBehaviourExtend
     /// </summary>
     /// <typeparam name="T">组件</typeparam>
     /// <param name="_go">GameObject</param>
+    /// <param name="_type">组件类别</param>
     /// <returns>组件</returns>
-    public static T AddUIDynamicComponent<T>(this GameObject _go)
-        where T : UIBehaviour
-    {        
-        return _go.AddComponent<T>();
+    public static T AddDynamicComponent<T>(this GameObject _go, Type _type)
+        where T : AbsMonoBehaviour
+    {
+        T result = (T)Activator.CreateInstance(_type);
+        result.BindGameObject(_go);
+        return result;
     }
 
     /// <summary>
@@ -40,16 +46,4 @@ public static class MonoBehaviourExtend
     {
         return _go.AddComponent<T>();
     }
-
-    /// <summary>
-    /// 添加动态组件
-    /// </summary>
-    /// <typeparam name="T">组件</typeparam>
-    /// <param name="_go">GameObject</param>
-    /// <returns>组件</returns>
-    public static T AddDynamicMonoBehaviour<T>(this GameObject _go)
-        where T : MonoBehaviour
-    {
-        return _go.AddComponent<T>();
-    }    
 }

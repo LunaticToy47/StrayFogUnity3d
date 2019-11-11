@@ -2,15 +2,7 @@
 /// <summary>
 /// 抽象MonoBehaviour
 /// </summary>
-public abstract partial class AbsMonoBehaviour : MonoBehaviour
+public abstract partial class AbsMonoBehaviour
 {
-    #region Awake
-    /// <summary>
-    /// Awake
-    /// </summary>
-    protected virtual void Awake()
-    {
-        
-    }
-    #endregion
+
 }

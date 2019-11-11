@@ -9,10 +9,10 @@ public class ExampleLobbyWindow : AbsUIWindowView
     /// <summary>
     /// OnAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnAfterAwake()
     {
-        Text txt = transform.Find("btnRadarBg/Text").GetComponent<Text>();
-        Button btnRadarBg = transform.Find("btnRadarBg").GetComponent<Button>();
+        Text txt = gameObject.transform.Find("btnRadarBg/Text").GetComponent<Text>();
+        Button btnRadarBg = gameObject.transform.Find("btnRadarBg").GetComponent<Button>();
         btnRadarBg.onClick.AddListener(() =>
         {
             Vector3 scale = Vector3.one * 4f;
@@ -28,6 +28,6 @@ public class ExampleLobbyWindow : AbsUIWindowView
                 StrayFogGamePools.uiWindowManager.OpenWindow(enUIWindow.ExampleMessageBoxWindow);
             }            
         });
-        transform.Find("btnRadar").gameObject.AddComponent<UIDragMono>();
+        gameObject.transform.Find("btnRadar").gameObject.AddComponent<UIDragMono>();
     }
 }

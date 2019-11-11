@@ -60,9 +60,9 @@ public class AssetBundleMonoBehaviour : AbsMonoBehaviour
         if (!mAssetBundleResultMonoBehaviour.ContainsKey(_request.input.uniqueId))
         {
             GameObject go = new GameObject(_request.input.config.fileName);
-            go.hideFlags = hideFlags;
-            go.transform.SetParent(transform);
-            AssetBundleOutputMonoBehaviour mono = go.AddComponent<AssetBundleOutputMonoBehaviour>();
+            go.hideFlags = gameObject.hideFlags;
+            go.transform.SetParent(gameObject.transform);
+            AssetBundleOutputMonoBehaviour mono = go.AddDynamicComponent<AssetBundleOutputMonoBehaviour>();
             mono.SetParameter(fileParameter);
             mAssetBundleResultMonoBehaviour.Add(_request.input.uniqueId, mono);
         }

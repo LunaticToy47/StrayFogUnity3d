@@ -1,24 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-    /// <summary>
-    /// 开始拖拽事件
-    /// </summary>
-    /// <param name="_sender">发送者</param>
-    /// <param name="_eventData">参数</param>
-    public delegate void BeginDragEventHandle(UIDragMono _sender, PointerEventData _eventData);
-    /// <summary>
-    /// 拖拽事件
-    /// </summary>
-    /// <param name="_sender">发送者</param>
-    /// <param name="_eventData">参数</param>
-    public delegate void DragEventHandle(UIDragMono _sender, PointerEventData _eventData);
-    /// <summary>
-    /// 结束拖拽事件
-    /// </summary>
-    /// <param name="_sender">发送者</param>
-    /// <param name="_eventData">参数</param>
-    public delegate void EndDragEventHandle(UIDragMono _sender, PointerEventData _eventData);
 
 /// <summary>
 /// UI拖拽组件
@@ -30,15 +13,15 @@ public class UIDragMono : UIBehaviour, IEndDragHandler, IBeginDragHandler, IDrag
     /// <summary>
     /// 开始拖拽事件
     /// </summary>
-    public event BeginDragEventHandle OnBeginDragEvent;
+    public event Action<UIDragMono, PointerEventData> OnBeginDragEvent;
     /// <summary>
     /// 拖拽事件
     /// </summary>
-    public event DragEventHandle OnDragEvent;
+    public event Action<UIDragMono, PointerEventData> OnDragEvent;
     /// <summary>
     /// 结束拖拽事件
     /// </summary>
-    public event EndDragEventHandle OnEndDragEvent;
+    public event Action<UIDragMono, PointerEventData> OnEndDragEvent;
     /// <summary>
     /// MaskableGraphic
     /// </summary>
@@ -67,10 +50,7 @@ public class UIDragMono : UIBehaviour, IEndDragHandler, IBeginDragHandler, IDrag
             //计算图片中心和鼠标点的差值
             mOffset = dragTransform.anchoredPosition - mouseUguiPos;
         }
-        if (OnBeginDragEvent != null)
-        {
-            OnBeginDragEvent(this, _eventData);
-        }
+        OnBeginDragEvent?.Invoke(this, _eventData);
     }
 
     /// <summary>
@@ -95,10 +75,7 @@ public class UIDragMono : UIBehaviour, IEndDragHandler, IBeginDragHandler, IDrag
                     dragTransform.FixedPositionInCanvas(canvas);
                 }
             }
-            if (OnDragEvent != null)
-            {
-                OnDragEvent(this, _eventData);
-            }
+            OnDragEvent?.Invoke(this, _eventData);
         }
     }
 
@@ -108,9 +85,6 @@ public class UIDragMono : UIBehaviour, IEndDragHandler, IBeginDragHandler, IDrag
     /// <param name="_eventData">参数</param>
     public void OnEndDrag(PointerEventData _eventData)
     {
-        if (OnEndDragEvent != null)
-        {
-            OnEndDragEvent(this, _eventData);
-        }
+        OnEndDragEvent?.Invoke(this, _eventData);
     }
 }

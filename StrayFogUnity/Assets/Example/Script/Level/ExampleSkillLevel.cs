@@ -45,7 +45,7 @@ public class ExampleSkillLevel : AbsLevel
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
-                StartCoroutine(LoadCharacter());
+                coroutine.StartCoroutine(LoadCharacter());
             });            
         });
     }
@@ -73,11 +73,11 @@ public class ExampleSkillLevel : AbsLevel
                     mFMSMachine = hero.GetComponent<FMSMachine>();
                     if (mFMSMachine == null)
                     {
-                        mFMSMachine = hero.AddComponent<FMSMachine>();
+                        mFMSMachine = hero.AddDynamicComponent<FMSMachine>();
                     }
                     mFMSMachine.SetAnimator(animator);
-                    mFMSMachine.transform.position = new Vector3(-7, 0, -3);
-                    mFMSMachine.transform.eulerAngles = Vector3.up * 90;
+                    mFMSMachine.gameObject.transform.position = new Vector3(-7, 0, -3);
+                    mFMSMachine.gameObject.transform.eulerAngles = Vector3.up * 90;
                 });
             }, watch);
     }

@@ -94,14 +94,13 @@ public sealed class StrayFogRunningUtility
     #endregion
 
     #region SingleMonoBehaviour 单例AbsSingleMonoBehaviour对象扩展
-    
     /// <summary>
     /// 单例AbsSingleMonoBehaviour对象扩展
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
     /// <returns>对象</returns>
     public static T SingleMonoBehaviour<T>()
-        where T : AbsSingleMonoBehaviour
+        where T : AbsSingleMonoBehaviour, new()
     {
         Type t = typeof(T);
         return AbsSingleMonoBehaviour.current<T>();
@@ -115,7 +114,7 @@ public sealed class StrayFogRunningUtility
     /// <typeparam name="T">对象类型</typeparam>
     /// <returns>对象</returns>
     public static T Single<T>()
-        where T : AbsSingle
+        where T : AbsSingle, new()
     {
         return AbsSingle.current<T>();
     }

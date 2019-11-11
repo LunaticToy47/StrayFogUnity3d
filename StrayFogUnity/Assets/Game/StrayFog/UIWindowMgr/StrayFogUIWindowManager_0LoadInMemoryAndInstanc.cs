@@ -85,9 +85,9 @@ public partial class StrayFogUIWindowManager
         if (mUIWindowSerialize == null)
         {
             GameObject go = new GameObject("UIWindowSerialize");
-            go.transform.SetParent(transform);
-            go.hideFlags = hideFlags;
-            mUIWindowSerialize = go.AddComponent<UIWindowSerialize>();
+            go.transform.SetParent(gameObject.transform);
+            go.hideFlags = gameObject.hideFlags;
+            mUIWindowSerialize = go.AddDynamicComponent<UIWindowSerialize>();
             mUIWindowSerialize.OnSearchAllWindowHolders += () => { return mWindowHolderMaping; };
         }
         return mUIWindowSerialize;
@@ -151,12 +151,12 @@ public partial class StrayFogUIWindowManager
                 {
                     GameObject go = new GameObject(cfg.name + "【Holder】【" + cfg.id + "】");
                     go.transform.SetParent(root);
-                    UIWindowHolder wh = go.AddComponent<UIWindowHolder>();
+                    UIWindowHolder wh = go.AddDynamicComponent<UIWindowHolder>();
                     wh.SetWindowConfig(cfg);
                     wh.SetWindowCanvas(OnGetCanvas(cfg.winRenderMode));
                     mWindowHolderMaping.Add(cfg.id, wh);
                 }
-                mWindowHolderMaping[cfg.id].transform.SetAsLastSibling();
+                mWindowHolderMaping[cfg.id].gameObject.transform.SetAsLastSibling();
             }
         }
     }
@@ -190,11 +190,11 @@ public partial class StrayFogUIWindowManager
                         W window = default(W);
                         if (type == null)
                         {
-                            window = (W)(AbsUIWindowView)prefab.AddComponent<UIXLuaWindow>();
+                            window = (W)(AbsUIWindowView)prefab.AddDynamicComponent<UIXLuaWindow>();
                         }
                         else
                         {
-                            window = (W)prefab.AddComponent(type);
+                            window = prefab.AddDynamicComponent<W>(type);
                         }
                         window.SetConfig(winCfg);
                         window.OnCloseWindow += Window_OnCloseWindow;
@@ -232,9 +232,9 @@ public partial class StrayFogUIWindowManager
         if (!isRunCheck)
         {
             GameObject go = new GameObject();
-            go.transform.SetParent(transform);
-            go.hideFlags = hideFlags;
-            UIWindowCheckInstance check = go.AddComponent<UIWindowCheckInstance>();
+            go.transform.SetParent(gameObject.transform);
+            go.hideFlags = gameObject.hideFlags;
+            UIWindowCheckInstance check = go.AddDynamicComponent<UIWindowCheckInstance>();
             check.CheckInstanceLoadComplete<W>(OnUIWindowHasInstance<W>, OnCheckInstanceComplete, _winCfgs, _callback, _parameters);
             mUIWindowCheckInstanceMaping.Add(check);
         }
@@ -446,7 +446,7 @@ public partial class StrayFogUIWindowManager
         {
             isAllOpened &= mWindowHolderMaping.ContainsKey(cfg.id) 
                 && mWindowHolderMaping[cfg.id].window != null
-                && mWindowHolderMaping[cfg.id].window.isActiveAndEnabled;
+                && mWindowHolderMaping[cfg.id].window.activeInHierarchy;
         }        
         return isAllOpened;
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 /// <summary>
 /// 抽象MonoBehaviour【ISerializable接口】
 /// </summary>
@@ -12,19 +13,19 @@ public abstract partial class AbsMonoBehaviour : ISerializable
     /// <summary>
     /// 导出序列化之前事件处理
     /// </summary>
-    public event EventHandlerExportSerializable OnBeforeExportSerializable;
+    public event Action<ISerializable, byte[]> OnBeforeExportSerializable;
     /// <summary>
     /// 导出序列化之后事件处理
     /// </summary>
-    public event EventHandlerExportSerializable OnAfterExportSerializable;
+    public event Action<ISerializable, byte[]> OnAfterExportSerializable;
     /// <summary>
     /// 导入序列化之前事件处理
     /// </summary>
-    public event EventHandlerImportSerializable OnBeforeImportSerializable;
+    public event Action<ISerializable, byte[], long> OnBeforeImportSerializable;
     /// <summary>
     /// 导入序列化之后事件处理
     /// </summary>
-    public event EventHandlerImportSerializable OnAfterImportSerializable;
+    public event Action<ISerializable, byte[], long> OnAfterImportSerializable;
     /// <summary>
     /// 导出序列化数据
     /// </summary>
