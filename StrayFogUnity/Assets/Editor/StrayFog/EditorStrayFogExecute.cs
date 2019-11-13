@@ -1201,20 +1201,32 @@ public sealed class EditorStrayFogExecute
                 srcMonoScripts.Add((MonoScript)AssetDatabase.LoadMainAssetAtPath(f));
             }
 
+            string assemblyLocation = string.Empty;
+            Type classType = null;
             foreach (MonoScript m in srcMonoScripts)
             {
-                AssemblyName[] ans = m.GetClass().Assembly.GetReferencedAssemblies();
-                if (ans != null)
+                classType = m.GetClass();
+                if (classType != null)
                 {
-                    foreach (AssemblyName n in ans)
+                    assemblyLocation = classType.Assembly.Location;
+                    if (!compilerParams.ReferencedAssemblies.Contains(assemblyLocation))
                     {
-                        string location = Assembly.Load(n.Name).Location;
-                        if (!compilerParams.ReferencedAssemblies.Contains(location))
-                        {
-                            compilerParams.ReferencedAssemblies.Add(location);
-                        }                        
+                        compilerParams.ReferencedAssemblies.Add(assemblyLocation);
                     }
-                }                
+
+                    AssemblyName[] ans = classType.Assembly.GetReferencedAssemblies();
+                    if (ans != null)
+                    {
+                        foreach (AssemblyName n in ans)
+                        {
+                            assemblyLocation = Assembly.Load(n.Name).Location;
+                            if (!compilerParams.ReferencedAssemblies.Contains(assemblyLocation))
+                            {
+                                compilerParams.ReferencedAssemblies.Add(assemblyLocation);
+                            }
+                        }
+                    }
+                }                        
             }
 
             float progress = 0;
