@@ -5,9 +5,9 @@ using Mono.Data.Sqlite;
 using OfficeOpenXml;
 using UnityEngine;
 /// <summary>
-/// StrayFogSQLite表实体帮助类【Insert】
+/// 配置表实体帮助类【Insert】
 /// </summary>
-public sealed partial class StrayFogSQLiteEntityHelper
+public sealed partial class StrayFogConfigHelper
 {
     #region OnInsertToCacheEntityData 插入数据到缓存
     /// <summary>
@@ -168,7 +168,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         bool result = OnInsertToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
         if (result)
         {
-            if (StrayFogGamePools.setting.isUseSQLite)
+            if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
             {
                 OnInsertIntoSQLite(_entity, tableAttribute);
             }

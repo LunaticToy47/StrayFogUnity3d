@@ -5,9 +5,9 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 /// <summary>
-/// StrayFogSQLite表实体帮助类【Update】
+/// 配置表实体帮助类【Update】
 /// </summary>
-public sealed partial class StrayFogSQLiteEntityHelper
+public sealed partial class StrayFogConfigHelper
 {
     #region OnUpdateToCacheEntityData 更新数据到缓存
     /// <summary>
@@ -221,7 +221,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
                     result = OnUpdateToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
                     if (result)
                     {
-                        if (StrayFogGamePools.setting.isUseSQLite)
+                        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
                         {
                             OnUpdateToSQLite(_entity,tableAttribute);
                         }

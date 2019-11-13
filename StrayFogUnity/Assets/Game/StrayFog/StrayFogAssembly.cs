@@ -21,7 +21,7 @@ public sealed class StrayFogAssembly
         if (dynamicAssemblies == null)
         {
             dynamicAssemblies = new List<Assembly>();
-            List<XLS_Config_Table_AsmdefMap> maps = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_AsmdefMap>();
+            List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
             string dllPath = string.Empty;
             string pdbPath = string.Empty;
             Assembly tmpAssembly = null;

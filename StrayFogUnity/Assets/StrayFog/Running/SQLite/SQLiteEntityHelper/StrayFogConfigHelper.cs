@@ -5,9 +5,9 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 /// <summary>
-/// StrayFogSQLite表实体帮助类
+/// 配置表实体帮助类
 /// </summary>
-public sealed partial class StrayFogSQLiteEntityHelper
+public sealed partial class StrayFogConfigHelper
 {
     #region 静态映射
     /// <summary>
@@ -135,7 +135,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         where T : AbsStrayFogSQLiteEntity
     {
         Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
-        if (StrayFogGamePools.setting.isUseSQLite)
+        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
         {
             result = OnReadFromSQLite<T>(_tableAttribute);
         }
@@ -207,23 +207,48 @@ public sealed partial class StrayFogSQLiteEntityHelper
         }
 
         //SQLiteHelper
-        if (StrayFogGamePools.setting.isUseSQLite)
+        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
         {
             if (!msStrayFogSQLiteHelperMaping.ContainsKey(tableAttribute.dbSQLiteKey))
             {
-                if (StrayFogGamePools.setting.isInternal)
+                if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
                 {
                     msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
-                        new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(tableAttribute.dbSQLitePath)));
+                        new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(tableAttribute.dbSQLitePath)));
                 }
                 else
                 {
                     msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
-                        new StrayFogSQLiteHelper(StrayFogGamePools.setting.GetSQLiteConnectionString(tableAttribute.dbSQLiteAssetBundleName)));
+                        new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(tableAttribute.dbSQLiteAssetBundleName)));
                 }
             }
         }        
         return tableAttribute;
+    }
+    #endregion
+
+    #region GetPropertyId
+    /// <summary>
+    /// 获得属性Id
+    /// </summary>
+    /// <param name="_propertyName">属性名称</param>
+    /// <returns>属性Id</returns>
+    public static int GetPropertyId(string _propertyName)
+    {
+        return _propertyName.UniqueHashCode();
+    }
+    #endregion
+
+    #region 获得PropertyInfo
+    /// <summary>
+    /// 获得PropertyInfo
+    /// </summary>
+    /// <param name="_tableAttribute">表属性</param>
+    /// <param name="_propertyId">属性Id</param>
+    /// <returns>PropertyInfo</returns>
+    public static PropertyInfo GetPropertyInfo(SQLiteTableMapAttribute _tableAttribute, int _propertyId)
+    {
+        return msEntityPropertyInfoMaping[_tableAttribute.id][_propertyId];
     }
     #endregion
 

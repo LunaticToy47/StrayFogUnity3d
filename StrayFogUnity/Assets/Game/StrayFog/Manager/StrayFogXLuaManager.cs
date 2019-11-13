@@ -22,7 +22,7 @@ public sealed partial class StrayFogXLuaManager : AbsSingleMonoBehaviour
     /// </summary>
     protected override void OnAfterConstructor()
     {
-        List<XLS_Config_Table_XLuaMap> src = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_XLuaMap>();
+        List<XLS_Config_Table_XLuaMap> src = StrayFogConfigHelper.Select<XLS_Config_Table_XLuaMap>();
         foreach (XLS_Config_Table_XLuaMap r in src)
         {
             if (!mXLuaConfigMaping.ContainsKey(r.id))

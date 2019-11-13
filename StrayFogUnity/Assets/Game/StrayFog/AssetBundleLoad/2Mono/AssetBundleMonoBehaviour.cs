@@ -225,7 +225,7 @@ public class AssetBundleMonoBehaviour : AbsMonoBehaviour
     /// <param name="_callback">回调</param>
     /// <param name="_extraParameter">额外参数</param>
     /// <param name="_type">资源类型</param>
-    void Output_OnInstantiate(bool _defaultSelfActive, IAssetBundleInput _input, AssetBundleInstantiateEventHandler _callback, object[] _extraParameter,Type _type)
+    void Output_OnInstantiate(bool _defaultSelfActive, IAssetBundleInput _input, Action<IAssetBundleResult> _callback, object[] _extraParameter,Type _type)
     {
         if (mAssetBundleResultMonoBehaviour.ContainsKey(_input.uniqueId))
         {

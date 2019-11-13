@@ -1,12 +1,20 @@
 ﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 /// <summary>
-/// StrayFogSQLite表实体帮助类【DbXLS】
+/// 配置表实体帮助类【DbXLS】
 /// </summary>
-public sealed partial class StrayFogSQLiteEntityHelper
+public sealed partial class StrayFogConfigHelper
 {
+    #region OnEventHandlerLoadViewFromXLS 从XLS表加载视图事件句柄
+    /// <summary>
+    /// 从XLS表加载视图事件句柄
+    /// </summary>
+    public static event Func<SQLiteTableMapAttribute, Type, Dictionary<int, AbsStrayFogSQLiteEntity>> OnEventHandlerLoadViewFromXLS;
+    #endregion 
+
     #region OnReadFromXLS
     /// <summary>
     /// 从XLS读取数据
@@ -119,56 +127,9 @@ public sealed partial class StrayFogSQLiteEntityHelper
         where T : AbsStrayFogSQLiteEntity
     {
         Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
-        T tempEntity = default(T);
         if (_tableAttribute.sqliteTableType == enSQLiteEntityClassify.View)
         {
-            if (_tableAttribute.tableClassType.Equals(typeof(XLS_Config_View_AssetDiskMaping)))
-            {
-                #region View_AssetDiskMaping 数据组装                                
-                List<XLS_Config_Table_AssetDiskMapingFile> files = Select<XLS_Config_Table_AssetDiskMapingFile>();
-                List<XLS_Config_Table_AssetDiskMapingFolder> folders = Select<XLS_Config_Table_AssetDiskMapingFolder>();
-                Dictionary<int, XLS_Config_Table_AssetDiskMapingFile> dicFile = new Dictionary<int, XLS_Config_Table_AssetDiskMapingFile>();
-                Dictionary<int, XLS_Config_Table_AssetDiskMapingFolder> dicFolder = new Dictionary<int, XLS_Config_Table_AssetDiskMapingFolder>();
-                foreach (XLS_Config_Table_AssetDiskMapingFolder t in folders)
-                {
-                    dicFolder.Add(t.folderId, t);
-                }
-                int fileId = "fileId".UniqueHashCode();
-                int folderId = "folderId".UniqueHashCode();
-                int fileName = "fileName".UniqueHashCode();
-                int inAssetPath = "inAssetPath".UniqueHashCode();
-                int outAssetPath = "outAssetPath".UniqueHashCode();
-                int extEnumValue = "extEnumValue".UniqueHashCode();
-                foreach (XLS_Config_Table_AssetDiskMapingFile t in files)
-                {
-                    tempEntity = OnCreateInstance<T>(_tableAttribute);
-                    msEntityPropertyInfoMaping[_tableAttribute.id][fileId].SetValue(tempEntity, t.fileId, null);
-                    msEntityPropertyInfoMaping[_tableAttribute.id][folderId].SetValue(tempEntity, t.folderId, null);
-                    msEntityPropertyInfoMaping[_tableAttribute.id][fileName].SetValue(tempEntity, t.inSide + t.ext, null);
-                    msEntityPropertyInfoMaping[_tableAttribute.id][inAssetPath].SetValue(tempEntity, Path.Combine(dicFolder[t.folderId].inSide, t.inSide + t.ext).TransPathSeparatorCharToUnityChar(), null);
-                    msEntityPropertyInfoMaping[_tableAttribute.id][outAssetPath].SetValue(tempEntity, t.outSide, null);
-                    msEntityPropertyInfoMaping[_tableAttribute.id][extEnumValue].SetValue(tempEntity, t.extEnumValue, null);
-                    tempEntity.Resolve();
-                    result.Add(tempEntity.pkSequenceId, tempEntity);
-                }
-                #endregion
-            }
-            else if (_tableAttribute.tableClassType.Equals(typeof(XLS_Config_View_DeterminantVT)))
-            {
-                #region View_DeterminantVT 数据组装
-                int vtNameKey = "vtName".UniqueHashCode();
-                foreach (SQLiteTableMapAttribute key in msSQLiteTableMapAttributeMaping.Values)
-                {
-                    if (key.isDeterminant)
-                    {
-                        tempEntity = OnCreateInstance<T>(_tableAttribute);
-                        msEntityPropertyInfoMaping[_tableAttribute.id][vtNameKey].SetValue(tempEntity, key.sqliteTableName, null);
-                        tempEntity.Resolve();
-                        result.Add(tempEntity.pkSequenceId, tempEntity);
-                    }
-                }
-                #endregion
-            }
+            result = OnEventHandlerLoadViewFromXLS?.Invoke(_tableAttribute, typeof(T));
         }
         return result;
     }

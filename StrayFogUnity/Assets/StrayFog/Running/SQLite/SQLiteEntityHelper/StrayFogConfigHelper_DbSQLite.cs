@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// StrayFogSQLite表实体帮助类【DbSQLite】
+/// 配置表实体帮助类【DbSQLite】
 /// </summary>
-public sealed partial class StrayFogSQLiteEntityHelper
+public sealed partial class StrayFogConfigHelper
 {
     #region OnReadFromSQLite
     /// <summary>

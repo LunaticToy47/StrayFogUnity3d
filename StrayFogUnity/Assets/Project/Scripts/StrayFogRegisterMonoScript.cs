@@ -6,8 +6,8 @@ using UnityEditor;
 /// <summary>
 /// 注册组件
 /// </summary>
-[AddComponentMenu("StrayFog/Game/MonoBehaviour/StrayFogRegisterMonoBehaviour")]
-public sealed class StrayFogRegisterMonoBehaviour : MonoBehaviour
+[AddComponentMenu("StrayFog/Game/ProjectAPK/StrayFogRegisterMonoScript")]
+public sealed class StrayFogRegisterMonoScript : MonoBehaviour
 {
 #if UNITY_EDITOR
     /// <summary>
@@ -46,25 +46,26 @@ public sealed class StrayFogRegisterMonoBehaviour : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        StrayFogGamePools.gameManager.Initialization(() =>
-        {
-            StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
-            {
-                string scriptName = monoBehaviourScriptName;
-                if (string.IsNullOrEmpty(scriptName))
-                {
-                    scriptName = gameObject.name;
-                }
-                Type type = StrayFogAssembly.GetType(scriptName);
-                if (type != null)
-                {
-                    gameObject.AddComponent(type);
-                }
-                else
-                {
-                    Debug.LogErrorFormat("Can't found type 【{0}】", scriptName);
-                }
-            });
-        });
+        //StrayFogSetting
+        //StrayFogGamePools.gameManager.Initialization(() =>
+        //{
+        //    StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
+        //    {
+        //        string scriptName = monoBehaviourScriptName;
+        //        if (string.IsNullOrEmpty(scriptName))
+        //        {
+        //            scriptName = gameObject.name;
+        //        }
+        //        Type type = StrayFogAssembly.GetType(scriptName);
+        //        if (type != null)
+        //        {
+        //            gameObject.AddComponent(type);
+        //        }
+        //        else
+        //        {
+        //            Debug.LogErrorFormat("Can't found type 【{0}】", scriptName);
+        //        }
+        //    });
+        //});
     }
 }

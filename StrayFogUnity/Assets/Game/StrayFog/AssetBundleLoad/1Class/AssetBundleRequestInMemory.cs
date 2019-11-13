@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using System;
+/// <summary>
 /// 资源请求加载到内存
 /// </summary>
 public class AssetBundleRequestInMemory : IAssetBundleRequestInMemory
@@ -9,9 +10,9 @@ public class AssetBundleRequestInMemory : IAssetBundleRequestInMemory
     /// <param name="_input">输入</param>
     /// <param name="_outputEvent">输出事件</param>
     /// <param name="_progressEvent">进度事件</param>
-    public AssetBundleRequestInMemory(IAssetBundleInput _input, 
-        AssetBundleOutputEventHandler _outputEvent, 
-        AssetBundleProgressEventHandler _progressEvent)
+    public AssetBundleRequestInMemory(IAssetBundleInput _input,
+        Action<IAssetBundleOutput> _outputEvent,
+        Action<float, IAssetBundleInput> _progressEvent)
     {
         input = _input;
         outputEvent = _outputEvent;
@@ -25,9 +26,9 @@ public class AssetBundleRequestInMemory : IAssetBundleRequestInMemory
     /// <summary>
     /// 输出事件
     /// </summary>
-    public AssetBundleOutputEventHandler outputEvent { get; private set; }
+    public Action<IAssetBundleOutput> outputEvent { get; private set; }
     /// <summary>
     /// 进度事件
     /// </summary>
-    public AssetBundleProgressEventHandler progressEvent { get; private set; }
+    public Action<float, IAssetBundleInput> progressEvent { get; private set; }
 }

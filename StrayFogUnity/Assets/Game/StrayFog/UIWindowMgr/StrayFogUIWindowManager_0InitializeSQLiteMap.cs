@@ -22,7 +22,7 @@ public partial class StrayFogUIWindowManager
     /// </summary>
     void OnInitializeSQLite()
     {
-        List<XLS_Config_Table_UIWindowSetting> tables = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UIWindowSetting>();
+        List<XLS_Config_Table_UIWindowSetting> tables = StrayFogConfigHelper.Select<XLS_Config_Table_UIWindowSetting>();
         foreach (XLS_Config_Table_UIWindowSetting t in tables)
         {
             mWindowSettingMaping.Add(t.id, t);

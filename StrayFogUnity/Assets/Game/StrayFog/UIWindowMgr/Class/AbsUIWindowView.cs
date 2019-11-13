@@ -1,12 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-/// <summary>
-/// 窗口开关句柄
-/// </summary>
-/// <param name="_window">窗口</param>
-public delegate void UIWindowOnOffEventHandle(AbsUIWindowView _window);
 /// <summary>
 /// 窗口视图
 /// </summary>
@@ -28,17 +21,6 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     {
         config = _cfg;
     }
-    #endregion
-
-    #region RectTransform
-    /// <summary>
-    /// RectTransform
-    /// </summary>
-    RectTransform mRectTransform;
-    /// <summary>
-    /// rectTransform
-    /// </summary>
-    public RectTransform rectTransform { get { if (mRectTransform == null) { mRectTransform = gameObject.GetComponent<RectTransform>(); } return mRectTransform; } }
     #endregion
 
     #region ToggleActive 切换激活状态
@@ -111,7 +93,7 @@ public abstract class AbsUIWindowView : AbsMonoBehaviour
     /// <summary>
     /// 关闭窗口事件
     /// </summary>
-    public event UIWindowOnOffEventHandle OnCloseWindow;
+    public event Action<AbsUIWindowView> OnCloseWindow;
     /// <summary>
     /// 关闭窗口
     /// </summary>

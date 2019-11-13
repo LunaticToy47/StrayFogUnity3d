@@ -16,7 +16,7 @@ public partial class StrayFogAssetBundleManager
     /// <param name="_folder">文件夹</param>
     /// <param name="_outputEvent">输出事件</param>
     /// <param name="_extraParemeter">额外参数</param>
-    public void LoadAssetInMemory(Enum _file, Enum _folder, AssetBundleOutputEventHandler _outputEvent, params object[] _extraParemeter)
+    public void LoadAssetInMemory(Enum _file, Enum _folder, Action<IAssetBundleOutput> _outputEvent, params object[] _extraParemeter)
     {
         LoadAssetInMemory(_file, _folder, _outputEvent, (p, i) => { }, _extraParemeter);
     }
@@ -28,7 +28,7 @@ public partial class StrayFogAssetBundleManager
     /// <param name="_outputEvent">输出事件</param>
     /// <param name="_progressEvent">进度事件</param>
     /// <param name="_extraParemeter">额外参数</param>
-    public void LoadAssetInMemory(Enum _file, Enum _folder, AssetBundleOutputEventHandler _outputEvent, AssetBundleProgressEventHandler _progressEvent, params object[] _extraParemeter)
+    public void LoadAssetInMemory(Enum _file, Enum _folder, Action<IAssetBundleOutput> _outputEvent, Action<float, IAssetBundleInput> _progressEvent, params object[] _extraParemeter)
     {
         LoadAssetInMemory(Convert.ToInt32(_file), Convert.ToInt32(_folder), _outputEvent, _progressEvent, _extraParemeter);
     }
@@ -42,7 +42,7 @@ public partial class StrayFogAssetBundleManager
     /// <param name="_folderId">文件夹Id</param>
     /// <param name="_outputEvent">输出事件</param>
     /// <param name="_extraParemeter">额外参数</param>
-    public void LoadAssetInMemory(int _fileId, int _folderId, AssetBundleOutputEventHandler _outputEvent, params object[] _extraParemeter)
+    public void LoadAssetInMemory(int _fileId, int _folderId, Action<IAssetBundleOutput> _outputEvent, params object[] _extraParemeter)
     {
         LoadAssetInMemory(_fileId, _folderId, _outputEvent, (p, i) => { }, _extraParemeter);
     }
@@ -54,7 +54,7 @@ public partial class StrayFogAssetBundleManager
     /// <param name="_outputEvent">输出事件</param>
     /// <param name="_progressEvent">进度事件</param>
     /// <param name="_extraParemeter">额外参数</param>
-    public void LoadAssetInMemory(int _fileId, int _folderId, AssetBundleOutputEventHandler _outputEvent, AssetBundleProgressEventHandler _progressEvent, params object[] _extraParemeter)
+    public void LoadAssetInMemory(int _fileId, int _folderId, Action<IAssetBundleOutput> _outputEvent, Action<float, IAssetBundleInput> _progressEvent, params object[] _extraParemeter)
     {
         OnLoadAssetInMemory(_fileId, _folderId, _outputEvent, _progressEvent, _extraParemeter);
     }
@@ -75,8 +75,8 @@ public partial class StrayFogAssetBundleManager
     /// <param name="_outputEvent">输出</param>
     /// <param name="_progressEvent">进度</param>
     /// <param name="_extraParemeter">额外参数</param>
-    void OnLoadAssetInMemory(int _fileId, int _folderId, 
-        AssetBundleOutputEventHandler _outputEvent, AssetBundleProgressEventHandler _progressEvent, 
+    void OnLoadAssetInMemory(int _fileId, int _folderId,
+        Action<IAssetBundleOutput> _outputEvent, Action<float, IAssetBundleInput> _progressEvent, 
         params object[] _extraParemeter)
     {
         XLS_Config_View_AssetDiskMaping config = GetAssetDiskMaping(_fileId, _folderId);

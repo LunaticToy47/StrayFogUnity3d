@@ -95,7 +95,8 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
 #endif
         IAssetBundleFileParameter tempAbp = null;
         mXLS_Config_View_AssetDiskMaping.Clear();
-        List<XLS_Config_View_AssetDiskMaping> mapings = StrayFogSQLiteEntityHelper.Select<XLS_Config_View_AssetDiskMaping>();
+        StrayFogConfigHelper.OnEventHandlerLoadViewFromXLS += StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS;
+        List<XLS_Config_View_AssetDiskMaping> mapings = StrayFogConfigHelper.Select<XLS_Config_View_AssetDiskMaping>();
         if (mapings.Count > 0)
         {
             foreach (XLS_Config_View_AssetDiskMaping v in mapings)
@@ -141,6 +142,7 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
                 mXLSToManifestMaping[v.folderId][v.fileId] = tempAbp.assetBundleId;
             }
         }
+        StrayFogConfigHelper.OnEventHandlerLoadViewFromXLS -= StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS;
 #if UNITY_EDITOR
         watch.Stop();
         Debug.LogFormat("Collection {0} from 【{1}=> {2}】,Time: {3}",
@@ -149,6 +151,58 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
             editorABPN, editorManifestN, editorXLSN, mAssetBundlePathParameterMaping.Count - beforeCollectXlsConfigABMPC, watch.Elapsed);
         watch.Reset();
 #endif
+    }
+
+    /// <summary>
+    /// 从XLS表加载视图
+    /// </summary>
+    /// <param name="_table">表格</param>
+    /// <param name="_type">类型</param>
+    /// <returns>数据集</returns>
+    Dictionary<int, AbsStrayFogSQLiteEntity> StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS(SQLiteTableMapAttribute _tableAttribute, System.Type _type)
+    {
+        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        if (_tableAttribute.tableClassType.Equals(typeof(XLS_Config_View_AssetDiskMaping)))
+        {
+            #region View_AssetDiskMaping 数据组装                                
+            List<XLS_Config_Table_AssetDiskMapingFile> files = StrayFogConfigHelper.Select<XLS_Config_Table_AssetDiskMapingFile>();
+            List<XLS_Config_Table_AssetDiskMapingFolder> folders = StrayFogConfigHelper.Select<XLS_Config_Table_AssetDiskMapingFolder>();
+            Dictionary<int, XLS_Config_Table_AssetDiskMapingFile> dicFile = new Dictionary<int, XLS_Config_Table_AssetDiskMapingFile>();
+            Dictionary<int, XLS_Config_Table_AssetDiskMapingFolder> dicFolder = new Dictionary<int, XLS_Config_Table_AssetDiskMapingFolder>();
+            foreach (XLS_Config_Table_AssetDiskMapingFolder t in folders)
+            {
+                dicFolder.Add(t.folderId, t);
+            }
+            int fileId = StrayFogConfigHelper.GetPropertyId("fileId");
+            int folderId = StrayFogConfigHelper.GetPropertyId("folderId");
+            int fileName = StrayFogConfigHelper.GetPropertyId("fileName");
+            int inAssetPath = StrayFogConfigHelper.GetPropertyId("inAssetPath");
+            int outAssetPath = StrayFogConfigHelper.GetPropertyId("outAssetPath");
+            int extEnumValue = StrayFogConfigHelper.GetPropertyId("extEnumValue");
+
+            AbsStrayFogSQLiteEntity tempEntity = null;
+            foreach (XLS_Config_Table_AssetDiskMapingFile t in files)
+            {
+                tempEntity = (AbsStrayFogSQLiteEntity)System.Activator.CreateInstance(_type, _tableAttribute.hasPkColumn && _tableAttribute.canModifyData);
+
+                StrayFogConfigHelper.GetPropertyInfo(_tableAttribute, fileId).SetValue(tempEntity, t.fileId, null);
+                StrayFogConfigHelper.GetPropertyInfo(_tableAttribute, folderId).SetValue(tempEntity, t.folderId, null);
+                StrayFogConfigHelper.GetPropertyInfo(_tableAttribute, fileName).SetValue(tempEntity, t.inSide + t.ext, null);
+                StrayFogConfigHelper.GetPropertyInfo(_tableAttribute, inAssetPath).SetValue(tempEntity, Path.Combine(dicFolder[t.folderId].inSide, t.inSide + t.ext).TransPathSeparatorCharToUnityChar(), null);
+                StrayFogConfigHelper.GetPropertyInfo(_tableAttribute, outAssetPath).SetValue(tempEntity, t.outSide, null);
+                StrayFogConfigHelper.GetPropertyInfo(_tableAttribute, extEnumValue).SetValue(tempEntity, t.extEnumValue, null);
+                tempEntity.Resolve();
+                result.Add(tempEntity.pkSequenceId, tempEntity);
+            }
+            #endregion
+        }
+        else if (_tableAttribute.tableClassType.Equals(typeof(XLS_Config_View_DeterminantVT)))
+        {
+            #region View_DeterminantVT 数据组装
+            int vtNameKey = "vtName".UniqueHashCode();            
+            #endregion
+        }
+        return result;
     }
     #endregion
 

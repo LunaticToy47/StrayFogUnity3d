@@ -5,9 +5,9 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 /// <summary>
-/// StrayFogSQLite表实体帮助类【Delete】
+/// 配置表实体帮助类【Delete】
 /// </summary>
-public sealed partial class StrayFogSQLiteEntityHelper
+public sealed partial class StrayFogConfigHelper
 {
     #region OnDeleteToCacheEntityData 从缓存删除数据
     /// <summary>
@@ -230,7 +230,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         bool result = OnDeleteToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
         if (result)
         {
-            if (StrayFogGamePools.setting.isUseSQLite)
+            if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
             {
                 OnDeleteFromSQLite(_entity, tableAttribute);
             }
@@ -255,7 +255,7 @@ public sealed partial class StrayFogSQLiteEntityHelper
         bool result = OnDeleteAllToCacheEntityData<T>(tableAttribute);
         if (result)
         {
-            if (StrayFogGamePools.setting.isUseSQLite)
+            if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
             {
                 OnDeleteAllFromSQLite(tableAttribute);
             }

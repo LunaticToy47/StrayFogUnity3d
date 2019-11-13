@@ -22,7 +22,7 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         if (!m_isInitialized)
         {
             m_isInitialized = true;
-            runningSetting = StrayFogSQLiteEntityHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
+            runningSetting = StrayFogConfigHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
             StrayFogAssembly.LoadDynamicAssembly();
             StrayFogGamePools.uiWindowManager.OnOpenWindowEventHandler += UiWindowManager_OnOpenWindowEventHandler;
             StrayFogGamePools.uiWindowManager.OnCloseWindowEventHandler += UiWindowManager_OnCloseWindowEventHandler;
@@ -123,8 +123,8 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
     {
         Time.timeScale = 0;
         StrayFogGamePools.assetBundleManager.Dispose();
-        StrayFogSQLiteEntityHelper.CloseSQLite();
-        StrayFogSQLiteEntityHelper.SaveExcelPackage();
+        StrayFogConfigHelper.CloseSQLite();
+        StrayFogConfigHelper.SaveExcelPackage();
         AssetBundle.UnloadAllAssetBundles(true);
         GameObject[] gos = SceneManager.GetActiveScene().GetRootGameObjects();
         if (gos != null && gos.Length > 0)

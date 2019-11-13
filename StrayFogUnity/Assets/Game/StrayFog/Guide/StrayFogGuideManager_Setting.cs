@@ -63,7 +63,7 @@ public partial class StrayFogGuideManager
     /// </summary>
     void OnInitGuideConfigData()
     {        
-        List<XLS_Config_Table_UserGuideConfig> configs = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideConfig>();
+        List<XLS_Config_Table_UserGuideConfig> configs = StrayFogConfigHelper.Select<XLS_Config_Table_UserGuideConfig>();
         if (configs != null && configs.Count > 0)
         {
             foreach (XLS_Config_Table_UserGuideConfig t in configs)
@@ -83,7 +83,7 @@ public partial class StrayFogGuideManager
     /// </summary>
     void OnInitGuideReferObjectData()
     {
-        List<XLS_Config_Table_UserGuideReferObject> referObjects = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideReferObject>();
+        List<XLS_Config_Table_UserGuideReferObject> referObjects = StrayFogConfigHelper.Select<XLS_Config_Table_UserGuideReferObject>();
         if (referObjects != null && referObjects.Count > 0)
         {
             foreach (XLS_Config_Table_UserGuideReferObject t in referObjects)
@@ -103,7 +103,7 @@ public partial class StrayFogGuideManager
     /// </summary>
     void OnInitGuideStyleData()
     {
-        List<XLS_Config_Table_UserGuideStyle> styles = StrayFogSQLiteEntityHelper.Select<XLS_Config_Table_UserGuideStyle>();
+        List<XLS_Config_Table_UserGuideStyle> styles = StrayFogConfigHelper.Select<XLS_Config_Table_UserGuideStyle>();
         if (styles != null && styles.Count > 0)
         {
             foreach (XLS_Config_Table_UserGuideStyle s in styles)

@@ -50,7 +50,7 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
         /// <param name="_input">输入</param>
         /// <param name="_callback">回调</param>
         /// <param name="_extraParameter">额外参数</param>
-        public ResultCallback(bool _defaultSelfActive,IAssetBundleInput _input, AssetBundleInstantiateEventHandler _callback, object[] _extraParameter)
+        public ResultCallback(bool _defaultSelfActive,IAssetBundleInput _input, Action<IAssetBundleResult> _callback, object[] _extraParameter)
         {
             defaultSelfActive = _defaultSelfActive;
             input = _input;
@@ -68,7 +68,7 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
         /// <summary>
         /// 回调
         /// </summary>
-        public AssetBundleInstantiateEventHandler callback { get; private set; }
+        public Action<IAssetBundleResult> callback { get; private set; }
         /// <summary>
         /// 额外参数
         /// </summary>
@@ -105,8 +105,8 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
     /// <param name="_extraParameter">额外参数</param>
     /// <param name="_type">资源类型</param>
     /// <param name="_assetBundle">资源包</param>
-    public void RequestInstantiate(bool _defaultSelfActive, IAssetBundleInput _input, 
-        AssetBundleInstantiateEventHandler _callback,object[] _extraParameter,Type _type, AssetBundle _assetBundle)
+    public void RequestInstantiate(bool _defaultSelfActive, IAssetBundleInput _input,
+        Action<IAssetBundleResult> _callback,object[] _extraParameter,Type _type, AssetBundle _assetBundle)
     {
         int key = _type.GetHashCode();
         if (!mQueueResultCallback.ContainsKey(key))

@@ -18,9 +18,9 @@ public enum enSQLiteReloadClassify
     DiskCoverSameCache,
 }
 /// <summary>
-/// StrayFogSQLite表实体帮助类【Reload】
+/// 配置表实体帮助类【Reload】
 /// </summary>
-public sealed partial class StrayFogSQLiteEntityHelper
+public sealed partial class StrayFogConfigHelper
 {
     #region Reload 重新加载数据集
     /// <summary>

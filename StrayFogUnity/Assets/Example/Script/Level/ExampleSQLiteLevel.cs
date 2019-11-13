@@ -126,12 +126,12 @@ public class ExampleSQLiteLevel : AbsLevel
     /// </summary>
     void SelectTable()
     {
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Table_Report>();
         UnityEngine.Debug.LogFormat("【Select  Table 】【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
         Stopwatch watch = new Stopwatch();
         watch.Start();
-        List<XLS_Report_Table_Report> maps = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        List<XLS_Report_Table_Report> maps = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table【{0}->{1}】Count->{2} Time->{3}", GetSrcData(tableAttribute), tableAttribute.sqliteTableName, maps.Count, watch.Elapsed);
     }
@@ -147,10 +147,10 @@ public class ExampleSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Table_Report>();
         UnityEngine.Debug.LogFormat("【Insert PK Table 】【Same Key】【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
-        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        List<XLS_Report_Table_Report> reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("【Select PK Table 】【Same Key】SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
@@ -158,14 +158,14 @@ public class ExampleSQLiteLevel : AbsLevel
         {
             watch.Reset();
             watch.Start();
-            StrayFogSQLiteEntityHelper.Insert(reports[0]);
+            StrayFogConfigHelper.Insert(reports[0]);
             watch.Stop();
             UnityEngine.Debug.LogFormat("【Insert PK Table】【Same Key】SQLite Data  【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
         }
 
         watch.Reset();
         watch.Start();
-        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("【Select PK Table】【Same Key】SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
@@ -180,10 +180,10 @@ public class ExampleSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Table_Report>();
         UnityEngine.Debug.LogFormat("【Insert PK Table 】【Different Key】 【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
-        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        List<XLS_Report_Table_Report> reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("【Select PK Table 】【Different Key】SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
@@ -191,13 +191,13 @@ public class ExampleSQLiteLevel : AbsLevel
         watch.Start();
         XLS_Report_Table_Report insertReport = new XLS_Report_Table_Report(Guid.NewGuid().ToString().GetHashCode());
         insertReport.Set_stringCol("Insert PK Table");
-        StrayFogSQLiteEntityHelper.Insert(insertReport);
+        StrayFogConfigHelper.Insert(insertReport);
         watch.Stop();
         UnityEngine.Debug.LogFormat("【Insert PK Table】【Different Key】SQLite Data  【Different PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
         watch.Reset();
         watch.Start();
-        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("【Select PK Table】【Different Key】SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
@@ -212,12 +212,12 @@ public class ExampleSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_ReportColumnMaping>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Table_ReportColumnMaping>();
         UnityEngine.Debug.LogFormat("Insert 【NoPk Table】 【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
         watch.Reset();
         watch.Start();
-        List<XLS_Report_Table_ReportColumnMaping> reportColumnMapings = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_ReportColumnMaping>();
+        List<XLS_Report_Table_ReportColumnMaping> reportColumnMapings = StrayFogConfigHelper.Select<XLS_Report_Table_ReportColumnMaping>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【NoPk Table】SQLite Data =>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
 
@@ -226,14 +226,14 @@ public class ExampleSQLiteLevel : AbsLevel
             watch.Reset();
             watch.Start();
             reportColumnMapings[0].Set_stringCol("Insert NoPk Table");
-            StrayFogSQLiteEntityHelper.Insert(reportColumnMapings[0]);
+            StrayFogConfigHelper.Insert(reportColumnMapings[0]);
             watch.Stop();
             UnityEngine.Debug.LogFormat("Insert【NoPk Table】SQLite Data  =>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
         }
 
         watch.Reset();
         watch.Start();
-        reportColumnMapings = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_ReportColumnMaping>();
+        reportColumnMapings = StrayFogConfigHelper.Select<XLS_Report_Table_ReportColumnMaping>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【NoPk Table】SQLite Data =>{0} , Time=>{1}", reportColumnMapings.Count, watch.Elapsed);
     }
@@ -250,10 +250,10 @@ public class ExampleSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Table_Report>();
         UnityEngine.Debug.LogFormat("Update【Normal Table 】【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
-        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        List<XLS_Report_Table_Report> reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【Normal Table 】SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
@@ -262,14 +262,14 @@ public class ExampleSQLiteLevel : AbsLevel
             watch.Reset();
             watch.Start();
             reports[0].Set_stringCol("UpdateNormal Table");
-            StrayFogSQLiteEntityHelper.Update(reports[0]);
+            StrayFogConfigHelper.Update(reports[0]);
             watch.Stop();
             UnityEngine.Debug.LogFormat("Update【Normal Table】SQLite Data 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
         }
 
         watch.Reset();
         watch.Start();
-        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【Normal Table】SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
@@ -284,10 +284,10 @@ public class ExampleSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Determinant_Table_ReportDeterminant>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Determinant_Table_ReportDeterminant>();
         UnityEngine.Debug.LogFormat("Update【Determinant Table 】【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
-        List<XLS_Report_Determinant_Table_ReportDeterminant> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Determinant_Table_ReportDeterminant>();
+        List<XLS_Report_Determinant_Table_ReportDeterminant> reports = StrayFogConfigHelper.Select<XLS_Report_Determinant_Table_ReportDeterminant>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【Determinant Table 】SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
@@ -297,14 +297,14 @@ public class ExampleSQLiteLevel : AbsLevel
             watch.Start();
             reports[0].Set_ReportTip("Update Determinant Table");
             reports[0].Set_DeterminantTip(Guid.NewGuid().ToString());
-            StrayFogSQLiteEntityHelper.Update(reports[0]);
+            StrayFogConfigHelper.Update(reports[0]);
             watch.Stop();
             UnityEngine.Debug.LogFormat("Update【Determinant Table】SQLite Data 【Same PK】=>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
         }
 
         watch.Reset();
         watch.Start();
-        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Determinant_Table_ReportDeterminant>();
+        reports = StrayFogConfigHelper.Select<XLS_Report_Determinant_Table_ReportDeterminant>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select【Determinant Table】SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
@@ -320,10 +320,10 @@ public class ExampleSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Table_Report>();
         UnityEngine.Debug.LogFormat("Delete Table【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
-        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        List<XLS_Report_Table_Report> reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
@@ -331,14 +331,14 @@ public class ExampleSQLiteLevel : AbsLevel
         {
             watch.Reset();
             watch.Start();
-            StrayFogSQLiteEntityHelper.Delete(reports[0]);
+            StrayFogConfigHelper.Delete(reports[0]);
             watch.Stop();
             UnityEngine.Debug.LogFormat("Delete Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
         }
 
         watch.Reset();
         watch.Start();
-        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
@@ -351,23 +351,23 @@ public class ExampleSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Table_Report>();
         UnityEngine.Debug.LogFormat("Delete Table【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
-        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        List<XLS_Report_Table_Report> reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
         watch.Reset();
         watch.Start();
-        StrayFogSQLiteEntityHelper.DeleteAll<XLS_Report_Table_Report>();
+        StrayFogConfigHelper.DeleteAll<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("DeleteAll Table SQLite Data =>{0} , Time=>{1}, Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
 
         watch.Reset();
         watch.Start();
-        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.Count, watch.Elapsed, reports.JsonSerialize());
     }
@@ -382,10 +382,10 @@ public class ExampleSQLiteLevel : AbsLevel
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        SQLiteTableMapAttribute tableAttribute = StrayFogSQLiteEntityHelper.GetTableAttribute<XLS_Report_Table_Report>();
+        SQLiteTableMapAttribute tableAttribute = StrayFogConfigHelper.GetTableAttribute<XLS_Report_Table_Report>();
         UnityEngine.Debug.LogFormat("Refresh Table【{0}->{1}】", GetSrcData(tableAttribute), tableAttribute.sqliteTableName);
 
-        List<XLS_Report_Table_Report> reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        List<XLS_Report_Table_Report> reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1} , Data=>【{2}】", reports.Count, watch.Elapsed, reports.JsonSerialize());
 
@@ -400,8 +400,8 @@ public class ExampleSQLiteLevel : AbsLevel
 
         watch.Reset();
         watch.Start();
-        StrayFogSQLiteEntityHelper.Reload<XLS_Report_Table_Report>();
-        reports = StrayFogSQLiteEntityHelper.Select<XLS_Report_Table_Report>();
+        StrayFogConfigHelper.Reload<XLS_Report_Table_Report>();
+        reports = StrayFogConfigHelper.Select<XLS_Report_Table_Report>();
         watch.Stop();
         UnityEngine.Debug.LogFormat("Select Table SQLite Data =>{0} , Time=>{1}", reports.JsonSerialize(), watch.Elapsed, reports.JsonSerialize());
     }

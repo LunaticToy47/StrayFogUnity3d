@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 /// <summary>
 /// 资源输出
 /// </summary>
@@ -14,7 +15,7 @@ public interface IAssetBundleOutput
     /// <typeparam name="T">对象类型</typeparam>
     /// <param name="_callback">回调</param>
     /// <param name="_extraParameter">额外参数</param>
-    void Instantiate<T>(AssetBundleInstantiateEventHandler _callback, params object[] _extraParameter) where T : Object;
+    void Instantiate<T>(Action<IAssetBundleResult> _callback, params object[] _extraParameter) where T : UnityEngine.Object;
     /// <summary>
     /// 实例化指定类型对象
     /// </summary>
@@ -22,5 +23,5 @@ public interface IAssetBundleOutput
     /// <param name="_defaultSelfActive">默认激活状态</param>
     /// <param name="_callback">回调</param>
     /// <param name="_extraParameter">额外参数</param>
-    void Instantiate<T>(bool _defaultSelfActive,AssetBundleInstantiateEventHandler _callback, params object[] _extraParameter) where T : Object;
+    void Instantiate<T>(bool _defaultSelfActive, Action<IAssetBundleResult> _callback, params object[] _extraParameter) where T : UnityEngine.Object;
 }

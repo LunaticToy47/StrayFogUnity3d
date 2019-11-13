@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 /// <summary>
-/// StrayFogSQLite表实体帮助类【Select】
+/// 配置表实体帮助类【Select】
 /// </summary>
-public sealed partial class StrayFogSQLiteEntityHelper
+public sealed partial class StrayFogConfigHelper
 {
     #region Select 查询数据集
     /// <summary>
