@@ -46,6 +46,7 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        
         //StrayFogSetting
         //StrayFogGamePools.gameManager.Initialization(() =>
         //{
