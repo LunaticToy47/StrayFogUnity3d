@@ -1250,6 +1250,51 @@ public sealed class EditorStrayFogExecute
     #endregion
 
     #region Asmdef菜单
+
+    #region FindAsmdefByAssembly 查的程序集所属的Asmdef
+    /// <summary>
+    /// 程序集与Asmdef映射
+    /// </summary>
+    static Dictionary<int, int> mAssemblyForAsmdefMaping = new Dictionary<int, int>();
+    /// <summary>
+    /// 查的程序集所属的Asmdef
+    /// </summary>
+    /// <param name="_assembly">程序集</param>
+    /// <returns>Asmdef数据id</returns>
+    public static int FindAssemblyForAsmdef(Assembly _assembly)
+    {
+        int key = _assembly.GetName().FullName.UniqueHashCode();
+        if (!mAssemblyForAsmdefMaping.ContainsKey(key))
+        {
+            List<EditorSelectionAsmdefMapSetting> asmdefs = CollectAsmdef();
+            foreach (EditorSelectionAsmdefMapSetting m in asmdefs)
+            {
+                m.Resolve();
+                if (_assembly.Location.ToUpper().TransPathSeparatorCharToUnityChar().EndsWith(m.asmdefDllPath.ToUpper().TransPathSeparatorCharToUnityChar()))
+                {
+                    mAssemblyForAsmdefMaping.Add(key, m.asmdefId);
+                    break;
+                }
+            }
+        }
+        return mAssemblyForAsmdefMaping.ContainsKey(key) ? mAssemblyForAsmdefMaping[key] : 0;
+    }
+    #endregion
+
+
+    #region CollectAsmdef 收集Asmdef
+    /// <summary>
+    /// 查看要打包的Asmdef
+    /// </summary>
+    /// <returns>执行节点</returns>
+    public static List<EditorSelectionAsmdefMapSetting> CollectAsmdef()
+    {
+        return EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsmdefMapSetting>(
+            new string[1] { Path.GetFileName(Application.dataPath) }, "", false,
+            (n) => { return EditorStrayFogUtility.assetBundleName.IsAsmdef(n); });
+    }
+    #endregion
+
     #region ExecuteLookPackageAsmdef 查看要打包的Asmdef
     /// <summary>
     /// 查看要打包的Asmdef
@@ -1257,9 +1302,7 @@ public sealed class EditorStrayFogExecute
     /// <returns>执行节点</returns>
     public static List<EditorSelectionAsmdefMapSetting> ExecuteLookPackageAsmdef()
     {
-        List<EditorSelectionAsmdefMapSetting> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsmdefMapSetting>(
-            new string[1] { Path.GetFileName(Application.dataPath) }, "", false,
-            (n) => { return EditorStrayFogUtility.assetBundleName.IsAsmdef(n); });
+        List<EditorSelectionAsmdefMapSetting> nodes = CollectAsmdef();
         StringBuilder sbLog = new StringBuilder();
         sbLog.AppendLine("Package Asmdef");
         float progress = 0;
