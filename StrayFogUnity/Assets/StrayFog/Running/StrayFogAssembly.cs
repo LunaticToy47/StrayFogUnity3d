@@ -1,12 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
+
+/// <summary>
+/// Asmdef路径映射
+/// </summary>
+public class StrayFogAsmdefPathMap
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="_asmdefId">Asmdef标识Id</param>
+    /// <param name="_dllPath">Dll路径</param>
+    /// <param name="_pdbPath">Pdb路径</param>
+    /// <param name="_isHotfix">是否是热更</param>
+    public StrayFogAsmdefPathMap(int _asmdefId,string _dllPath,string _pdbPath,bool _isHotfix)
+    {
+        asmdefId = _asmdefId;
+        dllPath = _dllPath;
+        pdbPath = _pdbPath;
+        isHotfix = _isHotfix;
+    }
+    /// <summary>
+    /// Asmdef标识Id
+    /// </summary>
+    public int asmdefId { get; private set; }
+    /// <summary>
+    /// 是否是热更
+    /// </summary>
+    public bool isHotfix { get; private set; }
+    /// <summary>
+    /// Dll路径
+    /// </summary>
+    public string dllPath { get; private set; }
+    /// <summary>
+    /// Pdb路径
+    /// </summary>
+    public string pdbPath { get; private set; }
+}
+
 /// <summary>
 /// 引擎程序集
 /// </summary>
 public sealed class StrayFogAssembly
 {
+    #region LoadDynamicAssembly 加载所有dll动态库
+    /// <summary>
+    /// 加载dll动态库
+    /// </summary>
+    /// <param name="_asmdefMap">Asmdef映射</param>
+    public static void LoadDynamicAssembly(Dictionary<int, StrayFogAsmdefPathMap> _asmdefMap)
+    {
+
+    }
+    #endregion
     //#region LoadDynamicAssembly 加载所有dll动态库
     ///// <summary>
     ///// 加载所有dll动态库
