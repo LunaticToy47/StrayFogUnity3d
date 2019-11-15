@@ -1,8 +1,5 @@
 ﻿#if UNITY_EDITOR
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -71,8 +68,14 @@ public class EditorBuildAsmdefMapWindow : AbsEditorWindow
         for (int i = 0; i < mAsmdefs.Count; i++)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(string.Format("{0}. 【{1}】=>{2}", (i + 1).PadLeft(mAsmdefs.Count), mAsmdefs[i].name, mAsmdefs[i].path));
-                      
+            EditorGUILayout.LabelField(string.Format("{0}. 【{1}】", 
+                (i + 1).PadLeft(mAsmdefs.Count), mAsmdefs[i].name));
+            mAsmdefs[i].assetNode.isHotfix = EditorGUILayout.ToggleLeft("isHotfix", mAsmdefs[i].assetNode.isHotfix);
+
+            if (GUILayout.Button("Setting"))
+            {
+                EditorStrayFogApplication.PingObject(mAsmdefs[i].assetNode);
+            }
             if (GUILayout.Button("Brower"))
             {
                 EditorStrayFogApplication.PingObject(mAsmdefs[i].path);

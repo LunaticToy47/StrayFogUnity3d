@@ -1,7 +1,8 @@
 {
     "name": "ProjectAPK",
     "references": [
-        "GUID:9fc5e238b553dbb4b8ef07e7d9a16da4"
+        "GUID:9fc5e238b553dbb4b8ef07e7d9a16da4",
+        "GUID:2e06eb56b218eed44820e65da2403e40"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

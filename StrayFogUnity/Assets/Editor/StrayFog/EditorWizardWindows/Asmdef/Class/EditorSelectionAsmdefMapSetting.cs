@@ -30,6 +30,23 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
         asmdefPdbPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + enFileExt.Dll_PDB.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
         asmdefPdbAssetbundleName = GetAssetBundleName()+"_p";
         ClearAssetBundleName();
+        OnRead();
+    }
+
+    /// <summary>
+    /// 读取配置
+    /// </summary>
+    void OnRead()
+    {
+        EditorEngineAssetConfig absCfg = new EditorEngineAssetConfig(fileInSide,
+            enEditorApplicationFolder.Game_Editor_Asmdef.GetAttribute<EditorApplicationFolderAttribute>().path,
+            enFileExt.Asset, typeof(EditorAsmdefAsset).FullName);
+        if (!absCfg.Exists())
+        {
+            absCfg.CreateAsset();
+        }
+        absCfg.LoadAsset();
+        assetNode = (EditorAsmdefAsset)absCfg.engineAsset;
     }
 
     /// <summary>
@@ -60,5 +77,9 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
     /// Asmdef资源Pdb名称
     /// </summary>
     public string asmdefPdbAssetbundleName { get; private set; }
+    /// <summary>
+    /// 资源节点
+    /// </summary>
+    public EditorAsmdefAsset assetNode { get; set; }
 }
 #endif

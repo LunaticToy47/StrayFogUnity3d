@@ -32,6 +32,11 @@ public enum enEditorApplicationFolder
     [EditorApplicationFolder("游戏Editor目录", "Assets/Game/Editor", "游戏Editor目录")]
     Game_Editor,
     /// <summary>
+    /// 游戏Editor的Asmdef目录
+    /// </summary>
+    [EditorApplicationFolder("游戏Editor的Asmdef目录", "Assets/Game/Editor/Asmdef", "游戏Editor的Asmdef目录")]
+    Game_Editor_Asmdef,
+    /// <summary>
     /// 游戏Editor的UIWindow目录
     /// </summary>
     [EditorApplicationFolder("游戏Editor的UIWindow目录", "Assets/Game/Editor/UIWindow", "游戏Editor的UIWindow目录")]
@@ -100,6 +105,11 @@ public enum enEditorApplicationFolder
     /// </summary>
     [EditorApplicationFolder("工程Shader目录", "Assets/Project/Shader", "工程Shader目录")]
     Project_Shader,
+    /// <summary>
+    /// 工程SQLite脚本目录
+    /// </summary>
+    [EditorApplicationFolder("工程SQLite脚本目录", "Assets/Project/Script/SQLite", "工程SQLite脚本目录")]
+    Project_Script_SQLite,
     #endregion
 }
 #endregion

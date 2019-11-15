@@ -53,6 +53,12 @@ public partial class XLS_Config_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 	/// </summary>
 	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,6,"asmdefPdbAssetbundleName","","@asmdefPdbAssetbundleName6",false,false)]	
 	public string asmdefPdbAssetbundleName { get; private set; }	
+		
+	/// <summary>
+	/// 是否是Hotfix程序集
+	/// </summary>
+	[SQLiteFieldType(enSQLiteDataType.Boolean,enSQLiteDataTypeArrayDimension.NoArray,7,"isHotfix","","@isHotfix7",false,false)]	
+	public bool isHotfix { get; private set; }	
 	
 	#endregion
 

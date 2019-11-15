@@ -738,18 +738,26 @@ public sealed class EditorStrayFogXLS
         StringBuilder sbConstructorSetParamsReplace = new StringBuilder();
         constructorSetParamsTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(tableConstructorTemplete, constructorSetParamsMark, out constructorSetParamsReplaceTemplete);
         #endregion
+        
+        string gameSqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
+        Dictionary<int, string> dicGameSqliteEntityFolder = new Dictionary<int, string>();
+        Dictionary<int, string> dicGameSqliteDeterminantEntitiesFolder = new Dictionary<int, string>();
 
+        string projectSqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Project_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
+        Dictionary<int, string> dicProjectSqliteEntityFolder = new Dictionary<int, string>();
+        Dictionary<int, string> dicProjectSqliteDeterminantEntitiesFolder = new Dictionary<int, string>();
 
-        string sqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
-
-        Dictionary<int, string> dicSqliteEntityFolder = new Dictionary<int, string>();
-        Dictionary<int, string> dicSqliteDeterminantEntitiesFolder = new Dictionary<int, string>();
         foreach (KeyValuePair<int, TableSQLiteHelper> key in _dbHelper)
         {
-            dicSqliteEntityFolder.Add(key.Key, Path.Combine(sqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_Entities"));
-            dicSqliteDeterminantEntitiesFolder.Add(key.Key, Path.Combine(sqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_DeterminantEntities"));
-            EditorStrayFogUtility.cmd.DeleteFolder(dicSqliteEntityFolder[key.Key]);
-            EditorStrayFogUtility.cmd.DeleteFolder(dicSqliteDeterminantEntitiesFolder[key.Key]);
+            dicGameSqliteEntityFolder.Add(key.Key, Path.Combine(gameSqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_Entities"));
+            dicGameSqliteDeterminantEntitiesFolder.Add(key.Key, Path.Combine(gameSqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_DeterminantEntities"));
+            EditorStrayFogUtility.cmd.DeleteFolder(dicGameSqliteEntityFolder[key.Key]);
+            EditorStrayFogUtility.cmd.DeleteFolder(dicGameSqliteDeterminantEntitiesFolder[key.Key]);
+
+            dicProjectSqliteEntityFolder.Add(key.Key, Path.Combine(projectSqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_Entities"));
+            dicProjectSqliteDeterminantEntitiesFolder.Add(key.Key, Path.Combine(projectSqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_DeterminantEntities"));
+            EditorStrayFogUtility.cmd.DeleteFolder(dicProjectSqliteEntityFolder[key.Key]);
+            EditorStrayFogUtility.cmd.DeleteFolder(dicProjectSqliteDeterminantEntitiesFolder[key.Key]);
         }
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
         List<string> tempConstructorParamSummary = new List<string>();
@@ -757,6 +765,18 @@ public sealed class EditorStrayFogXLS
         List<string> tempConstructorSetParams = new List<string>();
         List<string> tempPkSequenceId = new List<string>();
         bool hasPK = false;
+
+        List<string> projectSqliteMapPaths = new List<string>();
+        if (EditorStrayFogSavedAssetConfig.setXlsFileConfigForAsmdefMap.paths != null)
+        {
+            foreach (string p in EditorStrayFogSavedAssetConfig.setXlsFileConfigForAsmdefMap.paths)
+            {
+                if (!projectSqliteMapPaths.Contains(p))
+                {
+                    projectSqliteMapPaths.Add(p);
+                }
+            }
+        }
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
@@ -906,15 +926,29 @@ public sealed class EditorStrayFogXLS
                 .Replace("#hasPKColumn#", Convert.ToString(hasPK).ToLower())
                 .Replace("#canModifyData#", Convert.ToString(t.canModifyData).ToLower())
                 );
-
-            if (t.isDeterminant)
+            if (projectSqliteMapPaths.Contains(t.fileName))
             {
-                cfgEntityScript.SetDirectory(dicSqliteDeterminantEntitiesFolder[t.dbKey]);
+                if (t.isDeterminant)
+                {
+                    cfgEntityScript.SetDirectory(dicProjectSqliteDeterminantEntitiesFolder[t.dbKey]);
+                }
+                else
+                {
+                    cfgEntityScript.SetDirectory(dicProjectSqliteEntityFolder[t.dbKey]);
+                }
             }
             else
             {
-                cfgEntityScript.SetDirectory(dicSqliteEntityFolder[t.dbKey]);
+                if (t.isDeterminant)
+                {
+                    cfgEntityScript.SetDirectory(dicGameSqliteDeterminantEntitiesFolder[t.dbKey]);
+                }
+                else
+                {
+                    cfgEntityScript.SetDirectory(dicGameSqliteEntityFolder[t.dbKey]);
+                }
             }
+            
             Debug.LogFormat("【{0}->{1}】【{2}】=>{3}", t.tableName, t.className, cfgEntityScript.directory, cfgEntityScript.text);
             cfgEntityScript.CreateAsset();
             EditorUtility.DisplayProgressBar("Build Table Script",
@@ -1345,15 +1379,13 @@ public sealed class EditorStrayFogXLS
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 4].Value = asmdefScripts[i].asmdefDllAssetbundleName;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 5].Value = asmdefScripts[i].asmdefPdbPath;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 6].Value = asmdefScripts[i].asmdefPdbAssetbundleName;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 7].Value = asmdefScripts[i].assetNode.isHotfix ? 1 : 0;
                         }
                         else
                         {
                             rowIndex++;
                         }
-                        if (_progressCallback != null)
-                        {
-                            _progressCallback(asmdefScripts[i].asmdefDllName, (i + 1) / (float)asmdefScripts.Count);
-                        }
+                        _progressCallback?.Invoke(asmdefScripts[i].asmdefDllName, (i + 1) / (float)asmdefScripts.Count);
                     }
                     pck.Save();
                 }

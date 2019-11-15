@@ -16,33 +16,45 @@ public sealed class StrayFogAssembly
     /// <summary>
     /// 加载所有dll动态库
     /// </summary>
-    public static void LoadDynamicAssembly()
+    /// <param name="_onRequestInternalHotfixDllPaths">请求内部Hotfix热更Dll路径</param>
+    /// <param name="_onRequestAssetBundleHotfixDllPaths">请求外部资源包Hotfix热更Dll路径</param>
+    /// <param name="_onComplete">完成回调</param>
+    public static void LoadDynamicAssembly(Func<Dictionary<string, string>> _onRequestInternalHotfixDllPaths,
+        Func<Dictionary<string, string>> _onRequestAssetBundleHotfixDllPaths, Action _onComplete)
     {
         if (dynamicAssemblies == null)
         {
             dynamicAssemblies = new List<Assembly>();
-            List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
-            string dllPath = string.Empty;
-            string pdbPath = string.Empty;
+
             Assembly tmpAssembly = null;
-            foreach (XLS_Config_Table_AsmdefMap m in maps)
+            #region Hotfix Dll
+            Dictionary<string, string> dllSource = new Dictionary<string, string>();
+            if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
             {
-                if (StrayFogGamePools.setting.isInternal)
+                dllSource = _onRequestInternalHotfixDllPaths?.Invoke();
+            }
+            else
+            {
+                dllSource = _onRequestAssetBundleHotfixDllPaths?.Invoke();
+            }
+
+            if (dllSource != null && dllSource.Count > 0)
+            {
+                string dllPath = string.Empty;
+                string pdbPath = string.Empty;
+                foreach (KeyValuePair<string, string> key in dllSource)
                 {
-                    dllPath = m.asmdefDllPath;
-                    pdbPath = m.asmdefPdbPath;
-                }
-                else
-                {
-                    dllPath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, m.asmdefDllAssetbundleName);
-                    pdbPath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, m.asmdefPdbAssetbundleName);
-                }
-                if (File.Exists(dllPath) && File.Exists(pdbPath))
-                {
-                    tmpAssembly = Assembly.Load(File.ReadAllBytes(dllPath), File.ReadAllBytes(pdbPath));
-                    dynamicAssemblies.Add(tmpAssembly);
+                    dllPath = key.Key;
+                    pdbPath = key.Value;
+                    if (File.Exists(dllPath) && File.Exists(pdbPath))
+                    {
+                        tmpAssembly = Assembly.Load(File.ReadAllBytes(dllPath), File.ReadAllBytes(pdbPath));
+                        dynamicAssemblies.Add(tmpAssembly);
+                    }
                 }
             }
+            #endregion
+
             tmpAssembly = Assembly.GetCallingAssembly();
             if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
             {
@@ -58,6 +70,7 @@ public sealed class StrayFogAssembly
             {
                 dynamicAssemblies.Add(tmpAssembly);
             }
+            _onComplete?.Invoke();
         }
     }
     #endregion
