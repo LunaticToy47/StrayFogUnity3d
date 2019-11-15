@@ -34,7 +34,7 @@ public sealed partial class StrayFogConfigHelper
                     else
                     {
                         #region 插入数据
-                        Dictionary<int, AbsStrayFogSQLiteEntity> data = OnSelect<T>(null);
+                        Dictionary<int, T> data = OnSelect<T>(null);
                         StringBuilder sbLog = new StringBuilder();
                         _xlsRowIndex = -1;
                         if (_tableAttribute.hasPkColumn)
@@ -44,7 +44,7 @@ public sealed partial class StrayFogConfigHelper
                             bool hasSamePKValue = data.Count > 0;
                             int sameRowIndex = 0;
                             #region 查询缓存数据中是否有相同主键数据
-                            foreach (KeyValuePair<int, AbsStrayFogSQLiteEntity> entity in data)
+                            foreach (KeyValuePair<int, T> entity in data)
                             {
                                 hasSamePKValue = data.Count > 0;
                                 _xlsRowIndex++;

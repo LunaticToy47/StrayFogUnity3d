@@ -7,73 +7,68 @@ using System.Reflection;
 /// </summary>
 public sealed class StrayFogAssembly
 {
-    /// <summary>
-    /// 动态程序集组
-    /// </summary>
-    public static List<Assembly> dynamicAssemblies { get; private set; }
+    //#region LoadDynamicAssembly 加载所有dll动态库
+    ///// <summary>
+    ///// 加载所有dll动态库
+    ///// </summary>
+    ///// <param name="_onRequestInternalHotfixDllPaths">请求内部Hotfix热更Dll路径</param>
+    ///// <param name="_onRequestAssetBundleHotfixDllPaths">请求外部资源包Hotfix热更Dll路径</param>
+    ///// <param name="_onComplete">完成回调</param>
+    //public static void LoadDynamicAssembly(Func<Dictionary<string, string>> _onRequestInternalHotfixDllPaths,
+    //    Func<Dictionary<string, string>> _onRequestAssetBundleHotfixDllPaths, Action _onComplete)
+    //{
+    //    if (dynamicAssemblies == null)
+    //    {
+    //        dynamicAssemblies = new List<Assembly>();
 
-    #region LoadDynamicAssembly 加载所有dll动态库
-    /// <summary>
-    /// 加载所有dll动态库
-    /// </summary>
-    /// <param name="_onRequestInternalHotfixDllPaths">请求内部Hotfix热更Dll路径</param>
-    /// <param name="_onRequestAssetBundleHotfixDllPaths">请求外部资源包Hotfix热更Dll路径</param>
-    /// <param name="_onComplete">完成回调</param>
-    public static void LoadDynamicAssembly(Func<Dictionary<string, string>> _onRequestInternalHotfixDllPaths,
-        Func<Dictionary<string, string>> _onRequestAssetBundleHotfixDllPaths, Action _onComplete)
-    {
-        if (dynamicAssemblies == null)
-        {
-            dynamicAssemblies = new List<Assembly>();
+    //        Assembly tmpAssembly = null;
+    //        #region Hotfix Dll
+    //        Dictionary<string, string> dllSource = new Dictionary<string, string>();
+    //        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
+    //        {
+    //            dllSource = _onRequestInternalHotfixDllPaths?.Invoke();
+    //        }
+    //        else
+    //        {
+    //            dllSource = _onRequestAssetBundleHotfixDllPaths?.Invoke();
+    //        }
 
-            Assembly tmpAssembly = null;
-            #region Hotfix Dll
-            Dictionary<string, string> dllSource = new Dictionary<string, string>();
-            if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
-            {
-                dllSource = _onRequestInternalHotfixDllPaths?.Invoke();
-            }
-            else
-            {
-                dllSource = _onRequestAssetBundleHotfixDllPaths?.Invoke();
-            }
+    //        if (dllSource != null && dllSource.Count > 0)
+    //        {
+    //            string dllPath = string.Empty;
+    //            string pdbPath = string.Empty;
+    //            foreach (KeyValuePair<string, string> key in dllSource)
+    //            {
+    //                dllPath = key.Key;
+    //                pdbPath = key.Value;
+    //                if (File.Exists(dllPath) && File.Exists(pdbPath))
+    //                {
+    //                    tmpAssembly = Assembly.Load(File.ReadAllBytes(dllPath), File.ReadAllBytes(pdbPath));
+    //                    dynamicAssemblies.Add(tmpAssembly);
+    //                }
+    //            }
+    //        }
+    //        #endregion
 
-            if (dllSource != null && dllSource.Count > 0)
-            {
-                string dllPath = string.Empty;
-                string pdbPath = string.Empty;
-                foreach (KeyValuePair<string, string> key in dllSource)
-                {
-                    dllPath = key.Key;
-                    pdbPath = key.Value;
-                    if (File.Exists(dllPath) && File.Exists(pdbPath))
-                    {
-                        tmpAssembly = Assembly.Load(File.ReadAllBytes(dllPath), File.ReadAllBytes(pdbPath));
-                        dynamicAssemblies.Add(tmpAssembly);
-                    }
-                }
-            }
-            #endregion
-
-            tmpAssembly = Assembly.GetCallingAssembly();
-            if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
-            {
-                dynamicAssemblies.Add(tmpAssembly);
-            }
-            tmpAssembly = Assembly.GetEntryAssembly();
-            if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
-            {
-                dynamicAssemblies.Add(tmpAssembly);
-            }
-            tmpAssembly = Assembly.GetExecutingAssembly();
-            if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
-            {
-                dynamicAssemblies.Add(tmpAssembly);
-            }
-            _onComplete?.Invoke();
-        }
-    }
-    #endregion
+    //        tmpAssembly = Assembly.GetCallingAssembly();
+    //        if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
+    //        {
+    //            dynamicAssemblies.Add(tmpAssembly);
+    //        }
+    //        tmpAssembly = Assembly.GetEntryAssembly();
+    //        if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
+    //        {
+    //            dynamicAssemblies.Add(tmpAssembly);
+    //        }
+    //        tmpAssembly = Assembly.GetExecutingAssembly();
+    //        if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
+    //        {
+    //            dynamicAssemblies.Add(tmpAssembly);
+    //        }
+    //        _onComplete?.Invoke();
+    //    }
+    //}
+    //#endregion
 
     #region GetType Type映射
     /// <summary>
@@ -100,21 +95,21 @@ public sealed class StrayFogAssembly
         if (!mTypeMaping.ContainsKey(key))
         {
             Type type = null;
-            if (dynamicAssemblies != null && dynamicAssemblies.Count > 0)
-            {
-                foreach (Assembly m in dynamicAssemblies)
-                {
-                    type = m.GetType(_typeName);
-                    if (type == null)
-                    {
-                        type = m.GetType(m.GetName().Name + "." + _typeName);
-                    }
-                    if (type != null)
-                    {
-                        break;
-                    }
-                }
-            }
+            //if (dynamicAssemblies != null && dynamicAssemblies.Count > 0)
+            //{
+            //    foreach (Assembly m in dynamicAssemblies)
+            //    {
+            //        type = m.GetType(_typeName);
+            //        if (type == null)
+            //        {
+            //            type = m.GetType(m.GetName().Name + "." + _typeName);
+            //        }
+            //        if (type != null)
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
             mTypeMaping.Add(key, type);
         }
         return mTypeMaping[key];
@@ -137,24 +132,24 @@ public sealed class StrayFogAssembly
         if (!mExportedTypesMaping.ContainsKey(key))
         {
             mExportedTypesMaping.Add(key, new List<Type>());
-            if (dynamicAssemblies != null)
-            {
-                Type[] types = null;
-                foreach (Assembly m in dynamicAssemblies)
-                {
-                    types = m.GetExportedTypes();
-                    if (types != null && types.Length > 0)
-                    {
-                        foreach (Type t in types)
-                        {
-                            if (t.IsTypeOrSubTypeOf(_parentType))
-                            {
-                                mExportedTypesMaping[key].Add(t);
-                            }
-                        }
-                    }
-                }
-            }
+            //if (dynamicAssemblies != null)
+            //{
+            //    Type[] types = null;
+            //    foreach (Assembly m in dynamicAssemblies)
+            //    {
+            //        types = m.GetExportedTypes();
+            //        if (types != null && types.Length > 0)
+            //        {
+            //            foreach (Type t in types)
+            //            {
+            //                if (t.IsTypeOrSubTypeOf(_parentType))
+            //                {
+            //                    mExportedTypesMaping[key].Add(t);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
         return mExportedTypesMaping[key];
     }

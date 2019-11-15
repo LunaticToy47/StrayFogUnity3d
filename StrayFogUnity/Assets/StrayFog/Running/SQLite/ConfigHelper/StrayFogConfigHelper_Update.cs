@@ -29,7 +29,7 @@ public sealed partial class StrayFogConfigHelper
             {
                 case enSQLiteEntityClassify.Table:
                     #region 更新数据
-                    Dictionary<int, AbsStrayFogSQLiteEntity> data = OnSelect<T>(null);
+                    Dictionary<int, T> data = OnSelect<T>(null);
                     StringBuilder sbLog = new StringBuilder();
                     if (_tableAttribute.isDeterminant)
                     {
@@ -56,7 +56,7 @@ public sealed partial class StrayFogConfigHelper
                             bool hasSamePKValue = data.Count > 0;
                             int sameRowIndex = -1;
                             #region 查询缓存数据中是否有相同主键数据
-                            foreach (KeyValuePair<int, AbsStrayFogSQLiteEntity> entity in data)
+                            foreach (KeyValuePair<int, T> entity in data)
                             {
                                 hasSamePKValue = data.Count > 0;
                                 sameRowIndex++;

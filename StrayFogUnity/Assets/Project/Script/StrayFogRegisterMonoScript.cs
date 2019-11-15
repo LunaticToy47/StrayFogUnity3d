@@ -37,38 +37,37 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        StrayFogAssembly.LoadDynamicAssembly(
-            () =>
-            {
-                List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
-                Dictionary<string, string> result = new Dictionary<string, string>();
-                foreach (XLS_Config_Table_AsmdefMap m in maps)
-                {
-                    if (m.isHotfix)
-                    {
-                        result.Add(m.asmdefDllPath, m.asmdefPdbPath);
-                    }
-                }
-                return result;
-            },
-            () =>
-            {
-                List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
-                Dictionary<string, string> result = new Dictionary<string, string>();
-                foreach (XLS_Config_Table_AsmdefMap m in maps)
-                {
-                    if (m.isHotfix)
-                    {
-                        result.Add(Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefDllAssetbundleName),
-                            Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefPdbAssetbundleName));
-                    }
-                }
-                return result;
-            }, () => {
-                OnMountMonoScript();
-            }
-        );
-        
+        //StrayFogAssembly.LoadDynamicAssembly(
+        //    () =>
+        //    {
+        //        List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
+        //        Dictionary<string, string> result = new Dictionary<string, string>();
+        //        foreach (XLS_Config_Table_AsmdefMap m in maps)
+        //        {
+        //            if (m.isHotfix)
+        //            {
+        //                result.Add(m.asmdefDllPath, m.asmdefPdbPath);
+        //            }
+        //        }
+        //        return result;
+        //    },
+        //    () =>
+        //    {
+        //        List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
+        //        Dictionary<string, string> result = new Dictionary<string, string>();
+        //        foreach (XLS_Config_Table_AsmdefMap m in maps)
+        //        {
+        //            if (m.isHotfix)
+        //            {
+        //                result.Add(Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefDllAssetbundleName),
+        //                    Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefPdbAssetbundleName));
+        //            }
+        //        }
+        //        return result;
+        //    }, () => {
+        //        OnMountMonoScript();
+        //    }
+        //);        
     }
 
     /// <summary>
@@ -76,6 +75,9 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
     /// </summary>
     void OnMountMonoScript()
     {
+        Type type = StrayFogAssembly.GetType(monoBehaviourScriptName);
+
+
         //StrayFogSetting
         //StrayFogGamePools.gameManager.Initialization(() =>
         //{

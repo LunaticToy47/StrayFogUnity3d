@@ -52,7 +52,6 @@ public class ExampleGuideLevel : AbsLevel
         GUI.skin.label.fontSize = 40;
         GUI.color = Color.black;
         GUILayout.Label(StrayFogGamePools.setting.ToData());
-        GUILayout.Label("Dynamic=>CD:" + StrayFogAssembly.dynamicAssemblies.Count + " T:" + Time.time);
         string path = StrayFogGamePools.setting.assetBundleRoot + "/ab_xboxone";
         if (!Directory.Exists(StrayFogGamePools.setting.assetBundleRoot))
         {

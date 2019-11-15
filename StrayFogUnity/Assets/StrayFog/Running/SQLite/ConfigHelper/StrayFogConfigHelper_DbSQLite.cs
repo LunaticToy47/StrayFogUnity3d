@@ -13,10 +13,10 @@ public sealed partial class StrayFogConfigHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <returns>数据集</returns>
-    static Dictionary<int, AbsStrayFogSQLiteEntity> OnReadFromSQLite<T>(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, T> OnReadFromSQLite<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        Dictionary<int, T> result = new Dictionary<int, T>();
         SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _tableAttribute.sqliteTableName));
         T tempEntity = default(T);
         string tempPropertyName = string.Empty;

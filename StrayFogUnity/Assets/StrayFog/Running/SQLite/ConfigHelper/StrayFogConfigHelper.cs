@@ -77,10 +77,9 @@ public sealed partial class StrayFogConfigHelper
     /// <summary>
     /// 实体缓存数据
     /// Key:表
-    /// Value:[Key:主键序列值,Value:数据实体]有主键
-    /// Value:[Key:行号,Value:数据实体]无主键
+    /// Value:Dictionary<int, T> where T:AbsStrayFogSQLiteEntity
     /// </summary>
-    static Dictionary<int, Dictionary<int, AbsStrayFogSQLiteEntity>> mCacheEntityData = new Dictionary<int, Dictionary<int, AbsStrayFogSQLiteEntity>>();
+    static Dictionary<int, object> mCacheEntityData = new Dictionary<int, object>();
     #endregion
 
     #region OnRefreshCacheData 刷新内存数据
@@ -91,11 +90,13 @@ public sealed partial class StrayFogConfigHelper
     /// <summary>
     /// 刷新内存数据
     /// </summary>
+    /// <typeparam name="T">类型</typeparam>
     /// <param name="_data">数据</param>
     /// <param name="_tableAttribute">表属性</param>
     /// <param name="_isReadFromDisk">是否是从磁盘读取数据</param>
-    static void OnRefreshCacheData(Dictionary<int, AbsStrayFogSQLiteEntity> _data, SQLiteTableMapAttribute _tableAttribute, 
+    static void OnRefreshCacheData<T>(Dictionary<int, T> _data, SQLiteTableMapAttribute _tableAttribute, 
         bool _isReadFromDisk)
+        where T : AbsStrayFogSQLiteEntity
     {
         if (!mCacheEntityData.ContainsKey(_tableAttribute.id))
         {
@@ -118,9 +119,11 @@ public sealed partial class StrayFogConfigHelper
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
-    static Dictionary<int, AbsStrayFogSQLiteEntity> OnGetCacheData(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, T> OnGetCacheData<T>(SQLiteTableMapAttribute _tableAttribute)
+        where T : AbsStrayFogSQLiteEntity
     {
-        return mCacheEntityData.ContainsKey(_tableAttribute.id) ? mCacheEntityData[_tableAttribute.id] : new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        return mCacheEntityData.ContainsKey(_tableAttribute.id) ?
+            (Dictionary<int, T>)mCacheEntityData[_tableAttribute.id] : new Dictionary<int, T>();
     }
     #endregion
 
@@ -131,10 +134,10 @@ public sealed partial class StrayFogConfigHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <returns>数据集合</returns>
-    static Dictionary<int, AbsStrayFogSQLiteEntity> OnReadAll<T>(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, T> OnReadAll<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        Dictionary<int, T> result = new Dictionary<int, T>();
         if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
         {
             result = OnReadFromSQLite<T>(_tableAttribute);

@@ -36,7 +36,7 @@ public sealed partial class StrayFogConfigHelper
                         #region 删除数据                      
                         if (_tableAttribute.hasPkColumn)
                         {
-                            Dictionary<int, AbsStrayFogSQLiteEntity> data = OnSelect<T>(null);
+                            Dictionary<int, T> data = OnSelect<T>(null);
                             StringBuilder sbLog = new StringBuilder();
                             _xlsRowIndex = -1;
                             object cacheValue = null;
@@ -44,7 +44,7 @@ public sealed partial class StrayFogConfigHelper
                             bool hasSamePKValue = data.Count > 0;
                             int delKey = 0;
                             #region 查询缓存数据中是否有相同主键数据
-                            foreach (KeyValuePair<int, AbsStrayFogSQLiteEntity> entity in data)
+                            foreach (KeyValuePair<int, T> entity in data)
                             {
                                 hasSamePKValue = data.Count > 0;
                                 _xlsRowIndex++;                                

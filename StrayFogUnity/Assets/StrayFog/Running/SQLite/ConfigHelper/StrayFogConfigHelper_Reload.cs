@@ -56,7 +56,7 @@ public sealed partial class StrayFogConfigHelper
     public static List<T> Reload<T>(enSQLiteReloadClassify _reloadClassify,Func<T, bool> _condition)
     where T : AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity>  cache = OnReload<T>(_reloadClassify, _condition);
+        Dictionary<int, T>  cache = OnReload<T>(_reloadClassify, _condition);
         T[] result = new T[cache.Count];
         cache.Values.CopyTo(result, 0);
         return new List<T>(result);
@@ -69,13 +69,13 @@ public sealed partial class StrayFogConfigHelper
     /// <param name="_reloadClassify">重新加载分类</param>
     /// <param name="_condition">条件</param>
     /// <returns>数据集</returns>
-    static Dictionary<int, AbsStrayFogSQLiteEntity> OnReload<T>(enSQLiteReloadClassify _reloadClassify, Func<T, bool> _condition)
-    where T : AbsStrayFogSQLiteEntity
+    static Dictionary<int, T> OnReload<T>(enSQLiteReloadClassify _reloadClassify, Func<T, bool> _condition)
+        where T : AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity> fromCache = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        Dictionary<int, T> fromCache = new Dictionary<int, T>();
         SQLiteTableMapAttribute tableAttribute = GetTableAttribute<T>();
         OnRemoveExcelPackage(tableAttribute);
-        Dictionary<int, AbsStrayFogSQLiteEntity> fromDisk = OnReadAll<T>(tableAttribute);
+        Dictionary<int, T> fromDisk = OnReadAll<T>(tableAttribute);
         switch (_reloadClassify)
         {
             case enSQLiteReloadClassify.DiskCoverSameCache:
@@ -83,12 +83,12 @@ public sealed partial class StrayFogConfigHelper
                 if (tableAttribute.hasPkColumn && fromDisk.Count > 0)
                 {   //如果有磁盘数据，则进行对比处理
                     //如果有主键，则相同主键的磁盘数据覆盖缓存数据
-                    fromCache = OnGetCacheData(tableAttribute);
-                    Dictionary<int, AbsStrayFogSQLiteEntity> fromDiskMaping = new Dictionary<int, AbsStrayFogSQLiteEntity>();
-                    Dictionary<int, AbsStrayFogSQLiteEntity> fromCacheMaping = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+                    fromCache = OnGetCacheData<T>(tableAttribute);
+                    Dictionary<int, T> fromDiskMaping = new Dictionary<int, T>();
+                    Dictionary<int, T> fromCacheMaping = new Dictionary<int, T>();
                     StringBuilder cacheKey = new StringBuilder();
                     #region 统计磁盘数据
-                    foreach (AbsStrayFogSQLiteEntity disk in fromDisk.Values)
+                    foreach (T disk in fromDisk.Values)
                     {
                         cacheKey.Length = 0;
                         foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
@@ -103,7 +103,7 @@ public sealed partial class StrayFogConfigHelper
                     #endregion
 
                     #region 统计缓存数据
-                    foreach (AbsStrayFogSQLiteEntity cache in fromCache.Values)
+                    foreach (T cache in fromCache.Values)
                     {
                         cacheKey.Length = 0;
                         foreach (KeyValuePair<int, SQLiteFieldTypeAttribute> key in msEntitySQLitePropertySQLiteFieldTypeAttributeMaping[tableAttribute.id])
@@ -119,7 +119,7 @@ public sealed partial class StrayFogConfigHelper
 
                     #region 对比磁盘与缓存数据
                     bool isRest = false;
-                    foreach (KeyValuePair<int, AbsStrayFogSQLiteEntity> disk in fromDiskMaping)
+                    foreach (KeyValuePair<int, T> disk in fromDiskMaping)
                     {
                         if (fromCacheMaping.ContainsKey(disk.Key))
                         {

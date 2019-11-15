@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// 项目游戏开始脚本
@@ -11,6 +12,6 @@ public class ProjectGameStart
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void OnProjectGameStart()
     {
-        
+        List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
     }
 }

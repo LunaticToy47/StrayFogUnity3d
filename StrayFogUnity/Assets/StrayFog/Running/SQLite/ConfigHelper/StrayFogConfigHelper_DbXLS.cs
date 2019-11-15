@@ -22,10 +22,10 @@ public sealed partial class StrayFogConfigHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <returns>数据集</returns>
-    static Dictionary<int, AbsStrayFogSQLiteEntity> OnReadFromXLS<T>(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, T> OnReadFromXLS<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        Dictionary<int, T> result = new Dictionary<int, T>();
         if (File.Exists(_tableAttribute.xlsFilePath))
         {
             T tempEntity = default(T);
@@ -123,13 +123,17 @@ public sealed partial class StrayFogConfigHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_tableAttribute">表属性</param>
     /// <returns>数据</returns>
-    static Dictionary<int, AbsStrayFogSQLiteEntity> OnLoadViewFromXLS<T>(SQLiteTableMapAttribute _tableAttribute)
+    static Dictionary<int, T> OnLoadViewFromXLS<T>(SQLiteTableMapAttribute _tableAttribute)
         where T : AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        Dictionary<int, T> result = new Dictionary<int, T>();
         if (_tableAttribute.sqliteTableType == enSQLiteEntityClassify.View)
         {
-            result = OnEventHandlerLoadViewFromXLS?.Invoke(_tableAttribute, typeof(T));
+            Dictionary<int, AbsStrayFogSQLiteEntity> src = OnEventHandlerLoadViewFromXLS?.Invoke(_tableAttribute, typeof(T));
+            if (src != null)
+            {
+                result = (Dictionary<int, T>)Convert.ChangeType(src, typeof(Dictionary<int, T>));
+            }
         }
         return result;
     }

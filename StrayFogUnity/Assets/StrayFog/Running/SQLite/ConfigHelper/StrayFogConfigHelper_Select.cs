@@ -34,7 +34,7 @@ public sealed partial class StrayFogConfigHelper
     public static List<T> Select<T>(Func<T, bool> _condition)
     where T : AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity>  result = OnSelect<T>(_condition);
+        Dictionary<int, T>  result = OnSelect<T>(_condition);
         T[] data = new T[result.Count];
         result.Values.CopyTo(data, 0);
         return new List<T>(data);
@@ -48,15 +48,15 @@ public sealed partial class StrayFogConfigHelper
     /// <typeparam name="T">实体类型</typeparam>
     /// <param name="_condition">条件</param>
     /// <returns>数据集</returns>
-    static Dictionary<int, AbsStrayFogSQLiteEntity> OnSelect<T>(Func<T, bool> _condition)
-    where T : AbsStrayFogSQLiteEntity
+    static Dictionary<int, T> OnSelect<T>(Func<T, bool> _condition)
+        where T : AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        Dictionary<int, T> result = new Dictionary<int, T>();
         SQLiteTableMapAttribute tableAttribute = GetTableAttribute<T>();
-        Dictionary<int, AbsStrayFogSQLiteEntity> srcResult = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        Dictionary<int, T> srcResult = new Dictionary<int, T>();
         if (mCacheIsReadFromDisk.Contains(tableAttribute.id))
         {
-            srcResult = OnGetCacheData(tableAttribute);
+            srcResult = OnGetCacheData<T>(tableAttribute);
         }
         else
         {
