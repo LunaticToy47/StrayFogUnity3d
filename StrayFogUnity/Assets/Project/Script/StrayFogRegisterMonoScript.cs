@@ -38,46 +38,15 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
     void Awake()
     {
         object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
-        if (ins is IMonoBehaviourLifeCycle)
+        if (ins is ISimulateMonoBehaviour)
         {
-            IMonoBehaviourLifeCycle mono = (IMonoBehaviourLifeCycle)ins;
+            ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
             mono.BindGameObject(gameObject);
         }
         else
         {
             Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
         }
-        //StrayFogAssembly.LoadDynamicAssembly(
-        //    () =>
-        //    {
-        //        List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
-        //        Dictionary<string, string> result = new Dictionary<string, string>();
-        //        foreach (XLS_Config_Table_AsmdefMap m in maps)
-        //        {
-        //            if (m.isHotfix)
-        //            {
-        //                result.Add(m.asmdefDllPath, m.asmdefPdbPath);
-        //            }
-        //        }
-        //        return result;
-        //    },
-        //    () =>
-        //    {
-        //        List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
-        //        Dictionary<string, string> result = new Dictionary<string, string>();
-        //        foreach (XLS_Config_Table_AsmdefMap m in maps)
-        //        {
-        //            if (m.isHotfix)
-        //            {
-        //                result.Add(Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefDllAssetbundleName),
-        //                    Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefPdbAssetbundleName));
-        //            }
-        //        }
-        //        return result;
-        //    }, () => {
-        //        OnMountMonoScript();
-        //    }
-        //);        
     }
 
     /// <summary>

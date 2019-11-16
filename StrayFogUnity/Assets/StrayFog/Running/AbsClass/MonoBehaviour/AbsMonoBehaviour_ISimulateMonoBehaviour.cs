@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 /// <summary>
-/// 抽象MonoBehaviour
+/// 抽象MonoBehaviour【模拟MonoBehaviour】
 /// </summary>
-public abstract partial class AbsMonoBehaviour : IMonoBehaviourLifeCycle
+public abstract partial class AbsMonoBehaviour : ISimulateMonoBehaviour
 {
     #region gameObject
     /// <summary>
@@ -56,12 +55,17 @@ public abstract partial class AbsMonoBehaviour : IMonoBehaviourLifeCycle
                 rectTransform = (RectTransform)gameObject.transform;
             }
             coroutine = gameObject.AddComponent<StrayFogCoroutine>();
+            OnAfterBindGameObject();
         }
         else
         {
             Debug.LogErrorFormat("【{0}】 BindGameObject is null.", GetType().FullName);
         }
     }
+    /// <summary>
+    /// 绑定GameObject之后
+    /// </summary>
+    protected virtual void OnAfterBindGameObject() { }
     #endregion
 
     #region Awake
@@ -140,6 +144,34 @@ public abstract partial class AbsMonoBehaviour : IMonoBehaviourLifeCycle
     /// OnLateUpdate
     /// </summary>
     protected virtual void OnLateUpdate() { }
+    #endregion
+
+    #region Disable
+    /// <summary>
+    /// Disable
+    /// </summary>
+    public void Disable()
+    {
+        OnDisable();
+    }
+    /// <summary>
+    /// OnDisable
+    /// </summary>
+    protected virtual void OnDisable() { }
+    #endregion
+
+    #region Enable
+    /// <summary>
+    /// Enable
+    /// </summary>
+    public void Enable()
+    {
+        OnEnable();
+    }
+    /// <summary>
+    /// OnEnable
+    /// </summary>
+    protected virtual void OnEnable() { }
     #endregion
 
     #region Destroy

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 /// <summary>
-/// MonoBehaviour生命周期
+/// MonoBehaviour模拟
 /// </summary>
-public interface IMonoBehaviourLifeCycle
+public interface ISimulateMonoBehaviour
 {
     /// <summary>
     /// GameObject
@@ -49,6 +49,14 @@ public interface IMonoBehaviourLifeCycle
     /// LateUpdate
     /// </summary>
     void LateUpdate();
+    /// <summary>
+    /// OnDisable
+    /// </summary>
+    void Disable();
+    /// <summary>
+    /// OnEnable
+    /// </summary>
+    void Enable();
     /// <summary>
     /// Destroy
     /// </summary>

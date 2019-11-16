@@ -1,0 +1,14 @@
+﻿using UnityEngine;
+/// <summary>
+/// #EventName#
+/// </summary>
+public class ListenFor_#EventName#_Behaviour : MonoBehaviour
+{
+	/// <summary>
+    /// #EventName#
+    /// </summary>
+    void #EventName#()
+    {
+        
+    }
+}

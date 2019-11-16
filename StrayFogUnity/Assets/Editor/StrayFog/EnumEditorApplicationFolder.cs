@@ -94,7 +94,7 @@ public enum enEditorApplicationFolder
     #endregion
     #endregion
 
-    #region Project目录
+    #region StrayFogRunning目录
     /// <summary>
     /// 工程资源目录
     /// </summary>
@@ -110,6 +110,14 @@ public enum enEditorApplicationFolder
     /// </summary>
     [EditorApplicationFolder("工程SQLite脚本目录", "Assets/Project/Script/SQLite", "工程SQLite脚本目录")]
     Project_Script_SQLite,
+    #endregion
+
+    #region StrayFog目录
+    /// <summary>
+    /// StrayFog运行时LikeMonoBehaviour目录
+    /// </summary>
+    [EditorApplicationFolder("StrayFog运行时LikeMonoBehaviour目录", "Assets/StrayFog/Running/AbsClass/LikeMonoBehaviour", "StrayFog运行时LikeMonoBehaviour目录")]
+    StrayFog_Running_LikeMonoBehaviour,
     #endregion
 }
 #endregion

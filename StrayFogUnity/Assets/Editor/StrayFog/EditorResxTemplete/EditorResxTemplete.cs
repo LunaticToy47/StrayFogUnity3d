@@ -108,13 +108,24 @@ public class EditorResxTemplete
     }
 
     /// <summary>
-    /// EdtiorCustomAssetNewAssetScriptTemplete
+    /// EditorCustomAssetNewAssetScriptTemplete
     /// </summary>
-    public static string EdtiorCustomAssetNewAssetScriptTemplete
+    public static string EditorCustomAssetNewAssetScriptTemplete
     {
         get
         {
-            return GetFileString("Develop/EdtiorCustomAssetNewAssetScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Develop/EditorCustomAssetNewAssetScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+        }
+    }
+
+    /// <summary>
+    /// EditorLikeMonoBehaviourScriptTemplete
+    /// </summary>
+    public static string EditorLikeMonoBehaviourScriptTemplete
+    {
+        get
+        {
+            return GetFileString("Develop/EditorLikeMonoBehaviourScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
 

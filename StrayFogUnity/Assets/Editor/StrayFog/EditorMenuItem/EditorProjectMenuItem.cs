@@ -55,5 +55,21 @@ static class EditorProjectMenuItem
         win.Show();
     }
     #endregion
+
+    #region Build MonoBehaviour Event Listening
+    const string mcBuildMonoBehaviourEventListening = "Build MonoBehaviour Event Listening";
+    /// <summary>
+    /// 构建MonoBehaviour事件监听
+    /// </summary>
+    [MenuItem(mcMenu + mcBuildMonoBehaviourEventListening, false, mcPriority + 2)]
+    [MenuItem(mcAssetMenu + mcBuildMonoBehaviourEventListening, false, mcPriority + 2)]
+    [MenuItem(mcHierarchy + mcBuildMonoBehaviourEventListening, false, mcPriority + 2)]
+    static void EditorDevelopMenuItem_BuildMonoBehaviourEventListeningWindow()
+    {
+        EditorWindowBuildMonoBehaviourEventListening win =
+              EditorWindow.GetWindow<EditorWindowBuildMonoBehaviourEventListening>(mcBuildMonoBehaviourEventListening);
+        win.Show();
+    }
+    #endregion
 }
 #endif

@@ -10,7 +10,7 @@ public class EditorWindowCustomAssetCreateNewAsset : AbsEditorWindow
     /// <summary>
     /// Txt脚本模板
     /// </summary>
-    string mTxtScriptTemplete = EditorResxTemplete.EdtiorCustomAssetNewAssetScriptTemplete;
+    string mTxtScriptTemplete = EditorResxTemplete.EditorCustomAssetNewAssetScriptTemplete;
     /// <summary>
     /// 脚本内容
     /// </summary>
