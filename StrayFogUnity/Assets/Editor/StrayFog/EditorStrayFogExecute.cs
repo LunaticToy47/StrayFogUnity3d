@@ -133,6 +133,36 @@ public sealed class EditorStrayFogExecute
     }
     #endregion
 
+    #region ExecuteBuildSimulateMonoBehaviour 生成模拟MonoBehaviour组件
+    /// <summary>
+    /// 收集模拟MonoBehaviour
+    /// </summary>
+    /// <returns>方法与模拟属性</returns>
+    public static Dictionary<MethodInfo, SimulateMonoBehaviourAttribute> CollectSimulateMonoBehaviour()
+    {
+        Dictionary<MethodInfo, SimulateMonoBehaviourAttribute> result = new Dictionary<MethodInfo, SimulateMonoBehaviourAttribute>();
+        //mSimulateMonoBehaviourMethods = typeof(ISimulateMonoBehaviour).GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+        //if (mSimulateMonoBehaviourMethods != null)
+        //{
+        //    foreach (MethodInfo m in mSimulateMonoBehaviourMethods)
+        //    {
+        //        if (m.DeclaringType.Equals(mDeclaringType) && m.IsMethod())
+        //        {
+        //            EditorGUILayout.LabelField(m.Name);
+        //        }
+        //    }
+        //}
+        return result;
+    }
+
+    /// <summary>
+    /// 生成模拟MonoBehaviour组件
+    /// </summary>
+    public static void ExecuteBuildSimulateMonoBehaviour()
+    {
+
+    }
+    #endregion
     #endregion
 
     #region Shader菜单
