@@ -62,7 +62,7 @@ public class EditorWindowBuildMonoBehaviourEventListening : AbsEditorWindow
         {
             foreach (MethodInfo m in mSimulateMonoBehaviourMethods)
             {
-                if (m.DeclaringType.Equals(mDeclaringType) && !m.IsSpecialName)
+                if (m.DeclaringType.Equals(mDeclaringType) && m.IsMethod())
                 {
                     EditorGUILayout.LabelField(m.Name);
                 }

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Reflection;
+/// <summary>
+/// Type扩展
+/// </summary>
 public static class TypeExtend
 {
     /// <summary>
@@ -32,5 +36,15 @@ public static class TypeExtend
     public static bool IsSubTypeOf(this Type _srctype, Type _ofType)
     {
         return _srctype.IsSubclassOf(_ofType) || _srctype.GetInterface(_ofType.Name) != null;
+    }
+
+    /// <summary>
+    /// 是否是纯方法
+    /// </summary>
+    /// <param name="_methodInfo">方法</param>
+    /// <returns>true:是,false:否</returns>
+    public static bool IsMethod(this MethodInfo _methodInfo)
+    {
+        return !_methodInfo.IsSpecialName;
     }
 }
