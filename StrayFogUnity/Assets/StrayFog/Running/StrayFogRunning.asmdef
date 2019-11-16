@@ -1,7 +1,8 @@
 {
     "name": "StrayFogRunning",
     "references": [
-        "GUID:9fc5e238b553dbb4b8ef07e7d9a16da4"
+        "GUID:9fc5e238b553dbb4b8ef07e7d9a16da4",
+        "GUID:0edd31a616327b14c8b51c927062e8d7"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

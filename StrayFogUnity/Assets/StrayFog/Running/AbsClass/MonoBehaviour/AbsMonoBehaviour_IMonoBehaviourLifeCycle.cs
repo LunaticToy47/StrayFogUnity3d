@@ -47,7 +47,7 @@ public abstract partial class AbsMonoBehaviour : IMonoBehaviourLifeCycle
     /// </summary>
     /// <param name="_go">GameObject</param>
     public void BindGameObject(GameObject _go)
-    {
+    {        
         if (_go != null)
         {
             gameObject = _go;

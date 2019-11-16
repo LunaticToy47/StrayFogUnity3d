@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 /// <summary>
 /// Asmdef路径映射
@@ -50,73 +52,41 @@ public sealed class StrayFogAssembly
     /// <param name="_asmdefMap">Asmdef映射</param>
     public static void LoadDynamicAssembly(Dictionary<int, StrayFogAsmdefPathMap> _asmdefMap)
     {
-
+        mDynamicAssemblyMaping.Clear();
+        Assembly temp = null;
+        foreach (StrayFogAsmdefPathMap m in _asmdefMap.Values)
+        {
+            temp = Assembly.Load(File.ReadAllBytes(m.dllPath), File.ReadAllBytes(m.pdbPath));
+            if (temp != null)
+            {
+                mDynamicAssemblyMaping.Add(m.asmdefId, temp);
+            }
+        }
     }
     #endregion
-    //#region LoadDynamicAssembly 加载所有dll动态库
-    ///// <summary>
-    ///// 加载所有dll动态库
-    ///// </summary>
-    ///// <param name="_onRequestInternalHotfixDllPaths">请求内部Hotfix热更Dll路径</param>
-    ///// <param name="_onRequestAssetBundleHotfixDllPaths">请求外部资源包Hotfix热更Dll路径</param>
-    ///// <param name="_onComplete">完成回调</param>
-    //public static void LoadDynamicAssembly(Func<Dictionary<string, string>> _onRequestInternalHotfixDllPaths,
-    //    Func<Dictionary<string, string>> _onRequestAssetBundleHotfixDllPaths, Action _onComplete)
-    //{
-    //    if (dynamicAssemblies == null)
-    //    {
-    //        dynamicAssemblies = new List<Assembly>();
 
-    //        Assembly tmpAssembly = null;
-    //        #region Hotfix Dll
-    //        Dictionary<string, string> dllSource = new Dictionary<string, string>();
-    //        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
-    //        {
-    //            dllSource = _onRequestInternalHotfixDllPaths?.Invoke();
-    //        }
-    //        else
-    //        {
-    //            dllSource = _onRequestAssetBundleHotfixDllPaths?.Invoke();
-    //        }
-
-    //        if (dllSource != null && dllSource.Count > 0)
-    //        {
-    //            string dllPath = string.Empty;
-    //            string pdbPath = string.Empty;
-    //            foreach (KeyValuePair<string, string> key in dllSource)
-    //            {
-    //                dllPath = key.Key;
-    //                pdbPath = key.Value;
-    //                if (File.Exists(dllPath) && File.Exists(pdbPath))
-    //                {
-    //                    tmpAssembly = Assembly.Load(File.ReadAllBytes(dllPath), File.ReadAllBytes(pdbPath));
-    //                    dynamicAssemblies.Add(tmpAssembly);
-    //                }
-    //            }
-    //        }
-    //        #endregion
-
-    //        tmpAssembly = Assembly.GetCallingAssembly();
-    //        if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
-    //        {
-    //            dynamicAssemblies.Add(tmpAssembly);
-    //        }
-    //        tmpAssembly = Assembly.GetEntryAssembly();
-    //        if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
-    //        {
-    //            dynamicAssemblies.Add(tmpAssembly);
-    //        }
-    //        tmpAssembly = Assembly.GetExecutingAssembly();
-    //        if (tmpAssembly != null && !dynamicAssemblies.Contains(tmpAssembly))
-    //        {
-    //            dynamicAssemblies.Add(tmpAssembly);
-    //        }
-    //        _onComplete?.Invoke();
-    //    }
-    //}
-    //#endregion
+    #region CreateInstance 创建指定类别的实例
+    /// <summary>
+    /// 创建指定类别的实例
+    /// </summary>
+    /// <param name="_typeName">类名称</param>
+    /// <returns>实例</returns>
+    public static object CreateInstance(string _typeName)
+    {
+        Type type = GetType(_typeName);
+        return type != null ? Activator.CreateInstance(type) : null;
+    }
+    #endregion
 
     #region GetType Type映射
+    /// <summary>
+    /// 动态链接库组
+    /// </summary>
+    static Dictionary<int,Assembly> mDynamicAssemblyMaping = new Dictionary<int, Assembly>();
+    /// <summary>
+    /// 类与程序集映射
+    /// </summary>
+    static Dictionary<int, int> mTypeForAssemblyMaping = new Dictionary<int, int>();
     /// <summary>
     /// Type映射
     /// </summary>
@@ -141,63 +111,21 @@ public sealed class StrayFogAssembly
         if (!mTypeMaping.ContainsKey(key))
         {
             Type type = null;
-            //if (dynamicAssemblies != null && dynamicAssemblies.Count > 0)
-            //{
-            //    foreach (Assembly m in dynamicAssemblies)
-            //    {
-            //        type = m.GetType(_typeName);
-            //        if (type == null)
-            //        {
-            //            type = m.GetType(m.GetName().Name + "." + _typeName);
-            //        }
-            //        if (type != null)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //}
-            mTypeMaping.Add(key, type);
+            if (mDynamicAssemblyMaping != null && mDynamicAssemblyMaping.Count > 0)
+            {
+                foreach (KeyValuePair<int, Assembly> asm in mDynamicAssemblyMaping)
+                {
+                    type = asm.Value.GetType(_typeName);
+                    if (type != null)
+                    {
+                        mTypeForAssemblyMaping.Add(key, asm.Key);
+                        mTypeMaping.Add(key, type);
+                        break;
+                    }
+                }
+            }            
         }
-        return mTypeMaping[key];
-    }
-    #endregion
-
-    #region GetExportedTypes 获得继承于指定类别的所有类别组
-    /// <summary>
-    /// 子类组映射
-    /// </summary>
-    static Dictionary<int, List<Type>> mExportedTypesMaping = new Dictionary<int, List<Type>>();
-    /// <summary>
-    /// 获得继承于指定类别的所有类别组
-    /// </summary>
-    /// <param name="_parentType">父类别</param>
-    /// <returns>类别组</returns>
-    public static List<Type> GetExportedTypes(Type _parentType)
-    {
-        int key = _parentType.GetHashCode();
-        if (!mExportedTypesMaping.ContainsKey(key))
-        {
-            mExportedTypesMaping.Add(key, new List<Type>());
-            //if (dynamicAssemblies != null)
-            //{
-            //    Type[] types = null;
-            //    foreach (Assembly m in dynamicAssemblies)
-            //    {
-            //        types = m.GetExportedTypes();
-            //        if (types != null && types.Length > 0)
-            //        {
-            //            foreach (Type t in types)
-            //            {
-            //                if (t.IsTypeOrSubTypeOf(_parentType))
-            //                {
-            //                    mExportedTypesMaping[key].Add(t);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-        }
-        return mExportedTypesMaping[key];
+        return mTypeMaping.ContainsKey(key) ? mTypeMaping[key] : null;
     }
     #endregion
 }

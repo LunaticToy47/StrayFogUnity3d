@@ -9,7 +9,7 @@ using UnityEngine;
 public class ExampleTerrainLevel : AbsLevel
 {
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
     protected override void OnAwake()
     {
@@ -50,7 +50,7 @@ public class ExampleTerrainLevel : AbsLevel
     /// <summary>
     /// OnGUI
     /// </summary>
-    private void OnGUI()
+    protected override void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();

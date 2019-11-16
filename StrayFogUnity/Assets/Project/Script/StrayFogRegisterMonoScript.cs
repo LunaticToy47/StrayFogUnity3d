@@ -37,6 +37,16 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
+        if (ins is IMonoBehaviourLifeCycle)
+        {
+            IMonoBehaviourLifeCycle mono = (IMonoBehaviourLifeCycle)ins;
+            mono.BindGameObject(gameObject);
+        }
+        else
+        {
+            Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
+        }
         //StrayFogAssembly.LoadDynamicAssembly(
         //    () =>
         //    {

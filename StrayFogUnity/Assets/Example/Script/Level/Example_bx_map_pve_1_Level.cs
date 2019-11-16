@@ -6,9 +6,9 @@
 public class Example_bx_map_pve_1_Level : AbsLevel
 {
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    private void Awake()
+    protected override void OnAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
@@ -22,7 +22,7 @@ public class Example_bx_map_pve_1_Level : AbsLevel
     /// <summary>
     /// OnGUI
     /// </summary>
-    private void OnGUI()
+    protected override void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();

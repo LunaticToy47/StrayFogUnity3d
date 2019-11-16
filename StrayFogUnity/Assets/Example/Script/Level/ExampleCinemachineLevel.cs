@@ -6,9 +6,9 @@
 public class ExampleCinemachineLevel : AbsLevel
 {
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
@@ -22,7 +22,7 @@ public class ExampleCinemachineLevel : AbsLevel
     /// <summary>
     /// OnGUI
     /// </summary>
-    private void OnGUI()
+    protected override void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();

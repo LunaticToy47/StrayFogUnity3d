@@ -15,7 +15,7 @@ public class ExampleEventHandlerLevel : AbsLevel
     /// </summary>
     bool mCanDispatch = false;
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
     protected override void OnAwake()
     {
@@ -54,7 +54,7 @@ public class ExampleEventHandlerLevel : AbsLevel
     /// <summary>
     /// OnGUI
     /// </summary>
-    private void OnGUI()
+    protected override void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         if (mCanDispatch)

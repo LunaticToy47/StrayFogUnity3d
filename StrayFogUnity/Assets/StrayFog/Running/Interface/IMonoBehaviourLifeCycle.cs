@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 /// <summary>
 /// MonoBehaviour生命周期
 /// </summary>

@@ -41,9 +41,9 @@ public class ExampleUIWindowLevel : AbsLevel
     /// </summary>
     Dictionary<int, AliasTooltipAttribute> mUIWindowAliasMaping = new Dictionary<int, AliasTooltipAttribute>();
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
         foreach (KeyValuePair<FieldInfo, AliasTooltipAttribute> key in mUIWindowFieldAttrMaping)
         {
@@ -59,7 +59,10 @@ public class ExampleUIWindowLevel : AbsLevel
         });
     }
 
-    void OnGUI()
+    /// <summary>
+    /// OnGUI
+    /// </summary>
+    protected override void OnGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();

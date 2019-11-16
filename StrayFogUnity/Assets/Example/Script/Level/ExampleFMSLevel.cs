@@ -86,7 +86,7 @@ public class ExampleFMSLevel : AbsLevel
     /// <summary>
     /// OnGUI
     /// </summary>
-    private void OnGUI()
+    protected override void OnGUI()
     {
         if (mFMSMachine != null)
         {

@@ -13,9 +13,9 @@ public class ExampleRunningStartUpLevel : AbsMonoBehaviour
     string mError;
 
     /// <summary>
-    /// Awake
+    /// OnAwake
     /// </summary>
-    void Awake()
+    protected override void OnAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
@@ -31,7 +31,7 @@ public class ExampleRunningStartUpLevel : AbsMonoBehaviour
     /// <summary>
     /// OnGUI
     /// </summary>
-    void OnGUI()
+    protected override void OnGUI()
     {
         Debug.LogError("StrayFogRunningStartUpLevel=>SQLite");
         GUILayout.Label(StrayFogGamePools.setting.JsonSerialize());
