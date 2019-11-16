@@ -52,8 +52,8 @@ public class ExampleGuideLevel : AbsLevel
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
         mScrollViewPosition = GUILayout.BeginScrollView(mScrollViewPosition);
-        GUI.skin.label.fontSize = 40;
-        GUI.color = Color.black;
+        UnityEngine.GUI.skin.label.fontSize = 40;
+        UnityEngine.GUI.color = Color.black;
         GUILayout.Label(StrayFogGamePools.setting.ToData());
         string path = StrayFogGamePools.setting.assetBundleRoot + "/ab_xboxone";
         if (!Directory.Exists(StrayFogGamePools.setting.assetBundleRoot))

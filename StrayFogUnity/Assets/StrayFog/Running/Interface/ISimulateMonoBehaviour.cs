@@ -32,38 +32,47 @@ public interface ISimulateMonoBehaviour
     /// <summary>
     /// Awake
     /// </summary>
+    [SimulateMonoBehaviour("Awake")]
     void Awake();
     /// <summary>
     /// Start
     /// </summary>
+    [SimulateMonoBehaviour("Start")]
     void Start();
     /// <summary>
     /// Update
     /// </summary>
+    [SimulateMonoBehaviour("Update")]
     void Update();
     /// <summary>
     /// FixedUpdate
     /// </summary>
+    [SimulateMonoBehaviour("FixedUpdate")]
     void FixedUpdate();
     /// <summary>
     /// LateUpdate
     /// </summary>
+    [SimulateMonoBehaviour("LateUpdate")]
     void LateUpdate();
     /// <summary>
-    /// OnDisable
+    /// Disable
     /// </summary>
+    [SimulateMonoBehaviour("OnDisable")]
     void Disable();
     /// <summary>
-    /// OnEnable
+    /// Enable
     /// </summary>
+    [SimulateMonoBehaviour("OnEnable")]
     void Enable();
     /// <summary>
     /// Destroy
     /// </summary>
+    [SimulateMonoBehaviour("OnDestroy")]
     void Destroy();
     /// <summary>
-    /// DrawGUI
+    /// GUI
     /// </summary>
-    void DrawGUI();
+    [SimulateMonoBehaviour("OnGUI")]
+    void GUI();
 }
 

@@ -188,11 +188,11 @@ public abstract partial class AbsMonoBehaviour : ISimulateMonoBehaviour
     protected virtual void OnDestroy() { }
     #endregion
 
-    #region DrawGUI
+    #region GUI
     /// <summary>
-    /// DrawGUI
+    /// GUI
     /// </summary>
-    public void DrawGUI() {
+    public void GUI() {
         OnGUI();
     }
     /// <summary>
