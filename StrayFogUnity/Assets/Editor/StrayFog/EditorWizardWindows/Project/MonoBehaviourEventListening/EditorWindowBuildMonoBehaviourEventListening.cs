@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -30,11 +31,15 @@ public class EditorWindowBuildMonoBehaviourEventListening : AbsEditorWindow
     MethodInfo[] mSimulateMonoBehaviourMethods = null;
 
     /// <summary>
+    /// DeclaringType
+    /// </summary>
+    Type mDeclaringType = typeof(ISimulateMonoBehaviour);
+    /// <summary>
     /// OnFocus
     /// </summary>
     void OnFocus()
     {
-        mSimulateMonoBehaviourMethods = typeof(ISimulateMonoBehaviour).GetMethods(BindingFlags.Instance | BindingFlags.Public);
+        mSimulateMonoBehaviourMethods = typeof(ISimulateMonoBehaviour).GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
     }
 
     /// <summary>
@@ -53,7 +58,16 @@ public class EditorWindowBuildMonoBehaviourEventListening : AbsEditorWindow
     void DrawBrower()
     {
         mScrollViewPosition = EditorGUILayout.BeginScrollView(mScrollViewPosition);
-
+        if (mSimulateMonoBehaviourMethods != null)
+        {
+            foreach (MethodInfo m in mSimulateMonoBehaviourMethods)
+            {
+                if (m.DeclaringType.Equals(mDeclaringType) && !m.IsSpecialName)
+                {
+                    EditorGUILayout.LabelField(m.Name);
+                }
+            }
+        }
         EditorGUILayout.EndScrollView();
     }
     #endregion
