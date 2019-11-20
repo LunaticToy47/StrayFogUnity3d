@@ -27,4 +27,22 @@ public abstract partial class AbsMonoBehaviour : IRecycle
     /// </summary>
     protected virtual void OnRecycle() { }
     #endregion
+
+    #region ToggleSceneRecycle
+    /// <summary>
+    /// 转场景回收事件处理
+    /// </summary>
+    public event Action<IRecycle> OnToggleSceneRecycleHandler;
+    /// 转场景回收
+    /// </summary>
+    public void ToggleSceneRecycle()
+    {
+        OnToggleSceneRecycle();
+        OnToggleSceneRecycleHandler?.Invoke(this);
+    }
+    /// <summary>
+    /// 转场景回收
+    /// </summary>
+    protected virtual void OnToggleSceneRecycle() { }
+    #endregion
 }

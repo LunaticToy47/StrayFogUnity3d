@@ -16,5 +16,12 @@ public interface IRecycle
     /// 回收
     /// </summary>
     void Recycle();
+    /// <summary>
+    /// 转场景回收事件处理
+    /// </summary>
+    event Action<IRecycle> OnToggleSceneRecycleHandler;
+    /// 转场景回收
+    /// </summary>
+    void ToggleSceneRecycle();
 }
 

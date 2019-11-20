@@ -317,15 +317,23 @@ public abstract class AbsGuideResolveMatchCommand : IGuideMatchConditionCommand,
     /// 回收
     /// </summary>
     protected virtual void OnRecycle() { }
+    #endregion
 
+    #region ToggleSceneRecycle 转场景回收
     /// <summary>
-    /// 延时回收
+    /// 转场景回收事件处理
     /// </summary>
-    /// <param name="_delay">延时时间</param>
-    [Obsolete("Use Recycle() instead. Delay is not use.")]
-    public void Recycle(float _delay)
+    public event Action<IRecycle> OnToggleSceneRecycleHandler;
+    /// 转场景回收
+    /// </summary>
+    public void ToggleSceneRecycle()
     {
-        Recycle();
+        OnToggleSceneRecycle();
+        OnToggleSceneRecycleHandler?.Invoke(this);
     }
+    /// <summary>
+    /// 转场景回收
+    /// </summary>
+    protected virtual void OnToggleSceneRecycle() { }
     #endregion
 }
