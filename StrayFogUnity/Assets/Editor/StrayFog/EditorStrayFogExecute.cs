@@ -141,17 +141,19 @@ public sealed class EditorStrayFogExecute
     public static Dictionary<MethodInfo, SimulateMonoBehaviourAttribute> CollectSimulateMonoBehaviour()
     {
         Dictionary<MethodInfo, SimulateMonoBehaviourAttribute> result = new Dictionary<MethodInfo, SimulateMonoBehaviourAttribute>();
-        //mSimulateMonoBehaviourMethods = typeof(ISimulateMonoBehaviour).GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-        //if (mSimulateMonoBehaviourMethods != null)
-        //{
-        //    foreach (MethodInfo m in mSimulateMonoBehaviourMethods)
-        //    {
-        //        if (m.DeclaringType.Equals(mDeclaringType) && m.IsMethod())
-        //        {
-        //            EditorGUILayout.LabelField(m.Name);
-        //        }
-        //    }
-        //}
+        MethodInfo[] methods = typeof(ISimulateMonoBehaviour).GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+        if (methods != null)
+        {
+            SimulateMonoBehaviourAttribute attr = null;
+            foreach (MethodInfo m in methods)
+            {
+                attr = m.GetFirstAttribute<SimulateMonoBehaviourAttribute>();
+                if (attr != null)
+                {
+                    result.Add(m, attr);
+                }
+            }
+        }
         return result;
     }
 
@@ -160,6 +162,12 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildSimulateMonoBehaviour()
     {
+        EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("",
+            enEditorApplicationFolder.StrayFog_Running_LikeMonoBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path,
+            enFileExt.CS, "");
+        string mTxtScriptTemplete = EditorResxTemplete.EditorLikeMonoBehaviourScriptTemplete;
+
+        Dictionary<MethodInfo, SimulateMonoBehaviourAttribute> methods = CollectSimulateMonoBehaviour();
 
     }
     #endregion
