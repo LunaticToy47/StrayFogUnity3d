@@ -84,6 +84,7 @@ public sealed partial class StrayFogConfigHelper
             }
         }
         msStrayFogSQLiteHelperMaping.Clear();
+        mFunLoadViewFromXLSMaping.Clear();
     }
     #endregion
 }

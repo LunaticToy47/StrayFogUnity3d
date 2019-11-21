@@ -41,7 +41,7 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
         if (ins is ISimulateMonoBehaviour)
         {
             ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
-            mono.BindGameObject(gameObject);
+            mono.BindGameObject(gameObject);            
         }
         else
         {

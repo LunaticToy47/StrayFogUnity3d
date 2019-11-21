@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 /// <summary>
@@ -95,7 +96,7 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
 #endif
         IAssetBundleFileParameter tempAbp = null;
         mXLS_Config_View_AssetDiskMaping.Clear();
-        StrayFogConfigHelper.OnEventHandlerLoadViewFromXLS += StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS;
+        StrayFogConfigHelper.AddLoadViewFromXLS(StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS<XLS_Config_View_AssetDiskMaping>);
         List<XLS_Config_View_AssetDiskMaping> mapings = StrayFogConfigHelper.Select<XLS_Config_View_AssetDiskMaping>();
         if (mapings.Count > 0)
         {
@@ -142,7 +143,7 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
                 mXLSToManifestMaping[v.folderId][v.fileId] = tempAbp.assetBundleId;
             }
         }
-        StrayFogConfigHelper.OnEventHandlerLoadViewFromXLS -= StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS;
+        StrayFogConfigHelper.RemoveLoadViewFromXLS(StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS<XLS_Config_View_AssetDiskMaping>);
 #if UNITY_EDITOR
         watch.Stop();
         Debug.LogFormat("Collection {0} from 【{1}=> {2}】,Time: {3}",
@@ -159,9 +160,12 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
     /// <param name="_table">表格</param>
     /// <param name="_type">类型</param>
     /// <returns>数据集</returns>
-    Dictionary<int, AbsStrayFogSQLiteEntity> StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS(SQLiteTableMapAttribute _tableAttribute, System.Type _type)
+    Dictionary<int, T> StrayFogSQLiteEntityHelper_OnEventHandlerLoadViewFromXLS<T>
+        (SQLiteTableMapAttribute _tableAttribute)
+        where T: AbsStrayFogSQLiteEntity
     {
-        Dictionary<int, AbsStrayFogSQLiteEntity> result = new Dictionary<int, AbsStrayFogSQLiteEntity>();
+        Dictionary<int, T> result = new Dictionary<int, T>();
+        Type type = typeof(T);
         if (_tableAttribute.tableClassType.Equals(typeof(XLS_Config_View_AssetDiskMaping)))
         {
             #region View_AssetDiskMaping 数据组装                                
@@ -180,10 +184,10 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
             int outAssetPath = StrayFogConfigHelper.GetPropertyId("outAssetPath");
             int extEnumValue = StrayFogConfigHelper.GetPropertyId("extEnumValue");
 
-            AbsStrayFogSQLiteEntity tempEntity = null;
+            T tempEntity = null;
             foreach (XLS_Config_Table_AssetDiskMapingFile t in files)
             {
-                tempEntity = (AbsStrayFogSQLiteEntity)System.Activator.CreateInstance(_type, _tableAttribute.hasPkColumn && _tableAttribute.canModifyData);
+                tempEntity = (T)Activator.CreateInstance(type, _tableAttribute.hasPkColumn && _tableAttribute.canModifyData);
 
                 StrayFogConfigHelper.GetPropertyInfo(_tableAttribute, fileId).SetValue(tempEntity, t.fileId, null);
                 StrayFogConfigHelper.GetPropertyInfo(_tableAttribute, folderId).SetValue(tempEntity, t.folderId, null);

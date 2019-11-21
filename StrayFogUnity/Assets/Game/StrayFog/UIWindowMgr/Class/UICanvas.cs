@@ -4,7 +4,6 @@ using UnityEngine.UI;
 /// <summary>
 /// UGUI画布
 /// </summary>
-[RequireComponent(typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster))]
 [AddComponentMenu("StrayFog/Game/UI/UICanvas")]
 public sealed class UICanvas : AbsMonoBehaviour
 {
@@ -40,10 +39,37 @@ public sealed class UICanvas : AbsMonoBehaviour
     /// </summary>
     protected override void OnAwake()
     {
+        #region canvas
         canvas = gameObject.GetComponent<Canvas>();
+        if (canvas == null)
+        {
+            canvas = gameObject.AddComponent<Canvas>();
+        }
+        #endregion
+
+        #region canvasScaler
         canvasScaler = gameObject.GetComponent<CanvasScaler>();
+        if (canvasScaler == null)
+        {
+            canvasScaler = gameObject.AddComponent<CanvasScaler>();
+        }
+        #endregion
+
+        #region graphicRaycaster
         graphicRaycaster = gameObject.GetComponent<GraphicRaycaster>();
+        if (graphicRaycaster == null)
+        {
+            graphicRaycaster = gameObject.AddComponent<GraphicRaycaster>();
+        }
+        #endregion
+
+        #region rectTransfrom
         rectTransfrom = gameObject.GetComponent<RectTransform>();
+        if (rectTransfrom == null)
+        {
+            rectTransfrom = gameObject.AddComponent<RectTransform>();
+        }
+        #endregion
     }
     /// <summary>
     /// SetDirty

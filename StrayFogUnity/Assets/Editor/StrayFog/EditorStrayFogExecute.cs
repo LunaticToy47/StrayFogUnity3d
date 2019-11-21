@@ -1312,7 +1312,7 @@ public sealed class EditorStrayFogExecute
             foreach (EditorSelectionAsmdefMapSetting m in asmdefs)
             {
                 m.Resolve();
-                if (_assembly.Location.ToUpper().TransPathSeparatorCharToUnityChar().EndsWith(m.asmdefDllPath.ToUpper().TransPathSeparatorCharToUnityChar()))
+                if (_assembly.ManifestModule.FullyQualifiedName.ToUpper().TransPathSeparatorCharToUnityChar().EndsWith(m.asmdefDllPath.ToUpper().TransPathSeparatorCharToUnityChar()))
                 {
                     mAssemblyForAsmdefMaping.Add(key, m.asmdefId);
                     break;

@@ -90,7 +90,7 @@ public class ExampleUIWindowLevel : AbsLevel
     /// <summary>
     /// Update
     /// </summary>
-    void Update()
+    protected override void OnUpdate()
     {
         bool single = StrayFogGamePools.uiWindowManager.IsOpenedWindow(msrBtnWindows[0]);
         bool multiple = StrayFogGamePools.uiWindowManager.IsOpenedWindow(msrBtnWindows);

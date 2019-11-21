@@ -3,17 +3,53 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+
+/// <summary>
+/// 从XLS加载视图数据集
+/// </summary>
+/// <typeparam name="T">类型</typeparam>
+/// <param name="_tableAttribute">表属性</param>
+/// <returns>数据集</returns>
+public delegate Dictionary<int, T> LoadViewFromXLSEventHandler<T>(SQLiteTableMapAttribute _tableAttribute) where T : AbsStrayFogSQLiteEntity;
+
 /// <summary>
 /// 配置表实体帮助类【DbXLS】
 /// </summary>
 public sealed partial class StrayFogConfigHelper
 {
-    #region OnEventHandlerLoadViewFromXLS 从XLS表加载视图事件句柄
     /// <summary>
-    /// 从XLS表加载视图事件句柄
+    /// 从XLS读取视图映射
     /// </summary>
-    public static event Func<SQLiteTableMapAttribute, Type, Dictionary<int, AbsStrayFogSQLiteEntity>> OnEventHandlerLoadViewFromXLS;
-    #endregion 
+    static Dictionary<int, object> mFunLoadViewFromXLSMaping = new Dictionary<int, object>();
+
+    #region AddLoadViewFromXLS
+    /// <summary>
+    /// 添加从XLS加载视图
+    /// </summary>
+    public static void AddLoadViewFromXLS<T>(LoadViewFromXLSEventHandler<T> _funLoadViewFromXLS)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        Type t = typeof(T);
+        int key = t.GetHashCode();
+        if (!mFunLoadViewFromXLSMaping.ContainsKey(key))
+        {
+            mFunLoadViewFromXLSMaping.Add(key, _funLoadViewFromXLS);
+        }
+    }
+    #endregion
+
+    #region RemoveLoadViewFromXLS
+    /// <summary>
+    /// 移除从XLS加载视图
+    /// </summary>
+    public static void RemoveLoadViewFromXLS<T>(LoadViewFromXLSEventHandler<T> _funLoadViewFromXLS)
+        where T : AbsStrayFogSQLiteEntity
+    {
+        Type t = typeof(T);
+        int key = t.GetHashCode();
+        mFunLoadViewFromXLSMaping.Remove(key);
+    }
+    #endregion
 
     #region OnReadFromXLS
     /// <summary>
@@ -28,7 +64,7 @@ public sealed partial class StrayFogConfigHelper
         Dictionary<int, T> result = new Dictionary<int, T>();
         if (File.Exists(_tableAttribute.xlsFilePath))
         {
-            T tempEntity = default(T);
+            T tempEntity = default;
             int tempPropertyKey = 0;
             object tempValue = null;
             string tempName = string.Empty;
@@ -129,10 +165,15 @@ public sealed partial class StrayFogConfigHelper
         Dictionary<int, T> result = new Dictionary<int, T>();
         if (_tableAttribute.sqliteTableType == enSQLiteEntityClassify.View)
         {
-            Dictionary<int, AbsStrayFogSQLiteEntity> src = OnEventHandlerLoadViewFromXLS?.Invoke(_tableAttribute, typeof(T));
-            if (src != null)
+            Type t = typeof(T);
+            int key = t.GetHashCode();
+            if (mFunLoadViewFromXLSMaping.ContainsKey(key))
             {
-                result = (Dictionary<int, T>)Convert.ChangeType(src, typeof(Dictionary<int, T>));
+                if (mFunLoadViewFromXLSMaping[key] is LoadViewFromXLSEventHandler<T>)
+                {
+                    LoadViewFromXLSEventHandler<T> call = (LoadViewFromXLSEventHandler<T>)mFunLoadViewFromXLSMaping[key];
+                    result = call?.Invoke(_tableAttribute);
+                }
             }
         }
         return result;
