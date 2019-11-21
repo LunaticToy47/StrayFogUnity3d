@@ -135,26 +135,22 @@ public sealed class EditorStrayFogExecute
 
     #region ExecuteBuildSimulateMonoBehaviour 生成模拟MonoBehaviour组件
     /// <summary>
-    /// 收集模拟MonoBehaviour
+    /// 模拟MonoBehaviour方法映射
+    /// </summary>
+    static Dictionary<int, MethodInfo[]> mSimulateMonoBehaviour_MethodMaping = new Dictionary<int, MethodInfo[]>();
+    /// <summary>
+    /// 收集模拟MonoBehaviourMethod
     /// </summary>
     /// <returns>方法与模拟属性</returns>
-    public static Dictionary<MethodInfo, SimulateMonoBehaviourAttribute> CollectSimulateMonoBehaviour()
+    public static MethodInfo[] CollectSimulateMonoBehaviourMethods()
     {
-        Dictionary<MethodInfo, SimulateMonoBehaviourAttribute> result = new Dictionary<MethodInfo, SimulateMonoBehaviourAttribute>();
-        MethodInfo[] methods = typeof(ISimulateMonoBehaviour).GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-        if (methods != null)
+        Type type = typeof(SimulateMonoBehaviour_Templet);
+        int key = type.FullName.UniqueHashCode();
+        if (!mSimulateMonoBehaviour_MethodMaping.ContainsKey(key))
         {
-            SimulateMonoBehaviourAttribute attr = null;
-            foreach (MethodInfo m in methods)
-            {
-                attr = m.GetFirstAttribute<SimulateMonoBehaviourAttribute>();
-                if (attr != null)
-                {
-                    result.Add(m, attr);
-                }
-            }
+            mSimulateMonoBehaviour_MethodMaping.Add(key, type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly));
         }
-        return result;
+        return mSimulateMonoBehaviour_MethodMaping[key];
     }
 
     /// <summary>
@@ -165,10 +161,11 @@ public sealed class EditorStrayFogExecute
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("",
             enEditorApplicationFolder.StrayFog_Running_LikeMonoBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path,
             enFileExt.CS, "");
-        string mTxtScriptTemplete = EditorResxTemplete.EditorLikeMonoBehaviourScriptTemplete;
+        string mTxtScriptTemplete = EditorResxTemplete.EditorSimulateMonoBehaviourMethodScriptTemplete;
 
-        Dictionary<MethodInfo, SimulateMonoBehaviourAttribute> methods = CollectSimulateMonoBehaviour();
-
+        MethodInfo[] methods = CollectSimulateMonoBehaviourMethods();
+        //#Methods#
+        //#EventName#
     }
     #endregion
     #endregion
@@ -1461,6 +1458,8 @@ public sealed class EditorStrayFogExecute
 
         ExecuteSetSpritePackingTag();
         ExecuteSetAssetBundleName();
+
+        ExecuteBuildSimulateMonoBehaviour();
 
         ExecuteExportXlsSchemaToSqlite();
 

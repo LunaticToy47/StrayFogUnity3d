@@ -119,13 +119,13 @@ public class EditorResxTemplete
     }
 
     /// <summary>
-    /// EditorLikeMonoBehaviourScriptTemplete
+    /// EditorSimulateMonoBehaviourMethodScriptTemplete
     /// </summary>
-    public static string EditorLikeMonoBehaviourScriptTemplete
+    public static string EditorSimulateMonoBehaviourMethodScriptTemplete
     {
         get
         {
-            return GetFileString("Develop/EditorLikeMonoBehaviourScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Develop/EditorSimulateMonoBehaviourMethodScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
 
