@@ -131,16 +131,6 @@ public sealed class SimulateMonoBehaviour_Templet : MonoBehaviour
         
     }
 
-    private void OnDisconnectedFromMasterServer(NetworkDisconnection info)
-    {
-        
-    }
-
-    private void OnDisconnectedFromServer(NetworkDisconnection info)
-    {
-        
-    }
-
     private void OnDrawGizmos()
     {
         
@@ -152,16 +142,6 @@ public sealed class SimulateMonoBehaviour_Templet : MonoBehaviour
     }
 
     private void OnEnable()
-    {
-        
-    }
-
-    private void OnFailedToConnect(NetworkConnectionError error)
-    {
-        
-    }
-
-    private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
     {
         
     }
@@ -182,11 +162,6 @@ public sealed class SimulateMonoBehaviour_Templet : MonoBehaviour
     }
 
     private void OnLevelWasLoaded(int level)
-    {
-        
-    }
-
-    private void OnMasterServerEvent(MasterServerEvent msEvent)
     {
         
     }
@@ -237,16 +212,6 @@ public sealed class SimulateMonoBehaviour_Templet : MonoBehaviour
     }
 
     private void OnParticleTrigger()
-    {
-        
-    }
-
-    private void OnPlayerConnected(NetworkPlayer player)
-    {
-        
-    }
-
-    private void OnPlayerDisconnected(NetworkPlayer player)
     {
         
     }
@@ -345,4 +310,40 @@ public sealed class SimulateMonoBehaviour_Templet : MonoBehaviour
     {
         
     }
+
+    private void OnDisconnectedFromMasterServer(NetworkDisconnection info)
+    {
+        
+    }
+
+    private void OnDisconnectedFromServer(NetworkDisconnection info)
+    {
+        
+    }
+
+    private void OnFailedToConnect(NetworkConnectionError error)
+    {
+        
+    }
+
+    private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
+    {
+        
+    }
+
+    private void OnMasterServerEvent(MasterServerEvent msEvent)
+    {
+        
+    }
+
+    private void OnPlayerConnected(NetworkPlayer player)
+    {
+        
+    }
+
+    private void OnPlayerDisconnected(NetworkPlayer player)
+    {
+        
+    }
+
 }

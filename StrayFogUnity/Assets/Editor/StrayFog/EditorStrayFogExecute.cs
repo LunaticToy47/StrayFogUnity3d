@@ -133,6 +133,10 @@ public sealed class EditorStrayFogExecute
     }
     #endregion
 
+    #endregion
+
+    #region SimulateMonoBehaviour菜单
+
     #region ExecuteBuildSimulateMonoBehaviour 生成模拟MonoBehaviour组件
     /// <summary>
     /// 模拟MonoBehaviour方法映射
@@ -158,16 +162,83 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildSimulateMonoBehaviour()
     {
-        EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("",
-            enEditorApplicationFolder.StrayFog_Running_LikeMonoBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path,
-            enFileExt.CS, "");
-        string mTxtScriptTemplete = EditorResxTemplete.EditorSimulateMonoBehaviourMethodScriptTemplete;
+        string enumScriptFolder = enEditorApplicationFolder.StrayFog_Running_SimulateMonoBehaviourMethod.GetAttribute<EditorApplicationFolderAttribute>().path;
+        string methodFolder = Path.Combine(enumScriptFolder,"MethodMono");
 
+        EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", methodFolder, enFileExt.CS, "");
+
+        EditorStrayFogUtility.cmd.DeleteFolder(enumScriptFolder);
+        EditorStrayFogUtility.cmd.DeleteFolder(methodFolder);
+
+        string mTxtScriptTemplete = EditorResxTemplete.EditorSimulateMonoBehaviourMethodScriptTemplete;
         MethodInfo[] methods = CollectSimulateMonoBehaviourMethods();
-        //#Methods#
-        //#EventName#
+
+        List<string> enumMethodNames = new List<string>();
+        if (methods != null)
+        {
+            StringBuilder sbParameter = new StringBuilder();
+            StringBuilder sbLog = new StringBuilder();
+            sbLog.AppendLine("BuildSimulateMonoBehaviour");
+            string txtScript = string.Empty;
+            float progress = 0;
+            bool isBuild = false;
+            foreach (MethodInfo m in methods)
+            {
+                progress++;
+                sbParameter.Length = 0;
+                isBuild = m.GetFirstAttribute<ObsoleteAttribute>() == null;
+                ParameterInfo[] pams = m.GetParameters();
+                if (pams != null)
+                {
+                    foreach (ParameterInfo p in pams)
+                    {
+                        isBuild &= p.ParameterType.GetFirstAttribute<ObsoleteAttribute>() == null;
+                    }
+                }
+
+                if (isBuild)
+                {                    
+                    if (pams != null)
+                    {
+                        foreach (ParameterInfo p in pams)
+                        {
+                            sbParameter.AppendFormat("{0} {1},", p.ParameterType, p.Name);
+                        }
+                    }
+                    if (sbParameter.Length > 0)
+                    {
+                        sbParameter = sbParameter.Remove(sbParameter.Length - 1, 1);
+                    }
+                    txtScript = mTxtScriptTemplete;
+                    txtScript = txtScript
+                        .Replace("#MethodName#", m.Name)
+                        .Replace("#MethodParameter#", sbParameter.ToString());
+                    cfgEntityScript.SetName(m.Name);
+                    cfgEntityScript.SetText(txtScript);
+                    cfgEntityScript.CreateAsset();
+                    if (!enumMethodNames.Contains(m.Name))
+                    {
+                        enumMethodNames.Add(m.Name);
+                    }
+                }
+                sbLog.AppendLine(m.Name);                
+                EditorUtility.DisplayProgressBar("Build Log", m.Name, progress / methods.Length);
+            }
+
+            mTxtScriptTemplete = EditorResxTemplete.EditorSimulateMonoBehaviourMethodEnumScriptTemplete;
+            cfgEntityScript.SetDirectory(enumScriptFolder);
+            cfgEntityScript.SetName("EnumSimulateMonoBehaviourMethod");
+            cfgEntityScript.SetText(mTxtScriptTemplete.Replace("#Methods#", string.Join(",", enumMethodNames.ToArray())));
+            cfgEntityScript.CreateAsset();
+
+            EditorUtility.ClearProgressBar();
+            sbLog.AppendLine("ExecuteBuildSimulateMonoBehaviour Succeed!");
+            Debug.Log(sbLog.ToString());
+            EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        }
     }
     #endregion
+
     #endregion
 
     #region Shader菜单

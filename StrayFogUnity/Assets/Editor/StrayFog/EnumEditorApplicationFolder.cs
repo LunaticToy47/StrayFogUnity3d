@@ -114,10 +114,10 @@ public enum enEditorApplicationFolder
 
     #region StrayFog目录
     /// <summary>
-    /// StrayFog运行时LikeMonoBehaviour目录
+    /// StrayFog运行时SimulateMonoBehaviourMethod目录
     /// </summary>
-    [EditorApplicationFolder("StrayFog运行时LikeMonoBehaviour目录", "Assets/StrayFog/Running/AbsClass/LikeMonoBehaviour", "StrayFog运行时LikeMonoBehaviour目录")]
-    StrayFog_Running_LikeMonoBehaviour,
+    [EditorApplicationFolder("StrayFog运行时SimulateMonoBehaviourMethod目录", "Assets/StrayFog/Running/SimulateMonoBehaviourMethod", "StrayFog运行时SimulateMonoBehaviourMethod目录")]
+    StrayFog_Running_SimulateMonoBehaviourMethod,
     #endregion
 }
 #endregion

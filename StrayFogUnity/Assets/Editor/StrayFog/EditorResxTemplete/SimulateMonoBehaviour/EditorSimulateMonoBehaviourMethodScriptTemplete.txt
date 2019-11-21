@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 /// <summary>
-/// #EventName#
+/// #MethodName#
 /// </summary>
-public class SimulateMonoBehaviourMethod_#EventName# : MonoBehaviour
+public sealed class SimulateMonoBehaviourMethod_#MethodName# : AbsSimulateMonoBehaviourMethod
 {
 	/// <summary>
-    /// #EventName#
+    /// 方法分类
     /// </summary>
-    void #EventName#()
+    public override enSimulateMonoBehaviourMethod methodClassify { get { return enSimulateMonoBehaviourMethod.#MethodName#; } }
+
+	/// <summary>
+    /// #MethodName#
+    /// </summary>
+    void #MethodName#(#MethodParameter#)
     {
         
     }

@@ -130,6 +130,18 @@ public class EditorResxTemplete
     }
 
     /// <summary>
+    /// EditorSimulateMonoBehaviourMethodEnumScriptTemplete
+    /// </summary>
+    public static string EditorSimulateMonoBehaviourMethodEnumScriptTemplete
+    {
+        get
+        {
+            return GetFileString("SimulateMonoBehaviour/EditorSimulateMonoBehaviourMethodEnumScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+        }
+    }
+    
+
+    /// <summary>
     /// SQLiteCreateDeterminantViewTemplete
     /// </summary>
     public static string SQLiteCreateDeterminantViewTemplete

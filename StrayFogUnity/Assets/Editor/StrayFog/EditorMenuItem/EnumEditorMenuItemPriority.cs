@@ -13,29 +13,17 @@ enum enEditorMenuItemPriority
     /// </summary>
     DataMode,
     /// <summary>
-    /// UIWindow
+    /// EditorProjectMenuItem
     /// </summary>
-    UIWindow,
+    Shader,
     /// <summary>
     /// EditorProjectMenuItem
     /// </summary>
     Project,
     /// <summary>
-    /// EditorProjectMenuItem
+    /// UIWindow
     /// </summary>
-    Shader,
-    /// <summary>
-    /// EditorDevelopMenuItem
-    /// </summary>
-    Develop,
-    /// <summary>
-    /// EditorSimulateMonoBehaviourMenuItem
-    /// </summary>
-    SimulateMonoBehaviour,
-    /// <summary>
-    /// EditorCustomAssetMenuItem
-    /// </summary>
-    CustomAsset,
+    UIWindow,
     /// <summary>
     /// EditorGuideMenuItem
     /// </summary>
@@ -44,6 +32,14 @@ enum enEditorMenuItemPriority
     /// EditorAnimatorMenuItem
     /// </summary>
     Animator,
+    /// <summary>
+    /// EditorDevelopMenuItem
+    /// </summary>
+    Develop,
+    /// <summary>
+    /// EditorCustomAssetMenuItem
+    /// </summary>
+    CustomAsset,
     /// <summary>
     /// EditorAnimCurveMenuItem
     /// </summary>
@@ -83,7 +79,11 @@ enum enEditorMenuItemPriority
     /// <summary>
     /// EditorAsmdefMenuItem
     /// </summary>
-    Asmdef,    
+    Asmdef,
+    /// <summary>
+    /// EditorSimulateMonoBehaviourMenuItem
+    /// </summary>
+    SimulateMonoBehaviour,
     /// <summary>
     /// EditorReleaseMenuItem
     /// </summary>
