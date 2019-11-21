@@ -33,15 +33,20 @@ public abstract class AbsUIGuideWindowView : AbsUIWindowView
     /// </summary>
     bool mIsSetMaterial = false;
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected sealed override void OnAwake()
+    protected sealed override void OnRunAwake()
     {
         mIsSetMaterial = false;
         mUIGraphicMask = gameObject.AddComponent<UIGraphicMaskShader>();
         mUIGraphicMask.color = mDefaultColor;
         LoadMaterial((args) => { });
-    }    
+        OnAfterRunAwake();
+    }
+    /// <summary>
+    /// OnAfterRunAwake
+    /// </summary>
+    protected virtual void OnAfterRunAwake() { }
 
     /// <summary>
     /// 加载材质

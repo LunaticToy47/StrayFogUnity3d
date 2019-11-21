@@ -31,9 +31,9 @@ public class ExampleXLuaLevel : AbsLevel
     /// </summary>
     bool mTriggerStart=false;
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnRunAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
@@ -67,9 +67,9 @@ public class ExampleXLuaLevel : AbsLevel
     }
 
     /// <summary>
-    /// OnStart
+    /// OnRunStart
     /// </summary>
-    protected override  void OnStart()
+    protected override  void OnRunStart()
     {
         if (!mTriggerStart && mLuaStart != null)
         {
@@ -96,17 +96,17 @@ public class ExampleXLuaLevel : AbsLevel
     }
 
     /// <summary>
-    /// OnUpdate
+    /// OnRunUpdate
     /// </summary>
-    protected override void OnUpdate()
+    protected override void OnRunUpdate()
     {
         mLuaUpdate?.Invoke();
     }
 
     /// <summary>
-    /// OnDestroy
+    /// OnRunDestroy
     /// </summary>
-    protected override void OnDestroy()
+    protected override void OnRunDestroy()
     {
         mLuaOnDestroy?.Invoke();
         mLuaOnDestroy = null;
@@ -115,9 +115,9 @@ public class ExampleXLuaLevel : AbsLevel
     }
 
     /// <summary>
-    /// OnGUI
+    /// OnRunGUI
     /// </summary>
-    protected override void OnGUI()
+    protected override void OnRunGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();

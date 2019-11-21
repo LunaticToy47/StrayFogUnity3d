@@ -15,7 +15,7 @@ public partial interface ISimulateMonoBehaviour
     /// <summary>
     /// 协程
     /// </summary>
-    StrayFogCoroutine coroutine { get; }
+    SimulateMonoBehaviour_Coroutine coroutine { get; }
     /// <summary>
     /// 是否绑定GameObject
     /// </summary>

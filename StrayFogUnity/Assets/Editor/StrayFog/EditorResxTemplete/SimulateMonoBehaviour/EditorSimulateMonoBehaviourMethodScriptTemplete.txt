@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 /// <summary>
-/// #MethodName#
+/// #ClassName#
 /// </summary>
-public sealed class SimulateMonoBehaviourMethod_#MethodName# : AbsSimulateMonoBehaviourMethod
+public sealed class #ClassName# : AbsSimulateMonoBehaviourMethod
 {
 	/// <summary>
     /// 方法分类

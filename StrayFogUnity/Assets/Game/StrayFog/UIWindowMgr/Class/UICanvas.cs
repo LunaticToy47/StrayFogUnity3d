@@ -35,9 +35,9 @@ public sealed class UICanvas : AbsMonoBehaviour
     public float worldToPixels { get; private set; }
 
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnRunAwake()
     {
         #region canvas
         canvas = gameObject.GetComponent<Canvas>();

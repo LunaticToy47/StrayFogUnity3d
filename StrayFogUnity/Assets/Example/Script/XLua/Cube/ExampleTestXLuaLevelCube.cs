@@ -30,9 +30,9 @@ public class ExampleTestXLuaLevelCube : AbsMonoBehaviour
     bool mTriggerStart = false;
 
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnRunAwake()
     {
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(xLuaFileId, (table) =>
         {
@@ -50,9 +50,9 @@ public class ExampleTestXLuaLevelCube : AbsMonoBehaviour
     }
 
     /// <summary>
-    /// OnStart
+    /// OnRunStart
     /// </summary>
-    protected override void OnStart()
+    protected override void OnRunStart()
     {
         if (!mTriggerStart && mLuaStart != null)
         {
@@ -79,20 +79,17 @@ public class ExampleTestXLuaLevelCube : AbsMonoBehaviour
     }
 
     /// <summary>
-    /// OnUpdate
+    /// OnRunUpdate
     /// </summary>
-    protected override  void OnUpdate()
+    protected override  void OnRunUpdate()
     {
-        if (mLuaUpdate != null)
-        {
-            mLuaUpdate();
-        }
+        mLuaUpdate?.Invoke();
     }
 
     /// <summary>
-    /// OnDestroy
+    /// OnRunDestroy
     /// </summary>
-    protected override void OnDestroy()
+    protected override void OnRunDestroy()
     {
         mLuaOnDestroy?.Invoke();
         mLuaOnDestroy = null;

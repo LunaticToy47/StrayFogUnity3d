@@ -31,9 +31,9 @@ public class ExampleGuideWindow : AbsUIGuideWindowView
     /// </summary>
     UIGuidePrompt mUIGuidePrompt;
     /// <summary>
-    /// OnAfterAwake
+    /// OnAfterRunAwake
     /// </summary>
-    protected override void OnAfterAwake()
+    protected override void OnAfterRunAwake()
     {
         GameObject go = gameObject.transform.Find("ImgFramePrompt").gameObject;        
         mUIGuidePrompt = go.GetComponent<UIGuidePrompt>();
@@ -42,7 +42,7 @@ public class ExampleGuideWindow : AbsUIGuideWindowView
             mUIGuidePrompt = go.AddDynamicComponent<UIGuidePrompt>();
         }        
         mUIGuidePrompt.gameObject.SetActive(false);
-        base.OnAfterAwake();
+        base.OnAfterRunAwake();
     }
 
     /// <summary>

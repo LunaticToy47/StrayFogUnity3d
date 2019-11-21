@@ -1,0 +1,12 @@
+﻿/// <summary>
+/// MonoBehaviour模拟【接口】
+/// </summary>
+public partial interface ISimulateMonoBehaviour
+{
+#Method#
+    /// <summary>
+    /// #Name#
+    /// </summary>
+    void #Name#(#Parameter#);
+#Method#
+}

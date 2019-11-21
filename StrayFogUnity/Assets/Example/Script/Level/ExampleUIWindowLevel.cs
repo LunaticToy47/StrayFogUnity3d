@@ -41,9 +41,9 @@ public class ExampleUIWindowLevel : AbsLevel
     /// </summary>
     Dictionary<int, AliasTooltipAttribute> mUIWindowAliasMaping = new Dictionary<int, AliasTooltipAttribute>();
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnRunAwake()
     {
         foreach (KeyValuePair<FieldInfo, AliasTooltipAttribute> key in mUIWindowFieldAttrMaping)
         {
@@ -60,9 +60,9 @@ public class ExampleUIWindowLevel : AbsLevel
     }
 
     /// <summary>
-    /// OnGUI
+    /// OnRunGUI
     /// </summary>
-    protected override void OnGUI()
+    protected override void OnRunGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
@@ -88,9 +88,9 @@ public class ExampleUIWindowLevel : AbsLevel
     }
 
     /// <summary>
-    /// Update
+    /// OnRunUpdate
     /// </summary>
-    protected override void OnUpdate()
+    protected override void OnRunUpdate()
     {
         bool single = StrayFogGamePools.uiWindowManager.IsOpenedWindow(msrBtnWindows[0]);
         bool multiple = StrayFogGamePools.uiWindowManager.IsOpenedWindow(msrBtnWindows);

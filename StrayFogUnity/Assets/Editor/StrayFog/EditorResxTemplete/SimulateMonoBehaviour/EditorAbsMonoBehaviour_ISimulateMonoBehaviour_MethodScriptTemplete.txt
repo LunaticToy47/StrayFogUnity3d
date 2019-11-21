@@ -1,0 +1,23 @@
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
+/// <summary>
+/// 抽象MonoBehaviour【模拟MonoBehaviour】
+/// </summary>
+public abstract partial class AbsMonoBehaviour : ISimulateMonoBehaviour
+{
+#InterfaceMethod#
+    #region #Name#
+    /// <summary>
+    /// #Name#
+    /// </summary>
+    public void #Name#(#Parameter#)
+    {        
+        OnRun#VirtualName#(#ParameterArg#);
+    }
+    /// <summary>
+    /// On#Name#
+    /// </summary>
+    protected virtual void OnRun#VirtualName#(#Parameter#) { }
+    #endregion
+#InterfaceMethod#
+}

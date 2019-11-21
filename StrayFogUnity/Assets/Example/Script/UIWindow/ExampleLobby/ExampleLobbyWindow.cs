@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class ExampleLobbyWindow : AbsUIWindowView
 {
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAfterAwake()
+    protected override void OnRunAwake()
     {
         Text txt = gameObject.transform.Find("btnRadarBg/Text").GetComponent<Text>();
         Button btnRadarBg = gameObject.transform.Find("btnRadarBg").GetComponent<Button>();

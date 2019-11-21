@@ -8,9 +8,9 @@ using UnityEngine;
 public class ExampleXLSLevel : AbsLevel
 {
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnRunAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
@@ -26,9 +26,9 @@ public class ExampleXLSLevel : AbsLevel
     }
 
     /// <summary>
-    /// OnGUI
+    /// OnRunGUI
     /// </summary>
-    protected override void OnGUI()
+    protected override void OnRunGUI()
     {
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();

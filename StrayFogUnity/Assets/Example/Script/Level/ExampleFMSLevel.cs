@@ -38,9 +38,9 @@ public class ExampleFMSLevel : AbsLevel
     /// </summary>
     bool mAutoSample = true;
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnRunAwake()
     {
         StrayFogGamePools.gameManager.Initialization(() =>
         {
@@ -84,9 +84,9 @@ public class ExampleFMSLevel : AbsLevel
     }
 
     /// <summary>
-    /// OnGUI
+    /// OnRunGUI
     /// </summary>
-    protected override void OnGUI()
+    protected override void OnRunGUI()
     {
         if (mFMSMachine != null)
         {

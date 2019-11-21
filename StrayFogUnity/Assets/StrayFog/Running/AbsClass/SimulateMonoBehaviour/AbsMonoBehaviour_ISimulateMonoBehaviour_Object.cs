@@ -37,7 +37,7 @@ public abstract partial class AbsMonoBehaviour : ISimulateMonoBehaviour
     /// <summary>
     /// 协程
     /// </summary>
-    public StrayFogCoroutine coroutine { get; private set; }
+    public SimulateMonoBehaviour_Coroutine coroutine { get; private set; }
     #endregion
 
     #region BindGameObject
@@ -54,7 +54,7 @@ public abstract partial class AbsMonoBehaviour : ISimulateMonoBehaviour
             {
                 rectTransform = (RectTransform)gameObject.transform;
             }
-            coroutine = gameObject.AddComponent<StrayFogCoroutine>();
+            coroutine = gameObject.AddComponent<SimulateMonoBehaviour_Coroutine>();
             OnAfterBindGameObject();
             CollectCtrl<UIBehaviour>();
         }

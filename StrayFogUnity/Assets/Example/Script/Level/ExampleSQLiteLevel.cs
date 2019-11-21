@@ -9,9 +9,9 @@ using UnityEngine;
 public class ExampleSQLiteLevel : AbsLevel
 {
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnRunAwake()
     {
         Stopwatch watch = new Stopwatch();
         StrayFogGamePools.gameManager.Initialization(() =>
@@ -25,9 +25,9 @@ public class ExampleSQLiteLevel : AbsLevel
     }
 
     /// <summary>
-    /// OnGUI
+    /// OnRunGUI
     /// </summary>
-    protected override void OnGUI()
+    protected override void OnRunGUI()
     {
         #region Select
         GUILayout.BeginHorizontal();

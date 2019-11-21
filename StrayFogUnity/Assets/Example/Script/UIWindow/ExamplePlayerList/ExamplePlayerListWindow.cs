@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class ExamplePlayerListWindow : AbsUIWindowView
 {
     /// <summary>
-    /// Awake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAfterAwake()
+    protected override void OnRunAwake()
     {
         Button btn = gameObject.transform.Find(@"Table/c1_1").gameObject.GetComponent<Button>();
         btn.onClick.AddListener(() => {

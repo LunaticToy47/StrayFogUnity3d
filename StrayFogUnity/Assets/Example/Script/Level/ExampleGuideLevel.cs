@@ -15,9 +15,9 @@ public class ExampleGuideLevel : AbsLevel
     /// </summary>
     Vector2 mScrollViewPosition = Vector2.zero;
     /// <summary>
-    /// OnAwake
+    /// OnRunAwake
     /// </summary>
-    protected override void OnAwake()
+    protected override void OnRunAwake()
     {
         GameObject[] gos = SceneManager.GetActiveScene().GetRootGameObjects();
         if (gos != null && gos.Length > 0)
@@ -41,9 +41,9 @@ public class ExampleGuideLevel : AbsLevel
     }
 
     /// <summary>
-    /// OnGUI
+    /// OnRunGUI
     /// </summary>
-    protected override void OnGUI()
+    protected override void OnRunGUI()
     {
         if (GUILayout.Button("Start Guid"))
         {

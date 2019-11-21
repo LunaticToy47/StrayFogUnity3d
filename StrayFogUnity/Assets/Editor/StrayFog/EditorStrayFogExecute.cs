@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -170,22 +171,44 @@ public sealed class EditorStrayFogExecute
         EditorStrayFogUtility.cmd.DeleteFolder(enumScriptFolder);
         EditorStrayFogUtility.cmd.DeleteFolder(methodFolder);
 
-        string mTxtScriptTemplete = EditorResxTemplete.EditorSimulateMonoBehaviourMethodScriptTemplete;
-        MethodInfo[] methods = CollectSimulateMonoBehaviourMethods();
+        string txtSimulateMonoBehaviourMethodScriptTemplete = EditorResxTemplete.EditorSimulateMonoBehaviourMethodScriptTemplete;
+        string txtISimulateMonoBehaviour_MethodScriptTemplete = EditorResxTemplete.EditorISimulateMonoBehaviour_MethodScriptTemplete;
+        string txtAbsMonoBehaviour_ISimulateMonoBehaviour_MethodScriptTemplete = EditorResxTemplete.EditorAbsMonoBehaviour_ISimulateMonoBehaviour_MethodScriptTemplete;
 
+        string txtScript = string.Empty;
+
+        #region #Method#
+        string methodMark = "#Method#";
+        string methodReplaceTemplete = string.Empty;
+        string methodTemplete = string.Empty;
+        StringBuilder sbMethodReplace = new StringBuilder();
+        methodTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txtISimulateMonoBehaviour_MethodScriptTemplete, methodMark, out methodReplaceTemplete);
+        #endregion
+
+        #region #InterfaceMethod#
+        string interfaceMethodMark = "#InterfaceMethod#";
+        string interfaceMethodReplaceTemplete = string.Empty;
+        string interfaceMethodTemplete = string.Empty;
+        StringBuilder sbInterfaceMethodReplace = new StringBuilder();
+        interfaceMethodTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txtAbsMonoBehaviour_ISimulateMonoBehaviour_MethodScriptTemplete, interfaceMethodMark, out interfaceMethodReplaceTemplete);
+        #endregion
+
+        MethodInfo[] methods = CollectSimulateMonoBehaviourMethods();
         List<string> enumMethodNames = new List<string>();
         if (methods != null)
         {
             StringBuilder sbParameter = new StringBuilder();
+            StringBuilder sbParameterArg = new StringBuilder();
             StringBuilder sbLog = new StringBuilder();
-            sbLog.AppendLine("BuildSimulateMonoBehaviour");
-            string txtScript = string.Empty;
+            sbLog.AppendLine("BuildSimulateMonoBehaviour");            
             float progress = 0;
-            bool isBuild = false;
+            bool isBuild = false;            
+            #region 生成方法对应的脚本
             foreach (MethodInfo m in methods)
             {
                 progress++;
                 sbParameter.Length = 0;
+                sbParameterArg.Length = 0;
                 isBuild = m.GetFirstAttribute<ObsoleteAttribute>() == null;
                 ParameterInfo[] pams = m.GetParameters();
                 if (pams != null)
@@ -202,20 +225,48 @@ public sealed class EditorStrayFogExecute
                     {
                         foreach (ParameterInfo p in pams)
                         {
-                            sbParameter.AppendFormat("{0} {1},", p.ParameterType, p.Name);
+                            sbParameter.AppendFormat("{0} _{1},", p.ParameterType, p.Name);
+                            sbParameterArg.AppendFormat("_{0},", p.Name);
                         }
                     }
                     if (sbParameter.Length > 0)
                     {
                         sbParameter = sbParameter.Remove(sbParameter.Length - 1, 1);
                     }
-                    txtScript = mTxtScriptTemplete;
+                    if (sbParameterArg.Length > 0)
+                    {
+                        sbParameterArg = sbParameterArg.Remove(sbParameterArg.Length - 1, 1);
+                    }
+
+                    #region 生成单个方法脚本
+                    txtScript = txtSimulateMonoBehaviourMethodScriptTemplete;
+                    cfgEntityScript.SetName("SimulateMonoBehaviourMethod_" + m.Name);
                     txtScript = txtScript
+                        .Replace("#ClassName#", cfgEntityScript.name)
                         .Replace("#MethodName#", m.Name)
-                        .Replace("#MethodParameter#", sbParameter.ToString());
-                    cfgEntityScript.SetName(m.Name);
+                        .Replace("#MethodParameter#", sbParameter.ToString());                    
                     cfgEntityScript.SetText(txtScript);
                     cfgEntityScript.CreateAsset();
+                    #endregion
+
+                    #region 生成方法的接口
+                    sbMethodReplace.Append(
+                        methodTemplete
+                            .Replace("#Name#",m.Name)
+                            .Replace("#Parameter#",sbParameter.ToString())
+                        );
+                    #endregion
+
+                    #region 生成方法的接口实现
+                    sbInterfaceMethodReplace.Append(
+                        interfaceMethodTemplete
+                            .Replace("#Name#", m.Name)
+                            .Replace("#VirtualName#", m.Name.ToUpper().StartsWith("ON")?m.Name.Remove(0,2):m.Name)
+                            .Replace("#Parameter#", sbParameter.ToString())
+                            .Replace("#ParameterArg#", sbParameterArg.ToString())
+                        );
+                    #endregion
+
                     if (!enumMethodNames.Contains(m.Name))
                     {
                         enumMethodNames.Add(m.Name);
@@ -224,12 +275,31 @@ public sealed class EditorStrayFogExecute
                 sbLog.AppendLine(m.Name);                
                 EditorUtility.DisplayProgressBar("Build Log", m.Name, progress / methods.Length);
             }
+            #endregion
 
-            mTxtScriptTemplete = EditorResxTemplete.EditorSimulateMonoBehaviourMethodEnumScriptTemplete;
+            #region 生成方法的枚举
+            string txtSimulateMonoBehaviourMethodEnumScriptTemplete = EditorResxTemplete.EditorSimulateMonoBehaviourMethodEnumScriptTemplete;
             cfgEntityScript.SetDirectory(enumScriptFolder);
             cfgEntityScript.SetName("EnumSimulateMonoBehaviourMethod");
-            cfgEntityScript.SetText(mTxtScriptTemplete.Replace("#Methods#", string.Join(",", enumMethodNames.ToArray())));
+            cfgEntityScript.SetText(txtSimulateMonoBehaviourMethodEnumScriptTemplete.Replace("#Methods#", string.Join(","+Environment.NewLine, enumMethodNames.ToArray())));
             cfgEntityScript.CreateAsset();
+            #endregion
+
+            #region 生成方法的接口
+            txtScript = txtISimulateMonoBehaviour_MethodScriptTemplete.Replace(methodReplaceTemplete, sbMethodReplace.ToString());
+            cfgEntityScript.SetDirectory(enumScriptFolder);
+            cfgEntityScript.SetName("ISimulateMonoBehaviour_Method");
+            cfgEntityScript.SetText(txtScript);
+            cfgEntityScript.CreateAsset();
+            #endregion
+
+            #region 生成方法的接口实现
+            txtScript = txtAbsMonoBehaviour_ISimulateMonoBehaviour_MethodScriptTemplete.Replace(interfaceMethodReplaceTemplete, sbInterfaceMethodReplace.ToString());
+            cfgEntityScript.SetDirectory(enumScriptFolder);
+            cfgEntityScript.SetName("AbsMonoBehaviour_ISimulateMonoBehaviour_Method");
+            cfgEntityScript.SetText(txtScript);
+            cfgEntityScript.CreateAsset();
+            #endregion
 
             EditorUtility.ClearProgressBar();
             sbLog.AppendLine("ExecuteBuildSimulateMonoBehaviour Succeed!");
