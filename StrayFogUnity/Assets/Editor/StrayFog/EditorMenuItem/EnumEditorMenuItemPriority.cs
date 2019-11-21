@@ -29,6 +29,10 @@ enum enEditorMenuItemPriority
     /// </summary>
     Develop,
     /// <summary>
+    /// EditorSimulateMonoBehaviourMenuItem
+    /// </summary>
+    SimulateMonoBehaviour,
+    /// <summary>
     /// EditorCustomAssetMenuItem
     /// </summary>
     CustomAsset,

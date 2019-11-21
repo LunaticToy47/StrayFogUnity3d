@@ -5,9 +5,9 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
-/// 构建MonoBehaviour事件监听
+/// 构建模拟MonoBehaviour事件组件
 /// </summary>
-public class EditorWindowBuildMonoBehaviourEventListening : AbsEditorWindow
+public class EditorWindowBuildSimulateMonoBehaviourMethod : AbsEditorWindow
 {
     /// <summary>
     /// 滚动视图位置

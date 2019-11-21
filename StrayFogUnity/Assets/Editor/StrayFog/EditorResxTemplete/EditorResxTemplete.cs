@@ -125,7 +125,7 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("Develop/EditorSimulateMonoBehaviourMethodScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/EditorSimulateMonoBehaviourMethodScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
 
