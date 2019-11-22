@@ -352,6 +352,7 @@ public sealed class EditorStrayFogApplication
     #endregion
 
     #region IsExecuteMethodInCmd 是否在Cmd中执行方法
+    //https://docs.unity3d.com/Manual/CommandLineArguments.html
     /// <summary>
     /// 是否在Cmd中执行方法
     /// </summary>
