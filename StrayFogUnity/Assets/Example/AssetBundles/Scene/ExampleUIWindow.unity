@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monoScript: {fileID: 11500000, guid: 298a87e4b9d12fd4f802fec52954aab6, type: 3}
+  asmdefId: -1949415658
   monoBehaviourScriptName: ExampleUIWindowLevel
 --- !u!1 &645655515
 GameObject:
