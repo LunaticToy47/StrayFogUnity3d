@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -145,6 +146,27 @@ namespace StrayFog.Timeline
             }
 #endif
             return trackAsset;
+        }
+
+        /// <summary>
+        /// 获得指定的TrackAsset组
+        /// </summary>
+        /// <typeparam name="T">TrackAsset类型</typeparam>
+        /// <param name="_timeline">时间线</param>
+        /// <returns>TrackAsset组</returns>
+        public static List<T> FindTrackAsset<T>(this TimelineAsset _timeline)
+            where T : TrackAsset
+        {
+            List<T> result = new List<T>();
+            IEnumerator<TrackAsset> node = _timeline.GetOutputTracks().GetEnumerator();
+            while (node.MoveNext())
+            {
+                if (node.Current != null && node.Current is T)
+                {
+                    result.Add((T)node.Current);
+                }
+            };
+            return result;
         }
     }
 }
