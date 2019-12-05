@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 /// <summary>
 /// 比特转换扩展
 /// </summary>
@@ -225,6 +227,34 @@ public static class BitConverterExtend
     }
     #endregion
 
+    #region string
+    /// <summary>
+    /// 获得byte数组
+    /// </summary>
+    /// <param name="_value">值</param>
+    /// <returns>byte数组</returns>
+    public static byte[] GetBytes(this string _value)
+    {
+        return _value.GetBytes(false);
+    }
+    /// <summary>
+    /// 获得byte数组
+    /// </summary>
+    /// <param name="_value">值</param>
+    /// <param name="_hiloSwap">是否高低位互换</param>
+    /// <returns>byte数组</returns>
+    public static byte[] GetBytes(this string _value, bool _hiloSwap)
+    {
+        List<byte> result = new List<byte>();
+        byte[] bytes = GetBytes(_value, (v) => {
+            return Encoding.UTF8.GetBytes(v);
+        }, _hiloSwap);
+        result.AddRange(bytes.Length.GetBytes());
+        result.AddRange(bytes);
+        return result.ToArray();
+    }
+    #endregion
+
     #region GetBytes
     /// <summary>
     /// 获得byte数组
@@ -338,6 +368,52 @@ public static class BitConverterExtend
         byte[] result = CopyBuffer(_value, _startIndex, size, _hiloSwap);
         _startIndex += size;
         return BitConverter.ToChar(result, 0);
+    }
+    #endregion
+
+    #region ToByte
+    /// <summary>
+    /// 获得Byte值
+    /// </summary>
+    /// <param name="_value">byte数组源</param>
+    /// <returns>Byte值</returns>
+    public static byte ToByte(this byte[] _value)
+    {
+        long _startIndex = 0;
+        return _value.ToByte(ref _startIndex, false);
+    }
+    /// <summary>
+    /// 获得Byte值
+    /// </summary>
+    /// <param name="_value">byte数组源</param>
+    /// <param name="_startIndex">起始位置</param>
+    /// <returns>Byte值</returns>
+    public static byte ToByte(this byte[] _value, ref long _startIndex)
+    {
+        return _value.ToByte(ref _startIndex, false);
+    }
+    /// <summary>
+    /// 获得Byte值
+    /// </summary>
+    /// <param name="_value">byte数组源</param>
+    /// <returns>Byte值</returns>
+    public static byte ToByte(this byte[] _value, bool _hiloSwap)
+    {
+        long _startIndex = 0;
+        return _value.ToByte(ref _startIndex, _hiloSwap);
+    }
+    /// <summary>
+    /// 获得Byte值
+    /// </summary>
+    /// <param name="_value">byte数组源</param>
+    /// <param name="_startIndex">起始位置</param>
+    /// <returns>Byte值</returns>
+    public static byte ToByte(this byte[] _value, ref long _startIndex, bool _hiloSwap)
+    {
+        int size = sizeof(byte);
+        byte[] result = CopyBuffer(_value, _startIndex, size, _hiloSwap);
+        _startIndex += size;
+        return result[0];
     }
     #endregion
 
@@ -722,6 +798,54 @@ public static class BitConverterExtend
         byte[] result = CopyBuffer(_value, _startIndex, size, _hiloSwap);
         _startIndex += size;
         return BitConverter.ToUInt64(result, 0);
+    }
+    #endregion
+
+    #region ByteToString
+    /// <summary>
+    /// 获得ByteToString值
+    /// </summary>
+    /// <param name="_value">byte数组源</param>
+    /// <returns>ByteToString</returns>
+    public static string ByteToString(this byte[] _value)
+    {
+        long _startIndex = 0;
+        return _value.ByteToString(ref _startIndex, false);
+    }
+    /// <summary>
+    /// 获得ByteToString值
+    /// </summary>
+    /// <param name="_value">byte数组源</param>
+    /// <param name="_startIndex">起始位置</param>
+    /// <returns>ByteToString</returns>
+    public static string ByteToString(this byte[] _value, ref long _startIndex)
+    {
+        return _value.ByteToString(ref _startIndex, false);
+    }
+    /// <summary>
+    /// 获得ByteToString值
+    /// </summary>
+    /// <param name="_value">byte数组源</param>
+    /// <param name="_hiloSwap">是否高低位互换</param>
+    /// <returns>ByteToString</returns>
+    public static string ByteToString(this byte[] _value, bool _hiloSwap)
+    {
+        long _startIndex = 0;
+        return _value.ByteToString(ref _startIndex, _hiloSwap);
+    }
+    /// <summary>
+    /// 获得ByteToString值
+    /// </summary>
+    /// <param name="_value">byte数组源</param>
+    /// <param name="_startIndex">起始位置</param>
+    /// <param name="_hiloSwap">是否高低位互换</param>
+    /// <returns>ByteToString</returns>
+    public static string ByteToString(this byte[] _value, ref long _startIndex, bool _hiloSwap)
+    {
+        int size = _value.ToInt32(ref _startIndex, _hiloSwap);
+        byte[] result = CopyBuffer(_value, _startIndex, size, _hiloSwap);
+        _startIndex += size;
+        return Encoding.UTF8.GetString(result);
     }
     #endregion
 
