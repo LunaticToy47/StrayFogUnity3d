@@ -376,4 +376,16 @@ public static class UIExtendEngine
         _self.rectTransform.anchoredPosition = _self.LocalPointToRefer(_from);
     }
     #endregion
+
+    #region AlignFrom 从指定的RectTransform对齐位置
+    /// <summary>
+    /// 从指定的RectTransform对齐位置
+    /// </summary>
+    /// <param name="_self">要复制值的RectTransform</param>
+    /// <param name="_from">复制源RectTransform</param>
+    public static void AlignRectTransformFrom(this Graphic _self, Graphic _from)
+    {
+        _self.rectTransform.anchoredPosition = _self.LocalPointToRefer(_from);
+    }
+    #endregion
 }
