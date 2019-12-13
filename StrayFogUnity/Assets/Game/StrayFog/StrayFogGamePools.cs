@@ -11,7 +11,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>();
+            return  StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogAssetBundleManager>();
         }
     }
     #endregion
@@ -24,7 +24,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGuideManager>();
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogGuideManager>();
         }
     }
     #endregion
@@ -37,7 +37,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogGameManager>();
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogGameManager>();
         }
     }
     #endregion
@@ -50,7 +50,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogSceneManager>();
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogSceneManager>();
         }
     }
     #endregion
@@ -63,7 +63,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogXLuaManager>();
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogXLuaManager>();
         }
     }
     #endregion
@@ -76,7 +76,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogSkillManager>();
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogSkillManager>();
         }
     }
     #endregion
@@ -89,7 +89,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogUIWindowManager>();
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogUIWindowManager>();
         }
     }
     #endregion
@@ -128,7 +128,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleMonoBehaviour<StrayFogEventHandlerManager>();
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogEventHandlerManager>();
         }
     }
     #endregion    

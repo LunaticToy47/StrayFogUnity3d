@@ -119,46 +119,46 @@ public class EditorResxTemplete
     }
 
     /// <summary>
-    /// EditorSimulateMonoBehaviourMethodScriptTemplete
+    /// Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete
     /// </summary>
-    public static string EditorSimulateMonoBehaviourMethodScriptTemplete
+    public static string Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/EditorSimulateMonoBehaviourMethodScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
 
     /// <summary>
-    /// EditorSimulateMonoBehaviourMethodEnumScriptTemplete
+    /// Editor_SimulateMonoBehaviour_MethodEnum_ScriptTemplete
     /// </summary>
-    public static string EditorSimulateMonoBehaviourMethodEnumScriptTemplete
+    public static string Editor_SimulateMonoBehaviour_MethodEnum_ScriptTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/EditorSimulateMonoBehaviourMethodEnumScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_SimulateMonoBehaviour_MethodEnum_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
 
     /// <summary>
-    /// EditorISimulateMonoBehaviour_MethodScriptTemplete
+    /// Editor_ISimulateMonoBehaviour_ScriptTemplete
     /// </summary>
-    public static string EditorISimulateMonoBehaviour_MethodScriptTemplete
+    public static string Editor_ISimulateMonoBehaviour_ScriptTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/EditorISimulateMonoBehaviour_MethodScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_ISimulateMonoBehaviour_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
 
     /// <summary>
-    /// EditorAbsMonoBehaviour_ISimulateMonoBehaviour_MethodScriptTemplete
+    /// Editor_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete
     /// </summary>
-    public static string EditorAbsMonoBehaviour_ISimulateMonoBehaviour_MethodScriptTemplete
+    public static string Editor_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/EditorAbsMonoBehaviour_ISimulateMonoBehaviour_MethodScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
     

@@ -309,7 +309,7 @@ public class AnimCurve_BounceEaseIn : AbsSingle, IEditorAnimCurve
     /// <param name="_curveDuration">曲线持续时间</param>
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
-        return _curveFinalValue - StrayFogRunningUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_curveDuration - _time, 0, _curveFinalValue, _curveDuration) + _curveStartingValue;
+        return _curveFinalValue - StrayFogHotfixUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_curveDuration - _time, 0, _curveFinalValue, _curveDuration) + _curveStartingValue;
     }
 }
 #endregion
@@ -921,9 +921,9 @@ public class AnimCurve_BounceEaseInOut : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_BounceEaseIn>().KeyframeValue(_time * 2, 0, _curveFinalValue, _curveDuration) * .5 + _curveStartingValue;
+            return StrayFogHotfixUtility.Single<AnimCurve_BounceEaseIn>().KeyframeValue(_time * 2, 0, _curveFinalValue, _curveDuration) * .5 + _curveStartingValue;
         else
-            return StrayFogRunningUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_time * 2 - _curveDuration, 0, _curveFinalValue, _curveDuration) * .5 + _curveFinalValue * .5 + _curveStartingValue;
+            return StrayFogHotfixUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_time * 2 - _curveDuration, 0, _curveFinalValue, _curveDuration) * .5 + _curveFinalValue * .5 + _curveStartingValue;
     }
 }
 #endregion
@@ -952,9 +952,9 @@ public class AnimCurve_SineEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_SineEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_SineEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogRunningUtility.Single<AnimCurve_SineEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_SineEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -983,9 +983,9 @@ public class AnimCurve_QuadEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_QuadEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_QuadEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogRunningUtility.Single<AnimCurve_QuadEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_QuadEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1014,9 +1014,9 @@ public class AnimCurve_CubicEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_CubicEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_CubicEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogRunningUtility.Single<AnimCurve_CubicEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_CubicEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1045,9 +1045,9 @@ public class AnimCurve_QuartEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_QuartEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_QuartEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogRunningUtility.Single<AnimCurve_QuartEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_QuartEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1076,8 +1076,8 @@ public class AnimCurve_QuintEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_QuintEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
-        return StrayFogRunningUtility.Single<AnimCurve_QuintEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_QuintEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_QuintEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1106,9 +1106,9 @@ public class AnimCurve_ExpoEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_ExpoEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_ExpoEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogRunningUtility.Single<AnimCurve_ExpoEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_ExpoEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1137,9 +1137,9 @@ public class AnimCurve_CircEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_CircEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_CircEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogRunningUtility.Single<AnimCurve_CircEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_CircEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1168,8 +1168,8 @@ public class AnimCurve_BackEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_BackEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
-        return StrayFogRunningUtility.Single<AnimCurve_BackEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_BackEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_BackEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1198,8 +1198,8 @@ public class AnimCurve_ElasticEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_ElasticEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
-        return StrayFogRunningUtility.Single<AnimCurve_ElasticEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_ElasticEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_ElasticEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1228,8 +1228,8 @@ public class AnimCurve_BounceEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogRunningUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
-        return StrayFogRunningUtility.Single<AnimCurve_BounceEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+            return StrayFogHotfixUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+        return StrayFogHotfixUtility.Single<AnimCurve_BounceEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion

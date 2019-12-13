@@ -7,7 +7,7 @@ using UnityEditor;
 /// <summary>
 /// 引擎应用程序
 /// </summary>
-public class StrayFogRunningApplication : AbsSingleScriptableObject
+public sealed class StrayFogRunningApplication : AbsSingleScriptableObject
 {
     #region LoadAssetAtPath 从指定路径加载资源
     /// <summary>
@@ -37,7 +37,7 @@ public class StrayFogRunningApplication : AbsSingleScriptableObject
     /// <param name="_property">属性</param>
     /// <param name="_label">标签</param>
     /// <returns>高度</returns>
-    protected virtual float EditorDisplayParameter(Rect _position, SerializedProperty _property, GUIContent _label)
+    float EditorDisplayParameter(Rect _position, SerializedProperty _property, GUIContent _label)
     {
         float y = _position.y;
         _position.height = 16;

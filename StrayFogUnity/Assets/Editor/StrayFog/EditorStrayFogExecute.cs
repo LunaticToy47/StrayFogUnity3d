@@ -149,7 +149,7 @@ public sealed class EditorStrayFogExecute
     /// <returns>方法与模拟属性</returns>
     public static MethodInfo[] CollectSimulateMonoBehaviourMethods()
     {
-        Type type = typeof(SimulateMonoBehaviour_Templet);
+        Type type = typeof(Editor_SimulateMonoBehaviour_Templete);
         int key = type.FullName.UniqueHashCode();
         if (!mSimulateMonoBehaviour_MethodMaping.ContainsKey(key))
         {
@@ -163,7 +163,102 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildSimulateMonoBehaviour()
     {
-        string enumScriptFolder = enEditorApplicationFolder.StrayFog_Running_SimulateMonoBehaviourMethod.GetAttribute<EditorApplicationFolderAttribute>().path;
+        string hotfixScriptFolder = enEditorApplicationFolder.Hotfix_SimulateMonoBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path;
+        string runningScriptFolder = enEditorApplicationFolder.StrayFog_Running_SimulateMonoBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path;
+
+        MethodInfo[] methods = CollectSimulateMonoBehaviourMethods();
+        Dictionary<int, string> enumValueNames = new Dictionary<int, string>();        
+
+        string tempMethodName = string.Empty;
+        string tempMethodVirtualName = string.Empty;
+        int tempMethodNameKey = 0;
+
+        bool isBuild = false;
+        ParameterInfo[] pams = null;
+        //形参
+        List<string> stringFormalParameter = new List<string>();
+        //输入参数
+        List<string> stringInputParameter = new List<string>();
+
+        #region AbsMonoBehaviour
+        string txt_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete = EditorResxTemplete.Editor_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete;
+        
+        #region #AbsMonoBehaviourMethod#
+        string absMonoBehaviourMethodMark = "#AbsMonoBehaviourMethod#";
+        string absMonoBehaviourMethodReplaceTemplete = string.Empty;
+        string absMonoBehaviourMethodTemplete = string.Empty;
+        StringBuilder sbAbsMonoBehaviourMethodReplace = new StringBuilder();
+        absMonoBehaviourMethodTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txt_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete, absMonoBehaviourMethodMark, out absMonoBehaviourMethodReplaceTemplete);
+
+        string txtAbsMonoBehaviourMethodScript = string.Empty;
+        #endregion
+        #endregion
+
+        #region SimulateMonoBehaviour_MethodEnum_ScriptTemplete
+        string txt_SimulateMonoBehaviour_MethodEnum_ScriptTemplete = EditorResxTemplete.Editor_SimulateMonoBehaviour_MethodEnum_ScriptTemplete;
+        
+        #endregion
+
+        sbAbsMonoBehaviourMethodReplace.Length = 0;
+        foreach (MethodInfo m in methods)
+        {
+            stringFormalParameter.Clear();
+            stringInputParameter.Clear();
+
+            pams = m.GetParameters();
+            #region 是否生成此方法模拟
+            isBuild = m.GetFirstAttribute<ObsoleteAttribute>() == null;            
+            if (pams != null)
+            {
+                foreach (ParameterInfo p in pams)
+                {
+                    isBuild &= p.ParameterType.GetFirstAttribute<ObsoleteAttribute>() == null;
+                }
+            }
+            #endregion
+
+            if (isBuild)
+            {
+                tempMethodName = m.Name;
+                tempMethodNameKey = m.Name.UniqueHashCode();
+
+                #region 收集枚举
+                if (!enumValueNames.ContainsKey(tempMethodNameKey))
+                {
+                    enumValueNames.Add(tempMethodNameKey, tempMethodName);
+                }
+                #endregion
+
+                #region 收集形参与输入参数
+                foreach (ParameterInfo p in pams)
+                {
+                    stringFormalParameter.Add(string.Format("{0} _{1}", p.ParameterType, p.Name));
+                    stringInputParameter.Add(string.Format("_{0}", p.Name));
+                }
+                #endregion
+
+                #region 虚方法名称
+                tempMethodVirtualName = m.Name.ToUpper().StartsWith("ON") ? m.Name.Remove(0, 2) : m.Name;
+                #endregion
+
+                #region 生成AbsMonoBehaviour的实现
+                sbAbsMonoBehaviourMethodReplace.Append(
+                    absMonoBehaviourMethodTemplete
+                        .Replace("#Name#", m.Name)
+                        .Replace("#VirtualName#", tempMethodVirtualName)
+                        .Replace("#Parameter#", stringFormalParameter.Join())
+                        .Replace("#ParameterArg#", stringInputParameter.Join())
+                    );
+                #endregion
+            }
+        }
+
+        txtAbsMonoBehaviourMethodScript =
+            txt_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete
+            .Replace(absMonoBehaviourMethodReplaceTemplete, sbAbsMonoBehaviourMethodReplace.ToString());
+
+        Debug.Log(txtAbsMonoBehaviourMethodScript);
+        /*
         string methodFolder = Path.Combine(enumScriptFolder,"MethodMono");
 
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", methodFolder, enFileExt.CS, "");
@@ -306,6 +401,7 @@ public sealed class EditorStrayFogExecute
             Debug.Log(sbLog.ToString());
             EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         }
+        */
     }
     #endregion
 

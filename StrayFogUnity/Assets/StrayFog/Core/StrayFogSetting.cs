@@ -8,7 +8,7 @@ using UnityEditor;
 /// <summary>
 /// StrayFogSetting
 /// </summary>
-public class StrayFogSetting : AbsSingleScriptableObject
+public sealed class StrayFogSetting : AbsSingleScriptableObject
 {
     #region platform 运行平台
     //https://docs.unity3d.com/Manual/PlatformDependentCompilation.html
@@ -235,7 +235,7 @@ string.Empty;
     /// <param name="_property">属性</param>
     /// <param name="_label">标签</param>
     /// <returns>高度</returns>
-    protected virtual float EditorDisplayParameter(Rect _position, SerializedProperty _property, GUIContent _label)
+    float EditorDisplayParameter(Rect _position, SerializedProperty _property, GUIContent _label)
     {
         float y = _position.y;
         _position.height = 16;

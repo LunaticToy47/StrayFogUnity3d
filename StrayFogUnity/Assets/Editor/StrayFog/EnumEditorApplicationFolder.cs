@@ -92,9 +92,18 @@ public enum enEditorApplicationFolder
     [EditorApplicationFolder("游戏运行时AssetDiskMaping脚本目录", "Assets/Game/Script/AssetDiskMaping", "游戏运行时AssetDiskMaping脚本目录")]
     Game_Script_AssetDiskMaping,
     #endregion
+
+    #region Hotfix_SimulateMonoBehaviour
+    /// <summary>
+    /// Hotfix模拟MonoBehaviour目录
+    /// </summary>
+    [EditorApplicationFolder("Hotfix模拟MonoBehaviour目录", "Assets/StrayFog/0MonoBehaviour/AbsClass/SimulateMonoBehaviourMethod", "Hotfix模拟MonoBehaviour目录")]
+    Hotfix_SimulateMonoBehaviour,
     #endregion
 
-    #region StrayFogRunning目录
+    #endregion
+
+    #region Project目录
     /// <summary>
     /// 工程资源目录
     /// </summary>
@@ -112,12 +121,12 @@ public enum enEditorApplicationFolder
     Project_Script_SQLite,
     #endregion
 
-    #region StrayFog目录
+    #region StrayFogRunning目录
     /// <summary>
-    /// StrayFog运行时SimulateMonoBehaviourMethod目录
+    /// StrayFog运行时SimulateMonoBehaviour目录
     /// </summary>
-    [EditorApplicationFolder("StrayFog运行时SimulateMonoBehaviourMethod目录", "Assets/StrayFog/Running/SimulateMonoBehaviourMethod", "StrayFog运行时SimulateMonoBehaviourMethod目录")]
-    StrayFog_Running_SimulateMonoBehaviourMethod,
+    [EditorApplicationFolder("StrayFog运行时SimulateMonoBehaviour目录", "Assets/StrayFog/Running/SimulateMonoBehaviour", "StrayFog运行时SimulateMonoBehaviour目录")]
+    StrayFog_Running_SimulateMonoBehaviour,
     #endregion
 }
 #endregion

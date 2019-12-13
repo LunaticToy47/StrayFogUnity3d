@@ -173,7 +173,7 @@ public static class StringExtend
     }
     #endregion
 
-    #region SegmentationGroup 将源字符串按组分隔
+    #region Split 将源字符串按组分隔
     /// <summary>
     /// 分隔符映射
     /// </summary>
@@ -221,6 +221,50 @@ public static class StringExtend
             }
         }
         return result;
+    }
+    #endregion
+
+    #region Join 用默认连接符连接字符串
+    /// <summary>
+    /// 用默认连接符连接字符串
+    /// </summary>
+    /// <param name="_source">字符组</param>
+    /// <returns>字符</returns>
+    public static string Join(this List<string> _source)
+    {
+        return _source.Join(enSplitSymbol.Comma);
+    }
+
+    /// <summary>
+    /// 按指定连接符连接字符串
+    /// </summary>
+    /// <param name="_source">字符组</param>
+    /// <param name="_symbol">连接符</param>
+    /// <returns>字符</returns>
+    public static string Join(this List<string> _source, enSplitSymbol _symbol)
+    {
+        return _source.ToArray().Join(_symbol);
+    }
+
+    /// <summary>
+    /// 用默认连接符连接字符串
+    /// </summary>
+    /// <param name="_source">字符组</param>
+    /// <returns>字符</returns>
+    public static string Join(this string[] _source)
+    {
+        return _source.Join(enSplitSymbol.Comma);
+    }
+
+    /// <summary>
+    /// 按指定连接符连接字符串
+    /// </summary>
+    /// <param name="_source">字符组</param>
+    /// <param name="_symbol">连接符</param>
+    /// <returns>字符</returns>
+    public static string Join(this string[] _source, enSplitSymbol _symbol)
+    {
+        return string.Join(mSplitSymbolMaping[(int)_symbol][0], _source);
     }
     #endregion
 }
