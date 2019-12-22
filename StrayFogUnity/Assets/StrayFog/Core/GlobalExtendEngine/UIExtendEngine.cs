@@ -388,4 +388,48 @@ public static class UIExtendEngine
         _self.rectTransform.anchoredPosition = _self.LocalPointToRefer(_from);
     }
     #endregion
+
+    #region WorldReferToUI 世界物体相对于指定UI控件位置坐标
+    /// <summary>
+    /// 世界物体相对于指定UI控件位置坐标
+    /// </summary>
+    /// <param name="_worldGo">世界物体</param>
+    /// <param name="_worldCamera">世界摄像机</param>
+    /// <param name="_graphic">UI控件</param>
+    /// <returns>UI坐标</returns>
+    public static Vector2 WorldReferToUI(this Transform _worldGo, Camera _worldCamera, Graphic _graphic)
+    {
+        return _worldGo.WorldReferToUI(_worldCamera, _graphic.rectTransform, _graphic.canvas, _graphic.canvas.worldCamera);
+    }
+
+    /// <summary>
+    /// 世界物体相对于指定UI控件位置坐标
+    /// </summary>
+    /// <param name="_worldGo">世界物体</param>
+    /// <param name="_worldCamera">世界摄像机</param>
+    /// <param name="_uiRectTransform">UI控件</param>
+    /// <param name="_uiCanvas">UI画布</param>
+    /// <returns>UI坐标</returns>
+    public static Vector2 WorldReferToUI(this Transform _worldGo, Camera _worldCamera, RectTransform _uiRectTransform, Canvas _uiCanvas)
+    {
+        return _worldGo.WorldReferToUI(_worldCamera,_uiRectTransform,_uiCanvas,_uiCanvas.worldCamera);
+    }
+
+    /// <summary>
+    /// 世界物体相对于指定UI控件位置坐标
+    /// </summary>
+    /// <param name="_worldGo">世界物体</param>
+    /// <param name="_worldCamera">世界摄像机</param>
+    /// <param name="_uiRectTransform">UI控件</param>
+    /// <param name="_uiCanvas">UI画布</param>
+    /// <param name="_uiCamera">UI摄像机</param>
+    /// <returns>UI坐标</returns>
+    public static Vector2 WorldReferToUI(this Transform _worldGo, Camera _worldCamera, RectTransform _uiRectTransform, Canvas _uiCanvas,Camera _uiCamera)
+    {
+        Vector2 point = RectTransformUtility.WorldToScreenPoint(_worldCamera, _worldGo.position);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _uiRectTransform.transform.parent as RectTransform, point, _uiCamera, out point);
+        return point;
+    }
+    #endregion
 }
