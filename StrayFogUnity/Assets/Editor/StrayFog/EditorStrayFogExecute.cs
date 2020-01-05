@@ -205,6 +205,8 @@ public sealed class EditorStrayFogExecute
         //输入参数
         List<string> stringInputParameter = new List<string>();
 
+        
+
         #region Behaviour_Enum 行为枚举
         string txt_BehaviourEnum_ScriptTemplete = EditorResxTemplete.Editor_GeneralEnum_ScriptTemplete;
 
@@ -253,6 +255,8 @@ public sealed class EditorStrayFogExecute
 
         sbAbsMonoBehaviour_ISimulateMonoBehaviour_Method_Replace.Length = 0;
         sbBehaviour_Enum_Replace.Length = 0;
+
+        #region 收集MonoBehaviour方法
         foreach (MethodInfo m in monoMethods)
         {
             stringFormalParameter.Clear();
@@ -324,6 +328,14 @@ public sealed class EditorStrayFogExecute
                 #endregion
             }
         }
+        #endregion
+
+        #region 收集UIBehaviour方法
+        foreach (MethodInfo m in uiMethods)
+        {
+            Debug.LogErrorFormat("UIMethod=>{0}", m.Name);
+        }
+        #endregion
 
         #region 创建Hotfix的AbsMonoBehaviour_ISimulateMonoBehaviour_Method.cs文件
         EditorUtility.DisplayProgressBar("Create Hotfix Script", "AbsMonoBehaviour_ISimulateMonoBehaviour_Method.cs", 0);
