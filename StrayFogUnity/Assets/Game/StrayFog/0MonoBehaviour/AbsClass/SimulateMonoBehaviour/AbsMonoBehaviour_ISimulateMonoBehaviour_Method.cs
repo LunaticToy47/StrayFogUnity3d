@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public abstract partial class AbsMonoBehaviour
 {
+
     #region Awake
     /// <summary>
     /// Awake

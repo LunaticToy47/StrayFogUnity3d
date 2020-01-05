@@ -1,0 +1,12 @@
+﻿/// <summary>
+/// en#EnumClassName#
+/// </summary>
+public enum en#EnumClassName#
+{
+#Enums#
+    /// <summary>
+    /// #Desc#
+    /// </summary>
+    #Name# = #Value#,
+#Enums#
+}

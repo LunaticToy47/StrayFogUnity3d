@@ -119,6 +119,17 @@ public class EditorResxTemplete
     }
 
     /// <summary>
+    /// Editor_GeneralEnum_ScriptTemplete
+    /// </summary>
+    public static string Editor_GeneralEnum_ScriptTemplete
+    {
+        get
+        {
+            return GetFileString("General/Editor_GeneralEnum_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+        }
+    }
+
+    /// <summary>
     /// Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete
     /// </summary>
     public static string Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete
@@ -126,28 +137,6 @@ public class EditorResxTemplete
         get
         {
             return GetFileString("SimulateMonoBehaviour/Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
-        }
-    }
-
-    /// <summary>
-    /// Editor_SimulateMonoBehaviour_MethodEnum_ScriptTemplete
-    /// </summary>
-    public static string Editor_SimulateMonoBehaviour_MethodEnum_ScriptTemplete
-    {
-        get
-        {
-            return GetFileString("SimulateMonoBehaviour/Editor_SimulateMonoBehaviour_MethodEnum_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
-        }
-    }
-
-    /// <summary>
-    /// Editor_ISimulateMonoBehaviour_ScriptTemplete
-    /// </summary>
-    public static string Editor_ISimulateMonoBehaviour_ScriptTemplete
-    {
-        get
-        {
-            return GetFileString("SimulateMonoBehaviour/Editor_ISimulateMonoBehaviour_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
 

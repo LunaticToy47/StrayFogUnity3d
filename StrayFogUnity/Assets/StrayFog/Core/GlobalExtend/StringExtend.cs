@@ -267,6 +267,38 @@ public static class StringExtend
         return string.Join(mSplitSymbolMaping[(int)_symbol][0], _source);
     }
     #endregion
+
+    #region TransDescToSummary 转换描述为Summary形式
+    /// <summary>
+    /// 转换描述为Summary形式
+    /// </summary>
+    /// <param name="_desc">描述</param>
+    /// <returns>描述</returns>
+    public static string TransDescToSummary(this string _desc)
+    {
+        StringBuilder descSb = new StringBuilder();
+        StringReader reader = new StringReader(_desc);
+        string line = string.Empty;
+        int num = 0;
+        do
+        {
+            line = reader.ReadLine();
+            if (!string.IsNullOrEmpty(line))
+            {
+                if (num == 0)
+                {
+                    descSb.Append(line);
+                }
+                else
+                {
+                    descSb.Append(Environment.NewLine + "	///" + line);
+                }
+                num++;
+            }
+        } while (!string.IsNullOrEmpty(line));
+        return descSb.ToString();
+    }
+    #endregion
 }
 
 /// <summary>

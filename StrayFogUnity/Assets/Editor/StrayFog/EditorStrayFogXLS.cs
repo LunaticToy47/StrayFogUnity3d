@@ -112,38 +112,6 @@ public sealed class EditorStrayFogXLS
     }
     #endregion
 
-    #region OnTransDescToSummary 转换描述为Summary形式
-    /// <summary>
-    /// 转换描述为Summary形式
-    /// </summary>
-    /// <param name="_desc">描述</param>
-    /// <returns>描述</returns>
-    static string OnTransDescToSummary(string _desc)
-    {
-        StringBuilder descSb = new StringBuilder();
-        StringReader reader = new StringReader(_desc);
-        string line = string.Empty;
-        int num = 0;
-        do
-        {
-            line = reader.ReadLine();
-            if (!string.IsNullOrEmpty(line))
-            {
-                if (num == 0)
-                {
-                    descSb.Append(line);
-                }
-                else
-                {
-                    descSb.Append(Environment.NewLine + "	///" + line);
-                }
-                num++;
-            }
-        } while (!string.IsNullOrEmpty(line));
-        return descSb.ToString();
-    }
-    #endregion
-
     #region OnClearXlsData 清除XLS表数据
     /// <summary>
     /// 清除XLS表数据
@@ -810,7 +778,7 @@ public sealed class EditorStrayFogXLS
                 sbPropertyReplace.Append(
                     propertyTemplete
                     .Replace("#Name#", c.columnName)
-                    .Replace("#Desc#", OnTransDescToSummary(c.desc))
+                    .Replace("#Desc#", c.desc.TransDescToSummary())
                     .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
                     .Replace("#DataType#", c.dataType.ToString())
                     .Replace("#ArrayDimension#", c.arrayDimension.ToString())

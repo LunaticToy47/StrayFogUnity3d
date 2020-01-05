@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public abstract partial class AbsMonoBehaviour
 {
-#AbsMonoBehaviourMethod#
+#AbsMonoBehaviour_ISimulateMonoBehaviour_Method#
     #region #Name#
     /// <summary>
     /// #Name#
@@ -19,5 +19,5 @@ public abstract partial class AbsMonoBehaviour
     /// </summary>
     protected virtual void OnRun#VirtualName#(#Parameter#) { }
     #endregion
-#AbsMonoBehaviourMethod#
+#AbsMonoBehaviour_ISimulateMonoBehaviour_Method#
 }

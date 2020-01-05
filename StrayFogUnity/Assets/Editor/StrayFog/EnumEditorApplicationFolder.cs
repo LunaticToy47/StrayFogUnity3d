@@ -97,7 +97,7 @@ public enum enEditorApplicationFolder
     /// <summary>
     /// Hotfix模拟MonoBehaviour目录
     /// </summary>
-    [EditorApplicationFolder("Hotfix模拟MonoBehaviour目录", "Assets/StrayFog/0MonoBehaviour/AbsClass/SimulateMonoBehaviourMethod", "Hotfix模拟MonoBehaviour目录")]
+    [EditorApplicationFolder("Hotfix模拟MonoBehaviour目录", "Assets/Game/StrayFog/0MonoBehaviour/AbsClass/SimulateMonoBehaviour", "Hotfix模拟MonoBehaviour目录")]
     Hotfix_SimulateMonoBehaviour,
     #endregion
 

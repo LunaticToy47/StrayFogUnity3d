@@ -1,301 +1,302 @@
 /// <summary>
-/// MonoBehaviour模拟【接口】
+/// enSimulateBehaviourMethod
 /// </summary>
-public interface ISimulateMonoBehaviour
+public enum enSimulateBehaviourMethod
 {
+
     /// <summary>
     /// Awake
     /// </summary>
-    void Awake();
+    Awake = 1568327037,
 
     /// <summary>
     /// Start
     /// </summary>
-    void Start();
+    Start = -1436209294,
 
     /// <summary>
     /// Update
     /// </summary>
-    void Update();
+    Update = 859380341,
 
     /// <summary>
     /// FixedUpdate
     /// </summary>
-    void FixedUpdate();
+    FixedUpdate = 1123211015,
 
     /// <summary>
     /// LateUpdate
     /// </summary>
-    void LateUpdate();
+    LateUpdate = -786706335,
 
     /// <summary>
     /// OnAnimatorIK
     /// </summary>
-    void OnAnimatorIK(System.Int32 _layerIndex);
+    OnAnimatorIK = -280498498,
 
     /// <summary>
     /// OnAnimatorMove
     /// </summary>
-    void OnAnimatorMove();
+    OnAnimatorMove = 819272651,
 
     /// <summary>
     /// OnApplicationFocus
     /// </summary>
-    void OnApplicationFocus(System.Boolean _focus);
+    OnApplicationFocus = 1142575403,
 
     /// <summary>
     /// OnApplicationQuit
     /// </summary>
-    void OnApplicationQuit();
+    OnApplicationQuit = -26038104,
 
     /// <summary>
     /// OnApplicationPause
     /// </summary>
-    void OnApplicationPause(System.Boolean _pause);
+    OnApplicationPause = -523421775,
 
     /// <summary>
     /// OnAudioFilterRead
     /// </summary>
-    void OnAudioFilterRead(System.Single[] _data,System.Int32 _channels);
+    OnAudioFilterRead = 1740818661,
 
     /// <summary>
     /// OnBecameInvisible
     /// </summary>
-    void OnBecameInvisible();
+    OnBecameInvisible = 969726645,
 
     /// <summary>
     /// OnBecameVisible
     /// </summary>
-    void OnBecameVisible();
+    OnBecameVisible = 1109485090,
 
     /// <summary>
     /// OnBeforeTransformParentChanged
     /// </summary>
-    void OnBeforeTransformParentChanged();
+    OnBeforeTransformParentChanged = -1586874128,
 
     /// <summary>
     /// OnCanvasGroupChanged
     /// </summary>
-    void OnCanvasGroupChanged();
+    OnCanvasGroupChanged = 516530090,
 
     /// <summary>
     /// OnCollisionEnter
     /// </summary>
-    void OnCollisionEnter(UnityEngine.Collision _collision);
+    OnCollisionEnter = -1109986157,
 
     /// <summary>
     /// OnCollisionEnter2D
     /// </summary>
-    void OnCollisionEnter2D(UnityEngine.Collision2D _collision);
+    OnCollisionEnter2D = -1389330351,
 
     /// <summary>
     /// OnCollisionExit
     /// </summary>
-    void OnCollisionExit(UnityEngine.Collision _collision);
+    OnCollisionExit = 1287696639,
 
     /// <summary>
     /// OnCollisionExit2D
     /// </summary>
-    void OnCollisionExit2D(UnityEngine.Collision2D _collision);
+    OnCollisionExit2D = 1964023349,
 
     /// <summary>
     /// OnCollisionStay
     /// </summary>
-    void OnCollisionStay(UnityEngine.Collision _collision);
+    OnCollisionStay = 1637020836,
 
     /// <summary>
     /// OnCollisionStay2D
     /// </summary>
-    void OnCollisionStay2D(UnityEngine.Collision2D _collision);
+    OnCollisionStay2D = 1507497350,
 
     /// <summary>
     /// OnConnectedToServer
     /// </summary>
-    void OnConnectedToServer();
+    OnConnectedToServer = 337110440,
 
     /// <summary>
     /// OnControllerColliderHit
     /// </summary>
-    void OnControllerColliderHit(UnityEngine.ControllerColliderHit _hit);
+    OnControllerColliderHit = -25562668,
 
     /// <summary>
     /// OnDestroy
     /// </summary>
-    void OnDestroy();
+    OnDestroy = -1061600993,
 
     /// <summary>
     /// OnDisable
     /// </summary>
-    void OnDisable();
+    OnDisable = 1023302565,
 
     /// <summary>
     /// OnDrawGizmos
     /// </summary>
-    void OnDrawGizmos();
+    OnDrawGizmos = 657528410,
 
     /// <summary>
     /// OnDrawGizmosSelected
     /// </summary>
-    void OnDrawGizmosSelected();
+    OnDrawGizmosSelected = 1850316209,
 
     /// <summary>
     /// OnEnable
     /// </summary>
-    void OnEnable();
+    OnEnable = 493061452,
 
     /// <summary>
     /// OnGUI
     /// </summary>
-    void OnGUI();
+    OnGUI = -676706310,
 
     /// <summary>
     /// OnJointBreak
     /// </summary>
-    void OnJointBreak(System.Single _breakForce);
+    OnJointBreak = 1532242028,
 
     /// <summary>
     /// OnJointBreak2D
     /// </summary>
-    void OnJointBreak2D(UnityEngine.Joint2D _joint);
+    OnJointBreak2D = -95146170,
 
     /// <summary>
     /// OnLevelWasLoaded
     /// </summary>
-    void OnLevelWasLoaded(System.Int32 _level);
+    OnLevelWasLoaded = -1206117259,
 
     /// <summary>
     /// OnMouseDown
     /// </summary>
-    void OnMouseDown();
+    OnMouseDown = -149295158,
 
     /// <summary>
     /// OnMouseDrag
     /// </summary>
-    void OnMouseDrag();
+    OnMouseDrag = 301042844,
 
     /// <summary>
     /// OnMouseEnter
     /// </summary>
-    void OnMouseEnter();
+    OnMouseEnter = 463234816,
 
     /// <summary>
     /// OnMouseExit
     /// </summary>
-    void OnMouseExit();
+    OnMouseExit = 85975202,
 
     /// <summary>
     /// OnMouseOver
     /// </summary>
-    void OnMouseOver();
+    OnMouseOver = 368299876,
 
     /// <summary>
     /// OnMouseUp
     /// </summary>
-    void OnMouseUp();
+    OnMouseUp = -1014165231,
 
     /// <summary>
     /// OnMouseUpAsButton
     /// </summary>
-    void OnMouseUpAsButton();
+    OnMouseUpAsButton = 1449131165,
 
     /// <summary>
     /// OnParticleCollision
     /// </summary>
-    void OnParticleCollision(UnityEngine.GameObject _other);
+    OnParticleCollision = -931475473,
 
     /// <summary>
     /// OnParticleTrigger
     /// </summary>
-    void OnParticleTrigger();
+    OnParticleTrigger = -1517729139,
 
     /// <summary>
     /// OnPostRender
     /// </summary>
-    void OnPostRender();
+    OnPostRender = 1932627935,
 
     /// <summary>
     /// OnPreCull
     /// </summary>
-    void OnPreCull();
+    OnPreCull = -1051944940,
 
     /// <summary>
     /// OnPreRender
     /// </summary>
-    void OnPreRender();
+    OnPreRender = 320401068,
 
     /// <summary>
     /// OnRectTransformDimensionsChange
     /// </summary>
-    void OnRectTransformDimensionsChange();
+    OnRectTransformDimensionsChange = 209323506,
 
     /// <summary>
     /// OnRectTransformRemoved
     /// </summary>
-    void OnRectTransformRemoved();
+    OnRectTransformRemoved = 26056331,
 
     /// <summary>
     /// OnRenderImage
     /// </summary>
-    void OnRenderImage(UnityEngine.RenderTexture _source,UnityEngine.RenderTexture _destination);
+    OnRenderImage = -423675912,
 
     /// <summary>
     /// OnRenderObject
     /// </summary>
-    void OnRenderObject();
+    OnRenderObject = -1023093140,
 
     /// <summary>
     /// OnServerInitialized
     /// </summary>
-    void OnServerInitialized();
+    OnServerInitialized = -169455802,
 
     /// <summary>
     /// OnTransformChildrenChanged
     /// </summary>
-    void OnTransformChildrenChanged();
+    OnTransformChildrenChanged = 235071170,
 
     /// <summary>
     /// OnTransformParentChanged
     /// </summary>
-    void OnTransformParentChanged();
+    OnTransformParentChanged = 257464739,
 
     /// <summary>
     /// OnTriggerEnter
     /// </summary>
-    void OnTriggerEnter(UnityEngine.Collider _other);
+    OnTriggerEnter = -1635032799,
 
     /// <summary>
     /// OnTriggerEnter2D
     /// </summary>
-    void OnTriggerEnter2D(UnityEngine.Collider2D _collision);
+    OnTriggerEnter2D = -1892230713,
 
     /// <summary>
     /// OnTriggerExit
     /// </summary>
-    void OnTriggerExit(UnityEngine.Collider _other);
+    OnTriggerExit = 1222496289,
 
     /// <summary>
     /// OnTriggerExit2D
     /// </summary>
-    void OnTriggerExit2D(UnityEngine.Collider2D _collision);
+    OnTriggerExit2D = 2138010499,
 
     /// <summary>
     /// OnTriggerStay
     /// </summary>
-    void OnTriggerStay(UnityEngine.Collider _other);
+    OnTriggerStay = -834590756,
 
     /// <summary>
     /// OnTriggerStay2D
     /// </summary>
-    void OnTriggerStay2D(UnityEngine.Collider2D _collision);
+    OnTriggerStay2D = -776905390,
 
     /// <summary>
     /// OnValidate
     /// </summary>
-    void OnValidate();
+    OnValidate = 1228439491,
 
     /// <summary>
     /// OnWillRenderObject
     /// </summary>
-    void OnWillRenderObject();
+    OnWillRenderObject = -497587660,
 
 }

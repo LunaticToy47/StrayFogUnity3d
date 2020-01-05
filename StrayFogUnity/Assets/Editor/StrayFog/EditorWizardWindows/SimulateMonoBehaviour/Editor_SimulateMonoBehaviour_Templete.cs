@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 /// <summary>
 /// 模拟MonoBehaviour方法样板
 /// </summary>
