@@ -299,4 +299,69 @@ public enum enSimulateBehaviourMethod
     /// </summary>
     MonoBehaviour_OnWillRenderObject = -1453915015,
 
+    /// <summary>
+    /// UIBehaviour_Awake
+    /// </summary>
+    UIBehaviour_Awake = -559230361,
+
+    /// <summary>
+    /// UIBehaviour_OnBeforeTransformParentChanged
+    /// </summary>
+    UIBehaviour_OnBeforeTransformParentChanged = 656160426,
+
+    /// <summary>
+    /// UIBehaviour_OnCanvasGroupChanged
+    /// </summary>
+    UIBehaviour_OnCanvasGroupChanged = -97210580,
+
+    /// <summary>
+    /// UIBehaviour_OnCanvasHierarchyChanged
+    /// </summary>
+    UIBehaviour_OnCanvasHierarchyChanged = 1599730508,
+
+    /// <summary>
+    /// UIBehaviour_OnDestroy
+    /// </summary>
+    UIBehaviour_OnDestroy = 722999305,
+
+    /// <summary>
+    /// UIBehaviour_OnDidApplyAnimationProperties
+    /// </summary>
+    UIBehaviour_OnDidApplyAnimationProperties = -1263937255,
+
+    /// <summary>
+    /// UIBehaviour_OnDisable
+    /// </summary>
+    UIBehaviour_OnDisable = 1265705907,
+
+    /// <summary>
+    /// UIBehaviour_OnEnable
+    /// </summary>
+    UIBehaviour_OnEnable = 923177074,
+
+    /// <summary>
+    /// UIBehaviour_OnRectTransformDimensionsChange
+    /// </summary>
+    UIBehaviour_OnRectTransformDimensionsChange = -474802360,
+
+    /// <summary>
+    /// UIBehaviour_OnTransformParentChanged
+    /// </summary>
+    UIBehaviour_OnTransformParentChanged = -44253271,
+
+    /// <summary>
+    /// UIBehaviour_OnValidate
+    /// </summary>
+    UIBehaviour_OnValidate = -2006845631,
+
+    /// <summary>
+    /// UIBehaviour_Reset
+    /// </summary>
+    UIBehaviour_Reset = 2001369307,
+
+    /// <summary>
+    /// UIBehaviour_Start
+    /// </summary>
+    UIBehaviour_Start = -1869859944,
+
 }

@@ -262,12 +262,12 @@ public sealed class EditorStrayFogExecute
 
             pams = m.GetParameters();
             #region 是否生成此方法模拟
-            isBuild = m.GetFirstAttribute<ObsoleteAttribute>() == null;
+            isBuild = !m.HasObsoleteAttribute();
             if (pams != null)
             {
                 foreach (ParameterInfo p in pams)
                 {
-                    isBuild &= p.ParameterType.GetFirstAttribute<ObsoleteAttribute>() == null;
+                    isBuild &= !p.HasObsoleteAttribute();
                 }
             }
             #endregion
@@ -331,6 +331,44 @@ public sealed class EditorStrayFogExecute
         #region 收集UIBehaviour方法
         foreach (MethodInfo m in uiMethods)
         {
+            stringFormalParameter.Clear();
+            stringInputParameter.Clear();
+
+            pams = m.GetParameters();
+            #region 是否生成此方法模拟
+            isBuild = !m.HasObsoleteAttribute();
+            if (pams != null)
+            {
+                foreach (ParameterInfo p in pams)
+                {
+                    isBuild &= !p.HasObsoleteAttribute();
+                }
+            }
+            #endregion
+            if (isBuild)
+            {
+                tempMethodName = "UIBehaviour_" + m.Name;
+                tempMethodNameKey = tempMethodName.UniqueHashCode();
+
+                #region 收集枚举
+                if (!enumValueNames.ContainsKey(tempMethodNameKey))
+                {
+                    enumValueNames.Add(tempMethodNameKey, tempMethodName);
+                }
+                #endregion
+
+                #region 收集形参与输入参数
+                foreach (ParameterInfo p in pams)
+                {
+                    stringFormalParameter.Add(string.Format("{0} _{1}", p.ParameterType, p.Name));
+                    stringInputParameter.Add(string.Format("_{0}", p.Name));
+                }
+                #endregion
+
+                #region 虚方法名称
+                tempMethodVirtualName = m.Name.ToUpper().StartsWith("ON") ? m.Name.Remove(0, 2) : m.Name;
+                #endregion
+            }
             Debug.LogErrorFormat("UIMethod=>{0}", m.Name);
         }
         #endregion
