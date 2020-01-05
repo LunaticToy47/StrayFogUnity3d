@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 /// <summary>
-/// #ClassName#
+/// #MethodName#
 /// </summary>
-public sealed class #ClassName# : AbsSimulateMonoBehaviourMethod
+[AddComponentMenu("StrayFog/Game/SimulateMonoBehaviour/SimulateMonoBehaviour_#MethodName#")]
+public sealed class SimulateMonoBehaviour_#MethodName# : AbsSimulateMonoBehaviourMethod
 {
 	/// <summary>
     /// 方法分类
     /// </summary>
-    public override enSimulateMonoBehaviourMethod methodClassify { get { return enSimulateMonoBehaviourMethod.#MethodName#; } }
+    public override int methodClassify { get { return #MethodClassify#; } }
 
 	/// <summary>
     /// #MethodName#
