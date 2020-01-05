@@ -32,7 +32,7 @@ static class EditorAssetBundleNameMenuItem
     [MenuItem(mcMenu + mcSetAssetBundleName, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcSetAssetBundleName, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcSetAssetBundleName, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_SetAssetBundleNameWindow()
+    static void EditorAssetBundleNameMenuItem_EditorWindowSetAssetBundleName()
     {
         if (EditorStrayFogApplication.IsExecuteMethodInCmd())
         {
@@ -56,7 +56,7 @@ static class EditorAssetBundleNameMenuItem
     [MenuItem(mcMenu + mcQueryAssetBundleAssetDiskMapingData, false, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcQueryAssetBundleAssetDiskMapingData, false, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcQueryAssetBundleAssetDiskMapingData, false, mcPriority + 2)]
-    public static void EditorDevelopMenuItem_QueryAssetBundleAssetDiskMapingDataWindow()
+    public static void EditorAssetBundleNameMenuItem_QueryAssetBundleAssetDiskMapingDataWindow()
     {
         if (Selection.activeObject != null)
         {

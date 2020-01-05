@@ -33,7 +33,7 @@ static class EditorQueryMenuItem
     [MenuItem(mcMenu + mcLookAssetBundleRoot, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcLookAssetBundleRoot, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcLookAssetBundleRoot, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_LookAssetBundleRoot()
+    static void EditorQueryMenuItem_LookAssetBundleRoot()
     {
         EditorUtility.RevealInFinder(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
     }
@@ -47,7 +47,7 @@ static class EditorQueryMenuItem
     [MenuItem(mcMenu + mcLookAssetType, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcLookAssetType, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcLookAssetType, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_LookAssetType()
+    static void EditorQueryMenuItem_LookAssetType()
     {
         if (Selection.activeObject != null)
         {

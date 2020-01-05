@@ -32,7 +32,7 @@ static class EditorReleaseMenuItem
     [MenuItem(mcMenu + mcBuildPackage, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildPackage, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildPackage, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_BuildPackageWindow()
+    static void EditorReleaseMenuItem_ExecuteBuildPackage()
     {
         EditorStrayFogExecute.ExecuteBuildPackage();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildPackage);
@@ -47,7 +47,7 @@ static class EditorReleaseMenuItem
     [MenuItem(mcMenu + mcBuildBatToPackage, false, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcBuildBatToPackage, false, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcBuildBatToPackage, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_BuildBatToPackage()
+    static void EditorReleaseMenuItem_ExecuteBuildBatToPackage()
     {
         EditorStrayFogExecute.ExecuteBuildBatToPackage();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildBatToPackage);
@@ -62,7 +62,7 @@ static class EditorReleaseMenuItem
     [MenuItem(mcMenu + mcBuildDllToPackage, false, mcPriority + 3)]
     [MenuItem(mcAssetMenu + mcBuildDllToPackage, false, mcPriority + 3)]
     [MenuItem(mcHierarchy + mcBuildDllToPackage, false, mcPriority + 3)]
-    static void EditorDevelopMenuItem_BuildDllToPackage()
+    static void EditorReleaseMenuItem_ExecuteBuildDllToPackage()
     {
         EditorStrayFogExecute.ExecuteBuildDllToPackage();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildDllToPackage);
@@ -77,7 +77,7 @@ static class EditorReleaseMenuItem
     [MenuItem(mcMenu + mcBuildAsmdefToPackage, false, mcPriority + 3)]
     [MenuItem(mcAssetMenu + mcBuildAsmdefToPackage, false, mcPriority + 3)]
     [MenuItem(mcHierarchy + mcBuildAsmdefToPackage, false, mcPriority + 3)]
-    static void EditorDevelopMenuItem_BuildAsmdefToPackage()
+    static void EditorReleaseMenuItem_ExecuteBuildAsmdefToPackage()
     {
         EditorStrayFogExecute.ExecuteBuildAsmdefToPackage();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAsmdefToPackage);
@@ -92,7 +92,7 @@ static class EditorReleaseMenuItem
     [MenuItem(mcMenu + mcBuildAllXlsData, false, mcPriority + 4)]
     [MenuItem(mcAssetMenu + mcBuildAllXlsData, false, mcPriority + 4)]
     [MenuItem(mcHierarchy + mcBuildAllXlsData, false, mcPriority + 4)]
-    static void EditorDevelopMenuItem_BuildAllXlsData()
+    static void EditorReleaseMenuItem_ExecuteBuildAllXlsData()
     {
         EditorStrayFogExecute.ExecuteBuildAllXlsData();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAllXlsData);
@@ -107,7 +107,7 @@ static class EditorReleaseMenuItem
     [MenuItem(mcMenu + mcCopySQLiteDbToPackage, false, mcPriority + 5)]
     [MenuItem(mcAssetMenu + mcCopySQLiteDbToPackage, false, mcPriority + 5)]
     [MenuItem(mcHierarchy + mcCopySQLiteDbToPackage, false, mcPriority + 5)]
-    static void EditorDevelopMenuItem_CopySQLiteDbToPackage()
+    static void EditorReleaseMenuItem_ExecuteCopySQLiteDbToPackage()
     {
         EditorStrayFogExecute.ExecuteCopySQLiteDbToPackage();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcCopySQLiteDbToPackage);

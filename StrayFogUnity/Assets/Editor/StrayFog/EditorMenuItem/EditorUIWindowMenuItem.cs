@@ -32,10 +32,10 @@ static class EditorUIWindowMenuItem
     [MenuItem(mcMenu + mcCreateNewUIWindow, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcCreateNewUIWindow, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcCreateNewUIWindow, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_CreateNewUIWindowWindow()
+    static void EditorUIWindowMenuItem_CreateNewUIWindowWindow()
     {
-        EditorWindowCreateNewUIWindow win =
-              EditorWindow.GetWindow<EditorWindowCreateNewUIWindow>(mcCreateNewUIWindow);
+        EditorWindowCreateNewUI win =
+              EditorWindow.GetWindow<EditorWindowCreateNewUI>(mcCreateNewUIWindow);
         win.Show();
     }
     #endregion
@@ -48,7 +48,7 @@ static class EditorUIWindowMenuItem
     [MenuItem(mcMenu + mcBuildUIWindowMaping, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildUIWindowMaping, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildUIWindowMaping, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_BuildUIWindowMapingWindow()
+    static void EditorUIWindowMenuItem_EditorWindowBuildUIWindowMaping()
     {
         EditorWindowBuildUIWindowMaping win =
               EditorWindow.GetWindow<EditorWindowBuildUIWindowMaping>(mcBuildUIWindowMaping);

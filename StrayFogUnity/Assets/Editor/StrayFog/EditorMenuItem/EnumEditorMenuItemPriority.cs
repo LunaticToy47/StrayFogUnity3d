@@ -81,9 +81,9 @@ enum enEditorMenuItemPriority
     /// </summary>
     Asmdef,
     /// <summary>
-    /// EditorSimulateMonoBehaviourMenuItem
+    /// EditorSimulateBehaviourMenuItem
     /// </summary>
-    SimulateMonoBehaviour,
+    SimulateBehaviour,
     /// <summary>
     /// EditorReleaseMenuItem
     /// </summary>

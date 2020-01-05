@@ -32,28 +32,12 @@ static class EditorCustomAssetMenuItem
     [MenuItem(mcMenu + mcCustomAsset, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcCustomAsset, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcCustomAsset, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_CustomAssetNewAssetWindow()
+    static void EditorCustomAssetMenuItem_EditorWindowCustomAssetCreateNewAsset()
     {
         EditorWindowCustomAssetCreateNewAsset win =
         EditorWindow.GetWindow<EditorWindowCustomAssetCreateNewAsset>(mcCustomAsset);
         win.ShowUtility();
     }
-    #endregion
-
-    #region CustomRunningAsset
-    //const string mcCustomRunningAsset = "New Running Asset";
-    ///// <summary>
-    ///// 脚本编译宏符号
-    ///// </summary>
-    //[MenuItem(mcMenu + mcCustomRunningAsset, false, mcPriority + 2)]
-    //[MenuItem(mcAssetMenu + mcCustomRunningAsset, false, mcPriority + 2)]
-    //[MenuItem(mcHierarchy + mcCustomRunningAsset, false, mcPriority + 2)]
-    //static void EditorDevelopMenuItem_CustomAssetNewRunningAssetWindow()
-    //{
-    //    EditorWindowCustomAssetNewRunningAsset win =
-    //    EditorWindow.GetWindow<EditorWindowCustomAssetNewRunningAsset>(mcCustomRunningAsset);
-    //    win.Show();
-    //}
     #endregion
 }
 #endif

@@ -32,25 +32,25 @@ static class EditorAsmdefMenuItem
     [MenuItem(mcMenu + mcLookPackageAsmdef, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcLookPackageAsmdef, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcLookPackageAsmdef, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_LookPackageAsmdefWindow()
+    static void EditorAsmdefMenuItem_EditorWindowExecuteLookPackageAsmdef()
     {
         EditorStrayFogExecute.ExecuteLookPackageAsmdef();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcLookPackageAsmdef);
     }
     #endregion
 
-    #region Build Asmdef To XLS
-    const string mcBuildAsmdefToXLS = "Build Asmdef To XLS";
+    #region Build Asmdef Map
+    const string mcBuildAsmdefMap = "Build Asmdef Map";
     /// <summary>
     /// 生成Asmdef到XLS表
     /// </summary>
-    [MenuItem(mcMenu + mcBuildAsmdefToXLS, false, mcPriority + 1)]
-    [MenuItem(mcAssetMenu + mcBuildAsmdefToXLS, false, mcPriority + 1)]
-    [MenuItem(mcHierarchy + mcBuildAsmdefToXLS, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_BuildAsmdefToXLSWindow()
+    [MenuItem(mcMenu + mcBuildAsmdefMap, false, mcPriority + 1)]
+    [MenuItem(mcAssetMenu + mcBuildAsmdefMap, false, mcPriority + 1)]
+    [MenuItem(mcHierarchy + mcBuildAsmdefMap, false, mcPriority + 1)]
+    static void EditorAsmdefMenuItem_EditorWindowBuildAsmdefMap()
     {
-        EditorBuildAsmdefMapWindow win =
-               EditorWindow.GetWindow<EditorBuildAsmdefMapWindow>(mcBuildAsmdefToXLS);
+        EditorWindowBuildAsmdefMap win =
+               EditorWindow.GetWindow<EditorWindowBuildAsmdefMap>(mcBuildAsmdefMap);
         win.Show();
     }
     #endregion

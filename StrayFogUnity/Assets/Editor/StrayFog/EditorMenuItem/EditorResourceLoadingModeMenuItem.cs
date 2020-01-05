@@ -33,7 +33,7 @@ static class EditorResourceLoadingModeMenuItem
     [MenuItem(mcMenu + mcRLMInternal, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcRLMInternal, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcRLMInternal, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_RLMInternal()
+    static void EditorResourceLoadingModeMenuItem_RLMInternal()
     {
         OnEditorToggleLoadingResourceMode(true);
     }
@@ -43,7 +43,7 @@ static class EditorResourceLoadingModeMenuItem
     [MenuItem(mcMenu + mcRLMInternal, true, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcRLMInternal, true, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcRLMInternal, true, mcPriority + 1)]
-    static bool EditorDevelopMenuItem_RLMInternalValidate()
+    static bool EditorResourceLoadingModeMenuItem_RLMInternalValidate()
     {
         return !StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal;
     }
@@ -57,7 +57,7 @@ static class EditorResourceLoadingModeMenuItem
     [MenuItem(mcMenu + mcRLMExternal, false, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcRLMExternal, false, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcRLMExternal, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_RLMExternal()
+    static void EditorResourceLoadingModeMenuItem_RLMExternal()
     {
         OnEditorToggleLoadingResourceMode(false);
     }
@@ -67,7 +67,7 @@ static class EditorResourceLoadingModeMenuItem
     [MenuItem(mcMenu + mcRLMExternal, true, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcRLMExternal, true, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcRLMExternal, true, mcPriority + 2)]
-    static bool EditorDevelopMenuItem_RLMExternalValidate()
+    static bool EditorResourceLoadingModeMenuItem_RLMExternalValidate()
     {
         return StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 引导管理窗口
 /// </summary>
-public class EditorWindowGuideManagerWindow : AbsEditorWindow
+public class EditorWindowGuideManager : AbsEditorWindow
 {
     /// <summary>
     /// 滚动视图

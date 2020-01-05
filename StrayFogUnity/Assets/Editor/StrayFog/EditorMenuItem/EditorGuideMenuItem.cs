@@ -32,10 +32,10 @@ static class EditorGuideMenuItem
     [MenuItem(mcMenu + mcGuideManager, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcGuideManager, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcGuideManager, false, mcPriority + 1)]
-    static void EditorGuideMenuItem_EditorWindowGuideManagerWindow()
+    static void EditorGuideMenuItem_EditorWindowGuideManager()
     {
-        EditorWindowGuideManagerWindow win =
-        EditorWindow.GetWindow<EditorWindowGuideManagerWindow>(mcGuideManager);
+        EditorWindowGuideManager win =
+        EditorWindow.GetWindow<EditorWindowGuideManager>(mcGuideManager);
         win.Show();
     }
     #endregion

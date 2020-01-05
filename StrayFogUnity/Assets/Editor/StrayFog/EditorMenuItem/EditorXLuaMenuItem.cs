@@ -32,10 +32,10 @@ static class EditorXLuaMenuItem
     [MenuItem(mcMenu + mcBuildXLuaMap, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildXLuaMap, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildXLuaMap, false, mcPriority + 1)]
-    static void EditorXLSMenuItem_BuildXLuaMapWindow()
+    static void EditorXLSMenuItem_EditorWindowBuildXLuaMap()
     {
-        EditorBuildXLuaMapWindow win =
-               EditorWindow.GetWindow<EditorBuildXLuaMapWindow>(mcBuildXLuaMap);
+        EditorWindowBuildXLuaMap win =
+               EditorWindow.GetWindow<EditorWindowBuildXLuaMap>(mcBuildXLuaMap);
         win.Show();
     }
     #endregion      

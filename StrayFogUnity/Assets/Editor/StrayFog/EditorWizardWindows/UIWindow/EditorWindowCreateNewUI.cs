@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 创建UI窗口
 /// </summary>
-public class EditorWindowCreateNewUIWindow : AbsEditorWindow
+public class EditorWindowCreateNewUI : AbsEditorWindow
 {
     /// <summary>
     /// 窗口预置配置

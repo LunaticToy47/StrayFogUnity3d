@@ -32,7 +32,7 @@ static class EditorProjectMenuItem
     [MenuItem(mcMenu + mcBuildProjectAssets, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildProjectAssets, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildProjectAssets, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_BuildProjectAssetsWindow()
+    static void EditorProjectMenuItem_ExecuteBuildProjectAssets()
     {
         EditorStrayFogExecute.ExecuteBuildProjectAssets<StrayFogRunningApplication>();
         EditorStrayFogExecute.ExecuteBuildProjectAssets<StrayFogSetting>();
@@ -48,7 +48,7 @@ static class EditorProjectMenuItem
     [MenuItem(mcMenu + mcSettingProjectConfig, false, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcSettingProjectConfig, false, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcSettingProjectConfig, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_SettingProjectConfigWindow()
+    static void EditorProjectMenuItem_EditorWindowSettingProjectConfig()
     {
         EditorWindowSettingProjectConfig win =
               EditorWindow.GetWindow<EditorWindowSettingProjectConfig>(mcSettingProjectConfig);

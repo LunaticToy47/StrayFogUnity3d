@@ -32,7 +32,7 @@ static class EditorDevelopMenuItem
     [MenuItem(mcMenu + mcMacroDefine, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcMacroDefine, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcMacroDefine, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_MacroDefineScriptingDefineSymbolsWindow()
+    static void EditorDevelopMenuItem_EditorWindowMacroDefineScriptingDefineSymbols()
     {
         EditorWindowMacroDefineScriptingDefineSymbols win =
         EditorWindow.GetWindow<EditorWindowMacroDefineScriptingDefineSymbols>(mcMacroDefine);

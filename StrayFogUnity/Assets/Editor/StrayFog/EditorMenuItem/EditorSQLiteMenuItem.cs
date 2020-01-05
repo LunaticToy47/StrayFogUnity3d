@@ -32,7 +32,7 @@ static class EditorSQLiteMenuItem
     [MenuItem(mcMenu + mcExportXlsDataToSqlite, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcExportXlsDataToSqlite, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcExportXlsDataToSqlite, false, mcPriority + 1)]
-    static void EditorXLSMenuItem_ExportXlsDataToSqlite()
+    static void EditorSQLiteMenuItem_ExecuteExportXlsDataToSqlite()
     {
         EditorStrayFogExecute.ExecuteExportXlsDataToSqlite();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcExportXlsDataToSqlite);

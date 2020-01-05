@@ -32,7 +32,7 @@ static class EditorAssetDiskMapingMenuItem
     [MenuItem(mcMenu + mcBuildAllAssetDiskMaping, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildAllAssetDiskMaping, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildAllAssetDiskMaping, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_BuildAllAssetDiskMapingWindow()
+    static void EditorAssetDiskMapingMenuItem_EditorWindowBuildAllAssetDiskMaping()
     {
         if (EditorStrayFogApplication.IsExecuteMethodInCmd())
         {
@@ -41,8 +41,8 @@ static class EditorAssetDiskMapingMenuItem
         }
         else
         {
-            EditorBuildAllAssetDiskMapingWindow win =
-               EditorWindow.GetWindow<EditorBuildAllAssetDiskMapingWindow>(mcBuildAllAssetDiskMaping);
+            EditorWindowBuildAllAssetDiskMaping win =
+               EditorWindow.GetWindow<EditorWindowBuildAllAssetDiskMaping>(mcBuildAllAssetDiskMaping);
             win.Show();
         }
     }

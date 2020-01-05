@@ -32,10 +32,10 @@ static class EditorXLSMenuItem
     [MenuItem(mcMenu + mcBuildXlsSchemaToSqliteAndScript, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildXlsSchemaToSqliteAndScript, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildXlsSchemaToSqliteAndScript, false, mcPriority + 1)]
-    static void EditorXLSMenuItem_BuildXlsSchemaToSqliteAndScriptWindow()
+    static void EditorXLSMenuItem_EditorWindowBuildXlsSchemaToSqliteAndScript()
     {
-        EditorBuildXlsSchemaToSqliteAndScriptWindow win =
-               EditorWindow.GetWindow<EditorBuildXlsSchemaToSqliteAndScriptWindow>(mcBuildXlsSchemaToSqliteAndScript);
+        EditorWindowBuildXlsSchemaToSqliteAndScript win =
+               EditorWindow.GetWindow<EditorWindowBuildXlsSchemaToSqliteAndScript>(mcBuildXlsSchemaToSqliteAndScript);
         win.Show();
     }
     #endregion      

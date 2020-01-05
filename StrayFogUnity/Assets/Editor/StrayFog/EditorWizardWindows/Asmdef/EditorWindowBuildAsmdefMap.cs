@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 生成Asmdef脚本映射
 /// </summary>
-public class EditorBuildAsmdefMapWindow : AbsEditorWindow
+public class EditorWindowBuildAsmdefMap : AbsEditorWindow
 {
     /// <summary>
     /// Asmdef配置

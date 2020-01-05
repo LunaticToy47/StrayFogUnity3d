@@ -32,7 +32,7 @@ static class EditorDllMenuItem
     [MenuItem(mcMenu + mcLookPackageDll, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcLookPackageDll, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcLookPackageDll, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_LookPackageDllWindow()
+    static void EditorDllMenuItem_LookPackageDllWindow()
     {
         EditorStrayFogExecute.ExecuteLookPackageDll();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcLookPackageDll);
@@ -47,7 +47,7 @@ static class EditorDllMenuItem
     [MenuItem(mcMenu + mcDynamicCreateDll, false, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcDynamicCreateDll, false, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcDynamicCreateDll, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_DynamicCreateDllWindow()
+    static void EditorDllMenuItem_EditorWindowDynamicCreateDll()
     {
         EditorWindowDynamicCreateDll win =
         EditorWindow.GetWindow<EditorWindowDynamicCreateDll>(mcDynamicCreateDll);

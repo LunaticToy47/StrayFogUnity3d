@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 设置资源AssetDiskMaping窗口
 /// </summary>
-public class EditorBuildAllAssetDiskMapingWindow : AbsEditorWindow
+public class EditorWindowBuildAllAssetDiskMaping : AbsEditorWindow
 {
     /// <summary>
     /// 文件映射配置

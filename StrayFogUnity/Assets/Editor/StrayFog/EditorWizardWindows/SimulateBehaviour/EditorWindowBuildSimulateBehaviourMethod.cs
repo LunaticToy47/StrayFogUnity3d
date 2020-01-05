@@ -1,13 +1,11 @@
 ﻿#if UNITY_EDITOR
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
-/// 构建模拟MonoBehaviour事件组件
+/// 构建模拟Behaviour事件组件
 /// </summary>
-public class EditorWindowBuildSimulateMonoBehaviourMethod : AbsEditorWindow
+public class EditorWindowBuildSimulateBehaviourMethod : AbsEditorWindow
 {
     /// <summary>
     /// 滚动视图位置

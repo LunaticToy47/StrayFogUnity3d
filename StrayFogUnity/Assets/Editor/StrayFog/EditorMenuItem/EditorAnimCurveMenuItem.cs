@@ -32,7 +32,7 @@ static class EditorAnimCurveMenuItem
     [MenuItem(mcMenu + mcBuildAnimCurves, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildAnimCurves, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildAnimCurves, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_BuildAnimCurvesWindow()
+    static void EditorAnimCurveMenuItem_EditorWindowBuildAnimCurves()
     {
         EditorStrayFogExecute.ExecuteBuildAnimCurves();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildAnimCurves);

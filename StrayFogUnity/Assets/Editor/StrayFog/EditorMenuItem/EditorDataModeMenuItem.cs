@@ -33,7 +33,7 @@ static class EditorDataModeMenuItem
     [MenuItem(mcMenu + mcDTMXLS, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcDTMXLS, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcDTMXLS, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_DTMXLS()
+    static void EditorDataModeMenuItem_DTMXLS()
     {
         OnEditorToggleDataMode(true);
     }
@@ -43,7 +43,7 @@ static class EditorDataModeMenuItem
     [MenuItem(mcMenu + mcDTMXLS, true, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcDTMXLS, true, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcDTMXLS, true, mcPriority + 1)]
-    static bool EditorDevelopMenuItem_DTMXLSValidate()
+    static bool EditorDataModeMenuItem_DTMXLSValidate()
     {
         bool canSelect = StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite;
         canSelect &= StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal;
@@ -59,7 +59,7 @@ static class EditorDataModeMenuItem
     [MenuItem(mcMenu + mcDTMSQLite, false, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcDTMSQLite, false, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcDTMSQLite, false, mcPriority + 2)]
-    static void EditorDevelopMenuItem_DTMSQLite()
+    static void EditorDataModeMenuItem_DTMSQLite()
     {
         OnEditorToggleDataMode(false);
     }
@@ -69,7 +69,7 @@ static class EditorDataModeMenuItem
     [MenuItem(mcMenu + mcDTMSQLite, true, mcPriority + 2)]
     [MenuItem(mcAssetMenu + mcDTMSQLite, true, mcPriority + 2)]
     [MenuItem(mcHierarchy + mcDTMSQLite, true, mcPriority + 2)]
-    static bool EditorDevelopMenuItem_DTMSQLiteValidate()
+    static bool EditorDataModeMenuItem_DTMSQLiteValidate()
     {
         bool canSelect = !StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite;
         canSelect &= StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal;

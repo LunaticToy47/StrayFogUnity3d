@@ -33,7 +33,7 @@ static class EditorAnimatorMenuItem
     [MenuItem(mcMenu + mcBuildAnimatorControllerFMSMaping, false, mcPriority + 1)]
     [MenuItem(mcAssetMenu + mcBuildAnimatorControllerFMSMaping, false, mcPriority + 1)]
     [MenuItem(mcHierarchy + mcBuildAnimatorControllerFMSMaping, false, mcPriority + 1)]
-    static void EditorDevelopMenuItem_BuildAnimatorControllerFMSMapingWindow()
+    static void EditorAnimatorMenuItem_EditorWindowAnimatorControllerFMSMaping()
     {
         if (EditorStrayFogApplication.IsExecuteMethodInCmd())
         {
