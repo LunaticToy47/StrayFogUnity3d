@@ -34,8 +34,11 @@ static class EditorReleaseMenuItem
     [MenuItem(mcHierarchy + mcBuildPackage, false, mcPriority + 1)]
     static void EditorReleaseMenuItem_ExecuteBuildPackage()
     {
-        EditorStrayFogExecute.ExecuteBuildPackage();
-        EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildPackage);
+        if (EditorStrayFogApplication.MenuItemQuickDisplayDialog_OKCancel("Are you sure ExecuteBuildPackage?"))
+        {
+            EditorStrayFogExecute.ExecuteBuildPackage();
+            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildPackage);
+        }        
     }
     #endregion
 

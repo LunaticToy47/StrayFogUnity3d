@@ -1685,7 +1685,7 @@ public sealed class EditorStrayFogExecute
 
         ExecuteExportXlsSchemaToSqlite();
 
-        ExecuteBuildAllXlsData();       
+        ExecuteBuildAllXlsData();
 
         ExecuteBuildDllToPackage();
         ExecuteBuildAsmdefToPackage();

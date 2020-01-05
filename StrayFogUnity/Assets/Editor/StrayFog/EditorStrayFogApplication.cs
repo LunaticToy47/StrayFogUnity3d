@@ -386,6 +386,17 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 
+    #region MenuItemQuickDisplayDialog_OKCancel  MenuItem确认提示
+    /// <summary>
+    /// MenuItem确认提示
+    /// </summary>
+    /// <param name="_title">标题</param>
+    public static bool MenuItemQuickDisplayDialog_OKCancel(string _title)
+    {
+        return EditorUtility.DisplayDialog(_title, _title,"OK","Cancel");
+    }
+    #endregion
+
     #region IsInternalWhenUseSQLiteInEditorForResourceLoadMode 检测在编辑器状态下使用SQLite数据库时资源加载模式是否是内部资源模式
     /// <summary>
     /// 检测在编辑器状态下使用SQLite数据库时资源加载模式是否是内部资源模式
