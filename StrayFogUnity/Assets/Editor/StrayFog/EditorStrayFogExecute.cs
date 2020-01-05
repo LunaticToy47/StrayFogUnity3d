@@ -203,9 +203,7 @@ public sealed class EditorStrayFogExecute
         //形参
         List<string> stringFormalParameter = new List<string>();
         //输入参数
-        List<string> stringInputParameter = new List<string>();
-
-        
+        List<string> stringInputParameter = new List<string>();        
 
         #region Behaviour_Enum 行为枚举
         string txt_BehaviourEnum_ScriptTemplete = EditorResxTemplete.Editor_GeneralEnum_ScriptTemplete;
@@ -276,8 +274,8 @@ public sealed class EditorStrayFogExecute
 
             if (isBuild)
             {
-                tempMethodName = m.Name;
-                tempMethodNameKey = m.Name.UniqueHashCode();
+                tempMethodName = "MonoBehaviour_" + m.Name;
+                tempMethodNameKey = tempMethodName.UniqueHashCode();
 
                 #region 收集枚举
                 if (!enumValueNames.ContainsKey(tempMethodNameKey))
