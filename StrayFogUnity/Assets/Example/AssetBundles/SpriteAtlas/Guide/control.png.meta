@@ -2080,9 +2080,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+  spritePackingTag: ASSETS\EXAMPLE\ASSETBUNDLES\SPRITEATLAS\GUIDE
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
-  assetBundleName: resourcesab/uidev/sprite/control/control.png
+  assetBundleName: sp_1381309303
   assetBundleVariant: 

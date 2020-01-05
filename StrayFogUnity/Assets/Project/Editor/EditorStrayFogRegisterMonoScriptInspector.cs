@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 /// <summary>
 /// StrayFogRegisterMonoScript
 /// </summary>
@@ -30,3 +31,4 @@ public class EditorStrayFogRegisterMonoScriptInspector : Editor
         base.OnInspectorGUI();
     }
 }
+#endif

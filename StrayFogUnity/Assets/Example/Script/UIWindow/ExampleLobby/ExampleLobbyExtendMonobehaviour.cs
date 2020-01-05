@@ -5,10 +5,7 @@
 [AddComponentMenu("StrayFog/Example/UIWindow/ExampleLobbyExtendMonobehaviour")]
 public class ExampleLobbyExtendMonobehaviour : AbsMonoBehaviour
 {
-    /// <summary>
-    /// Awake
-    /// </summary>
-    void Awake()
+    protected override void OnRunAwake()
     {
         throw new UnityException("【ExampleLobbyExtendMonobehaviour】throw new UnityException");
     }

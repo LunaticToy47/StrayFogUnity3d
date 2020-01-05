@@ -5,7 +5,6 @@ public enum enAssetDiskMapingFile
 {
 	f_GuideMaskShader_mat = -1388105411,
 	f_SpriteAtlas_txt = 1787210896,
-	f_UIWindowPrefab_txt = -1367067612,
 	f_xLuaScript_lua_txt = 1930332635,
 	f_FZY4JW_0_TTF = 1435839211,
 	f_pf_hero_1002_prefab = 801223849,
@@ -77,6 +76,7 @@ public enum enAssetDiskMapingFile
 	f_SkillShape_Circle_png = 764015412,
 	f_SkillShape_Line_png = 957664066,
 	f_SkillShape_Sector_png = 718574578,
+	f_control_png = 421558678,
 	f_hero_show_attack_png = -1881786878,
 	f_hero_show_back_png = 1415271091,
 	f_hero_show_button_attack_png = -629659239,
