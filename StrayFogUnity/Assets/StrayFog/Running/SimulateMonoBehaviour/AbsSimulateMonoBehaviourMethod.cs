@@ -2,7 +2,7 @@
 /// <summary>
 /// 模拟MonoBehaviour方法抽象
 /// </summary>
-public abstract class AbsSimulateMonoBehaviourMethod : MonoBehaviour
+public abstract class AbsSimulateMonoBehaviourMethod : MonoBehaviour,ISimulateBehaviourMethod
 {
     /// <summary>
     /// 方法分类

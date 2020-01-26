@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// AsmdefMap实体
 /// </summary>
-[SQLiteTableMap(-305506126,"Assets/Game/Editor/XLS_Config/AsmdefMap.xlsx","AsmdefMap", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_853878160",typeof(XLS_Config_Table_AsmdefMap),true,false)]
+[SQLiteTableMap(1559723641,"Assets/Game/Editor/XLS_Config/AsmdefMap.xlsx","AsmdefMap", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_334573285",typeof(XLS_Config_Table_AsmdefMap),true,false)]
 public partial class XLS_Config_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 {
 	

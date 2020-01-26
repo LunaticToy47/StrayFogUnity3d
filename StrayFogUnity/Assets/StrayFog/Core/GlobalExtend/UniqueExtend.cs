@@ -16,9 +16,7 @@ public static class UniqueExtend
     /// <returns>HashCode</returns>
     public static int UniqueHashCode(this string _str)
     {
-        //int h = _str.MD5().GetHashCode();
-        //return (string.Format("{0}{1}",_str, _str.GetHashCode())).GetHashCode();
-        return _str.GetHashCode();
+        return _str.MD5().GetHashCode();
     }
     #endregion
 }

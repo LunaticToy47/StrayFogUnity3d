@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// UserGuideStyle实体
 /// </summary>
-[SQLiteTableMap(980815040,"Assets/Game/Editor/XLS_Config/UserGuideStyle.xlsx","UserGuideStyle", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_853878160",typeof(XLS_Config_Table_UserGuideStyle),true,false)]
+[SQLiteTableMap(666904118,"Assets/Game/Editor/XLS_Config/UserGuideStyle.xlsx","UserGuideStyle", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_334573285",typeof(XLS_Config_Table_UserGuideStyle),true,false)]
 public partial class XLS_Config_Table_UserGuideStyle: AbsStrayFogSQLiteEntity
 {
 	

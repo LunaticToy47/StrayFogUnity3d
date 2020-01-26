@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -20,12 +21,12 @@ public class EditorWindowBuildSimulateBehaviourMethod : AbsEditorWindow
     /// <summary>
     /// 模拟MonoBehaviour方法
     /// </summary>
-    MethodInfo[] mSimulateMonoBehaviourMethodMaping = null;
+    List<EditorSimulateBehaviourMethod> mSimulateMonoBehaviourMethodMaping = null;
 
     /// <summary>
     /// 模拟MonoBehaviour方法
     /// </summary>
-    MethodInfo[] mSimulateUIBehaviourMethodMaping = null;
+    List<EditorSimulateBehaviourMethod> mSimulateUIBehaviourMethodMaping = null;
 
     /// <summary>
     /// OnFocus
@@ -80,7 +81,7 @@ public class EditorWindowBuildSimulateBehaviourMethod : AbsEditorWindow
     /// <param name="_scrollViewPosition">滚动视图位置</param>
     /// <param name="_methods">方法组</param>
     /// <returns>滚动视图位置</returns>
-    Vector2 OnViewMethod(string _title,Vector2 _scrollViewPosition,MethodInfo[] _methods)
+    Vector2 OnViewMethod(string _title,Vector2 _scrollViewPosition, List<EditorSimulateBehaviourMethod> _methods)
     {
         EditorGUILayout.BeginVertical();
         EditorGUILayout.LabelField(_title);
@@ -88,11 +89,20 @@ public class EditorWindowBuildSimulateBehaviourMethod : AbsEditorWindow
         {
             _scrollViewPosition = EditorGUILayout.BeginScrollView(_scrollViewPosition);
             int index = 0;
-            int count = _methods.Length;
-            foreach (MethodInfo key in _methods)
+            int count = _methods.Count;
+            foreach (EditorSimulateBehaviourMethod key in _methods)
             {
                 index++;
-                EditorGUILayout.LabelField(string.Format("{0}.【{1}】", index.PadLeft(count), key.Name));
+                if (key.isBuildSimulate)
+                {
+                    EditorGUILayout.LabelField(string.Format("{0}.【{1}】",
+                    index.PadLeft(count), key.methodInfo.Name));
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(string.Format("{0}.【{1}】【Not Build Simulate】",
+                    index.PadLeft(count), key.methodInfo.Name));
+                }
             }
             EditorGUILayout.EndScrollView();
         }

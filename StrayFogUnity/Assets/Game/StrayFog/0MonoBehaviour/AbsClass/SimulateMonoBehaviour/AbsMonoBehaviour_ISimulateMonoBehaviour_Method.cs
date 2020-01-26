@@ -832,4 +832,46 @@ public abstract partial class AbsMonoBehaviour
     protected virtual void OnRunWillRenderObject() { }
     #endregion
 
+    #region OnCanvasHierarchyChanged
+    /// <summary>
+    /// OnCanvasHierarchyChanged
+    /// </summary>
+    public void OnCanvasHierarchyChanged()
+    {        
+        OnRunCanvasHierarchyChanged();
+    }
+    /// <summary>
+    /// OnOnCanvasHierarchyChanged
+    /// </summary>
+    protected virtual void OnRunCanvasHierarchyChanged() { }
+    #endregion
+
+    #region OnDidApplyAnimationProperties
+    /// <summary>
+    /// OnDidApplyAnimationProperties
+    /// </summary>
+    public void OnDidApplyAnimationProperties()
+    {        
+        OnRunDidApplyAnimationProperties();
+    }
+    /// <summary>
+    /// OnOnDidApplyAnimationProperties
+    /// </summary>
+    protected virtual void OnRunDidApplyAnimationProperties() { }
+    #endregion
+
+    #region Reset
+    /// <summary>
+    /// Reset
+    /// </summary>
+    public void Reset()
+    {        
+        OnRunReset();
+    }
+    /// <summary>
+    /// OnReset
+    /// </summary>
+    protected virtual void OnRunReset() { }
+    #endregion
+
 }

@@ -5,13 +5,13 @@
 public  static partial class enUIWindow
 {
 	[AliasTooltip("ExampleLobbyWindow")]
-	public const int ExampleLobbyWindow = 1758967500;
+	public const int ExampleLobbyWindow = -197707795;
 	[AliasTooltip("ExampleHeroListWindow")]
-	public const int ExampleHeroListWindow = -1629584243;
+	public const int ExampleHeroListWindow = -491778195;
 	[AliasTooltip("ExamplePlayerListWindow")]
-	public const int ExamplePlayerListWindow = -527730573;
+	public const int ExamplePlayerListWindow = -1411522539;
 	[AliasTooltip("ExampleMessageBoxWindow")]
-	public const int ExampleMessageBoxWindow = 513503323;
+	public const int ExampleMessageBoxWindow = 1708735878;
 	[AliasTooltip("ExampleGuideWindow")]
-	public const int ExampleGuideWindow = 186747624;
+	public const int ExampleGuideWindow = 253189677;
 }

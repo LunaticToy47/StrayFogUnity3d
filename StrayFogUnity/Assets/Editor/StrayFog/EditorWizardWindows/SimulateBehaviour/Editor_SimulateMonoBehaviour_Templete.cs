@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 /// <summary>
@@ -301,3 +302,4 @@ public sealed class Editor_SimulateMonoBehaviour_Templete : MonoBehaviour
         
     }
 }
+#endif

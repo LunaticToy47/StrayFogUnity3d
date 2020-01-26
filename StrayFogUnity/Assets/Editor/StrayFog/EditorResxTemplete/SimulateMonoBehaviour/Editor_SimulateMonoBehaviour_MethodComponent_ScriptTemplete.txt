@@ -3,7 +3,7 @@
 /// #MethodName#
 /// </summary>
 [AddComponentMenu("StrayFog/Game/SimulateMonoBehaviour/SimulateMonoBehaviour_#MethodName#")]
-public sealed class SimulateMonoBehaviour_#MethodName# : AbsSimulateMonoBehaviourMethod
+public sealed class #ClassName# : AbsSimulate#SimulateBehaviourClassify#Method
 {
 	/// <summary>
     /// 方法分类
@@ -13,7 +13,7 @@ public sealed class SimulateMonoBehaviour_#MethodName# : AbsSimulateMonoBehaviou
 	/// <summary>
     /// #MethodName#
     /// </summary>
-    void #MethodName#(#MethodParameter#)
+    #MethodOverridePrefix# #MethodName#(#MethodParameter#)
     {
         
     }
