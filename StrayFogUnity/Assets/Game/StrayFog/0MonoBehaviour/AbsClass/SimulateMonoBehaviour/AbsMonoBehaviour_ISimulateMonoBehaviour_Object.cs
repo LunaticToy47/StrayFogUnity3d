@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 抽象MonoBehaviour【模拟MonoBehaviour】
 /// </summary>
-public abstract partial class AbsMonoBehaviour
+public abstract partial class AbsMonoBehaviour: ISimulateMonoBehaviour
 {
     #region gameObject
     /// <summary>
@@ -16,7 +16,18 @@ public abstract partial class AbsMonoBehaviour
     /// <summary>
     /// RectTransform
     /// </summary>
-    public RectTransform rectTransform { get; private set; }
+    RectTransform mRectTransform = null;
+    /// <summary>
+    /// RectTransform
+    /// </summary>
+    public RectTransform rectTransform {
+        get {
+            if (mRectTransform == null) {
+                Debug.LogError("RectTransform is null.");
+            }
+            return mRectTransform;
+        }
+    }
     #endregion
 
     #region isBindGameObject
@@ -50,13 +61,18 @@ public abstract partial class AbsMonoBehaviour
         if (_go != null)
         {
             gameObject = _go;
+            mRectTransform = null;
             if (gameObject.transform is RectTransform)
             {
-                rectTransform = (RectTransform)gameObject.transform;
+                mRectTransform = (RectTransform)gameObject.transform;
             }
             coroutine = gameObject.AddComponent<SimulateMonoBehaviour_Coroutine>();
             OnAfterBindGameObject();
-            CollectCtrl<UIBehaviour>();
+            if (mRectTransform != null)
+            {
+                CollectCtrl<UIBehaviour>();
+            }            
+            OnBindSimulateBehaviourEvent();
         }
         else
         {

@@ -132,4 +132,17 @@ public static partial class StrayFogGamePools
         }
     }
     #endregion    
+
+    #region StrayFogHotfixLog
+    /// <summary>
+    /// StrayFogHotfixLog
+    /// </summary>
+    public static StrayFogHotfixLog hotfixLog
+    {
+        get
+        {
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogHotfixLog>();
+        }
+    }
+    #endregion    
 }

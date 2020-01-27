@@ -38,15 +38,15 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
     void Awake()
     {
         object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
-        //if (ins is ISimulateMonoBehaviour)
-        //{
-        //    ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
-        //    mono.BindGameObject(gameObject);            
-        //}
-        //else
-        //{
-        //    Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
-        //}
+        if (ins is ISimulateMonoBehaviour)
+        {
+            ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
+            mono.BindGameObject(gameObject);
+        }
+        else
+        {
+            Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
+        }
     }
 
     /// <summary>
