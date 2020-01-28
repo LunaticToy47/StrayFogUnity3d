@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 /// <summary>
-/// 抽象MonoBehaviour【模拟MonoBehaviour、UIBehaviour事件】
+/// 抽象AbsMonoBehaviour【模拟MonoBehaviour、UIBehaviour方法】
 /// </summary>
 public abstract partial class AbsMonoBehaviour
 {
-#AbsMonoBehaviour_ISimulateMonoBehaviour_Method#
+#AbsMonoBehaviour_ISimulateBehaviour_Method#
     #region #Name#
     /// <summary>
     /// #Name#
@@ -19,5 +19,5 @@ public abstract partial class AbsMonoBehaviour
     /// </summary>
     protected virtual void OnRun#VirtualName#(#Parameter#) { }
     #endregion
-#AbsMonoBehaviour_ISimulateMonoBehaviour_Method#
+#AbsMonoBehaviour_ISimulateBehaviour_Method#
 }

@@ -196,14 +196,14 @@ public sealed class EditorStrayFogExecute
     }
 
     /// <summary>
-    /// 生成模拟MonoBehaviour组件
+    /// 生成模拟Behaviour组件
     /// </summary>
-    public static void ExecuteBuildSimulateMonoBehaviour()
+    public static void ExecuteBuildSimulateBehaviour()
     {
         StringBuilder sbLog = new StringBuilder();
         sbLog.AppendLine("Begin ExecuteBuildSimulateMonoBehaviour");
-        string hotfix_SimulateMonoBehaviourScriptRootFolder = enEditorApplicationFolder.Hotfix_SimulateMonoBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path;
-        string runningSimulateMonoBehaviourScriptRootFolder = enEditorApplicationFolder.StrayFog_Running_SimulateMonoBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path;
+        string hotfix_SimulateBehaviourScriptRootFolder = enEditorApplicationFolder.Hotfix_SimulateBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path;
+        string runningSimulateBehaviourScriptRootFolder = enEditorApplicationFolder.StrayFog_Running_SimulateBehaviour.GetAttribute<EditorApplicationFolderAttribute>().path;
 
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
         Dictionary<int, string> enumValueNames = new Dictionary<int, string>();        
@@ -218,31 +218,48 @@ public sealed class EditorStrayFogExecute
         StringBuilder sbBehaviour_Enum_Replace = new StringBuilder();
         behaviour_Enum_Templete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txt_BehaviourEnum_ScriptTemplete, behaviour_Enum_Mark, out behaviour_Enum_ReplaceTemplete);
         #endregion
-        string txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ScriptName = "SimulateBehaviourMethod";
+        string txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ClassName = "SimulateBehaviourMethod";
         string txt_Hotfix_SimulateMonoBehaviour_Method_Enum_Script = string.Empty;
         #endregion
 
-        #region Hotfix_AbsMonoBehaviour_ISimulateMonoBehaviour_Method Hotfix抽象模拟MonoBehaviour行为方法
-        string txt_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete = EditorResxTemplete.Editor_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete;
+        #region Hotfix_AbsMonoBehaviour_ISimulateBehaviour_Method Hotfix抽象模拟Behaviour行为方法
+        string txt_AbsMonoBehaviour_SimulateBehaviour_Method_ScriptTemplete = EditorResxTemplete.Editor_AbsMonoBehaviour_ISimulateBehaviour_Method_ScriptTemplete;
 
-        #region #AbsMonoBehaviour_ISimulateMonoBehaviour_Method#
-        string absMonoBehaviour_ISimulateMonoBehaviour_Method_Mark = "#AbsMonoBehaviour_ISimulateMonoBehaviour_Method#";
-        string absMonoBehaviour_ISimulateMonoBehaviour_Method_ReplaceTemplete = string.Empty;
-        string absMonoBehaviour_ISimulateMonoBehaviour_Method_Templete = string.Empty;
-        StringBuilder sbAbsMonoBehaviour_ISimulateMonoBehaviour_Method_Replace = new StringBuilder();
-        absMonoBehaviour_ISimulateMonoBehaviour_Method_Templete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txt_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete, absMonoBehaviour_ISimulateMonoBehaviour_Method_Mark, out absMonoBehaviour_ISimulateMonoBehaviour_Method_ReplaceTemplete);
+        #region #AbsMonoBehaviour_ISimulateBehaviour_Method#
+        string absMonoBehaviour_ISimulateBehaviour_Method_Mark = "#AbsMonoBehaviour_ISimulateBehaviour_Method#";
+        string absMonoBehaviour_ISimulateBehaviour_Method_ReplaceTemplete = string.Empty;
+        string absMonoBehaviour_ISimulateBehaviour_Method_Templete = string.Empty;
+        StringBuilder sbAbsMonoBehaviour_ISimulateBehaviour_Method_Replace = new StringBuilder();
+        absMonoBehaviour_ISimulateBehaviour_Method_Templete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txt_AbsMonoBehaviour_SimulateBehaviour_Method_ScriptTemplete, absMonoBehaviour_ISimulateBehaviour_Method_Mark, out absMonoBehaviour_ISimulateBehaviour_Method_ReplaceTemplete);
         #endregion
 
-        string hotfix_AbsMonoBehaviour_ISimulateMonoBehaviour_Method_ScriptName = "AbsMonoBehaviour_ISimulateMonoBehaviour_Method";
-        string txt_Hotfix_AbsMonoBehaviour_ISimulateMonoBehaviour_Method_Script = string.Empty;
+        string hotfix_AbsMonoBehaviour_ISimulateBehaviour_Method_ScriptName = "AbsMonoBehaviour_ISimulateBehaviour_Method";
+        string txt_Hotfix_AbsMonoBehaviour_ISimulateBehaviour_Method_Script = string.Empty;
 
-        sbAbsMonoBehaviour_ISimulateMonoBehaviour_Method_Replace.Length = 0;
+        sbAbsMonoBehaviour_ISimulateBehaviour_Method_Replace.Length = 0;
         sbBehaviour_Enum_Replace.Length = 0;
         #endregion
 
-        #region SimulateMonoBehaviour/MonoBehaviours 模拟MonoBehaviour组件
-        string txt_SimulateMonoBehaviour_MethodComponent_ScriptTemplete = EditorResxTemplete.Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete;
-        string simulateMonoBehaviour_MethodComponent_Script_Folder = Path.Combine(runningSimulateMonoBehaviourScriptRootFolder, "MonoBehaviours");
+        #region Hotfix_AbsMonoBehaviour_ISimulateBehaviour_MethodMap Hotfix抽象模拟Behaviour行为枚举与方法映射
+        string txt_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete = EditorResxTemplete.Editor_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete;
+
+        #region #AbsMonoBehaviour_ISimulateBehaviour_MethodMap#
+        string absMonoBehaviour_ISimulateBehaviour_MethodMap_Mark = "#AbsMonoBehaviour_ISimulateBehaviour_MethodMap#";
+        string absMonoBehaviour_ISimulateBehaviour_MethodMap_ReplaceTemplete = string.Empty;
+        string absMonoBehaviour_ISimulateBehaviour_MethodMap_Templete = string.Empty;
+        StringBuilder sbAbsMonoBehaviour_ISimulateBehaviour_MethodMap_Replace = new StringBuilder();
+        absMonoBehaviour_ISimulateBehaviour_MethodMap_Templete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txt_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete, absMonoBehaviour_ISimulateBehaviour_MethodMap_Mark, out absMonoBehaviour_ISimulateBehaviour_MethodMap_ReplaceTemplete);
+        #endregion
+
+        string hotfix_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptName = "AbsMonoBehaviour_ISimulateBehaviour_MethodMap";
+        string txt_Hotfix_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_Script = string.Empty;
+
+        sbAbsMonoBehaviour_ISimulateBehaviour_MethodMap_Replace.Length = 0;       
+        #endregion
+
+        #region SimulateBehaviour/MonoBehaviours 模拟MonoBehaviour组件
+        string txt_SimulateBehaviour_MonoBehaviour_MethodComponent_ScriptTemplete = EditorResxTemplete.Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete;
+        string simulateBehaviour_MonoBehaviour_MethodComponent_Script_Folder = Path.Combine(runningSimulateBehaviourScriptRootFolder, "MonoBehaviours");
 
         //#region 无区域替换暂不用
         //string simulateMonoBehaviour_MethodComponent_Mark = "#无区域替换暂不用#";
@@ -252,14 +269,14 @@ public sealed class EditorStrayFogExecute
         //simulateMonoBehaviour_MethodComponent_Templete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txt_SimulateMonoBehaviour_MethodComponent_ScriptTemplete, simulateMonoBehaviour_MethodComponent_Mark, out simulateMonoBehaviour_MethodComponent_ReplaceTemplete);
         //#endregion
 
-        string txt_SimulateMonoBehaviour_MethodComponent_Script = string.Empty;
+        string txt_SimulateBehaviour_MonoBehaviour_MethodComponent_Script = string.Empty;
 
-        Dictionary<string, string> simulateMonoBehaviour_MethodComponent_Script_Maping = new Dictionary<string, string>();
+        Dictionary<string, string> simulateBehaviour_MonoBehaviour_MethodComponent_Script_Maping = new Dictionary<string, string>();
         #endregion        
 
-        #region SimulateUIBehaviour/UIBehaviours 模拟MonoBehaviour组件
-        string txt_SimulateUIBehaviour_MethodComponent_ScriptTemplete = EditorResxTemplete.Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete;
-        string simulateUIBehaviour_MethodComponent_Script_Folder = Path.Combine(runningSimulateMonoBehaviourScriptRootFolder, "UIBehaviours");
+        #region SimulateBehaviour/UIBehaviours 模拟MonoBehaviour组件
+        string txt_SimulateBehaviour_UIBehaviour_MethodComponent_ScriptTemplete = EditorResxTemplete.Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete;
+        string simulateBehaviour_UIBehaviour_MethodComponent_Script_Folder = Path.Combine(runningSimulateBehaviourScriptRootFolder, "UIBehaviours");
 
         //#region 无区域替换暂不用
         //string simulateUIBehaviour_MethodComponent_Mark = "#无区域替换暂不用#";
@@ -269,14 +286,14 @@ public sealed class EditorStrayFogExecute
         //simulateUIBehaviour_MethodComponent_Templete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txt_SimulateUIBehaviour_MethodComponent_ScriptTemplete, simulateUIBehaviour_MethodComponent_Mark, out simulateUIBehaviour_MethodComponent_ReplaceTemplete);
         //#endregion
 
-        string txt_SimulateUIBehaviour_MethodComponent_Script = string.Empty;
+        string txt_SimulateBehaviour_UIBehaviour_MethodComponent_Script = string.Empty;
 
-        Dictionary<string, string> simulateUIBehaviour_MethodComponent_Script_Maping = new Dictionary<string, string>();
+        Dictionary<string, string> simulateBehaviour_UIBehaviour_MethodComponent_Script_Maping = new Dictionary<string, string>();
         #endregion        
 
         //删除已有文件
-        EditorStrayFogUtility.cmd.DeleteFolder(simulateMonoBehaviour_MethodComponent_Script_Folder);
-        EditorStrayFogUtility.cmd.DeleteFolder(simulateUIBehaviour_MethodComponent_Script_Folder);
+        EditorStrayFogUtility.cmd.DeleteFolder(simulateBehaviour_MonoBehaviour_MethodComponent_Script_Folder);
+        EditorStrayFogUtility.cmd.DeleteFolder(simulateBehaviour_UIBehaviour_MethodComponent_Script_Folder);
         //收集所有要模拟的方法       
         List<EditorSimulateBehaviourMethod> simulateMethods = new List<EditorSimulateBehaviourMethod>();
         simulateMethods.AddRange(CollectSimulateMonoBehaviourMethods());
@@ -299,10 +316,10 @@ public sealed class EditorStrayFogExecute
                 {
                     case enEditorSimulateBehaviourClassify.MonoBehaviour:
                         #region 收集要生成的模拟MonoBehaviour的组件
-                        if (!simulateMonoBehaviour_MethodComponent_Script_Maping.ContainsKey(m.className))
+                        if (!simulateBehaviour_MonoBehaviour_MethodComponent_Script_Maping.ContainsKey(m.className))
                         {
-                            txt_SimulateMonoBehaviour_MethodComponent_Script =
-                                txt_SimulateMonoBehaviour_MethodComponent_ScriptTemplete
+                            txt_SimulateBehaviour_MonoBehaviour_MethodComponent_Script =
+                                txt_SimulateBehaviour_MonoBehaviour_MethodComponent_ScriptTemplete
                                 .Replace("#ClassName#",m.className)
                                 .Replace("#MethodName#", m.methodInfo.Name)
                                 .Replace("#MethodClassify#", m.methodEnumValue.ToString())
@@ -310,16 +327,23 @@ public sealed class EditorStrayFogExecute
                                 .Replace("#SimulateBehaviourClassify#", m.simulateBehaviourClassify.ToString())
                                 .Replace("#MethodOverridePrefix#", m.methodOverridePrefix)
                                 ;
-                            simulateMonoBehaviour_MethodComponent_Script_Maping.Add(m.className, txt_SimulateMonoBehaviour_MethodComponent_Script);
+                            simulateBehaviour_MonoBehaviour_MethodComponent_Script_Maping.Add(m.className, txt_SimulateBehaviour_MonoBehaviour_MethodComponent_Script);
+
+                            sbAbsMonoBehaviour_ISimulateBehaviour_MethodMap_Replace.Append(
+                                absMonoBehaviour_ISimulateBehaviour_MethodMap_Templete
+                                    .Replace("#EnumClassName#", txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ClassName)
+                                    .Replace("#EnumName#", m.methodEnumName)
+                                    .Replace("#BehaviourClassName#",m.className)
+                            );
                         }
                         #endregion
                         break;
                     case enEditorSimulateBehaviourClassify.UIBehaviour:
                         #region 收集要生成的模拟UIBehaviour的组件
-                        if (!simulateUIBehaviour_MethodComponent_Script_Maping.ContainsKey(m.className))
+                        if (!simulateBehaviour_UIBehaviour_MethodComponent_Script_Maping.ContainsKey(m.className))
                         {
-                            txt_SimulateUIBehaviour_MethodComponent_Script =
-                                txt_SimulateUIBehaviour_MethodComponent_ScriptTemplete
+                            txt_SimulateBehaviour_UIBehaviour_MethodComponent_Script =
+                                txt_SimulateBehaviour_UIBehaviour_MethodComponent_ScriptTemplete
                                 .Replace("#ClassName#", m.className)
                                 .Replace("#MethodName#", m.methodInfo.Name)
                                 .Replace("#MethodClassify#", m.methodEnumValue.ToString())
@@ -327,7 +351,14 @@ public sealed class EditorStrayFogExecute
                                 .Replace("#SimulateBehaviourClassify#", m.simulateBehaviourClassify.ToString())
                                 .Replace("#MethodOverridePrefix#", m.methodOverridePrefix)
                                 ;
-                            simulateUIBehaviour_MethodComponent_Script_Maping.Add(m.className, txt_SimulateUIBehaviour_MethodComponent_Script);
+                            simulateBehaviour_UIBehaviour_MethodComponent_Script_Maping.Add(m.className, txt_SimulateBehaviour_UIBehaviour_MethodComponent_Script);
+
+                            sbAbsMonoBehaviour_ISimulateBehaviour_MethodMap_Replace.Append(
+                                absMonoBehaviour_ISimulateBehaviour_MethodMap_Templete
+                                    .Replace("#EnumClassName#", txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ClassName)
+                                    .Replace("#EnumName#", m.methodEnumName)
+                                    .Replace("#BehaviourClassName#", m.className)
+                            );
                         }
                         #endregion
                         break;
@@ -336,8 +367,8 @@ public sealed class EditorStrayFogExecute
                 {//如果没有相同的实现，则生成实现
                     tempMethodKey.Add(m.simulateKey);
                     #region 生成AbsMonoBehaviour的实现
-                    sbAbsMonoBehaviour_ISimulateMonoBehaviour_Method_Replace.Append(
-                        absMonoBehaviour_ISimulateMonoBehaviour_Method_Templete
+                    sbAbsMonoBehaviour_ISimulateBehaviour_Method_Replace.Append(
+                        absMonoBehaviour_ISimulateBehaviour_Method_Templete
                             .Replace("#Name#", m.methodInfo.Name)
                             .Replace("#VirtualName#", m.vrtualMethodName)
                             .Replace("#Parameter#", m.methodFormalParameters.Join())
@@ -352,15 +383,15 @@ public sealed class EditorStrayFogExecute
         #region 创建Hotfix的AbsMonoBehaviour_ISimulateMonoBehaviour_Method.cs文件
 
         #region AbsMonoBehaviour抽象在Hotfix中实现MonoBehaviour方法
-        txt_Hotfix_AbsMonoBehaviour_ISimulateMonoBehaviour_Method_Script =
-            txt_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete
-            .Replace(absMonoBehaviour_ISimulateMonoBehaviour_Method_ReplaceTemplete, sbAbsMonoBehaviour_ISimulateMonoBehaviour_Method_Replace.ToString());
+        txt_Hotfix_AbsMonoBehaviour_ISimulateBehaviour_Method_Script =
+            txt_AbsMonoBehaviour_SimulateBehaviour_Method_ScriptTemplete
+            .Replace(absMonoBehaviour_ISimulateBehaviour_Method_ReplaceTemplete, sbAbsMonoBehaviour_ISimulateBehaviour_Method_Replace.ToString());
         #endregion
 
         EditorUtility.DisplayProgressBar("Create Hotfix Script", "AbsMonoBehaviour_ISimulateMonoBehaviour_Method.cs", 0);
-        cfgEntityScript.SetDirectory(hotfix_SimulateMonoBehaviourScriptRootFolder);
-        cfgEntityScript.SetName(hotfix_AbsMonoBehaviour_ISimulateMonoBehaviour_Method_ScriptName);
-        cfgEntityScript.SetText(txt_Hotfix_AbsMonoBehaviour_ISimulateMonoBehaviour_Method_Script);
+        cfgEntityScript.SetDirectory(hotfix_SimulateBehaviourScriptRootFolder);
+        cfgEntityScript.SetName(hotfix_AbsMonoBehaviour_ISimulateBehaviour_Method_ScriptName);
+        cfgEntityScript.SetText(txt_Hotfix_AbsMonoBehaviour_ISimulateBehaviour_Method_Script);
         cfgEntityScript.CreateAsset();
         EditorUtility.DisplayProgressBar("Create Hotfix Script", "AbsMonoBehaviour_ISimulateMonoBehaviour_Method.cs", 1);
         #endregion
@@ -385,49 +416,62 @@ public sealed class EditorStrayFogExecute
             }
             txt_Hotfix_SimulateMonoBehaviour_Method_Enum_Script =
                 txt_BehaviourEnum_ScriptTemplete
-                .Replace("#EnumClassName#", txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ScriptName)
+                .Replace("#EnumClassName#", txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ClassName)
                 .Replace(behaviour_Enum_ReplaceTemplete, sbBehaviour_Enum_Replace.ToString())
                 ;
 
-            cfgEntityScript.SetDirectory(hotfix_SimulateMonoBehaviourScriptRootFolder);
-            cfgEntityScript.SetName("Enum_" + txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ScriptName);
+            cfgEntityScript.SetDirectory(hotfix_SimulateBehaviourScriptRootFolder);
+            cfgEntityScript.SetName("Enum_" + txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ClassName);
             cfgEntityScript.SetText(txt_Hotfix_SimulateMonoBehaviour_Method_Enum_Script);
             cfgEntityScript.CreateAsset();
         }
         #endregion
 
         #region 创建Running时SimulateMonoBehaviour组件脚本
-        if (simulateMonoBehaviour_MethodComponent_Script_Maping.Count > 0)
+        if (simulateBehaviour_MonoBehaviour_MethodComponent_Script_Maping.Count > 0)
         {
             progress = 0;
-            foreach (KeyValuePair<string, string> key in simulateMonoBehaviour_MethodComponent_Script_Maping)
+            foreach (KeyValuePair<string, string> key in simulateBehaviour_MonoBehaviour_MethodComponent_Script_Maping)
             {
-                cfgEntityScript.SetDirectory(simulateMonoBehaviour_MethodComponent_Script_Folder);
+                cfgEntityScript.SetDirectory(simulateBehaviour_MonoBehaviour_MethodComponent_Script_Folder);
                 cfgEntityScript.SetName(key.Key);
                 cfgEntityScript.SetText(key.Value);
                 cfgEntityScript.CreateAsset();
                 sbLog.AppendLine(cfgEntityScript.fileName);
                 EditorUtility.DisplayProgressBar("Create SimulateMonoBehaviour Component",
-                    cfgEntityScript.fileName, progress / simulateMonoBehaviour_MethodComponent_Script_Maping.Count);                
+                    cfgEntityScript.fileName, progress / simulateBehaviour_MonoBehaviour_MethodComponent_Script_Maping.Count);                
             }
         }
         #endregion
 
         #region 创建Running时SimulateUIBehaviour组件脚本
-        if (simulateUIBehaviour_MethodComponent_Script_Maping.Count > 0)
+        if (simulateBehaviour_UIBehaviour_MethodComponent_Script_Maping.Count > 0)
         {
             progress = 0;
-            foreach (KeyValuePair<string, string> key in simulateUIBehaviour_MethodComponent_Script_Maping)
+            foreach (KeyValuePair<string, string> key in simulateBehaviour_UIBehaviour_MethodComponent_Script_Maping)
             {
-                cfgEntityScript.SetDirectory(simulateUIBehaviour_MethodComponent_Script_Folder);
+                cfgEntityScript.SetDirectory(simulateBehaviour_UIBehaviour_MethodComponent_Script_Folder);
                 cfgEntityScript.SetName(key.Key);
                 cfgEntityScript.SetText(key.Value);
                 cfgEntityScript.CreateAsset();
                 sbLog.AppendLine(cfgEntityScript.fileName);
                 EditorUtility.DisplayProgressBar("Create SimulateUIBehaviour Component",
-                    cfgEntityScript.fileName, progress / simulateUIBehaviour_MethodComponent_Script_Maping.Count);
+                    cfgEntityScript.fileName, progress / simulateBehaviour_UIBehaviour_MethodComponent_Script_Maping.Count);
             }
         }
+        #endregion
+
+        #region 创建Running时SimulateBehaviour枚举与方法映射脚本
+        txt_Hotfix_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_Script =
+            txt_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete
+            .Replace("#SummaryEnumClassName#", txt_Hotfix_SimulateMonoBehaviour_Method_Enum_ClassName)
+            .Replace(absMonoBehaviour_ISimulateBehaviour_MethodMap_ReplaceTemplete, sbAbsMonoBehaviour_ISimulateBehaviour_MethodMap_Replace.ToString())            
+            ;
+        cfgEntityScript.SetDirectory(hotfix_SimulateBehaviourScriptRootFolder);
+        cfgEntityScript.SetName(hotfix_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptName);
+        cfgEntityScript.SetText(txt_Hotfix_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_Script);
+        cfgEntityScript.CreateAsset();
+        sbLog.AppendLine(cfgEntityScript.fileName);
         #endregion
 
         EditorUtility.ClearProgressBar();
@@ -1729,7 +1773,7 @@ public sealed class EditorStrayFogExecute
         ExecuteSetSpritePackingTag();
         ExecuteSetAssetBundleName();
 
-        ExecuteBuildSimulateMonoBehaviour();
+        ExecuteBuildSimulateBehaviour();
 
         ExecuteExportXlsSchemaToSqlite();
 

@@ -141,13 +141,24 @@ public class EditorResxTemplete
     }
 
     /// <summary>
-    /// Editor_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete
+    /// Editor_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete
     /// </summary>
-    public static string Editor_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete
+    public static string Editor_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/Editor_AbsMonoBehaviour_SimulateMonoBehaviour_Method_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+        }
+    }
+
+    /// <summary>
+    /// Editor_AbsMonoBehaviour_ISimulateBehaviour_Method_ScriptTemplete
+    /// </summary>
+    public static string Editor_AbsMonoBehaviour_ISimulateBehaviour_Method_ScriptTemplete
+    {
+        get
+        {
+            return GetFileString("SimulateMonoBehaviour/Editor_AbsMonoBehaviour_ISimulateBehaviour_Method_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
         }
     }
     

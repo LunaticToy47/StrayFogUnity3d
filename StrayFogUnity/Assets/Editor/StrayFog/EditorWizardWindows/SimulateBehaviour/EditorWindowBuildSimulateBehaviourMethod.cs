@@ -66,9 +66,9 @@ public class EditorWindowBuildSimulateBehaviourMethod : AbsEditorWindow
         mMonoBehaviourScrollViewPosition = OnViewMethod("Mapper to MonoBehaviour", mMonoBehaviourScrollViewPosition, mSimulateMonoBehaviourMethodMaping);
         mUIBehaviourScrollViewPosition = OnViewMethod("Mapper to UIBehaviour", mUIBehaviourScrollViewPosition, mSimulateUIBehaviourMethodMaping);
         EditorGUILayout.EndHorizontal();
-        if (GUILayout.Button("Build SimulateMonoBehaviour"))
+        if (GUILayout.Button("Build SimulateBehaviour"))
         {
-            EditorStrayFogExecute.ExecuteBuildSimulateMonoBehaviour();
+            EditorStrayFogExecute.ExecuteBuildSimulateBehaviour();
         }
     }
     #endregion

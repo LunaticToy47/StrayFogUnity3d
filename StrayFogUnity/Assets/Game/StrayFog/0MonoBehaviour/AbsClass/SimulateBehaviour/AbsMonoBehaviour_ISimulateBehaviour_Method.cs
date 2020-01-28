@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 /// <summary>
-/// 抽象MonoBehaviour【模拟MonoBehaviour】
+/// 抽象AbsMonoBehaviour【模拟MonoBehaviour、UIBehaviour方法】
 /// </summary>
 public abstract partial class AbsMonoBehaviour
 {

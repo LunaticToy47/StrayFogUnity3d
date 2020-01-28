@@ -30,6 +30,13 @@ public abstract partial class AbsMonoBehaviour: ISimulateMonoBehaviour
     }
     #endregion
 
+    #region hasRectTransform 是否有RectTransform
+    /// <summary>
+    /// 是否有RectTransform
+    /// </summary>
+    public bool hasRectTransform { get; private set; }
+    #endregion
+
     #region isBindGameObject
     /// <summary>
     /// 是否绑定GameObject
@@ -62,13 +69,14 @@ public abstract partial class AbsMonoBehaviour: ISimulateMonoBehaviour
         {
             gameObject = _go;
             mRectTransform = null;
-            if (gameObject.transform is RectTransform)
+            hasRectTransform = (gameObject.transform is RectTransform);
+            if (hasRectTransform)
             {
                 mRectTransform = (RectTransform)gameObject.transform;
             }
             coroutine = gameObject.AddComponent<SimulateMonoBehaviour_Coroutine>();
             OnAfterBindGameObject();
-            if (mRectTransform != null)
+            if (hasRectTransform)
             {
                 CollectCtrl<UIBehaviour>();
             }            

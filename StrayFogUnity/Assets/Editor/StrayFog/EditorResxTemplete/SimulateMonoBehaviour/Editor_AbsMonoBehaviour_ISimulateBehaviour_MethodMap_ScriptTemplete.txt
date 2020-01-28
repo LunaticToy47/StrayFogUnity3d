@@ -1,0 +1,18 @@
+using System;
+using System.Collections.Generic;
+/// <summary>
+/// 【AbsMonoBehaviour】模拟Behaviour枚举与方法映射
+/// </summary>
+public abstract partial class AbsMonoBehaviour
+{
+    /// <summary>
+    /// Key:en#SummaryEnumClassName#
+    /// Value:Behaviour组件Type
+    /// </summary>
+    readonly Dictionary<int, Type> mSimulateBehaviourEnumForMethodMap = new Dictionary<int, Type>()
+    {
+	#AbsMonoBehaviour_ISimulateBehaviour_MethodMap#
+        { (int)en#EnumClassName#.#EnumName#,typeof(#BehaviourClassName#)},
+	#AbsMonoBehaviour_ISimulateBehaviour_MethodMap#
+    };
+}
