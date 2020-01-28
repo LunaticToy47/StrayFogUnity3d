@@ -22,8 +22,6 @@ public sealed partial class StrayFogGameManager : AbsSingleMonoBehaviour
         if (!m_isInitialized)
         {
             m_isInitialized = true;
-            Debug.unityLogger.logHandler = StrayFogGamePools.hotfixLog;
-
             runningSetting = StrayFogConfigHelper.Select<XLS_Config_Determinant_Table_GameSetting>()[0];
             StrayFogGamePools.uiWindowManager.OnOpenWindowEventHandler += UiWindowManager_OnOpenWindowEventHandler;
             StrayFogGamePools.uiWindowManager.OnCloseWindowEventHandler += UiWindowManager_OnCloseWindowEventHandler;

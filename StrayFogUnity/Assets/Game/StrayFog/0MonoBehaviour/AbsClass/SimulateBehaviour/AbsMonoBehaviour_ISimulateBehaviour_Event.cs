@@ -45,6 +45,10 @@ public abstract partial class AbsMonoBehaviour
             }
             ISimulateBehaviourMethod result = com as ISimulateBehaviourMethod;
         }
+        else
+        {
+            P.E("Can't find method map for {0}", _simulateMethod);
+        }
     }
 
     /// <summary>
