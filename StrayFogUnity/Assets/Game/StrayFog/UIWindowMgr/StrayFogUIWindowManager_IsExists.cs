@@ -4,27 +4,6 @@
 /// </summary>
 public partial class StrayFogUIWindowManager
 {
-    #region Enum
-    /// <summary>
-    /// 窗口是否存在
-    /// </summary>
-    /// <param name="_window">窗口</param>
-    /// <returns>true:存在,false:不存在</returns>
-    public bool IsExistsWindow(Enum _window)
-    {
-        return IsExistsWindow(OnGetWindowSetting(_window));
-    }
-    /// <summary>
-    /// 窗口是否存在
-    /// </summary>
-    /// <param name="_windows">窗口组</param>
-    /// <returns>true:存在,false:不存在</returns>
-    public bool IsExistsWindow(Enum[] _windows)
-    {
-        return IsExistsWindow(OnGetWindowSetting(_windows));
-    }
-    #endregion
-
     #region FolderId FileId
     /// <summary>
     /// 窗口是否存在

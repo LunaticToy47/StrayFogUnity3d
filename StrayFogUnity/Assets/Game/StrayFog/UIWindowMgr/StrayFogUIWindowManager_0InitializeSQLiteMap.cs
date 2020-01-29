@@ -47,30 +47,6 @@ public partial class StrayFogUIWindowManager
     /// 枚举键值映射
     /// </summary>
     Dictionary<int, int> mEnumKeyValueMaping = new Dictionary<int, int>();
-    /// <summary>
-    /// 获得窗口设定
-    /// </summary>
-    /// <param name="_wins">窗口组</param>
-    /// <returns>窗口设定</returns>
-    int[] OnGetWindowSetting(params Enum[] _wins)
-    {
-        int[] ids = null;
-        int key = 0;
-        if (_wins != null && _wins.Length > 0)
-        {
-            ids = new int[_wins.Length];            
-            for (int i = 0; i < _wins.Length; i++)
-            {
-                key = _wins[i].GetHashCode();
-                if (!mEnumKeyValueMaping.ContainsKey(key))
-                {
-                    mEnumKeyValueMaping.Add(key, Convert.ToInt32(_wins[i]));
-                }
-                ids[i] = mEnumKeyValueMaping[key];
-            }
-        }
-        return ids;
-    }
 
     /// <summary>
     /// 获得窗口设定

@@ -4,27 +4,6 @@
 /// </summary>
 public partial class StrayFogUIWindowManager
 {
-    #region Enum
-    /// <summary>
-    /// 窗口是否打开
-    /// </summary>
-    /// <param name="_window">窗口</param>
-    /// <returns>true:打开,false:关闭</returns>
-    public bool IsOpenedWindow(Enum _window)
-    {
-        return IsOpenedWindow(OnGetWindowSetting(_window));
-    }
-    /// <summary>
-    /// 窗口是否打开
-    /// </summary>
-    /// <param name="_windows">窗口组</param>
-    /// <returns>true:打开,false:关闭</returns>
-    public bool IsOpenedWindow(Enum[] _windows)
-    {
-        return IsOpenedWindow(OnGetWindowSetting(_windows));
-    }
-    #endregion
-
     #region FolderId FileId
     /// <summary>
     /// 窗口是否打开

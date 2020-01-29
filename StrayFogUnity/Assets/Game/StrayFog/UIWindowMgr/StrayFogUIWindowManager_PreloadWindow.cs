@@ -4,47 +4,6 @@
 /// </summary>
 public partial class StrayFogUIWindowManager
 {
-    #region Enum
-    /// <summary>
-    /// 预加载窗口
-    /// </summary>
-    /// <param name="_window">窗口</param>
-    /// <param name="_parameters">参数组</param>
-    public void PreloadWindow(Enum _window, params object[] _parameters)
-    {
-        PreloadWindow(_window, (wins, paras) => { }, _parameters);
-    }
-    /// <summary>
-    /// 预加载窗口
-    /// </summary>
-    /// <param name="_windows">窗口组</param>
-    /// <param name="_parameters">参数组</param>
-    public void PreloadWindow(Enum[] _windows, params object[] _parameters)
-    {
-        PreloadWindow(_windows, (wins, paras) => { }, _parameters);
-    }
-    /// <summary>
-    /// 预加载窗口
-    /// </summary>
-    /// <param name="_window">窗口</param>
-    /// <param name="_onCallback">回调</param>
-    /// <param name="_parameters">参数组</param>
-    public void PreloadWindow(Enum _window, UIWindowSettingEventHandler _onCallback, params object[] _parameters)
-    {
-        PreloadWindow(new Enum[1] { _window }, _onCallback, _parameters);
-    }
-    /// <summary>
-    /// 预加载窗口
-    /// </summary>
-    /// <param name="_windows">窗口组</param>
-    /// <param name="_onCallback">回调</param>
-    /// <param name="_parameters">参数组</param>
-    public void PreloadWindow(Enum[] _windows, UIWindowSettingEventHandler _onCallback, params object[] _parameters)
-    {
-        PreloadWindow(OnGetWindowSetting(_windows), _onCallback, _parameters);
-    }
-    #endregion
-
     #region FolderId FileId
     /// <summary>
     /// 预加载窗口
