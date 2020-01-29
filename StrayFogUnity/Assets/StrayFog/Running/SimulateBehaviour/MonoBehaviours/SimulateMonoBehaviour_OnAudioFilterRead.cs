@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnAudioFilterRead : AbsSimulateMonoBeh
     /// </summary>
     void OnAudioFilterRead(System.Single[] _data,System.Int32 _channels)
     {
-        
+        simulateMonoBehaviour.OnAudioFilterRead(_data,_channels);
     }
 }

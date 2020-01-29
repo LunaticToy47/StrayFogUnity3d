@@ -6,10 +6,21 @@ using XLua;
 [AddComponentMenu("StrayFog/Game/Example/Level/ExampleXLuaLevel")]
 public class ExampleXLuaLevel : AbsLevel
 {
+    protected override enSimulateBehaviourMethod[] simulateBehaviourMethods
+    {
+        get
+        {
+            return new enSimulateBehaviourMethod[3] {
+                enSimulateBehaviourMethod.MonoBehaviour_OnGUI,
+                enSimulateBehaviourMethod.MonoBehaviour_Update,
+                enSimulateBehaviourMethod.MonoBehaviour_OnDestroy };
+        }
+    }
+
     /// <summary>
     /// cube
     /// </summary>
-    public Transform cube;
+    Transform mCube;
     /// <summary>
     /// LuaTable
     /// </summary>
@@ -35,10 +46,12 @@ public class ExampleXLuaLevel : AbsLevel
     /// </summary>
     protected override void OnRunAwake()
     {
+        mCube = GameObject.Find("AddComponentUseXLuaForBatchCube").transform;
         StrayFogGamePools.gameManager.Initialization(() =>
         {
             StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
             {
+
             });            
         });
     }
@@ -55,7 +68,7 @@ public class ExampleXLuaLevel : AbsLevel
          */
         mScriptEnv = StrayFogGamePools.xLuaManager.GetLuaTable(_xLuaFileId, (table) => {
             table.Set("self", this);
-            table.Set("cube", cube);
+            table.Set("cube", mCube);
         });
 
         Action luaAwake = mScriptEnv.Get<Action>("awake");
@@ -148,16 +161,16 @@ public class ExampleXLuaLevel : AbsLevel
 
         GameObject go = null;
 
-        go = GameObject.Instantiate(cube.gameObject);
+        go = GameObject.Instantiate(mCube.gameObject);
         go.name = "Cube Left";
         go.AddDynamicComponent<ExampleTestXLuaLevelCube>();
-        go.transform.position = Vector3.right * -1.8f + cube.position;
+        go.transform.position = Vector3.right * -1.8f + mCube.position;
         mlstCubes.Add(go);
 
-        go = GameObject.Instantiate(cube.gameObject);
+        go = GameObject.Instantiate(mCube.gameObject);
         go.name = "Cube Right";
         go.AddDynamicComponent<ExampleTestXLuaLevelCube>();
-        go.transform.position = Vector3.right * 1.8f + cube.position;
+        go.transform.position = Vector3.right * 1.8f + mCube.position;
         mlstCubes.Add(go);
     }
 }

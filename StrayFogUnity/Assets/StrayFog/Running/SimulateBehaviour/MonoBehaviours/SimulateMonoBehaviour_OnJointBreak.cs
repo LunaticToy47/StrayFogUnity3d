@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnJointBreak : AbsSimulateMonoBehaviou
     /// </summary>
     void OnJointBreak(System.Single _breakForce)
     {
-        
+        simulateMonoBehaviour.OnJointBreak(_breakForce);
     }
 }

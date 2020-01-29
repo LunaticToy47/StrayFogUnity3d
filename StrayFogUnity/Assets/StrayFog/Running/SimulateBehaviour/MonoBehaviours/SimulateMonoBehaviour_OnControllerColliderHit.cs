@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnControllerColliderHit : AbsSimulateM
     /// </summary>
     void OnControllerColliderHit(UnityEngine.ControllerColliderHit _hit)
     {
-        
+        simulateMonoBehaviour.OnControllerColliderHit(_hit);
     }
 }

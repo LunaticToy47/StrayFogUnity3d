@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnTriggerEnter : AbsSimulateMonoBehavi
     /// </summary>
     void OnTriggerEnter(UnityEngine.Collider _other)
     {
-        
+        simulateMonoBehaviour.OnTriggerEnter(_other);
     }
 }

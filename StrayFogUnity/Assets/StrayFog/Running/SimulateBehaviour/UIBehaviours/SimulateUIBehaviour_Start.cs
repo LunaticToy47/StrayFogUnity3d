@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_Start : AbsSimulateUIBehaviourMethod
     /// </summary>
     protected override void Start()
     {
-        
+        simulateMonoBehaviour.Start();
     }
 }

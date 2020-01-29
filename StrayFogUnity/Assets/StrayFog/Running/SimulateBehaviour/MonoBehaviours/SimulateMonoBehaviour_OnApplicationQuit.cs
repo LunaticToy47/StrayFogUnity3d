@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnApplicationQuit : AbsSimulateMonoBeh
     /// </summary>
     void OnApplicationQuit()
     {
-        
+        simulateMonoBehaviour.OnApplicationQuit();
     }
 }

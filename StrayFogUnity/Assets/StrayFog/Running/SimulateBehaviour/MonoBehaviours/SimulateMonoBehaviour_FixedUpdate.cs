@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_FixedUpdate : AbsSimulateMonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        
+        simulateMonoBehaviour.FixedUpdate();
     }
 }

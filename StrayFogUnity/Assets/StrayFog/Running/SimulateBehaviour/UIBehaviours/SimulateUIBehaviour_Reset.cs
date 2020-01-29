@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_Reset : AbsSimulateUIBehaviourMethod
     /// </summary>
     protected override void Reset()
     {
-        
+        simulateMonoBehaviour.Reset();
     }
 }

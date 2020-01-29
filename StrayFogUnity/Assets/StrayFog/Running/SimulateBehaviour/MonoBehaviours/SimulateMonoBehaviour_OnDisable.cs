@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnDisable : AbsSimulateMonoBehaviourMe
     /// </summary>
     void OnDisable()
     {
-        
+        simulateMonoBehaviour.OnDisable();
     }
 }

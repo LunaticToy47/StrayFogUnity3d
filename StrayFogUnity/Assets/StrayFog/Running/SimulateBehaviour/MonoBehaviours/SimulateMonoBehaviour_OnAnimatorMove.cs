@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnAnimatorMove : AbsSimulateMonoBehavi
     /// </summary>
     void OnAnimatorMove()
     {
-        
+        simulateMonoBehaviour.OnAnimatorMove();
     }
 }

@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_LateUpdate : AbsSimulateMonoBehaviourM
     /// </summary>
     void LateUpdate()
     {
-        
+        simulateMonoBehaviour.LateUpdate();
     }
 }

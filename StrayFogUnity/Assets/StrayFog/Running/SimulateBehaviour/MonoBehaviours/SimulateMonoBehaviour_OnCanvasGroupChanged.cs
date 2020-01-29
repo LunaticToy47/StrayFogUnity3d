@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnCanvasGroupChanged : AbsSimulateMono
     /// </summary>
     void OnCanvasGroupChanged()
     {
-        
+        simulateMonoBehaviour.OnCanvasGroupChanged();
     }
 }

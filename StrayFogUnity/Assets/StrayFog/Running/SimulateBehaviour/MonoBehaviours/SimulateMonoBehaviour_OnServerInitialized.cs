@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnServerInitialized : AbsSimulateMonoB
     /// </summary>
     void OnServerInitialized()
     {
-        
+        simulateMonoBehaviour.OnServerInitialized();
     }
 }

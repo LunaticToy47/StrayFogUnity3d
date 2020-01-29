@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnValidate : AbsSimulateMonoBehaviourM
     /// </summary>
     void OnValidate()
     {
-        
+        simulateMonoBehaviour.OnValidate();
     }
 }

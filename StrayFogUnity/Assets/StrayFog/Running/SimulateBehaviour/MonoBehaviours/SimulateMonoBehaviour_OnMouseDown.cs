@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnMouseDown : AbsSimulateMonoBehaviour
     /// </summary>
     void OnMouseDown()
     {
-        
+        simulateMonoBehaviour.OnMouseDown();
     }
 }

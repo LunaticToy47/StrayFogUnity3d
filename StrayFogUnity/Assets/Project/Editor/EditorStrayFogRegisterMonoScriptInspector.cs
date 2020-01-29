@@ -27,6 +27,7 @@ public class EditorStrayFogRegisterMonoScriptInspector : Editor
             mStrayFogRegisterMonoScript.monoScript != null)
         {
             mStrayFogRegisterMonoScript.asmdefId = EditorStrayFogExecute.FindAssemblyForAsmdef(mStrayFogRegisterMonoScript.monoScript.GetClass().Assembly);
+            mStrayFogRegisterMonoScript.monoBehaviourScriptName = mStrayFogRegisterMonoScript.monoScript.name;
         }
         base.OnInspectorGUI();
     }

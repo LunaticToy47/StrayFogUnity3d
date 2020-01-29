@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnAnimatorIK : AbsSimulateMonoBehaviou
     /// </summary>
     void OnAnimatorIK(System.Int32 _layerIndex)
     {
-        
+        simulateMonoBehaviour.OnAnimatorIK(_layerIndex);
     }
 }

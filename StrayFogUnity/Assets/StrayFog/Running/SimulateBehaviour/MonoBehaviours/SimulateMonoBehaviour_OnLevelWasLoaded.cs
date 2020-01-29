@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnLevelWasLoaded : AbsSimulateMonoBeha
     /// </summary>
     void OnLevelWasLoaded(System.Int32 _level)
     {
-        
+        simulateMonoBehaviour.OnLevelWasLoaded(_level);
     }
 }

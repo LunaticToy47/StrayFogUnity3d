@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_OnCanvasHierarchyChanged : AbsSimulateUI
     /// </summary>
     protected override void OnCanvasHierarchyChanged()
     {
-        
+        simulateMonoBehaviour.OnCanvasHierarchyChanged();
     }
 }

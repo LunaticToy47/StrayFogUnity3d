@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnRectTransformRemoved : AbsSimulateMo
     /// </summary>
     void OnRectTransformRemoved()
     {
-        
+        simulateMonoBehaviour.OnRectTransformRemoved();
     }
 }

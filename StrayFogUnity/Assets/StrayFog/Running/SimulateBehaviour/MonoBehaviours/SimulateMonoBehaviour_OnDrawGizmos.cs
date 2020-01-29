@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnDrawGizmos : AbsSimulateMonoBehaviou
     /// </summary>
     void OnDrawGizmos()
     {
-        
+        simulateMonoBehaviour.OnDrawGizmos();
     }
 }

@@ -13,8 +13,8 @@ public sealed class #ClassName# : AbsSimulate#SimulateBehaviourClassify#Method
 	/// <summary>
     /// #MethodName#
     /// </summary>
-    #MethodOverridePrefix# #MethodName#(#MethodParameter#)
+    #MethodOverridePrefix# #MethodName#(#MethodFormalParameters#)
     {
-        
+        simulateMonoBehaviour.#MethodName#(#MethodInputParameters#);
     }
 }

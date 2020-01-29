@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnRenderObject : AbsSimulateMonoBehavi
     /// </summary>
     void OnRenderObject()
     {
-        
+        simulateMonoBehaviour.OnRenderObject();
     }
 }

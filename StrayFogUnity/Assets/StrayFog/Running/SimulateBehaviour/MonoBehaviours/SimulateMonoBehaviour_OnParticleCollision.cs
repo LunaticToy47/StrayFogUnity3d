@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnParticleCollision : AbsSimulateMonoB
     /// </summary>
     void OnParticleCollision(UnityEngine.GameObject _other)
     {
-        
+        simulateMonoBehaviour.OnParticleCollision(_other);
     }
 }

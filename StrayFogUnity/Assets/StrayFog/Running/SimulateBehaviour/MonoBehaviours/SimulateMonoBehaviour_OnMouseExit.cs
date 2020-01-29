@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnMouseExit : AbsSimulateMonoBehaviour
     /// </summary>
     void OnMouseExit()
     {
-        
+        simulateMonoBehaviour.OnMouseExit();
     }
 }

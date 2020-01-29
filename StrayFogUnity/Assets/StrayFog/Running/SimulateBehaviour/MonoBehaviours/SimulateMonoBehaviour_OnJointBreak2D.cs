@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnJointBreak2D : AbsSimulateMonoBehavi
     /// </summary>
     void OnJointBreak2D(UnityEngine.Joint2D _joint)
     {
-        
+        simulateMonoBehaviour.OnJointBreak2D(_joint);
     }
 }

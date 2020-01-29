@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnDestroy : AbsSimulateMonoBehaviourMe
     /// </summary>
     void OnDestroy()
     {
-        
+        simulateMonoBehaviour.OnDestroy();
     }
 }

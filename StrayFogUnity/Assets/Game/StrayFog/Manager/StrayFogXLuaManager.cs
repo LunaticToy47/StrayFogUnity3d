@@ -5,6 +5,11 @@ using XLua;
 [AddComponentMenu("StrayFog/Game/Manager/StrayFogXLuaManager")]
 public sealed partial class StrayFogXLuaManager : AbsSingleMonoBehaviour
 {
+    protected override enSimulateBehaviourMethod[] simulateBehaviourMethods
+    {
+        get { return new enSimulateBehaviourMethod[1] { enSimulateBehaviourMethod.MonoBehaviour_FixedUpdate }; }
+    }
+
     #region lua引擎
     /// <summary>
     /// lua引擎
@@ -62,7 +67,7 @@ public sealed partial class StrayFogXLuaManager : AbsSingleMonoBehaviour
     /// </summary>
     /// <param name="_xLuaFileId">xLua文件ID</param>
     /// <returns>xLua文件脚本</returns>
-    public string OnGetXLuaScript(int _xLuaFileId)
+    string OnGetXLuaScript(int _xLuaFileId)
     {
         string xLuaScript = string.Empty;
         if (mXLuaConfigMaping.ContainsKey(_xLuaFileId))
@@ -97,19 +102,20 @@ public sealed partial class StrayFogXLuaManager : AbsSingleMonoBehaviour
         meta.Dispose();
 
         string xLua = OnGetXLuaScript(_xLuaFileId);
-        LuaFunction luaFun = xLuaEnv.LoadString(xLua); 
+        LuaFunction luaFun = xLuaEnv.LoadString(xLua);
         luaFun.SetEnv(luaTable);
         _setTableCallback?.Invoke(luaTable);
         luaFun.Call();
+
         return luaTable;
     }
     #endregion
 
-    #region Update
+    #region OnRunUpdate
     /// <summary>
-    /// Update
+    /// OnRunUpdate
     /// </summary>
-    void Update()
+    protected override void OnRunUpdate()
     {
         if (xLuaEnv != null)
         {

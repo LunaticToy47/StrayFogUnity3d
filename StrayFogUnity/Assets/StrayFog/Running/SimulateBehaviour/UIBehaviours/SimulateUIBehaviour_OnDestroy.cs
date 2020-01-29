@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_OnDestroy : AbsSimulateUIBehaviourMethod
     /// </summary>
     protected override void OnDestroy()
     {
-        
+        simulateMonoBehaviour.OnDestroy();
     }
 }

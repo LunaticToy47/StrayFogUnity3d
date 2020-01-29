@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_OnRectTransformDimensionsChange : AbsSim
     /// </summary>
     protected override void OnRectTransformDimensionsChange()
     {
-        
+        simulateMonoBehaviour.OnRectTransformDimensionsChange();
     }
 }

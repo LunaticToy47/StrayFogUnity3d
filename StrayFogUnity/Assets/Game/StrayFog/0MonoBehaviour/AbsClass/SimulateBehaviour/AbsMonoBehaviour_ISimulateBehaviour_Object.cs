@@ -68,6 +68,7 @@ public abstract partial class AbsMonoBehaviour: ISimulateMonoBehaviour
         if (_go != null)
         {
             gameObject = _go;
+            _go.SetActive(false);
             mRectTransform = null;
             hasRectTransform = (gameObject.transform is RectTransform);
             if (hasRectTransform)
@@ -81,6 +82,7 @@ public abstract partial class AbsMonoBehaviour: ISimulateMonoBehaviour
                 CollectCtrl<UIBehaviour>();
             }            
             OnBindSimulateBehaviourEvent();
+            _go.SetActive(true);
         }
         else
         {

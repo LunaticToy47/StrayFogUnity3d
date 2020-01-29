@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnGUI : AbsSimulateMonoBehaviourMethod
     /// </summary>
     void OnGUI()
     {
-        
+        simulateMonoBehaviour.OnGUI();
     }
 }

@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnPreCull : AbsSimulateMonoBehaviourMe
     /// </summary>
     void OnPreCull()
     {
-        
+        simulateMonoBehaviour.OnPreCull();
     }
 }

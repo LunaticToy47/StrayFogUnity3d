@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnApplicationFocus : AbsSimulateMonoBe
     /// </summary>
     void OnApplicationFocus(System.Boolean _focus)
     {
-        
+        simulateMonoBehaviour.OnApplicationFocus(_focus);
     }
 }

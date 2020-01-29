@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnTriggerExit2D : AbsSimulateMonoBehav
     /// </summary>
     void OnTriggerExit2D(UnityEngine.Collider2D _collision)
     {
-        
+        simulateMonoBehaviour.OnTriggerExit2D(_collision);
     }
 }

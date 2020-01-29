@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_OnDidApplyAnimationProperties : AbsSimul
     /// </summary>
     protected override void OnDidApplyAnimationProperties()
     {
-        
+        simulateMonoBehaviour.OnDidApplyAnimationProperties();
     }
 }

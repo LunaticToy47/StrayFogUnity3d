@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_Awake : AbsSimulateMonoBehaviourMethod
     /// </summary>
     void Awake()
     {
-        
+        simulateMonoBehaviour.Awake();
     }
 }

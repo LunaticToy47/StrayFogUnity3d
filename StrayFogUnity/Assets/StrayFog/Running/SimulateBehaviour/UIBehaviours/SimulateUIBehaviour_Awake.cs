@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_Awake : AbsSimulateUIBehaviourMethod
     /// </summary>
     protected override void Awake()
     {
-        
+        simulateMonoBehaviour.Awake();
     }
 }

@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnTransformChildrenChanged : AbsSimula
     /// </summary>
     void OnTransformChildrenChanged()
     {
-        
+        simulateMonoBehaviour.OnTransformChildrenChanged();
     }
 }

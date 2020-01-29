@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_OnDisable : AbsSimulateUIBehaviourMethod
     /// </summary>
     protected override void OnDisable()
     {
-        
+        simulateMonoBehaviour.OnDisable();
     }
 }

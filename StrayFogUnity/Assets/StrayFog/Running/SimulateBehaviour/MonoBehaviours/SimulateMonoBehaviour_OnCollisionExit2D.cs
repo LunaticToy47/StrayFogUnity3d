@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnCollisionExit2D : AbsSimulateMonoBeh
     /// </summary>
     void OnCollisionExit2D(UnityEngine.Collision2D _collision)
     {
-        
+        simulateMonoBehaviour.OnCollisionExit2D(_collision);
     }
 }

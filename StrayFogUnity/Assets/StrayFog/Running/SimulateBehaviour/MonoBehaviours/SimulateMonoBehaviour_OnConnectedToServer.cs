@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnConnectedToServer : AbsSimulateMonoB
     /// </summary>
     void OnConnectedToServer()
     {
-        
+        simulateMonoBehaviour.OnConnectedToServer();
     }
 }

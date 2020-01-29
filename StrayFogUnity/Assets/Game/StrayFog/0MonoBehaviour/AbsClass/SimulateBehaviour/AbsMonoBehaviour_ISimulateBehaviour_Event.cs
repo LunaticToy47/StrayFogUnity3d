@@ -44,6 +44,7 @@ public abstract partial class AbsMonoBehaviour
                 com = _go.AddComponent(type);
             }
             ISimulateBehaviourMethod result = com as ISimulateBehaviourMethod;
+            result.BindSimulateMonoBehaviour(this);
         }
         else
         {

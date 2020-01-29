@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_OnValidate : AbsSimulateUIBehaviourMetho
     /// </summary>
     protected override void OnValidate()
     {
-        
+        simulateMonoBehaviour.OnValidate();
     }
 }

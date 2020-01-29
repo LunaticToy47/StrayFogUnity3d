@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnParticleTrigger : AbsSimulateMonoBeh
     /// </summary>
     void OnParticleTrigger()
     {
-        
+        simulateMonoBehaviour.OnParticleTrigger();
     }
 }

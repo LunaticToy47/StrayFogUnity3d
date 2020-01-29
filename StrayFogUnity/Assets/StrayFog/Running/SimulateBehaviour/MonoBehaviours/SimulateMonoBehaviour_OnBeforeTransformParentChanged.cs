@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnBeforeTransformParentChanged : AbsSi
     /// </summary>
     void OnBeforeTransformParentChanged()
     {
-        
+        simulateMonoBehaviour.OnBeforeTransformParentChanged();
     }
 }

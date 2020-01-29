@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_OnTransformParentChanged : AbsSimulateUI
     /// </summary>
     protected override void OnTransformParentChanged()
     {
-        
+        simulateMonoBehaviour.OnTransformParentChanged();
     }
 }

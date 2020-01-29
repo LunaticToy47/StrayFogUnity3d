@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnApplicationPause : AbsSimulateMonoBe
     /// </summary>
     void OnApplicationPause(System.Boolean _pause)
     {
-        
+        simulateMonoBehaviour.OnApplicationPause(_pause);
     }
 }

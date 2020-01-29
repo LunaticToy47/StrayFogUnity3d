@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnBecameVisible : AbsSimulateMonoBehav
     /// </summary>
     void OnBecameVisible()
     {
-        
+        simulateMonoBehaviour.OnBecameVisible();
     }
 }

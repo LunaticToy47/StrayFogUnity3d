@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnRectTransformDimensionsChange : AbsS
     /// </summary>
     void OnRectTransformDimensionsChange()
     {
-        
+        simulateMonoBehaviour.OnRectTransformDimensionsChange();
     }
 }

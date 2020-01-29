@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_OnRenderImage : AbsSimulateMonoBehavio
     /// </summary>
     void OnRenderImage(UnityEngine.RenderTexture _source,UnityEngine.RenderTexture _destination)
     {
-        
+        simulateMonoBehaviour.OnRenderImage(_source,_destination);
     }
 }

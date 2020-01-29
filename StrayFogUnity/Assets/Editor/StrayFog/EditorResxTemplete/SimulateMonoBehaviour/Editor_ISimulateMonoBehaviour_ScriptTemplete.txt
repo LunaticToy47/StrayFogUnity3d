@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+/// <summary>
+/// ISimulateMonoBehaviour接口
+/// </summary>
+public interface ISimulateMonoBehaviour
+{
+    /// <summary>
+    /// 绑定GameObject
+    /// </summary>
+    /// <param name="_go">GameObject</param>
+    void BindGameObject(GameObject _go);
+#ISimulateMonoBehaviour#
+    /// <summary>
+    /// #Name#
+    /// </summary>
+    void #Name#(#Parameter#);
+#ISimulateMonoBehaviour#
+}

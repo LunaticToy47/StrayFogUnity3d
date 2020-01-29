@@ -15,6 +15,6 @@ public sealed class SimulateUIBehaviour_OnCanvasGroupChanged : AbsSimulateUIBeha
     /// </summary>
     protected override void OnCanvasGroupChanged()
     {
-        
+        simulateMonoBehaviour.OnCanvasGroupChanged();
     }
 }

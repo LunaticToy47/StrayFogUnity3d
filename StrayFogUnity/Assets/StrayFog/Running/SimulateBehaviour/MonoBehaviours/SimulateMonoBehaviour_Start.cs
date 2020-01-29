@@ -15,6 +15,6 @@ public sealed class SimulateMonoBehaviour_Start : AbsSimulateMonoBehaviourMethod
     /// </summary>
     void Start()
     {
-        
+        simulateMonoBehaviour.Start();
     }
 }

@@ -12,6 +12,11 @@ using UnityEngine.SceneManagement;
 [AddComponentMenu("StrayFog/Game/Example/Level/ExampleUIWindowLevel")]
 public class ExampleUIWindowLevel : AbsLevel
 {
+    protected override enSimulateBehaviourMethod[] simulateBehaviourMethods {
+        get {
+            return new enSimulateBehaviourMethod[2]{ enSimulateBehaviourMethod.MonoBehaviour_OnGUI, enSimulateBehaviourMethod.MonoBehaviour_Update };
+        }
+    }
     /// <summary>
     /// UIWindow字段信息与说明属性映射
     /// </summary>
