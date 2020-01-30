@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 /// <summary>
 /// RAM扩展
@@ -7,9 +8,9 @@ using System.Collections.Generic;
 public static class RAMUnitExtend
 {
     /// <summary>
-    /// enRAMUnit枚举
+    /// enRAMUnit值名称映射
     /// </summary>
-    static List<enRAMUnit> smRamNames = typeof(enRAMUnit).ToEnums<enRAMUnit>();
+    static Dictionary<long, FieldInfo> smRamValueNameMaping = typeof(enRAMUnit).ValueToFieldForConstField<long>();
 
     #region 单位转换
     /// <summary>
@@ -18,9 +19,9 @@ public static class RAMUnitExtend
     /// <param name="_byteSize">字节</param>
     /// <param name="_unit">单位</param>
     /// <returns>转换后的大小</returns>
-    public static double ToRAM(this long _byteSize, enRAMUnit _unit)
+    public static double ToRAM(this long _byteSize, long _unit)
     {
-        return ((double)_byteSize) / ((long)_unit);
+        return ((double)_byteSize) / _unit;
     }
 
     /// <summary>
@@ -29,7 +30,7 @@ public static class RAMUnitExtend
     /// <param name="_byteSize">字节</param>
     /// <param name="_unit">单位</param>
     /// <returns>转换后的大小</returns>
-    public static double ToRAM(this int _byteSize, enRAMUnit _unit)
+    public static double ToRAM(this int _byteSize, long _unit)
     {
         return ToRAM((long)_byteSize, _unit);
     }
@@ -51,18 +52,18 @@ public static class RAMUnitExtend
     /// <returns>转换后的大小</returns>
     public static string ToRAMChar(this long _byteSize)
     {
-        enRAMUnit unit = enRAMUnit.B;
-        long max = (long)unit;
+        long unit = enRAMUnit.B;
+        long max = unit;
         long value = max;
-        foreach (enRAMUnit u in smRamNames)
+        foreach (KeyValuePair<long,FieldInfo> key in smRamValueNameMaping)
         {
-            value = (long)u;
+            value = key.Key;
             if (_byteSize >= value)
             {
                 max = Math.Max(max, value);
             }
         }
-        unit = (enRAMUnit)max;
+        unit = max;
         return ToRAMChar(_byteSize, unit);
     }
 
@@ -72,7 +73,7 @@ public static class RAMUnitExtend
     /// <param name="_byteSize">字节</param>
     /// <param name="_unit">单位</param>
     /// <returns>内存字符</returns>
-    public static string ToRAMChar(this int _byteSize, enRAMUnit _unit)
+    public static string ToRAMChar(this int _byteSize, long _unit)
     {
         return ToRAMChar((long)_byteSize, _unit);
     }
@@ -83,9 +84,9 @@ public static class RAMUnitExtend
     /// <param name="_byteSize">字节</param>
     /// <param name="_unit">单位</param>
     /// <returns>内存字符</returns>
-    public static string ToRAMChar(this long _byteSize, enRAMUnit _unit)
+    public static string ToRAMChar(this long _byteSize, long _unit)
     {
-        return ToRAM(_byteSize, _unit).ToString() + _unit.ToString();
+        return ToRAM(_byteSize, _unit).ToString() + smRamValueNameMaping[_unit].ToString();
     }
     #endregion
 }
@@ -93,26 +94,26 @@ public static class RAMUnitExtend
 /// <summary>
 /// 内存单位
 /// </summary>
-public enum enRAMUnit : long
+public static class enRAMUnit
 {
     /// <summary>
     /// 字节
     /// </summary>
-    B = 1,
+    public const long B = 1;
     /// <summary>
     /// 千字节
     /// </summary>
-    KB = B << 10,
+    public const long KB = B << 10;
     /// <summary>
     /// 兆字节
     /// </summary>
-    MB = KB << 10,
+    public const long MB = KB << 10;
     /// <summary>
     /// 十亿字节
     /// </summary>
-    GB = MB << 10,
+    public const long GB = MB << 10;
     /// <summary>
     /// 万亿
     /// </summary>
-    TB = GB << 10,
+    public const long TB = GB << 10;
 }

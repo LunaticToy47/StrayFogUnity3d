@@ -5,103 +5,103 @@
 /// <summary>
 /// 代码类型
 /// </summary>
-public enum enSQLiteDataType
-{    
+public static class enSQLiteDataType
+{
     /// <summary>
     /// Boolean
     /// </summary>
     [Code("bool", "BIT")]
-    Boolean,
+    public const int Boolean = 0x1;
     /// <summary>
     /// Char
     /// </summary>
     [Code("char", "CHAR")]
-    Char,
+    public const int Char = 0x2;
     /// <summary>
     /// SByte
     /// </summary>
     [Code("sbyte", "TINYSINT")]
-    SByte,
+    public const int SByte = 0x4;
     /// <summary>
     /// Byte
     /// </summary>
     [Code("byte", "TINYINT")]
-    Byte,
+    public const int Byte = 0x8;
     /// <summary>
     /// Int16
     /// </summary>
     [Code("short", "SMALLINT")]
-    Int16,
+    public const int Int16 = 0x10;
     /// <summary>
     /// UInt16
     /// </summary>
     [Code("ushort", "SMALLUINT")]
-    UInt16,
+    public const int UInt16 = 0x20;
     /// <summary>
     /// Int32
     /// </summary>
     [Code("int", "INT")]
-    Int32,
+    public const int Int32 = 0x40;
     /// <summary>
     /// UInt32
     /// </summary>
     [Code("uint", "UINT")]
-    UInt32,
+    public const int UInt32 = 0x80;
     /// <summary>
     /// Int64
     /// </summary>
     [Code("long", "INTEGER")]
-    Int64,
+    public const int Int64 = 0x100;
     /// <summary>
     /// UInt64
     /// </summary>
     [Code("ulong", "UNSIGNEDINTEGER")]
-    UInt64,
+    public const int UInt64 = 0x200;
     /// <summary>
     /// Single
     /// </summary>
     [Code("float", "SINGLE")]
-    Single,
+    public const int Single = 0x400;
     /// <summary>
     /// Double
     /// </summary>
     [Code("double", "REAL")]
-    Double,
+    public const int Double = 0x800;
     /// <summary>
     /// Decimal
     /// </summary>
     [Code("decimal", "DECIMAL")]
-    Decimal,
+    public const int Decimal = 0x1000;
     /// <summary>
     /// DateTime
     /// </summary>
     [Code("DateTime", "DATETIME")]
-    DateTime,
+    public const int DateTime = 0x2000;
     /// <summary>
     /// String
     /// </summary>
     [Code("string", "NVARCHAR")]
-    String,
+    public const int String = 0x4000;
     /// <summary>
     /// String
     /// </summary>
     [Code("Guid", "UNIQUEIDENTIFIER")]
-    Guid,    
+    public const int Guid = 0x8000;
     /// <summary>
     /// Vector2
     /// </summary>
     [Code("Vector2", "VECTOR2")]
-    Vector2,
+    public const int Vector2 = 0x10000;
     /// <summary>
     /// Vector3
     /// </summary>
     [Code("Vector3", "VECTOR3")]
-    Vector3,
+    public const int Vector3 = 0x20000;
     /// <summary>
     /// Vector4
     /// </summary>
     [Code("Vector4", "VECTOR4")]
-    Vector4,
+    public const int Vector4 = 0x40000;
 }
 #endregion
 
@@ -109,22 +109,22 @@ public enum enSQLiteDataType
 /// <summary>
 /// 数组维度
 /// </summary>
-public enum enSQLiteDataTypeArrayDimension
+public static class enSQLiteDataTypeArrayDimension
 {
     /// <summary>
     /// 非数组
     /// </summary>
     [Code("非数组", "","")]
-    NoArray,
+    public const int NoArray = 0x1;
     /// <summary>
     /// 一维数组
     /// </summary>
     [Code("一维数组", "[]", "DIM")]
-    OneDimensionArray,
+    public const int OneDimensionArray = 0x2;
     /// <summary>
     /// 二维数组
     /// </summary>
     [Code("二维数组", "[][]", "DIM2")]
-    TwoDimensionArray,
+    public const int TwoDimensionArray = 0x4;
 }
 #endregion

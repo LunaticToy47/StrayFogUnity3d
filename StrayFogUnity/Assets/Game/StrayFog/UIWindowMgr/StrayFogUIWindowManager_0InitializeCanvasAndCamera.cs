@@ -19,7 +19,7 @@ public partial class StrayFogUIWindowManager
     /// <summary>
     /// 绘制模式组
     /// </summary>
-    readonly List<RenderMode> mRenderModes = typeof(RenderMode).ToEnums<RenderMode>();
+    readonly Dictionary<int,string> mRenderModeMaping= typeof(RenderMode).ValueToNameForConstField();
     /// <summary>
     /// 画面映射
     /// Key:RenderMode
@@ -47,22 +47,22 @@ public partial class StrayFogUIWindowManager
     {
         uiLayer = LayerMask.NameToLayer("UI");
         GameObject go = null;
-        foreach (RenderMode rm in mRenderModes)
+        foreach (KeyValuePair<int,string> key in mRenderModeMaping)
         {
-            if (!mCanvasMaping.ContainsKey((int)rm))
+            if (!mCanvasMaping.ContainsKey(key.Key))
             {
-                go = new GameObject(typeof(UICanvas).Name + "_" + rm.ToString());
+                go = new GameObject(typeof(UICanvas).Name + "_" + key.Value);
                 go.layer = uiLayer;
                 UICanvas cvs = go.AddDynamicComponent<UICanvas>();
-                OnInitializeCanvas(cvs, rm);
-                mCanvasMaping.Add((int)rm, cvs);
+                OnInitializeCanvas(cvs, (RenderMode)key.Key);
+                mCanvasMaping.Add(key.Key, cvs);
                 GameObject.DontDestroyOnLoad(go);
             }
-            if (!mSiblingIndexCanvasMaping.ContainsKey((int)rm))
+            if (!mSiblingIndexCanvasMaping.ContainsKey(key.Key))
             {
                 go = new GameObject(go.name+ "_CacheSiblingIndex");
                 go.layer = uiLayer;
-                mSiblingIndexCanvasMaping.Add((int)rm, go.AddDynamicComponent<UISiblingIndexCanvas>());
+                mSiblingIndexCanvasMaping.Add(key.Key, go.AddDynamicComponent<UISiblingIndexCanvas>());
                 GameObject.DontDestroyOnLoad(go);
             }
         }

@@ -166,136 +166,153 @@ public sealed class FMSMachineMaping
 /// <summary>
 /// 状态机
 /// </summary>
-public enum enFMSMachine
+public static class enFMSMachine
 {
-	/// <summary>
-	/// Appear
-	/// </summary>
-	[AliasTooltip("Appear")]
-	Appear = -1415179385,
+    /// <summary>
+    /// Appear
+    /// </summary>
+    [AliasTooltip("Appear")]
+    public const int Appear = -1415179385;
 	/// <summary>
 	/// Attack
 	/// </summary>
 	[AliasTooltip("Attack")]
-	Attack = -1829219820,
-	/// <summary>
-	/// Base Layer
-	/// </summary>
-	[AliasTooltip("Base Layer")]
-	Base_Layer = -1383819056,
-	/// <summary>
-	/// CutOff
-	/// </summary>
-	[AliasTooltip("CutOff")]
-	CutOff = 2039771337,
-	/// <summary>
-	/// MaxSkill
-	/// </summary>
-	[AliasTooltip("MaxSkill")]
-	MaxSkill = 384028137,
-	/// <summary>
-	/// Move
-	/// </summary>
-	[AliasTooltip("Move")]
-	Move = 2055856572,
-	/// <summary>
-	/// Skill
-	/// </summary>
-	[AliasTooltip("Skill")]
-	Skill = 909255867,
+	public const int Attack = -1829219820;
+    /// <summary>
+    /// Base Layer
+    /// </summary>
+    [AliasTooltip("Base Layer")]
+    public const int Base_Layer = -1383819056;
+    /// <summary>
+    /// CutOff
+    /// </summary>
+    [AliasTooltip("CutOff")]
+
+    public const int CutOff = 2039771337;
+    /// <summary>
+    /// MaxSkill
+    /// </summary>
+    [AliasTooltip("MaxSkill")]
+
+    public const int MaxSkill = 384028137;
+    /// <summary>
+    /// Move
+    /// </summary>
+    [AliasTooltip("Move")]
+
+    public const int Move = 2055856572;
+    /// <summary>
+    /// Skill
+    /// </summary>
+    [AliasTooltip("Skill")]
+
+    public const int Skill = 909255867;
 }
 #endregion
 #region enFMSState
 /// <summary>
 /// 状态
 /// </summary>
-public enum enFMSState
+public static class enFMSState
 {
 	/// <summary>
 	/// Attack1_1
 	/// </summary>
 	[AliasTooltip("Attack1_1")]
-	Attack1_1 = -1483470882,
-	/// <summary>
-	/// Attack1_2
-	/// </summary>
-	[AliasTooltip("Attack1_2")]
-	Attack1_2 = 1050498660,
-	/// <summary>
-	/// Attack2_1
-	/// </summary>
-	[AliasTooltip("Attack2_1")]
-	Attack2_1 = -1512916601,
-	/// <summary>
-	/// Attack2_2
-	/// </summary>
-	[AliasTooltip("Attack2_2")]
-	Attack2_2 = 1021044797,
-	/// <summary>
-	/// Attack3_1
-	/// </summary>
-	[AliasTooltip("Attack3_1")]
-	Attack3_1 = -1542401104,
-	/// <summary>
-	/// Die
-	/// </summary>
-	[AliasTooltip("Die")]
-	Die = 20298039,
-	/// <summary>
-	/// Idle
-	/// </summary>
-	[AliasTooltip("Idle")]
-	Idle = 2081823275,
-	/// <summary>
-	/// Run
-	/// </summary>
-	[AliasTooltip("Run")]
-	Run = 1748754976,
-	/// <summary>
-	/// RunSample
-	/// </summary>
-	[AliasTooltip("RunSample")]
-	RunSample = -1024391356,
-	/// <summary>
-	/// skill1_1
-	/// </summary>
-	[AliasTooltip("skill1_1")]
-	skill1_1 = -2049895578,
-	/// <summary>
-	/// skill1_2
-	/// </summary>
-	[AliasTooltip("skill1_2")]
-	skill1_2 = 483934940,
-	/// <summary>
-	/// skill1_3
-	/// </summary>
-	[AliasTooltip("skill1_3")]
-	skill1_3 = 1809805898,
-	/// <summary>
-	/// skill2_1
-	/// </summary>
-	[AliasTooltip("skill2_1")]
-	skill2_1 = -2020102849,
-	/// <summary>
-	/// skill3_1
-	/// </summary>
-	[AliasTooltip("skill3_1")]
-	skill3_1 = -2041198840,
+    public const int Attack1_1 = -1483470882;
+    /// <summary>
+    /// Attack1_2
+    /// </summary>
+    [AliasTooltip("Attack1_2")]
+
+    public const int Attack1_2 = 1050498660;
+    /// <summary>
+    /// Attack2_1
+    /// </summary>
+    [AliasTooltip("Attack2_1")]
+
+    public const int Attack2_1 = -1512916601;
+    /// <summary>
+    /// Attack2_2
+    /// </summary>
+    [AliasTooltip("Attack2_2")]
+
+    public const int Attack2_2 = 1021044797;
+    /// <summary>
+    /// Attack3_1
+    /// </summary>
+    [AliasTooltip("Attack3_1")]
+
+    public const int Attack3_1 = -1542401104;
+    /// <summary>
+    /// Die
+    /// </summary>
+    [AliasTooltip("Die")]
+
+    public const int Die = 20298039;
+    /// <summary>
+    /// Idle
+    /// </summary>
+    [AliasTooltip("Idle")]
+
+    public const int Idle = 2081823275;
+    /// <summary>
+    /// Run
+    /// </summary>
+    [AliasTooltip("Run")]
+
+    public const int Run = 1748754976;
+    /// <summary>
+    /// RunSample
+    /// </summary>
+    [AliasTooltip("RunSample")]
+
+    public const int RunSample = -1024391356;
+    /// <summary>
+    /// skill1_1
+    /// </summary>
+    [AliasTooltip("skill1_1")]
+
+    public const int skill1_1 = -2049895578;
+    /// <summary>
+    /// skill1_2
+    /// </summary>
+    [AliasTooltip("skill1_2")]
+
+    public const int skill1_2 = 483934940;
+    /// <summary>
+    /// skill1_3
+    /// </summary>
+    [AliasTooltip("skill1_3")]
+
+    public const int skill1_3 = 1809805898;
+    /// <summary>
+    /// skill2_1
+    /// </summary>
+    [AliasTooltip("skill2_1")]
+
+    public const int skill2_1 = -2020102849;
+    /// <summary>
+    /// skill3_1
+    /// </summary>
+    [AliasTooltip("skill3_1")]
+
+    public const int skill3_1 = -2041198840;
 }
 #endregion
 #region enFMSParameter
 /// <summary>
 /// FMS参数
 /// </summary>
-public enum enFMSParameter
+public static class enFMSParameter
 {
-	/// <summary>
-	/// exitAction
-	/// </summary>
-	exitAction = -1189175008,
-	/// <summary>
-	/// sampleNormalizedTime
-	/// </summary>
-	sampleNormalizedTime = 1709776050,
+    /// <summary>
+    /// exitAction
+    /// </summary>
+    public const int exitAction = -1189175008;
+    /// <summary>
+    /// sampleNormalizedTime
+    /// </summary>
+    public const int sampleNormalizedTime = 1709776050;
 }
 #endregion

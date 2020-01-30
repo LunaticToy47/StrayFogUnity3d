@@ -11,15 +11,15 @@ public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 场景枚举
     /// </summary>
-    List<enAssetDiskMapingFile> mSceneEnums = new List<enAssetDiskMapingFile>();
+    List<int> mSceneEnums = new List<int>();
     /// <summary>
     /// 文件枚举映射
     /// </summary>
-    static readonly Dictionary<string, enAssetDiskMapingFile> m_enAssetDiskMapingFile_Maping = typeof(enAssetDiskMapingFile).NameToEnum<enAssetDiskMapingFile>();
+    static readonly Dictionary<string, int> m_enAssetDiskMapingFile_Maping = typeof(enAssetDiskMapingFile).NameToValueForConstField();
     /// <summary>
     /// 场景文件后缀
     /// </summary>
-    static readonly FileExtAttribute mSceneFileExtAttribute = enFileExt.Scene.GetAttribute<FileExtAttribute>();
+    static readonly FileExtAttribute mSceneFileExtAttribute = typeof(enFileExt).ValueToAttributeForConstField<FileExtAttribute>()[(int)enFileExt.Scene];
     /// <summary>
     /// 滚动视图位置
     /// </summary>
@@ -30,7 +30,7 @@ public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
     protected override void OnAfterConstructor()
     {
         mSceneEnums.Clear();
-        foreach (KeyValuePair<string, enAssetDiskMapingFile> key in m_enAssetDiskMapingFile_Maping)
+        foreach (KeyValuePair<string, int> key in m_enAssetDiskMapingFile_Maping)
         {
             if (key.Key.EndsWith(mSceneFileExtAttribute.noDotExt))
             {

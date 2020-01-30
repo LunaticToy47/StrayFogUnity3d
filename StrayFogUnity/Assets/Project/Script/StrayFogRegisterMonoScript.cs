@@ -37,46 +37,35 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
-        if (ins is ISimulateMonoBehaviour)
-        {
-            ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
-            mono.BindGameObject(gameObject);
-        }
-        else
-        {
-            Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
-        }
-    }
+        Type type = typeof(enSQLiteDataType);
+        var nv = type.NameToValueForConstField<long>();
+        var nsv = type.NameToSpecialValueForConstField<string>((f) => { return f.Name + "=>" + f.FieldType.FullName; });
+        var na = type.NameToAttributeForConstField<CodeAttribute>();
+        var nsa = type.NameToAttributeSpecifyValueForConstField<CodeAttribute,string>((a)=> { return a.csTypeName; });
 
-    /// <summary>
-    /// 挂载脚本
-    /// </summary>
-    void OnMountMonoScript()
-    {
-        Type type = StrayFogAssembly.GetType(monoBehaviourScriptName);
+        var vn = type.ValueToNameForConstField<int>();
+        var vsv = type.ValueToSpecialValueForConstField<string>((f) => { return f.Name + "=>" + f.FieldType.FullName; });
+        var va = type.ValueToAttributeForConstField<int, CodeAttribute>();
+        var vsa = type.ValueToAttributeSpecifyValueForConstField<CodeAttribute, string>((a)=> { return a.csTypeName; });
 
+        var names = type.ToNamesForConstField();
+        var values = type.ToValuesForConstField();
 
-        //StrayFogSetting
-        //StrayFogGamePools.gameManager.Initialization(() =>
+        var attrs = type.ToAttributesForConstField<CodeAttribute>();
+        var attSpValues = type.ToAttributeSpecifyValueForConstField<CodeAttribute, string>((a)=> { return a.csTypeName; });
+
+        Debug.LogError("SSSS");
+
+        //object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
+        //if (ins is ISimulateMonoBehaviour)
         //{
-        //    StrayFogGamePools.uiWindowManager.AfterToggleScene(() =>
-        //    {
-        //        string scriptName = monoBehaviourScriptName;
-        //        if (string.IsNullOrEmpty(scriptName))
-        //        {
-        //            scriptName = gameObject.name;
-        //        }
-        //        Type type = StrayFogAssembly.GetType(scriptName);
-        //        if (type != null)
-        //        {
-        //            gameObject.AddComponent(type);
-        //        }
-        //        else
-        //        {
-        //            Debug.LogErrorFormat("Can't found type 【{0}】", scriptName);
-        //        }
-        //    });
-        //});
+        //    ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
+        //    mono.BindGameObject(gameObject);
+        //}
+        //else
+        //{
+        //    Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
+        //}
+
     }
 }

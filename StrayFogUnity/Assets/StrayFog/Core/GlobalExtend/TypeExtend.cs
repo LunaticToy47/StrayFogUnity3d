@@ -6,6 +6,16 @@ using System.Reflection;
 public static class TypeExtend
 {
     /// <summary>
+    /// 是否是静态类
+    /// </summary>
+    /// <param name="_type">源类别</param>
+    /// <returns>True:是,False:否</returns>
+    public static bool IsStatic(this Type _type)
+    {
+        return _type.IsSealed && _type.IsAbstract;
+    }
+
+    /// <summary>
     /// 是否是指定类别或指定类别的子类别
     /// </summary>
     /// <param name="_srctype">源类别</param>

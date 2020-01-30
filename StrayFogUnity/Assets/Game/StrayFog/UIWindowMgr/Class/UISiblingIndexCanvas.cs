@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 /// <summary>
 /// UI窗口SiblingIndex画布
@@ -12,6 +13,11 @@ public sealed class UISiblingIndexCanvas : AbsMonoBehaviour
     /// Value:根节点
     /// </summary>
     Dictionary<int, RectTransform> mLayerMaping = new Dictionary<int, RectTransform>();
+    /// <summary>
+    /// 值名称映射
+    /// </summary>
+    Dictionary<int, string> mLayerNameMaping = typeof(enUIWindowLayer).ValueToNameForConstField();
+
     /// <summary>
     /// 创建窗口SiblingIndex占位符
     /// </summary>
@@ -30,7 +36,7 @@ public sealed class UISiblingIndexCanvas : AbsMonoBehaviour
                     siblingIndex = Mathf.Max(siblingIndex, key.Value.GetSiblingIndex() + 1);
                 }
             }
-            GameObject go = new GameObject(((enUIWindowLayer)_winCfg.layer).ToString());
+            GameObject go = new GameObject(mLayerNameMaping[_winCfg.layer]);
             go.layer = gameObject.layer;
             RectTransform rt = go.AddComponent<RectTransform>();
             rt.SetParent(gameObject.transform, false);

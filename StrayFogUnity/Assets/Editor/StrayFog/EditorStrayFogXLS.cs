@@ -537,8 +537,8 @@ public sealed class EditorStrayFogXLS
         string tempType = string.Empty;
         string schemaColumnOrdinalName = "name";
         string schemaColumnOrdinalType = "type";
-        enSQLiteDataType tempDataType = enSQLiteDataType.String;
-        enSQLiteDataTypeArrayDimension tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+        int tempDataType = enSQLiteDataType.String;
+        int tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
 
         EditorXlsTableSchema tempTable = null;
         EditorXlsTableColumnSchema tempTableColumn = null;
@@ -937,8 +937,8 @@ public sealed class EditorStrayFogXLS
         {
             List<EditorXlsTableColumnSchema> columns = new List<EditorXlsTableColumnSchema>();
             EditorXlsTableColumnSchema tempColumn = null;
-            enSQLiteDataType tempDataType = enSQLiteDataType.String;
-            enSQLiteDataTypeArrayDimension tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
+            int tempDataType = enSQLiteDataType.String;
+            int tempDataTypeArrayDimension = enSQLiteDataTypeArrayDimension.NoArray;
             using (ExcelPackage pck = new ExcelPackage(new FileInfo(_table.fileName)))
             {
                 if (pck.Workbook.Worksheets.Count > 0)

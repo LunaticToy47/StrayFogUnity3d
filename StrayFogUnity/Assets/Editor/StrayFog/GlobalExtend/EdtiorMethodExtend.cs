@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System;
 using System.Reflection;
 /// <summary>
 /// MethodExtend
 /// </summary>
-public static class MethodExtend
+public static class EdtiorMethodExtend
 {
     /// <summary>
     /// 是否有ObsoleteAttribute属性
@@ -24,6 +24,6 @@ public static class MethodExtend
     public static bool HasObsoleteAttribute(this ParameterInfo _parameterInfo)
     {
         return _parameterInfo.ParameterType.GetFirstAttribute<ObsoleteAttribute>() != null;
-    }
-    
+    }    
 }
+#endif

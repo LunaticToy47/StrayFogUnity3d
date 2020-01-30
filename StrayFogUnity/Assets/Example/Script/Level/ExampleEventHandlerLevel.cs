@@ -9,7 +9,7 @@ public class ExampleEventHandlerLevel : AbsLevel
     /// <summary>
     /// 游戏事件映射
     /// </summary>
-    static List<enExampleGameEvent> mEnGameEventMaping = typeof(enExampleGameEvent).ToEnums<enExampleGameEvent>();
+    static Dictionary<int,string> mEnGameEventMaping = typeof(enExampleGameEvent).ValueToNameForConstField();
     /// <summary>
     /// 可发布事件
     /// </summary>
@@ -26,10 +26,10 @@ public class ExampleEventHandlerLevel : AbsLevel
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    foreach (enExampleGameEvent evt in mEnGameEventMaping)
+                    foreach (KeyValuePair<int, string> evt in mEnGameEventMaping)
                     {
                         StrayFogGamePools.eventHandlerManager
-                        .AddListener((int)evt,
+                        .AddListener(evt.Key,
                             (args) =>
                             {
                                 Debug.Log(this + "AddListener => " + args.ToString() + " " + this);
@@ -37,7 +37,7 @@ public class ExampleEventHandlerLevel : AbsLevel
                             }
                         );
                         StrayFogGamePools.eventHandlerManager
-                        .AddCallbackListener((int)evt,
+                        .AddCallbackListener(evt.Key,
                             (args) =>
                             {
                                 Debug.Log("AddCallbackListener =>" + args.ToString() + " " + this);

@@ -29,15 +29,6 @@ public class FMSMachine : AbsMonoBehaviour
     /// <summary>
     /// 是否是指定状态机
     /// </summary>
-    /// <param name="_machine">状态机</param>
-    /// <returns>true:是,false:否</returns>
-    public bool IsMachine(enFMSMachine _machine)
-    {
-        return IsMachine((int)_machine);
-    }
-    /// <summary>
-    /// 是否是指定状态机
-    /// </summary>
     /// <param name="_machineNameHash">状态机NameHash值</param>
     /// <returns>true:是,false:否</returns>
     public bool IsMachine(int _machineNameHash)
@@ -50,15 +41,6 @@ public class FMSMachine : AbsMonoBehaviour
     /// <summary>
     /// 是否是指定状态
     /// </summary>
-    /// <param name="_state">状态</param>
-    /// <returns>true:是,false:否</returns>
-    public bool IsState(enFMSState _state)
-    {
-        return IsState((int)_state);
-    }
-    /// <summary>
-    /// 是否是指定状态
-    /// </summary>
     /// <param name="_state">状态NameHash值</param>
     /// <returns>true:是,false:否</returns>
     public bool IsState(int _stateNameHash)
@@ -67,48 +49,7 @@ public class FMSMachine : AbsMonoBehaviour
     }
     #endregion
 
-    #region GetStateHashName 获得指定状态的HashName值
-    /// <summary>
-    /// 获得指定状态的HashName值
-    /// </summary>
-    /// <param name="_state">状态</param>
-    /// <returns>HashName值</returns>
-    public int GetStateHashName(enFMSState _state)
-    {
-        return (int)_state;
-    }
-    #endregion
-
-    #region GetParameterId 获得参数Id值
-    /// <summary>
-    /// 获得参数Id值
-    /// </summary>
-    /// <param name="_parameter">参数</param>
-    /// <returns>Id值</returns>
-    public int GetParameterId(enFMSParameter _parameter)
-    {
-        return (int)_parameter;
-    }
-    #endregion
-
-    #region CrossFade 淡入淡出   
-    /// <summary>
-    /// 淡入淡出
-    /// </summary>
-    /// <param name="_state">状态</param>
-    public void CrossFade(enFMSState _state)
-    {
-        CrossFade(_state, 0);
-    }
-    /// <summary>
-    /// 淡入淡出
-    /// </summary>
-    /// <param name="_state">状态</param>
-    /// <param name="_normalizedTransitionDuration">归一化转换时间值</param>
-    public void CrossFade(enFMSState _state, float _normalizedTransitionDuration)
-    {
-        CrossFade(GetStateHashName(_state), _normalizedTransitionDuration);
-    }
+    #region CrossFade 淡入淡出
     /// <summary>
     /// 淡入淡出
     /// </summary>
@@ -145,11 +86,11 @@ public class FMSMachine : AbsMonoBehaviour
     /// </summary>
     /// <param name="_parameter">参数</param>
     /// <param name="_value">值</param>
-    public void SetInteger(enFMSParameter _parameter, int _value)
+    public void SetInteger(int _parameter, int _value)
     {
         if (mAnimator != null)
         {
-            mAnimator.SetInteger((int)_parameter, _value);
+            mAnimator.SetInteger(_parameter, _value);
         }        
     }
     #endregion
@@ -160,9 +101,9 @@ public class FMSMachine : AbsMonoBehaviour
     /// </summary>
     /// <param name="_parameter">参数</param>
     /// <returns>Value</returns>
-    public int GetInteger(enFMSParameter _parameter)
+    public int GetInteger(int _parameter)
     {
-        return mAnimator != null ? mAnimator.GetInteger((int)_parameter) : 0;
+        return mAnimator != null ? mAnimator.GetInteger(_parameter) : 0;
     }
     #endregion
 
@@ -172,11 +113,11 @@ public class FMSMachine : AbsMonoBehaviour
     /// </summary>
     /// <param name="_parameter">参数</param>
     /// <param name="_value">值</param>
-    public void SetFloat(enFMSParameter _parameter, float _value)
+    public void SetFloat(int _parameter, float _value)
     {
         if (mAnimator != null)
         {
-            mAnimator.SetFloat((int)_parameter, _value);
+            mAnimator.SetFloat(_parameter, _value);
         }        
     }
     #endregion
@@ -187,9 +128,9 @@ public class FMSMachine : AbsMonoBehaviour
     /// </summary>
     /// <param name="_parameter">参数</param>
     /// <returns>Value</returns>
-    public float GetFloat(enFMSParameter _parameter)
+    public float GetFloat(int _parameter)
     {
-        return mAnimator != null ? mAnimator.GetFloat((int)_parameter) : 0;
+        return mAnimator != null ? mAnimator.GetFloat(_parameter) : 0;
     }
     #endregion
 
@@ -199,11 +140,11 @@ public class FMSMachine : AbsMonoBehaviour
     /// </summary>
     /// <param name="_parameter">参数</param>
     /// <param name="_value">值</param>
-    public void SetBool(enFMSParameter _parameter, bool _value)
+    public void SetBool(int _parameter, bool _value)
     {
         if (mAnimator != null)
         {
-            mAnimator.SetBool((int)_parameter, _value);
+            mAnimator.SetBool(_parameter, _value);
         }        
     }
     #endregion
@@ -214,9 +155,9 @@ public class FMSMachine : AbsMonoBehaviour
     /// </summary>
     /// <param name="_parameter">参数</param>
     /// <returns>Value</returns>
-    public bool GetBool(enFMSParameter _parameter)
+    public bool GetBool(int _parameter)
     {
-        return mAnimator != null ? mAnimator.GetBool((int)_parameter) : false;
+        return mAnimator != null ? mAnimator.GetBool(_parameter) : false;
     }
     #endregion
 
@@ -224,19 +165,19 @@ public class FMSMachine : AbsMonoBehaviour
     /// <summary>
     /// SetTrigger
     /// </summary>
-    /// <param name="_parameter">参数</param>
+    /// <param name="_parameter">参数enFMSParameter</param>
     /// <param name="_value">值</param>
-    public void SetTrigger(enFMSParameter _parameter, bool _value)
+    public void SetTrigger(int _parameter, bool _value)
     {
         if (mAnimator != null)
         {
             if (_value)
             {
-                mAnimator.SetTrigger((int)_parameter);
+                mAnimator.SetTrigger(_parameter);
             }
             else
             {
-                mAnimator.ResetTrigger((int)_parameter);
+                mAnimator.ResetTrigger(_parameter);
             }
         }        
     }

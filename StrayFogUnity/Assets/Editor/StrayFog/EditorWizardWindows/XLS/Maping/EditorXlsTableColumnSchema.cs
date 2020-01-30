@@ -45,19 +45,19 @@ public class EditorXlsTableColumnSchema
     /// </summary>
     [AliasTooltip("SQLite列值")]
     [ReadOnly]
-    public string sqliteColumnValue;       
+    public string sqliteColumnValue;
     /// <summary>
-    /// 列类型
+    /// 列类型enSQLiteDataType
     /// </summary>
     [AliasTooltip("列类型")]
     [ReadOnly]
-    public enSQLiteDataType dataType;
+    public int dataType;
     /// <summary>
-    /// 数组维度
+    /// 数组维度enSQLiteDataTypeArrayDimension
     /// </summary>
     [AliasTooltip("数组维度")]
     [ReadOnly]
-    public enSQLiteDataTypeArrayDimension arrayDimension;
+    public int arrayDimension;
     /// <summary>
     /// 是否忽略此列
     /// </summary>

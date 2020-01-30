@@ -37,14 +37,18 @@ public sealed class StrayFogSQLiteDataTypeHelper
     #region readonly 变量
     /// <summary>
     /// SQLite数据类别映射
+    /// Key:enSQLiteDataType
+    /// Value:CodeAttribute
     /// </summary>
-    static readonly Dictionary<enSQLiteDataType, CodeAttribute> msrSQLiteDataTypeCodeAttributeMaping =
-                        typeof(enSQLiteDataType).EnumToAttribute<enSQLiteDataType, CodeAttribute>();
+    static readonly Dictionary<int, CodeAttribute> msrSQLiteDataTypeCodeAttributeMaping =
+                        typeof(enSQLiteDataType).ValueToAttributeForConstField<CodeAttribute>();
     /// <summary>
     /// SQLite数据类别数组维度映射
+    /// Key:enSQLiteDataTypeArrayDimension
+    /// Value:CodeAttribute
     /// </summary>
-    static readonly Dictionary<enSQLiteDataTypeArrayDimension, CodeAttribute> msrSQLiteDataTypeArrayDimensionCodeAttributeMaping =
-                        typeof(enSQLiteDataTypeArrayDimension).EnumToAttribute<enSQLiteDataTypeArrayDimension, CodeAttribute>();
+    static readonly Dictionary<int, CodeAttribute> msrSQLiteDataTypeArrayDimensionCodeAttributeMaping =
+                        typeof(enSQLiteDataTypeArrayDimension).ValueToAttributeForConstField<CodeAttribute>();
     #endregion
 
     #region GetSQLiteDataTypeCSCodeColumnNameSequence 获得SQLiteDataTypeCS列名称代码序列
@@ -129,7 +133,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
         /// <param name="_dim">维度</param>
         /// <param name="_isMatch">是否匹配</param>
         /// <param name="_typeName">类型名称</param>
-        public SQLiteDataTypeSetting(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dim, bool _isMatch, string _typeName)
+        public SQLiteDataTypeSetting(int _dataType, int _dim, bool _isMatch, string _typeName)
         {
             dataType = _dataType;
             dim = _dim;
@@ -139,11 +143,11 @@ public sealed class StrayFogSQLiteDataTypeHelper
         /// <summary>
         /// 数据类型
         /// </summary>
-        public enSQLiteDataType dataType { get; private set; }
+        public int dataType { get; private set; }
         /// <summary>
         /// 维度
         /// </summary>
-        public enSQLiteDataTypeArrayDimension dim { get; private set; }
+        public int dim { get; private set; }
         /// <summary>
         /// 是否匹配
         /// </summary>
@@ -164,14 +168,14 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <param name="_dataType">数据类型</param>
     /// <param name="_dataTypeArrayDimension">数据数组类型</param>
     /// <returns>true:有匹配的类型,false:无匹配的类型</returns>
-    public static bool ResolveCSDataType(string _csTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    public static bool ResolveCSDataType(string _csTypeValue, ref int _dataType, ref int _dataTypeArrayDimension)
     {
         int hashCode = _csTypeValue.GetHashCode();
         if (!msCSDataTypeSettingMaping.ContainsKey(hashCode))
         {
-            foreach (enSQLiteDataTypeArrayDimension dim in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping.Keys)
+            foreach (int dim in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping.Keys)
             {
-                foreach (enSQLiteDataType type in msrSQLiteDataTypeCodeAttributeMaping.Keys)
+                foreach (int type in msrSQLiteDataTypeCodeAttributeMaping.Keys)
                 {
                     if (GetCSDataTypeName(type, dim).Equals(_csTypeValue))
                     {
@@ -182,7 +186,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
             }
             if (!msCSDataTypeSettingMaping.ContainsKey(hashCode))
             {
-                msCSDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting(enSQLiteDataType.String, enSQLiteDataTypeArrayDimension.NoArray, false, _csTypeValue));
+                msCSDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting((int)enSQLiteDataType.String, (int)enSQLiteDataTypeArrayDimension.NoArray, false, _csTypeValue));
             }
         }
         _dataType = msCSDataTypeSettingMaping[hashCode].dataType;
@@ -203,14 +207,14 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <param name="_dataType">数据类型</param>
     /// <param name="_dataTypeArrayDimension">数据数组类型</param>
     /// <returns>true:有匹配的类型,false:无匹配的类型</returns>
-    public static bool ResolveSQLiteDataType(string _sqliteTypeValue, ref enSQLiteDataType _dataType, ref enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    public static bool ResolveSQLiteDataType(string _sqliteTypeValue, ref int _dataType, ref int _dataTypeArrayDimension)
     {
         int hashCode = _sqliteTypeValue.GetHashCode();
         if (!msSQLiteDataTypeSettingMaping.ContainsKey(hashCode))
         {
-            foreach (enSQLiteDataTypeArrayDimension dim in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping.Keys)
+            foreach (int dim in msrSQLiteDataTypeArrayDimensionCodeAttributeMaping.Keys)
             {
-                foreach (enSQLiteDataType type in msrSQLiteDataTypeCodeAttributeMaping.Keys)
+                foreach (int type in msrSQLiteDataTypeCodeAttributeMaping.Keys)
                 {
                     if (GetSQLiteDataTypeName(type, dim).Equals(_sqliteTypeValue))
                     {
@@ -221,7 +225,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
             }
             if (!msSQLiteDataTypeSettingMaping.ContainsKey(hashCode))
             {
-                msSQLiteDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting(enSQLiteDataType.String, enSQLiteDataTypeArrayDimension.NoArray, false, _sqliteTypeValue));
+                msSQLiteDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting((int)enSQLiteDataType.String, (int)enSQLiteDataTypeArrayDimension.NoArray, false, _sqliteTypeValue));
             }
         }
         _dataType = msSQLiteDataTypeSettingMaping[hashCode].dataType;
@@ -237,7 +241,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <param name="_dataType">数据类型</param>
     /// <param name="_dataTypeArrayDimension">数组维度</param>
     /// <returns>SQLite数据类型名称</returns>
-    public static string GetSQLiteDataTypeName(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    public static string GetSQLiteDataTypeName(int _dataType, int _dataTypeArrayDimension)
     {
         return string.Format("{1}{0}{1}", msrSQLiteDataTypeCodeAttributeMaping[_dataType].sqliteTypeName, msrSQLiteDataTypeArrayDimensionCodeAttributeMaping[_dataTypeArrayDimension].sqliteTypeName);
     }
@@ -250,7 +254,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <param name="_dataType">数据类型</param>
     /// <param name="_dataTypeArrayDimension">数组维度</param>
     /// <returns>SQLite数据类型名称</returns>
-    public static string GetCSDataTypeName(enSQLiteDataType _dataType, enSQLiteDataTypeArrayDimension _dataTypeArrayDimension)
+    public static string GetCSDataTypeName(int _dataType, int _dataTypeArrayDimension)
     {
         return msrSQLiteDataTypeCodeAttributeMaping[_dataType].csTypeName + msrSQLiteDataTypeArrayDimensionCodeAttributeMaping[_dataTypeArrayDimension].csTypeName;
     }
@@ -285,10 +289,10 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// </summary>
     /// <param name="_xlsValue">xls表列值</param>
     /// <param name="_propertyInfo">属性</param>
-    /// <param name="_SQLiteDataType">代码类型</param>
-    /// <param name="_SQLiteDataTypeArrayDimension">数组维度</param>
+    /// <param name="_SQLiteDataType">代码类型enSQLiteDataType</param>
+    /// <param name="_SQLiteDataTypeArrayDimension">数组维度enSQLiteDataTypeArrayDimension</param>
     /// <returns>转换后的列值</returns>
-    public static object GetXlsCSTypeColumnValue(object _xlsValue,PropertyInfo _propertyInfo, enSQLiteDataType _SQLiteDataType, enSQLiteDataTypeArrayDimension _SQLiteDataTypeArrayDimension)
+    public static object GetXlsCSTypeColumnValue(object _xlsValue,PropertyInfo _propertyInfo, int _SQLiteDataType, int _SQLiteDataTypeArrayDimension)
     {
         string[] tempArray = new string[0];
         string[] tempArrayTwo = new string[0];
@@ -415,9 +419,9 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// 获得指定的值从实体到XLS
     /// </summary>
     /// <param name="_value">值</param>
-    /// <param name="_SQLiteDataType">类型</param>
+    /// <param name="_SQLiteDataType">类型enSQLiteDataType</param>
     /// <returns>值</returns>
-    static object OnGetValueFromEntityToXls(object _value, enSQLiteDataType _SQLiteDataType)
+    static object OnGetValueFromEntityToXls(object _value, int _SQLiteDataType)
     {
         switch (_SQLiteDataType)
         {
@@ -492,9 +496,9 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// 获得指定的值从XLS到实体
     /// </summary>
     /// <param name="_value">值</param>
-    /// <param name="_SQLiteDataType">类型</param>
+    /// <param name="_SQLiteDataType">类型enSQLiteDataType</param>
     /// <returns>值</returns>
-    static object OnGetValueFromXlsToEntity(object _value, enSQLiteDataType _SQLiteDataType)
+    static object OnGetValueFromXlsToEntity(object _value, int _SQLiteDataType)
     {
         switch (_SQLiteDataType)
         {

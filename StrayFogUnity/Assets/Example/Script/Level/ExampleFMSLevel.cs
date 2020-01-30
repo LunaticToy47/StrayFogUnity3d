@@ -12,11 +12,11 @@ public class ExampleFMSLevel : AbsLevel
     /// <summary>
     /// 状态映射
     /// </summary>
-    Dictionary<string, int> mFMSStateMaping = typeof(enFMSState).NameToValue();
+    Dictionary<string, int> mFMSStateMaping = typeof(enFMSState).NameToValueForConstField();
     /// <summary>
     /// 参数映射
     /// </summary>
-    Dictionary<enFMSParameter, int> mFMSParameterMaping = typeof(enFMSParameter).EnumToValue<enFMSParameter>();
+    Dictionary<string, int> mFMSParameterMaping = typeof(enFMSParameter).NameToValueForConstField();
     /// <summary>
     /// 英雄状态机
     /// </summary>
@@ -106,14 +106,14 @@ public class ExampleFMSLevel : AbsLevel
 
             mParameterScrollViewPosition = GUILayout.BeginScrollView(mParameterScrollViewPosition);
             GUILayout.BeginHorizontal();
-            foreach (KeyValuePair<enFMSParameter, int> key in mFMSParameterMaping)
+            foreach (KeyValuePair<string, int> key in mFMSParameterMaping)
             {
                 if (GUILayout.Button(key.Key.ToString()))
                 {
-                    switch (key.Key)
+                    switch (key.Value)
                     {
                         case enFMSParameter.exitAction:
-                            mFMSMachine.SetTrigger(key.Key, true);
+                            mFMSMachine.SetTrigger(key.Value, true);
                             break;
                     }
                 }

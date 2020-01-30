@@ -177,7 +177,7 @@ public static class StringExtend
     /// <summary>
     /// 分隔符映射
     /// </summary>
-    static Dictionary<int, string[]> mSplitSymbolMaping = typeof(enSplitSymbol).ValueToAttributeSpecifyValue<AliasTooltipAttribute,string[]>((attr)=> {
+    static Dictionary<int, string[]> mSplitSymbolMaping = typeof(enSplitSymbol).ValueToAttributeSpecifyValueForConstField<AliasTooltipAttribute,string[]>((attr)=> {
         return new string[1] { attr.alias };
     });
 

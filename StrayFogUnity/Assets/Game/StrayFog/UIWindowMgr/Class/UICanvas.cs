@@ -87,6 +87,10 @@ public sealed class UICanvas : AbsMonoBehaviour
     /// </summary>
     Dictionary<int, RectTransform> mLayerMaping = new Dictionary<int, RectTransform>();
     /// <summary>
+    /// 值名称映射
+    /// </summary>
+    Dictionary<int, string> mLayerNameMaping = typeof(enUIWindowLayer).ValueToNameForConstField();
+    /// <summary>
     /// 附加窗口
     /// </summary>
     /// <param name="_window">窗口</param>
@@ -103,7 +107,7 @@ public sealed class UICanvas : AbsMonoBehaviour
                     siblingIndex = Mathf.Max(siblingIndex, key.Value.GetSiblingIndex() + 1);
                 }
             }
-            GameObject go = new GameObject(((enUIWindowLayer)_window.config.layer).ToString());
+            GameObject go = new GameObject(mLayerNameMaping[_window.config.layer]);
             go.layer = gameObject.layer;
             RectTransform rt = go.AddComponent<RectTransform>();
             rt.SetParent(canvas.transform,false);

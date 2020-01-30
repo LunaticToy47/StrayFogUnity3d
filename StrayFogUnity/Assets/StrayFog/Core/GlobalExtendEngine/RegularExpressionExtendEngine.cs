@@ -34,7 +34,7 @@ public static class RegularExpressionExtendEngine
     /// 正则属性映射
     /// </summary>
     static readonly Dictionary<int, RegularExpressionAttribute> msrRegularMaping =
-        typeof(enRegularExpression).ValueToAttribute<RegularExpressionAttribute>();
+        typeof(enRegularExpression).ValueToAttributeForConstField<RegularExpressionAttribute>();
 
     /// <summary>
     /// 是否匹配指定的规则
