@@ -89,11 +89,16 @@ public class EditorSelectionAnimatorControllerFMSMapingAsset : EditorSelectionAs
     /// </summary>
     public SortedDictionary<string, int> parameterForNameHashMaping { get; private set; }
     /// <summary>
+    /// 最大Layer索引
+    /// </summary>
+    public int maxLayerIndex { get; private set; }
+    /// <summary>
     /// 解析AnimatorController
     /// </summary>
     /// <param name="_ac">AnimatorController</param>
     void OnResolverLayer(AnimatorController _ac)
     {
+        maxLayerIndex = _ac.layers.Length;
         for (int i = 0; i < _ac.layers.Length; i++)
         {
             OnTraverseAnimatorStateMachine(i, _ac.layers[i].stateMachine);

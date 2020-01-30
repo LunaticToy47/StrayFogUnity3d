@@ -10,7 +10,7 @@ public sealed class FMSMachineMaping
 	/// MachineForLayer映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mMachineForLayerMaping = new Dictionary<int, List<int>>() {#MACHINEFORLAYER#
-		{ (int)enFMSMachine.#MACHINE#,new List<int> { #LISTLAYER##LAYER#,#LISTLAYER# } },#MACHINEFORLAYER#
+		{ enFMSMachine.#MACHINE#,new List<int> { #LISTLAYER#enFMSLayer.layer#LAYER#,#LISTLAYER# } },#MACHINEFORLAYER#
 	};
 	#endregion
 
@@ -19,7 +19,7 @@ public sealed class FMSMachineMaping
 	/// LayerForMachine映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mLayerForMachineMaping = new Dictionary<int, List<int>>() {#LAYERFORMACHINE#
-		{ #LAYER#,new List<int> { #LISTMACHINE#(int)enFMSMachine.#MACHINE#,#LISTMACHINE# } },#LAYERFORMACHINE#
+		{ enFMSLayer.layer#LAYER#,new List<int> { #LISTMACHINE#enFMSMachine.#MACHINE#,#LISTMACHINE# } },#LAYERFORMACHINE#
 	};
 	#endregion
 
@@ -28,7 +28,7 @@ public sealed class FMSMachineMaping
 	/// StateForLayer映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mStateForLayerMaping = new Dictionary<int, List<int>>() {#STATEFORLAYER#
-		{ (int)enFMSState.#STATE#,new List<int> { #LISTLAYER##LAYER#,#LISTLAYER# } },#STATEFORLAYER#
+		{ enFMSState.#STATE#,new List<int> { #LISTLAYER#enFMSLayer.layer#LAYER#,#LISTLAYER# } },#STATEFORLAYER#
 	};
 	#endregion
 
@@ -37,7 +37,7 @@ public sealed class FMSMachineMaping
 	/// LayerForState映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mLayerForStateMaping = new Dictionary<int, List<int>>() {#LAYERFORSTATE#
-		{ #LAYER#,new List<int> { #LISTSTATE#(int)enFMSState.#STATE#,#LISTSTATE# } },#LAYERFORSTATE#
+		{ enFMSLayer.layer#LAYER#,new List<int> { #LISTSTATE#enFMSState.#STATE#,#LISTSTATE# } },#LAYERFORSTATE#
 	};
 	#endregion
 
@@ -46,7 +46,7 @@ public sealed class FMSMachineMaping
 	/// StateForMachine映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mStateForMachineMaping = new Dictionary<int, List<int>>() {#STATEFORMACHINE#
-		{ (int)enFMSState.#STATE#,new List<int> { #LISTMACHINE#(int)enFMSMachine.#MACHINE#,#LISTMACHINE#} },#STATEFORMACHINE#
+		{ enFMSState.#STATE#,new List<int> { #LISTMACHINE#enFMSMachine.#MACHINE#,#LISTMACHINE#} },#STATEFORMACHINE#
 	};
 	#endregion
 
@@ -55,7 +55,7 @@ public sealed class FMSMachineMaping
 	/// MachineForState映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mMachineForStateMaping = new Dictionary<int, List<int>>() {#MACHINEFORSTATE#
-		{ (int)enFMSMachine.#MACHINE#,new List<int> { #LISTSTATE#(int)enFMSState.#STATE#,#LISTSTATE#} },#MACHINEFORSTATE#
+		{ enFMSMachine.#MACHINE#,new List<int> { #LISTSTATE#enFMSState.#STATE#,#LISTSTATE#} },#MACHINEFORSTATE#
 	};
 	#endregion
 
@@ -129,17 +129,34 @@ public sealed class FMSMachineMaping
 	}
 	#endregion
 }
+#region enFMSLayer
+/// <summary>
+/// Layer层级
+/// </summary>
+public static class enFMSLayer
+{
+#ENUMLAYER#
+	/// <summary>
+	/// layer#VALUE#
+	/// </summary>
+	[AliasTooltip("layer#VALUE#")]
+	public const int layer#VALUE# = #VALUE#;
+#ENUMLAYER#
+}
+#endregion
 #region enFMSMachine
 /// <summary>
 /// 状态机
 /// </summary>
-public enum enFMSMachine
-{#ENUMMACHINE#
+public static class enFMSMachine
+{
+#ENUMMACHINE#
 	/// <summary>
 	/// #MACHINEDESC#
 	/// </summary>
 	[AliasTooltip("#MACHINEDESC#")]
-	#MACHINE# = #VALUE#,#ENUMMACHINE#
+	public const int #MACHINE# = #VALUE#;
+#ENUMMACHINE#
 }
 #endregion
 
@@ -147,24 +164,28 @@ public enum enFMSMachine
 /// <summary>
 /// 状态
 /// </summary>
-public enum enFMSState
-{#ENUMSTATE#
+public static class enFMSState
+{
+#ENUMSTATE#
 	/// <summary>
 	/// #STATEDESC#
 	/// </summary>
 	[AliasTooltip("#STATEDESC#")]
-	#STATE# = #VALUE#,#ENUMSTATE#
+	public const int #STATE# = #VALUE#;
+#ENUMSTATE#
 }
 #endregion
 #region enFMSParameter
 /// <summary>
 /// FMS参数
 /// </summary>
-public enum enFMSParameter
-{#ENUMPARAMETER#
+public static class enFMSParameter
+{
+#ENUMPARAMETER#
 	/// <summary>
 	/// #NAME#
 	/// </summary>
-	#NAME# = #VALUE#,#ENUMPARAMETER#
+	public const int #NAME# = #VALUE#;
+#ENUMPARAMETER#
 }
 #endregion

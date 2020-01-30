@@ -582,7 +582,7 @@ public sealed class EditorStrayFogExecute
         List<EditorSelectionAnimatorControllerFMSMapingAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAnimatorControllerFMSMapingAsset>(cfg.paths, enEditorAssetFilterClassify.Object, true, (n) => { return n.ext.Equals(animatorControllerExt.ext); });
         if (nodes != null && nodes.Count > 0)
         {
-            OnBuilderAnimatorControllerMaping(nodes);
+            sbLog.AppendLine(OnBuilderAnimatorControllerMaping(nodes));
         }
 
         EditorUtility.ClearProgressBar();
@@ -597,7 +597,8 @@ public sealed class EditorStrayFogExecute
     /// 生成AnimatorController管理器
     /// </summary>
     /// <param name="_nodes">节点</param>
-    static void OnBuilderAnimatorControllerMaping(List<EditorSelectionAnimatorControllerFMSMapingAsset> _nodes)
+    /// <returns>映射脚本路径</returns>
+    static string OnBuilderAnimatorControllerMaping(List<EditorSelectionAnimatorControllerFMSMapingAsset> _nodes)
     {
         SortedDictionary<string, List<string>> stateForMachineMaping = new SortedDictionary<string, List<string>>();
         SortedDictionary<string, List<string>> machineForStateMaping = new SortedDictionary<string, List<string>>();
@@ -606,12 +607,15 @@ public sealed class EditorStrayFogExecute
         SortedDictionary<string, List<int>> machineForLayerMaping = new SortedDictionary<string, List<int>>();
         SortedDictionary<int, List<string>> layerForMachineMaping = new SortedDictionary<int, List<string>>();
         SortedDictionary<string, int> stateForNameHashMaping = new SortedDictionary<string, int>();
-        SortedDictionary<string, int> parameterForNameHashMaping = new SortedDictionary<string, int>();
+        SortedDictionary<string, int> parameterForNameHashMaping = new SortedDictionary<string, int>();        
         float progress = 0;
+        int maxLayerIndex = 0;
         foreach (EditorSelectionAnimatorControllerFMSMapingAsset n in _nodes)
         {
             progress++;
             n.Resolver();
+            maxLayerIndex = Mathf.Max(maxLayerIndex, n.maxLayerIndex);
+
             #region StateForLayer                      
             foreach (KeyValuePair<string, List<int>> key in n.stateForLayerMaping)
             {
@@ -900,6 +904,22 @@ public sealed class EditorStrayFogExecute
         editorFMSMachineMapingResult = editorFMSMachineMapingResult.Replace(editorFMSMachineMapingReplaceTemplete, editorFMSMachineMapingSbTemplete.ToString());
         #endregion
 
+        #region EnumLayer
+        editorFMSMachineMapingSbTemplete.Length = 0;
+        editorFMSMachineMapingFormatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingScriptTemplete, @"#ENUMLAYER#", out editorFMSMachineMapingReplaceTemplete);
+        progress = 0;
+        for (int i = 0; i < maxLayerIndex; i++)
+        {
+            progress++;
+            editorFMSMachineMapingSbTemplete.AppendLine(
+                editorFMSMachineMapingFormatTemplete
+                .Replace("#VALUE#", i.ToString()));
+            EditorUtility.DisplayProgressBar("ENUMLAYER",
+                            "Layer=>" + i, progress / maxLayerIndex);
+        }
+        editorFMSMachineMapingResult = editorFMSMachineMapingResult.Replace(editorFMSMachineMapingReplaceTemplete, editorFMSMachineMapingSbTemplete.ToString());
+        #endregion
+
         #region EnumMachine
         editorFMSMachineMapingSbTemplete.Length = 0;
         editorFMSMachineMapingFormatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingScriptTemplete, @"#ENUMMACHINE#", out editorFMSMachineMapingReplaceTemplete);
@@ -959,6 +979,8 @@ public sealed class EditorStrayFogExecute
 
         cfgScript.SetText(editorFMSMachineMapingResult);
         cfgScript.CreateAsset();
+
+        return cfgScript.fileName;
     }
     #endregion
 

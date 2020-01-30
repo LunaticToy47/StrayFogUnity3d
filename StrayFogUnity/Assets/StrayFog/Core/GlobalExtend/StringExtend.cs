@@ -185,19 +185,20 @@ public static class StringExtend
     /// 将源字符串按组分隔
     /// </summary>
     /// <param name="_source">源字符</param>
+    /// <param name="_symbol">分割符enSplitSymbol</param>
     /// <returns>组字符</returns>
-    public static string[] Split(this string _source, enSplitSymbol _symbol)
+    public static string[] Split(this string _source, int _symbol)
     {
-        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(mSplitSymbolMaping[(int)_symbol], StringSplitOptions.RemoveEmptyEntries);
+        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(mSplitSymbolMaping[_symbol], StringSplitOptions.RemoveEmptyEntries);
     }
 
     /// <summary>
     /// 将源字符串按组分隔
     /// </summary>
     /// <param name="_source">源字符</param>
-    /// <param name="_symbol">分割符</param>
+    /// <param name="_symbol">分割符enSplitSymbol</param>
     /// <returns>组字符</returns>
-    public static T[] Split<T>(this string _source, enSplitSymbol _symbol)
+    public static T[] Split<T>(this string _source, int _symbol)
     {
         Type t = typeof(T);
         T v = default;
@@ -239,9 +240,9 @@ public static class StringExtend
     /// 按指定连接符连接字符串
     /// </summary>
     /// <param name="_source">字符组</param>
-    /// <param name="_symbol">连接符</param>
+    /// <param name="_symbol">连接符enSplitSymbol</param>
     /// <returns>字符</returns>
-    public static string Join(this List<string> _source, enSplitSymbol _symbol)
+    public static string Join(this List<string> _source, int _symbol)
     {
         return _source.ToArray().Join(_symbol);
     }
@@ -260,11 +261,11 @@ public static class StringExtend
     /// 按指定连接符连接字符串
     /// </summary>
     /// <param name="_source">字符组</param>
-    /// <param name="_symbol">连接符</param>
+    /// <param name="_symbol">连接符enSplitSymbol</param>
     /// <returns>字符</returns>
-    public static string Join(this string[] _source, enSplitSymbol _symbol)
+    public static string Join(this string[] _source, int _symbol)
     {
-        return string.Join(mSplitSymbolMaping[(int)_symbol][0], _source);
+        return string.Join(mSplitSymbolMaping[_symbol][0], _source);
     }
     #endregion
 
@@ -304,21 +305,21 @@ public static class StringExtend
 /// <summary>
 /// 分隔符
 /// </summary>
-public enum enSplitSymbol
+public static class enSplitSymbol
 {
     /// <summary>
     /// 逗号
     /// </summary>
     [AliasTooltip(",")]
-    Comma,
+    public const int Comma = 0x1;
     /// <summary>
     /// 下划线
     /// </summary>
     [AliasTooltip("_")]
-    Underline,
+    public const int Underline = 0x2;
     /// <summary>
     /// | 线
     /// </summary>
     [AliasTooltip("|")]
-    VerticalBar
+    public const int VerticalBar = 0x4;
 }
