@@ -49,7 +49,7 @@ public class EditorWindowMacroDefineScriptingDefineSymbols : AbsEditorWindow
             }
             if (!mDefineAttributes.ContainsKey(tKey))
             {
-                mDefineAttributes.Add(tKey, t.NameToAttribute<AliasTooltipAttribute>());
+                mDefineAttributes.Add(tKey, t.NameToAttributeForConstField<AliasTooltipAttribute>());
             }
             if (!mDefineTypeAttributes.ContainsKey(tKey))
             {
