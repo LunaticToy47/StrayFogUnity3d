@@ -5,228 +5,228 @@ using UnityEngine;
 /// <summary>
 /// 文件扩展名
 /// </summary>
-public enum enFileExt
+public static class enFileExt
 {
     /// <summary>
     /// 未知扩展名
     /// </summary>
     [FileExt(".unknown")]
-    Unknown,
+    public const int Unknown = 0;
     /// <summary>
     /// 动画文件扩展名
     /// </summary>
     [FileExt(".anim")]
-    Animation,
+    public const int Animation = 1;
     /// <summary>
     /// 动画控制器扩展名
     /// </summary>
     [FileExt(".controller")]
-    AnimatorController,
+    public const int AnimatorController = 2;
     /// <summary>
     /// 重载动画控制器扩展名
     /// </summary>
     [FileExt(".overrideController")]
-    AnimatorOverrideController,
+    public const int AnimatorOverrideController = 3;
     /// <summary>
     /// 资源扩展名
     /// </summary>
     [FileExt(".asset")]
-    Asset,
+    public const int Asset = 4;
     /// <summary>
     /// 曲线
     /// </summary>
     [FileExt(".curves")]
-    Curves,
+    public const int Curves = 5;
     /// <summary>
     /// 阿凡达遮罩
     /// </summary>
     [FileExt(".mask")]
-    AvatarMask,
+    public const int AvatarMask = 6;
     /// <summary>
     /// 立方体贴图
     /// </summary>
     [FileExt(".cubemap")]
-    Cubemap,
+    public const int Cubemap = 7;
     /// <summary>
     /// 闪光
     /// </summary>
     [FileExt(".flare")]
-    Flare,
+    public const int Flare = 8;
     /// <summary>
     /// 字体
     /// </summary>
     [FileExt(".fontsettings")]
-    Font,
+    public const int Font = 9;
     /// <summary>
     /// GUI皮肤
     /// </summary>
     [FileExt(".guiskin")]
-    GUISkin,
+    public const int GUISkin = 10;
     /// <summary>
     /// 光照贴图参数
     /// </summary>
     [FileExt(".giparams")]
-    LightmapParameters,
+    public const int LightmapParameters = 11;
     /// <summary>
     /// 材质
     /// </summary>
     [FileExt(".mat")]
-    Material,
+    public const int Material = 12;
     /// <summary>
     /// 物理材质
     /// </summary>
     [FileExt(".physicMaterial")]
-    PhysicMaterial,
+    public const int PhysicMaterial = 13;
     /// <summary>
     /// 2D物理材质
     /// </summary>
     [FileExt(".physicsMaterial2D")]
-    Physics2DMaterial,
+    public const int Physics2DMaterial = 14;
     /// <summary>
     /// Prefab预置
     /// </summary>
     [FileExt(".prefab")]
-    Prefab,
+    public const int Prefab = 15;
     /// <summary>
     /// RenderTexture
     /// </summary>
     [FileExt(".renderTexture")]
-    RenderTexture,
+    public const int RenderTexture = 16;
     /// <summary>
     /// 音频混合器
     /// </summary>
     [FileExt(".mixer")]
-    AudioMixer,
+    public const int AudioMixer = 17;
     /// <summary>
     /// C#脚本
     /// </summary>
     [FileExt(".cs")]
-    CS,
+    public const int CS = 18;
     /// <summary>
     /// javascript脚本
     /// </summary>
     [FileExt(".js")]
-    Javascript,
+    public const int Javascript = 19;
     /// <summary>
     /// Shader变体
     /// </summary>
     [FileExt(".shadervariants")]
-    ShaderVariants,
+    public const int ShaderVariants = 20;
     /// <summary>
     /// Shader
     /// </summary>
     [FileExt(".shader")]
-    Shader,
+    public const int Shader = 21;
     /// <summary>
     /// UnityPackage
     /// </summary>
     [FileExt(".unitypackage")]
-    UnityPackage,
+    public const int UnityPackage = 22;
     /// <summary>
     /// 场景文件
     /// </summary>
     [FileExt(".unity")]
-    Scene,
+    public const int Scene = 23;
     /// <summary>
     /// Exr光照烘焙贴图
     /// </summary>
     [FileExt(".exr")]
-    LightMapExr,
+    public const int LightMapExr = 24;
     /// <summary>
     /// Manifest文件
     /// </summary>
     [FileExt(".manifest")]
-    Manifest,
+    public const int Manifest = 25;
     /// <summary>
     /// TextAsset文本
     /// </summary>
     [FileExt(".txt")]
-    TextAsset,
+    public const int TextAsset = 26;
     /// <summary>
     /// Sql
     /// </summary>
     [FileExt(".sql")]
-    Sql,
+    public const int Sql = 27;
     /// <summary>
     /// 二进制数据
     /// </summary>
     [FileExt(".bytes")]
-    Bytes,
+    public const int Bytes = 28;
     /// <summary>
     /// Lzma
     /// </summary>
     [FileExt(".Lzma")]
-    Lzma,
+    public const int Lzma = 29;
     /// <summary>
     /// zip
     /// </summary>
     [FileExt(".zip")]
-    ZIP,
+    public const int ZIP = 30;
     /// <summary>
     /// 7z
     /// </summary>
     [FileExt(".7z")]
-    _7z,
+    public const int _7z = 31;
     /// <summary>
     /// xml文件
     /// </summary>
     [FileExt(".xml")]
-    Xml,
+    public const int Xml = 32;
     /// <summary>
     /// xlsx
     /// </summary>
     [FileExt(".xlsx")]
-    Xlsx,
+    public const int Xlsx = 33;
     /// <summary>
     /// Config配置文件
     /// </summary>
     [FileExt(".cfg")]
-    Cfg,
+    public const int Cfg = 34;
     /// <summary>
     /// bat批处理文件
     /// </summary>
     [FileExt(".bat")]
-    Bat,
+    public const int Bat = 35;
     /// <summary>
     /// 注册表文件
     /// </summary>
     [FileExt(".reg")]
-    Reg,
+    public const int Reg = 36;
     /// <summary>
     /// dll动态链接库
     /// </summary>
     [FileExt(".dll")]
-    Dll,
+    public const int Dll = 37;
     /// <summary>
     /// dll动态链接库pdb文件
     /// </summary>
     [FileExt(".pdb")]
-    Dll_PDB,
+    public const int Dll_PDB = 38;
     /// <summary>
     /// dll动态链接库mdb文件
     /// </summary>
     [FileExt(".mdb")]
-    Dll_MDB,
+    public const int Dll_MDB = 39;
     /// <summary>
     /// Cginc库
     /// </summary>
     [FileExt(".cginc")]
-    Cginc,
+    public const int Cginc = 40;
     /// <summary>
     /// xlua文件
     /// </summary>
     [FileExt(".lua.txt")]
-    XLuaTxt,
+    public const int XLuaTxt = 41;
     /// <summary>
     /// SQLite数据库
     /// </summary>
     [FileExt(".db")]
-    SQLiteDb,
+    public const int SQLiteDb = 42;
     /// <summary>
     /// asmdef文件
     /// </summary>
     [FileExt(".asmdef")]
-    Asmdef,
+    public const int Asmdef = 43;
 }
 #endregion
 

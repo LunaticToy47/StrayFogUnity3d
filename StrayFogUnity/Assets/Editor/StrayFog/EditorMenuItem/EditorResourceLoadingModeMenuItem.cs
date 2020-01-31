@@ -80,7 +80,7 @@ static class EditorResourceLoadingModeMenuItem
     /// <param name="_isInternal">是否是内部资源加载</param>
     static void OnEditorToggleLoadingResourceMode(bool _isInternal)
     {
-        string forceexternalloadasset = enSystemDefine.FORCEEXTERNALLOADASSET.ToString();       
+        string forceexternalloadasset = typeof(enSystemDefine).ValueToNameForConstField()[enSystemDefine.FORCEEXTERNALLOADASSET];       
         if (_isInternal)
         {
             EditorStrayFogApplication.RemoveScriptingDefineSymbol(forceexternalloadasset);

@@ -14,7 +14,7 @@ public class EditorTextAssetConfig : AbsEdtiorAssetConfig
     /// <param name="_ext">后缀</param>
     /// <param name="_text">文本</param>
     public EditorTextAssetConfig(string _name, string _directory,
-        enFileExt _ext, string _text)
+        int _ext, string _text)
         : base(_name, _directory, _ext)
     {
         SetText(_text);

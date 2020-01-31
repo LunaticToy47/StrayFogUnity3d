@@ -11,7 +11,7 @@ public class EditorSelectionXLuaMapSetting : EditorSelectionAssetDiskMaping
     /// <param name="_pathOrGuid">路径或guid</param>
     public EditorSelectionXLuaMapSetting(string _pathOrGuid) : base(_pathOrGuid)
     {
-        isXLua = name.EndsWith(enFileExt.XLuaTxt.GetAttribute<FileExtAttribute>().ext);
+        isXLua = name.EndsWith(typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.XLuaTxt).ext);
         xLuaName = Path.GetFileNameWithoutExtension(nameWithoutExtension);
         xLuaId = xLuaName.UniqueHashCode();
     }

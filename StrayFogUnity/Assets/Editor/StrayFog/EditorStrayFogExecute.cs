@@ -532,7 +532,7 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteBuildDefaultShader()
     {
         EditorBinaryAssetConfig txtCfg = new EditorBinaryAssetConfig("", enEditorApplicationFolder.Project_Shader.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Shader, null);
-        FileExtAttribute attShader = enFileExt.Shader.GetAttribute<FileExtAttribute>();
+        FileExtAttribute attShader = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Shader);
         string directory = enEditorApplicationFolder.Editor_ResxTemplete_Shader.GetAttribute<EditorApplicationFolderAttribute>().path;
         string[] shaders = Directory.GetFileSystemEntries(directory,"*"+ attShader.ext, SearchOption.AllDirectories);
         StringBuilder sbLog = new StringBuilder();
@@ -578,7 +578,7 @@ public sealed class EditorStrayFogExecute
         EditorFolderConfigForAnimatorControllerFMSMaping cfg = EditorStrayFogSavedAssetConfig.setFolderConfigForAnimatorControllerFMSMaping;
         StringBuilder sbLog = new StringBuilder();
 
-        FileExtAttribute animatorControllerExt = enFileExt.AnimatorController.GetAttribute<FileExtAttribute>();
+        FileExtAttribute animatorControllerExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.AnimatorController);
         List<EditorSelectionAnimatorControllerFMSMapingAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAnimatorControllerFMSMapingAsset>(cfg.paths, enEditorAssetFilterClassify.Object, true, (n) => { return n.ext.Equals(animatorControllerExt.ext); });
         if (nodes != null && nodes.Count > 0)
         {
@@ -1033,7 +1033,7 @@ public sealed class EditorStrayFogExecute
 
         #region Build Anim Curve
         string folder = enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path;
-        string path = Path.Combine(folder, "AnimCurveAsset" + enFileExt.Curves.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
+        string path = Path.Combine(folder, "AnimCurveAsset" + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Curves).ext).TransPathSeparatorCharToUnityChar();
         ScriptableObject library = ScriptableObject.CreateInstance(EditorStrayFogApplication.curvePresetLibrary);
         MethodInfo addMehtod = EditorStrayFogApplication.curvePresetLibrary.GetMethod("Add");
         sbLog.AppendLine("Add Anim Curve");
@@ -1580,7 +1580,7 @@ public sealed class EditorStrayFogExecute
     /// <returns>Dll文件名称</returns>
     static string OnGetDynamicDllFileName()
     {
-        return mDynamicDllName + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext;
+        return mDynamicDllName + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext;
     }
     /// <summary>
     /// 生成动态Dll

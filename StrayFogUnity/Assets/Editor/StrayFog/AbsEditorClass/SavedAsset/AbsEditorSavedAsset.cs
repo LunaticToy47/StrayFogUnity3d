@@ -85,18 +85,20 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
             string ext = string.Empty;
             List<string> legalExts = new List<string>();
             bool isLegalFileExt = false;
+            FileExtAttribute fextAttr = null;
             switch (classify)
             {
                 case enEditorSavedAssetClassify.File:
                     path = EditorUtility.OpenFilePanel("Add " + classify.ToString(), EditorStrayFogApplication.assetsPath, "");
                     ext = Path.GetExtension(path);
-                    enFileExt[] legalFileExts = OnLegalFileExts();
+                    int[] legalFileExts = OnLegalFileExts();
                     if (legalFileExts != null && legalFileExts.Length > 0)
                     {
-                        foreach (enFileExt fext in legalFileExts)
+                        foreach (int fext in legalFileExts)
                         {
-                            isLegalFileExt |= fext.GetAttribute<FileExtAttribute>().IsExt(ext);
-                            legalExts.Add(fext.GetAttribute<FileExtAttribute>().ext);
+                            fextAttr = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(fext);
+                            isLegalFileExt |= fextAttr.IsExt(ext);
+                            legalExts.Add(fextAttr.ext);
                         }
                     }
                     if (!isLegalFileExt)
@@ -207,11 +209,11 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
     /// <summary>
     /// 合法文件后缀组
     /// </summary>
-    static readonly enFileExt[] mLegalFileExts = new enFileExt[0];
+    static readonly int[] mLegalFileExts = new int[0];
     /// <summary>
     /// 合法文件后缀组
     /// </summary>
     /// <returns>合法文件后缀组</returns>
-    protected virtual enFileExt[] OnLegalFileExts() { return mLegalFileExts; }
+    protected virtual int[] OnLegalFileExts() { return mLegalFileExts; }
 }
 #endif

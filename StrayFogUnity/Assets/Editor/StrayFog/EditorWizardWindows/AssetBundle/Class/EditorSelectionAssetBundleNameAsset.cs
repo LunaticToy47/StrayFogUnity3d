@@ -10,23 +10,23 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
     /// <summary>
     /// 场景后缀
     /// </summary>
-    readonly static string msrSceneExt = enFileExt.Scene.GetAttribute<FileExtAttribute>().ext;
+    readonly static string msrSceneExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Scene).ext;
     /// <summary>
     /// Dll后缀
     /// </summary>
-    readonly static string msrDllExt = enFileExt.Dll.GetAttribute<FileExtAttribute>().ext;
+    readonly static string msrDllExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext;
     /// <summary>
     /// xLua后缀
     /// </summary>
-    readonly static string msrXLuaTxtExt = enFileExt.XLuaTxt.GetAttribute<FileExtAttribute>().ext;
+    readonly static string msrXLuaTxtExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.XLuaTxt).ext;
     /// <summary>
     /// Asmdef后缀
     /// </summary>
-    readonly static string msrAsmdefExt = enFileExt.Asmdef.GetAttribute<FileExtAttribute>().ext;
+    readonly static string msrAsmdefExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asmdef).ext;
     /// <summary>
     /// Asset前缀
     /// </summary>
-    readonly static string msrAssetExt = enFileExt.Asset.GetAttribute<FileExtAttribute>().ext;
+    readonly static string msrAssetExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asset).ext;
     /// <summary>
     /// 名称前缀
     /// </summary>

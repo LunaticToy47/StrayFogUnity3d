@@ -13,7 +13,7 @@ public class EditorSelectionXlsSchemaToSQLiteAsset : EditorSelectionAsset
     {
         tableMapingDirectory = Path.Combine(directory, "TableMaping").TransPathSeparatorCharToUnityChar();
         tableAssetConfig = new EditorEngineAssetConfig(nameWithoutExtension, tableMapingDirectory, enFileExt.Asset, typeof(EditorXlsTableSchema).FullName);        
-        dbName = (Path.GetFileName(directory) + enFileExt.SQLiteDb.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
+        dbName = (Path.GetFileName(directory) + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.SQLiteDb).ext).TransPathSeparatorCharToUnityChar();
         dbPath = Path.Combine(directory, dbName).TransPathSeparatorCharToUnityChar();
     }
 

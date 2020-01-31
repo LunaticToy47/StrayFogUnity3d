@@ -185,7 +185,7 @@ public sealed class EditorStrayFogXLS
     {
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
-        FileExtAttribute xlsxExt = enFileExt.Xlsx.GetAttribute<FileExtAttribute>();
+        FileExtAttribute xlsxExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Xlsx);
         List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedAssetConfig.setFolderConfigForSchemaToSqlite.paths,
             enEditorAssetFilterClassify.DefaultAsset, false,
             (n) => { return xlsxExt.IsExt(n.ext); });
@@ -313,7 +313,7 @@ public sealed class EditorStrayFogXLS
         string sqliteView_DeterminantVTTemplete = EditorResxTemplete.SQLiteCreateDeterminantViewTemplete;
         Dictionary<int, TableSQLiteHelper> dicDbHelper = new Dictionary<int, TableSQLiteHelper>();
         Dictionary<int, List<string>> dicExcuteSql = new Dictionary<int, List<string>>();
-        FileExtAttribute attSqlExt = enFileExt.TextAsset.GetAttribute<FileExtAttribute>();
+        FileExtAttribute attSqlExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset);
 
         #region #Column# Templete
         string columnMark = "#Column#";
@@ -990,7 +990,7 @@ public sealed class EditorStrayFogXLS
                 xlsTableSchemaPaths.Add(t.tableSchemaAssetPath);
             }
         }
-        FileExtAttribute assetExt = enFileExt.Asset.GetAttribute<FileExtAttribute>();
+        FileExtAttribute assetExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asset);
         List<EditorSelectionAsset> assetFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(tableSchemaAssetFolders.ToArray(),
             enEditorAssetFilterClassify.Object, false,
             (n) => { return assetExt.IsExt(n.ext) && !xlsTableSchemaPaths.Contains(n.path); });

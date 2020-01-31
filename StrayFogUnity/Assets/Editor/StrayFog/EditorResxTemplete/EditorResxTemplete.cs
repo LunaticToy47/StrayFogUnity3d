@@ -37,7 +37,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("AssetDiskMaping/AssetDiskMapingEnumTemplete"+enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("AssetDiskMaping/AssetDiskMapingEnumTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -48,7 +49,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("Cmd/Cmd_ClearSvnTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Cmd/Cmd_ClearSvnTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -59,7 +61,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("Cmd/Cmd_DebugProfilerTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Cmd/Cmd_DebugProfilerTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -70,7 +73,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("Cmd/Cmd_PackageManifestTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Cmd/Cmd_PackageManifestTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -81,7 +85,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("Cmd/Cmd_ExecuteApplicationRestartMenu" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Cmd/Cmd_ExecuteApplicationRestartMenu" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -92,7 +97,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("Cmd/Cmd_ExecuteEngineMenu" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Cmd/Cmd_ExecuteEngineMenu" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -103,7 +109,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("Animator/EditorFMSMachineMapingScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Animator/EditorFMSMachineMapingScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -114,7 +121,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("Develop/EditorCustomAssetNewAssetScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("Develop/EditorCustomAssetNewAssetScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -125,7 +133,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("General/Editor_GeneralEnum_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("General/Editor_GeneralEnum_ScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -136,7 +145,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -147,7 +157,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/Editor_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_AbsMonoBehaviour_ISimulateBehaviour_MethodMap_ScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -158,7 +169,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/Editor_ISimulateMonoBehaviour_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_ISimulateMonoBehaviour_ScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
     
@@ -170,7 +182,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("SimulateMonoBehaviour/Editor_AbsMonoBehaviour_ISimulateBehaviour_Method_ScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SimulateMonoBehaviour/Editor_AbsMonoBehaviour_ISimulateBehaviour_Method_ScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
     
@@ -182,7 +195,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("SQLite/SQLiteCreateDeterminantViewTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SQLite/SQLiteCreateDeterminantViewTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -193,7 +207,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("SQLite/SQLiteCreateTableTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SQLite/SQLiteCreateTableTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -204,7 +219,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("SQLite/SQLiteEntityScriptTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("SQLite/SQLiteEntityScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -215,7 +231,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("UIWindow/UIWindowEnumMapingTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("UIWindow/UIWindowEnumMapingTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 
@@ -226,7 +243,8 @@ public class EditorResxTemplete
     {
         get
         {
-            return GetFileString("UIWindow/UIWindowViewTemplete" + enFileExt.TextAsset.GetAttribute<FileExtAttribute>().ext);
+            return GetFileString("UIWindow/UIWindowViewTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
 }

@@ -14,7 +14,7 @@ public abstract class AbsEdtiorAssetConfig : ICloneable
     /// <param name="_directory">目录</param>
     /// <param name="_ext">后缀</param>
     public AbsEdtiorAssetConfig(string _name, string _directory,
-    enFileExt _ext)
+    int _ext)
     {
         OnSetName(_name);
         OnSetDirectory(_directory);
@@ -33,9 +33,9 @@ public abstract class AbsEdtiorAssetConfig : ICloneable
     /// </summary>
     public string directory { get; private set; }
     /// <summary>
-    /// 文件后缀
+    /// 文件后缀enFileExt
     /// </summary>
-    public enFileExt ext { get; private set; }
+    public int ext { get; private set; }
     /// <summary>
     /// 后缀属性
     /// </summary>
@@ -92,7 +92,7 @@ public abstract class AbsEdtiorAssetConfig : ICloneable
     /// 设置后缀
     /// </summary>
     /// <param name="_ext">后缀</param>
-    public void SetExt(enFileExt _ext)
+    public void SetExt(int _ext)
     {
         OnSetExt(_ext);
         OnReset();
@@ -101,10 +101,10 @@ public abstract class AbsEdtiorAssetConfig : ICloneable
     /// 设置后缀
     /// </summary>
     /// <param name="_ext">后缀</param>
-    void OnSetExt(enFileExt _ext)
+    void OnSetExt(int _ext)
     {
         ext = _ext;
-        extAttribute = _ext.GetAttribute<FileExtAttribute>();
+        extAttribute = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(_ext);
     }
     #endregion
 

@@ -50,7 +50,7 @@ public sealed class EditorStrayFogAssembly
     public static List<Assembly> GetApplicationAssembly()
     {
         List<Assembly> assemblies = new List<Assembly>();
-        string[] files = Directory.GetFiles(scriptAssembliesPath, "*" + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext);
+        string[] files = Directory.GetFiles(scriptAssembliesPath, "*" + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext);
         if (files != null && files.Length > 0)
         {
             string name = string.Empty;
@@ -86,7 +86,7 @@ public sealed class EditorStrayFogAssembly
     public static List<Assembly> GetEditorApplicationAssembly()
     {
         List<Assembly> assemblies = new List<Assembly>();
-        string[] files = Directory.GetFiles(scriptAssembliesPath, "*" + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext);
+        string[] files = Directory.GetFiles(scriptAssembliesPath, "*" + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext);
         if (files != null && files.Length > 0)
         {
             string name = string.Empty;
@@ -326,10 +326,11 @@ public sealed class EditorStrayFogAssembly
     public static List<Assembly> GetDynamicAssemblies()
     {
         List<Assembly> assemblies = new List<Assembly>();
+        string dllExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext;
         List<EditorSelectionAsset> dlls =
             EditorStrayFogUtility.collectAsset.CollectAsset(
                 new string[1] { EditorStrayFogApplication.TryRelativeToProject("") }, "",
-                false, (n) => { return n.ext.Equals(enFileExt.Dll.GetAttribute<FileExtAttribute>().ext); });        
+                false, (n) => { return n.ext.Equals(dllExt); });
         List<Assembly> tempAssemblies = null;
         if (dlls != null && dlls.Count > 0)
         {

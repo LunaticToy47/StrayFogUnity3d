@@ -13,10 +13,10 @@ public class EditorBinaryAssetConfig : AbsEdtiorAssetConfig
     /// </summary>
     /// <param name="_name">名称</param>
     /// <param name="_directory">目录</param>
-    /// <param name="_ext">后缀</param>
+    /// <param name="_ext">后缀enFileExt</param>
     /// <param name="_bytes">数据流</param>
     public EditorBinaryAssetConfig(string _name, string _directory,
-        enFileExt _ext, byte[] _bytes)
+        int _ext, byte[] _bytes)
         : base(_name, _directory, _ext)
     {
         SetBinary(_bytes);

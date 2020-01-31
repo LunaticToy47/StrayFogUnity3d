@@ -622,4 +622,40 @@ public static class StaticClassConstFieldReflectionExtend
     #endregion
 
     #endregion
+
+    #region StaticClassConstFieldReflection Attribute反射
+    /// <summary>
+    /// 指定值的静态类常量指定属性
+    /// </summary>
+    /// <typeparam name="A">属性泛型</typeparam>
+    /// <param name="_staticType">静态类</param>
+    /// <param name="_constValue">常量值</param>
+    /// <returns>指定属性</returns>
+    public static A GetAttributeForConstField<A>(this Type _staticType, int _constValue)
+        where A : Attribute
+    {
+        return _staticType.GetAttributeForConstField<int, A>(_constValue);
+    }
+
+    /// <summary>
+    /// 指定值的静态类常量指定属性
+    /// </summary>
+    /// <typeparam name="V">值类型</typeparam>
+    /// <typeparam name="A">属性泛型</typeparam>
+    /// <param name="_staticType">静态类</param>
+    /// <param name="_constValue">常量值</param>
+    /// <returns>指定属性</returns>
+    public static A GetAttributeForConstField<V,A>(this Type _staticType, V _constValue)
+        where A : Attribute
+    {
+        if (!_staticType.IsStatic())
+        {
+            throw new ArgumentException("Type必须是静态类类型！");
+        }
+        Dictionary<V,A> dic = _staticType.ValueToAttributeForConstField<V, A>();
+        A result = default;
+        dic.TryGetValue(_constValue, out result);
+        return result;
+    }
+    #endregion
 }

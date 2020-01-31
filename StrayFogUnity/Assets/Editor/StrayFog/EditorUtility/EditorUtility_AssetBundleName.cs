@@ -21,8 +21,8 @@ public class EditorUtility_AssetBundleName : AbsSingle
     /// <summary>
     /// 忽略设置资源包名称的扩展名列表
     /// </summary>
-    static readonly List<enFileExt> msrIgnoreAssetBundleNames =
-        new List<enFileExt>() {
+    static readonly List<int> msrIgnoreAssetBundleNames =
+        new List<int>() {
             enFileExt.CS, enFileExt.LightMapExr,enFileExt.Javascript,enFileExt.Dll_MDB,enFileExt.Dll_PDB,enFileExt.Cginc,enFileExt.Asmdef };
     /// <summary>
     /// 是否是忽略后缀名映射
@@ -42,7 +42,7 @@ public class EditorUtility_AssetBundleName : AbsSingle
             bool isIgnore = false;
             for (int i = 0; i < msrIgnoreAssetBundleNames.Count; i++)
             {
-                attr = msrIgnoreAssetBundleNames[i].GetAttribute<FileExtAttribute>();
+                attr = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(msrIgnoreAssetBundleNames[i]);
                 isIgnore |= attr.IsExt(_ext);
                 if (isIgnore)
                 {
@@ -59,7 +59,8 @@ public class EditorUtility_AssetBundleName : AbsSingle
     /// <summary>
     /// 场景后缀属性
     /// </summary>
-    static readonly FileExtAttribute mSceneAttribute = enFileExt.Scene.GetAttribute<FileExtAttribute>();
+    static readonly FileExtAttribute mSceneAttribute =
+        typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Scene);
     /// <summary>
     /// 是否是场景关联资源
     /// </summary>
@@ -117,7 +118,7 @@ public class EditorUtility_AssetBundleName : AbsSingle
     public bool IsDllPlugins<T>(T _node)
         where T : EditorSelectionAsset
     {
-        return _node.isFile && !IsBelongEditorDirectory(_node.directory) && _node.ext == enFileExt.Dll.GetAttribute<FileExtAttribute>().ext;
+        return _node.isFile && !IsBelongEditorDirectory(_node.directory) && _node.ext == typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext;
     }
     #endregion
 
@@ -131,7 +132,7 @@ public class EditorUtility_AssetBundleName : AbsSingle
     public bool IsAsmdef<T>(T _node)
         where T : EditorSelectionAsset
     {
-        return _node.isFile && !IsBelongEditorDirectory(_node.directory) && _node.ext == enFileExt.Asmdef.GetAttribute<FileExtAttribute>().ext;
+        return _node.isFile && !IsBelongEditorDirectory(_node.directory) && _node.ext == typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asmdef).ext;
     }
     #endregion
     

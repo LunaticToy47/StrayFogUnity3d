@@ -84,7 +84,7 @@ static class EditorDataModeMenuItem
     /// <param name="_isXLSData">是否是XLS数据</param>
     static void OnEditorToggleDataMode(bool _isXLSData)
     {
-        string forceusesqlite = enSystemDefine.FORCEUSESQLITE.ToString();
+        string forceusesqlite = typeof(enSystemDefine).ValueToNameForConstField()[enSystemDefine.FORCEUSESQLITE];
         if (_isXLSData)
         {
             EditorStrayFogApplication.RemoveScriptingDefineSymbol(forceusesqlite);

@@ -17,7 +17,7 @@ public class EditorEngineAssetConfig : AbsEdtiorAssetConfig
     /// <param name="_ext">后缀</param>
     /// <param name="_typeFullName">类全名称</param>
     public EditorEngineAssetConfig(string _name, string _directory,
-        enFileExt _ext, string _typeFullName)
+        int _ext, string _typeFullName)
         : base(_name, _directory, _ext)
     {
         SetType(_typeFullName);

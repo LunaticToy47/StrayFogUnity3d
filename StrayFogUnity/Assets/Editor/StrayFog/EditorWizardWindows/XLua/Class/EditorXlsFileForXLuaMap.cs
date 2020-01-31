@@ -7,7 +7,7 @@ public class EditorXlsFileForXLuaMap : AbsEditorSavedAsset
     /// <summary>
     /// 文件后缀
     /// </summary>
-    static FileExtAttribute msFileExt = enFileExt.Xlsx.GetAttribute<FileExtAttribute>();
+    static FileExtAttribute msFileExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Xlsx);
     /// <summary>
     /// 可保存资源分类
     /// </summary>
@@ -34,6 +34,6 @@ public class EditorXlsFileForXLuaMap : AbsEditorSavedAsset
     /// 合法文件后缀组
     /// </summary>
     /// <returns>合法文件后缀组</returns>
-    protected override enFileExt[] OnLegalFileExts() { return new enFileExt[1] { enFileExt.Xlsx }; }
+    protected override int[] OnLegalFileExts() { return new int[1] { enFileExt.Xlsx }; }
 }
 #endif

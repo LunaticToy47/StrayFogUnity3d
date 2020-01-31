@@ -10,7 +10,7 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     /// <summary>
     /// 文件后缀映射
     /// </summary>
-    static readonly Dictionary<int, string> mFileExtMaping = typeof(enFileExt).ValueToAttributeSpecifyValue<FileExtAttribute, string>((a) => { return a.ext; });
+    static readonly Dictionary<int, string> mFileExtMaping = typeof(enFileExt).ValueToAttributeSpecifyValueForConstField<FileExtAttribute, string>((a) => { return a.ext; });
     /// <summary>
     /// 构造函数
     /// </summary>

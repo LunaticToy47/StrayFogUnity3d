@@ -47,7 +47,7 @@ public static class AttributeExtend
 
     #region GetFirstAttributeAbsolute
     /// <summary>
-    /// MemberInfo检举第一个属性映射(仅T类别)
+    /// MemberInfo第一个属性映射(仅T类别)
     /// </summary>
     static Dictionary<int, Dictionary<int, object>> mMemberInfoFirstAbsoluteAttributeMaping = new Dictionary<int, Dictionary<int, object>>();
     /// <summary>
@@ -95,9 +95,9 @@ public static class AttributeExtend
 
     #region GetAttributes
     /// <summary>
-    /// 静态类Const、readonly字段属性组映射
+    /// MemberInfo是T类型的Attributes
     /// </summary>
-    static Dictionary<int, Dictionary<int, object>> mEnumAttributeMaping = new Dictionary<int, Dictionary<int, object>>();
+    static Dictionary<int, Dictionary<int, object>> mMemberInfoAttributesMaping = new Dictionary<int, Dictionary<int, object>>();
     /// <summary>
     /// 获得指定的属性特性
     /// </summary>
@@ -109,11 +109,11 @@ public static class AttributeExtend
     {
         int fkey = _f.GetHashCode();
         int tkey = typeof(A).GetHashCode();
-        if (!mEnumAttributeMaping.ContainsKey(fkey))
+        if (!mMemberInfoAttributesMaping.ContainsKey(fkey))
         {
-            mEnumAttributeMaping.Add(fkey, new Dictionary<int, object>());
+            mMemberInfoAttributesMaping.Add(fkey, new Dictionary<int, object>());
         }
-        if (!mEnumAttributeMaping[fkey].ContainsKey(tkey))
+        if (!mMemberInfoAttributesMaping[fkey].ContainsKey(tkey))
         {
             object[] obj = _f.GetCustomAttributes(typeof(A), true);
             List<A> attr = new List<A>();
@@ -127,17 +127,17 @@ public static class AttributeExtend
                     }
                 }
             }
-            mEnumAttributeMaping[fkey].Add(tkey, attr);
+            mMemberInfoAttributesMaping[fkey].Add(tkey, attr);
         }
-        return (List<A>)mEnumAttributeMaping[fkey][tkey];
+        return (List<A>)mMemberInfoAttributesMaping[fkey][tkey];
     }
     #endregion
 
     #region GetAbsoluteAttributes
     /// <summary>
-    /// 静态类Const、readonly字段属性组映射(指定类型)
+    /// MemberInfo仅是T类型的Attributes
     /// </summary>
-    static Dictionary<int, Dictionary<int, object>> mEnumAbsoluteAttributeMaping = new Dictionary<int, Dictionary<int, object>>();
+    static Dictionary<int, Dictionary<int, object>> mMemberInfoAbsoluteAttributesMaping = new Dictionary<int, Dictionary<int, object>>();
     /// <summary>
     /// 获得指定的属性特性(指定类型)
     /// </summary>
@@ -149,11 +149,11 @@ public static class AttributeExtend
     {
         int fkey = _f.GetHashCode();
         int tkey = typeof(A).GetHashCode();
-        if (!mEnumAbsoluteAttributeMaping.ContainsKey(fkey))
+        if (!mMemberInfoAbsoluteAttributesMaping.ContainsKey(fkey))
         {
-            mEnumAbsoluteAttributeMaping.Add(fkey, new Dictionary<int, object>());
+            mMemberInfoAbsoluteAttributesMaping.Add(fkey, new Dictionary<int, object>());
         }
-        if (!mEnumAbsoluteAttributeMaping[fkey].ContainsKey(tkey))
+        if (!mMemberInfoAbsoluteAttributesMaping[fkey].ContainsKey(tkey))
         {
             object[] obj = _f.GetCustomAttributes(typeof(A), true);
             List<A> attr = new List<A>();
@@ -168,9 +168,9 @@ public static class AttributeExtend
                     }
                 }
             }
-            mEnumAbsoluteAttributeMaping[fkey].Add(tkey, attr);
+            mMemberInfoAbsoluteAttributesMaping[fkey].Add(tkey, attr);
         }
-        return (List<A>)mEnumAbsoluteAttributeMaping[fkey][tkey];
+        return (List<A>)mMemberInfoAbsoluteAttributesMaping[fkey][tkey];
     }
     #endregion
 

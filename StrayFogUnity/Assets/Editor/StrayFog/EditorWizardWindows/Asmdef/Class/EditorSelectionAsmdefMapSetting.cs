@@ -19,15 +19,15 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
     /// </summary>
     protected override void OnResolve()
     {
-        isAsmdef = name.EndsWith(enFileExt.Asmdef.GetAttribute<FileExtAttribute>().ext);
+        isAsmdef = name.EndsWith(typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asmdef).ext);
         SaveAssetBundleName(null);        
         asmdefDllName = Path.GetFileNameWithoutExtension(name);
         asmdefId = asmdefDllName.UniqueHashCode();
 
-        asmdefDllPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + enFileExt.Dll.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();        
+        asmdefDllPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext).TransPathSeparatorCharToUnityChar();        
         asmdefDllAssetbundleName = GetAssetBundleName();
 
-        asmdefPdbPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + enFileExt.Dll_PDB.GetAttribute<FileExtAttribute>().ext).TransPathSeparatorCharToUnityChar();
+        asmdefPdbPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll_PDB).ext).TransPathSeparatorCharToUnityChar();
         asmdefPdbAssetbundleName = GetAssetBundleName()+"_p";
         ClearAssetBundleName();
         OnRead();

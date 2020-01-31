@@ -7,7 +7,7 @@ public class EditorCsFileForDynamicCreateDll : AbsEditorSavedAsset
     /// <summary>
     /// 文件后缀
     /// </summary>
-    static FileExtAttribute msFileExt = enFileExt.CS.GetAttribute<FileExtAttribute>();
+    static FileExtAttribute msFileExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.CS);
 
     /// <summary>
     /// 可保存资源分类
@@ -35,6 +35,6 @@ public class EditorCsFileForDynamicCreateDll : AbsEditorSavedAsset
     /// 合法文件后缀组
     /// </summary>
     /// <returns>合法文件后缀组</returns>
-    protected override enFileExt[] OnLegalFileExts() { return new enFileExt[1] { enFileExt.CS }; }
+    protected override int[] OnLegalFileExts() { return new int[1] { enFileExt.CS }; }
 }
 #endif
