@@ -9,3 +9,15 @@ public  static class enUIWindow_#AssemblyName#
 	public const int #Name# = #Id#;
 #Windows#
 }
+
+/// <summary>
+/// UI窗口RenderMode枚举
+/// 【#Directory#】
+/// </summary>
+public  static class enUIWindow_RenderMode_#AssemblyName#
+{
+#RenderModes#
+	[AliasTooltip("#Name#")]
+	public const int #Name# = #Id#;
+#RenderModes#
+}

@@ -1,7 +1,9 @@
 ﻿/// <summary>
 /// 资源磁盘映射枚举#EnumName#
 /// </summary>
-public enum en#EnumName#
-{#Enums#
-	#Name# = #HashCode#,#Enums#	
+public static class en#EnumName#
+{
+#Enums#
+	public const int #Name# = #HashCode#;
+#Enums#	
 }

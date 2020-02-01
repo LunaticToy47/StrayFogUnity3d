@@ -10,12 +10,12 @@ public class ExampleGuideWindow : AbsUIGuideWindowView
     /// <summary>
     /// 材质文件
     /// </summary>
-    protected override enAssetDiskMapingFile materialFile { get { return enAssetDiskMapingFile.f_GuideMaskShader_mat; } }
+    protected override int materialFile { get { return enAssetDiskMapingFile.f_GuideMaskShader_mat; } }
 
     /// <summary>
     /// 材质文件夹
     /// </summary>
-    protected override enAssetDiskMapingFolder materialFolder { get { return enAssetDiskMapingFolder.Assets_Game_AssetBundles_Materials; } }
+    protected override int materialFolder { get { return enAssetDiskMapingFolder.Assets_Game_AssetBundles_Materials; } }
 
     /// <summary>
     /// 引导提示队列

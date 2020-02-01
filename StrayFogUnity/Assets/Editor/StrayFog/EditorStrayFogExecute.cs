@@ -25,30 +25,45 @@ public sealed class EditorStrayFogExecute
         float progress = 0;
         string scriptTemplete = EditorResxTemplete.UIWindowEnumMapingTemplete;
         string result = scriptTemplete;
-        string replaceTemplete = string.Empty;
-        string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#Windows#", out replaceTemplete);
+
+        #region Windows
+        string replaceWindowsTemplete = string.Empty;
+        string formatWindowsTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#Windows#", out replaceWindowsTemplete);
+        Dictionary<int, StringBuilder> dicSbWindowsTemplete = new Dictionary<int, StringBuilder>();
+        #endregion
+
+        #region RenderModes
+        string replaceRenderModesTemplete = string.Empty;
+        string formatRenderModesTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#RenderModes#", out replaceRenderModesTemplete);
+        Dictionary<int, StringBuilder> dicSbRenderModesTemplete = new Dictionary<int, StringBuilder>();
+        #endregion
+
         StringBuilder sbLog = new StringBuilder();
-        Dictionary<int, StringBuilder> dicSbTemplete = new Dictionary<int, StringBuilder>();
+        
         Dictionary<int, string> dicAssemblyName = new Dictionary<int, string>();
-        int key = 0;
+        int pathKey = 0;
         if (mWindows != null && mWindows.Count > 0)
         {            
             foreach (EditorSelectionUIWindowSetting w in mWindows)
             {
-                key = Path.GetDirectoryName(w.directory).TransPathSeparatorCharToUnityChar().UniqueHashCode();
-                if (!dicSbTemplete.ContainsKey(key))
+                pathKey = Path.GetDirectoryName(w.directory).TransPathSeparatorCharToUnityChar().UniqueHashCode();
+                if (!dicSbWindowsTemplete.ContainsKey(pathKey))
                 {
-                    dicSbTemplete.Add(key, new StringBuilder());
+                    dicSbWindowsTemplete.Add(pathKey, new StringBuilder());
                 }
-                if (!dicAssemblyName.ContainsKey(key))
+                if (!dicSbRenderModesTemplete.ContainsKey(pathKey))
                 {
-                    dicAssemblyName.Add(key, w.ownerAssembly.GetName().Name);
+                    dicSbRenderModesTemplete.Add(pathKey, new StringBuilder());
                 }
-                dicSbTemplete[key].AppendLine(
-                    formatTemplete                    
+                if (!dicAssemblyName.ContainsKey(pathKey))
+                {
+                    dicAssemblyName.Add(pathKey, w.ownerAssembly.GetName().Name);
+                }
+                dicSbWindowsTemplete[pathKey].AppendLine(
+                    formatWindowsTemplete                    
                     .Replace("#Name#", w.nameWithoutExtension)
                     .Replace("#Id#", w.winId.ToString())
-                    );
+                    );                          
                 progress++;
                 EditorUtility.DisplayProgressBar("Builder Window Enum", w.path, progress / mWindows.Count);
             }
@@ -58,18 +73,34 @@ public sealed class EditorStrayFogExecute
             });
         }
 
+        //生成RenderMode静态类常量
+        List<RenderMode> renderModes = typeof(RenderMode).ToEnums<RenderMode>();
+        foreach (int key in dicSbRenderModesTemplete.Keys)
+        {
+            foreach (RenderMode m in renderModes)
+            {
+                dicSbRenderModesTemplete[key].AppendLine(
+                   formatRenderModesTemplete
+                   .Replace("#Name#", m.ToString())
+                   .Replace("#Id#", ((int)m).ToString())
+                   );
+            }           
+        }
+
         if (EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths != null && EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths.Length > 0)
         {
             for (int i = 0; i < EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths.Length; i++)
             {
-                key = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].UniqueHashCode();
-                if (dicSbTemplete.ContainsKey(key))
+                pathKey = EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].UniqueHashCode();
+                if (dicSbWindowsTemplete.ContainsKey(pathKey))
                 {
+
                     result = scriptTemplete
-                        .Replace(replaceTemplete, dicSbTemplete[key].ToString())
-                        .Replace("#Directory#", EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].TransPathSeparatorCharToUnityChar())
-                        .Replace("#AssemblyName#", dicAssemblyName[key])
-                        ;
+                        .Replace(replaceWindowsTemplete, dicSbWindowsTemplete[pathKey].ToString())                      
+                        .Replace(replaceRenderModesTemplete, dicSbRenderModesTemplete[pathKey].ToString())                     
+                        .Replace("#Directory#", EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].TransPathSeparatorCharToUnityChar())                     
+                        .Replace("#AssemblyName#", dicAssemblyName[pathKey])
+                     ;
                     
                     result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
                     EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow",
@@ -79,6 +110,7 @@ public sealed class EditorStrayFogExecute
                 }                
             }
         }
+
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         Debug.Log(sbLog);

@@ -15,7 +15,8 @@ public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 文件枚举映射
     /// </summary>
-    static readonly Dictionary<string, int> m_enAssetDiskMapingFile_Maping = typeof(enAssetDiskMapingFile).NameToValueForConstField();
+    static readonly Dictionary<int, string> m_enAssetDiskMapingFile_Maping =
+        typeof(enAssetDiskMapingFile).ValueToNameForConstField();
     /// <summary>
     /// 场景文件后缀
     /// </summary>
@@ -30,11 +31,11 @@ public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
     protected override void OnAfterConstructor()
     {
         mSceneEnums.Clear();
-        foreach (KeyValuePair<string, int> key in m_enAssetDiskMapingFile_Maping)
+        foreach (KeyValuePair<int, string> key in m_enAssetDiskMapingFile_Maping)
         {
-            if (key.Key.EndsWith(mSceneFileExtAttribute.noDotExt))
+            if (key.Value.EndsWith(mSceneFileExtAttribute.noDotExt))
             {
-                mSceneEnums.Add(key.Value);
+                mSceneEnums.Add(key.Key);
             }
         }
         base.OnAfterConstructor();
@@ -58,8 +59,9 @@ public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
     /// <summary>
     /// 加载场景
     /// </summary>
-    /// <param name="_file">场景文件</param>
-    public void LoadScene(enAssetDiskMapingFile _file, enAssetDiskMapingFolder _folder)
+    /// <param name="_file">场景文件enAssetDiskMapingFile</param>
+    /// <param name="_folder">场景文件夹enAssetDiskMapingFolder</param>
+    public void LoadScene(int _file, int _folder)
     {
         StrayFogGamePools.uiWindowManager.BeforeToggleScene();
         StrayFogGamePools.assetBundleManager.LoadAssetInMemory(_file, _folder,
@@ -85,9 +87,9 @@ public partial class StrayFogSceneManager : AbsSingleMonoBehaviour
         GUILayout.Space(10);
         mScrollViewPosition = GUILayout.BeginScrollView(mScrollViewPosition);
         GUILayout.BeginHorizontal();
-        foreach (enAssetDiskMapingFile f in mSceneEnums)
+        foreach (int f in mSceneEnums)
         {
-            if (GUILayout.Button(f.ToString()))
+            if (GUILayout.Button(m_enAssetDiskMapingFile_Maping[f]))
             {
                 LoadScene(f, enAssetDiskMapingFolder.Assets_Example_AssetBundles_Scene);
             }

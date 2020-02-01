@@ -7,13 +7,13 @@ using UnityEngine;
 public abstract class AbsUIGuideWindowView : AbsUIWindowView
 {
     /// <summary>
-    /// 材质文件
+    /// 材质文件enAssetDiskMapingFile
     /// </summary>
-    protected abstract enAssetDiskMapingFile materialFile { get; }
+    protected abstract int materialFile { get; }
     /// <summary>
-    /// 材质文件夹
+    /// 材质文件夹enAssetDiskMapingFolder
     /// </summary>
-    protected abstract enAssetDiskMapingFolder materialFolder { get; }
+    protected abstract int materialFolder { get; }
     
     /// <summary>
     /// Graphic遮罩映射
