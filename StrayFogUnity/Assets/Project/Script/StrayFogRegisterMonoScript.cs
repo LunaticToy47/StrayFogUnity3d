@@ -56,16 +56,16 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
 
         Debug.LogError("SSSS");
 
-        //object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
-        //if (ins is ISimulateMonoBehaviour)
-        //{
-        //    ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
-        //    mono.BindGameObject(gameObject);
-        //}
-        //else
-        //{
-        //    Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
-        //}
+        object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
+        if (ins is ISimulateMonoBehaviour)
+        {
+            ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
+            mono.BindGameObject(gameObject);
+        }
+        else
+        {
+            Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
+        }
 
     }
 }

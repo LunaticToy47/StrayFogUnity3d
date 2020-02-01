@@ -2,7 +2,7 @@
 /// UI窗口枚举
 /// 【Assets/Example/AssetBundles/UIWindow】
 /// </summary>
-public  static partial class enUIWindow
+public  static class enUIWindow_GameExample
 {
 	[AliasTooltip("ExampleLobbyWindow")]
 	public const int ExampleLobbyWindow = -197707795;

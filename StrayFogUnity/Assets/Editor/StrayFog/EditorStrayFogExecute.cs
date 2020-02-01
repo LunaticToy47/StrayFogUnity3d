@@ -29,6 +29,7 @@ public sealed class EditorStrayFogExecute
         string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#Windows#", out replaceTemplete);
         StringBuilder sbLog = new StringBuilder();
         Dictionary<int, StringBuilder> dicSbTemplete = new Dictionary<int, StringBuilder>();
+        Dictionary<int, string> dicAssemblyName = new Dictionary<int, string>();
         int key = 0;
         if (mWindows != null && mWindows.Count > 0)
         {            
@@ -39,10 +40,15 @@ public sealed class EditorStrayFogExecute
                 {
                     dicSbTemplete.Add(key, new StringBuilder());
                 }
+                if (!dicAssemblyName.ContainsKey(key))
+                {
+                    dicAssemblyName.Add(key, w.ownerAssembly.GetName().Name);
+                }
                 dicSbTemplete[key].AppendLine(
                     formatTemplete                    
                     .Replace("#Name#", w.nameWithoutExtension)
-                    .Replace("#Id#", w.winId.ToString()));
+                    .Replace("#Id#", w.winId.ToString())
+                    );
                 progress++;
                 EditorUtility.DisplayProgressBar("Builder Window Enum", w.path, progress / mWindows.Count);
             }
@@ -61,7 +67,9 @@ public sealed class EditorStrayFogExecute
                 {
                     result = scriptTemplete
                         .Replace(replaceTemplete, dicSbTemplete[key].ToString())
-                        .Replace("#Directory#", EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].TransPathSeparatorCharToUnityChar());
+                        .Replace("#Directory#", EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].TransPathSeparatorCharToUnityChar())
+                        .Replace("#AssemblyName#", dicAssemblyName[key])
+                        ;
                     
                     result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
                     EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow",

@@ -20,14 +20,14 @@ public class ExampleUIWindowLevel : AbsLevel
     /// <summary>
     /// UIWindow字段信息与说明属性映射
     /// </summary>
-    static Dictionary<FieldInfo, AliasTooltipAttribute> mUIWindowFieldAttrMaping = typeof(enUIWindow).GetFieldInfoAttribute<AliasTooltipAttribute>();
+    static Dictionary<FieldInfo, AliasTooltipAttribute> mUIWindowFieldAttrMaping = typeof(enUIWindow_GameExample).GetFieldInfoAttribute<AliasTooltipAttribute>();
     /// <summary>
     /// 按钮可操作窗口
     /// </summary>
     static readonly int[] msrBtnWindows = new int[3] {
-        enUIWindow.ExamplePlayerListWindow,
-        enUIWindow.ExampleHeroListWindow,
-        enUIWindow.ExampleMessageBoxWindow,
+        enUIWindow_GameExample.ExamplePlayerListWindow,
+        enUIWindow_GameExample.ExampleHeroListWindow,
+        enUIWindow_GameExample.ExampleMessageBoxWindow,
     };
     /// <summary>
     /// 是否自动开启关闭窗口时间

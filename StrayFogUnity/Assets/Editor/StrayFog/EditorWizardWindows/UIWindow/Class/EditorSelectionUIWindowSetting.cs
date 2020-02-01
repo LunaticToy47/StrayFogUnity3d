@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using Mono.Data.Sqlite;
 using System;
+using System.Reflection;
 using UnityEngine;
 /// <summary>
 /// UIWindow设定选择资源
@@ -29,6 +30,7 @@ public class EditorSelectionUIWindowSetting : EditorSelectionAssetDiskMaping
         }
         absCfg.LoadAsset();
         assetNode = (EditorUIWindowAsset)absCfg.engineAsset;
+        ownerAssembly = EditorStrayFogAssembly.GetType(assetNode.name).Assembly;
     }
 
     /// <summary>
@@ -39,6 +41,10 @@ public class EditorSelectionUIWindowSetting : EditorSelectionAssetDiskMaping
     /// 窗口ID
     /// </summary>
     public int winId { get { return (fileId.ToString() + folderId.ToString()).UniqueHashCode(); } }
+    /// <summary>
+    /// 窗口所属应用程序集
+    /// </summary>
+    public Assembly ownerAssembly { get; private set; }
     /// <summary>
     /// 资源节点
     /// </summary>

@@ -2,7 +2,7 @@
 /// UI窗口枚举
 /// 【#Directory#】
 /// </summary>
-public  static partial class enUIWindow
+public  static class enUIWindow_#AssemblyName#
 {
 #Windows#
 	[AliasTooltip("#Name#")]
