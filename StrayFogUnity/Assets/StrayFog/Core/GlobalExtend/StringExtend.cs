@@ -185,20 +185,20 @@ public static class StringExtend
     /// 将源字符串按组分隔
     /// </summary>
     /// <param name="_source">源字符</param>
-    /// <param name="_symbol">分割符enSplitSymbol</param>
+    /// <param name="_enSplitSymbol">分割符enSplitSymbol</param>
     /// <returns>组字符</returns>
-    public static string[] Split(this string _source, int _symbol)
+    public static string[] Split(this string _source, int _enSplitSymbol)
     {
-        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(mSplitSymbolMaping[_symbol], StringSplitOptions.RemoveEmptyEntries);
+        return string.IsNullOrEmpty(_source) ? new string[0] : _source.Split(mSplitSymbolMaping[_enSplitSymbol], StringSplitOptions.RemoveEmptyEntries);
     }
 
     /// <summary>
     /// 将源字符串按组分隔
     /// </summary>
     /// <param name="_source">源字符</param>
-    /// <param name="_symbol">分割符enSplitSymbol</param>
+    /// <param name="_enSplitSymbol">分割符enSplitSymbol</param>
     /// <returns>组字符</returns>
-    public static T[] Split<T>(this string _source, int _symbol)
+    public static T[] Split<T>(this string _source, int _enSplitSymbol)
     {
         Type t = typeof(T);
         T v = default;
@@ -206,7 +206,7 @@ public static class StringExtend
         {
             throw new InvalidCastException("T must be ValueType");
         }
-        string[] values = _source.Split(_symbol);
+        string[] values = _source.Split(_enSplitSymbol);
         Func<string, T> fun = (arg) => { return (T)Convert.ChangeType(arg, t); };
         if (v is bool)
         {
@@ -240,11 +240,11 @@ public static class StringExtend
     /// 按指定连接符连接字符串
     /// </summary>
     /// <param name="_source">字符组</param>
-    /// <param name="_symbol">连接符enSplitSymbol</param>
+    /// <param name="_enSplitSymbol">连接符enSplitSymbol</param>
     /// <returns>字符</returns>
-    public static string Join(this List<string> _source, int _symbol)
+    public static string Join(this List<string> _source, int _enSplitSymbol)
     {
-        return _source.ToArray().Join(_symbol);
+        return _source.ToArray().Join(_enSplitSymbol);
     }
 
     /// <summary>
@@ -261,11 +261,11 @@ public static class StringExtend
     /// 按指定连接符连接字符串
     /// </summary>
     /// <param name="_source">字符组</param>
-    /// <param name="_symbol">连接符enSplitSymbol</param>
+    /// <param name="_enSplitSymbol">连接符enSplitSymbol</param>
     /// <returns>字符</returns>
-    public static string Join(this string[] _source, int _symbol)
+    public static string Join(this string[] _source, int _enSplitSymbol)
     {
-        return string.Join(mSplitSymbolMaping[_symbol][0], _source);
+        return string.Join(mSplitSymbolMaping[_enSplitSymbol][0], _source);
     }
     #endregion
 

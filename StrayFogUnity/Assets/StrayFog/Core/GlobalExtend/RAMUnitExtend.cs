@@ -17,22 +17,22 @@ public static class RAMUnitExtend
     /// 内存大小转换
     /// </summary>
     /// <param name="_byteSize">字节</param>
-    /// <param name="_unit">单位</param>
+    /// <param name="_enRAMUnit">单位</param>
     /// <returns>转换后的大小</returns>
-    public static double ToRAM(this long _byteSize, long _unit)
+    public static double ToRAM(this long _byteSize, long _enRAMUnit)
     {
-        return ((double)_byteSize) / _unit;
+        return ((double)_byteSize) / _enRAMUnit;
     }
 
     /// <summary>
     /// 内存大小转换
     /// </summary>
     /// <param name="_byteSize">字节</param>
-    /// <param name="_unit">单位</param>
+    /// <param name="_enRAMUnit">单位</param>
     /// <returns>转换后的大小</returns>
-    public static double ToRAM(this int _byteSize, long _unit)
+    public static double ToRAM(this int _byteSize, long _enRAMUnit)
     {
-        return ToRAM((long)_byteSize, _unit);
+        return ToRAM((long)_byteSize, _enRAMUnit);
     }
 
     /// <summary>
@@ -71,22 +71,22 @@ public static class RAMUnitExtend
     /// 内存大小转换
     /// </summary>
     /// <param name="_byteSize">字节</param>
-    /// <param name="_unit">单位</param>
+    /// <param name="_enRAMUnit">单位</param>
     /// <returns>内存字符</returns>
-    public static string ToRAMChar(this int _byteSize, long _unit)
+    public static string ToRAMChar(this int _byteSize, long _enRAMUnit)
     {
-        return ToRAMChar((long)_byteSize, _unit);
+        return ToRAMChar((long)_byteSize, _enRAMUnit);
     }
 
     /// <summary>
     /// 内存大小转换
     /// </summary>
     /// <param name="_byteSize">字节</param>
-    /// <param name="_unit">单位</param>
+    /// <param name="_enRAMUnit">单位</param>
     /// <returns>内存字符</returns>
-    public static string ToRAMChar(this long _byteSize, long _unit)
+    public static string ToRAMChar(this long _byteSize, long _enRAMUnit)
     {
-        return ToRAM(_byteSize, _unit).ToString() + smRamValueNameMaping[_unit].ToString();
+        return ToRAM(_byteSize, _enRAMUnit).ToString() + smRamValueNameMaping[_enRAMUnit].ToString();
     }
     #endregion
 }
