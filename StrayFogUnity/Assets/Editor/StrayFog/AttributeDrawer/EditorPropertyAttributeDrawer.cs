@@ -32,6 +32,10 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
     /// </summary>
     bool mIsReadOnly = false;
     /// <summary>
+    /// 是否是静态类常量映射枚举
+    /// </summary>
+    bool mIsStaticClassConstFieldMapForEnum = false;
+    /// <summary>
     /// OnGUI
     /// </summary>
     /// <param name="_position">位置</param>
@@ -59,6 +63,8 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
             #endregion
         }
         mIsDraw = true;
+        mIsReadOnly = false;
+        mIsStaticClassConstFieldMapForEnum = false;
         int propertyKey = EditorStrayFogUtility.guiLayout.GetPropertyKey(_property, fieldInfo);
         if (!mPropertyHeightMaping.ContainsKey(propertyKey))
         {
@@ -71,6 +77,7 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
             propertyHeight += drawer.GetPropertyHeight(propertyKey);
             mIsDraw &= drawer.IsDrawer(propertyKey);
             mIsReadOnly |= drawer.IsReadOnly(propertyKey);
+            mIsStaticClassConstFieldMapForEnum |= drawer.isStaticClassConstFieldMapForEnum(propertyKey);
         }
         mPropertyHeightMaping[propertyKey] = propertyHeight;
         if (!mPropertyDrawMaping.ContainsKey(propertyKey))
@@ -101,9 +108,18 @@ public class EditorPropertyAttributeDrawer : PropertyDrawer
                     #endregion
                     break;
                 default:
-                    #region 绘制普通
-                    EditorGUI.PropertyField(_position, _property, _label, _property.hasVisibleChildren && _property.isExpanded);
-                    #endregion
+                    if (mIsStaticClassConstFieldMapForEnum)
+                    {
+                        #region 静态类常量映射为枚举
+                        EditorStrayFogUtility.guiLayout.StaticClassConstFieldMapForEnum(propertyKey,fieldInfo, _position, _property, _label);
+                        #endregion
+                    }
+                    else
+                    {
+                        #region 绘制普通
+                        EditorGUI.PropertyField(_position, _property, _label, _property.hasVisibleChildren && _property.isExpanded);
+                        #endregion
+                    }
                     break;
             }
             if (mIsReadOnly)

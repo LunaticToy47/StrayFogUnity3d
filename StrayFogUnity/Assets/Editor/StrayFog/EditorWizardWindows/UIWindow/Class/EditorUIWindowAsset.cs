@@ -11,20 +11,23 @@ public class EditorUIWindowAsset : AbsScriptableObject
     [AliasTooltip("画布绘制模式")]
     public RenderMode renderMode;
     /// <summary>
-    /// 窗口Layer
+    /// enUIWindowLayer窗口Layer
     /// </summary>
     [AliasTooltip("窗口Layer")]
-    public enUIWindowLayer layer;
+    [StaticClassConstFieldMapForEnum(typeof(enUIWindowLayer))]
+    public int layer;
     /// <summary>
-    /// 打开模式
+    /// 打开模式enUIWindowOpenMode
     /// </summary>
     [AliasTooltip("打开模式")]
-    public enUIWindowOpenMode openMode;
+    [StaticClassConstFieldMapForEnum(typeof(enUIWindowOpenMode))]
+    public int openMode;
     /// <summary>
-    /// 关闭模式
+    /// 关闭模式enUIWindowCloseMode
     /// </summary>
     [AliasTooltip("关闭模式")]
-    public enUIWindowCloseMode closeMode;
+    [StaticClassConstFieldMapForEnum(typeof(enUIWindowCloseMode))]
+    public int closeMode;
     /// <summary>
     /// 是否忽略开启关闭模式
     /// </summary>

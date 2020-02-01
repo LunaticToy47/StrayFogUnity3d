@@ -37,12 +37,13 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// <summary>
     /// 窗口最小Layer映射
     /// </summary>
-    static readonly Dictionary<int, string> msrWindowMinLayerMaping =
-        typeof(enUIWindowLayer).ValueToAttributeSpecifyValue<AliasTooltipAttribute, string>((a) => { return a.alias; });
+    static readonly Dictionary<int, string> msrWindowMinLayerMaping = 
+        typeof(enUIWindowLayer).ValueToAttributeSpecifyValueForConstField<AliasTooltipAttribute, string>((a) => { return a.alias; });
     /// <summary>
     /// 搜索窗口绘制类别
     /// </summary>
-    Dictionary<int, bool> mSearchWindowMinLayer = typeof(enUIWindowLayer).ValueToSpecialValue((m) => { return true; });
+    Dictionary<int, bool> mSearchWindowMinLayer = 
+        typeof(enUIWindowLayer).ValueToSpecialValueForConstField((m) => { return true; });
     /// <summary>
     /// 窗口组
     /// </summary>

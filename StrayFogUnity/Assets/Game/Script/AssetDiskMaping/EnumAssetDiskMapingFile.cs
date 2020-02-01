@@ -5,6 +5,7 @@ public enum enAssetDiskMapingFile
 {
 	f_GuideMaskShader_mat = 1030043145,
 	f_SpriteAtlas_txt = -1047153048,
+	f_LoginWindow_prefab = -1111317671,
 	f_xLuaScript_lua_txt = -1314513662,
 	f_FZY4JW_0_TTF = -671828977,
 	f_pf_hero_1002_prefab = -1822338762,

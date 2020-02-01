@@ -46,5 +46,15 @@ abstract class AbsEditorAttributeDrawer
     {
         return 0;
     }
+
+    /// <summary>
+    /// 是否是静态类常量映射枚举
+    /// </summary>
+    /// <param name="_propertyKey">属性Key</param>
+    /// <returns>true:是,false:否</returns>
+    public virtual bool isStaticClassConstFieldMapForEnum(int _propertyKey)
+    {
+        return false;
+    }
 }
 #endif

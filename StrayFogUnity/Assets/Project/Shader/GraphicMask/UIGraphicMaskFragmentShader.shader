@@ -327,9 +327,9 @@ Shader "Game/UI/GraphicMask/Fragment"
 				   {
 					   //_GraphicUvSlicedBorder 九宫uv值,判定当前uv在九宫的哪一格,按当前格子的缩放进行uv读取
 					   //转换到遮罩(0,0)坐标
-					   texuv -=_graphicUvMaskForScene.xy;
+					   texuv -= _graphicUvMaskForScene.xy;
 					   //由屏幕坐标系转到遮罩坐标系
-					   texuv *=ratiouv;
+					   texuv *= ratiouv;
 
 					   //如果图集是美术做成一张图的用下面这句，将上面两句屏蔽，有时间再统一改。
 					   //texuv = texuv * _graphicUvRatio.zw + _graphicUvRatio.xy;

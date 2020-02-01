@@ -515,6 +515,7 @@ public static class StaticClassConstFieldReflectionExtend
     /// </summary>
     static Dictionary<int, Dictionary<int, Dictionary<int, Dictionary<int, object>>>> msStaticClassConstFieldDictionaryMaping =
         new Dictionary<int, Dictionary<int, Dictionary<int, Dictionary<int, object>>>>();
+    
 
     /// <summary>
     /// 将静态类const、readonly属性映射为字典
@@ -528,7 +529,7 @@ public static class StaticClassConstFieldReflectionExtend
     /// <param name="_funcResult">Value返回结果</param>
     /// <returns>字典</returns>
     static Dictionary<K, R> _StaticClassConstFieldToDictionary<K, V, R>(Type _staticType,
-        Func<FieldInfo, K> _funcKey, Func<FieldInfo, K, V> _funcValue, Func<FieldInfo, K, V, R> _funcResult)
+    Func<FieldInfo, K> _funcKey, Func<FieldInfo, K, V> _funcValue, Func<FieldInfo, K, V, R> _funcResult)
     {
         if (!_staticType.IsStatic())
         {

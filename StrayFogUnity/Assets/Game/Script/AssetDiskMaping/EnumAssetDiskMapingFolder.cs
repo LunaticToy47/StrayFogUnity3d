@@ -5,6 +5,7 @@ public enum enAssetDiskMapingFolder
 {
 	Assets_Game_AssetBundles_Materials = 2130076485,
 	Assets_Game_AssetBundles_SpriteAtlas = 1148303718,
+	Assets_Game_AssetBundles_UIWindow_Login = -1255526873,
 	Assets_Game_XLuaScript = -764457537,
 	Assets_Example_AssetBundles_Fonts = 703074975,
 	Assets_Example_AssetBundles_Prefabs_Character = -2004506147,

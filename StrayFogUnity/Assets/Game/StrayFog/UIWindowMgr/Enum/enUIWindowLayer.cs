@@ -29,8 +29,13 @@ public static class enUIWindowLayer
     [AliasTooltip("弹出框层【Layer:400】")]
     public const int Popup = 400;
     /// <summary>
-    /// 顶级层【Layer:500】"
+    /// 引导层【Layer:500】"
     /// </summary>
-    [AliasTooltip("顶级层【Layer:500】")]
-    public const int Highest = 500;
+    [AliasTooltip("引导层【Layer:500】")]
+    public const int Guide = 500;
+    /// <summary>
+    /// 顶级层【Layer:Max】"
+    /// </summary>
+    [AliasTooltip("顶级层【Layer:Max】")]
+    public const int Highest = int.MaxValue;
 }
