@@ -773,15 +773,16 @@ public sealed class EditorStrayFogXLS
             tempConstructorFormalParams.Clear();
             tempConstructorSetParams.Clear();
             hasPK = false;
+
             foreach (EditorXlsTableColumnSchema c in t.columns)
             {
                 sbPropertyReplace.Append(
                     propertyTemplete
                     .Replace("#Name#", c.columnName)
                     .Replace("#Desc#", c.desc.TransDescToSummary())
-                    .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
-                    .Replace("#DataType#", c.dataType.ToString())
-                    .Replace("#ArrayDimension#", c.arrayDimension.ToString())
+                    .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSPropertyDataTypeName(c.dataType, c.arrayDimension))
+                    .Replace("#PropertyType#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType))
+                    .Replace("#ArrayDimension#", StrayFogSQLiteDataTypeHelper.GetCSPropertyDataTypeArrayDimensionName(c.arrayDimension))
                     .Replace("#XlsColumnValueIndex#", c.xlsColumnValueIndex.ToString())
                     .Replace("#SqliteColumnName#", c.sqliteColumnName)
                     .Replace("#SqliteColumnValue#", c.sqliteColumnValue)
@@ -795,7 +796,7 @@ public sealed class EditorStrayFogXLS
                     sbSetPropertyReplace.Append(
                             setPropertyTemplete
                             .Replace("#Name#", c.columnName)
-                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
+                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSPropertyDataTypeName(c.dataType, c.arrayDimension))
                         );
                 }
                 else
@@ -813,7 +814,7 @@ public sealed class EditorStrayFogXLS
                         tempConstructorFormalParams.Add(
                         constructorFormalParamsTemplete
                             .Replace("#Name#", c.columnName)
-                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
+                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSPropertyDataTypeName(c.dataType, c.arrayDimension))
                         );
 
                         tempConstructorSetParams.Add(
@@ -826,7 +827,7 @@ public sealed class EditorStrayFogXLS
                         sbSetPropertyReplace.Append(
                             setPropertyTemplete
                             .Replace("#Name#", c.columnName)
-                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSDataTypeName(c.dataType, c.arrayDimension))
+                            .Replace("#Type#", StrayFogSQLiteDataTypeHelper.GetCSPropertyDataTypeName(c.dataType, c.arrayDimension))
                         );
                     }
                 }

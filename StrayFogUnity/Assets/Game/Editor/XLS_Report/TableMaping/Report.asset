@@ -27,8 +27,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: idCol
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: stringCol
     desc: "\u5B57\u7B26\u4E32"
@@ -37,6 +37,6 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: stringCol
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0

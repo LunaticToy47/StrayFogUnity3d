@@ -42,6 +42,15 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// </summary>
     static readonly Dictionary<int, CodeAttribute> msrSQLiteDataTypeCodeAttributeMaping =
                         typeof(enSQLiteDataType).ValueToAttributeForConstField<CodeAttribute>();
+
+    /// <summary>
+    /// SQLite数据类别映射
+    /// Key:enSQLiteDataType
+    /// Value:名称
+    /// </summary>
+    static readonly Dictionary<int, string> msrSQLiteDataTypeNameMaping =
+                        typeof(enSQLiteDataType).ValueToNameForConstField();
+
     /// <summary>
     /// SQLite数据类别数组维度映射
     /// Key:enSQLiteDataTypeArrayDimension
@@ -49,6 +58,14 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// </summary>
     static readonly Dictionary<int, CodeAttribute> msrSQLiteDataTypeArrayDimensionCodeAttributeMaping =
                         typeof(enSQLiteDataTypeArrayDimension).ValueToAttributeForConstField<CodeAttribute>();
+
+    /// <summary>
+    /// SQLite数据类别数组维度映射
+    /// Key:enSQLiteDataTypeArrayDimension
+    /// Value:名称
+    /// </summary>
+    static readonly Dictionary<int, string> msrSQLiteDataTypeArrayDimensionNameMaping =
+                        typeof(enSQLiteDataTypeArrayDimension).ValueToNameForConstField();
     #endregion
 
     #region GetSQLiteDataTypeCSCodeColumnNameSequence 获得SQLiteDataTypeCS列名称代码序列
@@ -177,7 +194,7 @@ public sealed class StrayFogSQLiteDataTypeHelper
             {
                 foreach (int type in msrSQLiteDataTypeCodeAttributeMaping.Keys)
                 {
-                    if (GetCSDataTypeName(type, dim).Equals(_csTypeValue))
+                    if (GetCSPropertyDataTypeName(type, dim).Equals(_csTypeValue))
                     {
                         msCSDataTypeSettingMaping.Add(hashCode, new SQLiteDataTypeSetting(type, dim, true, _csTypeValue));
                         break;
@@ -247,6 +264,19 @@ public sealed class StrayFogSQLiteDataTypeHelper
     }
     #endregion
 
+    #region GetCSPropertyDataTypeName 获得CS属性数据类型名称
+    /// <summary>
+    /// 获得CS属性数据类型名称
+    /// </summary>
+    /// <param name="_dataType">数据类型</param>
+    /// <param name="_dataTypeArrayDimension">数组维度</param>
+    /// <returns>SQLite数据类型名称</returns>
+    public static string GetCSPropertyDataTypeName(int _dataType, int _dataTypeArrayDimension)
+    {
+        return msrSQLiteDataTypeCodeAttributeMaping[_dataType].csTypeName + msrSQLiteDataTypeArrayDimensionCodeAttributeMaping[_dataTypeArrayDimension].csTypeName;
+    }
+    #endregion
+
     #region GetCSDataTypeName 获得CS数据类型名称
     /// <summary>
     /// 获得CS数据类型名称
@@ -254,9 +284,21 @@ public sealed class StrayFogSQLiteDataTypeHelper
     /// <param name="_dataType">数据类型</param>
     /// <param name="_dataTypeArrayDimension">数组维度</param>
     /// <returns>SQLite数据类型名称</returns>
-    public static string GetCSDataTypeName(int _dataType, int _dataTypeArrayDimension)
+    public static string GetCSDataTypeName(int _dataType)
     {
-        return msrSQLiteDataTypeCodeAttributeMaping[_dataType].csTypeName + msrSQLiteDataTypeArrayDimensionCodeAttributeMaping[_dataTypeArrayDimension].csTypeName;
+        return msrSQLiteDataTypeNameMaping[_dataType];
+    }
+    #endregion
+
+    #region GetCSPropertyDataTypeArrayDimensionName 获得CS属性数组维度类型名称
+    /// <summary>
+    /// 获得CS属性数组维度类型名称
+    /// </summary>
+    /// <param name="_dataTypeArrayDimension">数组维度</param>
+    /// <returns>SQLite数据类型名称</returns>
+    public static string GetCSPropertyDataTypeArrayDimensionName(int _dataTypeArrayDimension)
+    {
+        return msrSQLiteDataTypeArrayDimensionNameMaping[_dataTypeArrayDimension];
     }
     #endregion
 

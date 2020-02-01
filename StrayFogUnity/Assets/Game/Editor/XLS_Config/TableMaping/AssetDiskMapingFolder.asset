@@ -27,8 +27,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: folderId
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: inSide
     desc: "\u5185\u90E8\u8D44\u6E90\u8DEF\u5F84"
@@ -37,8 +37,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: inSide
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: outSide
     desc: "\u5916\u90E8\u8D44\u6E90\u8DEF\u5F84"
@@ -47,6 +47,6 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: outSide
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0

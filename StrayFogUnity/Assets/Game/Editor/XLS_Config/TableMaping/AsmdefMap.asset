@@ -27,8 +27,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: asmdefDllName
     desc: "Asmdef\u540D\u79F0"
@@ -37,8 +37,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: asmdefDllName
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: asmdefDllPath
     desc: "AsmdefDLL\u8DEF\u5F84"
@@ -47,8 +47,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: asmdefDllPath
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: asmdefDllAssetbundleName
     desc: "Asmdef\u8D44\u6E90\u6587\u4EF6\u540D\u79F0"
@@ -57,8 +57,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: asmdefDllAssetbundleName
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: asmdefPdbPath
     desc: "AsmdefDLL\u8DEF\u5F84"
@@ -67,8 +67,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: asmdefPdbPath
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: asmdefPdbAssetbundleName
     desc: "Asmdef\u8D44\u6E90\u6587\u4EF6\u540D\u79F0"
@@ -77,8 +77,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: asmdefPdbAssetbundleName
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: isHotfix
     desc: "\u662F\u5426\u662FHotfix\u7A0B\u5E8F\u96C6"
@@ -87,6 +87,6 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: isHotfix
     sqliteColumnValue: 
-    dataType: 0
-    arrayDimension: 0
+    dataType: 1
+    arrayDimension: 1
     isIngore: 0

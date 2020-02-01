@@ -860,18 +860,4 @@ public abstract partial class AbsMonoBehaviour
     protected virtual void OnRunDidApplyAnimationProperties() { }
     #endregion
 
-    #region Reset
-    /// <summary>
-    /// Reset
-    /// </summary>
-    public void Reset()
-    {        
-        OnRunReset();
-    }
-    /// <summary>
-    /// OnReset
-    /// </summary>
-    protected virtual void OnRunReset() { }
-    #endregion
-
 }

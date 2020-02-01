@@ -350,16 +350,6 @@ public enum enSimulateBehaviourMethod
     UIBehaviour_OnTransformParentChanged = 1700757761,
 
     /// <summary>
-    /// UIBehaviour_OnValidate
-    /// </summary>
-    UIBehaviour_OnValidate = 1740444746,
-
-    /// <summary>
-    /// UIBehaviour_Reset
-    /// </summary>
-    UIBehaviour_Reset = -635453696,
-
-    /// <summary>
     /// UIBehaviour_Start
     /// </summary>
     UIBehaviour_Start = -1591770755,

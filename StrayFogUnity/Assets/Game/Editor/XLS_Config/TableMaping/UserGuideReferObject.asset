@@ -27,8 +27,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: refer2DType
     desc: "2D\u53C2\u8003\u7C7B\u578B\n0\uFF1A\u65E0\u53C2\u8003\u5BF9\u5BF9\u8C61\n1\uFF1AUI\u7A97\u53E3\u63A7\u4EF6\n2\uFF1AUI\u7A97\u53E3\u52A8\u6001\u751F\u6210\u63A7\u4EF6\n\n"
@@ -37,8 +37,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: refer2DType
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: refer2DValue
     desc: "2D\u53C2\u8003\u503C\u3010Graphic\u906E\u7F69\u540D\u79F0\u4E0D\u586B\u5219\u9ED8\u8BA4\u4E3A\u63A7\u4EF6\u672C\u8EAB\u3011\n0\uFF1A\u4E0D\u586B\n1\uFF1A\u3010\u7A97\u53E3\u540D\u79F0|\u63A7\u4EF6\u540D\u79F0|\u76F8\u5BF9\u4E8E\u63A7\u4EF6\u5B50\u8282\u70B9Graphic\u906E\u7F69\u540D\u79F0\u3011\n2\uFF1A\u3010\u7A97\u53E3\u540D\u79F0|\u52A8\u6001\u63A7\u4EF6\u7236\u8282\u70B9\u540D\u79F0|\u52A8\u6001\u63A7\u4EF6\u6A21\u677F\u540D\u79F0|\u76F8\u5BF9\u4E8E\u52A8\u6001\u63A7\u4EF6\u6A21\u677F\u5B50\u8282\u70B9Graphic\u906E\u7F69\u540D\u79F0\u3011\n"
@@ -47,8 +47,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: refer2DValue
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: refer2DSearchDynamicConditionType
     desc: "2D\u52A8\u6001\u7EC4\u4EF6\u641C\u7D22\u6761\u4EF6\n0\uFF1A\u7D22\u5F15\n1\uFF1A\u7269\u54C1\n2\uFF1A\u88C5\u5907"
@@ -57,8 +57,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: refer2DSearchDynamicConditionType
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: refer2DSearchDynamicConditionValue
     desc: "2D\u52A8\u6001\u7EC4\u4EF6\u641C\u7D22\u503C\n0\uFF1A\u7D22\u5F15\u503C\n1\uFF1A\u7269\u54C1\u914D\u7F6EID\n2\uFF1A\u88C5\u5907\u914D\u7F6EID"
@@ -67,8 +67,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: refer2DSearchDynamicConditionValue
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: refer3DType
     desc: "3D\u53C2\u8003\u7C7B\u578B\n0\uFF1A\u65E0\u53C2\u8003\u5BF9\u8C61\n1\uFF1APlayer\u73A9\u5BB6\n2\uFF1ANPC\n3\uFF1AMonster\n4\uFF1ABoss\n5\uFF1AItem\u7269\u54C1\n6\uFF1A\u5750\u6807\n\n"
@@ -77,8 +77,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: refer3DType
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: refer3DValue
     desc: "3D\u53C2\u8003\u503C\n0\uFF1A\u4E0D\u586B\n1\uFF1A\u6682\u65F6\u4E0D\u586B\n2\uFF1ANPC\u914D\u7F6EId\n3\uFF1AMonster\u914D\u7F6EId\n4\uFF1ABoss\u914D\u7F6EId\n5\uFF1AItem\u7269\u54C1\u914D\u7F6EId\n6\uFF1A\u5750\u6807(x,y,z)"
@@ -87,6 +87,6 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: refer3DValue
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0

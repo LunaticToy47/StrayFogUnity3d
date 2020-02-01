@@ -27,8 +27,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: xLuaFileId
     desc: "xLua\u6587\u4EF6id"
@@ -37,8 +37,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: xLuaFileId
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: xLuaFolderId
     desc: "xLua\u6587\u4EF6\u5939id"
@@ -47,6 +47,6 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: xLuaFolderId
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0

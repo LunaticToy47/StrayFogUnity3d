@@ -60,15 +60,15 @@ public class Editor_SimulateUIBehaviour_Templete : UIBehaviour
         base.OnTransformParentChanged();
     }
 
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-    }
+    //protected override void OnValidate()
+    //{
+    //    base.OnValidate();
+    //}
 
-    protected override void Reset()
-    {
-        base.Reset();
-    }
+    //protected override void Reset()
+    //{
+    //    base.Reset();
+    //}
 
     protected override void Start()
     {

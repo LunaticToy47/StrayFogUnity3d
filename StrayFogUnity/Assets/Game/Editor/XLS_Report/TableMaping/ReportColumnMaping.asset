@@ -27,8 +27,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: boolCol
     sqliteColumnValue: 
-    dataType: 0
-    arrayDimension: 0
+    dataType: 1
+    arrayDimension: 1
     isIngore: 0
   - columnName: charCol
     desc: "char\u975E\u6570\u7EC4"
@@ -37,8 +37,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: charCol
     sqliteColumnValue: 
-    dataType: 1
-    arrayDimension: 0
+    dataType: 2
+    arrayDimension: 1
     isIngore: 0
   - columnName: sbyteCol
     desc: "sbyte\u975E\u6570\u7EC4"
@@ -47,8 +47,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: sbyteCol
     sqliteColumnValue: 
-    dataType: 2
-    arrayDimension: 0
+    dataType: 4
+    arrayDimension: 1
     isIngore: 0
   - columnName: byteCol
     desc: "byte\u975E\u6570\u7EC4"
@@ -57,8 +57,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: byteCol
     sqliteColumnValue: 
-    dataType: 3
-    arrayDimension: 0
+    dataType: 8
+    arrayDimension: 1
     isIngore: 0
   - columnName: shortCol
     desc: "short\u975E\u6570\u7EC4"
@@ -67,8 +67,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: shortCol
     sqliteColumnValue: 
-    dataType: 4
-    arrayDimension: 0
+    dataType: 16
+    arrayDimension: 1
     isIngore: 0
   - columnName: ushortCol
     desc: "ushort\u975E\u6570\u7EC4"
@@ -77,8 +77,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: ushortCol
     sqliteColumnValue: 
-    dataType: 5
-    arrayDimension: 0
+    dataType: 32
+    arrayDimension: 1
     isIngore: 0
   - columnName: intCol
     desc: "int\u975E\u6570\u7EC4"
@@ -87,8 +87,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: intCol
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: uintCol
     desc: "uint\u975E\u6570\u7EC4"
@@ -97,8 +97,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: uintCol
     sqliteColumnValue: 
-    dataType: 7
-    arrayDimension: 0
+    dataType: 128
+    arrayDimension: 1
     isIngore: 0
   - columnName: longCol
     desc: "long\u975E\u6570\u7EC4"
@@ -107,8 +107,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: longCol
     sqliteColumnValue: 
-    dataType: 8
-    arrayDimension: 0
+    dataType: 256
+    arrayDimension: 1
     isIngore: 0
   - columnName: ulongCol
     desc: "ulong\u975E\u6570\u7EC4"
@@ -117,8 +117,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: ulongCol
     sqliteColumnValue: 
-    dataType: 9
-    arrayDimension: 0
+    dataType: 512
+    arrayDimension: 1
     isIngore: 0
   - columnName: floatCol
     desc: "float\u975E\u6570\u7EC4"
@@ -127,8 +127,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: floatCol
     sqliteColumnValue: 
-    dataType: 10
-    arrayDimension: 0
+    dataType: 1024
+    arrayDimension: 1
     isIngore: 0
   - columnName: doubleCol
     desc: "double\u975E\u6570\u7EC4"
@@ -137,8 +137,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: doubleCol
     sqliteColumnValue: 
-    dataType: 11
-    arrayDimension: 0
+    dataType: 2048
+    arrayDimension: 1
     isIngore: 0
   - columnName: decimalCol
     desc: "decimal\u975E\u6570\u7EC4"
@@ -147,8 +147,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: decimalCol
     sqliteColumnValue: 
-    dataType: 12
-    arrayDimension: 0
+    dataType: 4096
+    arrayDimension: 1
     isIngore: 0
   - columnName: DateTimeCol
     desc: "DateTime\u975E\u6570\u7EC4"
@@ -157,8 +157,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: DateTimeCol
     sqliteColumnValue: 
-    dataType: 13
-    arrayDimension: 0
+    dataType: 8192
+    arrayDimension: 1
     isIngore: 0
   - columnName: stringCol
     desc: "string\u975E\u6570\u7EC4"
@@ -167,8 +167,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: stringCol
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: GuidCol
     desc: "Guid\u975E\u6570\u7EC4"
@@ -177,8 +177,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: GuidCol
     sqliteColumnValue: 
-    dataType: 15
-    arrayDimension: 0
+    dataType: 32768
+    arrayDimension: 1
     isIngore: 0
   - columnName: Vector2Col
     desc: "Vector2\u975E\u6570\u7EC4"
@@ -187,8 +187,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector2Col
     sqliteColumnValue: 
-    dataType: 16
-    arrayDimension: 0
+    dataType: 65536
+    arrayDimension: 1
     isIngore: 0
   - columnName: Vector3Col
     desc: "Vector3\u975E\u6570\u7EC4"
@@ -197,8 +197,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector3Col
     sqliteColumnValue: 
-    dataType: 17
-    arrayDimension: 0
+    dataType: 131072
+    arrayDimension: 1
     isIngore: 0
   - columnName: Vector4Col
     desc: "Vector4\u975E\u6570\u7EC4"
@@ -207,8 +207,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector4Col
     sqliteColumnValue: 
-    dataType: 18
-    arrayDimension: 0
+    dataType: 262144
+    arrayDimension: 1
     isIngore: 0
   - columnName: boolDIMCol
     desc: "bool\u4E00\u7EF4\u6570\u7EC4"
@@ -217,8 +217,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: boolDIMCol
     sqliteColumnValue: 
-    dataType: 0
-    arrayDimension: 1
+    dataType: 1
+    arrayDimension: 2
     isIngore: 0
   - columnName: charDIMCol
     desc: "char\u4E00\u7EF4\u6570\u7EC4"
@@ -227,8 +227,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: charDIMCol
     sqliteColumnValue: 
-    dataType: 1
-    arrayDimension: 1
+    dataType: 2
+    arrayDimension: 2
     isIngore: 0
   - columnName: sbyteDIMCol
     desc: "sbyte\u4E00\u7EF4\u6570\u7EC4"
@@ -237,8 +237,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: sbyteDIMCol
     sqliteColumnValue: 
-    dataType: 2
-    arrayDimension: 1
+    dataType: 4
+    arrayDimension: 2
     isIngore: 0
   - columnName: byteDIMCol
     desc: "byte\u4E00\u7EF4\u6570\u7EC4"
@@ -247,8 +247,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: byteDIMCol
     sqliteColumnValue: 
-    dataType: 3
-    arrayDimension: 1
+    dataType: 8
+    arrayDimension: 2
     isIngore: 0
   - columnName: shortDIMCol
     desc: "short\u4E00\u7EF4\u6570\u7EC4"
@@ -257,8 +257,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: shortDIMCol
     sqliteColumnValue: 
-    dataType: 4
-    arrayDimension: 1
+    dataType: 16
+    arrayDimension: 2
     isIngore: 0
   - columnName: ushortDIMCol
     desc: "ushort\u4E00\u7EF4\u6570\u7EC4"
@@ -267,8 +267,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: ushortDIMCol
     sqliteColumnValue: 
-    dataType: 5
-    arrayDimension: 1
+    dataType: 32
+    arrayDimension: 2
     isIngore: 0
   - columnName: intDIMCol
     desc: "int\u4E00\u7EF4\u6570\u7EC4"
@@ -277,8 +277,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: intDIMCol
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 1
+    dataType: 64
+    arrayDimension: 2
     isIngore: 0
   - columnName: uintDIMCol
     desc: "uint\u4E00\u7EF4\u6570\u7EC4"
@@ -287,8 +287,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: uintDIMCol
     sqliteColumnValue: 
-    dataType: 7
-    arrayDimension: 1
+    dataType: 128
+    arrayDimension: 2
     isIngore: 0
   - columnName: longDIMCol
     desc: "long\u4E00\u7EF4\u6570\u7EC4"
@@ -297,8 +297,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: longDIMCol
     sqliteColumnValue: 
-    dataType: 8
-    arrayDimension: 1
+    dataType: 256
+    arrayDimension: 2
     isIngore: 0
   - columnName: ulongDIMCol
     desc: "ulong\u4E00\u7EF4\u6570\u7EC4"
@@ -307,8 +307,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: ulongDIMCol
     sqliteColumnValue: 
-    dataType: 9
-    arrayDimension: 1
+    dataType: 512
+    arrayDimension: 2
     isIngore: 0
   - columnName: floatDIMCol
     desc: "float\u4E00\u7EF4\u6570\u7EC4"
@@ -317,8 +317,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: floatDIMCol
     sqliteColumnValue: 
-    dataType: 10
-    arrayDimension: 1
+    dataType: 1024
+    arrayDimension: 2
     isIngore: 0
   - columnName: doubleDIMCol
     desc: "double\u4E00\u7EF4\u6570\u7EC4"
@@ -327,8 +327,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: doubleDIMCol
     sqliteColumnValue: 
-    dataType: 11
-    arrayDimension: 1
+    dataType: 2048
+    arrayDimension: 2
     isIngore: 0
   - columnName: decimalDIMCol
     desc: "decimal\u4E00\u7EF4\u6570\u7EC4"
@@ -337,8 +337,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: decimalDIMCol
     sqliteColumnValue: 
-    dataType: 12
-    arrayDimension: 1
+    dataType: 4096
+    arrayDimension: 2
     isIngore: 0
   - columnName: DateTimeDIMCol
     desc: "DateTime\u4E00\u7EF4\u6570\u7EC4"
@@ -347,8 +347,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: DateTimeDIMCol
     sqliteColumnValue: 
-    dataType: 13
-    arrayDimension: 1
+    dataType: 8192
+    arrayDimension: 2
     isIngore: 0
   - columnName: stringDIMCol
     desc: "string\u4E00\u7EF4\u6570\u7EC4"
@@ -357,8 +357,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: stringDIMCol
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 1
+    dataType: 16384
+    arrayDimension: 2
     isIngore: 0
   - columnName: GuidDIMCol
     desc: "Guid\u4E00\u7EF4\u6570\u7EC4"
@@ -367,8 +367,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: GuidDIMCol
     sqliteColumnValue: 
-    dataType: 15
-    arrayDimension: 1
+    dataType: 32768
+    arrayDimension: 2
     isIngore: 0
   - columnName: Vector2DIMCol
     desc: "Vector2\u4E00\u7EF4\u6570\u7EC4"
@@ -377,8 +377,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector2DIMCol
     sqliteColumnValue: 
-    dataType: 16
-    arrayDimension: 1
+    dataType: 65536
+    arrayDimension: 2
     isIngore: 0
   - columnName: Vector3DIMCol
     desc: "Vector3\u4E00\u7EF4\u6570\u7EC4"
@@ -387,8 +387,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector3DIMCol
     sqliteColumnValue: 
-    dataType: 17
-    arrayDimension: 1
+    dataType: 131072
+    arrayDimension: 2
     isIngore: 0
   - columnName: Vector4DIMCol
     desc: "Vector4\u4E00\u7EF4\u6570\u7EC4"
@@ -397,8 +397,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector4DIMCol
     sqliteColumnValue: 
-    dataType: 18
-    arrayDimension: 1
+    dataType: 262144
+    arrayDimension: 2
     isIngore: 0
   - columnName: boolDIM2Col
     desc: "bool\u4E8C\u7EF4\u6570\u7EC4"
@@ -407,8 +407,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: boolDIM2Col
     sqliteColumnValue: 
-    dataType: 0
-    arrayDimension: 2
+    dataType: 1
+    arrayDimension: 4
     isIngore: 0
   - columnName: charDIM2Col
     desc: "char\u4E8C\u7EF4\u6570\u7EC4"
@@ -417,8 +417,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: charDIM2Col
     sqliteColumnValue: 
-    dataType: 1
-    arrayDimension: 2
+    dataType: 2
+    arrayDimension: 4
     isIngore: 0
   - columnName: sbyteDIM2Col
     desc: "sbyte\u4E8C\u7EF4\u6570\u7EC4"
@@ -427,8 +427,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: sbyteDIM2Col
     sqliteColumnValue: 
-    dataType: 2
-    arrayDimension: 2
+    dataType: 4
+    arrayDimension: 4
     isIngore: 0
   - columnName: byteDIM2Col
     desc: "byte\u4E8C\u7EF4\u6570\u7EC4"
@@ -437,8 +437,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: byteDIM2Col
     sqliteColumnValue: 
-    dataType: 3
-    arrayDimension: 2
+    dataType: 8
+    arrayDimension: 4
     isIngore: 0
   - columnName: shortDIM2Col
     desc: "short\u4E8C\u7EF4\u6570\u7EC4"
@@ -447,8 +447,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: shortDIM2Col
     sqliteColumnValue: 
-    dataType: 4
-    arrayDimension: 2
+    dataType: 16
+    arrayDimension: 4
     isIngore: 0
   - columnName: ushortDIM2Col
     desc: "ushort\u4E8C\u7EF4\u6570\u7EC4"
@@ -457,8 +457,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: ushortDIM2Col
     sqliteColumnValue: 
-    dataType: 5
-    arrayDimension: 2
+    dataType: 32
+    arrayDimension: 4
     isIngore: 0
   - columnName: intDIM2Col
     desc: "int\u4E8C\u7EF4\u6570\u7EC4"
@@ -467,8 +467,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: intDIM2Col
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 2
+    dataType: 64
+    arrayDimension: 4
     isIngore: 0
   - columnName: uintDIM2Col
     desc: "uint\u4E8C\u7EF4\u6570\u7EC4"
@@ -477,8 +477,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: uintDIM2Col
     sqliteColumnValue: 
-    dataType: 7
-    arrayDimension: 2
+    dataType: 128
+    arrayDimension: 4
     isIngore: 0
   - columnName: longDIM2Col
     desc: "long\u4E8C\u7EF4\u6570\u7EC4"
@@ -487,8 +487,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: longDIM2Col
     sqliteColumnValue: 
-    dataType: 8
-    arrayDimension: 2
+    dataType: 256
+    arrayDimension: 4
     isIngore: 0
   - columnName: ulongDIM2Col
     desc: "ulong\u4E8C\u7EF4\u6570\u7EC4"
@@ -497,8 +497,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: ulongDIM2Col
     sqliteColumnValue: 
-    dataType: 9
-    arrayDimension: 2
+    dataType: 512
+    arrayDimension: 4
     isIngore: 0
   - columnName: floatDIM2Col
     desc: "float\u4E8C\u7EF4\u6570\u7EC4"
@@ -507,8 +507,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: floatDIM2Col
     sqliteColumnValue: 
-    dataType: 10
-    arrayDimension: 2
+    dataType: 1024
+    arrayDimension: 4
     isIngore: 0
   - columnName: doubleDIM2Col
     desc: "double\u4E8C\u7EF4\u6570\u7EC4"
@@ -517,8 +517,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: doubleDIM2Col
     sqliteColumnValue: 
-    dataType: 11
-    arrayDimension: 2
+    dataType: 2048
+    arrayDimension: 4
     isIngore: 0
   - columnName: decimalDIM2Col
     desc: "decimal\u4E8C\u7EF4\u6570\u7EC4"
@@ -527,8 +527,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: decimalDIM2Col
     sqliteColumnValue: 
-    dataType: 12
-    arrayDimension: 2
+    dataType: 4096
+    arrayDimension: 4
     isIngore: 0
   - columnName: DateTimeDIM2Col
     desc: "DateTime\u4E8C\u7EF4\u6570\u7EC4"
@@ -537,8 +537,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: DateTimeDIM2Col
     sqliteColumnValue: 
-    dataType: 13
-    arrayDimension: 2
+    dataType: 8192
+    arrayDimension: 4
     isIngore: 0
   - columnName: stringDIM2Col
     desc: "string\u4E8C\u7EF4\u6570\u7EC4"
@@ -547,8 +547,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: stringDIM2Col
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 2
+    dataType: 16384
+    arrayDimension: 4
     isIngore: 0
   - columnName: GuidDIM2Col
     desc: "Guid\u4E8C\u7EF4\u6570\u7EC4"
@@ -557,8 +557,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: GuidDIM2Col
     sqliteColumnValue: 
-    dataType: 15
-    arrayDimension: 2
+    dataType: 32768
+    arrayDimension: 4
     isIngore: 0
   - columnName: Vector2DIM2Col
     desc: "Vector2\u4E8C\u7EF4\u6570\u7EC4"
@@ -567,8 +567,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector2DIM2Col
     sqliteColumnValue: 
-    dataType: 16
-    arrayDimension: 2
+    dataType: 65536
+    arrayDimension: 4
     isIngore: 0
   - columnName: Vector3DIM2Col
     desc: "Vector3\u4E8C\u7EF4\u6570\u7EC4"
@@ -577,8 +577,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector3DIM2Col
     sqliteColumnValue: 
-    dataType: 17
-    arrayDimension: 2
+    dataType: 131072
+    arrayDimension: 4
     isIngore: 0
   - columnName: Vector4DIM2Col
     desc: "Vector4\u4E8C\u7EF4\u6570\u7EC4"
@@ -587,6 +587,6 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: Vector4DIM2Col
     sqliteColumnValue: 
-    dataType: 18
-    arrayDimension: 2
+    dataType: 262144
+    arrayDimension: 4
     isIngore: 0

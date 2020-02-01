@@ -150,10 +150,6 @@ public abstract partial class AbsMonoBehaviour
 	
         { (int)enSimulateBehaviourMethod.UIBehaviour_OnTransformParentChanged,typeof(SimulateUIBehaviour_OnTransformParentChanged)},
 	
-        { (int)enSimulateBehaviourMethod.UIBehaviour_OnValidate,typeof(SimulateUIBehaviour_OnValidate)},
-	
-        { (int)enSimulateBehaviourMethod.UIBehaviour_Reset,typeof(SimulateUIBehaviour_Reset)},
-	
         { (int)enSimulateBehaviourMethod.UIBehaviour_Start,typeof(SimulateUIBehaviour_Start)},
 	
     };

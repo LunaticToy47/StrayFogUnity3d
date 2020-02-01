@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -57,6 +58,22 @@ static class EditorQueryMenuItem
         {
             EditorUtility.DisplayDialog("LookAssetType", "Can't selected any object.", "OK");
         }
+    }
+    #endregion
+
+    #region Find MissingScript Prefab
+    const string mcFindMissingScriptPrefab = "Find MissingScript Prefab";    
+    /// <summary>
+    /// 查看资源类型
+    /// </summary>
+    [MenuItem(mcMenu + mcFindMissingScriptPrefab, false, mcPriority + 1)]
+    [MenuItem(mcAssetMenu + mcFindMissingScriptPrefab, false, mcPriority + 1)]
+    [MenuItem(mcHierarchy + mcFindMissingScriptPrefab, false, mcPriority + 1)]
+    static void EditorQueryMenuItem_EditorWindowFindMissingScriptPrefab()
+    {
+        EditorWindowFindMissingScriptPrefab win =
+        EditorWindow.GetWindow<EditorWindowFindMissingScriptPrefab>(mcFindMissingScriptPrefab);
+        win.Show();
     }
     #endregion
 }

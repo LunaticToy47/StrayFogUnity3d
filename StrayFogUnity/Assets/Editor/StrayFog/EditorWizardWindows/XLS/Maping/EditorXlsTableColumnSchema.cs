@@ -50,12 +50,14 @@ public class EditorXlsTableColumnSchema
     /// 列类型enSQLiteDataType
     /// </summary>
     [AliasTooltip("列类型")]
+    [StaticClassConstFieldMapForEnum(typeof(enSQLiteDataType))]
     [ReadOnly]
     public int dataType;
     /// <summary>
     /// 数组维度enSQLiteDataTypeArrayDimension
     /// </summary>
     [AliasTooltip("数组维度")]
+    [StaticClassConstFieldMapForEnum(typeof(enSQLiteDataTypeArrayDimension))]
     [ReadOnly]
     public int arrayDimension;
     /// <summary>

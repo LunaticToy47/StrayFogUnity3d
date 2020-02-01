@@ -315,9 +315,4 @@ public interface ISimulateMonoBehaviour
     /// </summary>
     void OnDidApplyAnimationProperties();
 
-    /// <summary>
-    /// Reset
-    /// </summary>
-    void Reset();
-
 }

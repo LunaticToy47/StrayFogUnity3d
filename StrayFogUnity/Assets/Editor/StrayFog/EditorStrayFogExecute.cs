@@ -1849,12 +1849,13 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteBuildPackage()
     {
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
-        StringBuilder sbLog = new StringBuilder();
+        
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
+        StringBuilder sbLog = new StringBuilder();
+        #region 清理包目录
+        EditorUtility.DisplayProgressBar("BuildPackage", string.Format("Clear AssetBundleRoot=>{0}", path), 0);
         List<EditorSelectionAssetBundleNameAsset> dlls = new List<EditorSelectionAssetBundleNameAsset>();
-
         EditorStrayFogUtility.cmd.DeleteFolder(path);
-
         if (Directory.Exists(path))
         {
             string error = string.Format("The folder can't delete, it will restart editor.");
@@ -1868,22 +1869,39 @@ public sealed class EditorStrayFogExecute
         {
             Directory.CreateDirectory(path);
         }
+        #endregion
+
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteClearAllSpritePackingTag", 0);
         ExecuteClearAllSpritePackingTag();
+
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteClearAllAssetBundleName", 0);
         ExecuteClearAllAssetBundleName();
 
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteSetSpritePackingTag", 0);
         ExecuteSetSpritePackingTag();
+
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteSetAssetBundleName", 0);
         ExecuteSetAssetBundleName();
 
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildSimulateBehaviour", 0);
         ExecuteBuildSimulateBehaviour();
 
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteExportXlsSchemaToSqlite", 0);
         ExecuteExportXlsSchemaToSqlite();
 
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildAllXlsData", 0);
         ExecuteBuildAllXlsData();
 
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildDllToPackage", 0);
         ExecuteBuildDllToPackage();
+
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildAsmdefToPackage", 0);
         ExecuteBuildAsmdefToPackage();
 
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteCopySQLiteDbToPackage", 0);
         ExecuteCopySQLiteDbToPackage();
+
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildBatToPackage", 0);
         ExecuteBuildBatToPackage();
 
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();

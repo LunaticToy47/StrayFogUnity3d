@@ -27,8 +27,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: desc
     desc: "\u63CF\u8FF0"
@@ -37,8 +37,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: desc
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 1
   - columnName: arrowAnchor
     desc: "\u7BAD\u5934\u951A\u70B9[\u7D22\u5F15\u4E0E\u89E6\u53D1\u53C2\u8003\u5BF9\u8C61\u7EC4\u7D22\u5F15\u76F8\u540C]\n3\uFF1A\u7BAD\u5934\u5728\u6846\u5DE6\u4FA7\n5\uFF1A\u7BAD\u5934\u5728\u6846\u53F3\u4FA7\n1\uFF1A\u7BAD\u5934\u5728\u6846\u4E0A\u4FA7\n7\uFF1A\u7BAD\u5934\u5728\u6846\u4E0B\u4FA7"
@@ -47,8 +47,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: arrowAnchor
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
   - columnName: content
     desc: "\u6587\u672C\u63CF\u8FF0"
@@ -57,8 +57,8 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: content
     sqliteColumnValue: 
-    dataType: 14
-    arrayDimension: 0
+    dataType: 16384
+    arrayDimension: 1
     isIngore: 0
   - columnName: contentWidth
     desc: "\u6587\u672C\u5BBD\u5EA6"
@@ -67,6 +67,6 @@ MonoBehaviour:
     isNull: 0
     sqliteColumnName: contentWidth
     sqliteColumnValue: 
-    dataType: 6
-    arrayDimension: 0
+    dataType: 64
+    arrayDimension: 1
     isIngore: 0
