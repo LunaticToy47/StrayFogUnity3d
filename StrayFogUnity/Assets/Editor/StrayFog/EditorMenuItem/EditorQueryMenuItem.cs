@@ -45,9 +45,9 @@ static class EditorQueryMenuItem
     /// <summary>
     /// 查看资源类型
     /// </summary>
-    [MenuItem(mcMenu + mcLookAssetType, false, mcPriority + 1)]
-    [MenuItem(mcAssetMenu + mcLookAssetType, false, mcPriority + 1)]
-    [MenuItem(mcHierarchy + mcLookAssetType, false, mcPriority + 1)]
+    [MenuItem(mcMenu + mcLookAssetType, false, mcPriority + 2)]
+    [MenuItem(mcAssetMenu + mcLookAssetType, false, mcPriority + 2)]
+    [MenuItem(mcHierarchy + mcLookAssetType, false, mcPriority + 2)]
     static void EditorQueryMenuItem_LookAssetType()
     {
         if (Selection.activeObject != null)
@@ -66,14 +66,28 @@ static class EditorQueryMenuItem
     /// <summary>
     /// 查看资源类型
     /// </summary>
-    [MenuItem(mcMenu + mcFindMissingScriptPrefab, false, mcPriority + 1)]
-    [MenuItem(mcAssetMenu + mcFindMissingScriptPrefab, false, mcPriority + 1)]
-    [MenuItem(mcHierarchy + mcFindMissingScriptPrefab, false, mcPriority + 1)]
+    [MenuItem(mcMenu + mcFindMissingScriptPrefab, false, mcPriority + 3)]
+    [MenuItem(mcAssetMenu + mcFindMissingScriptPrefab, false, mcPriority + 3)]
+    [MenuItem(mcHierarchy + mcFindMissingScriptPrefab, false, mcPriority + 3)]
     static void EditorQueryMenuItem_EditorWindowFindMissingScriptPrefab()
     {
         EditorWindowFindMissingScriptPrefab win =
         EditorWindow.GetWindow<EditorWindowFindMissingScriptPrefab>(mcFindMissingScriptPrefab);
         win.Show();
+    }
+    #endregion
+
+    #region Look Project Setting
+    const string mcLookProjectSetting = "Look Project Setting";
+    /// <summary>
+    /// 查看工程设定
+    /// </summary>
+    [MenuItem(mcMenu + mcLookProjectSetting, false, mcPriority + 4)]
+    [MenuItem(mcAssetMenu + mcLookProjectSetting, false, mcPriority + 4)]
+    [MenuItem(mcHierarchy + mcLookProjectSetting, false, mcPriority + 4)]
+    static void EditorQueryMenuItem_EditorWindowLookProjectSetting()
+    {
+        EditorStrayFogApplication.PingObject(enEditorApplicationFolder.Project_Resources.GetAttribute<EditorApplicationFolderAttribute>().path);
     }
     #endregion
 }

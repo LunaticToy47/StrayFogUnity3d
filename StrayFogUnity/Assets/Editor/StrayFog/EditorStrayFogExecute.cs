@@ -1158,9 +1158,9 @@ public sealed class EditorStrayFogExecute
             progress++;
             n.SaveSpritePackingTag();
             EditorUtility.DisplayProgressBar("Save Sprite Packing Tag", n.path, progress / nodes.Count);
-        }
-        EditorUtility.ClearProgressBar();
+        }        
         AssetDatabase.SaveAssets();
+        EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendLine("ExecuteSetSpritePackingTag Succeed!");
         Debug.Log(sbLog.ToString());
@@ -1207,9 +1207,9 @@ public sealed class EditorStrayFogExecute
             progress++;
             n.ClearSpritePackingTag();
             EditorUtility.DisplayProgressBar("Clear Sprite Packing Tag", n.path, progress / nodes.Count);
-        }
-        EditorUtility.ClearProgressBar();
+        }        
         AssetDatabase.SaveAssets();
+        EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendLine("ExecuteClearAllSpritePackingTag Succeed!");
         Debug.Log(sbLog.ToString());
@@ -1272,11 +1272,10 @@ public sealed class EditorStrayFogExecute
                     EditorUtility.DisplayProgressBar("Set AssetBundleName", n.path, progress / nodeMaping.Count);
                 }
                 #endregion
-
-                EditorUtility.ClearProgressBar();
-                AssetDatabase.SaveAssets();
+                                
+                AssetDatabase.SaveAssets();                
                 AssetDatabase.RemoveUnusedAssetBundleNames();
-                EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+                
 
                 #region 节点日志
                 progress++;
@@ -1284,8 +1283,7 @@ public sealed class EditorStrayFogExecute
                 {
                     sbLog.AppendLine(n.ToLog());
                     EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodeMaping.Count);
-                }
-                EditorUtility.ClearProgressBar();
+                }                
                 if (EditorStrayFogApplication.IsExecuteMethodInCmd())
                 {
                     //Debug.Log(sbLog.ToString());
@@ -1297,6 +1295,9 @@ public sealed class EditorStrayFogExecute
                     sbLog.AppendLine(string.Format("Log=>{0}", logFilename));
                 }
                 #endregion
+
+                EditorUtility.ClearProgressBar();
+                EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
             }
         }
         else
@@ -1890,7 +1891,10 @@ public sealed class EditorStrayFogExecute
         ExecuteExportXlsSchemaToSqlite();
 
         EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildAllXlsData", 0);
-        ExecuteBuildAllXlsData();
+        OnExecuteBuildAllXlsData((t, p) =>
+        {
+            EditorUtility.DisplayProgressBar("BuildPackage", t, p);
+        });
 
         EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildDllToPackage", 0);
         ExecuteBuildDllToPackage();
@@ -1904,6 +1908,7 @@ public sealed class EditorStrayFogExecute
         EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildBatToPackage", 0);
         ExecuteBuildBatToPackage();
 
+        EditorUtility.DisplayProgressBar("BuildPackage", "BuildAssetBundles", 0);
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         BuildPipeline.BuildAssetBundles(path,
             BuildAssetBundleOptions.ChunkBasedCompression,
@@ -1933,6 +1938,12 @@ public sealed class EditorStrayFogExecute
     /// ClearSvn批处理
     /// </summary>
     static readonly EditorTextAssetConfig mClearSvnReg = new EditorTextAssetConfig("ClearSvn", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_ClearSvnTemplete);
+
+    /// <summary>
+    /// PlayerLog批处理
+    /// </summary>
+    static readonly EditorTextAssetConfig mPlayerLog = new EditorTextAssetConfig("PlayerLog", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_PlayerLogTemplete);
+    
     /// <summary>
     /// 生成打包后的bat批处理文件
     /// </summary>
@@ -1941,7 +1952,8 @@ public sealed class EditorStrayFogExecute
         StringBuilder sbLog = new StringBuilder();
         EditorTextAssetConfig packageManifestBat = (EditorTextAssetConfig)mPackageManifestBat.Clone();
         EditorTextAssetConfig debugProfilerBat = (EditorTextAssetConfig)mDebugProfilerBat.Clone();
-        EditorTextAssetConfig clearSvnReg = (EditorTextAssetConfig)mClearSvnReg.Clone();
+        EditorTextAssetConfig clearSvnRegBat = (EditorTextAssetConfig)mClearSvnReg.Clone();
+        EditorTextAssetConfig playerLogBat = (EditorTextAssetConfig)mPlayerLog.Clone();
 
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         string scriptTemplete = packageManifestBat.text;
@@ -1966,7 +1978,13 @@ public sealed class EditorStrayFogExecute
         debugProfilerBat.SetText(debugProfilerBat.text.Replace("#DebugProfiler#", PlayerSettings.applicationIdentifier));
         debugProfilerBat.CreateAsset();
 
-        clearSvnReg.CreateAsset();
+        clearSvnRegBat.CreateAsset();
+
+
+        playerLogBat.SetText(playerLogBat.text.Replace("#Path#",
+            Regex.Replace(Application.persistentDataPath, "/" + Environment.UserName + "/", "/%username%/")));
+        playerLogBat.CreateAsset();
+
         sbLog.AppendLine("ExecuteBuildBatToPackage Succeed!");
         Debug.Log(sbLog.ToString());
     }
@@ -2012,11 +2030,29 @@ public sealed class EditorStrayFogExecute
     /// 生成所有XLS表数据
     /// </summary>
     public static void ExecuteBuildAllXlsData()
-    {        
+    {
+        OnExecuteBuildAllXlsData(null);
+    }
+
+    /// <summary>
+    /// 生成所有XLS表数据
+    /// </summary>
+    /// <param name="_displayProgressBar">显示进度条</param>
+    static void OnExecuteBuildAllXlsData(Action<string,float> _displayProgressBar)
+    {
+        _displayProgressBar?.Invoke("ExecuteBuildAllAssetDiskMaping", 0);
         ExecuteBuildAllAssetDiskMaping();
+
+        _displayProgressBar?.Invoke("ExecuteBuildUIWindowSetting", 0);
         ExecuteBuildUIWindowSetting();
+
+        _displayProgressBar?.Invoke("ExportXLuaMapToXLS", 0);
         ExportXLuaMapToXLS();
+
+        _displayProgressBar?.Invoke("ExecuteAsmdefToXLS", 0);
         ExecuteAsmdefToXLS();
+
+        _displayProgressBar?.Invoke("ExecuteExportXlsDataToSqlite", 0);
         ExecuteExportXlsDataToSqlite();
     }
     #endregion

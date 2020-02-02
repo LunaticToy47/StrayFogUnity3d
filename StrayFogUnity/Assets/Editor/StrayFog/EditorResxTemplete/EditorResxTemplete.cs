@@ -103,6 +103,18 @@ public class EditorResxTemplete
     }
 
     /// <summary>
+    /// Cmd_PlayerLogTemplete
+    /// </summary>
+    public static string Cmd_PlayerLogTemplete
+    {
+        get
+        {
+            return GetFileString("Cmd/Cmd_PlayerLogTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
+        }
+    }    
+
+    /// <summary>
     /// EditorFMSMachineMapingScriptTemplete
     /// </summary>
     public static string EditorFMSMachineMapingScriptTemplete

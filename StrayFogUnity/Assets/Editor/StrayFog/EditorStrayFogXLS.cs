@@ -189,11 +189,15 @@ public sealed class EditorStrayFogXLS
         List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedAssetConfig.setFolderConfigForSchemaToSqlite.paths,
             enEditorAssetFilterClassify.DefaultAsset, false,
             (n) => { return xlsxExt.IsExt(n.ext); });
-        foreach (EditorSelectionXlsSchemaToSQLiteAsset f in xlsFiles)
+        float progress = 0;
+        for (int i = 0; i < xlsFiles.Count; i++)
         {
-            f.Resolve();
-            tableSchemas.Add(ReadXlsSchema(f));
+            progress = i + 1;
+            EditorUtility.DisplayProgressBar("ReadXlsSchema", xlsFiles[i].path, progress / xlsFiles.Count);
+            xlsFiles[i].Resolve();
+            tableSchemas.Add(ReadXlsSchema(xlsFiles[i]));
         }
+        EditorUtility.ClearProgressBar();
         return tableSchemas;
     }
     #endregion

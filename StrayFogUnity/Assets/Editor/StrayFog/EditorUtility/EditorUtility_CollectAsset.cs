@@ -338,9 +338,13 @@ public class EditorUtility_CollectAsset : AbsSingle
             List<string> lstNodePath = new List<string>();
             string[] arrDepPath = null;
             T node = null;
+            float progress = 0;
+            Type type = typeof(T);
             for (int i = 0; i < arrPath.Length; i++)
-            {
+            {                
                 arrPath[i] = AssetDatabase.GUIDToAssetPath(arrPath[i]);
+                progress = i + 1;
+                EditorUtility.DisplayProgressBar("CollectAsset=>"+ type.FullName, arrPath[i], progress / arrPath.Length);
                 if (_includeDependencies)
                 {
                     #region 收集依赖项
@@ -363,11 +367,14 @@ public class EditorUtility_CollectAsset : AbsSingle
                 }
             }
 
-            foreach (string p in lstNodePath)
+            progress = 0;
+            for (int i=0;i< lstNodePath.Count;i++)
             {
-                if (File.Exists(p))
+                progress = i + 1;
+                EditorUtility.DisplayProgressBar("Filter Asset=>" + type.FullName, arrPath[i], progress / lstNodePath.Count);
+                if (File.Exists(lstNodePath[i]))
                 {
-                    node = (T)Activator.CreateInstance(typeof(T), p);
+                    node = (T)Activator.CreateInstance(typeof(T), lstNodePath[i]);
                     islegal = _funIslegal == null || (_funIslegal != null && _funIslegal(node));
                     isForceExclude = _funIsForceExclude != null && _funIsForceExclude(node);
                     if (islegal && !isForceExclude)
@@ -377,6 +384,7 @@ public class EditorUtility_CollectAsset : AbsSingle
                 }
             }
         }
+        EditorUtility.ClearProgressBar();
         return results;
     }
     #endregion

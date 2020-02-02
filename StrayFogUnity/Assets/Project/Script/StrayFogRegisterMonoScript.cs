@@ -37,7 +37,22 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        Type type = typeof(enSQLiteDataType);
+        object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
+        if (ins is ISimulateMonoBehaviour)
+        {
+            ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
+            mono.BindGameObject(gameObject);
+        }
+        else
+        {
+            Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
+        }
+
+    }
+}
+
+/*
+ Type type = typeof(enSQLiteDataType);
         var nv = type.NameToValueForConstField<long>();
         var nsv = type.NameToSpecialValueForConstField<string>((f) => { return f.Name + "=>" + f.FieldType.FullName; });
         var na = type.NameToAttributeForConstField<CodeAttribute>();
@@ -55,17 +70,4 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
         var attSpValues = type.ToAttributeSpecifyValueForConstField<CodeAttribute, string>((a)=> { return a.csTypeName; });
 
         Debug.LogError("SSSS");
-
-        object ins = StrayFogAssembly.CreateInstance(monoBehaviourScriptName);
-        if (ins is ISimulateMonoBehaviour)
-        {
-            ISimulateMonoBehaviour mono = (ISimulateMonoBehaviour)ins;
-            mono.BindGameObject(gameObject);
-        }
-        else
-        {
-            Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
-        }
-
-    }
-}
+     */
