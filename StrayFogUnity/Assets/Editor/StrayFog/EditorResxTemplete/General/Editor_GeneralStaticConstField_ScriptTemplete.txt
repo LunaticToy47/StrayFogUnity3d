@@ -1,0 +1,12 @@
+﻿/// <summary>
+/// en#StaticClassName#
+/// </summary>
+public static class en#StaticClassName#
+{
+#Consts#
+    /// <summary>
+    /// #Desc#
+    /// </summary>
+    public const int #Name# = #Value#;
+#Consts#
+}

@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// Linear曲线
 /// </summary>
-public class AnimCurve_Linear : AbsSingle, IEditorAnimCurve
+public class AnimCurve_Linear : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -32,7 +32,7 @@ public class AnimCurve_Linear : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// SineEaseIn曲线
 /// </summary>
-public class AnimCurve_SineEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_SineEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -60,7 +60,7 @@ public class AnimCurve_SineEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuadEaseIn曲线
 /// </summary>
-public class AnimCurve_QuadEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuadEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -88,7 +88,7 @@ public class AnimCurve_QuadEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// CubicEaseIn曲线
 /// </summary>
-public class AnimCurve_CubicEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_CubicEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -116,7 +116,7 @@ public class AnimCurve_CubicEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuartEaseIn曲线
 /// </summary>
-public class AnimCurve_QuartEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuartEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -144,7 +144,7 @@ public class AnimCurve_QuartEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuintEaseIn曲线
 /// </summary>
-public class AnimCurve_QuintEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuintEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -172,7 +172,7 @@ public class AnimCurve_QuintEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// ExpoEaseIn曲线
 /// </summary>
-public class AnimCurve_ExpoEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_ExpoEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -200,7 +200,7 @@ public class AnimCurve_ExpoEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// CircEaseIn曲线
 /// </summary>
-public class AnimCurve_CircEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_CircEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -228,7 +228,7 @@ public class AnimCurve_CircEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// BackEaseIn曲线
 /// </summary>
-public class AnimCurve_BackEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_BackEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -256,7 +256,7 @@ public class AnimCurve_BackEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// ElasticEaseIn曲线
 /// </summary>
-public class AnimCurve_ElasticEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_ElasticEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -290,7 +290,7 @@ public class AnimCurve_ElasticEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// BounceEaseIn曲线
 /// </summary>
-public class AnimCurve_BounceEaseIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_BounceEaseIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -309,7 +309,7 @@ public class AnimCurve_BounceEaseIn : AbsSingle, IEditorAnimCurve
     /// <param name="_curveDuration">曲线持续时间</param>
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
-        return _curveFinalValue - StrayFogHotfixUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_curveDuration - _time, 0, _curveFinalValue, _curveDuration) + _curveStartingValue;
+        return _curveFinalValue - EditorStrayFogUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_curveDuration - _time, 0, _curveFinalValue, _curveDuration) + _curveStartingValue;
     }
 }
 #endregion
@@ -318,7 +318,7 @@ public class AnimCurve_BounceEaseIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// SineEaseOut曲线
 /// </summary>
-public class AnimCurve_SineEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_SineEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -346,7 +346,7 @@ public class AnimCurve_SineEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuadEaseOut曲线
 /// </summary>
-public class AnimCurve_QuadEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuadEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -375,7 +375,7 @@ public class AnimCurve_QuadEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// CubicEaseOut曲线
 /// </summary>
-public class AnimCurve_CubicEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_CubicEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -403,7 +403,7 @@ public class AnimCurve_CubicEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuartEaseOut曲线
 /// </summary>
-public class AnimCurve_QuartEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuartEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -431,7 +431,7 @@ public class AnimCurve_QuartEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuintEaseOut曲线
 /// </summary>
-public class AnimCurve_QuintEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuintEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -459,7 +459,7 @@ public class AnimCurve_QuintEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// ExpoEaseOut曲线
 /// </summary>
-public class AnimCurve_ExpoEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_ExpoEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -487,7 +487,7 @@ public class AnimCurve_ExpoEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// CircEaseOut曲线
 /// </summary>
-public class AnimCurve_CircEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_CircEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -515,7 +515,7 @@ public class AnimCurve_CircEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// BackEaseOut曲线
 /// </summary>
-public class AnimCurve_BackEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_BackEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -543,7 +543,7 @@ public class AnimCurve_BackEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// ElasticEaseOut曲线
 /// </summary>
-public class AnimCurve_ElasticEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_ElasticEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -577,7 +577,7 @@ public class AnimCurve_ElasticEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// BounceEaseOut曲线
 /// </summary>
-public class AnimCurve_BounceEaseOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_BounceEaseOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -612,7 +612,7 @@ public class AnimCurve_BounceEaseOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// SineEaseInOut曲线
 /// </summary>
-public class AnimCurve_SineEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_SineEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -643,7 +643,7 @@ public class AnimCurve_SineEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuadEaseInOut曲线
 /// </summary>
-public class AnimCurve_QuadEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuadEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -674,7 +674,7 @@ public class AnimCurve_QuadEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// CubicEaseInOut曲线
 /// </summary>
-public class AnimCurve_CubicEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_CubicEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -705,7 +705,7 @@ public class AnimCurve_CubicEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuartEaseInOut曲线
 /// </summary>
-public class AnimCurve_QuartEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuartEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -736,7 +736,7 @@ public class AnimCurve_QuartEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuintEaseInOut曲线
 /// </summary>
-public class AnimCurve_QuintEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuintEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -766,7 +766,7 @@ public class AnimCurve_QuintEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// ExpoEaseInOut曲线
 /// </summary>
-public class AnimCurve_ExpoEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_ExpoEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -803,7 +803,7 @@ public class AnimCurve_ExpoEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// CircEaseInOut曲线
 /// </summary>
-public class AnimCurve_CircEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_CircEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -834,7 +834,7 @@ public class AnimCurve_CircEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// BackEaseInOut曲线
 /// </summary>
-public class AnimCurve_BackEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_BackEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -865,7 +865,7 @@ public class AnimCurve_BackEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// ElasticEaseInOut曲线
 /// </summary>
-public class AnimCurve_ElasticEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_ElasticEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -901,7 +901,7 @@ public class AnimCurve_ElasticEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// BounceEaseInOut曲线
 /// </summary>
-public class AnimCurve_BounceEaseInOut : AbsSingle, IEditorAnimCurve
+public class AnimCurve_BounceEaseInOut : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -921,9 +921,9 @@ public class AnimCurve_BounceEaseInOut : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_BounceEaseIn>().KeyframeValue(_time * 2, 0, _curveFinalValue, _curveDuration) * .5 + _curveStartingValue;
+            return EditorStrayFogUtility.Single<AnimCurve_BounceEaseIn>().KeyframeValue(_time * 2, 0, _curveFinalValue, _curveDuration) * .5 + _curveStartingValue;
         else
-            return StrayFogHotfixUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_time * 2 - _curveDuration, 0, _curveFinalValue, _curveDuration) * .5 + _curveFinalValue * .5 + _curveStartingValue;
+            return EditorStrayFogUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_time * 2 - _curveDuration, 0, _curveFinalValue, _curveDuration) * .5 + _curveFinalValue * .5 + _curveStartingValue;
     }
 }
 #endregion
@@ -932,7 +932,7 @@ public class AnimCurve_BounceEaseInOut : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// SineEaseOutIn曲线
 /// </summary>
-public class AnimCurve_SineEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_SineEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -952,9 +952,9 @@ public class AnimCurve_SineEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_SineEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_SineEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogHotfixUtility.Single<AnimCurve_SineEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_SineEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -963,7 +963,7 @@ public class AnimCurve_SineEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuadEaseOutIn曲线
 /// </summary>
-public class AnimCurve_QuadEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuadEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -983,9 +983,9 @@ public class AnimCurve_QuadEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_QuadEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_QuadEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogHotfixUtility.Single<AnimCurve_QuadEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_QuadEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -994,7 +994,7 @@ public class AnimCurve_QuadEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// CubicEaseOutIn曲线
 /// </summary>
-public class AnimCurve_CubicEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_CubicEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -1014,9 +1014,9 @@ public class AnimCurve_CubicEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_CubicEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_CubicEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogHotfixUtility.Single<AnimCurve_CubicEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_CubicEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1025,7 +1025,7 @@ public class AnimCurve_CubicEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuartEaseOutIn曲线
 /// </summary>
-public class AnimCurve_QuartEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuartEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -1045,9 +1045,9 @@ public class AnimCurve_QuartEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_QuartEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_QuartEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogHotfixUtility.Single<AnimCurve_QuartEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_QuartEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1056,7 +1056,7 @@ public class AnimCurve_QuartEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// QuintEaseOutIn曲线
 /// </summary>
-public class AnimCurve_QuintEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_QuintEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -1076,8 +1076,8 @@ public class AnimCurve_QuintEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_QuintEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
-        return StrayFogHotfixUtility.Single<AnimCurve_QuintEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_QuintEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_QuintEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1086,7 +1086,7 @@ public class AnimCurve_QuintEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// ExpoEaseOutIn曲线
 /// </summary>
-public class AnimCurve_ExpoEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_ExpoEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -1106,9 +1106,9 @@ public class AnimCurve_ExpoEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_ExpoEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_ExpoEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogHotfixUtility.Single<AnimCurve_ExpoEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_ExpoEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1117,7 +1117,7 @@ public class AnimCurve_ExpoEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// CircEaseOutIn曲线
 /// </summary>
-public class AnimCurve_CircEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_CircEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -1137,9 +1137,9 @@ public class AnimCurve_CircEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_CircEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_CircEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
 
-        return StrayFogHotfixUtility.Single<AnimCurve_CircEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_CircEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1148,7 +1148,7 @@ public class AnimCurve_CircEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// BackEaseOutIn曲线
 /// </summary>
-public class AnimCurve_BackEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_BackEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -1168,8 +1168,8 @@ public class AnimCurve_BackEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_BackEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
-        return StrayFogHotfixUtility.Single<AnimCurve_BackEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_BackEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_BackEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1178,7 +1178,7 @@ public class AnimCurve_BackEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// ElasticEaseOutIn曲线
 /// </summary>
-public class AnimCurve_ElasticEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_ElasticEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -1198,8 +1198,8 @@ public class AnimCurve_ElasticEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_ElasticEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
-        return StrayFogHotfixUtility.Single<AnimCurve_ElasticEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_ElasticEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_ElasticEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion
@@ -1208,7 +1208,7 @@ public class AnimCurve_ElasticEaseOutIn : AbsSingle, IEditorAnimCurve
 /// <summary>
 /// BounceEaseOutIn曲线
 /// </summary>
-public class AnimCurve_BounceEaseOutIn : AbsSingle, IEditorAnimCurve
+public class AnimCurve_BounceEaseOutIn : AbsEditorSingle, IEditorAnimCurve
 {
     /// <summary>
     /// 曲线名称
@@ -1228,8 +1228,8 @@ public class AnimCurve_BounceEaseOutIn : AbsSingle, IEditorAnimCurve
     public double KeyframeValue(double _time, double _curveStartingValue, double _curveFinalValue, double _curveDuration)
     {
         if (_time < _curveDuration / 2)
-            return StrayFogHotfixUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
-        return StrayFogHotfixUtility.Single<AnimCurve_BounceEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
+            return EditorStrayFogUtility.Single<AnimCurve_BounceEaseOut>().KeyframeValue(_time * 2, _curveStartingValue, _curveFinalValue / 2, _curveDuration);
+        return EditorStrayFogUtility.Single<AnimCurve_BounceEaseIn>().KeyframeValue((_time * 2) - _curveDuration, _curveStartingValue + _curveFinalValue / 2, _curveFinalValue / 2, _curveDuration);
     }
 }
 #endregion

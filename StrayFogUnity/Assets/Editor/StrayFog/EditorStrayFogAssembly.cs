@@ -320,6 +320,22 @@ public sealed class EditorStrayFogAssembly
 
     #region GetDynamicAssemblies 获得动态程序集组
     /// <summary>
+    /// EditorAssemblySelectionAsset
+    /// </summary>
+    class EditorAssemblySelectionAsset : EditorSelectionAsset
+    {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="_pathOrGuid">资源路径或guid</param>
+        public EditorAssemblySelectionAsset(string _pathOrGuid) : base(_pathOrGuid)
+        { }
+    }
+    /// <summary>
+    /// 动态Dll
+    /// </summary>
+    static List<EditorAssemblySelectionAsset> mDynamicDlls = null;
+    /// <summary>
     /// 获得动态程序集组
     /// </summary>
     /// <returns>程序集组</returns>
@@ -327,14 +343,16 @@ public sealed class EditorStrayFogAssembly
     {
         List<Assembly> assemblies = new List<Assembly>();
         string dllExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext;
-        List<EditorSelectionAsset> dlls =
-            EditorStrayFogUtility.collectAsset.CollectAsset(
-                new string[1] { EditorStrayFogApplication.TryRelativeToProject("") }, "",
-                false, (n) => { return n.ext.Equals(dllExt); });
-        List<Assembly> tempAssemblies = null;
-        if (dlls != null && dlls.Count > 0)
+        if (mDynamicDlls == null)
         {
-            foreach (EditorSelectionAsset d in dlls)
+            mDynamicDlls = EditorStrayFogUtility.collectAsset.CollectAsset<EditorAssemblySelectionAsset>(
+                new string[1] { EditorStrayFogApplication.TryRelativeToProject("") }, "",
+                enEditorDependencyClassify.UnClude, (n) => { return n.ext.Equals(dllExt); });
+        }
+        List<Assembly> tempAssemblies = null;
+        if (mDynamicDlls != null && mDynamicDlls.Count > 0)
+        {
+            foreach (EditorAssemblySelectionAsset d in mDynamicDlls)
             {
                 try
                 {

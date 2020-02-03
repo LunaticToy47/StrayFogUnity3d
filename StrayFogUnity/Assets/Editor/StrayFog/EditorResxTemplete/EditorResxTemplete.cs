@@ -151,6 +151,18 @@ public class EditorResxTemplete
     }
 
     /// <summary>
+    /// Editor_GeneralStaticConstField_ScriptTemplete
+    /// </summary>
+    public static string Editor_GeneralStaticConstField_ScriptTemplete
+    {
+        get
+        {
+            return GetFileString("General/Editor_GeneralStaticConstField_ScriptTemplete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
+        }
+    }
+
+    /// <summary>
     /// Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete
     /// </summary>
     public static string Editor_SimulateMonoBehaviour_MethodComponent_ScriptTemplete

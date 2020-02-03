@@ -32,6 +32,11 @@ public enum enEditorApplicationFolder
     [EditorApplicationFolder("游戏Editor目录", "Assets/Game/Editor", "游戏Editor目录")]
     Game_Editor,
     /// <summary>
+    /// 游戏Editor/Bat目录
+    /// </summary>
+    [EditorApplicationFolder("游戏Editor/Bat目录", "Assets/Game/Editor/Bat", "游戏Editor/Bat目录")]
+    Game_Editor_Bat,
+    /// <summary>
     /// 游戏Editor的Asmdef目录
     /// </summary>
     [EditorApplicationFolder("游戏Editor的Asmdef目录", "Assets/Game/Editor/Asmdef", "游戏Editor的Asmdef目录")]
@@ -101,6 +106,16 @@ public enum enEditorApplicationFolder
     Hotfix_SimulateBehaviour,
     #endregion
 
+    #endregion
+
+    #region Game/StrayFog目录
+    #region UIWindowMgr
+    /// <summary>
+    /// UI窗口管理器目录
+    /// </summary>
+    [EditorApplicationFolder("UI窗口管理器目录", "Assets/Game/StrayFog/UIWindowMgr", "UI窗口管理器目录")]
+    Game_StrayFog_UIWindowMgr,
+    #endregion
     #endregion
 
     #region Project目录

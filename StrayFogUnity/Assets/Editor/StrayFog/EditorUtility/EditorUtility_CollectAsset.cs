@@ -47,157 +47,58 @@ public enum enEditorAssetFilterClassify
     [EditorAssetFilter("t:TextAsset")]
     TextAsset = 0x40
 }
+/// <summary>
+/// 资源收集依赖分类
+/// </summary>
+[Serializable]
+public enum enEditorDependencyClassify
+{
+    /// <summary>
+    /// 不包含依赖项
+    /// </summary>
+    UnClude,
+    /// <summary>
+    /// 包含依赖项
+    /// </summary>
+    InClude,
+}
 #endregion
 /// <summary>
 /// 资源收集
 /// </summary>
-public class EditorUtility_CollectAsset : AbsSingle
+public class EditorUtility_CollectAsset : AbsEditorSingle
 {
-    #region CollectAsset 收集资源【EditorSelectionAsset重载】
+    #region CollectAsset 收集资源【T重载】
+    #region  一参数
     /// <summary>
     /// 收集资源
     /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
     /// <param name="_searchInFolders">搜索目录</param>
     /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
+    public List<T> CollectAsset<T>(
         string[] _searchInFolders)
+        where T : EditorSelectionAsset
     {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders);
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_filter">过滤</param>
-    /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, enEditorAssetFilterClassify _filter)
-    {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, OnResolveAssetFilter(_filter));
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_filter">过滤</param>
-    /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, string _filter)
-    {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, _filter);
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
-    /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, bool _includeDependencies)
-    {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, _includeDependencies);
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
-    /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, enEditorAssetFilterClassify _filter, bool _includeDependencies)
-    {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, OnResolveAssetFilter(_filter), _includeDependencies);
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
-    /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, string _filter, bool _includeDependencies)
-    {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, _filter, _includeDependencies);
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
-    /// <param name="_funIslegal">是否合法</param>
-    /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, enEditorAssetFilterClassify _filter, bool _includeDependencies,
-        Func<EditorSelectionAsset, bool> _funIslegal)
-    {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, OnResolveAssetFilter(_filter), _includeDependencies, _funIslegal);
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
-    /// <param name="_funIslegal">是否合法</param>
-    /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, string _filter, bool _includeDependencies,
-        Func<EditorSelectionAsset, bool> _funIslegal)
-    {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, _filter, _includeDependencies, _funIslegal);
+        return CollectAsset<T>(_searchInFolders, string.Empty, enEditorDependencyClassify.UnClude, null, null);
     }
     /// <summary>
     /// 收集资源
     /// </summary>
     /// <typeparam name="T">资源节点</typeparam>
     /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
-    /// <param name="_funIslegal">是否合法</param>
-    /// <param name="_funIsForceExclude">是否强制排除</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
     /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, enEditorAssetFilterClassify _filter, bool _includeDependencies,
-        Func<EditorSelectionAsset, bool> _funIslegal,
-        Func<EditorSelectionAsset, bool> _funIsForceExclude)
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, bool _displayProgressBar)
+        where T : EditorSelectionAsset
     {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, OnResolveAssetFilter(_filter), _includeDependencies, _funIslegal, _funIsForceExclude);
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <typeparam name="T">资源节点</typeparam>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
-    /// <param name="_funIslegal">是否合法</param>
-    /// <param name="_funIsForceExclude">是否强制排除</param>
-    /// <returns>节点组</returns>
-    public List<EditorSelectionAsset> CollectAsset(
-        string[] _searchInFolders, string _filter, bool _includeDependencies,
-        Func<EditorSelectionAsset, bool> _funIslegal,
-        Func<EditorSelectionAsset, bool> _funIsForceExclude)
-    {
-        return CollectAsset<EditorSelectionAsset>(_searchInFolders, _filter, _includeDependencies, _funIslegal, _funIsForceExclude);
+        return CollectAsset<T>(_searchInFolders, string.Empty, enEditorDependencyClassify.UnClude, null, null, _displayProgressBar);
     }
     #endregion
 
-    #region CollectAsset 收集资源【T重载】
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <typeparam name="T">资源节点</typeparam>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <returns>节点组</returns>
-    public List<T> CollectAsset<T>(
-        string[] _searchInFolders)
-        where T : EditorSelectionAsset
-    {
-        return CollectAsset<T>(_searchInFolders, string.Empty, false, null, null);
-    }
+    #region 二参数
+    #region _searchInFolders,_filter
     /// <summary>
     /// 收集资源
     /// </summary>
@@ -209,8 +110,24 @@ public class EditorUtility_CollectAsset : AbsSingle
         string[] _searchInFolders, enEditorAssetFilterClassify _filter)
         where T : EditorSelectionAsset
     {
-        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), false, null, null);
+        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), enEditorDependencyClassify.UnClude, null, null);
     }
+
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, enEditorAssetFilterClassify _filter, bool _displayProgressBar)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), enEditorDependencyClassify.UnClude, null, null, _displayProgressBar);
+    }
+
     /// <summary>
     /// 收集资源
     /// </summary>
@@ -222,20 +139,7 @@ public class EditorUtility_CollectAsset : AbsSingle
         string[] _searchInFolders, string _filter)
         where T : EditorSelectionAsset
     {
-        return CollectAsset<T>(_searchInFolders, _filter, false, null, null);
-    }
-    /// <summary>
-    /// 收集资源
-    /// </summary>
-    /// <typeparam name="T">资源节点</typeparam>
-    /// <param name="_searchInFolders">搜索目录</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
-    /// <returns>节点组</returns>
-    public List<T> CollectAsset<T>(
-        string[] _searchInFolders, bool _includeDependencies)
-        where T : EditorSelectionAsset
-    {
-        return CollectAsset<T>(_searchInFolders, string.Empty, _includeDependencies, null, null);
+        return CollectAsset<T>(_searchInFolders, _filter, enEditorDependencyClassify.UnClude, null, null);
     }
     /// <summary>
     /// 收集资源
@@ -243,13 +147,62 @@ public class EditorUtility_CollectAsset : AbsSingle
     /// <typeparam name="T">资源节点</typeparam>
     /// <param name="_searchInFolders">搜索目录</param>
     /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
     /// <returns>节点组</returns>
     public List<T> CollectAsset<T>(
-        string[] _searchInFolders, enEditorAssetFilterClassify _filter, bool _includeDependencies)
+        string[] _searchInFolders, string _filter, bool _displayProgressBar)
         where T : EditorSelectionAsset
     {
-        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), _includeDependencies, null, null);
+        return CollectAsset<T>(_searchInFolders, _filter, enEditorDependencyClassify.UnClude, null, null, _displayProgressBar);
+    }
+    #endregion
+
+    #region _searchInFolders,_includeDependencies
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, enEditorDependencyClassify _dependencyClassify)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, string.Empty, _dependencyClassify, null, null);
+    }
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, enEditorDependencyClassify _dependencyClassify, bool _displayProgressBar)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, string.Empty, _dependencyClassify, null, null, _displayProgressBar);
+    }
+    #endregion
+
+    #endregion
+
+    #region 三参数
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, enEditorAssetFilterClassify _filter, enEditorDependencyClassify _dependencyClassify)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), _dependencyClassify, null, null);
     }
     /// <summary>
     /// 收集资源
@@ -257,13 +210,14 @@ public class EditorUtility_CollectAsset : AbsSingle
     /// <typeparam name="T">资源节点</typeparam>
     /// <param name="_searchInFolders">搜索目录</param>
     /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
     /// <returns>节点组</returns>
     public List<T> CollectAsset<T>(
-        string[] _searchInFolders, string _filter, bool _includeDependencies)
+        string[] _searchInFolders, enEditorAssetFilterClassify _filter, enEditorDependencyClassify _dependencyClassify, bool _displayProgressBar)
         where T : EditorSelectionAsset
     {
-        return CollectAsset<T>(_searchInFolders, _filter, _includeDependencies, null, null);
+        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), _dependencyClassify, null, null, _displayProgressBar);
     }
     /// <summary>
     /// 收集资源
@@ -271,31 +225,82 @@ public class EditorUtility_CollectAsset : AbsSingle
     /// <typeparam name="T">资源节点</typeparam>
     /// <param name="_searchInFolders">搜索目录</param>
     /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, string _filter, enEditorDependencyClassify _dependencyClassify)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, null, null);
+    }
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, string _filter, enEditorDependencyClassify _dependencyClassify, bool _displayProgressBar)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, null, null, _displayProgressBar);
+    }
+    #endregion
+
+    #region 四参数
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
     /// <param name="_funIslegal">是否合法</param>
     /// <returns>节点组</returns>
     public List<T> CollectAsset<T>(
-        string[] _searchInFolders, enEditorAssetFilterClassify _filter, bool _includeDependencies,
+        string[] _searchInFolders, enEditorAssetFilterClassify _filter, enEditorDependencyClassify _dependencyClassify,
         Func<T, bool> _funIslegal)
         where T : EditorSelectionAsset
     {
-        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), _includeDependencies, _funIslegal, null);
+        return CollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, _funIslegal, null);
     }
+
     /// <summary>
     /// 收集资源
     /// </summary>
     /// <typeparam name="T">资源节点</typeparam>
     /// <param name="_searchInFolders">搜索目录</param>
     /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <param name="_funIslegal">是否合法</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, enEditorAssetFilterClassify _filter, enEditorDependencyClassify _dependencyClassify,
+        Func<T, bool> _funIslegal, bool _displayProgressBar)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, _funIslegal, null, _displayProgressBar);
+    }
+
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
     /// <param name="_funIslegal">是否合法</param>
     /// <returns>节点组</returns>
     public List<T> CollectAsset<T>(
-        string[] _searchInFolders, string _filter, bool _includeDependencies,
+        string[] _searchInFolders, string _filter, enEditorDependencyClassify _dependencyClassify,
         Func<T, bool> _funIslegal)
         where T : EditorSelectionAsset
     {
-        return CollectAsset<T>(_searchInFolders, _filter, _includeDependencies, _funIslegal, null);
+        return CollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, _funIslegal, null);
     }
     /// <summary>
     /// 收集资源
@@ -303,30 +308,114 @@ public class EditorUtility_CollectAsset : AbsSingle
     /// <typeparam name="T">资源节点</typeparam>
     /// <param name="_searchInFolders">搜索目录</param>
     /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <param name="_funIslegal">是否合法</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, string _filter, enEditorDependencyClassify _dependencyClassify,
+        Func<T, bool> _funIslegal, bool _displayProgressBar)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, _funIslegal, null, _displayProgressBar);
+    }
+    #endregion
+
+    #region 五参数
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
     /// <param name="_funIslegal">是否合法</param>
     /// <param name="_funIsForceExclude">是否强制排除</param>
     /// <returns>节点组</returns>
     public List<T> CollectAsset<T>(
-        string[] _searchInFolders, enEditorAssetFilterClassify _filter, bool _includeDependencies,
+        string[] _searchInFolders, enEditorAssetFilterClassify _filter, enEditorDependencyClassify _dependencyClassify,
         Func<T, bool> _funIslegal, Func<T, bool> _funIsForceExclude)
         where T : EditorSelectionAsset
     {
-        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), _includeDependencies, _funIslegal, _funIsForceExclude);
+        return CollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, _funIslegal, _funIsForceExclude, true);
     }
+
     /// <summary>
     /// 收集资源
     /// </summary>
     /// <typeparam name="T">资源节点</typeparam>
     /// <param name="_searchInFolders">搜索目录</param>
     /// <param name="_filter">过滤</param>
-    /// <param name="_includeDependencies">是否包含依赖项</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
     /// <param name="_funIslegal">是否合法</param>
     /// <param name="_funIsForceExclude">是否强制排除</param>
     /// <returns>节点组</returns>
     public List<T> CollectAsset<T>(
-        string[] _searchInFolders, string _filter, bool _includeDependencies,
+        string[] _searchInFolders, string _filter, enEditorDependencyClassify _dependencyClassify,
         Func<T, bool> _funIslegal, Func<T, bool> _funIsForceExclude)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, _funIslegal, _funIsForceExclude, true);
+    }
+    #endregion
+
+    #region 六参数
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <param name="_funIslegal">是否合法</param>
+    /// <param name="_funIsForceExclude">是否强制排除</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, enEditorAssetFilterClassify _filter, enEditorDependencyClassify _dependencyClassify,
+        Func<T, bool> _funIslegal, Func<T, bool> _funIsForceExclude, bool _displayProgressBar)
+        where T : EditorSelectionAsset
+    {
+        return CollectAsset<T>(_searchInFolders, OnResolveAssetFilter(_filter), _dependencyClassify, _funIslegal, _funIsForceExclude, _displayProgressBar);
+    }
+
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <param name="_funIslegal">是否合法</param>
+    /// <param name="_funIsForceExclude">是否强制排除</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
+    /// <returns>节点组</returns>
+    public List<T> CollectAsset<T>(
+        string[] _searchInFolders, string _filter, enEditorDependencyClassify _dependencyClassify,
+        Func<T, bool> _funIslegal, Func<T, bool> _funIsForceExclude, bool _displayProgressBar)
+        where T : EditorSelectionAsset
+    {
+        return OnCollectAsset<T>(_searchInFolders, _filter, _dependencyClassify, _funIslegal, _funIsForceExclude, _displayProgressBar);
+    }
+    #endregion
+
+    #endregion
+
+    #region OnCollectAsset 收集资源
+    /// <summary>
+    /// 收集资源
+    /// </summary>
+    /// <typeparam name="T">资源节点</typeparam>
+    /// <param name="_searchInFolders">搜索目录</param>
+    /// <param name="_filter">过滤</param>
+    /// <param name="_dependencyClassify">依赖项分类</param>
+    /// <param name="_funIslegal">是否合法</param>
+    /// <param name="_funIsForceExclude">是否强制排除</param>
+    /// <param name="_displayProgressBar">是否显示进度条</param>
+    /// <returns>节点组</returns>
+    List<T> OnCollectAsset<T>(
+        string[] _searchInFolders, string _filter, enEditorDependencyClassify _dependencyClassify,
+        Func<T, bool> _funIslegal, Func<T, bool> _funIsForceExclude, bool _displayProgressBar)
         where T : EditorSelectionAsset
     {
         List<T> results = new List<T>();
@@ -341,11 +430,14 @@ public class EditorUtility_CollectAsset : AbsSingle
             float progress = 0;
             Type type = typeof(T);
             for (int i = 0; i < arrPath.Length; i++)
-            {                
+            {
                 arrPath[i] = AssetDatabase.GUIDToAssetPath(arrPath[i]);
                 progress = i + 1;
-                EditorUtility.DisplayProgressBar("CollectAsset=>"+ type.FullName, arrPath[i], progress / arrPath.Length);
-                if (_includeDependencies)
+                if (_displayProgressBar)
+                {
+                    EditorUtility.DisplayProgressBar("CollectAsset=>" + type.FullName, arrPath[i], progress / arrPath.Length);
+                }
+                if (_dependencyClassify == enEditorDependencyClassify.InClude)
                 {
                     #region 收集依赖项
                     arrDepPath = AssetDatabase.GetDependencies(arrPath[i]);
@@ -368,10 +460,13 @@ public class EditorUtility_CollectAsset : AbsSingle
             }
 
             progress = 0;
-            for (int i=0;i< lstNodePath.Count;i++)
+            for (int i = 0; i < lstNodePath.Count; i++)
             {
                 progress = i + 1;
-                EditorUtility.DisplayProgressBar("Filter Asset=>" + type.FullName, arrPath[i], progress / lstNodePath.Count);
+                if (_displayProgressBar)
+                {
+                    EditorUtility.DisplayProgressBar("Filter Asset=>" + type.FullName, arrPath[i], progress / lstNodePath.Count);
+                }
                 if (File.Exists(lstNodePath[i]))
                 {
                     node = (T)Activator.CreateInstance(typeof(T), lstNodePath[i]);
@@ -384,7 +479,10 @@ public class EditorUtility_CollectAsset : AbsSingle
                 }
             }
         }
-        EditorUtility.ClearProgressBar();
+        if (_displayProgressBar)
+        {
+            EditorUtility.ClearProgressBar();
+        }
         return results;
     }
     #endregion

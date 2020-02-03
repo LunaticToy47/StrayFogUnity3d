@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// 正则表达式工具
 /// </summary>
-public class EditorUtility_Regex : AbsSingle
+public class EditorUtility_Regex : AbsEditorSingle
 {
     #region MatchPairMarkTemplete 匹配成对标签
     /// <summary>

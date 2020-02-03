@@ -14,20 +14,17 @@ public class EditorUIWindowAsset : AbsScriptableObject
     /// enUIWindowLayer窗口Layer
     /// </summary>
     [AliasTooltip("窗口Layer")]
-    [StaticClassConstFieldMapForEnum(typeof(enUIWindowLayer))]
-    public int layer;
+    public enEditorUIWindowLayer layer;
     /// <summary>
     /// 打开模式enUIWindowOpenMode
     /// </summary>
     [AliasTooltip("打开模式")]
-    [StaticClassConstFieldMapForEnum(typeof(enUIWindowOpenMode))]
-    public int openMode;
+    public enEditorUIWindowOpenMode openMode;
     /// <summary>
     /// 关闭模式enUIWindowCloseMode
     /// </summary>
     [AliasTooltip("关闭模式")]
-    [StaticClassConstFieldMapForEnum(typeof(enUIWindowCloseMode))]
-    public int closeMode;
+    public enEditorUIWindowCloseMode closeMode;
     /// <summary>
     /// 是否忽略开启关闭模式
     /// </summary>

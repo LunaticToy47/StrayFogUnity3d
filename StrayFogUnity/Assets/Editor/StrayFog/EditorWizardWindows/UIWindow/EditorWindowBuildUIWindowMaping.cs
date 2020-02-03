@@ -38,12 +38,12 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// 窗口最小Layer映射
     /// </summary>
     static readonly Dictionary<int, string> msrWindowMinLayerMaping = 
-        typeof(enUIWindowLayer).ValueToAttributeSpecifyValueForConstField<AliasTooltipAttribute, string>((a) => { return a.alias; });
+        typeof(enEditorUIWindowLayer).ValueToAttributeSpecifyValue<AliasTooltipAttribute, string>((a) => { return a.alias; });
     /// <summary>
     /// 搜索窗口绘制类别
     /// </summary>
     Dictionary<int, bool> mSearchWindowMinLayer = 
-        typeof(enUIWindowLayer).ValueToSpecialValueForConstField((m) => { return true; });
+        typeof(enEditorUIWindowLayer).ValueToSpecialValue((m) => { return true; });
     /// <summary>
     /// 窗口组
     /// </summary>
@@ -60,15 +60,16 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     /// <summary>
     /// 配置
     /// </summary>
-    EditorXlsFileConfigForUIWindowSetting mConfig;
+    EditorXlsFileConfigForUIWindowSetting mConfig = null;
+
     /// <summary>
     /// OnFocus
     /// </summary>
-    void OnFocus()
+    private void OnFocus()
     {
-        mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
         mConfig = EditorStrayFogSavedAssetConfig.setXlsFileConfigForUIWindowSetting;
     }
+
     /// <summary>
     /// OnGUI
     /// </summary>
@@ -85,7 +86,7 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
     void DrawBrower()
     {
         mConfig.DrawGUI();
-        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();        
     }
     #endregion
 
@@ -170,17 +171,20 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
         EditorGUILayout.Separator();
 
         #region isDraw 计算是否绘制
-        for (int i = 0; i < mWindows.Count; i++)
+        if (mWindows != null && mWindows.Count > 0)
         {
-            mWindows[i].isDraw =
-                //名称过滤
-                (string.IsNullOrEmpty(mSearchWindowName) || Regex.IsMatch(mWindows[i].nameWithoutExtension,
-                string.Format(@"({0})+?\w*", mSearchWindowName.Replace(",", "|")), RegexOptions.IgnoreCase)) &&
-                //绘制类别过滤
-                mSearchWindowRenderMode[(int)mWindows[i].assetNode.renderMode] &&
-                //窗口最小Layer
-                mSearchWindowMinLayer[(int)mWindows[i].assetNode.layer];
-        }
+            for (int i = 0; i < mWindows.Count; i++)
+            {
+                mWindows[i].isDraw =
+                    //名称过滤
+                    (string.IsNullOrEmpty(mSearchWindowName) || Regex.IsMatch(mWindows[i].nameWithoutExtension,
+                    string.Format(@"({0})+?\w*", mSearchWindowName.Replace(",", "|")), RegexOptions.IgnoreCase)) &&
+                    //绘制类别过滤
+                    mSearchWindowRenderMode[(int)mWindows[i].assetNode.renderMode] &&
+                    //窗口最小Layer
+                    mSearchWindowMinLayer[(int)mWindows[i].assetNode.layer];
+            }
+        }        
         #endregion
 
         #region 绘制窗口属性列表
@@ -283,6 +287,13 @@ public class EditorWindowBuildUIWindowMaping : AbsEditorWindow
                 }
                 BuilderWindowEnum();
             }
+        }
+        #endregion
+
+        #region 显示窗口
+        if (GUILayout.Button("Display UIWindow"))
+        {
+            mWindows = EditorStrayFogGlobalVariable.CollectUIWindowSettingAssets<EditorSelectionUIWindowSetting>();
         }
         #endregion
 

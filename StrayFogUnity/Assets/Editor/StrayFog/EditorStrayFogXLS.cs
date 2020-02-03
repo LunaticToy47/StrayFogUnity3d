@@ -187,7 +187,7 @@ public sealed class EditorStrayFogXLS
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
         FileExtAttribute xlsxExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Xlsx);
         List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedAssetConfig.setFolderConfigForSchemaToSqlite.paths,
-            enEditorAssetFilterClassify.DefaultAsset, false,
+            enEditorAssetFilterClassify.DefaultAsset, enEditorDependencyClassify.UnClude,
             (n) => { return xlsxExt.IsExt(n.ext); });
         float progress = 0;
         for (int i = 0; i < xlsFiles.Count; i++)
@@ -491,7 +491,7 @@ public sealed class EditorStrayFogXLS
         #region 创建视图SQL语句
         foreach (KeyValuePair<int, TableSQLiteHelper> key in dicDbHelper)
         {
-            List<EditorSelectionAsset> sqlAssets = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(new string[1] { key.Value.dbDirectory }, enEditorAssetFilterClassify.TextAsset, false, (node) => { return node.ext.ToUpper().Equals(attSqlExt.ext.ToUpper()); });
+            List<EditorSelectionAsset> sqlAssets = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(new string[1] { key.Value.dbDirectory }, enEditorAssetFilterClassify.TextAsset, enEditorDependencyClassify.UnClude, (node) => { return node.ext.ToUpper().Equals(attSqlExt.ext.ToUpper()); });
             if (sqlAssets != null && sqlAssets.Count > 0)
             {
                 progress = 0;
@@ -997,7 +997,7 @@ public sealed class EditorStrayFogXLS
         }
         FileExtAttribute assetExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asset);
         List<EditorSelectionAsset> assetFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsset>(tableSchemaAssetFolders.ToArray(),
-            enEditorAssetFilterClassify.Object, false,
+            enEditorAssetFilterClassify.Object, enEditorDependencyClassify.UnClude,
             (n) => { return assetExt.IsExt(n.ext) && !xlsTableSchemaPaths.Contains(n.path); });
 
         foreach (EditorSelectionAsset af in assetFiles)

@@ -32,16 +32,11 @@ public sealed class EditorStrayFogExecute
         Dictionary<int, StringBuilder> dicSbWindowsTemplete = new Dictionary<int, StringBuilder>();
         #endregion
 
-        #region RenderModes
-        string replaceRenderModesTemplete = string.Empty;
-        string formatRenderModesTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#RenderModes#", out replaceRenderModesTemplete);
-        Dictionary<int, StringBuilder> dicSbRenderModesTemplete = new Dictionary<int, StringBuilder>();
-        #endregion
-
-        StringBuilder sbLog = new StringBuilder();
-        
+        StringBuilder sbLog = new StringBuilder();        
         Dictionary<int, string> dicAssemblyName = new Dictionary<int, string>();
         int pathKey = 0;
+
+        #region 收集窗口枚举常量
         if (mWindows != null && mWindows.Count > 0)
         {            
             foreach (EditorSelectionUIWindowSetting w in mWindows)
@@ -50,10 +45,6 @@ public sealed class EditorStrayFogExecute
                 if (!dicSbWindowsTemplete.ContainsKey(pathKey))
                 {
                     dicSbWindowsTemplete.Add(pathKey, new StringBuilder());
-                }
-                if (!dicSbRenderModesTemplete.ContainsKey(pathKey))
-                {
-                    dicSbRenderModesTemplete.Add(pathKey, new StringBuilder());
                 }
                 if (!dicAssemblyName.ContainsKey(pathKey))
                 {
@@ -72,21 +63,9 @@ public sealed class EditorStrayFogExecute
                 EditorUtility.DisplayProgressBar("Insert Window Setting To Xls", n, p);
             });
         }
+        #endregion
 
-        //生成RenderMode静态类常量
-        List<RenderMode> renderModes = typeof(RenderMode).ToEnums<RenderMode>();
-        foreach (int key in dicSbRenderModesTemplete.Keys)
-        {
-            foreach (RenderMode m in renderModes)
-            {
-                dicSbRenderModesTemplete[key].AppendLine(
-                   formatRenderModesTemplete
-                   .Replace("#Name#", m.ToString())
-                   .Replace("#Id#", ((int)m).ToString())
-                   );
-            }           
-        }
-
+        #region 生成窗口枚举静态类
         if (EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths != null && EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths.Length > 0)
         {
             for (int i = 0; i < EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths.Length; i++)
@@ -96,8 +75,7 @@ public sealed class EditorStrayFogExecute
                 {
 
                     result = scriptTemplete
-                        .Replace(replaceWindowsTemplete, dicSbWindowsTemplete[pathKey].ToString())                      
-                        .Replace(replaceRenderModesTemplete, dicSbRenderModesTemplete[pathKey].ToString())                     
+                        .Replace(replaceWindowsTemplete, dicSbWindowsTemplete[pathKey].ToString())                  
                         .Replace("#Directory#", EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowPrefab.paths[i].TransPathSeparatorCharToUnityChar())                     
                         .Replace("#AssemblyName#", dicAssemblyName[pathKey])
                      ;
@@ -110,6 +88,140 @@ public sealed class EditorStrayFogExecute
                 }                
             }
         }
+        #endregion
+
+        #region 生成窗口属性枚举静态类
+        string txt_StaticConstField_ScriptTemplete = EditorResxTemplete.Editor_GeneralStaticConstField_ScriptTemplete;
+        string buildStaticConstFieldScriptFolder = Path.Combine(enEditorApplicationFolder.Game_StrayFog_UIWindowMgr.GetAttribute<EditorApplicationFolderAttribute>().path, "Enum").TransPathSeparatorCharToUnityChar();
+
+        #region #Consts#
+        string staticConstField_Mark = "#Consts#";
+        string staticConstField_ReplaceTemplete = string.Empty;
+        string staticConstField_Templete = string.Empty;
+        StringBuilder sbStaticConstField_Replace = new StringBuilder();
+        staticConstField_Templete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(txt_StaticConstField_ScriptTemplete, staticConstField_Mark, out staticConstField_ReplaceTemplete);
+        #endregion
+
+        EditorTextAssetConfig staticConstFieldScriptCfg = new EditorTextAssetConfig(string.Empty,
+                       buildStaticConstFieldScriptFolder, enFileExt.CS,string.Empty);        
+
+        string txt_StaticConstField_Script = string.Empty;
+        string txt_StaticConstField_ClassName = string.Empty;
+        string txt_StaticConstField_ScriptName = string.Empty;
+        sbStaticConstField_Replace.Length = 0;
+
+        #region 生成RenderMode静态类常量
+        txt_StaticConstField_Script = string.Empty;
+        txt_StaticConstField_ClassName = string.Empty;
+        txt_StaticConstField_ScriptName = string.Empty;
+        sbStaticConstField_Replace.Length = 0;
+        List<RenderMode> renderModes = typeof(RenderMode).ToEnums<RenderMode>();
+        txt_StaticConstField_ClassName = "UIWindowRenderMode";
+        txt_StaticConstField_ScriptName = "en" + txt_StaticConstField_ClassName;
+        foreach (RenderMode key in renderModes)
+        {
+            sbStaticConstField_Replace.Append(
+                staticConstField_Templete
+                .Replace("#Name#",key.ToString())
+                .Replace("#Value#",((int)key).ToString())
+                .Replace("#Desc#",key.ToString())
+                );
+        }
+
+        txt_StaticConstField_Script = 
+            txt_StaticConstField_ScriptTemplete
+            .Replace(staticConstField_ReplaceTemplete, sbStaticConstField_Replace.ToString())
+            .Replace("#StaticClassName#", txt_StaticConstField_ClassName)
+            ;
+        staticConstFieldScriptCfg.SetName(txt_StaticConstField_ScriptName);
+        staticConstFieldScriptCfg.SetText(txt_StaticConstField_Script);
+        staticConstFieldScriptCfg.CreateAsset();
+        #endregion
+
+        #region 生成enEditorUIWindowLayer静态类常量
+        txt_StaticConstField_Script = string.Empty;
+        txt_StaticConstField_ClassName = string.Empty;
+        txt_StaticConstField_ScriptName = string.Empty;
+        sbStaticConstField_Replace.Length = 0;
+        Dictionary<enEditorUIWindowLayer, AliasTooltipAttribute> layers = typeof(enEditorUIWindowLayer).EnumToAttribute<enEditorUIWindowLayer, AliasTooltipAttribute>();
+        txt_StaticConstField_ClassName = "UIWindowLayer";
+        txt_StaticConstField_ScriptName = "en" + txt_StaticConstField_ClassName;
+        foreach (KeyValuePair<enEditorUIWindowLayer, AliasTooltipAttribute> key in layers)
+        {
+            sbStaticConstField_Replace.Append(
+                staticConstField_Templete
+                .Replace("#Name#", key.Key.ToString())
+                .Replace("#Value#", ((int)key.Key).ToString())
+                .Replace("#Desc#", key.Value.alias)
+                );
+        }
+
+        txt_StaticConstField_Script =
+            txt_StaticConstField_ScriptTemplete
+            .Replace(staticConstField_ReplaceTemplete, sbStaticConstField_Replace.ToString())
+            .Replace("#StaticClassName#", txt_StaticConstField_ClassName)
+            ;
+        staticConstFieldScriptCfg.SetName(txt_StaticConstField_ScriptName);
+        staticConstFieldScriptCfg.SetText(txt_StaticConstField_Script);
+        staticConstFieldScriptCfg.CreateAsset();
+        #endregion
+
+        #region 生成enEditorUIWindowOpenMode静态类常量
+        txt_StaticConstField_Script = string.Empty;
+        txt_StaticConstField_ClassName = string.Empty;
+        txt_StaticConstField_ScriptName = string.Empty;
+        sbStaticConstField_Replace.Length = 0;
+        Dictionary<enEditorUIWindowOpenMode, AliasTooltipAttribute> openModes = typeof(enEditorUIWindowOpenMode).EnumToAttribute<enEditorUIWindowOpenMode, AliasTooltipAttribute>();
+        txt_StaticConstField_ClassName = "UIWindowOpenMode";
+        txt_StaticConstField_ScriptName = "en" + txt_StaticConstField_ClassName;
+        foreach (KeyValuePair<enEditorUIWindowOpenMode, AliasTooltipAttribute> key in openModes)
+        {
+            sbStaticConstField_Replace.Append(
+                staticConstField_Templete
+                .Replace("#Name#", key.Key.ToString())
+                .Replace("#Value#", ((int)key.Key).ToString())
+                .Replace("#Desc#", key.Value.alias)
+                );
+        }
+
+        txt_StaticConstField_Script =
+            txt_StaticConstField_ScriptTemplete
+            .Replace(staticConstField_ReplaceTemplete, sbStaticConstField_Replace.ToString())
+            .Replace("#StaticClassName#", txt_StaticConstField_ClassName)
+            ;
+        staticConstFieldScriptCfg.SetName(txt_StaticConstField_ScriptName);
+        staticConstFieldScriptCfg.SetText(txt_StaticConstField_Script);
+        staticConstFieldScriptCfg.CreateAsset();
+        #endregion
+
+        #region 生成enEditorUIWindowCloseMode静态类常量
+        txt_StaticConstField_Script = string.Empty;
+        txt_StaticConstField_ClassName = string.Empty;
+        txt_StaticConstField_ScriptName = string.Empty;
+        sbStaticConstField_Replace.Length = 0;
+        Dictionary<enEditorUIWindowCloseMode, AliasTooltipAttribute> closeModes = typeof(enEditorUIWindowCloseMode).EnumToAttribute<enEditorUIWindowCloseMode, AliasTooltipAttribute>();
+        txt_StaticConstField_ClassName = "UIWindowCloseMode";
+        txt_StaticConstField_ScriptName = "en" + txt_StaticConstField_ClassName;
+        foreach (KeyValuePair<enEditorUIWindowCloseMode, AliasTooltipAttribute> key in closeModes)
+        {
+            sbStaticConstField_Replace.Append(
+                staticConstField_Templete
+                .Replace("#Name#", key.Key.ToString())
+                .Replace("#Value#", ((int)key.Key).ToString())
+                .Replace("#Desc#", key.Value.alias)
+                );
+        }
+
+        txt_StaticConstField_Script =
+            txt_StaticConstField_ScriptTemplete
+            .Replace(staticConstField_ReplaceTemplete, sbStaticConstField_Replace.ToString())
+            .Replace("#StaticClassName#", txt_StaticConstField_ClassName)
+            ;
+        staticConstFieldScriptCfg.SetName(txt_StaticConstField_ScriptName);
+        staticConstFieldScriptCfg.SetText(txt_StaticConstField_Script);
+        staticConstFieldScriptCfg.CreateAsset();
+        #endregion
+        #endregion
 
         EditorUtility.ClearProgressBar();
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
@@ -619,7 +731,7 @@ public sealed class EditorStrayFogExecute
         StringBuilder sbLog = new StringBuilder();
 
         FileExtAttribute animatorControllerExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.AnimatorController);
-        List<EditorSelectionAnimatorControllerFMSMapingAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAnimatorControllerFMSMapingAsset>(cfg.paths, enEditorAssetFilterClassify.Object, true, (n) => { return n.ext.Equals(animatorControllerExt.ext); });
+        List<EditorSelectionAnimatorControllerFMSMapingAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAnimatorControllerFMSMapingAsset>(cfg.paths, enEditorAssetFilterClassify.Object, enEditorDependencyClassify.InClude, (n) => { return n.ext.Equals(animatorControllerExt.ext); });
         if (nodes != null && nodes.Count > 0)
         {
             sbLog.AppendLine(OnBuilderAnimatorControllerMaping(nodes));
@@ -1564,7 +1676,7 @@ public sealed class EditorStrayFogExecute
     public static List<EditorSelectionAssetBundleNameAsset> ExecuteLookPackageDll()
     {
         List<EditorSelectionAssetBundleNameAsset> nodes = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAssetBundleNameAsset>(
-            new string[1] { enEditorApplicationFolder.Game.GetAttribute<EditorApplicationFolderAttribute>().path }, "", false,
+            new string[1] { enEditorApplicationFolder.Game.GetAttribute<EditorApplicationFolderAttribute>().path }, "", enEditorDependencyClassify.UnClude,
             (n) => { return EditorStrayFogUtility.assetBundleName.IsDllPlugins(n); });
         StringBuilder sbLog = new StringBuilder();
         sbLog.AppendLine("Package Dll");
@@ -1753,7 +1865,7 @@ public sealed class EditorStrayFogExecute
     public static List<EditorSelectionAsmdefMapSetting> CollectAsmdef()
     {
         return EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsmdefMapSetting>(
-            new string[1] { Path.GetFileName(Application.dataPath) }, "", false,
+            new string[1] { Path.GetFileName(Application.dataPath) }, "", enEditorDependencyClassify.UnClude,
             (n) => { return EditorStrayFogUtility.assetBundleName.IsAsmdef(n); });
     }
     #endregion
@@ -1927,22 +2039,22 @@ public sealed class EditorStrayFogExecute
     /// <summary>
     /// 打包Manifest批处理
     /// </summary>
-    static readonly EditorTextAssetConfig mPackageManifestBat = new EditorTextAssetConfig("PackageManifest", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_PackageManifestTemplete);
+    static readonly EditorTextAssetConfig mPackageManifestBat = new EditorTextAssetConfig("PackageManifest", enEditorApplicationFolder.Game_Editor_Bat.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_PackageManifestTemplete);
 
     /// <summary>
     /// DebugProfiler批处理
     /// </summary>
-    static readonly EditorTextAssetConfig mDebugProfilerBat = new EditorTextAssetConfig("DebugProfiler", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_DebugProfilerTemplete);
+    static readonly EditorTextAssetConfig mDebugProfilerBat = new EditorTextAssetConfig("DebugProfiler", enEditorApplicationFolder.Game_Editor_Bat.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_DebugProfilerTemplete);
 
     /// <summary>
     /// ClearSvn批处理
     /// </summary>
-    static readonly EditorTextAssetConfig mClearSvnReg = new EditorTextAssetConfig("ClearSvn", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_ClearSvnTemplete);
+    static readonly EditorTextAssetConfig mClearSvnReg = new EditorTextAssetConfig("ClearSvn", enEditorApplicationFolder.Game_Editor_Bat.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_ClearSvnTemplete);
 
     /// <summary>
     /// PlayerLog批处理
     /// </summary>
-    static readonly EditorTextAssetConfig mPlayerLog = new EditorTextAssetConfig("PlayerLog", enEditorApplicationFolder.Game_Editor.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_PlayerLogTemplete);
+    static readonly EditorTextAssetConfig mPlayerLog = new EditorTextAssetConfig("PlayerLog", enEditorApplicationFolder.Game_Editor_Bat.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.Bat, EditorResxTemplete.Cmd_PlayerLogTemplete);
     
     /// <summary>
     /// 生成打包后的bat批处理文件
@@ -1984,7 +2096,7 @@ public sealed class EditorStrayFogExecute
         playerLogBat.SetText(playerLogBat.text.Replace("#Path#",
             Regex.Replace(Application.persistentDataPath, "/" + Environment.UserName + "/", "/%username%/")));
         playerLogBat.CreateAsset();
-
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendLine("ExecuteBuildBatToPackage Succeed!");
         Debug.Log(sbLog.ToString());
     }

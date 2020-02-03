@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// AssetBundleName工具
 /// </summary>
-public class EditorUtility_AssetBundleName : AbsSingle
+public class EditorUtility_AssetBundleName : AbsEditorSingle
 {
     /// <summary>
     /// 非法Unity资源名称
@@ -207,7 +207,7 @@ public class EditorUtility_AssetBundleName : AbsSingle
             sbErrorDirectory.AppendLine("Illegal directory name");
             bool isAnyIllegal = false;
             nodes = EditorStrayFogUtility.collectAsset.CollectAsset<T>(
-                _folders, enEditorAssetFilterClassify.Object, false,
+                _folders, enEditorAssetFilterClassify.Object,enEditorDependencyClassify.UnClude,
                 (node) =>
                 {
                     bool isLegal = IsLegalAssetBundleNamePackageNode(node);

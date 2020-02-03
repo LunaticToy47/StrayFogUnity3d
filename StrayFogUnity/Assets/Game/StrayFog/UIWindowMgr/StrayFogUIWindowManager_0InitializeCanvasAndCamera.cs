@@ -19,7 +19,7 @@ public partial class StrayFogUIWindowManager
     /// <summary>
     /// 绘制模式组
     /// </summary>
-    readonly Dictionary<int,string> mRenderModeMaping= typeof(enUIWindow_RenderMode_GameHotfix).ValueToNameForConstField();
+    readonly Dictionary<int,string> mRenderModeMaping= typeof(enUIWindowRenderMode).ValueToNameForConstField();
     /// <summary>
     /// 画面映射
     /// Key:RenderMode
