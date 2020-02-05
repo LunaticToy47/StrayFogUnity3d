@@ -47,7 +47,6 @@ public sealed class StrayFogRegisterMonoScript : MonoBehaviour
         {
             Debug.LogErrorFormat("【{0}】is not IMonoBehaviourLifeCycle", monoBehaviourScriptName);
         }
-
     }
 }
 

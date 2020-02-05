@@ -132,4 +132,17 @@ public static partial class StrayFogGamePools
         }
     }
     #endregion    
+
+    #region StrayFogILRuntimeManager
+    /// <summary>
+    /// StrayFogILRuntimeManager
+    /// </summary>
+    public static StrayFogILRuntimeManager ILRuntimeManager
+    {
+        get
+        {
+            return StrayFogHotfixUtility.SingleMonoBehaviour<StrayFogILRuntimeManager>();
+        }
+    }
+    #endregion
 }

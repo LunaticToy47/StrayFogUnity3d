@@ -1,0 +1,13 @@
+﻿<linker>
+  <assembly fullname="UnityEngine" preserve="all"/>
+  <assembly fullname="UnityEngine.UI" preserve="all"/>
+  <assembly fullname="Assembly-CSharp" preserve="all"/> 
+  <assembly fullname="ILRuntime" preserve="all"/>
+  <assembly fullname="Cinemachine" preserve="all"/>
+  <assembly fullname="Unity.Timeline" preserve="all"/>
+  <assembly fullname="XLua" preserve="all"/>
+  <assembly fullname="ProjectAPK" preserve="all"/>
+  <assembly fullname="StrayFogCore" preserve="all"/>
+  <assembly fullname="StrayFogRunning" preserve="all"/>
+  <assembly fullname="GameHotfix" preserve="all"/>
+</linker>

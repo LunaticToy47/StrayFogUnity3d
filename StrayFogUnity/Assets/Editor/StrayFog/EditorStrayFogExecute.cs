@@ -1866,7 +1866,7 @@ public sealed class EditorStrayFogExecute
     {
         return EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionAsmdefMapSetting>(
             new string[1] { Path.GetFileName(Application.dataPath) }, "", enEditorDependencyClassify.UnClude,
-            (n) => { return EditorStrayFogUtility.assetBundleName.IsAsmdef(n); });
+            (n) => { return EditorStrayFogUtility.assetBundleName.IsAsmdef(n); }, false);
     }
     #endregion
 

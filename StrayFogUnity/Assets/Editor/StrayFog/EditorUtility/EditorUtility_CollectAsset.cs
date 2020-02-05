@@ -435,8 +435,9 @@ public class EditorUtility_CollectAsset : AbsEditorSingle
                 progress = i + 1;
                 if (_displayProgressBar)
                 {
-                    EditorUtility.DisplayProgressBar("CollectAsset=>" + type.FullName, arrPath[i], progress / arrPath.Length);
+                    EditorUtility.DisplayProgressBar("CollectAsset=>" + type.Name, arrPath[i], progress / arrPath.Length);
                 }
+
                 if (_dependencyClassify == enEditorDependencyClassify.InClude)
                 {
                     #region 收集依赖项
@@ -465,7 +466,7 @@ public class EditorUtility_CollectAsset : AbsEditorSingle
                 progress = i + 1;
                 if (_displayProgressBar)
                 {
-                    EditorUtility.DisplayProgressBar("Filter Asset=>" + type.FullName, arrPath[i], progress / lstNodePath.Count);
+                    EditorUtility.DisplayProgressBar("Filter Asset=>" + type.Name, arrPath[i], progress / lstNodePath.Count);
                 }
                 if (File.Exists(lstNodePath[i]))
                 {
