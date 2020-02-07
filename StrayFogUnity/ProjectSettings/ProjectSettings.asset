@@ -576,7 +576,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    1: HOTFIX_ENABLE;4
+    1: HOTFIX_ENABLE
     7: 
     21: UNITY_XBOXONE_DEVELOPMENT_BUILD;FORCEEXTERNALLOADASSET
   platformArchitecture: {}

@@ -322,4 +322,9 @@ public static class enSplitSymbol
     /// </summary>
     [AliasTooltip("|")]
     public const int VerticalBar = 0x4;
+    /// <summary>
+    /// ;冒号
+    /// </summary>
+    [AliasTooltip(";")]
+    public const int Colon = 0x8;
 }

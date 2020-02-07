@@ -25,27 +25,17 @@ public sealed class EditorStrayFogApplication
     public readonly static Type curvePresetLibrary = Type.GetType("UnityEditor.CurvePresetLibrary, UnityEditor");
     #endregion
 
-    #region SetScriptingDefineSymbolsForGroup 设置脚本宏定义
-    /// <summary>
-    /// 脚本宏定义分隔符
-    /// </summary>
-    static readonly string msrScriptingDefineSymbolSpeatorChar = ";";
+    #region ScriptingDefineSymbolsForGroup 脚本宏定义
+    #region OnSetScriptingDefineSymbolsForGroup 设置脚本宏定义
     /// <summary>
     /// 设置脚本宏定义
     /// </summary>
     /// <param name="_defines">宏定义</param>
     /// <returns>宏字符串</returns>
-    public static string SetScriptingDefineSymbolsForGroup(string[] _defines)
+    public static string OnSetScriptingDefineSymbolsForGroup(string[] _defines)
     {
         StringBuilder sb = new StringBuilder();
-        if (_defines.Length > 0)
-        {
-            foreach (string s in _defines)
-            {
-                sb.AppendFormat("{0}{1}", s, msrScriptingDefineSymbolSpeatorChar);
-            }
-            sb.Remove(sb.Length - 1, 1);
-        }
+        sb.Append(_defines.Join(enSplitSymbol.Colon));
         PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, sb.ToString());
         return sb.ToString();
     }
@@ -62,7 +52,7 @@ public sealed class EditorStrayFogApplication
         string group = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
         if (!string.IsNullOrEmpty(group))
         {
-            symbol = group.Split(new string[1] { msrScriptingDefineSymbolSpeatorChar }, StringSplitOptions.RemoveEmptyEntries);
+            symbol = group.Split(enSplitSymbol.Colon);
         }
         if (symbol == null)
         {
@@ -101,7 +91,7 @@ public sealed class EditorStrayFogApplication
                 }
             }
         }
-        SetScriptingDefineSymbolsForGroup(saves.ToArray());
+        OnSetScriptingDefineSymbolsForGroup(saves.ToArray());
     }
     #endregion
 
@@ -134,8 +124,9 @@ public sealed class EditorStrayFogApplication
                 }
             }
         }
-        SetScriptingDefineSymbolsForGroup(saves.ToArray());
+        OnSetScriptingDefineSymbolsForGroup(saves.ToArray());
     }
+    #endregion
     #endregion
 
     #region  ExecuteMenu_AssetsRefresh 执行Assets/Refresh菜单
