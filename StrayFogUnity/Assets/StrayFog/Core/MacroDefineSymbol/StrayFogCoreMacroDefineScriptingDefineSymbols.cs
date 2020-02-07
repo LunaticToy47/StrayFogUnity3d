@@ -70,14 +70,14 @@ public static class StrayFogCoreMacroDefineScriptingDefineSymbols
         [AliasTooltip("编辑器模式")]
         public const int Editor = 0x1;
         /// <summary>
-        /// StreamingAssets模式
+        /// StreamingAssets模式【整包】
         /// </summary>
-        [AliasTooltip("StreamingAssets模式")]
+        [AliasTooltip("StreamingAssets模式【整包】")]
         public const int StreamingAssets = 0x2;
         /// <summary>
-        /// AssetBundle模式
+        /// AssetBundle模式【热更包】
         /// </summary>
-        [AliasTooltip("AssetBundle模式")]
+        [AliasTooltip("AssetBundle模式【热更包】")]
         public const int AssetBundle = 0x4;
     }
     #endregion
