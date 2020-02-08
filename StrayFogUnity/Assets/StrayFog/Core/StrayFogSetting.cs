@@ -1,26 +1,80 @@
-﻿using UnityEngine;
+﻿//外部资源加载模式
+#if (STREAMINGASSETS || ASSETBUNDLE)
+#define ISLOADASSETBYEXTERNAL
+#endif
+
+using UnityEngine;
 using System.Reflection;
 using System.IO;
 using System.Text;
 #if UNITY_EDITOR
 using UnityEditor;
+using System.Collections.Generic;
+using static StrayFogReleaseMacroDefineScriptingDefineSymbols;
 #endif
 /// <summary>
 /// StrayFogSetting
 /// </summary>
 public sealed class StrayFogSetting : AbsSingleScriptableObject
 {
+    #region isInternal 是否加载内部资源
+    /// <summary>
+    /// 是否加载内部资源
+    /// </summary>
+    [AliasTooltip("是否加载内部资源")]
+    public bool isInternal
+    {
+        get
+        {
+#if UNITY_EDITOR && !ISLOADASSETBYEXTERNAL
+            return true;
+#else
+            return false;
+#endif
+        }
+    }
+    #endregion
+
+    #region isUseSQLite 是否使用数据库
+    /// <summary>
+    /// 是否使用数据库
+    /// </summary>
+    [AliasTooltip("是否使用数据库")]
+    public bool isUseSQLite
+    {
+        get
+        {
+#if UNITY_EDITOR
+#if SQLITE
+            return true;
+#else
+            return !isInternal;
+#endif
+#else
+            return true;
+#endif
+        }
+    }
+    #endregion
+
     #region platform 运行平台
     //https://docs.unity3d.com/Manual/PlatformDependentCompilation.html
     /// <summary>
     /// 运行平台
     /// </summary>
+    string mPlatform = string.Empty;
+    /// <summary>
+    /// 运行平台
+    /// </summary>
+    [AliasTooltip("运行平台")]
     public string platform
     {
         get
         {
-            return "ab_" +
-            #region Platform Define
+            if (string.IsNullOrEmpty(mPlatform))
+            {
+                mPlatform = "ab_" +
+                #region Platform Define
 #if UNITY_STANDALONE_OSX
         //#define directive for compiling/executing code specifically for Mac OS X (including Universal, PPC and Intel architectures).
         "osx";
@@ -94,27 +148,55 @@ public sealed class StrayFogSetting : AbsSingleScriptableObject
         //#define directive for assertions control process.
         "assertions";
 #endif
-            #endregion
+                #endregion
+            }
+            return mPlatform;
         }
     }
     #endregion
 
     #region assetBundleRoot 资源包路径根目录
     /// <summary>
+    /// 资源包路径根目录
+    /// </summary>
+    string mAssetBundleRoot = string.Empty;
+    /// <summary>
     /// 资源包根路径
     /// </summary>
+    [AliasTooltip("资源包根路径")]
     public string assetBundleRoot
     {
         get
         {
-            return
+            if (string.IsNullOrEmpty(mAssetBundleRoot))
+            {
 #if UNITY_WEBGL
-"";
-#elif (UNITY_STANDALONE_WIN)&& !UNITY_EDITOR
-            Path.GetDirectoryName(Application.dataPath) + "/" + platform;
+                mAssetBundleRoot ="";
 #else
-            Application.persistentDataPath + "/" + platform;
+                #region Others
+#if UNITY_EDITOR
+                #region UNITY_EDITOR
+#if STREAMINGASSETS
+                mAssetBundleRoot = Path.Combine(streamingAssetsRoot, platform).TransPathSeparatorCharToUnityChar();
+#else
+                mAssetBundleRoot = Path.Combine(Application.persistentDataPath, platform).TransPathSeparatorCharToUnityChar();
 #endif
+                #endregion
+#else
+                #region RunTime
+#if STREAMINGASSETS
+                mAssetBundleRoot = Path.Combine(streamingAssetsRoot, platform).TransPathSeparatorCharToUnityChar();
+#elif UNITY_STANDALONE_WIN
+                mAssetBundleRoot = Path.Combine(Path.GetDirectoryName(Application.dataPath), platform).TransPathSeparatorCharToUnityChar();
+#else
+                mAssetBundleRoot = Path.Combine(Application.persistentDataPath, platform).TransPathSeparatorCharToUnityChar();
+#endif
+                #endregion
+#endif
+                #endregion
+#endif
+            }
+            return mAssetBundleRoot;
         }
     }
     #endregion
@@ -123,16 +205,24 @@ public sealed class StrayFogSetting : AbsSingleScriptableObject
     /// <summary>
     /// streamingAssets根目录
     /// </summary>
+    string mStreamingAssetsRoot = string.Empty;
+    /// <summary>
+    /// streamingAssets根目录
+    /// </summary>
+    [AliasTooltip("streamingAssets根目录")]
     public string streamingAssetsRoot
     {
         get
         {
-            return
+            if (string.IsNullOrEmpty(mStreamingAssetsRoot))
+            {
 #if UNITY_WEBGL
-"/" + Path.GetFileName(Application.streamingAssetsPath);
+                mStreamingAssetsRoot = "/" + Path.GetFileName(Application.streamingAssetsPath);
 #else
- Application.streamingAssetsPath;
+                mStreamingAssetsRoot = Application.streamingAssetsPath;
 #endif
+            }
+            return mStreamingAssetsRoot;
         }
     }
     #endregion
@@ -141,6 +231,7 @@ public sealed class StrayFogSetting : AbsSingleScriptableObject
     /// <summary>
     /// Manifest文件路径
     /// </summary>
+    [AliasTooltip("Manifest文件路径")]
     public string manifestPath { get { return Path.Combine(assetBundleRoot, platform).Replace(@"\", "/"); } }
     #endregion
 
@@ -148,6 +239,7 @@ public sealed class StrayFogSetting : AbsSingleScriptableObject
     /// <summary>
     /// WWW前缀
     /// </summary>
+    [AliasTooltip("WWW前缀")]
     public string wwwPrefix
     {
         get
@@ -162,41 +254,31 @@ string.Empty;
     }
     #endregion    
 
-    #region isInternal 是否是内部资源加载
+    #region GetSQLiteConnectionString 获得SQLite数据库连接字符串
     /// <summary>
-    /// 是否是内部资源加载
+    /// SQLite数据库连接字符串
     /// </summary>
-    public bool isInternal
-    {
-        get
-        {
-#if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
-            return true;
-#else
-            return false;
-#endif
-        }
-    }
-    #endregion
-    
-    #region isUseSQLite 是否使用数据库
+    Dictionary<int, string> mSQLiteConnectionStringMaping = new Dictionary<int, string>();
     /// <summary>
-    /// 是否使用数据库
+    /// 获得SQLite数据库连接字符串
     /// </summary>
-    public bool isUseSQLite
+    /// <param name="_dbPath">数据库路径</param>
+    /// <returns>数据库连接字符串</returns>
+    public string GetSQLiteConnectionString(string _dbPath)
     {
-        get
+        int key = _dbPath.GetHashCode();
+        if (!mSQLiteConnectionStringMaping.TryGetValue(key, out _dbPath))
         {
-#if UNITY_EDITOR
-#if FORCEUSESQLITE
-            return true;
+#if UNITY_EDITOR && !ISLOADASSETBYEXTERNAL
+            _dbPath = string.Format("data source={0}", _dbPath);
+#elif UNITY_ANDROID
+        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, _dbPath));
 #else
-            return !isInternal;
+        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, _dbPath));
 #endif
-#else
-            return true;
-#endif
+            mSQLiteConnectionStringMaping.Add(key, _dbPath);
         }
+        return _dbPath;
     }
     #endregion
 
@@ -204,30 +286,85 @@ string.Empty;
     /// <summary>
     /// 数据字符串
     /// </summary>
+    StringBuilder mSbToData = new StringBuilder();
+    /// <summary>
+    /// 数据字符串
+    /// </summary>
     /// <returns>数据字符串</returns>
     public string ToData()
     {
-        StringBuilder sb = new StringBuilder();
-        PropertyInfo[] properties = GetType().GetProperties();
-        if (properties != null && properties.Length > 0)
+        if (mSbToData.Length == 0)
         {
-            foreach (PropertyInfo p in properties)
+            PropertyInfo[] properties = GetType().GetProperties();
+            if (properties != null && properties.Length > 0)
             {
-                if (p.CanRead && !p.CanWrite)
+                AliasTooltipAttribute att = null;
+                foreach (PropertyInfo p in properties)
                 {
-                    sb.AppendLine(string.Format("{0}=>{1}", p.Name, p.GetValue(this, null)));
+                    if (p.CanRead && !p.CanWrite)
+                    {
+                        att = p.GetFirstAttribute<AliasTooltipAttribute>();
+                        mSbToData.AppendLine(string.Format("{0}【{1}】=>{2}", p.Name, att.alias, p.GetValue(this, null)));
+                    }
                 }
             }
         }
-        return sb.ToString();
+        return mSbToData.ToString();
     }
     #endregion
 
     #region UNITY_EDITOR
 #if UNITY_EDITOR
+    /// <summary>
+    /// 资源加载模式映射
+    /// </summary>
+    Dictionary<int, string> menLoadAssetModeDefineMaping = typeof(enLoadAssetModeDefine).ValueToAttributeSpecifyValueForConstField<AliasTooltipAttribute, string>((a) => { return a.alias; });
+    /// <summary>
+    /// 资源加载模式
+    /// </summary>
+    [AliasTooltip("资源加载模式")]
+    public string editorLoadAssetModeDefine
+    {
+        get
+        {
+#if STREAMINGASSETS
+            return menLoadAssetModeDefineMaping[enLoadAssetModeDefine.STREAMINGASSETS];
+#elif ASSETBUNDLE
+            return menLoadAssetModeDefineMaping[enLoadAssetModeDefine.ASSETBUNDLE];
+#else
+            return "Editor";
+#endif
+        }
+    }
+
+    /// <summary>
+    /// 加载配置表模式映射
+    /// </summary>
+    Dictionary<int, string> menLoadConfigDefineMaping = typeof(enLoadConfigDefine).ValueToAttributeSpecifyValueForConstField<AliasTooltipAttribute, string>((a) => { return a.alias; });
+    /// <summary>
+    /// 加载配置表模式
+    /// </summary>
+    [AliasTooltip("加载配置表模式")]
+    public string editorLoadConfigDefine
+    {
+        get
+        {
+            string result = string.Empty;
+            if (isUseSQLite)
+            {
+                result = menLoadConfigDefineMaping[enLoadConfigDefine.SQLITE];
+            }
+            else
+            {
+                result = menLoadConfigDefineMaping[enLoadConfigDefine.XLS];
+            }
+            return result;
+        }
+    }
+
     [InvokeMethod("EditorDisplayParameter")]
     [AliasTooltip("方法回调")]
-    public string invoke;
+    public string editorInvoke;
     /// <summary>
     /// OnDisplayPath
     /// </summary>
@@ -238,40 +375,16 @@ string.Empty;
     float EditorDisplayParameter(Rect _position, SerializedProperty _property, GUIContent _label)
     {
         float y = _position.y;
-        _position.height = 16;
+        _position.height = 16;        
         PropertyInfo[] properties = GetType().GetProperties();
         if (properties != null && properties.Length > 0)
         {
-            foreach (PropertyInfo p in properties)
-            {
-                if (p.CanRead && !p.CanWrite)
-                {
-                    EditorGUI.LabelField(_position, string.Format("{0}=>{1}", p.Name, p.GetValue(this, null)));
-                    _position.y += _position.height;
-                }
-            }
-        }        
+            _position.height *= properties.Length;
+        }
+        EditorGUI.LabelField(_position, ToData());
+        _position.y += _position.height;
         return _position.y - y;
     }
 #endif
-    #endregion
-
-    #region GetSQLiteConnectionString 获得SQLite数据库连接字符串
-    /// <summary>
-    /// 获得SQLite数据库连接字符串
-    /// </summary>
-    /// <param name="_dbPath">数据库路径</param>
-    /// <returns>数据库连接字符串</returns>
-    public string GetSQLiteConnectionString(string _dbPath)
-    {
-#if UNITY_EDITOR && !FORCEEXTERNALLOADASSET
-        _dbPath = string.Format("data source={0}", _dbPath);
-#elif UNITY_ANDROID
-        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, _dbPath));
-#else
-        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, _dbPath));
-#endif
-        return _dbPath;
-    }
-    #endregion
-}
+#endregion
+        }

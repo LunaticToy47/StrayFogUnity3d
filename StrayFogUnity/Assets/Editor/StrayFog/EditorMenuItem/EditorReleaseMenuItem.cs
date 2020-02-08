@@ -34,9 +34,9 @@ static class EditorReleaseMenuItem
     [MenuItem(mcHierarchy + mcBuildSetting, false, mcPriority)]
     static void EditorReleaseMenuItem_EditorWindowExecuteBuildSetting()
     {
-        //EditorWindowExecuteBuildSetting win =
-        //       EditorWindow.GetWindow<EditorWindowExecuteBuildSetting>(mcBuildSetting);
-        //win.Show();
+        EditorWindowExecuteBuildSetting win =
+               EditorWindow.GetWindow<EditorWindowExecuteBuildSetting>(mcBuildSetting);
+        win.Show();
     }
     #endregion
 

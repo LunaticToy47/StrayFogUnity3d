@@ -272,12 +272,58 @@ public class EditorUtility_GUILayout : AbsEditorSingle
     /// Value:静态类常量属性名称
     /// </summary>
     static Dictionary<int, GUIContent[]> mPopupStaticClassConstFieldMapForEnumAliasMaping = new Dictionary<int, GUIContent[]>();
+
+    /// <summary>
+    /// 静态类常量映射枚举别名
+    /// Key:staticType HashCode
+    /// Value:静态类常量属性名称
+    /// </summary>
+    static Dictionary<int, string[]> mPopupStaticClassConstFieldMapForMaskEnumAliasMaping = new Dictionary<int, string[]>();
+
     /// <summary>
     /// 静态类常量映射枚举值
     /// Key:staticType HashCode
     /// Value:静态类常量属性值
     /// </summary>
     static Dictionary<int, object[]> mPopupStaticClassConstFieldMapForEnumValueMaping = new Dictionary<int, object[]>();
+
+    /// <summary>
+    /// 静态类常量映射枚举Flags
+    /// Key:staticType HashCode
+    /// Value:静态类常量属性名称
+    /// </summary>
+    static Dictionary<int, bool> mPopupStaticClassConstFieldMapForEnumFlagsMaping = new Dictionary<int, bool>();
+
+    /// <summary>
+    /// 解析静态类常量映射枚举
+    /// </summary>
+    /// <param name="_fieldInfo">字段属性</param>
+    /// <param name="_staticTypeKey">静态类Key值</param>
+    /// <returns>true:成功,false:失败</returns>
+    bool OnResolveStaticClassConstFieldMapForEnum(FieldInfo _fieldInfo,out int _staticTypeKey)
+    {        
+        StaticClassConstFieldMapForEnumAttribute att = _fieldInfo.GetFirstAttribute<StaticClassConstFieldMapForEnumAttribute>();
+        bool result = att != null;
+        _staticTypeKey = att.staticType.GetHashCode();
+        if (!mPopupStaticClassConstFieldMapForEnumValueMaping.ContainsKey(_staticTypeKey))
+        {
+            Dictionary<object, string> data = att.staticType.ValueToAttributeSpecifyValueForConstField<object, AliasTooltipAttribute, string>((a) => { return a.alias; });
+            mPopupStaticClassConstFieldMapForEnumAliasMaping.Add(_staticTypeKey, new GUIContent[data.Count]);
+            mPopupStaticClassConstFieldMapForEnumValueMaping.Add(_staticTypeKey, new object[data.Count]);
+            mPopupStaticClassConstFieldMapForMaskEnumAliasMaping.Add(_staticTypeKey, new string[data.Count]);
+            int index = 0;
+            foreach (KeyValuePair<object, string> key in data)
+            {
+                mPopupStaticClassConstFieldMapForEnumAliasMaping[_staticTypeKey][index] = new GUIContent(key.Value);
+                mPopupStaticClassConstFieldMapForEnumValueMaping[_staticTypeKey][index] = key.Key;
+                mPopupStaticClassConstFieldMapForMaskEnumAliasMaping[_staticTypeKey][index] = key.Value;
+                index++;
+            }
+            mPopupStaticClassConstFieldMapForEnumFlagsMaping.Add(_staticTypeKey, att.staticType.GetFirstAttribute<StaticClassConstFieldFlagsAttribute>() != null);
+        }
+        return result;
+    }
+
     /// <summary>
     /// 绘制静态类常量映射枚举
     /// </summary>
@@ -286,55 +332,60 @@ public class EditorUtility_GUILayout : AbsEditorSingle
     /// <param name="_position">位置</param>
     /// <param name="_property">属性</param>
     /// <param name="_label">label</param>
-    public void StaticClassConstFieldMapForEnum(int _propertyKey,FieldInfo _fieldInfo, Rect _position, SerializedProperty _property, GUIContent _label)
+    public void StaticClassConstFieldMapForEnum(int _propertyKey, FieldInfo _fieldInfo, Rect _position, SerializedProperty _property, GUIContent _label)
     {
-        StaticClassConstFieldMapForEnumAttribute att = _fieldInfo.GetFirstAttribute<StaticClassConstFieldMapForEnumAttribute>();
-        int staticTypeKey = att.staticType.GetHashCode();
-        if (!mPopupStaticClassConstFieldMapForEnumValueMaping.ContainsKey(staticTypeKey))
+        int staticTypeKey = 0;
+        bool result = OnResolveStaticClassConstFieldMapForEnum(_fieldInfo, out staticTypeKey);
+        if (result)
         {
-            Dictionary<object, string> data = att.staticType.ValueToAttributeSpecifyValueForConstField<object, AliasTooltipAttribute, string>((a) => { return a.alias; });
-            mPopupStaticClassConstFieldMapForEnumAliasMaping.Add(staticTypeKey, new GUIContent[data.Count]);
-            mPopupStaticClassConstFieldMapForEnumValueMaping.Add(staticTypeKey, new object[data.Count]);
-            int index = 0;
-            foreach (KeyValuePair<object, string> key in data)
+            bool isFlags = mPopupStaticClassConstFieldMapForEnumFlagsMaping[staticTypeKey];
+            Type fieldType = null;
+            switch (_property.propertyType)
             {
-                mPopupStaticClassConstFieldMapForEnumAliasMaping[staticTypeKey][index] = new GUIContent(key.Value);
-                mPopupStaticClassConstFieldMapForEnumValueMaping[staticTypeKey][index] = key.Key;
-                index++;
+                case SerializedPropertyType.Float:
+                    fieldType = typeof(double);
+                    break;
+                default:
+                    fieldType = typeof(long);
+                    break;
+            }
+            if (isFlags)
+            {
+                #region Flags
+                _property.longValue = EditorGUI.MaskField(_position, _label, _property.intValue, mPopupStaticClassConstFieldMapForMaskEnumAliasMaping[staticTypeKey]);
+                #endregion
+            }
+            else
+            {
+                #region Not Flags
+                object[] staticValues = mPopupStaticClassConstFieldMapForEnumValueMaping[staticTypeKey];
+                int selectedIndex = 0;
+                for (int i = 0; i < staticValues.Length; i++)
+                {
+                    if (Convert.ChangeType(staticValues[i], fieldType)
+                        .Equals(_property.longValue))
+                    {
+                        selectedIndex = i;
+                        break;
+                    }
+                }
+                selectedIndex = EditorGUI.Popup(_position, _label, selectedIndex, mPopupStaticClassConstFieldMapForEnumAliasMaping[staticTypeKey]);
+                switch (_property.propertyType)
+                {
+                    case SerializedPropertyType.Float:
+                        _property.doubleValue = (double)Convert.ChangeType(staticValues[selectedIndex], fieldType);
+                        break;
+                    default:
+                        _property.longValue = (long)Convert.ChangeType(staticValues[selectedIndex], fieldType);
+                        break;
+                }
+                #endregion
             }
         }
-        Type fieldType = null;
-        switch (_property.propertyType)
+        else
         {
-            case SerializedPropertyType.Float:
-                fieldType = typeof(double);
-                break;
-            default:
-                fieldType = typeof(long);
-                break;
+            throw new Exception(string.Format("{0}.{1} can't has StaticClassConstFieldMapForEnumAttribute.", _fieldInfo.DeclaringType.Name, _fieldInfo.Name));
         }
-        object[] staticValues = mPopupStaticClassConstFieldMapForEnumValueMaping[staticTypeKey];
-        int selectedIndex = 0;
-        for(int i=0;i<staticValues.Length;i++)
-        {
-            if (Convert.ChangeType(staticValues[i], fieldType)
-                .Equals(_property.longValue))
-            {
-                selectedIndex = i;
-                break;
-            }
-        }
-        selectedIndex = EditorGUI.Popup(_position, _label, selectedIndex, mPopupStaticClassConstFieldMapForEnumAliasMaping[staticTypeKey]);
-        switch (_property.propertyType)
-        {
-            case SerializedPropertyType.Float:
-                _property.doubleValue = (double)Convert.ChangeType(staticValues[selectedIndex], fieldType);
-                break;
-            default:
-                _property.longValue = (long)Convert.ChangeType(staticValues[selectedIndex], fieldType);
-                break;
-        }
-        
     }
     #endregion
 
