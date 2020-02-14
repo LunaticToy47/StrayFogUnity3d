@@ -25,6 +25,18 @@ public class FMSMachine : AbsMonoBehaviour
     }
     #endregion
 
+    #region NameToHash 动画名称转Hash
+    /// <summary>
+    /// 动画名称转Hash
+    /// </summary>
+    /// <param name="_name">动画名称</param>
+    /// <returns>值</returns>
+    public int NameToHash(string _name)
+    {
+        return Animator.StringToHash(_name);
+    }
+    #endregion
+
     #region IsMachine 是否是指定状态机
     /// <summary>
     /// 是否是指定状态机

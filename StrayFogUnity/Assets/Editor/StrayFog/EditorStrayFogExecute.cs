@@ -80,7 +80,7 @@ public sealed class EditorStrayFogExecute
                         .Replace("#AssemblyName#", dicAssemblyName[pathKey])
                      ;
                     
-                    result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
+                    result = result.ClearRepeatCRLF();
                     EditorTextAssetConfig cfg = new EditorTextAssetConfig("EnumUIWindow",
                         EditorStrayFogSavedAssetConfig.setFolderConfigForUIWindowScript.paths[i], enFileExt.CS, result);
                     cfg.CreateAsset();
@@ -752,30 +752,45 @@ public sealed class EditorStrayFogExecute
     /// <returns>映射脚本路径</returns>
     static string OnBuilderAnimatorControllerMaping(List<EditorSelectionAnimatorControllerFMSMapingAsset> _nodes)
     {
+        SortedDictionary<string, List<int>> layerNameForIndexMaping = new SortedDictionary<string, List<int>>();
         SortedDictionary<string, List<string>> stateForMachineMaping = new SortedDictionary<string, List<string>>();
         SortedDictionary<string, List<string>> machineForStateMaping = new SortedDictionary<string, List<string>>();
-        SortedDictionary<string, List<int>> stateForLayerMaping = new SortedDictionary<string, List<int>>();
-        SortedDictionary<int, List<string>> layerForStateMaping = new SortedDictionary<int, List<string>>();
-        SortedDictionary<string, List<int>> machineForLayerMaping = new SortedDictionary<string, List<int>>();
-        SortedDictionary<int, List<string>> layerForMachineMaping = new SortedDictionary<int, List<string>>();
+        SortedDictionary<string, List<string>> stateForLayerMaping = new SortedDictionary<string, List<string>>();
+        SortedDictionary<string, List<string>> layerForStateMaping = new SortedDictionary<string, List<string>>();
+        SortedDictionary<string, List<string>> machineForLayerMaping = new SortedDictionary<string, List<string>>();
+        SortedDictionary<string, List<string>> layerForMachineMaping = new SortedDictionary<string, List<string>>();
         SortedDictionary<string, int> stateForNameHashMaping = new SortedDictionary<string, int>();
         SortedDictionary<string, int> parameterForNameHashMaping = new SortedDictionary<string, int>();        
         float progress = 0;
-        int maxLayerIndex = 0;
         foreach (EditorSelectionAnimatorControllerFMSMapingAsset n in _nodes)
         {
             progress++;
             n.Resolver();
-            maxLayerIndex = Mathf.Max(maxLayerIndex, n.maxLayerIndex);
+
+            #region LayerNameForIndex
+            foreach (KeyValuePair<string, int> key in n.layerNameForIndexMaping)
+            {
+                if (!layerNameForIndexMaping.ContainsKey(key.Key))
+                {
+                    layerNameForIndexMaping.Add(key.Key, new List<int>());
+                }
+                if (!layerNameForIndexMaping[key.Key].Contains(key.Value))
+                {
+                    layerNameForIndexMaping[key.Key].Add(key.Value);
+                }
+            }
+            EditorUtility.DisplayProgressBar("Resolver LayerNameForIndex",
+                            n.path, progress / _nodes.Count);
+            #endregion
 
             #region StateForLayer                      
-            foreach (KeyValuePair<string, List<int>> key in n.stateForLayerMaping)
+            foreach (KeyValuePair<string, List<string>> key in n.stateForLayerMaping)
             {
                 if (!stateForLayerMaping.ContainsKey(key.Key))
                 {
-                    stateForLayerMaping.Add(key.Key, new List<int>());
+                    stateForLayerMaping.Add(key.Key, new List<string>());
                 }
-                foreach (int v in key.Value)
+                foreach (string v in key.Value)
                 {
                     if (!stateForLayerMaping[key.Key].Contains(v))
                     {
@@ -788,7 +803,7 @@ public sealed class EditorStrayFogExecute
             #endregion
 
             #region LayerForState            
-            foreach (KeyValuePair<int, List<string>> key in n.layerForStateMaping)
+            foreach (KeyValuePair<string, List<string>> key in n.layerForStateMaping)
             {
                 if (!layerForStateMaping.ContainsKey(key.Key))
                 {
@@ -807,13 +822,13 @@ public sealed class EditorStrayFogExecute
             #endregion
 
             #region MachineForLayer           
-            foreach (KeyValuePair<string, List<int>> key in n.machineForLayerMaping)
+            foreach (KeyValuePair<string, List<string>> key in n.machineForLayerMaping)
             {
                 if (!machineForLayerMaping.ContainsKey(key.Key))
                 {
-                    machineForLayerMaping.Add(key.Key, new List<int>());
+                    machineForLayerMaping.Add(key.Key, new List<string>());
                 }
-                foreach (int v in key.Value)
+                foreach (string v in key.Value)
                 {
                     if (!machineForLayerMaping[key.Key].Contains(v))
                     {
@@ -826,7 +841,7 @@ public sealed class EditorStrayFogExecute
             #endregion
 
             #region LayerForMachine            
-            foreach (KeyValuePair<int, List<string>> key in n.layerForMachineMaping)
+            foreach (KeyValuePair<string, List<string>> key in n.layerForMachineMaping)
             {
                 if (!layerForMachineMaping.ContainsKey(key.Key))
                 {
@@ -941,15 +956,21 @@ public sealed class EditorStrayFogExecute
         editorFMSMachineMapingFormatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingScriptTemplete, @"#STATEFORLAYER#", out editorFMSMachineMapingReplaceTemplete);
         editorFMSMachineMapingFormatTempleteA = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingFormatTemplete, @"#LISTLAYER#", out editorFMSMachineMapingReplaceTempleteA);
         progress = 0;
-        foreach (KeyValuePair<string, List<int>> key in stateForLayerMaping)
+        foreach (KeyValuePair<string, List<string>> key in stateForLayerMaping)
         {
             progress++;
             editorFMSMachineMapingSbTempleteA.Length = 0;
-            foreach (int layer in key.Value)
+            foreach (string layer in key.Value)
             {
-                editorFMSMachineMapingSbTempleteA.Append(editorFMSMachineMapingFormatTempleteA.Replace("#LAYER#", layer.ToString()));
+                editorFMSMachineMapingSbTempleteA.Append(
+                    editorFMSMachineMapingFormatTempleteA.Replace("#LAYER#", layer.OnlyCharOrUnderline()));
             }
-            editorFMSMachineMapingSbTemplete.AppendLine(editorFMSMachineMapingFormatTemplete.Replace("#STATE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key.Key)).Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString()));
+
+            editorFMSMachineMapingSbTemplete.AppendLine(
+                editorFMSMachineMapingFormatTemplete.Replace("#STATE#", key.Key.OnlyCharOrUnderline())
+                .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
+                );
+
             EditorUtility.DisplayProgressBar("StateForLayer",
                             "State=>" + key.Key, progress / stateForLayerMaping.Count);
         }
@@ -961,15 +982,21 @@ public sealed class EditorStrayFogExecute
         editorFMSMachineMapingFormatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingScriptTemplete, @"#LAYERFORSTATE#", out editorFMSMachineMapingReplaceTemplete);
         editorFMSMachineMapingFormatTempleteA = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingFormatTemplete, @"#LISTSTATE#", out editorFMSMachineMapingReplaceTempleteA);
         progress = 0;
-        foreach (KeyValuePair<int, List<string>> key in layerForStateMaping)
+        foreach (KeyValuePair<string, List<string>> key in layerForStateMaping)
         {
             progress++;
             editorFMSMachineMapingSbTempleteA.Length = 0;
             foreach (string state in key.Value)
             {
-                editorFMSMachineMapingSbTempleteA.Append(editorFMSMachineMapingFormatTempleteA.Replace("#STATE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(state.ToString())));
+                editorFMSMachineMapingSbTempleteA.Append(
+                    editorFMSMachineMapingFormatTempleteA.Replace("#STATE#", state.OnlyCharOrUnderline()));
             }
-            editorFMSMachineMapingSbTemplete.AppendLine(editorFMSMachineMapingFormatTemplete.Replace("#LAYER#", key.Key.ToString()).Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString()));
+
+            editorFMSMachineMapingSbTemplete.AppendLine(
+                editorFMSMachineMapingFormatTemplete.Replace("#LAYER#", key.Key.OnlyCharOrUnderline())
+                .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
+                );
+
             EditorUtility.DisplayProgressBar("LayerForState",
                             "Layer=>" + key.Key, progress / layerForStateMaping.Count);
         }
@@ -981,15 +1008,20 @@ public sealed class EditorStrayFogExecute
         editorFMSMachineMapingFormatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingScriptTemplete, @"#MACHINEFORLAYER#", out editorFMSMachineMapingReplaceTemplete);
         editorFMSMachineMapingFormatTempleteA = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingFormatTemplete, @"#LISTLAYER#", out editorFMSMachineMapingReplaceTempleteA);
         progress = 0;
-        foreach (KeyValuePair<string, List<int>> key in machineForLayerMaping)
+        foreach (KeyValuePair<string, List<string>> key in machineForLayerMaping)
         {
             progress++;
             editorFMSMachineMapingSbTempleteA.Length = 0;
-            foreach (int layer in key.Value)
+            foreach (string layer in key.Value)
             {
-                editorFMSMachineMapingSbTempleteA.Append(editorFMSMachineMapingFormatTempleteA.Replace("#LAYER#", layer.ToString()));
+                editorFMSMachineMapingSbTempleteA.Append(
+                    editorFMSMachineMapingFormatTempleteA.Replace("#LAYER#", layer.OnlyCharOrUnderline()));
             }
-            editorFMSMachineMapingSbTemplete.AppendLine(editorFMSMachineMapingFormatTemplete.Replace("#MACHINE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key.Key)).Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString()));
+            editorFMSMachineMapingSbTemplete.AppendLine(
+                editorFMSMachineMapingFormatTemplete
+                .Replace("#MACHINE#",key.Key.OnlyCharOrUnderline())
+                .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
+                );
             EditorUtility.DisplayProgressBar("MachineForLayer",
                             "Machine=>" + key.Key, progress / machineForLayerMaping.Count);
         }
@@ -1001,19 +1033,26 @@ public sealed class EditorStrayFogExecute
         editorFMSMachineMapingFormatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingScriptTemplete, @"#LAYERFORMACHINE#", out editorFMSMachineMapingReplaceTemplete);
         editorFMSMachineMapingFormatTempleteA = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingFormatTemplete, @"#LISTMACHINE#", out editorFMSMachineMapingReplaceTempleteA);
         progress = 0;
-        foreach (KeyValuePair<int, List<string>> key in layerForMachineMaping)
+        foreach (KeyValuePair<string, List<string>> key in layerForMachineMaping)
         {
             progress++;
             editorFMSMachineMapingSbTempleteA.Length = 0;
             foreach (string state in key.Value)
             {
-                editorFMSMachineMapingSbTempleteA.Append(editorFMSMachineMapingFormatTempleteA.Replace("#MACHINE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(state.ToString())));
+                editorFMSMachineMapingSbTempleteA.Append(
+                    editorFMSMachineMapingFormatTempleteA.Replace("#MACHINE#", state.OnlyCharOrUnderline()));
             }
-            editorFMSMachineMapingSbTemplete.AppendLine(editorFMSMachineMapingFormatTemplete.Replace("#LAYER#", key.Key.ToString()).Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString()));
+
+            editorFMSMachineMapingSbTemplete.AppendLine(
+                editorFMSMachineMapingFormatTemplete.Replace("#LAYER#", key.Key.OnlyCharOrUnderline())
+                .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
+                );
+
             EditorUtility.DisplayProgressBar("LayerForMachine",
                             "Layer=>" + key.Key, progress / layerForMachineMaping.Count);
         }
-        editorFMSMachineMapingResult = editorFMSMachineMapingResult.Replace(editorFMSMachineMapingReplaceTemplete, editorFMSMachineMapingSbTemplete.ToString());
+        editorFMSMachineMapingResult = editorFMSMachineMapingResult
+            .Replace(editorFMSMachineMapingReplaceTemplete, editorFMSMachineMapingSbTemplete.ToString());
         #endregion
 
         #region StateForMachine
@@ -1027,9 +1066,15 @@ public sealed class EditorStrayFogExecute
             editorFMSMachineMapingSbTempleteA.Length = 0;
             foreach (string m in key.Value)
             {
-                editorFMSMachineMapingSbTempleteA.Append(editorFMSMachineMapingFormatTempleteA.Replace("#MACHINE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(m)));
+                editorFMSMachineMapingSbTempleteA.Append(
+                    editorFMSMachineMapingFormatTempleteA.Replace("#MACHINE#", m.OnlyCharOrUnderline()));
             }
-            editorFMSMachineMapingSbTemplete.AppendLine(editorFMSMachineMapingFormatTemplete.Replace("#STATE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key.Key)).Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString()));
+
+            editorFMSMachineMapingSbTemplete.AppendLine(
+                editorFMSMachineMapingFormatTemplete.Replace("#STATE#", key.Key.OnlyCharOrUnderline())
+                .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
+                );
+
             EditorUtility.DisplayProgressBar("StateForMachine",
                             "State=>" + key.Key, progress / stateForMachineMaping.Count);
         }
@@ -1047,9 +1092,15 @@ public sealed class EditorStrayFogExecute
             editorFMSMachineMapingSbTempleteA.Length = 0;
             foreach (string s in key.Value)
             {
-                editorFMSMachineMapingSbTempleteA.Append(editorFMSMachineMapingFormatTempleteA.Replace("#STATE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(s)));
+                editorFMSMachineMapingSbTempleteA.Append(
+                    editorFMSMachineMapingFormatTempleteA.Replace("#STATE#", s.OnlyCharOrUnderline()));
             }
-            editorFMSMachineMapingSbTemplete.AppendLine(editorFMSMachineMapingFormatTemplete.Replace("#MACHINE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key.Key)).Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString()));
+
+            editorFMSMachineMapingSbTemplete.AppendLine(
+                editorFMSMachineMapingFormatTemplete.Replace("#MACHINE#", key.Key.OnlyCharOrUnderline())
+                .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
+                );
+
             EditorUtility.DisplayProgressBar("MachineForState",
                             "Machine=>" + key.Key, progress / machineForStateMaping.Count);
         }
@@ -1060,16 +1111,25 @@ public sealed class EditorStrayFogExecute
         editorFMSMachineMapingSbTemplete.Length = 0;
         editorFMSMachineMapingFormatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(editorFMSMachineMapingScriptTemplete, @"#ENUMLAYER#", out editorFMSMachineMapingReplaceTemplete);
         progress = 0;
-        for (int i = 0; i < maxLayerIndex; i++)
+        
+        foreach (KeyValuePair<string,List<int>> key in layerNameForIndexMaping)
         {
             progress++;
-            editorFMSMachineMapingSbTemplete.AppendLine(
+            foreach (int index in key.Value)
+            {
+                editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#VALUE#", i.ToString()));
+                .Replace("#NAME#",key.Key.OnlyCharOrUnderline())                
+                .Replace("#VALUE#", index.ToString())
+                .Replace("#DESC#",key.Key)
+                );                
+            }
             EditorUtility.DisplayProgressBar("ENUMLAYER",
-                            "Layer=>" + i, progress / maxLayerIndex);
+                                "Layer=>" + key.Key, progress / layerNameForIndexMaping.Count);
         }
-        editorFMSMachineMapingResult = editorFMSMachineMapingResult.Replace(editorFMSMachineMapingReplaceTemplete, editorFMSMachineMapingSbTemplete.ToString());
+
+        editorFMSMachineMapingResult = editorFMSMachineMapingResult
+            .Replace(editorFMSMachineMapingReplaceTemplete, editorFMSMachineMapingSbTemplete.ToString());
         #endregion
 
         #region EnumMachine
@@ -1079,11 +1139,13 @@ public sealed class EditorStrayFogExecute
         foreach (string key in machineForStateMaping.Keys)
         {
             progress++;
+
             editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#MACHINE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key))
+                .Replace("#MACHINE#", key.OnlyCharOrUnderline())
                 .Replace("#VALUE#", key.UniqueHashCode().ToString())
                 .Replace("#MACHINEDESC#", key));
+
             EditorUtility.DisplayProgressBar("EnumMachine",
                             "Machine=>" + key, progress / machineForStateMaping.Count);
         }
@@ -1097,11 +1159,13 @@ public sealed class EditorStrayFogExecute
         foreach (KeyValuePair<string, int> key in stateForNameHashMaping)
         {
             progress++;
+
             editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#STATE#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key.Key))
+                .Replace("#STATE#", key.Key.OnlyCharOrUnderline())
                 .Replace("#VALUE#", key.Value.ToString())
                 .Replace("#STATEDESC#", key.Key));
+
             EditorUtility.DisplayProgressBar("EnumState",
                             "State=>" + key, progress / stateForNameHashMaping.Count);
         }
@@ -1115,17 +1179,20 @@ public sealed class EditorStrayFogExecute
         foreach (KeyValuePair<string, int> key in parameterForNameHashMaping)
         {
             progress++;
+
             editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#NAME#", EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(key.Key))
+                .Replace("#NAME#", key.Key.OnlyCharOrUnderline())
                 .Replace("#VALUE#", key.Value.ToString()));
+
             EditorUtility.DisplayProgressBar("EnumParameter",
                             "Parameter=>" + key, progress / parameterForNameHashMaping.Count);
         }
-        editorFMSMachineMapingResult = editorFMSMachineMapingResult.Replace(editorFMSMachineMapingReplaceTemplete, editorFMSMachineMapingSbTemplete.ToString());
+        editorFMSMachineMapingResult = editorFMSMachineMapingResult
+            .Replace(editorFMSMachineMapingReplaceTemplete, editorFMSMachineMapingSbTemplete.ToString());
         #endregion
 
-        editorFMSMachineMapingResult = EditorStrayFogUtility.regex.ClearRepeatCRLF(editorFMSMachineMapingResult);
+        editorFMSMachineMapingResult = editorFMSMachineMapingResult.ClearRepeatCRLF();
 
         EditorTextAssetConfig cfgScript = new EditorTextAssetConfig("FMSMachineMaping", enEditorApplicationFolder.Game_Script_FMS.GetAttribute<EditorApplicationFolderAttribute>().path, enFileExt.CS, "");
 
@@ -2083,7 +2150,7 @@ public sealed class EditorStrayFogExecute
         }
         sbTemplete.AppendLine(formatTemplete.Replace("#Folder#", path));
         string result = scriptTemplete.Replace(replaceTemplete, sbTemplete.ToString());
-        result = EditorStrayFogUtility.regex.ClearRepeatCRLF(result);
+        result = result.ClearRepeatCRLF();
         packageManifestBat.SetText(result);
         packageManifestBat.CreateAsset();
 

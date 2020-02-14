@@ -10,13 +10,13 @@ public sealed class FMSMachineMaping
 	/// MachineForLayer映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mMachineForLayerMaping = new Dictionary<int, List<int>>() {
-		{ enFMSMachine.Appear,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSMachine.Attack,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSMachine.Base_Layer,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSMachine.CutOff,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSMachine.MaxSkill,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSMachine.Move,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSMachine.Skill,new List<int> { enFMSLayer.layer0, } },
+		{ enFMSMachine.Base_Layer,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSMachine.Base_Layer_Appear,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSMachine.Base_Layer_Attack,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSMachine.Base_Layer_CutOff,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSMachine.Base_Layer_MaxSkill,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSMachine.Base_Layer_Move,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSMachine.Base_Layer_Skill,new List<int> { enFMSLayer.Base_Layer_index0, } },
 	};
 	#endregion
 	#region LayerForMachine映射
@@ -24,7 +24,7 @@ public sealed class FMSMachineMaping
 	/// LayerForMachine映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mLayerForMachineMaping = new Dictionary<int, List<int>>() {
-		{ enFMSLayer.layer0,new List<int> { enFMSMachine.Base_Layer,enFMSMachine.Attack,enFMSMachine.Skill,enFMSMachine.CutOff,enFMSMachine.Move,enFMSMachine.MaxSkill,enFMSMachine.Appear, } },
+		{ enFMSLayer.Base_Layer_index0,new List<int> { enFMSMachine.Base_Layer,enFMSMachine.Base_Layer_Attack,enFMSMachine.Base_Layer_Skill,enFMSMachine.Base_Layer_CutOff,enFMSMachine.Base_Layer_Move,enFMSMachine.Base_Layer_MaxSkill,enFMSMachine.Base_Layer_Appear, } },
 	};
 	#endregion
 	#region StateForLayer映射
@@ -32,20 +32,20 @@ public sealed class FMSMachineMaping
 	/// StateForLayer映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mStateForLayerMaping = new Dictionary<int, List<int>>() {
-		{ enFMSState.Attack1_1,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.Attack1_2,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.Attack2_1,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.Attack2_2,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.Attack3_1,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.Die,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.Idle,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.Run,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.RunSample,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.skill1_1,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.skill1_2,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.skill1_3,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.skill2_1,new List<int> { enFMSLayer.layer0, } },
-		{ enFMSState.skill3_1,new List<int> { enFMSLayer.layer0, } },
+		{ enFMSState.Base_Layer_Attack_Attack1_1,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Attack_Attack1_2,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Attack_Attack2_1,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Attack_Attack2_2,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Attack_Attack3_1,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_CutOff_Die,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Move_Idle,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Move_Run,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Move_RunSample,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Skill_skill1_1,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Skill_skill1_2,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Skill_skill1_3,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Skill_skill2_1,new List<int> { enFMSLayer.Base_Layer_index0, } },
+		{ enFMSState.Base_Layer_Skill_skill3_1,new List<int> { enFMSLayer.Base_Layer_index0, } },
 	};
 	#endregion
 	#region LayerForState映射
@@ -53,7 +53,7 @@ public sealed class FMSMachineMaping
 	/// LayerForState映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mLayerForStateMaping = new Dictionary<int, List<int>>() {
-		{ enFMSLayer.layer0,new List<int> { enFMSState.Attack1_2,enFMSState.Attack2_2,enFMSState.Attack3_1,enFMSState.Attack1_1,enFMSState.Attack2_1,enFMSState.skill3_1,enFMSState.skill2_1,enFMSState.skill1_3,enFMSState.skill1_1,enFMSState.skill1_2,enFMSState.Die,enFMSState.Idle,enFMSState.Run,enFMSState.RunSample, } },
+		{ enFMSLayer.Base_Layer_index0,new List<int> { enFMSState.Base_Layer_Attack_Attack1_2,enFMSState.Base_Layer_Attack_Attack2_2,enFMSState.Base_Layer_Attack_Attack3_1,enFMSState.Base_Layer_Attack_Attack1_1,enFMSState.Base_Layer_Attack_Attack2_1,enFMSState.Base_Layer_Skill_skill3_1,enFMSState.Base_Layer_Skill_skill2_1,enFMSState.Base_Layer_Skill_skill1_3,enFMSState.Base_Layer_Skill_skill1_1,enFMSState.Base_Layer_Skill_skill1_2,enFMSState.Base_Layer_CutOff_Die,enFMSState.Base_Layer_Move_Idle,enFMSState.Base_Layer_Move_Run,enFMSState.Base_Layer_Move_RunSample, } },
 	};
 	#endregion
 	#region StateForMachine映射
@@ -61,20 +61,20 @@ public sealed class FMSMachineMaping
 	/// StateForMachine映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mStateForMachineMaping = new Dictionary<int, List<int>>() {
-		{ enFMSState.Attack1_1,new List<int> { enFMSMachine.Attack,} },
-		{ enFMSState.Attack1_2,new List<int> { enFMSMachine.Attack,} },
-		{ enFMSState.Attack2_1,new List<int> { enFMSMachine.Attack,} },
-		{ enFMSState.Attack2_2,new List<int> { enFMSMachine.Attack,} },
-		{ enFMSState.Attack3_1,new List<int> { enFMSMachine.Attack,} },
-		{ enFMSState.Die,new List<int> { enFMSMachine.CutOff,} },
-		{ enFMSState.Idle,new List<int> { enFMSMachine.Move,} },
-		{ enFMSState.Run,new List<int> { enFMSMachine.Move,} },
-		{ enFMSState.RunSample,new List<int> { enFMSMachine.Move,} },
-		{ enFMSState.skill1_1,new List<int> { enFMSMachine.Skill,} },
-		{ enFMSState.skill1_2,new List<int> { enFMSMachine.Skill,} },
-		{ enFMSState.skill1_3,new List<int> { enFMSMachine.Skill,} },
-		{ enFMSState.skill2_1,new List<int> { enFMSMachine.Skill,} },
-		{ enFMSState.skill3_1,new List<int> { enFMSMachine.Skill,} },
+		{ enFMSState.Base_Layer_Attack_Attack1_1,new List<int> { enFMSMachine.Base_Layer_Attack,} },
+		{ enFMSState.Base_Layer_Attack_Attack1_2,new List<int> { enFMSMachine.Base_Layer_Attack,} },
+		{ enFMSState.Base_Layer_Attack_Attack2_1,new List<int> { enFMSMachine.Base_Layer_Attack,} },
+		{ enFMSState.Base_Layer_Attack_Attack2_2,new List<int> { enFMSMachine.Base_Layer_Attack,} },
+		{ enFMSState.Base_Layer_Attack_Attack3_1,new List<int> { enFMSMachine.Base_Layer_Attack,} },
+		{ enFMSState.Base_Layer_CutOff_Die,new List<int> { enFMSMachine.Base_Layer_CutOff,} },
+		{ enFMSState.Base_Layer_Move_Idle,new List<int> { enFMSMachine.Base_Layer_Move,} },
+		{ enFMSState.Base_Layer_Move_Run,new List<int> { enFMSMachine.Base_Layer_Move,} },
+		{ enFMSState.Base_Layer_Move_RunSample,new List<int> { enFMSMachine.Base_Layer_Move,} },
+		{ enFMSState.Base_Layer_Skill_skill1_1,new List<int> { enFMSMachine.Base_Layer_Skill,} },
+		{ enFMSState.Base_Layer_Skill_skill1_2,new List<int> { enFMSMachine.Base_Layer_Skill,} },
+		{ enFMSState.Base_Layer_Skill_skill1_3,new List<int> { enFMSMachine.Base_Layer_Skill,} },
+		{ enFMSState.Base_Layer_Skill_skill2_1,new List<int> { enFMSMachine.Base_Layer_Skill,} },
+		{ enFMSState.Base_Layer_Skill_skill3_1,new List<int> { enFMSMachine.Base_Layer_Skill,} },
 	};
 	#endregion
 	#region MachineForState映射
@@ -82,13 +82,13 @@ public sealed class FMSMachineMaping
 	/// MachineForState映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mMachineForStateMaping = new Dictionary<int, List<int>>() {
-		{ enFMSMachine.Appear,new List<int> { } },
-		{ enFMSMachine.Attack,new List<int> { enFMSState.Attack1_2,enFMSState.Attack2_2,enFMSState.Attack3_1,enFMSState.Attack1_1,enFMSState.Attack2_1,} },
 		{ enFMSMachine.Base_Layer,new List<int> { } },
-		{ enFMSMachine.CutOff,new List<int> { enFMSState.Die,} },
-		{ enFMSMachine.MaxSkill,new List<int> { } },
-		{ enFMSMachine.Move,new List<int> { enFMSState.Idle,enFMSState.Run,enFMSState.RunSample,} },
-		{ enFMSMachine.Skill,new List<int> { enFMSState.skill3_1,enFMSState.skill2_1,enFMSState.skill1_3,enFMSState.skill1_1,enFMSState.skill1_2,} },
+		{ enFMSMachine.Base_Layer_Appear,new List<int> { } },
+		{ enFMSMachine.Base_Layer_Attack,new List<int> { enFMSState.Base_Layer_Attack_Attack1_2,enFMSState.Base_Layer_Attack_Attack2_2,enFMSState.Base_Layer_Attack_Attack3_1,enFMSState.Base_Layer_Attack_Attack1_1,enFMSState.Base_Layer_Attack_Attack2_1,} },
+		{ enFMSMachine.Base_Layer_CutOff,new List<int> { enFMSState.Base_Layer_CutOff_Die,} },
+		{ enFMSMachine.Base_Layer_MaxSkill,new List<int> { } },
+		{ enFMSMachine.Base_Layer_Move,new List<int> { enFMSState.Base_Layer_Move_Idle,enFMSState.Base_Layer_Move_Run,enFMSState.Base_Layer_Move_RunSample,} },
+		{ enFMSMachine.Base_Layer_Skill,new List<int> { enFMSState.Base_Layer_Skill_skill3_1,enFMSState.Base_Layer_Skill_skill2_1,enFMSState.Base_Layer_Skill_skill1_3,enFMSState.Base_Layer_Skill_skill1_1,enFMSState.Base_Layer_Skill_skill1_2,} },
 	};
 	#endregion
 	#region IsMachine 是否是指定状态机
@@ -167,10 +167,10 @@ public sealed class FMSMachineMaping
 public static class enFMSLayer
 {
 	/// <summary>
-	/// layer0
+	/// Base Layer_index0
 	/// </summary>
-	[AliasTooltip("layer0")]
-	public const int layer0 = 0;
+	[AliasTooltip("Base Layer_index0")]
+	public const int Base_Layer_index0 = 0;
 }
 #endregion
 #region enFMSMachine
@@ -180,40 +180,40 @@ public static class enFMSLayer
 public static class enFMSMachine
 {
 	/// <summary>
-	/// Appear
-	/// </summary>
-	[AliasTooltip("Appear")]
-	public const int Appear = 37004531;
-	/// <summary>
-	/// Attack
-	/// </summary>
-	[AliasTooltip("Attack")]
-	public const int Attack = -1608400166;
-	/// <summary>
 	/// Base Layer
 	/// </summary>
 	[AliasTooltip("Base Layer")]
 	public const int Base_Layer = 2132919814;
 	/// <summary>
-	/// CutOff
+	/// Base Layer.Appear
 	/// </summary>
-	[AliasTooltip("CutOff")]
-	public const int CutOff = 665510285;
+	[AliasTooltip("Base Layer.Appear")]
+	public const int Base_Layer_Appear = 1810299478;
 	/// <summary>
-	/// MaxSkill
+	/// Base Layer.Attack
 	/// </summary>
-	[AliasTooltip("MaxSkill")]
-	public const int MaxSkill = 1993193975;
+	[AliasTooltip("Base Layer.Attack")]
+	public const int Base_Layer_Attack = -1066058642;
 	/// <summary>
-	/// Move
+	/// Base Layer.CutOff
 	/// </summary>
-	[AliasTooltip("Move")]
-	public const int Move = -863935284;
+	[AliasTooltip("Base Layer.CutOff")]
+	public const int Base_Layer_CutOff = 771977433;
 	/// <summary>
-	/// Skill
+	/// Base Layer.MaxSkill
 	/// </summary>
-	[AliasTooltip("Skill")]
-	public const int Skill = 17973819;
+	[AliasTooltip("Base Layer.MaxSkill")]
+	public const int Base_Layer_MaxSkill = 768335021;
+	/// <summary>
+	/// Base Layer.Move
+	/// </summary>
+	[AliasTooltip("Base Layer.Move")]
+	public const int Base_Layer_Move = -693355825;
+	/// <summary>
+	/// Base Layer.Skill
+	/// </summary>
+	[AliasTooltip("Base Layer.Skill")]
+	public const int Base_Layer_Skill = 668503037;
 }
 #endregion
 #region enFMSState
@@ -223,75 +223,75 @@ public static class enFMSMachine
 public static class enFMSState
 {
 	/// <summary>
-	/// Attack1_1
+	/// Base Layer.Attack.Attack1_1
 	/// </summary>
-	[AliasTooltip("Attack1_1")]
-	public const int Attack1_1 = -1483470882;
+	[AliasTooltip("Base Layer.Attack.Attack1_1")]
+	public const int Base_Layer_Attack_Attack1_1 = -1621456835;
 	/// <summary>
-	/// Attack1_2
+	/// Base Layer.Attack.Attack1_2
 	/// </summary>
-	[AliasTooltip("Attack1_2")]
-	public const int Attack1_2 = 1050498660;
+	[AliasTooltip("Base Layer.Attack.Attack1_2")]
+	public const int Base_Layer_Attack_Attack1_2 = 106158471;
 	/// <summary>
-	/// Attack2_1
+	/// Base Layer.Attack.Attack2_1
 	/// </summary>
-	[AliasTooltip("Attack2_1")]
-	public const int Attack2_1 = -1512916601;
+	[AliasTooltip("Base Layer.Attack.Attack2_1")]
+	public const int Base_Layer_Attack_Attack2_1 = -1659095452;
 	/// <summary>
-	/// Attack2_2
+	/// Base Layer.Attack.Attack2_2
 	/// </summary>
-	[AliasTooltip("Attack2_2")]
-	public const int Attack2_2 = 1021044797;
+	[AliasTooltip("Base Layer.Attack.Attack2_2")]
+	public const int Base_Layer_Attack_Attack2_2 = 68511710;
 	/// <summary>
-	/// Attack3_1
+	/// Base Layer.Attack.Attack3_1
 	/// </summary>
-	[AliasTooltip("Attack3_1")]
-	public const int Attack3_1 = -1542401104;
+	[AliasTooltip("Base Layer.Attack.Attack3_1")]
+	public const int Base_Layer_Attack_Attack3_1 = -1663148973;
 	/// <summary>
-	/// Die
+	/// Base Layer.CutOff.Die
 	/// </summary>
-	[AliasTooltip("Die")]
-	public const int Die = 20298039;
+	[AliasTooltip("Base Layer.CutOff.Die")]
+	public const int Base_Layer_CutOff_Die = -150360828;
 	/// <summary>
-	/// Idle
+	/// Base Layer.Move.Idle
 	/// </summary>
-	[AliasTooltip("Idle")]
-	public const int Idle = 2081823275;
+	[AliasTooltip("Base Layer.Move.Idle")]
+	public const int Base_Layer_Move_Idle = -910840152;
 	/// <summary>
-	/// Run
+	/// Base Layer.Move.Run
 	/// </summary>
-	[AliasTooltip("Run")]
-	public const int Run = 1748754976;
+	[AliasTooltip("Base Layer.Move.Run")]
+	public const int Base_Layer_Move_Run = 457199773;
 	/// <summary>
-	/// RunSample
+	/// Base Layer.Move.RunSample
 	/// </summary>
-	[AliasTooltip("RunSample")]
-	public const int RunSample = -1024391356;
+	[AliasTooltip("Base Layer.Move.RunSample")]
+	public const int Base_Layer_Move_RunSample = -466899697;
 	/// <summary>
-	/// skill1_1
+	/// Base Layer.Skill.skill1_1
 	/// </summary>
-	[AliasTooltip("skill1_1")]
-	public const int skill1_1 = -2049895578;
+	[AliasTooltip("Base Layer.Skill.skill1_1")]
+	public const int Base_Layer_Skill_skill1_1 = -1743932620;
 	/// <summary>
-	/// skill1_2
+	/// Base Layer.Skill.skill1_2
 	/// </summary>
-	[AliasTooltip("skill1_2")]
-	public const int skill1_2 = 483934940;
+	[AliasTooltip("Base Layer.Skill.skill1_2")]
+	public const int Base_Layer_Skill_skill1_2 = 17097358;
 	/// <summary>
-	/// skill1_3
+	/// Base Layer.Skill.skill1_3
 	/// </summary>
-	[AliasTooltip("skill1_3")]
-	public const int skill1_3 = 1809805898;
+	[AliasTooltip("Base Layer.Skill.skill1_3")]
+	public const int Base_Layer_Skill_skill1_3 = 1979961880;
 	/// <summary>
-	/// skill2_1
+	/// Base Layer.Skill.skill2_1
 	/// </summary>
-	[AliasTooltip("skill2_1")]
-	public const int skill2_1 = -2020102849;
+	[AliasTooltip("Base Layer.Skill.skill2_1")]
+	public const int Base_Layer_Skill_skill2_1 = -1706357395;
 	/// <summary>
-	/// skill3_1
+	/// Base Layer.Skill.skill3_1
 	/// </summary>
-	[AliasTooltip("skill3_1")]
-	public const int skill3_1 = -2041198840;
+	[AliasTooltip("Base Layer.Skill.skill3_1")]
+	public const int Base_Layer_Skill_skill3_1 = -1685493926;
 }
 #endregion
 #region enFMSParameter
@@ -301,12 +301,12 @@ public static class enFMSState
 public static class enFMSParameter
 {
 	/// <summary>
-	/// exitAction
+	/// exitAction_Trigger
 	/// </summary>
-	public const int exitAction = -1189175008;
+	public const int exitAction_Trigger = -1189175008;
 	/// <summary>
-	/// sampleNormalizedTime
+	/// sampleNormalizedTime_Float
 	/// </summary>
-	public const int sampleNormalizedTime = 1709776050;
+	public const int sampleNormalizedTime_Float = 1709776050;
 }
 #endregion

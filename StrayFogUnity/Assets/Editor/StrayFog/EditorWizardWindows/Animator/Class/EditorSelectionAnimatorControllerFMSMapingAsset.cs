@@ -22,20 +22,30 @@ public class EditorSelectionAnimatorControllerFMSMapingAsset : EditorSelectionAs
     /// </summary>
     public void Resolver()
     {
+        layerNameForIndexMaping = new SortedDictionary<string, int>();
+
         machineForStateMaping = new SortedDictionary<string, List<string>>();
         stateForMachineMaping = new SortedDictionary<string, List<string>>();
 
-        stateForLayerMaping = new SortedDictionary<string, List<int>>();
-        layerForStateMaping = new SortedDictionary<int, List<string>>();
+        stateForLayerMaping = new SortedDictionary<string, List<string>>();
+        layerForStateMaping = new SortedDictionary<string, List<string>>();
 
-        machineForLayerMaping = new SortedDictionary<string, List<int>>();
-        layerForMachineMaping = new SortedDictionary<int, List<string>>();
+        machineForLayerMaping = new SortedDictionary<string, List<string>>();
+        layerForMachineMaping = new SortedDictionary<string, List<string>>();
 
         stateForNameHashMaping = new SortedDictionary<string, int>();
-        parameterForNameHashMaping = new SortedDictionary<string, int>();
+        parameterForNameHashMaping = new SortedDictionary<string, int>();        
+
         AnimatorController ac = (AnimatorController)AssetDatabase.LoadMainAssetAtPath(path);
         OnResolverLayer(ac);
     }
+
+    /// <summary>
+    /// Layer层名称与索引 
+    /// Key:Layer名称
+    /// Value:Layer索引 
+    /// </summary>
+    public SortedDictionary<string,int> layerNameForIndexMaping { get; private set; }
 
     /// <summary>
     /// 状态与状态机映射
@@ -53,28 +63,28 @@ public class EditorSelectionAnimatorControllerFMSMapingAsset : EditorSelectionAs
     /// <summary>
     /// 状态与layer索引映射
     /// Key:状态
-    /// Value:layer索引
+    /// Value:layer名称
     /// </summary>
-    public SortedDictionary<string, List<int>> stateForLayerMaping { get; private set; }
+    public SortedDictionary<string, List<string>> stateForLayerMaping { get; private set; }
     /// <summary>
     /// layer与状态索引映射
-    /// Key:layer索引
+    /// Key:layer名称
     /// Value:状态
     /// </summary>
-    public SortedDictionary<int, List<string>> layerForStateMaping { get; private set; }
+    public SortedDictionary<string, List<string>> layerForStateMaping { get; private set; }
 
     /// <summary>
     /// 状态机与layer索引映射
     /// Key:状态机
-    /// Value:layer索引
+    /// Value:layer名称
     /// </summary>
-    public SortedDictionary<string, List<int>> machineForLayerMaping { get; private set; }
+    public SortedDictionary<string, List<string>> machineForLayerMaping { get; private set; }
     /// <summary>
     /// layer与状态机索引映射
-    /// Key:layer索引
+    /// Key:layer名称
     /// Value:状态机
     /// </summary>
-    public SortedDictionary<int, List<string>> layerForMachineMaping { get; private set; }
+    public SortedDictionary<string, List<string>> layerForMachineMaping { get; private set; }
 
     /// <summary>
     /// 状态与NameHash映射
@@ -88,26 +98,31 @@ public class EditorSelectionAnimatorControllerFMSMapingAsset : EditorSelectionAs
     /// Value:NameHash
     /// </summary>
     public SortedDictionary<string, int> parameterForNameHashMaping { get; private set; }
-    /// <summary>
-    /// 最大Layer索引
-    /// </summary>
-    public int maxLayerIndex { get; private set; }
+    
     /// <summary>
     /// 解析AnimatorController
     /// </summary>
     /// <param name="_ac">AnimatorController</param>
     void OnResolverLayer(AnimatorController _ac)
     {
-        maxLayerIndex = _ac.layers.Length;
+        string layerName = string.Empty;
         for (int i = 0; i < _ac.layers.Length; i++)
         {
-            OnTraverseAnimatorStateMachine(i, _ac.layers[i].stateMachine);
+            layerName = _ac.layers[i].name + "_index" + i;
+            if (!layerNameForIndexMaping.ContainsKey(layerName))
+            {
+                layerNameForIndexMaping.Add(layerName, i);
+            }
+            OnTraverseAnimatorStateMachine(i, layerName, _ac.layers[i].stateMachine, string.Empty);
         }
+
+        string parameterName = string.Empty;
         foreach (AnimatorControllerParameter p in _ac.parameters)
         {
-            if (!parameterForNameHashMaping.ContainsKey(p.name))
+            parameterName = p.name + "_" + p.type;
+            if (!parameterForNameHashMaping.ContainsKey(parameterName))
             {
-                parameterForNameHashMaping.Add(p.name, p.nameHash);
+                parameterForNameHashMaping.Add(parameterName, p.nameHash);
             }
         }
     }
@@ -116,88 +131,93 @@ public class EditorSelectionAnimatorControllerFMSMapingAsset : EditorSelectionAs
     /// 遍历状态机
     /// </summary>
     /// <param name="_layerIndex">layer索引</param>
+    /// <param name="_layerName">Layer名称</param>
     /// <param name="_machine">状态机</param>
-    void OnTraverseAnimatorStateMachine(int _layerIndex, AnimatorStateMachine _machine)
+    /// <param name="_pathName">路径名称</param>
+    void OnTraverseAnimatorStateMachine(int _layerIndex, string _layerName, AnimatorStateMachine _machine,string _pathName)
     {
         if (_machine != null)
         {
+            string machineName = string.IsNullOrEmpty(_pathName) ? _machine.name : (_pathName + "." + _machine.name);            
             #region machineForStateMaping
-            if (!machineForStateMaping.ContainsKey(_machine.name))
+            if (!machineForStateMaping.ContainsKey(machineName))
             {
-                machineForStateMaping.Add(_machine.name, new List<string>());
+                machineForStateMaping.Add(machineName, new List<string>());
             }
             #endregion
 
             #region machineForLayerMaping
-            if (!machineForLayerMaping.ContainsKey(_machine.name))
+            if (!machineForLayerMaping.ContainsKey(machineName))
             {
-                machineForLayerMaping.Add(_machine.name, new List<int>());
+                machineForLayerMaping.Add(machineName, new List<string>());
             }
-            if (!machineForLayerMaping[_machine.name].Contains(_layerIndex))
+            if (!machineForLayerMaping[machineName].Contains(_layerName))
             {
-                machineForLayerMaping[_machine.name].Add(_layerIndex);
+                machineForLayerMaping[machineName].Add(_layerName);
             }
             #endregion
 
             #region layerForMachineMaping
-            if (!layerForMachineMaping.ContainsKey(_layerIndex))
+            if (!layerForMachineMaping.ContainsKey(_layerName))
             {
-                layerForMachineMaping.Add(_layerIndex, new List<string>());
+                layerForMachineMaping.Add(_layerName, new List<string>());
             }
-            if (!layerForMachineMaping[_layerIndex].Contains(_machine.name))
+            if (!layerForMachineMaping[_layerName].Contains(machineName))
             {
-                layerForMachineMaping[_layerIndex].Add(_machine.name);
+                layerForMachineMaping[_layerName].Add(machineName);
             }
             #endregion
 
             if (_machine.states != null)
             {
+                string stateName = string.Empty;
                 foreach (ChildAnimatorState s in _machine.states)
                 {
+                    stateName = machineName + "." + s.state.name;
                     #region stateForMachineMaping
-                    if (!stateForMachineMaping.ContainsKey(s.state.name))
+                    if (!stateForMachineMaping.ContainsKey(stateName))
                     {
-                        stateForMachineMaping.Add(s.state.name, new List<string>());
+                        stateForMachineMaping.Add(stateName, new List<string>());
                     }
-                    if (!stateForMachineMaping[s.state.name].Contains(_machine.name))
+                    if (!stateForMachineMaping[stateName].Contains(machineName))
                     {
-                        stateForMachineMaping[s.state.name].Add(_machine.name);
+                        stateForMachineMaping[stateName].Add(machineName);
                     }
                     #endregion
 
                     #region machineForStateMaping
-                    if (!machineForStateMaping[_machine.name].Contains(_machine.name))
+                    if (!machineForStateMaping[machineName].Contains(machineName))
                     {
-                        machineForStateMaping[_machine.name].Add(s.state.name);
+                        machineForStateMaping[machineName].Add(stateName);
                     }
                     #endregion
 
                     #region stateForLayerMaping
-                    if (!stateForLayerMaping.ContainsKey(s.state.name))
+                    if (!stateForLayerMaping.ContainsKey(stateName))
                     {
-                        stateForLayerMaping.Add(s.state.name, new List<int>());
+                        stateForLayerMaping.Add(stateName, new List<string>());
                     }
-                    if (!stateForLayerMaping[s.state.name].Contains(_layerIndex))
+                    if (!stateForLayerMaping[stateName].Contains(_layerName))
                     {
-                        stateForLayerMaping[s.state.name].Add(_layerIndex);
+                        stateForLayerMaping[stateName].Add(_layerName);
                     }
                     #endregion
 
                     #region layerForStateMaping
-                    if (!layerForStateMaping.ContainsKey(_layerIndex))
+                    if (!layerForStateMaping.ContainsKey(_layerName))
                     {
-                        layerForStateMaping.Add(_layerIndex, new List<string>());
+                        layerForStateMaping.Add(_layerName, new List<string>());
                     }
-                    if (!layerForStateMaping[_layerIndex].Contains(s.state.name))
+                    if (!layerForStateMaping[_layerName].Contains(stateName))
                     {
-                        layerForStateMaping[_layerIndex].Add(s.state.name);
+                        layerForStateMaping[_layerName].Add(stateName);
                     }
                     #endregion
 
                     #region stateForNameHashMaping
-                    if (!stateForNameHashMaping.ContainsKey(s.state.name))
+                    if (!stateForNameHashMaping.ContainsKey(stateName))
                     {
-                        stateForNameHashMaping.Add(s.state.name, s.state.nameHash);
+                        stateForNameHashMaping.Add(stateName, Animator.StringToHash(stateName));
                     }
                     #endregion
                 }
@@ -207,7 +227,7 @@ public class EditorSelectionAnimatorControllerFMSMapingAsset : EditorSelectionAs
             {
                 foreach (ChildAnimatorStateMachine cm in _machine.stateMachines)
                 {
-                    OnTraverseAnimatorStateMachine(_layerIndex, cm.stateMachine);
+                    OnTraverseAnimatorStateMachine(_layerIndex, _layerName, cm.stateMachine, machineName);
                 }
             }
         }

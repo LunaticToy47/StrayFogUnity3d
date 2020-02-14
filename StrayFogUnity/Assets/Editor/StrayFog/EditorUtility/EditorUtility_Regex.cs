@@ -26,32 +26,6 @@ public class EditorUtility_Regex : AbsEditorSingle
         }
         return result;
     }
-    #endregion
-
-    #region ClearRepeatCRLF 清除重复的回车换行符
-    /// <summary>
-    /// 清除字符串中重复的回车换行符
-    /// </summary>
-    /// <param name="_str">字符串</param>
-    /// <returns>字符串</returns>
-    public string ClearRepeatCRLF(string _str)
-    {
-        _str = Regex.Replace(_str, @"(\r\n[\r\n\t]*?\r\n)", "\r\n");
-        _str = Regex.Replace(_str, @"(\r\n){2,}", "\r\n");
-        return _str;
-    }
-    #endregion
-
-    #region ClearCRLF 清除回车换行符
-    /// <summary>
-    /// 清除回车换行符
-    /// </summary>
-    /// <param name="_str">字符串</param>
-    /// <returns>字符串</returns>
-    public string ClearCRLF(string _str)
-    {
-        return Regex.Replace(_str, @"\r|\n", "");
-    }
-    #endregion
+    #endregion    
 }
 #endif

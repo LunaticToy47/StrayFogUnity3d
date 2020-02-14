@@ -10,7 +10,7 @@ public sealed class FMSMachineMaping
 	/// MachineForLayer映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mMachineForLayerMaping = new Dictionary<int, List<int>>() {#MACHINEFORLAYER#
-		{ enFMSMachine.#MACHINE#,new List<int> { #LISTLAYER#enFMSLayer.layer#LAYER#,#LISTLAYER# } },#MACHINEFORLAYER#
+		{ enFMSMachine.#MACHINE#,new List<int> { #LISTLAYER#enFMSLayer.#LAYER#,#LISTLAYER# } },#MACHINEFORLAYER#
 	};
 	#endregion
 
@@ -19,7 +19,7 @@ public sealed class FMSMachineMaping
 	/// LayerForMachine映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mLayerForMachineMaping = new Dictionary<int, List<int>>() {#LAYERFORMACHINE#
-		{ enFMSLayer.layer#LAYER#,new List<int> { #LISTMACHINE#enFMSMachine.#MACHINE#,#LISTMACHINE# } },#LAYERFORMACHINE#
+		{ enFMSLayer.#LAYER#,new List<int> { #LISTMACHINE#enFMSMachine.#MACHINE#,#LISTMACHINE# } },#LAYERFORMACHINE#
 	};
 	#endregion
 
@@ -28,7 +28,7 @@ public sealed class FMSMachineMaping
 	/// StateForLayer映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mStateForLayerMaping = new Dictionary<int, List<int>>() {#STATEFORLAYER#
-		{ enFMSState.#STATE#,new List<int> { #LISTLAYER#enFMSLayer.layer#LAYER#,#LISTLAYER# } },#STATEFORLAYER#
+		{ enFMSState.#STATE#,new List<int> { #LISTLAYER#enFMSLayer.#LAYER#,#LISTLAYER# } },#STATEFORLAYER#
 	};
 	#endregion
 
@@ -37,7 +37,7 @@ public sealed class FMSMachineMaping
 	/// LayerForState映射
 	/// </summary>
 	readonly static Dictionary<int, List<int>> mLayerForStateMaping = new Dictionary<int, List<int>>() {#LAYERFORSTATE#
-		{ enFMSLayer.layer#LAYER#,new List<int> { #LISTSTATE#enFMSState.#STATE#,#LISTSTATE# } },#LAYERFORSTATE#
+		{ enFMSLayer.#LAYER#,new List<int> { #LISTSTATE#enFMSState.#STATE#,#LISTSTATE# } },#LAYERFORSTATE#
 	};
 	#endregion
 
@@ -137,10 +137,10 @@ public static class enFMSLayer
 {
 #ENUMLAYER#
 	/// <summary>
-	/// layer#VALUE#
+	/// #DESC#
 	/// </summary>
-	[AliasTooltip("layer#VALUE#")]
-	public const int layer#VALUE# = #VALUE#;
+	[AliasTooltip("#DESC#")]
+	public const int #NAME# = #VALUE#;
 #ENUMLAYER#
 }
 #endregion

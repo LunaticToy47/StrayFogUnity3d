@@ -112,7 +112,7 @@ public class ExampleFMSLevel : AbsLevel
                 {
                     switch (key.Value)
                     {
-                        case enFMSParameter.exitAction:
+                        case enFMSParameter.exitAction_Trigger:
                             mFMSMachine.SetTrigger(key.Value, true);
                             break;
                     }
@@ -121,21 +121,21 @@ public class ExampleFMSLevel : AbsLevel
             GUILayout.EndHorizontal();
             GUILayout.EndScrollView();
 
-            if (mFMSMachine.IsState(enFMSState.RunSample))
+            if (mFMSMachine.IsState(enFMSState.Base_Layer_Move_RunSample))
             {
                 GUILayout.BeginHorizontal();
-                mAutoSample = GUILayout.Toggle(mAutoSample,"Auto Sample");
+                mAutoSample = GUILayout.Toggle(mAutoSample, "Auto Sample");
                 mSampleNormalizedTime = GUILayout.HorizontalSlider(mSampleNormalizedTime, 0, 1);
-                mFMSMachine.SetFloat(enFMSParameter.sampleNormalizedTime, mSampleNormalizedTime);
+                mFMSMachine.SetFloat(enFMSParameter.sampleNormalizedTime_Float, mSampleNormalizedTime);
                 GUILayout.EndHorizontal();
                 GUILayout.EndVertical();
-            }            
+            }
         }
         StrayFogGamePools.sceneManager.DrawLevelSelectButtonOnGUI();
         StrayFogGamePools.eventHandlerManager.DrawLevelSelectButtonOnGUI();
     }
 
-    private void Update()
+    protected override void OnRunUpdate()
     {
         if (mAutoSample)
         {

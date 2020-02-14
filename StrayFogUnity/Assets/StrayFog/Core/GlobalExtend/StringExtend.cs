@@ -300,6 +300,48 @@ public static class StringExtend
         return descSb.ToString();
     }
     #endregion
+
+    #region OnlyCharOrUnderline 仅保留字符和下划线
+    /// <summary>
+    /// 仅保留字符和下划线
+    /// </summary>
+    const string illegalOnlyCharOrUnderline = @"[^\w\d_]";
+    /// <summary>
+    /// 仅保留字符和下划线
+    /// </summary>
+    /// <param name="_string">要转换的字符</param>
+    /// <returns>字符</returns>
+    public static string OnlyCharOrUnderline(this string _string)
+    {
+        return Regex.Replace(_string, illegalOnlyCharOrUnderline, "_");
+    }
+    #endregion
+
+    #region ClearRepeatCRLF 清除重复的回车换行符
+    /// <summary>
+    /// 清除字符串中重复的回车换行符
+    /// </summary>
+    /// <param name="_str">字符串</param>
+    /// <returns>字符串</returns>
+    public static string ClearRepeatCRLF(this string _str)
+    {
+        _str = Regex.Replace(_str, @"(\r\n[\r\n\t]*?\r\n)", "\r\n");
+        _str = Regex.Replace(_str, @"(\r\n){2,}", "\r\n");
+        return _str;
+    }
+    #endregion
+
+    #region ClearCRLF 清除回车换行符
+    /// <summary>
+    /// 清除回车换行符
+    /// </summary>
+    /// <param name="_str">字符串</param>
+    /// <returns>字符串</returns>
+    public static string ClearCRLF(this string _str)
+    {
+        return Regex.Replace(_str, @"\r|\n", "");
+    }
+    #endregion
 }
 
 /// <summary>
