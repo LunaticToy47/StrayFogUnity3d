@@ -10,7 +10,7 @@ using System.Text;
 #if UNITY_EDITOR
 using UnityEditor;
 using System.Collections.Generic;
-using static StrayFogReleaseMacroDefineScriptingDefineSymbols;
+using static StrayFogMacroDefineScriptingDefineSymbols;
 #endif
 /// <summary>
 /// StrayFogSetting

@@ -41,5 +41,9 @@ public sealed class EditorStrayFogUtility
     /// GUILayout工具
     /// </summary>
     public readonly static EditorUtility_GUILayout guiLayout = Single<EditorUtility_GUILayout>();
+    /// <summary>
+    /// 宏定义工具
+    /// </summary>
+    public readonly static EditorUtility_MacroDefineSymbol macroDefineSymbol = Single<EditorUtility_MacroDefineSymbol>();
 }
 #endif
