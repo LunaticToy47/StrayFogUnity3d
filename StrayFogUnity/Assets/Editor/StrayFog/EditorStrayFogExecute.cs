@@ -2029,7 +2029,7 @@ public sealed class EditorStrayFogExecute
     public static void ExecuteBuildPackage()
     {
         EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
-        
+
         string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
         StringBuilder sbLog = new StringBuilder();
         #region 清理包目录
@@ -2090,7 +2090,7 @@ public sealed class EditorStrayFogExecute
         EditorUtility.DisplayProgressBar("BuildPackage", "BuildAssetBundles", 0);
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         BuildPipeline.BuildAssetBundles(path,
-            BuildAssetBundleOptions.ChunkBasedCompression,
+            BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DeterministicAssetBundle,
             EditorUserBuildSettings.activeBuildTarget);
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         EditorStrayFogUtility.cmd.ExcuteFile(Path.GetFullPath(mPackageManifestBat.fileName));
