@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -10,13 +11,18 @@ public class EditorWindowExecuteBuildSetting : AbsEditorWindow
     /// 滚动视图位置
     /// </summary>
     Vector2 mScrollViewPosition = Vector2.zero;
+
+    /// <summary>
+    /// 宏定义
+    /// </summary>
+    Dictionary<int, EditorMacroDefineSymbol> mEditorMacroDefineSymbolMaping = new Dictionary<int, EditorMacroDefineSymbol>();
     
     /// <summary>
     /// OnFocus
     /// </summary>
     private void OnFocus()
     {
-        
+        mEditorMacroDefineSymbolMaping = EditorStrayFogUtility.macroDefineSymbol.LoadMacroDefineScriptingDefineSymbols();
     }
 
     /// <summary>
@@ -33,8 +39,11 @@ public class EditorWindowExecuteBuildSetting : AbsEditorWindow
     /// DrawBrower
     /// </summary>
     void DrawBrower()
-    {
-         
+    {        
+        foreach (EditorMacroDefineSymbol key in mEditorMacroDefineSymbolMaping.Values)
+        {
+
+        }
         EditorGUILayout.Separator();
     }
     #endregion

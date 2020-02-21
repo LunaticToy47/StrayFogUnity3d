@@ -10,7 +10,6 @@ using System.Text;
 #if UNITY_EDITOR
 using UnityEditor;
 using System.Collections.Generic;
-using static StrayFogMacroDefineScriptingDefineSymbols;
 #endif
 /// <summary>
 /// StrayFogSetting
@@ -315,52 +314,7 @@ string.Empty;
 
     #region UNITY_EDITOR
 #if UNITY_EDITOR
-    /// <summary>
-    /// 资源加载模式映射
-    /// </summary>
-    Dictionary<int, string> menLoadAssetModeDefineMaping = typeof(enLoadAssetModeDefine).ValueToAttributeSpecifyValueForConstField<AliasTooltipAttribute, string>((a) => { return a.alias; });
-    /// <summary>
-    /// 资源加载模式
-    /// </summary>
-    [AliasTooltip("资源加载模式")]
-    public string editorLoadAssetModeDefine
-    {
-        get
-        {
-#if STREAMINGASSETS
-            return menLoadAssetModeDefineMaping[enLoadAssetModeDefine.STREAMINGASSETS];
-#elif ASSETBUNDLE
-            return menLoadAssetModeDefineMaping[enLoadAssetModeDefine.ASSETBUNDLE];
-#else
-            return "Editor";
-#endif
-        }
-    }
 
-    /// <summary>
-    /// 加载配置表模式映射
-    /// </summary>
-    Dictionary<int, string> menLoadConfigDefineMaping = typeof(enLoadConfigDefine).ValueToAttributeSpecifyValueForConstField<AliasTooltipAttribute, string>((a) => { return a.alias; });
-    /// <summary>
-    /// 加载配置表模式
-    /// </summary>
-    [AliasTooltip("加载配置表模式")]
-    public string editorLoadConfigDefine
-    {
-        get
-        {
-            string result = string.Empty;
-            if (isUseSQLite)
-            {
-                result = menLoadConfigDefineMaping[enLoadConfigDefine.SQLITE];
-            }
-            else
-            {
-                result = menLoadConfigDefineMaping[enLoadConfigDefine.XLS];
-            }
-            return result;
-        }
-    }
 
     [InvokeMethod("EditorDisplayParameter")]
     [AliasTooltip("方法回调")]
@@ -375,7 +329,7 @@ string.Empty;
     float EditorDisplayParameter(Rect _position, SerializedProperty _property, GUIContent _label)
     {
         float y = _position.y;
-        _position.height = 16;        
+        _position.height = 16;
         PropertyInfo[] properties = GetType().GetProperties();
         if (properties != null && properties.Length > 0)
         {
@@ -386,5 +340,5 @@ string.Empty;
         return _position.y - y;
     }
 #endif
-#endregion
-        }
+    #endregion
+}

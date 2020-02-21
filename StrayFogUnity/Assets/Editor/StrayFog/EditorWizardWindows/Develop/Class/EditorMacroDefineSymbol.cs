@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 /// <summary>
 /// 宏定义符号
@@ -20,7 +21,7 @@ public class EditorMacroDefineSymbol
         {
             item = new EditorMacroDefineSymbol_Item(key.Key, key.Value);
             defineMaping.Add(item.name, item);
-        }
+        }        
     }
 
     public int key { get; private set; }
@@ -37,14 +38,14 @@ public class EditorMacroDefineSymbol
     /// </summary>
     public Dictionary<string, EditorMacroDefineSymbol_Item> defineMaping { get; private set; }
     /// <summary>
-    /// 检测宏定义
+    /// 设置宏定义
     /// </summary>
-    /// <param name="_defines">宏定义</param>
-    public void Check(string[] _defines)
+    /// <param name="_defineNames">宏定义名称组</param>
+    public void SetChecked(string[] _defineNames)
     {
-        if (_defines != null && _defines.Length > 0)
+        if (_defineNames != null && _defineNames.Length > 0)
         {
-            foreach (string k in _defines)
+            foreach (string k in _defineNames)
             {
                 if (defineMaping.ContainsKey(k))
                 {
@@ -54,3 +55,4 @@ public class EditorMacroDefineSymbol
         }
     }
 }
+#endif

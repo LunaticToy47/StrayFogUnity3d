@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// 宏定义
 /// </summary>
-public static class StrayFogMacroDefineScriptingDefineSymbols
+public static class EditorMacroDefineScriptingDefineSymbols
 {
     #region enLoadAssetModeDefine 资源加载模式宏定义
     /// <summary>

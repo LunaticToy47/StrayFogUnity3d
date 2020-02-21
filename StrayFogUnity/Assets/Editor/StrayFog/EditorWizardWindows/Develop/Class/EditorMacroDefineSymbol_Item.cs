@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿#if UNITY_EDITOR
+/// <summary>
 /// 宏定义符号子项
 /// </summary>
 public class EditorMacroDefineSymbol_Item
@@ -26,3 +27,4 @@ public class EditorMacroDefineSymbol_Item
     /// </summary>
     public bool isChecked;
 }
+#endif

@@ -14,7 +14,7 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
     {
         Dictionary<int, EditorMacroDefineSymbol> result = new Dictionary<int, EditorMacroDefineSymbol>();
         string[] defines = EditorStrayFogApplication.GetScriptingDefineSymbolsForGroup();
-        Type define = typeof(StrayFogMacroDefineScriptingDefineSymbols);
+        Type define = typeof(EditorMacroDefineScriptingDefineSymbols);
         Type[] types = define.GetNestedTypes();
         if (types != null && types.Length > 0)
         {
@@ -25,7 +25,7 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
                 {
                     result.Add(symbol.key, symbol);
                 }
-                symbol.Check(defines);
+                symbol.SetChecked(defines);
             }
         }
         return result;
