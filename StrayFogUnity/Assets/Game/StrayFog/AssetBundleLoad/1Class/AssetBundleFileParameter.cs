@@ -17,27 +17,26 @@ public class AssetBundleFileParameter: IAssetBundleFileParameter
     /// </summary>
     public string assetBundlePath { get; private set; }    
     /// <summary>
-    /// 是否是内部资源
+    /// 是否使用外部资源包
     /// </summary>
-    public bool isInternal { get; private set; }
+    public bool isUseAssetBundle { get; private set; }
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="_assetBundleName">资源包名称</param>
     public AssetBundleFileParameter(string _assetBundleName)
     {
-        isInternal = StrayFogGamePools.setting.isInternal;
-        if (isInternal)
+        isUseAssetBundle = StrayFogGamePools.setting.isUseAssetBundle;
+        assetBundleId = _assetBundleName.UniqueHashCode();
+        assetBundleName = _assetBundleName;
+
+        if (isUseAssetBundle)
         {
-            assetBundleId = _assetBundleName.UniqueHashCode();
-            assetBundleName = _assetBundleName;
-            assetBundlePath = _assetBundleName.TransPathSeparatorCharToUnityChar();
+            assetBundlePath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
         }
         else
-        {
-            assetBundleId = _assetBundleName.UniqueHashCode();
-            assetBundleName = _assetBundleName;
-            assetBundlePath = Path.Combine(StrayFogGamePools.setting.assetBundleRoot, _assetBundleName).TransPathSeparatorCharToUnityChar();
+        {            
+            assetBundlePath = _assetBundleName.TransPathSeparatorCharToUnityChar();
         }
     }
 }

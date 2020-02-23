@@ -125,7 +125,7 @@ public class AssetBundleOutputMonoBehaviour : AbsMonoBehaviour
         if (!mHasRequest.Contains(key))
         {
             mHasRequest.Add(key);
-            if (mFileParameter.isInternal)
+            if (!mFileParameter.isUseAssetBundle)
             {
 #if UNITY_EDITOR
                 UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath(mFileParameter.assetBundlePath, _type);

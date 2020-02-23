@@ -129,16 +129,16 @@ public class AssetBundleMonoBehaviour : AbsMonoBehaviour
         }
         if (isLoadAllDependencies && mLoadState == enLoadState.Dependencies)
         {
-            if (fileParameter.isInternal)
-            {
-                mLoadState = enLoadState.Ready;
-                OnExecuteQueueRequest();
-            }
-            else
+            if (fileParameter.isUseAssetBundle)
             {
                 mLoadState = enLoadState.AssetBundle;
                 AssetBundleCreateRequest requestAssetBundle = AssetBundle.LoadFromFileAsync(fileParameter.assetBundlePath);
-                requestAssetBundle.completed += RequestAssetBundle_completed;
+                requestAssetBundle.completed += RequestAssetBundle_completed;                
+            }
+            else
+            {
+                mLoadState = enLoadState.Ready;
+                OnExecuteQueueRequest();
             }
         }
     }

@@ -19,7 +19,7 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
     protected override void OnAfterConstructor()
     {
         #region 加载AssetBundleManifest        
-        if (!StrayFogGamePools.setting.isInternal)
+        if (StrayFogGamePools.setting.isUseAssetBundle)
         {
             if (File.Exists(StrayFogGamePools.setting.manifestPath))
             {
@@ -118,13 +118,13 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
                 {
                     mXLSToManifestMaping[v.folderId].Add(v.fileId, 0);
                 }
-                if (StrayFogGamePools.setting.isInternal)
+                if (StrayFogGamePools.setting.isUseAssetBundle)
                 {
-                    tempAbp = new AssetBundleFileParameter(v.inAssetPath);
+                    tempAbp = new AssetBundleFileParameter(v.outAssetPath);
                 }
                 else
                 {
-                    tempAbp = new AssetBundleFileParameter(v.outAssetPath);
+                    tempAbp = new AssetBundleFileParameter(v.inAssetPath);
                 }
                 if (!mAssetBundlePathParameterMaping.ContainsKey(tempAbp.assetBundleId))
                 {
@@ -281,18 +281,18 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         if (file != null)
         {
             TextAsset ta = null;
-            if (StrayFogGamePools.setting.isInternal)
-            {
-                ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(file.assetBundlePath, typeof(TextAsset));
-                result = ta.text;
-            }
-            else
+            if (file.isUseAssetBundle)
             {
                 AssetBundle ab = AssetBundle.LoadFromFile(file.assetBundlePath);
                 ta = ab.LoadAsset<TextAsset>(config.fileName);
                 result = ta.text;
                 ab.Unload(false);
-                ab = null;
+                ab = null;                
+            }
+            else
+            {
+                ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(file.assetBundlePath, typeof(TextAsset));
+                result = ta.text;
             }
         }
         return result;

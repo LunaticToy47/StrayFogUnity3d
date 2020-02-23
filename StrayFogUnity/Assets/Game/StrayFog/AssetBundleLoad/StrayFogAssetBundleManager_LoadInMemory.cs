@@ -103,7 +103,7 @@ public partial class StrayFogAssetBundleManager
     AssetBundleMonoBehaviour[] Mono_OnRequestLoadDependencies(AssetBundleMonoBehaviour _request)
     {
         AssetBundleMonoBehaviour[] result = null;
-        if (!_request.fileParameter.isInternal)
+        if (_request.fileParameter.isUseAssetBundle)
         {
             string[] deps = mAssetBundleManifest.GetDirectDependencies(_request.fileParameter.assetBundleName);
             if (deps != null && deps.Length > 0)

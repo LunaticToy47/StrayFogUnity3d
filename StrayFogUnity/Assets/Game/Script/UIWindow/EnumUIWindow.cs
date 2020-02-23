@@ -5,5 +5,5 @@
 public  static class enUIWindow_GameHotfix
 {
 	[AliasTooltip("LoginWindow")]
-	public const int LoginWindow = -1425095840;
+	public const int LoginWindow = 1166481551;
 }

@@ -18,5 +18,5 @@ public interface IAssetBundleFileParameter
     /// <summary>
     /// 是否是内部资源
     /// </summary>
-    bool isInternal { get; }
+    bool isUseAssetBundle { get; }
 }

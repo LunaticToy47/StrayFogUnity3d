@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR
+using System.IO;
 /// <summary>
 /// XLS表格架构
 /// </summary>
@@ -61,7 +62,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// <summary>
     /// 数据库连接字符串
     /// </summary>
-    public string dbConnectionString { get { return StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(dbPath); } }
+    public string dbConnectionString { get { return StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().EditorGetSQLiteConnectionString(dbPath); } }
     #endregion
 
     #region assetBundleDbName 数据库外部资源名称
@@ -110,3 +111,4 @@ public class EditorXlsTableSchema : AbsScriptableObject
         } }
     #endregion
 }
+#endif

@@ -1,5 +1,7 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEditor;
 /// <summary>
@@ -24,7 +26,7 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
     /// </summary>
     readonly static string msrAsmdefExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asmdef).ext;
     /// <summary>
-    /// Asset前缀
+    /// Asset后缀
     /// </summary>
     readonly static string msrAssetExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asset).ext;
     /// <summary>
@@ -38,12 +40,20 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
             {msrDllExt,"d_" },
             {msrAsmdefExt,"m_" }
         };
+
+    /// <summary>
+    /// 要锁定资源名称的后缀
+    /// </summary>
+    static readonly List<string> msrLockNameExt = new List<string>() {
+        msrDllExt,msrAsmdefExt
+    };
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="_pathOrGuid">路径或guid</param>
     public EditorSelectionAssetBundleNameAsset(string _pathOrGuid) : base(_pathOrGuid)
     {
+        isRoot = false;
     }
     /// <summary>
     /// 引用项
@@ -158,7 +168,8 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
          */
         #endregion
 
-        bool isShrinkMerge = (mRefrenceMaping.Count == 1);
+        //仅被一个资源引用并且不是根节点的节点将被收缩
+        bool isShrinkMerge = (mRefrenceMaping.Count == 1) && !isRoot;
         if (isShrinkMerge)
         {
             List<EditorSelectionAssetBundleNameAsset> lstRefs = new List<EditorSelectionAssetBundleNameAsset>(mRefrenceMaping.Values);
@@ -219,27 +230,29 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
             mAssetBundleName = msrNamePrefix[ext];
         }
         else if (name.EndsWith(msrXLuaTxtExt))
-        {
+        {//同一目录下的lua文件打为一个资源
             mAssetBundleName = msrNamePrefix[msrXLuaTxtExt];
             hashCode = directory.UniqueHashCode();
         }
         mAssetBundleName += hashCode;
-        bool isLockName = false;
+        bool isLockName = false;        
         AssetImporter importer = AssetImporter.GetAtPath(path);
         if (importer is TextureImporter)
         {
             TextureImporter ti = (TextureImporter)importer;
             if (!string.IsNullOrEmpty(ti.spritePackingTag))
             {
-                //如果是精灵图集
-                mAssetBundleName = "sp_" + (directory + "/" + ti.spritePackingTag).UniqueHashCode();
+                //如果是精灵图集，一个图集一个资源，同一个图集的Sprite的Tag与目录一致
+                mAssetBundleName = "sp_" + ti.spritePackingTag.UniqueHashCode();
                 isLockName = true;
             }
         }
-        else if (ext == msrDllExt)
+        else if (msrLockNameExt.Contains(ext))
         {
             isLockName = true;
         }
+        mAssetBundleName = Path.Combine(directory, mAssetBundleName).OnlyCNUSAndOtherReplaceU().TransPathSeparatorCharToUnityChar();
+
         if (_sync != null && !isLockName)
         {
             if (EditorStrayFogUtility.assetBundleName.IsSceneRelateAsset(this))
@@ -255,10 +268,9 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
                 mAssetBundleName = _sync.mAssetBundleName;
             }
         }
-        mAssetBundleName = EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(mAssetBundleName);
+
         importer.SetAssetBundleNameAndVariant(mAssetBundleName, string.Empty);
         EditorUtility.SetDirty(importer);
-
         OnSyncAssetBundleName(_sync == null ? this : _sync);
     }
     /// <summary>
@@ -297,6 +309,19 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
             mImporter.SetAssetBundleNameAndVariant(string.Empty, string.Empty);
             EditorUtility.SetDirty(mImporter);
         }
+    }
+
+    /// <summary>
+    /// 是否是根节点
+    /// </summary>
+    public bool isRoot { get; private set; }
+    /// <summary>
+    /// 设置根节点
+    /// </summary>
+    /// <param name="_isRoot">是否是根节点</param>
+    public void SetRoot(bool _isRoot)
+    {
+        isRoot = _isRoot;
     }
 }
 #endif

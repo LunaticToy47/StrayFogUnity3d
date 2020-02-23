@@ -1,9 +1,27 @@
 ﻿@echo on
+setlocal enabledelayedexpansion
+
 #BatCmd#
-set srcFolder=#Folder#\
-set destFolder=#Folder#_manifest\
+set srcFolder=#Folder#
+set destFolder=#Folder#_manifest
+
 RMDIR /s/q %destFolder%
-MD %destFolder%
-FOR %%F IN (%srcFolder%*.manifest) DO (MOVE %%F  %destFolder%)
+::MD %destFolder%
+
+
+FOR /r %srcFolder% %%F in (*.manifest) do ( 
+set "file=%%F"
+set "dir=%%~dpF"
+
+if exist %%F (
+
+set "file=!file:%srcFolder%=%destFolder%!"
+set "dir=!dir:%srcFolder%=%destFolder%!"
+
+MD !dir!
+MOVE %%F !file!
+)
+)
 #BatCmd#
+setlocal disabledelayedexpansion
 ping -n 3 127.1>nul & exit

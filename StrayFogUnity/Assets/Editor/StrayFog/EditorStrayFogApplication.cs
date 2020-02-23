@@ -388,18 +388,5 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 
-    #region IsInternalWhenUseSQLiteInEditorForResourceLoadMode 检测在编辑器状态下使用SQLite数据库时资源加载模式是否是内部资源模式
-    /// <summary>
-    /// 检测在编辑器状态下使用SQLite数据库时资源加载模式是否是内部资源模式
-    /// </summary>
-    public static void IsInternalWhenUseSQLiteInEditorForResourceLoadMode()
-    {
-        if (!StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
-        {
-            EditorUtility.DisplayDialog("Error Resource Load Mode", "Please Set 【Resource Load Mode】 to 【Internal】", "OK");
-            throw new UnityException("Error Resource Load Mode");
-        }        
-    }    
-    #endregion
 }
 #endif

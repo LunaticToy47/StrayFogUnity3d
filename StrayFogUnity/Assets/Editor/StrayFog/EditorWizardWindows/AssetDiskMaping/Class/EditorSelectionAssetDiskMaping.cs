@@ -77,17 +77,23 @@ public class EditorSelectionAssetDiskMaping : EditorSelectionAssetBundleNameAsse
     /// </summary>
     public void Resolve()
     {
-        fileEnumName = EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(name);
+        fileEnumName = name.OnlyCNUAndOtherReplaceU();
         fileId = fileEnumName.UniqueHashCode();
-        fileScriptEnumName = "f_" + EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(fileEnumName).Replace(".", "_");
+        fileScriptEnumName = "f_" + fileEnumName.OnlyCNUAndOtherReplaceU();
         fileInSide = Path.GetFileNameWithoutExtension(name);
-        fileOutSide = GetAssetBundleName();
-        folderEnumName = EditorStrayFogUtility.assetBundleName.ReplaceIllgealCharToUnderline(directory);
+        
+        folderEnumName = directory.OnlyCNUAndOtherReplaceU();
         folderId = folderEnumName.UniqueHashCode();
         folderInSide = directory;
-        if (!string.IsNullOrEmpty(fileOutSide))
+
+        string assetBundleName = GetAssetBundleName();
+        if (!string.IsNullOrEmpty(assetBundleName))
         {
-            folderOutSide = Path.GetDirectoryName(fileOutSide);
+            fileOutSide = Path.GetFileName(assetBundleName);
+        }
+        if (!string.IsNullOrEmpty(assetBundleName))
+        {
+            folderOutSide = Path.GetDirectoryName(assetBundleName);
         }
         OnResolve();
     }

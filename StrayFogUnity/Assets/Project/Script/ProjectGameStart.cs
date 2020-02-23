@@ -35,16 +35,16 @@ public class ProjectGameStart
             StrayFogAsmdefPathMap temp = null;
             foreach (XLS_Config_Table_AsmdefMap m in maps)
             {
-                if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
-                {
-                    temp = new StrayFogAsmdefPathMap(m.id, m.asmdefDllPath, m.asmdefPdbPath, m.isHotfix);
-                }
-                else
+                if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseAssetBundle)
                 {
                     temp = new StrayFogAsmdefPathMap(m.id,
                         Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefDllAssetbundleName),
                         Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefPdbAssetbundleName),
-                        m.isHotfix);
+                        m.isHotfix);                    
+                }
+                else
+                {
+                    temp = new StrayFogAsmdefPathMap(m.id, m.asmdefDllPath, m.asmdefPdbPath, m.isHotfix);
                 }
                 if (!result.ContainsKey(temp.asmdefId))
                 {

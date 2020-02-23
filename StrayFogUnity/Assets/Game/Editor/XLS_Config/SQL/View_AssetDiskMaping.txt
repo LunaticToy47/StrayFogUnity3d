@@ -6,7 +6,7 @@ CREATE VIEW View_AssetDiskMaping AS
 SELECT fi.fileId,fi.folderId,
 CAST(fi.inSide||fi.ext AS TEXT) fileName,
 CAST(fo.inSide || '/' || fi.inSide || fi.ext AS TEXT) inAssetPath,
-fi.outSide outAssetPath,
+CAST(fo.outSide || '/' || fi.outSide AS TEXT) outAssetPath,
 fi.extEnumValue
 FROM AssetDiskMapingFile fi
 LEFT JOIN AssetDiskMapingFolder fo

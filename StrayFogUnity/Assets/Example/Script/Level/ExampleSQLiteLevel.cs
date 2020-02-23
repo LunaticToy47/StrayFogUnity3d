@@ -104,13 +104,13 @@ public class ExampleSQLiteLevel : AbsLevel
         string path = string.Empty;
         if (StrayFogGamePools.setting.isUseSQLite)
         {
-            if (StrayFogGamePools.setting.isInternal)
+            if (StrayFogGamePools.setting.isUseAssetBundle)
             {
-                path = _tableAttribute.dbSQLitePath;
+                path = _tableAttribute.dbSQLiteAssetBundleName; 
             }
             else
             {
-                path = _tableAttribute.dbSQLiteAssetBundleName;
+                path = _tableAttribute.dbSQLitePath;
             }
         }
         else

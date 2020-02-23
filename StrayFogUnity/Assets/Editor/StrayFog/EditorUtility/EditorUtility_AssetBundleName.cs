@@ -134,8 +134,7 @@ public class EditorUtility_AssetBundleName : AbsEditorSingle
     {
         return _node.isFile && !IsBelongEditorDirectory(_node.directory) && _node.ext == typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Asmdef).ext;
     }
-    #endregion
-    
+    #endregion    
 
     #region IsAllowSetBundleName 是否允许设定AssetBundleName
     /// <summary>
@@ -172,18 +171,6 @@ public class EditorUtility_AssetBundleName : AbsEditorSingle
     public bool IsIllegalFile(string _name)
     {
         return Regex.IsMatch(_name, illegalUnityAssetName);
-    }
-    #endregion
-
-    #region ReplaceIllgealCharToUnderline 将不合法的字符转换为下划线
-    /// <summary>
-    /// 将不合法的字符转换为下划线
-    /// </summary>
-    /// <param name="_string">要转换的字符</param>
-    /// <returns>字符</returns>
-    public string ReplaceIllgealCharToUnderline(string _string)
-    {
-        return Regex.Replace(_string, illegalUnityAssetName, "_");
     }
     #endregion
 

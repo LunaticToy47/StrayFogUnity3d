@@ -963,11 +963,11 @@ public sealed class EditorStrayFogExecute
             foreach (string layer in key.Value)
             {
                 editorFMSMachineMapingSbTempleteA.Append(
-                    editorFMSMachineMapingFormatTempleteA.Replace("#LAYER#", layer.OnlyCharOrUnderline()));
+                    editorFMSMachineMapingFormatTempleteA.Replace("#LAYER#", layer.OnlyCNUAndOtherReplaceU()));
             }
 
             editorFMSMachineMapingSbTemplete.AppendLine(
-                editorFMSMachineMapingFormatTemplete.Replace("#STATE#", key.Key.OnlyCharOrUnderline())
+                editorFMSMachineMapingFormatTemplete.Replace("#STATE#", key.Key.OnlyCNUAndOtherReplaceU())
                 .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
                 );
 
@@ -989,11 +989,11 @@ public sealed class EditorStrayFogExecute
             foreach (string state in key.Value)
             {
                 editorFMSMachineMapingSbTempleteA.Append(
-                    editorFMSMachineMapingFormatTempleteA.Replace("#STATE#", state.OnlyCharOrUnderline()));
+                    editorFMSMachineMapingFormatTempleteA.Replace("#STATE#", state.OnlyCNUAndOtherReplaceU()));
             }
 
             editorFMSMachineMapingSbTemplete.AppendLine(
-                editorFMSMachineMapingFormatTemplete.Replace("#LAYER#", key.Key.OnlyCharOrUnderline())
+                editorFMSMachineMapingFormatTemplete.Replace("#LAYER#", key.Key.OnlyCNUAndOtherReplaceU())
                 .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
                 );
 
@@ -1015,11 +1015,11 @@ public sealed class EditorStrayFogExecute
             foreach (string layer in key.Value)
             {
                 editorFMSMachineMapingSbTempleteA.Append(
-                    editorFMSMachineMapingFormatTempleteA.Replace("#LAYER#", layer.OnlyCharOrUnderline()));
+                    editorFMSMachineMapingFormatTempleteA.Replace("#LAYER#", layer.OnlyCNUAndOtherReplaceU()));
             }
             editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#MACHINE#",key.Key.OnlyCharOrUnderline())
+                .Replace("#MACHINE#",key.Key.OnlyCNUAndOtherReplaceU())
                 .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
                 );
             EditorUtility.DisplayProgressBar("MachineForLayer",
@@ -1040,11 +1040,11 @@ public sealed class EditorStrayFogExecute
             foreach (string state in key.Value)
             {
                 editorFMSMachineMapingSbTempleteA.Append(
-                    editorFMSMachineMapingFormatTempleteA.Replace("#MACHINE#", state.OnlyCharOrUnderline()));
+                    editorFMSMachineMapingFormatTempleteA.Replace("#MACHINE#", state.OnlyCNUAndOtherReplaceU()));
             }
 
             editorFMSMachineMapingSbTemplete.AppendLine(
-                editorFMSMachineMapingFormatTemplete.Replace("#LAYER#", key.Key.OnlyCharOrUnderline())
+                editorFMSMachineMapingFormatTemplete.Replace("#LAYER#", key.Key.OnlyCNUAndOtherReplaceU())
                 .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
                 );
 
@@ -1067,11 +1067,11 @@ public sealed class EditorStrayFogExecute
             foreach (string m in key.Value)
             {
                 editorFMSMachineMapingSbTempleteA.Append(
-                    editorFMSMachineMapingFormatTempleteA.Replace("#MACHINE#", m.OnlyCharOrUnderline()));
+                    editorFMSMachineMapingFormatTempleteA.Replace("#MACHINE#", m.OnlyCNUAndOtherReplaceU()));
             }
 
             editorFMSMachineMapingSbTemplete.AppendLine(
-                editorFMSMachineMapingFormatTemplete.Replace("#STATE#", key.Key.OnlyCharOrUnderline())
+                editorFMSMachineMapingFormatTemplete.Replace("#STATE#", key.Key.OnlyCNUAndOtherReplaceU())
                 .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
                 );
 
@@ -1093,11 +1093,11 @@ public sealed class EditorStrayFogExecute
             foreach (string s in key.Value)
             {
                 editorFMSMachineMapingSbTempleteA.Append(
-                    editorFMSMachineMapingFormatTempleteA.Replace("#STATE#", s.OnlyCharOrUnderline()));
+                    editorFMSMachineMapingFormatTempleteA.Replace("#STATE#", s.OnlyCNUAndOtherReplaceU()));
             }
 
             editorFMSMachineMapingSbTemplete.AppendLine(
-                editorFMSMachineMapingFormatTemplete.Replace("#MACHINE#", key.Key.OnlyCharOrUnderline())
+                editorFMSMachineMapingFormatTemplete.Replace("#MACHINE#", key.Key.OnlyCNUAndOtherReplaceU())
                 .Replace(editorFMSMachineMapingReplaceTempleteA, editorFMSMachineMapingSbTempleteA.ToString())
                 );
 
@@ -1119,7 +1119,7 @@ public sealed class EditorStrayFogExecute
             {
                 editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#NAME#",key.Key.OnlyCharOrUnderline())                
+                .Replace("#NAME#",key.Key.OnlyCNUAndOtherReplaceU())                
                 .Replace("#VALUE#", index.ToString())
                 .Replace("#DESC#",key.Key)
                 );                
@@ -1142,7 +1142,7 @@ public sealed class EditorStrayFogExecute
 
             editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#MACHINE#", key.OnlyCharOrUnderline())
+                .Replace("#MACHINE#", key.OnlyCNUAndOtherReplaceU())
                 .Replace("#VALUE#", key.UniqueHashCode().ToString())
                 .Replace("#MACHINEDESC#", key));
 
@@ -1162,7 +1162,7 @@ public sealed class EditorStrayFogExecute
 
             editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#STATE#", key.Key.OnlyCharOrUnderline())
+                .Replace("#STATE#", key.Key.OnlyCNUAndOtherReplaceU())
                 .Replace("#VALUE#", key.Value.ToString())
                 .Replace("#STATEDESC#", key.Key));
 
@@ -1182,7 +1182,7 @@ public sealed class EditorStrayFogExecute
 
             editorFMSMachineMapingSbTemplete.AppendLine(
                 editorFMSMachineMapingFormatTemplete
-                .Replace("#NAME#", key.Key.OnlyCharOrUnderline())
+                .Replace("#NAME#", key.Key.OnlyCNUAndOtherReplaceU())
                 .Replace("#VALUE#", key.Value.ToString()));
 
             EditorUtility.DisplayProgressBar("EnumParameter",
@@ -1423,6 +1423,7 @@ public sealed class EditorStrayFogExecute
                     {
                         nodeMaping.Add(n.guidHashCode, n);
                     }
+                    n.SetRoot(true);
                     progress++;
                     EditorUtility.DisplayProgressBar("Build Topolopy Node", n.path, progress / nodes.Count);
                 }
@@ -1775,7 +1776,7 @@ public sealed class EditorStrayFogExecute
             progress++;
             if (!string.IsNullOrEmpty(n.GetAssetBundleName()))
             {
-                File.Copy(n.path, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, n.GetAssetBundleName()));
+                File.Copy(n.path, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot, n.GetAssetBundleName()));
             }
             else
             {
@@ -1988,14 +1989,22 @@ public sealed class EditorStrayFogExecute
         float progress = 0;
         StringBuilder sbLog = new StringBuilder();
         List<EditorSelectionAsmdefMapSetting> nodes = ExecuteLookPackageAsmdef();
+        string savePath = string.Empty;
+        string saveDir = string.Empty;
         foreach (EditorSelectionAsmdefMapSetting n in nodes)
         {
             progress++;
             n.Resolve();
             if (File.Exists(n.asmdefDllPath))
             {
-                File.Copy(n.asmdefDllPath, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot,
-                    n.asmdefDllAssetbundleName), true);
+                savePath = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot,
+                    n.asmdefDllAssetbundleName);
+                saveDir = Path.GetDirectoryName(savePath);
+                if (!Directory.Exists(saveDir))
+                {
+                    Directory.CreateDirectory(saveDir);
+                }
+                File.Copy(n.asmdefDllPath, savePath, true);
             }
             else
             {
@@ -2003,8 +2012,14 @@ public sealed class EditorStrayFogExecute
             }
             if (File.Exists(n.asmdefPdbPath))
             {
-                File.Copy(n.asmdefPdbPath, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot,
-                    n.asmdefPdbAssetbundleName), true);
+                savePath = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot,
+                    n.asmdefPdbAssetbundleName);
+                saveDir = Path.GetDirectoryName(savePath);
+                if (!Directory.Exists(saveDir))
+                {
+                    Directory.CreateDirectory(saveDir);
+                }
+                File.Copy(n.asmdefPdbPath, savePath, true);
             }
             else
             {
@@ -2028,9 +2043,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildPackage()
     {
-        EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
-
-        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
+        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot);
         StringBuilder sbLog = new StringBuilder();
         #region 清理包目录
         EditorUtility.DisplayProgressBar("BuildPackage", string.Format("Clear AssetBundleRoot=>{0}", path), 0);
@@ -2134,35 +2147,35 @@ public sealed class EditorStrayFogExecute
         EditorTextAssetConfig clearSvnRegBat = (EditorTextAssetConfig)mClearSvnReg.Clone();
         EditorTextAssetConfig playerLogBat = (EditorTextAssetConfig)mPlayerLog.Clone();
 
-        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot);
+        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot);
+        
+        #region packageManifestBat
         string scriptTemplete = packageManifestBat.text;
         string replaceTemplete = string.Empty;
         string formatTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(scriptTemplete, @"#BatCmd#", out replaceTemplete);
-        StringBuilder sbTemplete = new StringBuilder();
-        string[] directories = new string[0];
-        if (Directory.Exists(path))
-        {
-            directories = Directory.GetDirectories(path);
-        }        
-        foreach (string key in directories)
-        {
-            sbTemplete.AppendLine(formatTemplete.Replace("#Folder#", key));
-        }
+        StringBuilder sbTemplete = new StringBuilder();   
         sbTemplete.AppendLine(formatTemplete.Replace("#Folder#", path));
         string result = scriptTemplete.Replace(replaceTemplete, sbTemplete.ToString());
         result = result.ClearRepeatCRLF();
         packageManifestBat.SetText(result);
         packageManifestBat.CreateAsset();
-
+        #endregion
+        
+        #region debugProfilerBat
         debugProfilerBat.SetText(debugProfilerBat.text.Replace("#DebugProfiler#", PlayerSettings.applicationIdentifier));
         debugProfilerBat.CreateAsset();
-
+        #endregion
+        
+        #region clearSvnRegBat
         clearSvnRegBat.CreateAsset();
-
-
+        #endregion
+        
+        #region playerLogBat
         playerLogBat.SetText(playerLogBat.text.Replace("#Path#",
             Regex.Replace(Application.persistentDataPath, "/" + Environment.UserName + "/", "/%username%/")));
         playerLogBat.CreateAsset();
+        #endregion
+
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         sbLog.AppendLine("ExecuteBuildBatToPackage Succeed!");
         Debug.Log(sbLog.ToString());
@@ -2188,7 +2201,7 @@ public sealed class EditorStrayFogExecute
                 if (!dbKeys.Contains(t.dbKey))
                 {
                     dbKeys.Add(t.dbKey);
-                    string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, t.assetBundleDbName);
+                    string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot, t.assetBundleDbName);
                     string dir = Path.GetDirectoryName(db);
                     if (!Directory.Exists(dir))
                     {

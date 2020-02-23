@@ -3,6 +3,26 @@
 /// </summary>
 public static class EditorMacroDefineScriptingDefineSymbols
 {
+    #region enUpdateAssetModeDefine 资源更新模式宏定义
+    /// <summary>
+    /// 资源更新模式宏定义
+    /// </summary>
+    [AliasTooltip("资源更新模式宏定义")]
+    public static class enUpdateAssetModeDefine
+    {
+        /// <summary>
+        /// 编辑器模式【不更新资源】
+        /// </summary>        
+        [AliasTooltip("编辑器模式【不更新资源】")]
+        public const int NOUPDATEASSET = 0x1;
+        /// <summary>
+        /// 网络更新【从指定地址更新资源】
+        /// </summary>
+        [AliasTooltip("网络更新【从指定地址更新资源】")]
+        public const int  UPDATEFROMNETWORK= 0x2;
+    }
+    #endregion
+
     #region enLoadAssetModeDefine 资源加载模式宏定义
     /// <summary>
     /// 资源加载模式宏定义
@@ -11,23 +31,23 @@ public static class EditorMacroDefineScriptingDefineSymbols
     public static class enLoadAssetModeDefine
     {
         /// <summary>
-        /// StreamingAssets模式【整包】
+        /// 编辑器资源
         /// </summary>        
-        [AliasTooltip("StreamingAssets模式【整包】")]
-        public const int STREAMINGASSETS = 0x1;
+        [AliasTooltip("编辑器资源")]
+        public const int FROMEDITOR = 0x1;
         /// <summary>
-        /// AssetBundle模式【热更包】
+        /// 从AssetBundle加载资源
         /// </summary>
-        [AliasTooltip("AssetBundle模式【热更包】")]
-        public const int ASSETBUNDLE = 0x2;
+        [AliasTooltip("从AssetBundle加载资源")]
+        public const int FROMASSETBUNDLE = 0x2;
     }
     #endregion
 
-    #region enLoadConfigDefine 加载配置表模式宏定义
+    #region enLoadConfigDefine 配置表数据加载模式宏定义
     /// <summary>
-    /// 加载配置表模式宏定义
+    /// 配置表数据加载模式宏定义
     /// </summary>
-    [AliasTooltip("加载配置表模式宏定义")]
+    [AliasTooltip("配置表数据加载模式宏定义")]
     public static class enLoadConfigDefine
     {
         /// <summary>
@@ -40,6 +60,21 @@ public static class EditorMacroDefineScriptingDefineSymbols
         /// </summary>
         [AliasTooltip("SQLite数据库")]
         public const int SQLITE = 0x2;
+    }
+    #endregion
+
+    #region enILRuntimeDefine ILRuntime热更宏定义
+    /// <summary>
+    /// ILRuntime热更宏定义
+    /// </summary>
+    [AliasTooltip("ILRuntime热更宏定义")]
+    public static class enILRuntimeDefine
+    {
+        /// <summary>
+        /// ILRuntime
+        /// </summary>
+        [AliasTooltip("ILRuntime")]
+        public const int ILRuntime = 0x1;
     }
     #endregion
 
@@ -59,7 +94,7 @@ public static class EditorMacroDefineScriptingDefineSymbols
         /// 使用Entity-Component-System
         /// </summary>
         [AliasTooltip("使用Entity-Component-System")]
-        public const int USEENTITYCOMPONENTSYSTEM = 0x2;
+        public const int USEECS = 0x2;
     }
     #endregion
 

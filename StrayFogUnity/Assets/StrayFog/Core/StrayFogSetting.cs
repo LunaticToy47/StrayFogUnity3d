@@ -1,34 +1,29 @@
-﻿//外部资源加载模式
-#if (STREAMINGASSETS || ASSETBUNDLE)
-#define ISLOADASSETBYEXTERNAL
-#endif
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Reflection;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
-using System.Collections.Generic;
 #endif
 /// <summary>
 /// StrayFogSetting
 /// </summary>
 public sealed class StrayFogSetting : AbsSingleScriptableObject
 {
-    #region isInternal 是否加载内部资源
+    #region isUseAssetBundle 是否使用AssetBundle资源
     /// <summary>
-    /// 是否加载内部资源
+    /// 是否使用AssetBundle资源
     /// </summary>
-    [AliasTooltip("是否加载内部资源")]
-    public bool isInternal
+    [AliasTooltip("是否使用AssetBundle资源")]
+    public bool isUseAssetBundle
     {
         get
         {
-#if UNITY_EDITOR && !ISLOADASSETBYEXTERNAL
-            return true;
-#else
+#if UNITY_EDITOR && !FROMASSETBUNDLE
             return false;
+#else
+            return true;
 #endif
         }
     }
@@ -44,11 +39,18 @@ public sealed class StrayFogSetting : AbsSingleScriptableObject
         get
         {
 #if UNITY_EDITOR
+            if (isUseAssetBundle)
+            {//使用外部资源时，必须使用数据库
+                return true;
+            }
+            else
+            {//使用内部资源时，可选
 #if SQLITE
-            return true;
+                return true;
 #else
-            return !isInternal;
+                return false;
 #endif
+            }
 #else
             return true;
 #endif
@@ -167,34 +169,13 @@ public sealed class StrayFogSetting : AbsSingleScriptableObject
     {
         get
         {
-            if (string.IsNullOrEmpty(mAssetBundleRoot))
-            {
 #if UNITY_WEBGL
-                mAssetBundleRoot ="";
+            mAssetBundleRoot = "";
+#elif UNITY_STANDALONE_WIN && !UNITY_EDITOR
+            mAssetBundleRoot = Path.Combine(Path.GetDirectoryName(Application.dataPath), platform).TransPathSeparatorCharToUnityChar();
 #else
-                #region Others
-#if UNITY_EDITOR
-                #region UNITY_EDITOR
-#if STREAMINGASSETS
-                mAssetBundleRoot = Path.Combine(streamingAssetsRoot, platform).TransPathSeparatorCharToUnityChar();
-#else
-                mAssetBundleRoot = Path.Combine(Application.persistentDataPath, platform).TransPathSeparatorCharToUnityChar();
+            mAssetBundleRoot = Path.Combine(Application.persistentDataPath, platform).TransPathSeparatorCharToUnityChar();
 #endif
-                #endregion
-#else
-                #region RunTime
-#if STREAMINGASSETS
-                mAssetBundleRoot = Path.Combine(streamingAssetsRoot, platform).TransPathSeparatorCharToUnityChar();
-#elif UNITY_STANDALONE_WIN
-                mAssetBundleRoot = Path.Combine(Path.GetDirectoryName(Application.dataPath), platform).TransPathSeparatorCharToUnityChar();
-#else
-                mAssetBundleRoot = Path.Combine(Application.persistentDataPath, platform).TransPathSeparatorCharToUnityChar();
-#endif
-                #endregion
-#endif
-                #endregion
-#endif
-            }
             return mAssetBundleRoot;
         }
     }
@@ -251,7 +232,7 @@ string.Empty;
 #endif
         }
     }
-    #endregion    
+    #endregion
 
     #region GetSQLiteConnectionString 获得SQLite数据库连接字符串
     /// <summary>
@@ -266,18 +247,25 @@ string.Empty;
     public string GetSQLiteConnectionString(string _dbPath)
     {
         int key = _dbPath.GetHashCode();
-        if (!mSQLiteConnectionStringMaping.TryGetValue(key, out _dbPath))
+        if (!mSQLiteConnectionStringMaping.ContainsKey(key))
         {
-#if UNITY_EDITOR && !ISLOADASSETBYEXTERNAL
-            _dbPath = string.Format("data source={0}", _dbPath);
+#if UNITY_EDITOR
+            if (isUseAssetBundle)
+            {//使用外部资源必须是外部数据库
+                _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, _dbPath));
+            }
+            else
+            {//使用内部资源则按传过来的路径读数据库
+                _dbPath = string.Format("data source={0}", _dbPath);
+            }            
 #elif UNITY_ANDROID
-        _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, _dbPath));
+            _dbPath = string.Format("URI=file:{0}", Path.Combine(assetBundleRoot, _dbPath));
 #else
-        _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, _dbPath));
+            _dbPath = string.Format("data source={0}", Path.Combine(assetBundleRoot, _dbPath));
 #endif
             mSQLiteConnectionStringMaping.Add(key, _dbPath);
         }
-        return _dbPath;
+        return mSQLiteConnectionStringMaping[key];
     }
     #endregion
 
@@ -314,7 +302,31 @@ string.Empty;
 
     #region UNITY_EDITOR
 #if UNITY_EDITOR
+    #region editorReleaseAssetBundleRoot 资源包发布路径根目录【Editor】
+    /// <summary>
+    /// 资源包发布路径根目录【Editor】
+    /// </summary>
+    [AliasTooltip("资源包发布路径根目录【Editor】")]
+    public string editorReleaseAssetBundleRoot
+    {
+        get
+        {
+            return Path.Combine(Application.persistentDataPath, platform).TransPathSeparatorCharToUnityChar();
+        }
+    }
+    #endregion
 
+    #region EditorGetSQLiteConnectionString 获得SQLite数据库连接字符串【Editor】
+    /// <summary>
+    ///获得SQLite数据库连接字符串【Editor】
+    /// </summary>
+    /// <param name="_dbPath">数据库路径</param>
+    /// <returns>数据库连接字符串</returns>
+    public string EditorGetSQLiteConnectionString(string _dbPath)
+    {
+        return string.Format("data source={0}", _dbPath);
+    }
+    #endregion
 
     [InvokeMethod("EditorDisplayParameter")]
     [AliasTooltip("方法回调")]

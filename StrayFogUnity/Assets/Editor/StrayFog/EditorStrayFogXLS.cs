@@ -183,7 +183,6 @@ public sealed class EditorStrayFogXLS
     /// <returns>XLS表结构框架</returns>
     public static List<EditorXlsTableSchema> ReadXlsSchema(Action<float, EditorXlsTableSchema> _onProgress)
     {
-        EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tableSchemas = new List<EditorXlsTableSchema>();
         FileExtAttribute xlsxExt = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Xlsx);
         List<EditorSelectionXlsSchemaToSQLiteAsset> xlsFiles = EditorStrayFogUtility.collectAsset.CollectAsset<EditorSelectionXlsSchemaToSQLiteAsset>(EditorStrayFogSavedAssetConfig.setFolderConfigForSchemaToSqlite.paths,
@@ -210,7 +209,6 @@ public sealed class EditorStrayFogXLS
     /// <returns>XLS表结构框架</returns>
     public static EditorXlsTableSchema ReadXlsSchema(EditorSelectionXlsSchemaToSQLiteAsset _xlsAsset)
     {
-        EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         EditorXlsTableSchema tempTable = null;
         EditorXlsTableColumnSchema tempColumn = null;
         Dictionary<string, EditorXlsTableColumnSchema> tempSrcTableColumns = new Dictionary<string, EditorXlsTableColumnSchema>();
@@ -300,7 +298,6 @@ public sealed class EditorStrayFogXLS
     /// </summary>
     public static void ExportXlsSchemaToSQLite()
     {
-        EditorStrayFogApplication.IsInternalWhenUseSQLiteInEditorForResourceLoadMode();
         List<EditorXlsTableSchema> tables = ReadXlsSchema();
         Dictionary<int, TableSQLiteHelper> dicHelper = OnCreateTableSchemaToSQLite(tables);
         OnCreateScriptFromSQLite(tables, dicHelper);

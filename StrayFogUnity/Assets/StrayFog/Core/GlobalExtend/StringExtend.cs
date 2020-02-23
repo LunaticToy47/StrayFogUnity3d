@@ -301,19 +301,35 @@ public static class StringExtend
     }
     #endregion
 
-    #region OnlyCharOrUnderline 仅保留字符和下划线
+    #region OnlyCNUAndOtherReplaceU 仅保留字符、数字、下划线其他字符替换为下划线
     /// <summary>
-    /// 仅保留字符和下划线
+    /// 仅保留字符、数字、下划线
     /// </summary>
-    const string illegalOnlyCharOrUnderline = @"[^\w\d_]";
+    const string illegalOnlyCNUAndOtherReplaceU = @"[^\w\d_]";
     /// <summary>
-    /// 仅保留字符和下划线
+    /// 仅保留字符、数字、下划线其他字符替换为下划线
     /// </summary>
     /// <param name="_string">要转换的字符</param>
     /// <returns>字符</returns>
-    public static string OnlyCharOrUnderline(this string _string)
+    public static string OnlyCNUAndOtherReplaceU(this string _string)
     {
-        return Regex.Replace(_string, illegalOnlyCharOrUnderline, "_");
+        return Regex.Replace(_string, illegalOnlyCNUAndOtherReplaceU, "_");
+    }
+    #endregion
+
+    #region OnlyCNUSAndOtherReplaceU 仅保留字符、数字、下划线、斜杠其他字符替换为下划线
+    /// <summary>
+    /// 仅保留字符、数字、下划线、斜杠
+    /// </summary>
+    const string illegalOnlyCNUSAndOtherReplaceU = @"[^\w\d_/\\]";
+    /// <summary>
+    /// 仅保留字符、数字、下划线、斜杠其他字符替换为下划线
+    /// </summary>
+    /// <param name="_string">要转换的字符</param>
+    /// <returns>字符</returns>
+    public static string OnlyCNUSAndOtherReplaceU(this string _string)
+    {
+        return Regex.Replace(_string, illegalOnlyCNUSAndOtherReplaceU, "_");
     }
     #endregion
 

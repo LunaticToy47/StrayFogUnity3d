@@ -214,15 +214,15 @@ public sealed partial class StrayFogConfigHelper
         {
             if (!msStrayFogSQLiteHelperMaping.ContainsKey(tableAttribute.dbSQLiteKey))
             {
-                if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isInternal)
+                if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseAssetBundle)
                 {
                     msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
-                        new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(tableAttribute.dbSQLitePath)));
+                        new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(tableAttribute.dbSQLiteAssetBundleName)));
                 }
                 else
                 {
                     msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
-                        new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(tableAttribute.dbSQLiteAssetBundleName)));
+                        new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(tableAttribute.dbSQLitePath)));
                 }
             }
         }        

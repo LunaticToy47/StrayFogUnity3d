@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿#if UNITY_EDITOR
+using System;
 /// <summary>
 /// XLS表格列架构
 /// </summary>
@@ -78,3 +78,4 @@ public class EditorXlsTableColumnSchema
     public string sqliteParameterName { get { return string.Format("@{0}{1}", columnName, xlsColumnValueIndex); } }
     #endregion
 }
+#endif
