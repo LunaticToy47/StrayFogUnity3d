@@ -447,7 +447,33 @@ public static class UIExtendEngine
     /// <returns>UI坐标</returns>
     public static Vector2 WorldReferToUI(this Transform _worldGo, Camera _worldCamera, RectTransform _uiRectTransform, Canvas _uiCanvas,Camera _uiCamera)
     {
-        Vector2 point = RectTransformUtility.WorldToScreenPoint(_worldCamera, _worldGo.position);
+        return _worldGo.position.WorldReferToUI(_worldCamera, _uiRectTransform, _uiCanvas, _uiCamera);
+    }
+
+    /// <summary>
+    /// 世界物体相对于指定UI控件位置坐标
+    /// </summary>
+    /// <param name="_worldPosition">世界物体</param>
+    /// <param name="_worldCamera">世界摄像机</param>
+    /// <param name="_graphic">UI控件</param>
+    /// <returns>UI坐標</returns>
+    public static Vector2 WorldReferToUI(this Vector3 _worldPosition, Camera _worldCamera, Graphic _graphic)
+    {
+        return _worldPosition.WorldReferToUI(_worldCamera, _graphic.rectTransform, _graphic.canvas, _graphic.canvas.worldCamera);
+    }
+
+    /// <summary>
+    /// 世界物體相對于指定UI控件位置坐標
+    /// </summary>
+    /// <param name="_worldPosition">世界物體坐标</param>
+    /// <param name="_worldCamera">世界攝像機</param>
+    /// <param name="_uiRectTransform">UI控件</param>
+    /// <param name="_uiCanvas">UI畫布</param>
+    /// <param name="_uiCamera">UI攝像機</param>
+    /// <returns>UI坐標</returns>
+    public static Vector2 WorldReferToUI(this Vector3 _worldPosition, Camera _worldCamera, RectTransform _uiRectTransform, Canvas _uiCanvas, Camera _uiCamera)
+    {
+        Vector2 point = RectTransformUtility.WorldToScreenPoint(_worldCamera, _worldPosition);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _uiRectTransform.transform.parent as RectTransform, point, _uiCamera, out point);
         return point;
