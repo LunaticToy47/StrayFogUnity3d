@@ -9,9 +9,16 @@ public class EditorMacroScriptingDefineSymbolAttribute : PropertyAttribute
     /// <summary>
     /// 构造函数
     /// </summary>
-    public EditorMacroScriptingDefineSymbolAttribute()
+    /// <param name="_shortcutClassify">快捷菜单分类</param>
+    public EditorMacroScriptingDefineSymbolAttribute(enEditorMacroScriptingDefineSymbolShortcutClassify _shortcutClassify)
     {
+        shortcutClassify = _shortcutClassify;
     }
+
+    /// <summary>
+    /// 快捷菜单分类
+    /// </summary>
+    public enEditorMacroScriptingDefineSymbolShortcutClassify shortcutClassify { get; private set; }
 }
 
 

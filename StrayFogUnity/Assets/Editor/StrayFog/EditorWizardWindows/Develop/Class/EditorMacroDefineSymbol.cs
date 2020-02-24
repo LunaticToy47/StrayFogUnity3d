@@ -15,13 +15,14 @@ public class EditorMacroDefineSymbol
         key = _type.GetHashCode();
         type = _type;
         alias = _type.GetFirstAttribute<AliasTooltipAttribute>();
+        isRadio = _type.GetFirstAttribute<EditorRadioAttribute>() != null;
         defineMaping = new Dictionary<string, EditorMacroDefineSymbol_Item>();
         EditorMacroDefineSymbol_Item item = null;
         foreach (KeyValuePair<string, AliasTooltipAttribute> key in _type.NameToAttributeForConstField<AliasTooltipAttribute>())
         {
             item = new EditorMacroDefineSymbol_Item(key.Key, key.Value);
             defineMaping.Add(item.name, item);
-        }        
+        }
     }
 
     public int key { get; private set; }
@@ -34,6 +35,10 @@ public class EditorMacroDefineSymbol
     /// </summary>
     public AliasTooltipAttribute alias { get; private set; }
     /// <summary>
+    /// 是否单选
+    /// </summary>
+    public bool isRadio { get; private set; }
+    /// <summary>
     /// 宏定义
     /// </summary>
     public Dictionary<string, EditorMacroDefineSymbol_Item> defineMaping { get; private set; }
@@ -41,7 +46,7 @@ public class EditorMacroDefineSymbol
     /// 设置宏定义
     /// </summary>
     /// <param name="_defineNames">宏定义名称组</param>
-    public void SetChecked(string[] _defineNames)
+    public void SetChecked(params string[] _defineNames)
     {
         if (_defineNames != null && _defineNames.Length > 0)
         {

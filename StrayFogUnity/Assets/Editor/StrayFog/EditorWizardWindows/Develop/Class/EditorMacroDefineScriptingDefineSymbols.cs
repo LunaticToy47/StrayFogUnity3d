@@ -8,18 +8,15 @@ public static class EditorMacroDefineScriptingDefineSymbols
     /// 资源更新模式宏定义
     /// </summary>
     [AliasTooltip("资源更新模式宏定义")]
+    [EditorRadio()]
     public static class enUpdateAssetModeDefine
     {
-        /// <summary>
-        /// 编辑器模式【不更新资源】
-        /// </summary>        
-        [AliasTooltip("编辑器模式【不更新资源】")]
-        public const int NOUPDATEASSET = 0x1;
         /// <summary>
         /// 网络更新【从指定地址更新资源】
         /// </summary>
         [AliasTooltip("网络更新【从指定地址更新资源】")]
-        public const int  UPDATEFROMNETWORK= 0x2;
+        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        public const int UPDATEFROMNETWORK = 0x1;
     }
     #endregion
 
@@ -28,18 +25,15 @@ public static class EditorMacroDefineScriptingDefineSymbols
     /// 资源加载模式宏定义
     /// </summary>
     [AliasTooltip("资源加载模式宏定义")]
+    [EditorRadio()]
     public static class enLoadAssetModeDefine
     {
-        /// <summary>
-        /// 编辑器资源
-        /// </summary>        
-        [AliasTooltip("编辑器资源")]
-        public const int FROMEDITOR = 0x1;
         /// <summary>
         /// 从AssetBundle加载资源
         /// </summary>
         [AliasTooltip("从AssetBundle加载资源")]
-        public const int FROMASSETBUNDLE = 0x2;
+        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        public const int FROMASSETBUNDLE = 0x1;
     }
     #endregion
 
@@ -48,18 +42,15 @@ public static class EditorMacroDefineScriptingDefineSymbols
     /// 配置表数据加载模式宏定义
     /// </summary>
     [AliasTooltip("配置表数据加载模式宏定义")]
+    [EditorRadio()]
     public static class enLoadConfigDefine
     {
-        /// <summary>
-        /// XLS表
-        /// </summary>
-        [AliasTooltip("XLS表")]
-        public const int XLS = 0x1;
         /// <summary>
         /// StreamingAssets模式
         /// </summary>
         [AliasTooltip("SQLite数据库")]
-        public const int SQLITE = 0x2;
+        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        public const int SQLITE = 0x1;
     }
     #endregion
 
@@ -68,13 +59,15 @@ public static class EditorMacroDefineScriptingDefineSymbols
     /// ILRuntime热更宏定义
     /// </summary>
     [AliasTooltip("ILRuntime热更宏定义")]
+    [EditorRadio()]
     public static class enILRuntimeDefine
     {
         /// <summary>
         /// ILRuntime
         /// </summary>
         [AliasTooltip("ILRuntime")]
-        public const int ILRuntime = 0x1;
+        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        public const int ILRUNTIME = 0x1;
     }
     #endregion
 
@@ -124,6 +117,7 @@ public static class EditorMacroDefineScriptingDefineSymbols
         /// Debug日志
         /// </summary>
         [AliasTooltip("Debug日志")]
+        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
         public const int DEBUGLOG = 0x8;        
     }
     #endregion        
