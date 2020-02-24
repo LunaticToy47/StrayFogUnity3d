@@ -96,11 +96,7 @@ public static class UIExtendEngine
         Vector2 mUIPoint = RectTransformUtility.WorldToScreenPoint(_refer.canvas.worldCamera, _refer.transform.position);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _self.transform.parent as RectTransform, mUIPoint, _self.canvas.worldCamera, out mUIPoint);
-        Vector2 pivot = _self.rectTransform.pivot - _refer.rectTransform.pivot;
-        mUIPoint.x += pivot.x * _self.rectTransform.rect.width * _self.rectTransform.localScale.x;
-        mUIPoint.y += pivot.y * _self.rectTransform.rect.height * _self.rectTransform.localScale.y;        
         return mUIPoint;
-        
     }
     #endregion
 
@@ -256,7 +252,7 @@ public static class UIExtendEngine
     }
     #endregion
 
-    #region 转换矩形为Bounds
+    #region TransRectToBounds 转换矩形为Bounds
     /// <summary>
     /// 转换矩形为Bounds
     /// </summary>
@@ -386,6 +382,31 @@ public static class UIExtendEngine
     public static void AlignRectTransformFrom(this Graphic _self, Graphic _from)
     {
         _self.rectTransform.anchoredPosition = _self.LocalPointToRefer(_from);
+    }
+    #endregion
+
+    #region AlignFrom 从指定的RectTransform对齐位置
+    /// <summary>
+    /// 从指定的RectTransform对齐位置
+    /// </summary>
+    /// <param name="_self">要復制值的RectTransform</param>
+    /// <param name="_selfAnchor">自身锚点</param>
+    /// <param name="_selfOffsetPos">自身位置偏移</param>
+    /// <param name="_from">復制源RectTransform</param>
+    /// <param name="_fromAnchor">复制源锚点</param>
+    /// <param name="_fromOffsetPos">复制源锚点偏移</param>
+    public static void AlignRectTransformFrom(this Graphic _self, TextAnchor _selfAnchor, Vector2 _selfOffsetPos, Graphic _from, TextAnchor _fromAnchor, Vector2 _fromOffsetPos)
+    {
+        Vector2 pos = _self.LocalPointToRefer(_from);
+        Vector2 pivot = _selfAnchor.GetTextAnchorPivot();
+        pivot = _self.rectTransform.pivot - pivot;
+        _selfOffsetPos = pivot * _self.rectTransform.sizeDelta + _selfOffsetPos;
+
+        pivot = _fromAnchor.GetTextAnchorPivot();
+        pivot = pivot - _from.rectTransform.pivot;
+        _fromOffsetPos = pivot * _from.rectTransform.sizeDelta + _fromOffsetPos;
+
+        _self.rectTransform.anchoredPosition = pos + _selfOffsetPos + _fromOffsetPos;
     }
     #endregion
 
