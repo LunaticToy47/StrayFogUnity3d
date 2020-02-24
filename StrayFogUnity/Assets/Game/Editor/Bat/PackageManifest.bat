@@ -1,7 +1,7 @@
 @echo on
 setlocal enabledelayedexpansion
-set srcFolder=C:\Users\Bzl\AppData\LocalLow\StrayFog\StrayFogUnity3d\ab_win
-set destFolder=C:\Users\Bzl\AppData\LocalLow\StrayFog\StrayFogUnity3d\ab_win_manifest
+set srcFolder=C:\Users\7Cool\AppData\LocalLow\StrayFog\StrayFogUnity3d\ab_win
+set destFolder=C:\Users\7Cool\AppData\LocalLow\StrayFog\StrayFogUnity3d\ab_win_manifest
 RMDIR /s/q %destFolder%
 ::MD %destFolder%
 FOR /r %srcFolder% %%F in (*.manifest) do ( 

@@ -1,14 +1,12 @@
 ﻿@echo on
-setlocal enabledelayedexpansion
-
 #BatCmd#
 set srcFolder=#Folder#
 set destFolder=#Folder#_manifest
 
 RMDIR /s/q %destFolder%
-::MD %destFolder%
+MD %destFolder%
 
-
+setlocal enabledelayedexpansion
 FOR /r %srcFolder% %%F in (*.manifest) do ( 
 set "file=%%F"
 set "dir=%%~dpF"
@@ -22,6 +20,6 @@ MD !dir!
 MOVE %%F !file!
 )
 )
-#BatCmd#
 setlocal disabledelayedexpansion
+#BatCmd#
 ping -n 3 127.1>nul & exit

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using UnityEngine;
 /// <summary>
 /// 宏脚本定义符属性
@@ -20,6 +21,7 @@ public class EditorMacroScriptingDefineSymbolAttribute : PropertyAttribute
     /// </summary>
     public enEditorMacroScriptingDefineSymbolShortcutClassify shortcutClassify { get; private set; }
 }
+#endif
 
 
 

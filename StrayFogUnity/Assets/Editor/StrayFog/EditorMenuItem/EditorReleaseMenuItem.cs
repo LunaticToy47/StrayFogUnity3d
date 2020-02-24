@@ -24,22 +24,6 @@ static class EditorReleaseMenuItem
     const int mcPriority = 100 * (int)enEditorMenuItemPriority.Release;
     #endregion
 
-    #region Build Setting
-    const string mcBuildSetting = "Build Setting";
-    /// <summary>
-    /// 发布设置
-    /// </summary>
-    [MenuItem(mcMenu + mcBuildSetting, false, mcPriority)]
-    [MenuItem(mcAssetMenu + mcBuildSetting, false, mcPriority)]
-    [MenuItem(mcHierarchy + mcBuildSetting, false, mcPriority)]
-    static void EditorReleaseMenuItem_EditorWindowExecuteBuildSetting()
-    {
-        EditorWindowExecuteBuildSetting win =
-               EditorWindow.GetWindow<EditorWindowExecuteBuildSetting>(mcBuildSetting);
-        win.Show();
-    }
-    #endregion
-
     #region Build Package
     const string mcBuildPackage = "Build Package";
     /// <summary>
@@ -50,11 +34,9 @@ static class EditorReleaseMenuItem
     [MenuItem(mcHierarchy + mcBuildPackage, false, mcPriority + 1)]
     static void EditorReleaseMenuItem_ExecuteBuildPackage()
     {
-        if (EditorStrayFogApplication.MenuItemQuickDisplayDialog_OKCancel("Are you sure ExecuteBuildPackage?"))
-        {
-            EditorStrayFogExecute.ExecuteBuildPackage();
-            EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildPackage);
-        }        
+        EditorWindowExecuteBuildPackage win =
+               EditorWindow.GetWindow<EditorWindowExecuteBuildPackage>(mcBuildPackage);
+        win.Show();
     }
     #endregion
 

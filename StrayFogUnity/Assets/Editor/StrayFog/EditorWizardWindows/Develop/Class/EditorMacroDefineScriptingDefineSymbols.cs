@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿#if UNITY_EDITOR 
+/// <summary>
 /// 宏定义
 /// </summary>
 public static class EditorMacroDefineScriptingDefineSymbols
@@ -152,3 +153,4 @@ public static class EditorMacroDefineScriptingDefineSymbols
     }
     #endregion
 }
+#endif
