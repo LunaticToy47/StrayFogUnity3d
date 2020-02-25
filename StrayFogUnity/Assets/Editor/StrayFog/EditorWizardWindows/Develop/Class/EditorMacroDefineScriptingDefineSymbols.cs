@@ -16,7 +16,7 @@ public static class EditorMacroDefineScriptingDefineSymbols
         /// 网络更新【从指定地址更新资源】
         /// </summary>
         [AliasTooltip("网络更新【从指定地址更新资源】")]
-        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        [EditorMacroScriptingDefineSymbolShortcut(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
         public const int UPDATEFROMNETWORK = 0x1;
     }
     #endregion
@@ -33,7 +33,7 @@ public static class EditorMacroDefineScriptingDefineSymbols
         /// 从AssetBundle加载资源
         /// </summary>
         [AliasTooltip("从AssetBundle加载资源")]
-        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        [EditorMacroScriptingDefineSymbolShortcut(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
         public const int FROMASSETBUNDLE = 0x1;
     }
     #endregion
@@ -50,7 +50,7 @@ public static class EditorMacroDefineScriptingDefineSymbols
         /// StreamingAssets模式
         /// </summary>
         [AliasTooltip("SQLite数据库")]
-        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        [EditorMacroScriptingDefineSymbolShortcut(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
         public const int SQLITE = 0x1;
     }
     #endregion
@@ -67,7 +67,7 @@ public static class EditorMacroDefineScriptingDefineSymbols
         /// ILRuntime
         /// </summary>
         [AliasTooltip("ILRuntime")]
-        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        [EditorMacroScriptingDefineSymbolShortcut(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
         public const int ILRUNTIME = 0x1;
     }
     #endregion
@@ -118,7 +118,7 @@ public static class EditorMacroDefineScriptingDefineSymbols
         /// Debug日志
         /// </summary>
         [AliasTooltip("Debug日志")]
-        [EditorMacroScriptingDefineSymbol(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
+        [EditorMacroScriptingDefineSymbolShortcut(enEditorMacroScriptingDefineSymbolShortcutClassify.Release)]
         public const int DEBUGLOG = 0x8;        
     }
     #endregion        

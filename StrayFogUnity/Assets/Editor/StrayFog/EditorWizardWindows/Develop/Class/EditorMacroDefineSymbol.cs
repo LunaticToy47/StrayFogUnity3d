@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 /// <summary>
 /// 宏定义符号
 /// </summary>
@@ -17,10 +18,10 @@ public class EditorMacroDefineSymbol
         alias = _type.GetFirstAttribute<AliasTooltipAttribute>();
         isRadio = _type.GetFirstAttribute<EditorRadioAttribute>() != null;
         defineMaping = new Dictionary<string, EditorMacroDefineSymbol_Item>();
-        EditorMacroDefineSymbol_Item item = null;
-        foreach (KeyValuePair<string, AliasTooltipAttribute> key in _type.NameToAttributeForConstField<AliasTooltipAttribute>())
+        EditorMacroDefineSymbol_Item item = null;        
+        foreach (FieldInfo key in _type.ToFieldInfosForConstField())
         {
-            item = new EditorMacroDefineSymbol_Item(key.Key, key.Value);
+            item = new EditorMacroDefineSymbol_Item(key);
             defineMaping.Add(item.name, item);
         }
     }

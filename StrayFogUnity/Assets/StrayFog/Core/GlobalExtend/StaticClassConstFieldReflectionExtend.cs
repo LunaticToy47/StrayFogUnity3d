@@ -10,8 +10,8 @@ public static class StaticClassConstFieldReflectionExtend
     #region NameToValue
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:名称
-    /// Value:值
+    /// Key: 字段名称
+    /// Value: 字段值
     /// </summary>
     /// <param name="_staticType">静态类类型</param>
     /// <returns>字典</returns>
@@ -21,8 +21,8 @@ public static class StaticClassConstFieldReflectionExtend
     }
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:名称
-    /// Value:值
+    /// Key: 字段名称
+    /// Value: 字段值
     /// </summary>
     /// <typeparam name="V">值类型</typeparam>
     /// <param name="_staticType">静态类类型</param>
@@ -50,11 +50,42 @@ public static class StaticClassConstFieldReflectionExtend
     }
     #endregion
 
+    #region NameToFieldInfo
+    /// <summary>
+    /// 将静态类Const、readonly字段转换为字典
+    /// Key: 字段名称
+    /// Value: 字段FieldInfo
+    /// </summary>
+    /// <param name="_staticType">静态类类型</param>
+    /// <returns>字典</returns>
+    public static Dictionary<string, FieldInfo> NameToFieldInfoForConstField(this Type _staticType)
+    {
+        if (!_staticType.IsStatic())
+        {
+            throw new ArgumentException("Type必须是静态类类型！");
+        }
+        return _StaticClassConstFieldToDictionary<string, FieldInfo, FieldInfo>(_staticType,
+            (f) =>
+            {
+                return f.Name;
+            },
+            (f, k) =>
+            {
+                return f;
+            },
+            (f, k, v) =>
+            {
+                return v;
+            }
+        );
+    }
+    #endregion
+
     #region NameToSpecialValue
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段
-    /// Value:值
+    /// Key: 字段名称
+    /// Value: 字段指定特殊值
     /// </summary>
     /// <typeparam name="R">值类别</typeparam>
     /// <param name="_staticType">静态类类型</param>
@@ -86,8 +117,8 @@ public static class StaticClassConstFieldReflectionExtend
     #region NameToAttribute
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// Key: 字段名称
+    /// Value: 字段指定特性
     /// </summary>
     /// <typeparam name="A">特性泛型</typeparam>
     /// <param name="_staticType">静态类类型</param>    
@@ -119,8 +150,8 @@ public static class StaticClassConstFieldReflectionExtend
     #region NameToAttributeSpecifyValue
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// Key: 字段名称
+    /// Value: 字段指定特性值
     /// </summary>
     /// <typeparam name="A">特性泛型</typeparam>
     /// <typeparam name="R">特殊值类型</typeparam>
@@ -154,8 +185,8 @@ public static class StaticClassConstFieldReflectionExtend
     #region ValueToName
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:值
-    /// Value:名称
+    /// Key: 字段值
+    /// Value: 字段名称
     /// </summary>
     /// <param name="_staticType">静态类类型</param>
     /// <returns>字典</returns>
@@ -165,8 +196,8 @@ public static class StaticClassConstFieldReflectionExtend
     }
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:值
-    /// Value:名称
+    /// Key: 字段值
+    /// Value: 字段名称
     /// </summary>
     /// <typeparam name="V">值类型</typeparam>
     /// <param name="_staticType">静态类类型</param>
@@ -194,11 +225,42 @@ public static class StaticClassConstFieldReflectionExtend
     }
     #endregion
 
+    #region ValueToFieldInfo
+    /// <summary>
+    /// 将静态类Const、readonly字段转换为字典
+    /// Key: 字段值
+    /// Value: 字段FieldInfo
+    /// </summary>
+    /// <param name="_staticType">静态类类型</param>
+    /// <returns>字典</returns>
+    public static Dictionary<V, FieldInfo> ValueToFieldInfoForConstField<V>(this Type _staticType)
+    {
+        if (!_staticType.IsStatic())
+        {
+            throw new ArgumentException("Type必须是静态类类型！");
+        }
+        return _StaticClassConstFieldToDictionary<V, FieldInfo, FieldInfo>(_staticType,
+            (f) =>
+            {
+                return (V)Convert.ChangeType(f.GetValue(null), typeof(V));
+            },
+            (f, k) =>
+            {
+                return f;
+            },
+            (f, k, v) =>
+            {
+                return v;
+            }
+        );
+    }
+    #endregion
+
     #region ValueToSpecialValue
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段
-    /// Value:值
+    /// Key: 字段值
+    /// Value: 字段特殊值
     /// </summary>
     /// <typeparam name="R">特殊值类别</typeparam>
     /// <param name="_staticType">静态类类型</param>
@@ -210,8 +272,8 @@ public static class StaticClassConstFieldReflectionExtend
     }
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段
-    /// Value:值
+    /// Key: 字段值
+    /// Value: 字段特殊值
     /// </summary>
     /// <typeparam name="V">值类型</typeparam>
     /// <typeparam name="R">特殊值类型</typeparam>
@@ -244,8 +306,8 @@ public static class StaticClassConstFieldReflectionExtend
     #region ValueToAttribute
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// Key: 字段值
+    /// Value: 字段指定特性
     /// </summary>
     /// <typeparam name="A">特性泛型</typeparam>
     /// <param name="_staticType">静态类类型</param>    
@@ -258,8 +320,8 @@ public static class StaticClassConstFieldReflectionExtend
 
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// Key: 字段值
+    /// Value: 字段指定特性
     /// </summary>
     /// <typeparam name="V">值类型</typeparam>
     /// <typeparam name="A">特性泛型</typeparam>
@@ -290,8 +352,8 @@ public static class StaticClassConstFieldReflectionExtend
 
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// Key: 字段值
+    /// Value: 字段FieldInfo
     /// </summary>
     /// <typeparam name="V">特值类型</typeparam>
     /// <param name="_staticType">静态类类型</param>    
@@ -322,8 +384,8 @@ public static class StaticClassConstFieldReflectionExtend
     #region ValueToAttributeSpecifyValue
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// Key: 字段值
+    /// Value: 字段指定特性特殊值
     /// </summary>
     /// <typeparam name="A">特性泛型</typeparam>
     /// <typeparam name="R">特殊值类型</typeparam>
@@ -337,8 +399,8 @@ public static class StaticClassConstFieldReflectionExtend
     }
     /// <summary>
     /// 将静态类Const、readonly字段转换为字典
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// Key: 字段值
+    /// Value: 字段指定特性特殊值
     /// </summary>
     /// <typeparam name="V">值类型</typeparam>
     /// <typeparam name="R">特殊值类型</typeparam>
@@ -405,7 +467,7 @@ public static class StaticClassConstFieldReflectionExtend
     /// </summary>
     /// <typeparam name="V">值类型</typeparam>
     /// <param name="_staticType">静态类类型</param>
-    /// <returns>字典</returns>
+    /// <returns>值组</returns>
     public static List<int> ToValuesForConstField(this Type _staticType)
     {
         return _staticType.ToValuesForConstField<int>();
@@ -415,7 +477,7 @@ public static class StaticClassConstFieldReflectionExtend
     /// </summary>
     /// <typeparam name="V">值类型</typeparam>
     /// <param name="_staticType">静态类类型</param>
-    /// <returns>字典</returns>
+    /// <returns>值组</returns>
     public static List<V> ToValuesForConstField<V>(this Type _staticType)
     {
         if (!_staticType.IsStatic())
@@ -443,13 +505,11 @@ public static class StaticClassConstFieldReflectionExtend
 
     #region ToAttributes
     /// <summary>
-    /// 获得指定静态类Const、readonly字段的特性组
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// 获得指定静态类Const、readonly字段的特性组  
     /// </summary>
     /// <typeparam name="A">特性泛型</typeparam>
     /// <param name="_staticType">静态类类型</param>    
-    /// <returns>字典</returns>
+    /// <returns>特性组</returns>
     public static List<A> ToAttributesForConstField<A>(this Type _staticType)
         where A : Attribute
     {
@@ -476,15 +536,13 @@ public static class StaticClassConstFieldReflectionExtend
 
     #region ToAttributeSpecifyValue
     /// <summary>
-    /// 获得指定静态类Const、readonly字段的特性组
-    /// Key:静态类Const、readonly字段名称
-    /// Value:静态类Const、readonly字段特性
+    /// 获得指定静态类Const、readonly字段的特性特殊值组
     /// </summary>
     /// <typeparam name="A">特性泛型</typeparam>
     /// <typeparam name="R">特殊值类型</typeparam>
     /// <param name="_staticType">静态类类型</param>    
     /// <param name="_funcAlias">属性特定值函数</param>
-    /// <returns>字典</returns>
+    /// <returns>特性特殊值组</returns>
     public static List<R> ToAttributeSpecifyValueForConstField<A, R>(this Type _staticType, Func<A, R> _funcAlias)
         where A : Attribute
     {
@@ -504,6 +562,35 @@ public static class StaticClassConstFieldReflectionExtend
             (f, k, v) =>
             {
                 return _funcAlias(v);
+            }
+        );
+    }
+    #endregion
+
+    #region ToFieldInfos
+    /// <summary>
+    /// 获得指定静态类Const、readonly字段的FieldInfo组
+    /// </summary>
+    /// <param name="_staticType">静态类类型</param>    
+    /// <returns>FieldInfo组</returns>
+    public static List<FieldInfo> ToFieldInfosForConstField(this Type _staticType)
+    {
+        if (!_staticType.IsStatic())
+        {
+            throw new ArgumentException("Type必须是静态类类型！");
+        }
+        return _StaticClassConstFieldToList<FieldInfo, FieldInfo, FieldInfo>(_staticType,
+            (f) =>
+            {
+                return f;
+            },
+            (f, k) =>
+            {
+                return k;
+            },
+            (f, k, v) =>
+            {
+                return v;
             }
         );
     }

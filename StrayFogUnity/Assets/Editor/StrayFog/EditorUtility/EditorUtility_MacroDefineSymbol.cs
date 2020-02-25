@@ -1,11 +1,40 @@
 ﻿#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 /// <summary>
 /// 宏定义符号
 /// </summary>
 public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
 {
+    #region EditorGUILayout_DrawMacroDefineSymbol 绘制脚本宏定义符
+    /// <summary>
+    /// 绘制脚本宏定义符
+    /// </summary>
+    /// <param name="_macroDefineSymbol">宏定义符</param>
+    public void EditorGUILayout_DrawMacroDefineSymbol(Dictionary<int, EditorMacroDefineSymbol> _macroDefineSymbol)
+    {
+        foreach (KeyValuePair<int, EditorMacroDefineSymbol> macro in _macroDefineSymbol)
+        {
+            EditorGUILayout.LabelField(string.Format("【{0}】{1}", macro.Value.type.Name, macro.Value.alias.alias, GUILayout.ExpandWidth(false)));
+            foreach (EditorMacroDefineSymbol_Item define in macro.Value.defineMaping.Values)
+            {
+                EditorGUILayout.BeginHorizontal();
+                define.isChecked = EditorGUILayout.ToggleLeft(
+                    string.Format("{0}【{1}】", define.name, define.alias.alias), define.isChecked);
+                if (GUILayout.Button(string.Format("Copy 【{0}】Define", define.alias.alias, GUILayout.ExpandWidth(false))))
+                {
+                    EditorStrayFogApplication.CopyToClipboard(define.name);
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            EditorStrayFogUtility.guiLayout.DrawSeparator();
+        }
+    }
+    #endregion
+
+    #region LoadMacroDefineScriptingDefineSymbols 加载宏定义符号
     /// <summary>
     /// 加载宏定义符号
     /// </summary>
@@ -30,7 +59,9 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
         }
         return result;
     }
+    #endregion
 
+    #region SaveMacroDefineScriptingDefineSymbols 保存宏定义符号
     /// <summary>
     /// 保存宏定义符号
     /// </summary>
@@ -62,5 +93,6 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
         EditorStrayFogApplication.RemoveScriptingDefineSymbol(removeDefines.ToArray());
         EditorStrayFogApplication.AddScriptingDefineSymbol(saveDefines.ToArray());
     }
+    #endregion
 }
 #endif

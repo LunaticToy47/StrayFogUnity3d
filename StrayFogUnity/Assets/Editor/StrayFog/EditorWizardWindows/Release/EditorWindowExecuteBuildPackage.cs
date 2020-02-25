@@ -8,9 +8,14 @@ using UnityEngine;
 public class EditorWindowExecuteBuildPackage : AbsEditorWindow
 {
     /// <summary>
-    /// 滚动视图位置
+    /// 快捷菜单滚动视图位置
     /// </summary>
-    Vector2 mScrollViewPosition = Vector2.zero;
+    Vector2 mShortcutMenuScrollViewPosition = Vector2.zero;
+
+    /// <summary>
+    /// 宏定义滚动视图位置
+    /// </summary>
+    Vector2 mMacroDefineSymbolScrollViewPosition = Vector2.zero;
 
     /// <summary>
     /// 宏定义
@@ -39,12 +44,20 @@ public class EditorWindowExecuteBuildPackage : AbsEditorWindow
     /// DrawBrower
     /// </summary>
     void DrawBrower()
-    {        
-        foreach (EditorMacroDefineSymbol key in mEditorMacroDefineSymbolMaping.Values)
-        {
+    {
+        EditorGUILayout.BeginHorizontal();
+        //快捷菜单
+        mShortcutMenuScrollViewPosition = EditorGUILayout.BeginScrollView(mShortcutMenuScrollViewPosition);
+        
+        EditorGUILayout.EndScrollView();
 
-        }
-        EditorGUILayout.Separator();
+        //宏定义符
+        mMacroDefineSymbolScrollViewPosition = EditorGUILayout.BeginScrollView(mMacroDefineSymbolScrollViewPosition);
+        EditorStrayFogUtility.macroDefineSymbol.EditorGUILayout_DrawMacroDefineSymbol(mEditorMacroDefineSymbolMaping);
+        EditorGUILayout.EndScrollView();
+
+        EditorGUILayout.EndHorizontal();
+        EditorStrayFogUtility.guiLayout.DrawSeparator();
     }
     #endregion
 

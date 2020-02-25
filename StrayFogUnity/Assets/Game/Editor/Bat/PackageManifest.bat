@@ -1,9 +1,9 @@
 @echo on
-setlocal enabledelayedexpansion
-set srcFolder=C:\Users\7Cool\AppData\LocalLow\StrayFog\StrayFogUnity3d\ab_win
-set destFolder=C:\Users\7Cool\AppData\LocalLow\StrayFog\StrayFogUnity3d\ab_win_manifest
+set srcFolder=C:\Users\Bzl\AppData\LocalLow\StrayFog\StrayFogUnity3d\ab_win
+set destFolder=C:\Users\Bzl\AppData\LocalLow\StrayFog\StrayFogUnity3d\ab_win_manifest
 RMDIR /s/q %destFolder%
-::MD %destFolder%
+MD %destFolder%
+setlocal enabledelayedexpansion
 FOR /r %srcFolder% %%F in (*.manifest) do ( 
 set "file=%%F"
 set "dir=%%~dpF"

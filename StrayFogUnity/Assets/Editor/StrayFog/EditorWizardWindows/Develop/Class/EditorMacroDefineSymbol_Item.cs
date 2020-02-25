@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Reflection;
 /// <summary>
 /// 宏定义符号子项
 /// </summary>
@@ -7,13 +8,14 @@ public class EditorMacroDefineSymbol_Item
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="_name">宏名称</param>
-    /// <param name="_alias">宏别名</param>
-    public EditorMacroDefineSymbol_Item(string _name, AliasTooltipAttribute _alias)
+    /// <param name="_fieldInfo">字段</param>
+    public EditorMacroDefineSymbol_Item(FieldInfo _fieldInfo)
     {
-        name = _name;
-        alias = _alias;
+        name = _fieldInfo.Name;
+        alias = _fieldInfo.GetFirstAttribute<AliasTooltipAttribute>();
+        shortcut = _fieldInfo.GetFirstAttribute<EditorMacroScriptingDefineSymbolShortcutAttribute>();
     }
+
     /// <summary>
     /// 宏名称
     /// </summary>
@@ -23,7 +25,11 @@ public class EditorMacroDefineSymbol_Item
     /// </summary>
     public AliasTooltipAttribute alias { get; private set; }
     /// <summary>
-    /// 是否选 中
+    /// 快捷菜单
+    /// </summary>
+    public EditorMacroScriptingDefineSymbolShortcutAttribute shortcut { get; private set; }
+    /// <summary>
+    /// 是否选中
     /// </summary>
     public bool isChecked;
 }

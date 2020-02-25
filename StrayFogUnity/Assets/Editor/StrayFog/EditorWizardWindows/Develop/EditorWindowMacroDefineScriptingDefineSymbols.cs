@@ -50,31 +50,17 @@ public class EditorWindowMacroDefineScriptingDefineSymbols : AbsEditorWindow
     /// </summary>
     private void DrawAssetNodes()
     {
-        EditorGUILayout.HelpBox("The System and Develop macro define is setting in EnumMacroDefineScriptingDefineSymbols.cs file.", MessageType.Info);
+        EditorGUILayout.HelpBox("The macro define is setting in class=>" + typeof(EditorMacroDefineScriptingDefineSymbols).Name, MessageType.Info);
 
         mScrollViewPosition = EditorGUILayout.BeginScrollView(mScrollViewPosition);
-        foreach (KeyValuePair<int, EditorMacroDefineSymbol> macro in mCoreMacroDefineScriptingDefineSymbolsMaping)
-        {
-            EditorGUILayout.LabelField(string.Format("【{0}】{1}", macro.Value.type.Name, macro.Value.alias.alias));
-            foreach (EditorMacroDefineSymbol_Item define in macro.Value.defineMaping.Values)
-            {
-                EditorGUILayout.BeginHorizontal();
-                define.isChecked = EditorGUILayout.ToggleLeft(
-                    string.Format("{0}【{1}】", define.name, define.alias.alias), define.isChecked);
-                if (GUILayout.Button(string.Format("Copy 【{0}】Define", define.alias.alias)))
-                {
-                    EditorStrayFogApplication.CopyToClipboard(define.name);
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            EditorStrayFogUtility.guiLayout.DrawSeparator();
-        }
+        EditorStrayFogUtility.macroDefineSymbol.EditorGUILayout_DrawMacroDefineSymbol(mCoreMacroDefineScriptingDefineSymbolsMaping);        
+        EditorGUILayout.EndScrollView();
 
         if (GUILayout.Button("Save Define"))
         {
             OnSaveDefine();
         }
-        EditorGUILayout.EndScrollView();
+        
     }
     #endregion
 
