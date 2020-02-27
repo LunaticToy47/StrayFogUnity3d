@@ -149,10 +149,7 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
         {
             foreach (EditorMacroDefineSymbol_Item d in key.defineMaping.Values)
             {
-                if (d.IsShortcut(_shortcutClassify))
-                {
-                    d.isChecked = true;
-                }
+                d.isChecked = d.IsShortcut(_shortcutClassify);
             }
         }
         SaveMacroDefineScriptingDefineSymbols(_symbols);
