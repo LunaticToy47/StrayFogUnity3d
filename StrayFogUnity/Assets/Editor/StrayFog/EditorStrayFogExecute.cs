@@ -2035,6 +2035,16 @@ public sealed class EditorStrayFogExecute
     #endregion
     #endregion
 
+    #region PerformanceOptimization 性能优化菜单
+    /// <summary>
+    /// 执行性能优化
+    /// </summary>
+    public static void ExecutePerformanceOptimization()
+    {
+        PlayerSettings.gcIncremental = true;
+    }
+    #endregion
+
     #region Release菜单
 
     #region ExecuteBuildPackage 发布包
@@ -2100,7 +2110,10 @@ public sealed class EditorStrayFogExecute
         EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildBatToPackage", 0);
         ExecuteBuildBatToPackage();
 
-        EditorUtility.DisplayProgressBar("BuildPackage", "BuildAssetBundles", 0);
+        EditorUtility.DisplayProgressBar("BuildPackage", "ExecutePerformanceOptimization", 0);
+        ExecutePerformanceOptimization();
+
+        EditorUtility.DisplayProgressBar("BuildPackage", "BuildPipeline.BuildAssetBundles", 0);
         EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
         BuildPipeline.BuildAssetBundles(path,
             BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DeterministicAssetBundle,
