@@ -47,7 +47,7 @@ public class EditorMacroDefineSymbol
     /// 设置宏定义
     /// </summary>
     /// <param name="_defineNames">宏定义名称组</param>
-    public void SetChecked(params string[] _defineNames)
+    public void SetCheckedFromPlayerSettings(params string[] _defineNames)
     {
         if (_defineNames != null && _defineNames.Length > 0)
         {
@@ -55,7 +55,7 @@ public class EditorMacroDefineSymbol
             {
                 if (defineMaping.ContainsKey(k))
                 {
-                    defineMaping[k].isChecked = true;
+                    defineMaping[k].SetPlayerSettingsChecked(true);
                 }
             }
         }

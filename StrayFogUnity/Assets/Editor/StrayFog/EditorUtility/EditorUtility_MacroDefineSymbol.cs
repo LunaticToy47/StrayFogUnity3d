@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 /// <summary>
@@ -34,6 +35,45 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
     }
     #endregion
 
+    #region EditorGUILayout_DrawMacroDefineSymbolShortcut 绘制脚本宏定义符快捷菜单
+    /// <summary>
+    /// 快捷分类映射
+    /// </summary>
+    readonly Dictionary<enEditorMacroScriptingDefineSymbolShortcutClassify, AliasTooltipAttribute> mShortcutClassifyMaping = typeof(enEditorMacroScriptingDefineSymbolShortcutClassify).EnumToAttribute<enEditorMacroScriptingDefineSymbolShortcutClassify,AliasTooltipAttribute>();
+    /// <summary>
+    /// 绘制脚本宏定义符快捷菜单
+    /// </summary>
+    /// <param name="_macroDefineSymbol">宏定义符</param>
+    public void EditorGUILayout_DrawMacroDefineSymbolShortcut(Dictionary<int, EditorMacroDefineSymbol> _macroDefineSymbol)
+    {
+        EditorGUILayout.HelpBox("Macro Define Symbol Shortcut Menu", MessageType.Info);
+        foreach (KeyValuePair<enEditorMacroScriptingDefineSymbolShortcutClassify, AliasTooltipAttribute> key in mShortcutClassifyMaping)
+        {
+            if (GUILayout.Button(key.Value.alias))
+            {
+                SaveMacroDefineScriptingDefineSymbolsForShortcut(key.Key, _macroDefineSymbol);
+            }
+        }
+
+        EditorStrayFogUtility.guiLayout.DrawSeparator();
+        EditorGUILayout.HelpBox("Macro Define Symbols", MessageType.Info);
+        StringBuilder sbSymbol = new StringBuilder();
+        foreach (KeyValuePair<int, EditorMacroDefineSymbol> macro in _macroDefineSymbol)
+        {            
+            foreach (EditorMacroDefineSymbol_Item define in macro.Value.defineMaping.Values)
+            {
+                if (define.isPlayerSettingsChecked)
+                {
+                    sbSymbol.AppendLine(define.alias.alias);
+                }
+            }
+        }
+        GUI.enabled = false;
+        EditorGUILayout.TextArea(sbSymbol.ToString());
+        GUI.enabled = true;
+    }
+    #endregion
+
     #region LoadMacroDefineScriptingDefineSymbols 加载宏定义符号
     /// <summary>
     /// 加载宏定义符号
@@ -54,7 +94,7 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
                 {
                     result.Add(symbol.key, symbol);
                 }
-                symbol.SetChecked(defines);
+                symbol.SetCheckedFromPlayerSettings(defines);
             }
         }
         return result;
@@ -69,7 +109,7 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
     public void SaveMacroDefineScriptingDefineSymbols(Dictionary<int, EditorMacroDefineSymbol> _symbols)
     {
         List<string> saveDefines = new List<string>();
-        List<string> removeDefines = new List<string>();
+        List<string> removeDefines = new List<string>();        
         foreach (EditorMacroDefineSymbol key in _symbols.Values)
         {
             foreach (EditorMacroDefineSymbol_Item d in key.defineMaping.Values)
@@ -92,6 +132,30 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
         }
         EditorStrayFogApplication.RemoveScriptingDefineSymbol(removeDefines.ToArray());
         EditorStrayFogApplication.AddScriptingDefineSymbol(saveDefines.ToArray());
+    }
+    #endregion
+
+    #region SaveMacroDefineScriptingDefineSymbolsForShortcut 保存指定快捷分类的宏定义符号
+    /// <summary>
+    /// 保存指定快捷分类的宏定义符号
+    /// </summary>
+    /// <param name="_shortcutClassify">快捷分类</param>
+    /// <param name="_symbols">宏定义符号</param>
+    public void SaveMacroDefineScriptingDefineSymbolsForShortcut(
+        enEditorMacroScriptingDefineSymbolShortcutClassify _shortcutClassify,
+        Dictionary<int, EditorMacroDefineSymbol> _symbols)
+    {        
+        foreach (EditorMacroDefineSymbol key in _symbols.Values)
+        {
+            foreach (EditorMacroDefineSymbol_Item d in key.defineMaping.Values)
+            {
+                if (d.IsShortcut(_shortcutClassify))
+                {
+                    d.isChecked = true;
+                }
+            }
+        }
+        SaveMacroDefineScriptingDefineSymbols(_symbols);
     }
     #endregion
 }
