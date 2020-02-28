@@ -13,7 +13,9 @@ public static class EditorUnityMonitor
     /// </summary>
     static EditorUnityMonitor()
     {
-        Debug.Log("EditorUnityMonitor");
+#if UNITY_EDITOR
+        EP.Log("OnHowToUse_InitializeOnLoad");
+#endif
     }
 }
 #endif

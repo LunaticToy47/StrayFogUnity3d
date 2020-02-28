@@ -48,7 +48,7 @@ public abstract partial class AbsMonoBehaviour
         }
         else
         {
-            P.E("Can't find method map for {0}", _simulateMethod);
+            P.Error("Can't find method map for {0}", _simulateMethod);
         }
     }
 

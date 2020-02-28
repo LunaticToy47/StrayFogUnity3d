@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.Runtime.CompilerServices;
+using UnityEngine;
 /// <summary>
 /// 如果使用一些特殊的属性
 /// </summary>
@@ -8,9 +9,27 @@ static class EditorHowToUseSpecialAttributes
     [MethodImpl(MethodImplOptions.Synchronized)]
     //https://www.cnblogs.com/zhuawang/archive/2013/05/27/3102834.htm
     //这里使用后线程同步锁，会超成死锁，不可以用
-    static void MethodImpl()
+    static void OnHowToUse_MethodImpl()
     {
+#if UNITY_EDITOR
+        EP.Log("OnHowToUse_MethodImpl");
+#endif
+    }
 
+    /*
+     * https://www.cnblogs.com/meteoric_cry/p/7602122.html
+     * Before –> Awake –> OnEnable –> After –> RuntimeMethodLoad –> Start。
+     * [MethodImpl(MethodImplOptions.Synchronized)]
+     */
+    /// <summary>
+    /// 程序主入口点
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void OnHowToUse_RuntimeInitializeOnLoadMethod()
+    {
+#if UNITY_EDITOR
+        EP.Log("OnHowToUse_RuntimeInitializeOnLoadMethod");
+#endif
     }
 
     /*

@@ -4,24 +4,13 @@ using UnityEngine;
 /// <summary>
 /// 日志管理器
 /// </summary>
-//[AddComponentMenu("StrayFog/Game/Log/StrayFogHotfixLog")]
-public static class P
+public static class EP
 {
-    /// <summary>
-    /// 编译条件
-    /// </summary>
-#if DEBUGLOG
-    const string mDebugLogConditional = "DEBUGLOG";//enSystemDefine.DEBUGLOG;
-#else
-    const string mDebugLogConditional = "UNITY_EDITOR";//enSystemDefine.DEBUGLOG;    
-#endif
-
     #region Log
     /// <summary>
     /// Log
     /// </summary>
     /// <param name="_message">信息</param>
-    [Conditional(mDebugLogConditional)]
     public static void Log(string _message)
     {
         UnityEngine.Debug.Log(_message);
@@ -32,8 +21,7 @@ public static class P
     /// </summary>
     /// <param name="_message">信息</param>
     /// <param name="_color">颜色</param>
-    [Conditional(mDebugLogConditional)]
-    public static void Log(string _message,Color _color)
+    public static void Log(string _message, Color _color)
     {
         UnityEngine.Debug.Log(_message.ApplyColor(_color));
     }
@@ -43,8 +31,7 @@ public static class P
     /// </summary>
     /// <param name="_format">格式符</param>
     /// <param name="_args">参数组</param>
-    [Conditional(mDebugLogConditional)]
-    public static void Log(string _format,params object[] _args)
+    public static void Log(string _format, params object[] _args)
     {
         UnityEngine.Debug.LogFormat(_format, _args);
     }
@@ -55,8 +42,7 @@ public static class P
     /// <param name="_format">格式符</param>
     /// <param name="_color">颜色</param>
     /// <param name="_args">参数组</param>
-    [Conditional(mDebugLogConditional)]
-    public static void Log(string _format,Color _color, params object[] _args)
+    public static void Log(string _format, Color _color, params object[] _args)
     {
         UnityEngine.Debug.LogFormat(_format.FormatApplyColor(_color, _args));
     }
@@ -67,7 +53,6 @@ public static class P
     /// LogWarning
     /// </summary>
     /// <param name="_message">信息</param>
-    [Conditional(mDebugLogConditional)]
     public static void Warning(string _message)
     {
         UnityEngine.Debug.LogWarning(_message);
@@ -78,7 +63,6 @@ public static class P
     /// </summary>
     /// <param name="_message">信息</param>
     /// <param name="_color">颜色</param>
-    [Conditional(mDebugLogConditional)]
     public static void Warning(string _message, Color _color)
     {
         UnityEngine.Debug.LogWarning(_message.ApplyColor(_color));
@@ -89,7 +73,6 @@ public static class P
     /// </summary>
     /// <param name="_format">格式符</param>
     /// <param name="_args">参数组</param>
-    [Conditional(mDebugLogConditional)]
     public static void Warning(string _format, params object[] _args)
     {
         UnityEngine.Debug.LogWarningFormat(_format, _args);
@@ -100,8 +83,7 @@ public static class P
     /// <param name="_format">格式符</param>
     /// <param name="_color">颜色</param>
     /// <param name="_args">参数组</param>
-    [Conditional(mDebugLogConditional)]
-    public static void Warning(string _format,Color _color, params object[] _args)
+    public static void Warning(string _format, Color _color, params object[] _args)
     {
         UnityEngine.Debug.LogWarningFormat(_format.FormatApplyColor(_color, _args));
     }
