@@ -99,6 +99,10 @@ public class EditorWindowBuildXlsSchemaToSqliteAndScript : AbsEditorWindow
             {
                 EditorStrayFogApplication.OpenFile(Path.GetFullPath(mXlsTableSchemas[i].fileName));
             }
+            if (GUILayout.Button("Script"))
+            {
+                EditorStrayFogApplication.RevealInFinder(mXlsTableSchemas[i].scriptSqliteEntityFolder);
+            }
             EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.EndScrollView();

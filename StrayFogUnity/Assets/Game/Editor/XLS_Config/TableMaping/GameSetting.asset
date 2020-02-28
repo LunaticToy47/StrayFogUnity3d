@@ -21,33 +21,43 @@ MonoBehaviour:
   isDeterminant: 1
   canModifyData: 0
   columns:
-  - columnName: resolution
-    desc: "\u5206\u8FA8\u7387"
+  - columnName: name
+    desc: "\u540D\u79F0"
+    xlsColumnValueIndex: 1
+    isPK: 0
+    isNull: 0
+    sqliteColumnName: name
+    sqliteColumnValue: 
+    dataType: 16384
+    arrayDimension: 1
+    isIngore: 0
+  - columnName: value
+    desc: "\u503C"
+    xlsColumnValueIndex: 2
+    isPK: 0
+    isNull: 0
+    sqliteColumnName: value
+    sqliteColumnValue: 
+    dataType: 16384
+    arrayDimension: 1
+    isIngore: 0
+  - columnName: valueType
+    desc: "\u503C\u7C7B\u578B"
+    xlsColumnValueIndex: 3
+    isPK: 0
+    isNull: 0
+    sqliteColumnName: valueType
+    sqliteColumnValue: 
+    dataType: 16384
+    arrayDimension: 1
+    isIngore: 0
+  - columnName: desc
+    desc: "\u8BF4\u660E"
     xlsColumnValueIndex: 4
     isPK: 0
     isNull: 0
-    sqliteColumnName: name
-    sqliteColumnValue: value
-    dataType: 65536
-    arrayDimension: 1
-    isIngore: 0
-  - columnName: targetFrameRate
-    desc: "\u5E27\u7387"
-    xlsColumnValueIndex: 5
-    isPK: 0
-    isNull: 0
-    sqliteColumnName: name
-    sqliteColumnValue: value
-    dataType: 64
-    arrayDimension: 1
-    isIngore: 0
-  - columnName: isRunGuide
-    desc: "\u662F\u5426\u8FD0\u884C\u5F15\u5BFC"
-    xlsColumnValueIndex: 6
-    isPK: 0
-    isNull: 0
-    sqliteColumnName: name
-    sqliteColumnValue: value
-    dataType: 1
+    sqliteColumnName: desc
+    sqliteColumnValue: 
+    dataType: 16384
     arrayDimension: 1
     isIngore: 0
