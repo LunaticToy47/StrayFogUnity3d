@@ -35,6 +35,13 @@ public class EditorXlsTableSchema : AbsScriptableObject
     [AliasTooltip("表分类")]
     [ReadOnly]
     public enSQLiteEntityClassify classify = enSQLiteEntityClassify.Table;
+
+    /// <summary>
+    /// 脚本目录分类
+    /// </summary>
+    [AliasTooltip("脚本目录分类")]
+    [ReadOnly]
+    public enEditorApplicationFolder scriptFolderClassify = enEditorApplicationFolder.Game_Script_SQLite;
     /// <summary>
     /// 是否是行列式表
     /// </summary>
@@ -109,6 +116,13 @@ public class EditorXlsTableSchema : AbsScriptableObject
             }            
             return Path.GetFileNameWithoutExtension(dbName) + "_" + className;
         } }
+    #endregion
+
+    #region Sqlit实体脚本保存目录
+    /// <summary>
+    /// Sqlit实体脚本保存目录
+    /// </summary>
+    public string scriptSqliteEntityFolder { get { return Path.Combine(Path.GetFullPath(scriptFolderClassify.GetAttribute<EditorApplicationFolderAttribute>().path), dbEnumName + (isDeterminant? "_DeterminantEntities" : "_Entities")); } }
     #endregion
 }
 #endif

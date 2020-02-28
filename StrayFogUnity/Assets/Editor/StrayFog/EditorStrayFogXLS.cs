@@ -545,6 +545,8 @@ public sealed class EditorStrayFogXLS
         EditorXlsTableColumnSchema tempTableColumn = null;
         List<EditorXlsTableColumnSchema> tempColumns = new List<EditorXlsTableColumnSchema>();
         Dictionary<int, string> dicSQLiteClassifyEnum = new Dictionary<int, string>();
+
+        #region 收集视图
         foreach (KeyValuePair<int, TableSQLiteHelper> db in _dbHelper)
         {
             #region 搜索要生成的视图
@@ -598,7 +600,9 @@ public sealed class EditorStrayFogXLS
             }
             #endregion          
         }
+        #endregion
 
+        #region 收集数据库枚举
         foreach (EditorXlsTableSchema t in _tables)
         {
             if (!dicSQLiteClassifyEnum.ContainsKey(t.dbKey))
@@ -606,6 +610,7 @@ public sealed class EditorStrayFogXLS
                 dicSQLiteClassifyEnum.Add(t.dbKey, t.dbEnumName);
             }
         }
+        #endregion
 
         #region 行列式表整理
         progress = 0;
@@ -707,45 +712,29 @@ public sealed class EditorStrayFogXLS
         StringBuilder sbConstructorSetParamsReplace = new StringBuilder();
         constructorSetParamsTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(tableConstructorTemplete, constructorSetParamsMark, out constructorSetParamsReplaceTemplete);
         #endregion
-        
-        string gameSqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Game_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
-        Dictionary<int, string> dicGameSqliteEntityFolder = new Dictionary<int, string>();
-        Dictionary<int, string> dicGameSqliteDeterminantEntitiesFolder = new Dictionary<int, string>();
 
-        string projectSqliteFolder = Path.GetFullPath(enEditorApplicationFolder.Project_Script_SQLite.GetAttribute<EditorApplicationFolderAttribute>().path);
-        Dictionary<int, string> dicProjectSqliteEntityFolder = new Dictionary<int, string>();
-        Dictionary<int, string> dicProjectSqliteDeterminantEntitiesFolder = new Dictionary<int, string>();
-
-        foreach (KeyValuePair<int, TableSQLiteHelper> key in _dbHelper)
+        #region 删除实体脚本目录
+        List<string> delFolder = new List<string>();
+        foreach (EditorXlsTableSchema t in _tables)
         {
-            dicGameSqliteEntityFolder.Add(key.Key, Path.Combine(gameSqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_Entities"));
-            dicGameSqliteDeterminantEntitiesFolder.Add(key.Key, Path.Combine(gameSqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_DeterminantEntities"));
-            EditorStrayFogUtility.cmd.DeleteFolder(dicGameSqliteEntityFolder[key.Key]);
-            EditorStrayFogUtility.cmd.DeleteFolder(dicGameSqliteDeterminantEntitiesFolder[key.Key]);
-
-            dicProjectSqliteEntityFolder.Add(key.Key, Path.Combine(projectSqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_Entities"));
-            dicProjectSqliteDeterminantEntitiesFolder.Add(key.Key, Path.Combine(projectSqliteFolder, Path.GetFileNameWithoutExtension(key.Value.dbPath) + "_DeterminantEntities"));
-            EditorStrayFogUtility.cmd.DeleteFolder(dicProjectSqliteEntityFolder[key.Key]);
-            EditorStrayFogUtility.cmd.DeleteFolder(dicProjectSqliteDeterminantEntitiesFolder[key.Key]);
+            if (!delFolder.Contains(t.scriptSqliteEntityFolder))
+            {
+                delFolder.Add(t.scriptSqliteEntityFolder);
+            }            
         }
+        foreach (string d in delFolder)
+        {
+            EditorStrayFogUtility.cmd.DeleteFolder(d);
+        }
+        #endregion
+
         EditorTextAssetConfig cfgEntityScript = new EditorTextAssetConfig("", "", enFileExt.CS, "");
         List<string> tempConstructorParamSummary = new List<string>();
         List<string> tempConstructorFormalParams = new List<string>();
         List<string> tempConstructorSetParams = new List<string>();
         List<string> tempPkSequenceId = new List<string>();
         bool hasPK = false;
-
-        List<string> projectSqliteMapPaths = new List<string>();
-        if (EditorStrayFogSavedAssetConfig.setXlsFileConfigForAsmdefMap.paths != null)
-        {
-            foreach (string p in EditorStrayFogSavedAssetConfig.setXlsFileConfigForAsmdefMap.paths)
-            {
-                if (!projectSqliteMapPaths.Contains(p))
-                {
-                    projectSqliteMapPaths.Add(p);
-                }
-            }
-        }
+          
         foreach (EditorXlsTableSchema t in _tables)
         {
             progress++;
@@ -833,6 +822,7 @@ public sealed class EditorStrayFogXLS
                     }
                 }
             }
+
             if (tempPkSequenceId.Count > 0)
             {
                 sbPkSequenceIdReplace.Append(string.Join("+", tempPkSequenceId.ToArray()));
@@ -896,29 +886,9 @@ public sealed class EditorStrayFogXLS
                 .Replace("#hasPKColumn#", Convert.ToString(hasPK).ToLower())
                 .Replace("#canModifyData#", Convert.ToString(t.canModifyData).ToLower())
                 );
-            if (projectSqliteMapPaths.Contains(t.fileName))
-            {
-                if (t.isDeterminant)
-                {
-                    cfgEntityScript.SetDirectory(dicProjectSqliteDeterminantEntitiesFolder[t.dbKey]);
-                }
-                else
-                {
-                    cfgEntityScript.SetDirectory(dicProjectSqliteEntityFolder[t.dbKey]);
-                }
-            }
-            else
-            {
-                if (t.isDeterminant)
-                {
-                    cfgEntityScript.SetDirectory(dicGameSqliteDeterminantEntitiesFolder[t.dbKey]);
-                }
-                else
-                {
-                    cfgEntityScript.SetDirectory(dicGameSqliteEntityFolder[t.dbKey]);
-                }
-            }
-            
+
+            cfgEntityScript.SetDirectory(t.scriptSqliteEntityFolder);
+
             Debug.LogFormat("【{0}->{1}】【{2}】=>{3}", t.tableName, t.className, cfgEntityScript.directory, cfgEntityScript.text);
             cfgEntityScript.CreateAsset();
             EditorUtility.DisplayProgressBar("Build Table Script",

@@ -17,6 +17,7 @@ MonoBehaviour:
   fileName: Assets/Game/Editor/XLS_Config/UserGuideReferObject.xlsx
   dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
   classify: 0
+  scriptFolderClassify: 11
   isDeterminant: 0
   canModifyData: 0
   columns:

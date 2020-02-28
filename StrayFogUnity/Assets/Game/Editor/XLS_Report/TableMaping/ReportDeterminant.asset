@@ -17,46 +17,27 @@ MonoBehaviour:
   fileName: Assets/Game/Editor/XLS_Report/ReportDeterminant.xlsx
   dbPath: Assets/Game/Editor/XLS_Report/XLS_Report.db
   classify: 0
+  scriptFolderClassify: 11
   isDeterminant: 1
   canModifyData: 1
   columns:
-  - columnName: name
-    desc: "\u540D\u79F0"
-    xlsColumnValueIndex: 1
-    isPK: 0
-    isNull: 0
-    sqliteColumnName: name
-    sqliteColumnValue: 
-    dataType: 16384
-    arrayDimension: 1
-    isIngore: 0
-  - columnName: value
-    desc: "\u503C"
-    xlsColumnValueIndex: 2
-    isPK: 0
-    isNull: 0
-    sqliteColumnName: value
-    sqliteColumnValue: 
-    dataType: 16384
-    arrayDimension: 1
-    isIngore: 0
-  - columnName: valueType
-    desc: "\u503C\u7C7B\u578B"
-    xlsColumnValueIndex: 3
-    isPK: 0
-    isNull: 0
-    sqliteColumnName: valueType
-    sqliteColumnValue: 
-    dataType: 16384
-    arrayDimension: 1
-    isIngore: 0
-  - columnName: desc
-    desc: "\u8BF4\u660E"
+  - columnName: ReportTip
+    desc: "\u62A5\u8868\u63D0\u793A"
     xlsColumnValueIndex: 4
     isPK: 0
     isNull: 0
-    sqliteColumnName: desc
-    sqliteColumnValue: 
+    sqliteColumnName: name
+    sqliteColumnValue: value
+    dataType: 16384
+    arrayDimension: 1
+    isIngore: 0
+  - columnName: DeterminantTip
+    desc: "\u884C\u5217\u5F0F\u63D0\u793A"
+    xlsColumnValueIndex: 5
+    isPK: 0
+    isNull: 0
+    sqliteColumnName: name
+    sqliteColumnValue: value
     dataType: 16384
     arrayDimension: 1
     isIngore: 0
