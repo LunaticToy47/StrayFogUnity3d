@@ -1,5 +1,6 @@
 ﻿using Mono.Data.Sqlite;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -22,6 +23,15 @@ public class ExampleSQLiteLevelForIOS : MonoBehaviour
     /// 表值
     /// </summary>
     StringBuilder sbTableValue = new StringBuilder();
+
+    /// <summary>
+    /// 插入条数
+    /// </summary>
+    int mInsertNum = 1000000;
+    /// <summary>
+    /// 时间
+    /// </summary>
+    Stopwatch watch = new Stopwatch();
     /// <summary>
     /// Awake
     /// </summary>
@@ -32,9 +42,21 @@ public class ExampleSQLiteLevelForIOS : MonoBehaviour
     }
 
     private void OnGUI()
-    {        
+    {
+        if (GUILayout.Button("Insert 10W"))
+        {
+            StrayFogSQLiteHelper helper = new StrayFogSQLiteHelper(mDbPath);           
+            while (mInsertNum > 0)
+            {
+                helper.ExecuteQuery("INSERT INTO AsmdefMap VALUES (1,'AAAAAAAA','BBBBBBBB','CCCCCCC','DDDDDD','EEEEEE',0)");
+                mInsertNum--;
+            }            
+        }
+        GUILayout.Label("Insert Num =>" + mInsertNum);
         if (GUILayout.Button("Read SQLite"))
         {
+            watch.Reset();
+            watch.Start();
             StrayFogSQLiteHelper helper = new StrayFogSQLiteHelper(mDbPath);
             SqliteDataReader reader = helper.ReadFullTable("AsmdefMap");
             while (reader.Read())
@@ -44,10 +66,11 @@ public class ExampleSQLiteLevelForIOS : MonoBehaviour
                     sbTableColumn.Append(reader.GetName(i) + ",");
                     sbTableValue.Append(reader.GetValue(i).ToString());
                 }
-                break;
             }
             reader.Close();
+            watch.Stop();
         }
+        GUILayout.Label("Time=>" + watch.ElapsedMilliseconds);
         mScrollViewPosition = GUILayout.BeginScrollView(mScrollViewPosition);
         GUILayout.Label("Connect String=>"+ mDbPath);
         GUILayout.Label("Table Columns=>" + sbTableColumn.ToString());
