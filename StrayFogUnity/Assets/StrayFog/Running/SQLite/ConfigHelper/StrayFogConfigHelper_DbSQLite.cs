@@ -17,7 +17,7 @@ public sealed partial class StrayFogConfigHelper
         where T : AbsStrayFogSQLiteEntity
     {
         Dictionary<int, T> result = new Dictionary<int, T>();
-        SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ExecuteQuery(string.Format("SELECT * FROM {0}", _tableAttribute.sqliteTableName));
+        SqliteDataReader reader = msStrayFogSQLiteHelperMaping[_tableAttribute.dbSQLiteKey].ReadFullTable(_tableAttribute.sqliteTableName);
         T tempEntity = default(T);
         string tempPropertyName = string.Empty;
         int tempPropertyKey = 0;

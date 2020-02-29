@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 /// <summary>
-/// FMS关卡
+/// SQLite关卡
 /// </summary>
 [AddComponentMenu("StrayFog/Game/Example/Level/ExampleSQLiteLevel")]
 public class ExampleSQLiteLevel : AbsLevel
