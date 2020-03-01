@@ -1,1 +1,1 @@
-start C:/Users/%username%/AppData/LocalLow/StrayFog/StrayFogUnity3d
+start C:/Users/7Cool/AppData/LocalLow/StrayFog/StrayFogUnity3d

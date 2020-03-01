@@ -35,5 +35,10 @@ public class EditorXlsFileForAsmdefMap : AbsEditorSavedAsset
     /// </summary>
     /// <returns>合法文件后缀组</returns>
     protected override int[] OnLegalFileExts() { return new int[1] { enFileExt.Xlsx }; }
+
+    /// <summary>
+    /// 允许操作数量
+    /// </summary>
+    protected override int allowOprNum => 1;
 }
 #endif

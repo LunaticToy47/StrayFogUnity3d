@@ -4,16 +4,11 @@ using UnityEngine;
 /// <summary>
 /// AsmdefMap实体
 /// </summary>
-[SQLiteTableMap(1559723641,"Assets/Game/Editor/XLS_Config/AsmdefMap.xlsx","AsmdefMap", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_334573285",typeof(XLS_Config_Table_AsmdefMap),true,false)]
-public partial class XLS_Config_Table_AsmdefMap: AbsStrayFogSQLiteEntity
+[SQLiteTableMap(-1128168728,"Assets/Game/Editor/XLS_Hotfix/AsmdefMap.xlsx","AsmdefMap", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Hotfix/XLS_Hotfix.db","c_957487325",typeof(XLS_Hotfix_Table_AsmdefMap),false,false)]
+public partial class XLS_Hotfix_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 {
 	
 
-	
-	protected override int OnResolvePkSequenceId()
-    {
-        return (id.ToString()).UniqueHashCode();
-    }
 	
 
 	#region Properties	
@@ -21,7 +16,7 @@ public partial class XLS_Config_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// 路径ID
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"id","","@id1",true,false)]	
+	[SQLiteFieldType(enSQLiteDataType.Int32,enSQLiteDataTypeArrayDimension.NoArray,1,"id","","@id1",false,false)]	
 	public int id { get; private set; }	
 		
 	/// <summary>

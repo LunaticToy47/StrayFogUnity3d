@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EditorXlsFileConfigForAsmdefMap
   m_EditorClassIdentifier: 
   paths:
-  - Assets/Game/Editor/XLS_Config/AsmdefMap.xlsx
+  - Assets/Game/Editor/XLS_Hotfix/AsmdefMap.xlsx
   invoke: 

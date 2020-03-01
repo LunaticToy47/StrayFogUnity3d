@@ -18,6 +18,11 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
     public virtual enEditorSavedAssetPattern pattern { get { return enEditorSavedAssetPattern.OnlyInAssets; } }
 
     /// <summary>
+    /// 可允许操作的数量
+    /// </summary>
+    protected virtual int allowOprNum { get { return int.MaxValue; } }
+
+    /// <summary>
     /// 绘制GUI描述
     /// </summary>
     protected abstract string drawGUIDesc { get; }
@@ -63,6 +68,7 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
         }
         return _position.y - y;
     }
+
     /// <summary>
     /// 绘制GUI
     /// </summary>
@@ -80,75 +86,84 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
         #region Add Path
         if (GUILayout.Button("Add " + classify.ToString()))
         {
-            string path = string.Empty;
-            string error = string.Empty;
-            string ext = string.Empty;
-            List<string> legalExts = new List<string>();
-            bool isLegalFileExt = false;
-            FileExtAttribute fextAttr = null;
-            switch (classify)
+            if (mTempPaths.Count < allowOprNum)
             {
-                case enEditorSavedAssetClassify.File:
-                    path = EditorUtility.OpenFilePanel("Add " + classify.ToString(), EditorStrayFogApplication.assetsPath, "");
-                    ext = Path.GetExtension(path);
-                    int[] legalFileExts = OnLegalFileExts();
-                    if (legalFileExts != null && legalFileExts.Length > 0)
-                    {
-                        foreach (int fext in legalFileExts)
+                #region Add
+                string path = string.Empty;
+                string error = string.Empty;
+                string ext = string.Empty;
+                List<string> legalExts = new List<string>();
+                bool isLegalFileExt = false;
+                FileExtAttribute fextAttr = null;
+                switch (classify)
+                {
+                    case enEditorSavedAssetClassify.File:
+                        path = EditorUtility.OpenFilePanel("Add " + classify.ToString(), EditorStrayFogApplication.assetsPath, "");
+                        ext = Path.GetExtension(path);
+                        int[] legalFileExts = OnLegalFileExts();
+                        if (legalFileExts != null && legalFileExts.Length > 0)
                         {
-                            fextAttr = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(fext);
-                            isLegalFileExt |= fextAttr.IsExt(ext);
-                            legalExts.Add(fextAttr.ext);
+                            foreach (int fext in legalFileExts)
+                            {
+                                fextAttr = typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(fext);
+                                isLegalFileExt |= fextAttr.IsExt(ext);
+                                legalExts.Add(fextAttr.ext);
+                            }
+                        }
+                        if (!isLegalFileExt)
+                        {
+                            error = string.Format("The file must be 【{0}】", string.Join(",", legalExts.ToArray()));
+                        }
+                        break;
+                    case enEditorSavedAssetClassify.Folder:
+                        path = EditorUtility.OpenFolderPanel("Add " + classify.ToString(), EditorStrayFogApplication.assetsPath, "");
+                        break;
+                }
+                bool isLegalPath = false;
+                string errTip = string.Empty;
+
+                #region 判定路径是否合法
+                switch (pattern)
+                {
+                    case enEditorSavedAssetPattern.OnlyInAssets:
+                        isLegalPath = EditorStrayFogApplication.IsSubToAssets(path);
+                        if (isLegalPath)
+                        {
+                            path = EditorStrayFogApplication.GetRelativeToProject(path);
+                        }
+                        errTip = "in";
+                        break;
+                    case enEditorSavedAssetPattern.OnlyOutAssets:
+                        isLegalPath = !EditorStrayFogApplication.IsSubToAssets(path);
+                        errTip = "out";
+                        break;
+                }
+                #endregion
+
+                if (isLegalPath)
+                {
+                    if (string.IsNullOrEmpty(error))
+                    {
+                        if (!mTempPaths.Contains(path))
+                        {
+                            mTempPaths.Add(path);
+                            mTempIsDirty = true;
                         }
                     }
-                    if (!isLegalFileExt)
+                    else
                     {
-                        error = string.Format("The file must be 【{0}】", string.Join(",", legalExts.ToArray()));
-                    }
-                    break;
-                case enEditorSavedAssetClassify.Folder:
-                    path = EditorUtility.OpenFolderPanel("Add " + classify.ToString(), EditorStrayFogApplication.assetsPath, "");
-                    break;
-            }
-            bool isLegalPath = false;
-            string errTip = string.Empty;
-
-            #region 判定路径是否合法
-            switch (pattern)
-            {
-                case enEditorSavedAssetPattern.OnlyInAssets:
-                    isLegalPath = EditorStrayFogApplication.IsSubToAssets(path);
-                    if (isLegalPath)
-                    {
-                        path = EditorStrayFogApplication.GetRelativeToProject(path);
-                    }
-                    errTip = "in";
-                    break;
-                case enEditorSavedAssetPattern.OnlyOutAssets:
-                    isLegalPath = !EditorStrayFogApplication.IsSubToAssets(path);
-                    errTip = "out";
-                    break;
-            }
-            #endregion
-
-            if (isLegalPath)
-            {
-                if (string.IsNullOrEmpty(error))
-                {
-                    if (!mTempPaths.Contains(path))
-                    {
-                        mTempPaths.Add(path);
-                        mTempIsDirty = true;
+                        EditorUtility.DisplayDialog(classify.ToString(), error, "OK");
                     }
                 }
                 else
                 {
-                    EditorUtility.DisplayDialog(classify.ToString(), error, "OK");
+                    EditorUtility.DisplayDialog(classify.ToString(), classify.ToString() + " must be " + errTip + " 【" + EditorStrayFogApplication.assetsPath + "】", "OK");
                 }
+                #endregion
             }
             else
             {
-                EditorUtility.DisplayDialog(classify.ToString(), classify.ToString() + " must be "+ errTip + " 【" + EditorStrayFogApplication.assetsPath + "】", "OK");
+                EditorUtility.DisplayDialog("Add Error", $"Only allow operation {allowOprNum} {classify}", "OK");
             }
         }
         #endregion
@@ -172,7 +187,7 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
                 }
                 if (GUILayout.Button("Delete"))
                 {
-                    if (EditorUtility.DisplayDialog("Delete "+ classify.ToString(), "Are you sure to delete "+ classify.ToString() + " 【" + mTempPaths[i] + "】", "OK", "Cancel"))
+                    if (EditorUtility.DisplayDialog("Delete " + classify.ToString(), "Are you sure to delete " + classify.ToString() + " 【" + mTempPaths[i] + "】", "OK", "Cancel"))
                     {
                         delIndex = i;
                         break;

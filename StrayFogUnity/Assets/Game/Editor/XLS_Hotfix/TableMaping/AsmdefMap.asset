@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AsmdefMap
   m_EditorClassIdentifier: 
   tableName: AsmdefMap
-  tableSchemaAssetPath: Assets/Game/Editor/XLS_Config/TableMaping/AsmdefMap.asset
-  fileName: Assets/Game/Editor/XLS_Config/AsmdefMap.xlsx
-  dbPath: Assets/Game/Editor/XLS_Config/XLS_Config.db
+  tableSchemaAssetPath: Assets/Game/Editor/XLS_Hotfix/TableMaping/AsmdefMap.asset
+  fileName: Assets/Game/Editor/XLS_Hotfix/AsmdefMap.xlsx
+  dbPath: Assets/Game/Editor/XLS_Hotfix/XLS_Hotfix.db
   classify: 0
   scriptFolderClassify: 11
   isDeterminant: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   - columnName: id
     desc: "\u8DEF\u5F84ID"
     xlsColumnValueIndex: 1
-    isPK: 1
+    isPK: 0
     isNull: 0
     sqliteColumnName: id
     sqliteColumnValue: 
