@@ -221,7 +221,7 @@ public sealed partial class StrayFogConfigHelper
                     result = OnUpdateToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
                     if (result)
                     {
-                        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
+                        if (StrayFogRunningPool.runningSetting.isUseSQLite)
                         {
                             OnUpdateToSQLite(_entity,tableAttribute);
                         }

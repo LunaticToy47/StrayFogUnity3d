@@ -230,7 +230,7 @@ public sealed partial class StrayFogConfigHelper
         bool result = OnDeleteToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
         if (result)
         {
-            if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
+            if (StrayFogRunningPool.runningSetting.isUseSQLite)
             {
                 OnDeleteFromSQLite(_entity, tableAttribute);
             }
@@ -255,7 +255,7 @@ public sealed partial class StrayFogConfigHelper
         bool result = OnDeleteAllToCacheEntityData<T>(tableAttribute);
         if (result)
         {
-            if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
+            if (StrayFogRunningPool.runningSetting.isUseSQLite)
             {
                 OnDeleteAllFromSQLite(tableAttribute);
             }

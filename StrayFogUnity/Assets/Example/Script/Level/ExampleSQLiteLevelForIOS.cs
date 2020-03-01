@@ -37,7 +37,7 @@ public class ExampleSQLiteLevelForIOS : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        mDbPath = StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(
+        mDbPath = StrayFogRunningPool.runningSetting.GetSQLiteConnectionString(
             Path.Combine(Application.streamingAssetsPath, "XLS_Config.db").TransPathSeparatorCharToUnityChar());
     }
 

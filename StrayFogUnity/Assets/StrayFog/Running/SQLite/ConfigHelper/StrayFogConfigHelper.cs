@@ -138,7 +138,7 @@ public sealed partial class StrayFogConfigHelper
         where T : AbsStrayFogSQLiteEntity
     {
         Dictionary<int, T> result = new Dictionary<int, T>();
-        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
+        if (StrayFogRunningPool.runningSetting.isUseSQLite)
         {
             result = OnReadFromSQLite<T>(_tableAttribute);
         }
@@ -210,19 +210,19 @@ public sealed partial class StrayFogConfigHelper
         }
 
         //SQLiteHelper
-        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
+        if (StrayFogRunningPool.runningSetting.isUseSQLite)
         {
             if (!msStrayFogSQLiteHelperMaping.ContainsKey(tableAttribute.dbSQLiteKey))
             {
-                if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseAssetBundle)
+                if (StrayFogRunningPool.runningSetting.isUseAssetBundle)
                 {
                     msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
-                        new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(tableAttribute.dbSQLiteAssetBundleName)));
+                        new StrayFogSQLiteHelper(StrayFogRunningPool.runningSetting.GetSQLiteConnectionString(tableAttribute.dbSQLiteAssetBundleName)));
                 }
                 else
                 {
                     msStrayFogSQLiteHelperMaping.Add(tableAttribute.dbSQLiteKey,
-                        new StrayFogSQLiteHelper(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().GetSQLiteConnectionString(tableAttribute.dbSQLitePath)));
+                        new StrayFogSQLiteHelper(StrayFogRunningPool.runningSetting.GetSQLiteConnectionString(tableAttribute.dbSQLitePath)));
                 }
             }
         }        

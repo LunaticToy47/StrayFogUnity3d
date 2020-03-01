@@ -102,7 +102,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleScriptableObject<StrayFogRunningApplication>();
+            return StrayFogRunningPool.SingleScriptableObject<StrayFogRunningApplication>();
         }
     }
     #endregion
@@ -115,7 +115,7 @@ public static partial class StrayFogGamePools
     {
         get
         {
-            return StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>();
+            return StrayFogRunningPool.runningSetting;
         }
     }
     #endregion

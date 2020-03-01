@@ -168,7 +168,7 @@ public sealed partial class StrayFogConfigHelper
         bool result = OnInsertToCacheEntityData(_entity, tableAttribute, out xlsRowIndex);
         if (result)
         {
-            if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseSQLite)
+            if (StrayFogRunningPool.runningSetting.isUseSQLite)
             {
                 OnInsertIntoSQLite(_entity, tableAttribute);
             }

@@ -1776,7 +1776,7 @@ public sealed class EditorStrayFogExecute
             progress++;
             if (!string.IsNullOrEmpty(n.GetAssetBundleName()))
             {
-                File.Copy(n.path, Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot, n.GetAssetBundleName()));
+                File.Copy(n.path, Path.Combine(StrayFogRunningPool.runningSetting.editorReleaseAssetBundleRoot, n.GetAssetBundleName()));
             }
             else
             {
@@ -1997,7 +1997,7 @@ public sealed class EditorStrayFogExecute
             n.Resolve();
             if (File.Exists(n.asmdefDllPath))
             {
-                savePath = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot,
+                savePath = Path.Combine(StrayFogRunningPool.runningSetting.editorReleaseAssetBundleRoot,
                     n.asmdefDllAssetbundleName);
                 saveDir = Path.GetDirectoryName(savePath);
                 if (!Directory.Exists(saveDir))
@@ -2012,7 +2012,7 @@ public sealed class EditorStrayFogExecute
             }
             if (File.Exists(n.asmdefPdbPath))
             {
-                savePath = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot,
+                savePath = Path.Combine(StrayFogRunningPool.runningSetting.editorReleaseAssetBundleRoot,
                     n.asmdefPdbAssetbundleName);
                 saveDir = Path.GetDirectoryName(savePath);
                 if (!Directory.Exists(saveDir))
@@ -2053,7 +2053,7 @@ public sealed class EditorStrayFogExecute
     /// </summary>
     public static void ExecuteBuildPackage()
     {
-        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot);
+        string path = Path.GetFullPath(StrayFogRunningPool.runningSetting.editorReleaseAssetBundleRoot);
         StringBuilder sbLog = new StringBuilder();
         #region 清理包目录
         EditorUtility.DisplayProgressBar("BuildPackage", string.Format("Clear AssetBundleRoot=>{0}", path), 0);
@@ -2160,7 +2160,7 @@ public sealed class EditorStrayFogExecute
         EditorTextAssetConfig clearSvnRegBat = (EditorTextAssetConfig)mClearSvnReg.Clone();
         EditorTextAssetConfig playerLogBat = (EditorTextAssetConfig)mPlayerLog.Clone();
 
-        string path = Path.GetFullPath(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot);
+        string path = Path.GetFullPath(StrayFogRunningPool.runningSetting.editorReleaseAssetBundleRoot);
         
         #region packageManifestBat
         string scriptTemplete = packageManifestBat.text;
@@ -2214,7 +2214,7 @@ public sealed class EditorStrayFogExecute
                 if (!dbKeys.Contains(t.dbKey))
                 {
                     dbKeys.Add(t.dbKey);
-                    string db = Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().editorReleaseAssetBundleRoot, t.assetBundleDbName);
+                    string db = Path.Combine(StrayFogRunningPool.runningSetting.editorReleaseAssetBundleRoot, t.assetBundleDbName);
                     string dir = Path.GetDirectoryName(db);
                     if (!Directory.Exists(dir))
                     {
