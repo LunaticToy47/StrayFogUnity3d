@@ -36,6 +36,7 @@ static class EditorProjectMenuItem
     {
         EditorStrayFogExecute.ExecuteBuildProjectAssets<StrayFogRunningApplication>();
         EditorStrayFogExecute.ExecuteBuildProjectAssets<StrayFogSetting>();
+        EditorStrayFogExecute.ExecuteHotfixAsmdefSetting();
         EditorStrayFogApplication.MenuItemQuickDisplayDialogSucceed(mcBuildProjectAssets);
     }
     #endregion

@@ -284,6 +284,14 @@ public sealed class EditorStrayFogExecute
         sbLog.AppendLine(string.Format("ExecuteBuildProjectAssets 【{0}】Succeed!", absInheritType.FullName));
         Debug.Log(sbLog.ToString());
     }
+
+    /// <summary>
+    /// 生成HotfixAsmdef设定资源
+    /// </summary>
+    public static void ExecuteHotfixAsmdefSetting()
+    {
+        //StrayFogHotfixAsmdefSetting
+    }
     #endregion
 
     #endregion
