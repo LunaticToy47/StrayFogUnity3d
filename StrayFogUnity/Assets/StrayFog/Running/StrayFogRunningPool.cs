@@ -38,7 +38,7 @@ public sealed class StrayFogRunningPool
         get
         {
 #if UNITY_EDITOR
-            return SingleScriptableObject<StrayFogHotfixAsmdefSetting>();
+            return null;
 #else
             return SingleScriptableObject<StrayFogHotfixAsmdefSetting>();
 #endif

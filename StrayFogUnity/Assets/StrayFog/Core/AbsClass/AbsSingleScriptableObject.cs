@@ -44,6 +44,6 @@ public abstract class AbsSingleScriptableObject : AbsScriptableObject
     /// <summary>
     /// 在构造函数之后
     /// </summary>
-    protected virtual void OnAfterConstructor() { }
+    protected virtual void OnAfterConstructor() { }    
     #endregion
 }
