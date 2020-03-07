@@ -129,7 +129,7 @@ public abstract class AbsEditorSavedAsset : AbsScriptableObject
                         isLegalPath = EditorStrayFogApplication.IsSubToAssets(path);
                         if (isLegalPath)
                         {
-                            path = EditorStrayFogApplication.GetRelativeToProject(path);
+                            path = EditorStrayFogApplication.GetRelativeToAssets(path);
                         }
                         errTip = "in";
                         break;

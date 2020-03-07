@@ -254,13 +254,13 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 
-    #region GetRelativeToProject 获得Path相对于工程的路径
+    #region GetRelativeToAssets 获得Path相对于Assets的路径
     /// <summary>
-    /// 获得Path相对于工程的路径
+    /// 获得Path相对于Assets的路径
     /// </summary>
     /// <param name="_path">路径</param>
-    /// <returns>相对路径</returns>
-    public static string GetRelativeToProject(string _path)
+    /// <returns>相对于Assets路径</returns>
+    public static string GetRelativeToAssets(string _path)
     {
         return GetRelativeTo(_path, Path.GetDirectoryName(assetsPath));
     }
@@ -272,7 +272,7 @@ public sealed class EditorStrayFogApplication
     /// </summary>
     /// <param name="_path">路径</param>
     /// <param name="_root">根目录</param>
-    /// <returns>相对路径</returns>
+    /// <returns>相对于Root的路径</returns>
     public static string GetRelativeTo(string _path, string _root)
     {
         _path = Path.GetFullPath(_path).TransPathSeparatorCharToUnityChar().Replace(Path.GetFullPath(_root).TransPathSeparatorCharToUnityChar(), "");
@@ -280,13 +280,21 @@ public sealed class EditorStrayFogApplication
     }
     #endregion
 
-    #region TryRelativeToProject 尝试获得Path相对于工程的路径
+    #region TryRelativeToAssets 尝试获得Path相对于Assets的路径
     /// <summary>
-    /// 尝试获得Path相对于工程的路径
+    /// 尝试获得Path相对于Assets的路径
+    /// </summary>
+    /// <returns>相对于Assets路径</returns>
+    public static string TryRelativeToAssets()
+    {
+        return TryRelativeToAssets(string.Empty);
+    }
+    /// <summary>
+    /// 尝试获得Path相对于Assets的路径
     /// </summary>
     /// <param name="_path">尝试的路径</param>
-    /// <returns>相对路径</returns>
-    public static string TryRelativeToProject(string _path)
+    /// <returns>相对于Assets路径</returns>
+    public static string TryRelativeToAssets(string _path)
     {
         if (string.IsNullOrEmpty(_path))
         {//如果为空，则直接转到Assets路径下
@@ -294,7 +302,7 @@ public sealed class EditorStrayFogApplication
         }
         else if (IsSubToProject(_path))
         {//如果是工程子目录
-            _path = GetRelativeToProject(_path);
+            _path = GetRelativeToAssets(_path);
         }
         return _path;
     }

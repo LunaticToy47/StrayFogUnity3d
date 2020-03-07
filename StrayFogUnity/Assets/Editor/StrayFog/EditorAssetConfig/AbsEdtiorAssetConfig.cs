@@ -114,7 +114,7 @@ public abstract class AbsEdtiorAssetConfig : ICloneable
     /// </summary>
     void OnReset()
     {
-        directory = EditorStrayFogApplication.TryRelativeToProject(directory);
+        directory = EditorStrayFogApplication.TryRelativeToAssets(directory);
         fileName = Path.Combine(directory, name + extAttribute.ext).TransPathSeparatorCharToUnityChar();
     }
     #endregion

@@ -346,7 +346,7 @@ public sealed class EditorStrayFogAssembly
         if (mDynamicDlls == null)
         {
             mDynamicDlls = EditorStrayFogUtility.collectAsset.CollectAsset<EditorAssemblySelectionAsset>(
-                new string[1] { EditorStrayFogApplication.TryRelativeToProject("") }, "",
+                new string[1] { EditorStrayFogApplication.TryRelativeToAssets("") }, "",
                 enEditorDependencyClassify.UnClude, (n) => { return n.ext.Equals(dllExt); }, false);
         }
         List<Assembly> tempAssemblies = null;
