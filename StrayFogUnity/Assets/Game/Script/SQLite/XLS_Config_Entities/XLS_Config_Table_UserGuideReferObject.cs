@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// UserGuideReferObject实体
 /// </summary>
-[SQLiteTableMap(1925734139,"Assets/Game/Editor/XLS_Config/UserGuideReferObject.xlsx","UserGuideReferObject", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_334573285",typeof(XLS_Config_Table_UserGuideReferObject),true,false)]
+[SQLiteTableMap(1925734139,"Assets/Game/Editor/XLS_Config/UserGuideReferObject.xlsx","UserGuideReferObject", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","Assets/c_334573285",typeof(XLS_Config_Table_UserGuideReferObject),true,false)]
 public partial class XLS_Config_Table_UserGuideReferObject: AbsStrayFogSQLiteEntity
 {
 	

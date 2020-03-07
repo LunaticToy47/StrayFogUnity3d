@@ -47,13 +47,7 @@ public class EditorWindowBuildAsmdefMap : AbsEditorWindow
         EditorGUILayout.Separator();
         if (GUILayout.Button("Load Asmdef"))
         {
-            mAsmdefs.Clear();
-            List<EditorSelectionAsmdefMapSetting> asmdefs = EditorStrayFogExecute.ExecuteLookPackageAsmdef();
-            foreach (EditorSelectionAsmdefMapSetting s in asmdefs)
-            {
-                s.Resolve();
-                mAsmdefs.Add(s);
-            }
+            mAsmdefs = EditorStrayFogExecute.ExecuteLookPackageAsmdef();
         }
     }
     #endregion

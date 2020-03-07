@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// View_DeterminantVT实体
 /// </summary>
-[SQLiteTableMap(-824694385,"","View_DeterminantVT", enSQLiteEntityClassify.View,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","c_334573285",typeof(XLS_Config_View_DeterminantVT),false,false)]
+[SQLiteTableMap(-824694385,"","View_DeterminantVT", enSQLiteEntityClassify.View,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","Assets/c_334573285",typeof(XLS_Config_View_DeterminantVT),false,false)]
 public partial class XLS_Config_View_DeterminantVT: AbsStrayFogSQLiteEntity
 {
 	

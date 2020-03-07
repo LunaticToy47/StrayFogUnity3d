@@ -85,6 +85,10 @@ enum enEditorMenuItemPriority
     /// </summary>
     SimulateBehaviour,
     /// <summary>
+    /// EditorHotfixStaticSettingMenuItem
+    /// </summary>
+    HotfixStaticSetting,
+    /// <summary>
     /// EditorReleaseMenuItem
     /// </summary>
     Release,

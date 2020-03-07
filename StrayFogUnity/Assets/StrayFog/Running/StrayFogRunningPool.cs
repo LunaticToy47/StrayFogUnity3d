@@ -3,7 +3,7 @@ using System.Text;
 /// <summary>
 /// 引擎工具
 /// </summary>
-public sealed class StrayFogRunningPool
+public sealed partial class StrayFogRunningPool
 {
     #region SingleScriptableObject 单例AbsSingleScriptableObject对象扩展
     /// <summary>
@@ -37,11 +37,7 @@ public sealed class StrayFogRunningPool
     {
         get
         {
-#if UNITY_EDITOR
             return null;
-#else
-            return SingleScriptableObject<StrayFogHotfixAsmdefSetting>();
-#endif
         }
     }
 #endregion
