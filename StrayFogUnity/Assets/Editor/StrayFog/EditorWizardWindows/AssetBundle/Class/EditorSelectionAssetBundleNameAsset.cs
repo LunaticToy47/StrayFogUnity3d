@@ -45,7 +45,7 @@ public class EditorSelectionAssetBundleNameAsset : EditorSelectionAsset
     /// 要锁定资源名称的后缀
     /// </summary>
     static readonly List<string> msrLockNameExt = new List<string>() {
-        msrDllExt,msrAsmdefExt
+        msrDllExt,msrAsmdefExt,msrAssetExt
     };
     /// <summary>
     /// 构造函数
