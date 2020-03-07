@@ -280,19 +280,39 @@ public sealed partial class StrayFogAssetBundleManager : AbsSingleMonoBehaviour
         XLS_Config_View_AssetDiskMaping config = StrayFogGamePools.assetBundleManager.GetAssetDiskMaping(_fileId, _folderId);
         if (file != null)
         {
-            TextAsset ta = null;
-            if (file.isUseAssetBundle)
+            TextAsset ta = GetAssetDirect<TextAsset>(config.fileName, file.assetBundlePath);
+            if (ta != null)
             {
-                AssetBundle ab = AssetBundle.LoadFromFile(file.assetBundlePath);
-                ta = ab.LoadAsset<TextAsset>(config.fileName);
                 result = ta.text;
+            }            
+        }
+        return result;
+    }
+    #endregion
+
+    #region GetAssetDirect 直接获得指定资源
+    /// <summary>
+    /// 直接获得指定资源
+    /// </summary>
+    /// <param name="_assetName">资源名称</param>
+    /// <param name="_assetPath">资源路径</param>    
+    /// <returns>资源</returns>
+    public T GetAssetDirect<T>(string _assetName,string _assetPath)
+        where T : UnityEngine.Object
+    {
+        T result = default;
+        if (File.Exists(_assetPath))
+        {            
+            if (StrayFogGamePools.setting.isUseAssetBundle)
+            {
+                AssetBundle ab = AssetBundle.LoadFromFile(_assetPath);
+                result = ab.LoadAsset<T>(_assetName);
                 ab.Unload(false);
-                ab = null;                
+                ab = null;
             }
             else
             {
-                ta = (TextAsset)StrayFogGamePools.runningApplication.LoadAssetAtPath(file.assetBundlePath, typeof(TextAsset));
-                result = ta.text;
+                result = (T)StrayFogGamePools.runningApplication.LoadAssetAtPath(_assetPath, typeof(T));              
             }
         }
         return result;

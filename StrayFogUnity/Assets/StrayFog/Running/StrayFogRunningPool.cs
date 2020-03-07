@@ -29,11 +29,11 @@ public sealed class StrayFogRunningPool
     }
     #endregion
 
-    #region StrayFogAsmdefHotfixSetting 设置文件
+    #region StrayFogAsmdefHotfixStaticSetting 设置文件
     /// <summary>
-    /// Asmdef设置文件
+    /// Asmdef静态设置文件
     /// </summary>
-    public static StrayFogHotfixAsmdefSetting asmdefSetting
+    public static StrayFogHotfixAsmdefStaticSetting asmdefStaticSetting
     {
         get
         {
