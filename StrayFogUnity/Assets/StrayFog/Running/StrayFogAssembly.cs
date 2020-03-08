@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ILRuntime.CLR.TypeSystem;
+using ILRuntime.Runtime.Intepreter;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -48,6 +50,10 @@ public sealed class StrayFogAssembly
     /// <returns>实例</returns>
     public static object CreateInstance(string _typeName)
     {
+        //AppDomain.CurrentDomain.GetAssemblies();
+        //mILRuntimeAppDomain.GetType()
+        //ILTypeInstance ins = mILRuntimeAppDomain.Instantiate(_typeName);
+        //ins.CLRInstance
         Type type = Type.GetType(_typeName);
         return type != null ? Activator.CreateInstance(type) : null;
     }
