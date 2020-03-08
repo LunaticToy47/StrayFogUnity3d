@@ -138,6 +138,11 @@ public enum enEditorApplicationFolder
 
     #region StrayFogRunning目录
     /// <summary>
+    /// StrayFog运行时目录
+    /// </summary>
+    [EditorApplicationFolder("StrayFog运行时目录", "Assets/StrayFog/Running", "StrayFog运行时目录")]
+    StrayFog_Running,
+    /// <summary>
     /// StrayFog运行时SimulateBehaviour目录
     /// </summary>
     [EditorApplicationFolder("StrayFog运行时SimulateBehaviour目录", "Assets/StrayFog/Running/SimulateBehaviour", "StrayFog运行时SimulateBehaviour目录")]

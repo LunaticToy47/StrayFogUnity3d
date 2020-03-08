@@ -2052,12 +2052,14 @@ public sealed class EditorStrayFogExecute
     }
     #endregion
 
-    #region ExecuteBuildStaticSetting 执行生成静态设定
+    #region ExecuteBuildHotfixStaticSetting 执行生成静态设定
     /// <summary>
     /// 执行生成静态设定
     /// </summary>
     public static void ExecuteBuildHotfixStaticSetting()
     {
+        StringBuilder sbLog = new StringBuilder();
+
         #region HotfixAsmdef 静态设定
         List<EditorSelectionAsmdefMapSetting> settings = ExecuteLookPackageAsmdef();
         Type hotfixAsmdefStaticSetting = typeof(StrayFogHotfixAsmdefStaticSetting);
@@ -2093,8 +2095,41 @@ public sealed class EditorStrayFogExecute
         string assetBundleName = assetBundle.GetAssetBundleName();
         string editorPath = assetBundle.path;
 
+        #region HotfixAsmdefStaticSetting 生成脚本
+        EditorTextAssetConfig staticSettingConfig = new EditorTextAssetConfig("StrayFogRunningPool_StaticSetting",
+            enEditorApplicationFolder.StrayFog_Running.GetAttribute<EditorApplicationFolderAttribute>().path,
+            enFileExt.CS, "");        
+
+        #region 模板
+        string staticSettingScriptTemplete = EditorResxTemplete.StrayFogRunningPool_StaticSetting_Templete;
+        string staticSettingMark = "#HotfixAsmdefStaticSetting#";
+        string staticSettingReplaceTemplete = string.Empty;
+        string staticSettingTemplete = string.Empty;
+        StringBuilder sbStaticSettingReplace = new StringBuilder();
+        staticSettingTemplete = EditorStrayFogUtility.regex.MatchPairMarkTemplete(
+            staticSettingScriptTemplete, staticSettingMark, out staticSettingReplaceTemplete);
         #endregion
 
+        sbStaticSettingReplace.Append(
+            staticSettingTemplete
+            .Replace("#HotfixAsmdefStaticSettingAssetBundlePath#", assetBundleName)
+            .Replace("#HotfixAsmdefStaticSettingEditorPath#", editorPath)
+            );
+
+        string staticSettingScript = string.Empty;
+        staticSettingScript = staticSettingScriptTemplete
+            .Replace(staticSettingReplaceTemplete, sbStaticSettingReplace.ToString());
+
+        staticSettingConfig.SetText(staticSettingScript);
+        staticSettingConfig.CreateAsset();
+        #endregion
+
+        #endregion
+
+        EditorUtility.ClearProgressBar();
+        EditorStrayFogApplication.ExecuteMenu_AssetsRefresh();
+        sbLog.AppendLine("ExecuteBuildHotfixStaticSetting Succeed!");
+        Debug.Log(sbLog.ToString());
     }
     #endregion
 

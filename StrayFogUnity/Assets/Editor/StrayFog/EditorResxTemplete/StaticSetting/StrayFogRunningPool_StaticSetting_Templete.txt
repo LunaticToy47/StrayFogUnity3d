@@ -1,9 +1,9 @@
-/// <summary>
+﻿/// <summary>
 /// 静态设置
 /// </summary>
 public partial class StrayFogRunningPool
 {
-	
+	#HotfixAsmdefStaticSetting#
     /// <summary>
     /// HotfixAsmdef静态设定路径
     /// </summary>    
@@ -11,13 +11,13 @@ public partial class StrayFogRunningPool
         get {
             if (runningSetting.isUseAssetBundle)
             {
-                return "assets/game/assetbundles/assets/a_231799851";
+                return "#HotfixAsmdefStaticSettingAssetBundlePath#";
             }
             else
             {
-                return "Assets/Game/AssetBundles/Assets/StrayFogHotfixAsmdefStaticSetting.asset";
+                return "#HotfixAsmdefStaticSettingEditorPath#";
             }
         }
     }
-	
+	#HotfixAsmdefStaticSetting#
 }

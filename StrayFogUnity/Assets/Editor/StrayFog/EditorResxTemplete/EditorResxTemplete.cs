@@ -271,5 +271,17 @@ public class EditorResxTemplete
                 typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
         }
     }
+
+    /// <summary>
+    /// StrayFogRunningPool_StaticSetting_Templete
+    /// </summary>
+    public static string StrayFogRunningPool_StaticSetting_Templete
+    {
+        get
+        {
+            return GetFileString("StaticSetting/StrayFogRunningPool_StaticSetting_Templete" +
+                typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.TextAsset).ext);
+        }
+    }
 }
 #endif
