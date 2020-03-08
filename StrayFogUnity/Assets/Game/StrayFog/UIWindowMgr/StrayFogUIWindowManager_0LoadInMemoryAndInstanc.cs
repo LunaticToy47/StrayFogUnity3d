@@ -186,7 +186,7 @@ public partial class StrayFogUIWindowManager
                     if (prefab != null)
                     {
                         prefab.name = winCfg.name + "[" + winCfg.id + "]";
-                        Type type = StrayFogAssembly.GetType(winCfg.name);
+                        Type type = Type.GetType(winCfg.name);
                         W window = default(W);
                         if (type == null)
                         {

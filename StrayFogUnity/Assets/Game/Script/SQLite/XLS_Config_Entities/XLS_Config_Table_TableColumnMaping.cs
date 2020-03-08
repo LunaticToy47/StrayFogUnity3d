@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// TableColumnMaping实体
 /// </summary>
-[SQLiteTableMap(651357196,"Assets/Game/Editor/XLS_Config/TableColumnMaping.xlsx","TableColumnMaping", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","Assets/c_334573285",typeof(XLS_Config_Table_TableColumnMaping),false,false)]
+[SQLiteTableMap(651357196,"Assets/Game/Editor/XLS_Config/TableColumnMaping.xlsx","TableColumnMaping", enSQLiteEntityClassify.Table,false, 1,4,2,4,"Assets/Game/Editor/XLS_Config/XLS_Config.db","Assets/497757a9c5b2ec17ded656170b51c788/c_334573285",typeof(XLS_Config_Table_TableColumnMaping),false,false)]
 public partial class XLS_Config_Table_TableColumnMaping: AbsStrayFogSQLiteEntity
 {
 	
