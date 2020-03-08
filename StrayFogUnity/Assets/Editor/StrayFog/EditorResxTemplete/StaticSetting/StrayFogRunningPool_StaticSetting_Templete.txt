@@ -7,7 +7,7 @@ public partial class StrayFogRunningPool
     /// <summary>
     /// HotfixAsmdef静态设定路径
     /// </summary>    
-    public string HotfixAsmdefStaticSettingPath {
+    public static string HotfixAsmdefStaticSettingPath {
         get {
             if (runningSetting.isUseAssetBundle)
             {

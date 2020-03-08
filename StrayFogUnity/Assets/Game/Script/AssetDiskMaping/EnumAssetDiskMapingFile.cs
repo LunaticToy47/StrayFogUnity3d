@@ -4,6 +4,8 @@
 public static class enAssetDiskMapingFile
 {
 
+	public const int f_StrayFogHotfixAsmdefStaticSetting_asset = 291557865;
+
 	public const int f_GuideMaskShader_mat = -43603534;
 
 	public const int f_SpriteAtlas_txt = 353122054;

@@ -19,41 +19,6 @@ public class ProjectGameStart
     static void OnProjectGameStart()
     {
         Debug.Log("OnProjectGameStart");
-        StrayFogAssembly.LoadDynamicAssembly(OnLoadAsmdefMap());
+        StrayFogAssembly.LoadDynamicAssembly();
     }
-
-    #region OnLoadAsmdefMap 加载AsmdefMap
-    /// <summary>
-    /// 加载AsmdefMap
-    /// </summary>
-    /// <returns>Asmdef路径映射</returns>
-    static Dictionary<int, StrayFogAsmdefPathMap> OnLoadAsmdefMap()
-    {
-        Dictionary<int, StrayFogAsmdefPathMap> result = new Dictionary<int, StrayFogAsmdefPathMap>();
-        //List<XLS_Config_Table_AsmdefMap> maps = StrayFogConfigHelper.Select<XLS_Config_Table_AsmdefMap>();
-        //if (maps != null)
-        //{
-        //    StrayFogAsmdefPathMap temp = null;
-        //    foreach (XLS_Config_Table_AsmdefMap m in maps)
-        //    {
-        //        if (StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().isUseAssetBundle)
-        //        {
-        //            temp = new StrayFogAsmdefPathMap(m.id,
-        //                Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefDllAssetbundleName),
-        //                Path.Combine(StrayFogRunningUtility.SingleScriptableObject<StrayFogSetting>().assetBundleRoot, m.asmdefPdbAssetbundleName),
-        //                m.isHotfix);                    
-        //        }
-        //        else
-        //        {
-        //            temp = new StrayFogAsmdefPathMap(m.id, m.asmdefDllPath, m.asmdefPdbPath, m.isHotfix);
-        //        }
-        //        if (!result.ContainsKey(temp.asmdefId))
-        //        {
-        //            result.Add(temp.asmdefId, temp);
-        //        }
-        //    }
-        //}
-        return result;
-    }
-    #endregion
 }

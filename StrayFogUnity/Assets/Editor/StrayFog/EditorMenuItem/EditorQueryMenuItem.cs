@@ -11,19 +11,19 @@ static class EditorQueryMenuItem
     /// <summary>
     /// 菜单
     /// </summary>
-    const string mcMenu = "StrayFog/Query/";
+    public const string mcMenu = "StrayFog/Query/";
     /// <summary>
     /// Asset菜单
     /// </summary>
-    const string mcAssetMenu = "Assets/" + mcMenu;
+    public const string mcAssetMenu = "Assets/" + mcMenu;
     /// <summary>
     /// Hierarchy菜单
     /// </summary>
-    const string mcHierarchy = "GameObject/" + mcMenu;
+    public const string mcHierarchy = "GameObject/" + mcMenu;
     /// <summary>
     /// 菜单优先级
     /// </summary>
-    const int mcPriority = 100 * (int)enEditorMenuItemPriority.Query;
+    public const int mcPriority = 100 * (int)enEditorMenuItemPriority.Query;
     #endregion
 
     #region Look AssetBundleRoot

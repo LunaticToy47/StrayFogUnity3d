@@ -2,44 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-
-/// <summary>
-/// Asmdef路径映射
-/// </summary>
-public class StrayFogAsmdefPathMap
-{
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="_asmdefId">Asmdef标识Id</param>
-    /// <param name="_dllPath">Dll路径</param>
-    /// <param name="_pdbPath">Pdb路径</param>
-    /// <param name="_isHotfix">是否是热更</param>
-    public StrayFogAsmdefPathMap(int _asmdefId,string _dllPath,string _pdbPath,bool _isHotfix)
-    {
-        asmdefId = _asmdefId;
-        dllPath = _dllPath;
-        pdbPath = _pdbPath;
-        isHotfix = _isHotfix;
-    }
-    /// <summary>
-    /// Asmdef标识Id
-    /// </summary>
-    public int asmdefId { get; private set; }
-    /// <summary>
-    /// 是否是热更
-    /// </summary>
-    public bool isHotfix { get; private set; }
-    /// <summary>
-    /// Dll路径
-    /// </summary>
-    public string dllPath { get; private set; }
-    /// <summary>
-    /// Pdb路径
-    /// </summary>
-    public string pdbPath { get; private set; }
-}
-
 /// <summary>
 /// 引擎程序集
 /// </summary>
@@ -49,19 +11,22 @@ public sealed class StrayFogAssembly
     /// <summary>
     /// 加载dll动态库
     /// </summary>
-    /// <param name="_asmdefMap">Asmdef映射</param>
-    public static void LoadDynamicAssembly(Dictionary<int, StrayFogAsmdefPathMap> _asmdefMap)
+    public static void LoadDynamicAssembly()
     {
         mDynamicAssemblyMaping.Clear();
         Assembly temp = null;
-        foreach (StrayFogAsmdefPathMap m in _asmdefMap.Values)
+        StrayFogHotfixAsmdefStaticSetting asmdef = StrayFogRunningPool.asmdefStaticSetting;
+        if (asmdef.settings != null)
         {
-            temp = Assembly.Load(File.ReadAllBytes(m.dllPath), File.ReadAllBytes(m.pdbPath));
-            if (temp != null)
+            foreach (StrayFogHotfixAsmdefStaticSettingItem key in asmdef.settings)
             {
-                mDynamicAssemblyMaping.Add(m.asmdefId, temp);
+                temp = Assembly.Load(File.ReadAllBytes(key.hotfixAsmdefDllAssetBundlePath), File.ReadAllBytes(key.hotfixAsmdefPdbAssetBundlePath));
+                if (temp != null)
+                {
+                    mDynamicAssemblyMaping.Add(key.hotfixAsmdefId, temp);
+                }
             }
-        }
+        }        
     }
     #endregion
 

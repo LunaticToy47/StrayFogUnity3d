@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using UnityEngine;
 /// <summary>
 /// 引擎工具
 /// </summary>
@@ -31,13 +30,31 @@ public sealed partial class StrayFogRunningPool
 
     #region StrayFogAsmdefHotfixStaticSetting 设置文件
     /// <summary>
+    /// HotfixAsmdef设置
+    /// </summary>
+    static StrayFogHotfixAsmdefStaticSetting mStrayFogHotfixAsmdefStaticSetting;
+    /// <summary>
     /// Asmdef静态设置文件
     /// </summary>
     public static StrayFogHotfixAsmdefStaticSetting asmdefStaticSetting
     {
         get
         {
-            return null;
+            if (mStrayFogHotfixAsmdefStaticSetting == null)
+            {
+                if (runningSetting.isUseAssetBundle)
+                {
+                    AssetBundle ab = AssetBundle.LoadFromFile(HotfixAsmdefStaticSettingPath);
+                    mStrayFogHotfixAsmdefStaticSetting = ab.LoadAllAssets<StrayFogHotfixAsmdefStaticSetting>()[0];
+                    ab.Unload(false);
+                    ab = null;
+                }
+                else
+                {
+                    mStrayFogHotfixAsmdefStaticSetting = (StrayFogHotfixAsmdefStaticSetting)SingleScriptableObject<StrayFogRunningApplication>().LoadAssetAtPath(HotfixAsmdefStaticSettingPath, typeof(StrayFogHotfixAsmdefStaticSetting));
+                }
+            }            
+            return mStrayFogHotfixAsmdefStaticSetting;
         }
     }
 #endregion

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: StrayFogHotfixAsmdefStaticSetting
   m_EditorClassIdentifier: 
   settings:
-  - hotfixAsmdefDllAssetBundlePath: assets/example/m_1770702064
+  - hotfixAsmdefId: 868207728
+    hotfixAsmdefDllAssetBundlePath: assets/example/m_1770702064
     hotfixAsmdefPdbAssetBundlePath: assets/example/m_1770702064_p
-  - hotfixAsmdefDllAssetBundlePath: assets/game/m_44316423
+  - hotfixAsmdefId: 1330698698
+    hotfixAsmdefDllAssetBundlePath: assets/game/m_44316423
     hotfixAsmdefPdbAssetBundlePath: assets/game/m_44316423_p

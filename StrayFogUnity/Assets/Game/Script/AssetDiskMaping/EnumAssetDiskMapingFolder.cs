@@ -4,6 +4,8 @@
 public static class enAssetDiskMapingFolder
 {
 
+	public const int Assets_Game_AssetBundles_Assets = 27702436;
+
 	public const int Assets_Game_AssetBundles_Materials = 2130076485;
 
 	public const int Assets_Game_AssetBundles_SpriteAtlas = 1148303718;

@@ -2052,26 +2052,34 @@ public sealed class EditorStrayFogExecute
     }
     #endregion
 
-    #region ExecuteBuildHotfixStaticSetting 执行生成静态设定
+    #region ExecuteLookBuildHotfixAsmdefStaticSetting 执行查看HotfixAsmdef静态设定
     /// <summary>
-    /// 执行生成静态设定
+    /// 执行查看HotfixAsmdef静态设定
     /// </summary>
-    public static void ExecuteBuildHotfixStaticSetting()
+    public static EditorEngineAssetConfig ExecuteLookBuildHotfixAsmdefStaticSetting()
+    {
+        Type hotfix = typeof(StrayFogHotfixAsmdefStaticSetting);
+        EditorEngineAssetConfig hotfixAsset = new EditorEngineAssetConfig(hotfix.Name,
+            enEditorApplicationFolder.Game_AssetBundles_Assets.GetAttribute<EditorApplicationFolderAttribute>().path,
+            enFileExt.Asset, hotfix.Name);
+        if (!hotfixAsset.Exists())
+        {
+            hotfixAsset.CreateAsset();
+        }
+        hotfixAsset.LoadAsset();
+        return hotfixAsset;
+    }
+    /// <summary>
+    /// 执行生成HotfixAsmdef静态设定
+    /// </summary>
+    public static void ExecuteBuildHotfixAsmdefStaticSetting()
     {
         StringBuilder sbLog = new StringBuilder();
 
         #region HotfixAsmdef 静态设定
         List<EditorSelectionAsmdefMapSetting> settings = ExecuteLookPackageAsmdef();
-        Type hotfixAsmdefStaticSetting = typeof(StrayFogHotfixAsmdefStaticSetting);
-        EditorEngineAssetConfig hassCfg = new EditorEngineAssetConfig(hotfixAsmdefStaticSetting.Name,
-            enEditorApplicationFolder.Game_AssetBundles_Assets.GetAttribute<EditorApplicationFolderAttribute>().path, 
-            enFileExt.Asset, hotfixAsmdefStaticSetting.Name);
-        if (!hassCfg.Exists())
-        {
-            hassCfg.CreateAsset();           
-        }
-        hassCfg.LoadAsset();
-        StrayFogHotfixAsmdefStaticSetting haSet = (StrayFogHotfixAsmdefStaticSetting)hassCfg.engineAsset;
+        EditorEngineAssetConfig hotfixAsset = ExecuteLookBuildHotfixAsmdefStaticSetting();
+        StrayFogHotfixAsmdefStaticSetting haSet = (StrayFogHotfixAsmdefStaticSetting)hotfixAsset.engineAsset;
         List<EditorSelectionAsmdefMapSetting> hotfixs = new List<EditorSelectionAsmdefMapSetting>();
         foreach (EditorSelectionAsmdefMapSetting s in settings)
         {
@@ -2085,12 +2093,13 @@ public sealed class EditorStrayFogExecute
         for (int i = 0; i < hotfixs.Count; i++)
         {
             haSet.settings[i] = new StrayFogHotfixAsmdefStaticSettingItem();
+            haSet.settings[i].hotfixAsmdefId = hotfixs[i].asmdefId;
             haSet.settings[i].hotfixAsmdefDllAssetBundlePath = hotfixs[i].asmdefDllAssetbundleName;
             haSet.settings[i].hotfixAsmdefPdbAssetBundlePath = hotfixs[i].asmdefPdbAssetbundleName;
         }
-        EditorUtility.SetDirty(hassCfg.engineAsset);
+        EditorUtility.SetDirty(hotfixAsset.engineAsset);
         AssetDatabase.SaveAssets();
-        EditorSelectionAssetBundleNameAsset assetBundle = new EditorSelectionAssetBundleNameAsset(hassCfg.fileName);
+        EditorSelectionAssetBundleNameAsset assetBundle = new EditorSelectionAssetBundleNameAsset(hotfixAsset.fileName);
         assetBundle.SaveAssetBundleName(null);
         string assetBundleName = assetBundle.GetAssetBundleName();
         string editorPath = assetBundle.path;
@@ -2199,7 +2208,7 @@ public sealed class EditorStrayFogExecute
         ExecuteBuildBatToPackage();
 
         EditorUtility.DisplayProgressBar("BuildPackage", "ExecuteBuildHotfixStaticSetting", 0);
-        ExecuteBuildHotfixStaticSetting();
+        ExecuteBuildHotfixAsmdefStaticSetting();
 
         EditorUtility.DisplayProgressBar("BuildPackage", "ExecutePerformanceOptimization", 0);
         ExecutePerformanceOptimization();
