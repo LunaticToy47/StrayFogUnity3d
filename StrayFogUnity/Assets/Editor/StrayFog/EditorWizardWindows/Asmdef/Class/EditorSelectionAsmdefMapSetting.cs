@@ -24,10 +24,10 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
         asmdefDllName = Path.GetFileNameWithoutExtension(name);
         asmdefId = asmdefDllName.UniqueHashCode();
 
-        asmdefDllPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext).TransPathSeparatorCharToUnityChar();        
+        asmdefDllLibraryPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll).ext).TransPathSeparatorCharToUnityChar();        
         asmdefDllAssetbundleName = GetAssetBundleName();
 
-        asmdefPdbPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll_PDB).ext).TransPathSeparatorCharToUnityChar();
+        asmdefPdbLibraryPath = Path.Combine(EditorStrayFogAssembly.scriptAssembliesPath, asmdefDllName + typeof(enFileExt).GetAttributeForConstField<FileExtAttribute>(enFileExt.Dll_PDB).ext).TransPathSeparatorCharToUnityChar();
         asmdefPdbAssetbundleName = GetAssetBundleName()+"_p";
         ClearAssetBundleName();
         OnRead();
@@ -64,7 +64,7 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
     /// <summary>
     /// Asmdef映射dll文件
     /// </summary>
-    public string asmdefDllPath { get; private set; }
+    public string asmdefDllLibraryPath { get; private set; }
     /// <summary>
     /// Asmdef资源Dll名称
     /// </summary>
@@ -72,7 +72,7 @@ public class EditorSelectionAsmdefMapSetting : EditorSelectionAssetDiskMaping
     /// <summary>
     /// Asmdef映射Pdb文件
     /// </summary>
-    public string asmdefPdbPath { get; private set; }
+    public string asmdefPdbLibraryPath { get; private set; }
     /// <summary>
     /// Asmdef资源Pdb名称
     /// </summary>

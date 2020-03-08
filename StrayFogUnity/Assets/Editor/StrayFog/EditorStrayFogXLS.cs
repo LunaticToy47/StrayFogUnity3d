@@ -1315,9 +1315,9 @@ public sealed class EditorStrayFogXLS
                         {
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 1].Value = asmdefScripts[i].asmdefId;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 2].Value = asmdefScripts[i].asmdefDllName;
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = asmdefScripts[i].asmdefDllPath;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 3].Value = asmdefScripts[i].asmdefDllLibraryPath;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 4].Value = asmdefScripts[i].asmdefDllAssetbundleName;
-                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 5].Value = asmdefScripts[i].asmdefPdbPath;
+                            sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 5].Value = asmdefScripts[i].asmdefPdbLibraryPath;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 6].Value = asmdefScripts[i].asmdefPdbAssetbundleName;
                             sheet.Cells[msrColumnDataRowStartIndex + i - rowIndex, 7].Value = asmdefScripts[i].assetNode.isHotfix ? 1 : 0;
                         }

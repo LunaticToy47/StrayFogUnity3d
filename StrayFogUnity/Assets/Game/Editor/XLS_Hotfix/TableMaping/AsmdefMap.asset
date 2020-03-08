@@ -41,12 +41,12 @@ MonoBehaviour:
     dataType: 16384
     arrayDimension: 1
     isIngore: 0
-  - columnName: asmdefDllPath
+  - columnName: asmdefDllLibraryPath
     desc: "AsmdefDLL\u8DEF\u5F84"
     xlsColumnValueIndex: 3
     isPK: 0
     isNull: 0
-    sqliteColumnName: asmdefDllPath
+    sqliteColumnName: asmdefDllLibraryPath
     sqliteColumnValue: 
     dataType: 16384
     arrayDimension: 1
@@ -61,12 +61,12 @@ MonoBehaviour:
     dataType: 16384
     arrayDimension: 1
     isIngore: 0
-  - columnName: asmdefPdbPath
+  - columnName: asmdefPdbLibraryPath
     desc: "AsmdefDLL\u8DEF\u5F84"
     xlsColumnValueIndex: 5
     isPK: 0
     isNull: 0
-    sqliteColumnName: asmdefPdbPath
+    sqliteColumnName: asmdefPdbLibraryPath
     sqliteColumnValue: 
     dataType: 16384
     arrayDimension: 1

@@ -28,8 +28,8 @@ public partial class XLS_Hotfix_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// AsmdefDLL路径
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,3,"asmdefDllPath","","@asmdefDllPath3",false,false)]	
-	public string asmdefDllPath { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,3,"asmdefDllLibraryPath","","@asmdefDllLibraryPath3",false,false)]	
+	public string asmdefDllLibraryPath { get; private set; }	
 		
 	/// <summary>
 	/// Asmdef资源文件名称
@@ -40,8 +40,8 @@ public partial class XLS_Hotfix_Table_AsmdefMap: AbsStrayFogSQLiteEntity
 	/// <summary>
 	/// AsmdefDLL路径
 	/// </summary>
-	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"asmdefPdbPath","","@asmdefPdbPath5",false,false)]	
-	public string asmdefPdbPath { get; private set; }	
+	[SQLiteFieldType(enSQLiteDataType.String,enSQLiteDataTypeArrayDimension.NoArray,5,"asmdefPdbLibraryPath","","@asmdefPdbLibraryPath5",false,false)]	
+	public string asmdefPdbLibraryPath { get; private set; }	
 		
 	/// <summary>
 	/// Asmdef资源文件名称

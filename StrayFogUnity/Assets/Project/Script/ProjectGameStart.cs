@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
 /// <summary>
 /// 项目游戏开始脚本
 /// </summary>
@@ -16,9 +13,9 @@ public class ProjectGameStart
     /// 程序主入口点
     /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void OnProjectGameStart()
+    static void OnRuntimeBeforeSceneLoad()
     {
-        Debug.Log("OnProjectGameStart");
+        Debug.LogErrorFormat("ProjectGameStart.OnRuntimeBeforeSceneLoad");
         StrayFogAssembly.LoadDynamicAssembly();
     }
 }

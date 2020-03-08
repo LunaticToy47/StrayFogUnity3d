@@ -76,7 +76,7 @@ public class EditorXlsTableSchema : AbsScriptableObject
     /// <summary>
     /// 数据库外部资源名称
     /// </summary>
-    public string assetBundleDbName { get { return Path.Combine(EditorStrayFogApplication.TryRelativeToAssets() ,"c_" + dbPath.UniqueHashCode().ToString().Replace("-", "_")).TransPathSeparatorCharToUnityChar(); } }
+    public string assetBundleDbName { get { return Path.Combine(EditorStrayFogApplication.TryRelativeToAssets(), "SQLite".ToHex() + "/c_" + dbPath.UniqueHashCode().ToString().Replace("-", "_")).TransPathSeparatorCharToUnityChar(); } }
     #endregion
 
     #region dbKey 数据库Key值

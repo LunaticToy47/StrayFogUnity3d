@@ -1920,7 +1920,7 @@ public sealed class EditorStrayFogExecute
             foreach (EditorSelectionAsmdefMapSetting m in asmdefs)
             {
                 m.Resolve();
-                if (_assembly.ManifestModule.FullyQualifiedName.ToUpper().TransPathSeparatorCharToUnityChar().EndsWith(m.asmdefDllPath.ToUpper().TransPathSeparatorCharToUnityChar()))
+                if (_assembly.ManifestModule.FullyQualifiedName.ToUpper().TransPathSeparatorCharToUnityChar().EndsWith(m.asmdefDllLibraryPath.ToUpper().TransPathSeparatorCharToUnityChar()))
                 {
                     mAssemblyForAsmdefMaping.Add(key, m.asmdefId);
                     break;
@@ -2002,7 +2002,7 @@ public sealed class EditorStrayFogExecute
         {
             progress++;
             n.Resolve();
-            if (File.Exists(n.asmdefDllPath))
+            if (File.Exists(n.asmdefDllLibraryPath))
             {
                 savePath = Path.Combine(StrayFogRunningPool.runningSetting.editorReleaseAssetBundleRoot,
                     n.asmdefDllAssetbundleName);
@@ -2011,13 +2011,13 @@ public sealed class EditorStrayFogExecute
                 {
                     Directory.CreateDirectory(saveDir);
                 }
-                File.Copy(n.asmdefDllPath, savePath, true);
+                File.Copy(n.asmdefDllLibraryPath, savePath, true);
             }
             else
             {
-                Debug.LogErrorFormat("Can't find Asmdef maping dll【{0}】", n.asmdefDllPath);
+                Debug.LogErrorFormat("Can't find Asmdef maping dll【{0}】", n.asmdefDllLibraryPath);
             }
-            if (File.Exists(n.asmdefPdbPath))
+            if (File.Exists(n.asmdefPdbLibraryPath))
             {
                 savePath = Path.Combine(StrayFogRunningPool.runningSetting.editorReleaseAssetBundleRoot,
                     n.asmdefPdbAssetbundleName);
@@ -2026,11 +2026,11 @@ public sealed class EditorStrayFogExecute
                 {
                     Directory.CreateDirectory(saveDir);
                 }
-                File.Copy(n.asmdefPdbPath, savePath, true);
+                File.Copy(n.asmdefPdbLibraryPath, savePath, true);
             }
             else
             {
-                Debug.LogErrorFormat("Can't find Asmdef maping dll【{0}】", n.asmdefDllPath);
+                Debug.LogErrorFormat("Can't find Asmdef maping dll【{0}】", n.asmdefDllLibraryPath);
             }
 
             EditorUtility.DisplayProgressBar("Build Log", n.path, progress / nodes.Count);
@@ -2096,6 +2096,8 @@ public sealed class EditorStrayFogExecute
             haSet.settings[i].hotfixAsmdefId = hotfixs[i].asmdefId;
             haSet.settings[i].hotfixAsmdefDllAssetBundlePath = hotfixs[i].asmdefDllAssetbundleName;
             haSet.settings[i].hotfixAsmdefPdbAssetBundlePath = hotfixs[i].asmdefPdbAssetbundleName;
+            haSet.settings[i].hotfixAsmdefDllLibraryPath = hotfixs[i].asmdefDllLibraryPath;
+            haSet.settings[i].hotfixAsmdefPdbLibraryPath = hotfixs[i].asmdefPdbLibraryPath;
         }
         EditorUtility.SetDirty(hotfixAsset.engineAsset);
         AssetDatabase.SaveAssets();

@@ -16,6 +16,10 @@ MonoBehaviour:
   - hotfixAsmdefId: 868207728
     hotfixAsmdefDllAssetBundlePath: assets/example/m_1770702064
     hotfixAsmdefPdbAssetBundlePath: assets/example/m_1770702064_p
+    hotfixAsmdefDllLibraryPath: Library/ScriptAssemblies/GameExample.dll
+    hotfixAsmdefPdbLibraryPath: Library/ScriptAssemblies/GameExample.pdb
   - hotfixAsmdefId: 1330698698
     hotfixAsmdefDllAssetBundlePath: assets/game/m_44316423
     hotfixAsmdefPdbAssetBundlePath: assets/game/m_44316423_p
+    hotfixAsmdefDllLibraryPath: Library/ScriptAssemblies/GameHotfix.dll
+    hotfixAsmdefPdbLibraryPath: Library/ScriptAssemblies/GameHotfix.pdb

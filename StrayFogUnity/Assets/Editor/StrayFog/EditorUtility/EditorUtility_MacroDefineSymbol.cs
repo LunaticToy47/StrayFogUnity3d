@@ -27,6 +27,7 @@ public class EditorUtility_MacroDefineSymbol : AbsEditorSingle
                 if (GUILayout.Button(string.Format("Copy 【{0}】Define", define.alias.alias, GUILayout.ExpandWidth(false))))
                 {
                     EditorStrayFogApplication.CopyToClipboard(define.name);
+                    EditorUtility.DisplayDialog("Copy Define", "Copy Define " + define.name, "OK");
                 }
                 EditorGUILayout.EndHorizontal();
             }

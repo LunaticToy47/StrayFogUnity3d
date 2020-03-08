@@ -20,6 +20,16 @@ public class StrayFogHotfixAsmdefStaticSettingItem
     /// </summary>
     [ReadOnly]
     public string hotfixAsmdefPdbAssetBundlePath = string.Empty;
+    /// <summary>
+    /// HotfixAsmdef Dll Library路径
+    /// </summary>
+    [ReadOnly]
+    public string hotfixAsmdefDllLibraryPath = string.Empty;
+    /// <summary>
+    /// HotfixAsmdef Pdb Library路径
+    /// </summary>
+    [ReadOnly]
+    public string hotfixAsmdefPdbLibraryPath = string.Empty;
 }
 
 /// <summary>

@@ -58,6 +58,28 @@ public sealed class StrayFogSetting : AbsSingleScriptableObject
     }
     #endregion
 
+    #region isUseILRuntime 是否使用ILRuntime
+    /// <summary>
+    /// 是否使用ILRuntime
+    /// </summary>
+    public bool isUseILRuntime
+    {
+        get {
+#if UNITY_EDITOR
+            #region UNITY_EDITOR
+#if ILRUNTIME
+                return true;
+#else
+            return false;
+#endif
+            #endregion
+#else
+            return true;
+#endif
+        }
+    }
+    #endregion
+
     #region platform 运行平台
     //https://docs.unity3d.com/Manual/PlatformDependentCompilation.html
     /// <summary>
